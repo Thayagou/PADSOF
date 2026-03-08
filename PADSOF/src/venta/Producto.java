@@ -16,7 +16,7 @@ public abstract class Producto {
 	private boolean eliminado;
 	
 	/**
-	 * Creador de un producto
+	 * Creador de producto
 	 * @param nombre Nombre del producto
 	 * @param desc Descripción del producto
 	 * @param precio Precio del producto
