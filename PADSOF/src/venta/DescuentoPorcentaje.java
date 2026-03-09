@@ -13,9 +13,9 @@ public class DescuentoPorcentaje extends Descuento {
 	@Override
 	public double getPrecioDescontado(int numUds, double volumen, double precio) {
 		if(this.cumpleCondiciones(numUds, volumen)) {
-			return precio*(porcentaje/100);
+			return precio-(precio*(porcentaje/100));
 		} else {
-			return 0.0;
+			return precio;
 		}
 	}
 	

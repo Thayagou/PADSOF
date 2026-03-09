@@ -10,6 +10,9 @@ public class Resena {
 	private ClienteRegistrado usuario;
 	
 	public Resena(double puntuacion, String comentario, ClienteRegistrado usuario) {
+		if(puntuacion < 0 || puntuacion > 5) {
+			throw new IllegalArgumentException("Resena con puntuacion invalida");
+		}
 		this.puntuacion = puntuacion;
 		this.comentario = comentario;
 		this.fecha = LocalDate.now();
@@ -20,16 +23,8 @@ public class Resena {
 		return puntuacion;
 	}
 
-	public void setPuntuacion(double puntuacion) {
-		this.puntuacion = puntuacion;
-	}
-
 	public String getComentario() {
 		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
 	}
 
 	public LocalDate getFecha() {

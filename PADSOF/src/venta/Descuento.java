@@ -22,10 +22,10 @@ public abstract class Descuento {
 	}
 	
 	public double getPrecioDescontado(int numUds, double volumen, double precio) {
-		return 0.0;
+		return precio;
 	}
 	
-	public Producto getRegalo(int numUds, double volumen, double precio) {
+	public Producto getRegalo(int numUds, double volumen) {
 		return null;
 	}
 	

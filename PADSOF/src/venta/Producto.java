@@ -32,16 +32,13 @@ public abstract class Producto {
 		this.descuento = null;
 		this.eliminado = false;
 		
-		for(Categoria c : categorias) {
-			this.anadirCategorias(c);
-			if(c.tieneDescuento()) {
-				if(this.descuento == null) {
-					this.descuento = c.getDescuento();
-				} else {
-					throw new IllegalArgumentException("El producto no puede tener multiples descuentos por categoria");
-				}
-			}
+		if(!anadirCategorias(categorias)) {
+			throw new IllegalArgumentException("El producto no puede tener multiples descuentos por categoria");
 		}
+	}
+	
+	public boolean perteneceACategoria(Categoria categoria) {
+		return categorias.contains(categoria);
 	}
 
 	public String getNombre() {
@@ -76,19 +73,30 @@ public abstract class Producto {
 		this.imagen = imagen;
 	}
 
-	public Set<Categoria> getCategorias() {
-		return Collections.unmodifiableSet(categorias);
+	public Categoria[] getCategorias() {
+		return categorias.toArray(new Categoria[0]);
 	}
 	
 	/**
 	 * Metodo para añadir categorias al producto
 	 * @param categorias Categorias que se van a añadir al producto
+	 * @return true si se añadieron todas las categorias, false si alguna no pudo añadirse.
 	 */
-	public void anadirCategorias(Categoria...categorias) {
+	public boolean anadirCategorias(Categoria...categorias) {
+		boolean ret = true;
 		for(Categoria c : categorias) {
+			if(c.tieneDescuento()) {
+				if(descuento == null) {
+					descuento = c.getDescuento();
+				} else {
+					ret = false;
+					continue;
+				}
+			}
 			if(this.categorias.add(c))
 				c.anadirProducto(this);
 		}
+		return ret;
 	}
 	
 	/**
@@ -97,6 +105,9 @@ public abstract class Producto {
 	 */
 	public void quitarCategorias(Categoria...categorias) {
 		for(Categoria c : categorias) {
+			if(c.tieneDescuento()) {
+				descuento = null;
+			}
 			if(this.categorias.remove(c))
 				c.quitarProducto(this);
 		}
@@ -144,8 +155,8 @@ public abstract class Producto {
 		this.eliminado = eliminado;
 	}
 	
-	public List<Resena> getResenas() {
-		return resenas;
+	public Resena[] getResenas() {
+		return resenas.toArray(new Resena[0]);
 	}
 	
 	public void anadirResena(Resena resena) {

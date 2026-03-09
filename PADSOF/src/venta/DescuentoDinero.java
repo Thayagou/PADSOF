@@ -13,9 +13,9 @@ public class DescuentoDinero extends Descuento {
 	@Override
 	public double getPrecioDescontado(int numUds, double volumen, double precio) {
 		if(this.cumpleCondiciones(numUds, volumen)) {
-			return dinero;
+			return precio - dinero/numUds;
 		} else {
-			return 0.0;
+			return precio;
 		}
 	}
 	

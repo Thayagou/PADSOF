@@ -9,13 +9,11 @@ public class Pack extends Producto {
 	
 	public Pack(Set<Stock> stocks, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) {
 		super(nombre, desc, precio, imagen, categorias);
-		for(Stock s : stocks) {
-			productos.add(s);
-		}
+		productos.addAll(stocks);
 	}
 	
-	public Set<Stock> getProductos() {
-		return productos;
+	public Stock[] getProductos() {
+		return productos.toArray(new Stock[0]);
 	}
 
 	@Override

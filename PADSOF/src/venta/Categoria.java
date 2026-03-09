@@ -34,23 +34,42 @@ public class Categoria {
 		return descuento;
 	}
 
-	public void setDescuento(Descuento descuento) {
+	public boolean setDescuento(Descuento descuento) {
+		if(descuento == null) return false;
+		
+		for(Producto p : productos) {
+			if(p.tieneDescuento()) return false;
+		}
 		this.descuento = descuento;
+		for(Producto p : productos) {
+			p.setDescuento(descuento);
+		}
+		return true;
+	}
+	
+	public void quitarDescuento() {
+		for(Producto p : productos) {
+			p.quitarDescuento();
+		}
+		this.descuento = null;
 	}
 	
 	public boolean tieneDescuento() {
 		return descuento != null;
 	}
 	
-	public Set<Producto> getProductos() {
-		return productos;
+	public Producto[] getProductos() {
+		return productos.toArray(new Producto[0]);
 	}
 	
-	public void anadirProducto(Producto p) {
+	public boolean anadirProducto(Producto p) {
+		if(!p.anadirCategorias(this)) return false;
 		productos.add(p);
+		return true;
 	}
 	
 	public void quitarProducto(Producto p) {
+		p.quitarCategorias(this);
 		productos.remove(p);
 	}
 
@@ -60,26 +79,5 @@ public class Categoria {
 	@Override
 	public String toString() {
 		return nombre;
-	}
-	
-	/**
-	 * Metodo para obtener el hashCode de una categoria.
-	 * Se utiliza el nombre de la categoria.
-	 */
-	@Override
-	public int hashCode() {
-	    return nombre.hashCode();
-	}
-	
-	/**
-	 * Metodo para comparar dos categorias y ver si son iguales.
-	 * Se determinan como iguales si tienen el mismo nombre.
-	 */
-	@Override
-	public boolean equals(Object o) {
-	    if (this == o) return true;
-	    if (o == null || getClass() != o.getClass()) return false;
-	    Categoria c = (Categoria) o;
-	    return nombre.equals(c.nombre);
 	}
 }

@@ -11,7 +11,7 @@ public class DescuentoRegalo extends Descuento {
 	}
 
 	@Override
-	public Producto getRegalo(int numUds, double volumen, double precio) {
+	public Producto getRegalo(int numUds, double volumen) {
 		if(this.cumpleCondiciones(numUds, volumen)) {
 			return regalo;
 		} else {
