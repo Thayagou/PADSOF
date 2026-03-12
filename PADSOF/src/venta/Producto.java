@@ -144,6 +144,8 @@ public abstract class Producto {
 	}
 	
 	public boolean tieneDescuento() {
+		if(!this.descuento.isVigente())
+			this.quitarDescuento();
 		return this.descuento != null;
 	}
 

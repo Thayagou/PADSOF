@@ -55,6 +55,8 @@ public class Categoria {
 	}
 	
 	public boolean tieneDescuento() {
+		if(!this.descuento.isVigente())
+			this.quitarDescuento();
 		return descuento != null;
 	}
 	
