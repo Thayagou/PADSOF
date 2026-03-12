@@ -1,9 +1,9 @@
 package estadistica;
 
-import venta.Producto;
-
 import java.time.*;
 import java.util.*;
+
+import venta.productos.Producto;
 
 public class StatsProducto {
 	Producto producto;

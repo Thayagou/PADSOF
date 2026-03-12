@@ -1,8 +1,10 @@
 package wallapop;
 
 import java.util.*;
+
+import venta.productos.Categoria;
+
 import java.awt.Image;
-import venta.Categoria;
 
 public class ArticuloSegundaMano {
 	int id;

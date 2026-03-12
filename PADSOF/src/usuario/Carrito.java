@@ -3,6 +3,9 @@ package usuario;
 import java.util.*;
 import java.time.*;
 import venta.*;
+import venta.descuentos.Descuento;
+import venta.productos.Producto;
+import venta.productos.StockExterno;
 
 public class Carrito {
 	private LocalDateTime fechaCaducidad;

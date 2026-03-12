@@ -1,4 +1,4 @@
-package venta;
+package venta.productos;
 
 import java.time.*;
 
@@ -10,6 +10,18 @@ public class Comic extends Producto {
 	private int numPaginas;
 	private String editorial;
 	
+	/**
+	 * Creador de la clase Comic
+	 * @param nombre Nombre del comic
+	 * @param desc Descripcion del comic
+	 * @param precio Precio del comic
+	 * @param imagen Imagen del comic
+	 * @param fecha Fecha de publicación del comic
+	 * @param autor Autor del comic
+	 * @param pags Número de páginas del comic
+	 * @param editorial Editorial que publica el comic
+	 * @param categorias Array de categorías del cómic
+	 */
 	public Comic(String nombre, String desc, double precio, ImageIcon imagen, LocalDate fecha, String autor, int pags, String editorial, Categoria...categorias) {
 		super(nombre, desc, precio, imagen, categorias);
 		this.fechaPublicacion = fecha;
@@ -18,6 +30,9 @@ public class Comic extends Producto {
 		this.editorial = editorial;
 	}
 	
+	/**
+	 * Método para imprimir las características del comic
+	 */
 	public String getCaracteristicas() {
 		return String.format("(fecha de publicacion=%s, Autor=%s, Numero de paginas=%d, Editorial=%s)",
 				fechaPublicacion, autor, numPaginas, editorial);

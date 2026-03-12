@@ -1,4 +1,4 @@
-package venta;
+package venta.descuentos;
 
 public enum CondicionDescuento {
 	SIN_CONDICION,

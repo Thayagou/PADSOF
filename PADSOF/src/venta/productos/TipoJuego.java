@@ -1,4 +1,4 @@
-package venta;
+package venta.productos;
 
 public enum TipoJuego {
 	CARTAS,

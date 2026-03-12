@@ -5,6 +5,16 @@ import java.util.*;
 import javax.swing.ImageIcon;
 
 import venta.*;
+import venta.descuentos.CondicionDescuento;
+import venta.descuentos.Descuento;
+import venta.productos.Categoria;
+import venta.productos.Comic;
+import venta.productos.Figura;
+import venta.productos.Juego;
+import venta.productos.Pack;
+import venta.productos.Producto;
+import venta.productos.Stock;
+import venta.productos.TipoJuego;
 import wallapop.ArticuloSegundaMano;
 
 public class Almacen {

@@ -3,7 +3,7 @@ package wallapop;
 import java.util.*;
 
 import usuario.*;
-import venta.Categoria;
+import venta.productos.Categoria;
 
 public class TestWallapop {
 

@@ -1,4 +1,4 @@
-package venta;
+package venta.pedidos;
 
 public enum EstadoPedido {
 	PAGADO,
