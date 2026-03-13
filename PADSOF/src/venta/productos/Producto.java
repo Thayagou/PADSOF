@@ -229,6 +229,13 @@ public abstract class Producto {
 	}
 	
 	/**
+	 * Método para restaurar un producto eliminado
+	 */
+	public void restaurar() {
+		this.eliminado = false;
+	}
+	
+	/**
 	 * Método para obtener las reseñas de un producto
 	 * @return Array con las reseñas del producto
 	 */
