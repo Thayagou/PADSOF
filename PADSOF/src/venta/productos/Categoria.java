@@ -46,8 +46,15 @@ public class Categoria {
 	/**
 	 * Método para eliminar la categoría
 	 */
-	public void setEliminada() {
+	public void eliminar() {
 		this.eliminada = true;
+	}
+	
+	/**
+	 * Método para restaurar una categoría eliminada
+	 */
+	public void restaurar() {
+		this.eliminada = false;
 	}
 
 	/**
