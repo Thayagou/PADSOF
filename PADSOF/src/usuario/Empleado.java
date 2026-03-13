@@ -5,6 +5,7 @@ import java.util.*;
 public class Empleado extends Usuario{
 	private Set<Permiso> permisos;
 	private List<Notificacion> notificaciones;
+	private boolean deAlta;
 	
 	public Empleado(String nombre, String contrasena, Permiso...perms) {
 		super(nombre, contrasena);
@@ -15,6 +16,27 @@ public class Empleado extends Usuario{
 		
 		this.permisos = new HashSet<>();
 		for(Permiso p : perms) {
+			this.permisos.add(p);
+		}
+		
+		deAlta = true;
+	}
+	
+	public boolean estaDeAlta() {
+		return deAlta;
+	}
+	
+	public void darDeBaja() {
+		deAlta = false;
+	}
+	
+	public void darDeAlta() {
+		deAlta = true;
+	}
+	
+	public void setPermisos(Permiso[] permisos) {
+		this.permisos.removeAll(this.permisos);
+		for(Permiso p : permisos) {
 			this.permisos.add(p);
 		}
 	}
