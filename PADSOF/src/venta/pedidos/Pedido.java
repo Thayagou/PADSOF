@@ -19,6 +19,7 @@ public class Pedido {
 	private EstadoPedido estado;
 	private final ClienteRegistrado cliente;
 	private final Set<StockExterno> itemsPedido = new HashSet<StockExterno>();
+	private final double precioTotal;
 	
 	/**
 	 * Creador de la clase Pedido
@@ -30,9 +31,21 @@ public class Pedido {
 		this.fechaPago = LocalDateTime.now();
 		this.estado = EstadoPedido.PAGADO;
 		this.cliente = cliente;
+		
+		double precioTotal = 0;
 		for(StockExterno s : stocks) {
 			itemsPedido.add(new StockExterno(s.getProducto(), s.getUdsEnStock(), s.getPrecioFinal()));
+			precioTotal += s.getPrecioFinal();
 		}
+		this.precioTotal = precioTotal;
+	}
+	
+	/**
+	 * Getter del precio total del pedido
+	 * @return Precio total del pedido
+	 */
+	public double getPrecioTotal() {
+		return precioTotal;
 	}
 	
 	/**
@@ -160,5 +173,17 @@ public class Pedido {
 	 */
 	public StockExterno[] getItemsPedido() {
 		return itemsPedido.toArray(new StockExterno[0]);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append(String.format("Pedido id=%d\n  Items:\n", id));
+		for(StockExterno st : itemsPedido) {
+			s.append("  " + st.toString() + "\n");
+		}
+		s.append("\n  Precio total: "+precioTotal);
+		s.append("\n  Fecha de pedido: "+fechaPago);
+		return s.toString();
 	}
 }

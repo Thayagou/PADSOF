@@ -143,8 +143,8 @@ public abstract class Producto {
 					continue;
 				}
 			}
-			if(this.categorias.add(c))
-				c.anadirProducto(this);
+			this.categorias.add(c);
+			c.anadirProducto(this);
 		}
 		return ret;
 	}
@@ -281,8 +281,15 @@ public abstract class Producto {
 	 */
 	@Override
 	public String toString() {
-	    return String.format("Producto{id=%d, nombre='%s', precio=%.2f, eliminado=%s, caracteristicas=%s reseñas=", 
-	                         id, nombre, precio, eliminado, getCaracteristicas()) + resenas + ", categorias="+
-	                         categorias + ", descuento=["+descuento+"]}";
+	    return String.format("Producto: id=%d\n"
+	    		+ "  %s\n"
+	    		+ "  %s\n"
+	    		+ "  precio=%.2f\n"
+	    		+ "  caracteristicas=%s\n"
+	    		+ "  puntuacionMedia=%f\n"
+	    		+ "  reseñas=%s\n"
+	    		+ "  categorias=%s\n"
+	    		+ "  descuento=[%s]\n", 
+	    		id, nombre, descripcion, precio, getCaracteristicas(), getPuntuacionMedia(), resenas, categorias, descuento);
 	}
 }

@@ -112,10 +112,9 @@ public class Categoria {
 	/**
 	 * Método para añadir un producto a la categoría
 	 * @param p Producto que se añade
-	 * @return true si se pudo añadir, false si no
 	 */
-	public boolean anadirProducto(Producto p) {
-		return p.anadirCategorias(this);
+	void anadirProducto(Producto p) {
+		productos.add(p);
 	}
 	
 	/**
@@ -123,7 +122,7 @@ public class Categoria {
 	 * @param p Producto que se quita de la categoría
 	 */
 	public void quitarProducto(Producto p) {
-		p.quitarCategorias(this);
+		productos.remove(p);
 	}
 
 	/**

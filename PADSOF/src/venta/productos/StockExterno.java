@@ -13,6 +13,16 @@ public class StockExterno extends Stock {
 		super(p, uds);
 		this.precioFinal = precio;
 	}
+	
+	/**
+	 * Creador de un StockExterno sin especificar precio final aun
+	 * @param p Producto del stock
+	 * @param uds Número de unidades en el stock
+	 */
+	public StockExterno(Producto p, int uds) {
+		super(p, uds);
+		this.precioFinal = getProducto().getPrecio();
+	}
 
 	/**
 	 * Getter del precio final del producto
@@ -30,4 +40,8 @@ public class StockExterno extends Stock {
 		this.precioFinal = precioFinal;
 	}
 	
+	@Override
+	public String toString() {
+		return getProducto().getNombre() + "x" + getUdsEnStock() + ". Precio por unidad: " + precioFinal;
+	}
 }

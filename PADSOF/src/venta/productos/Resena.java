@@ -16,7 +16,7 @@ public class Resena {
 	 * @param usuario Usuario que realiza la reseña
 	 */
 	public Resena(double puntuacion, String comentario, ClienteRegistrado usuario) {
-		if(puntuacion <= 0 || puntuacion >= 5) {
+		if(puntuacion < 0 || puntuacion > 5) {
 			throw new IllegalArgumentException("Resena con puntuacion invalida");
 		}
 		this.puntuacion = puntuacion;
@@ -62,6 +62,6 @@ public class Resena {
 	 */
 	@Override
 	public String toString() {
-		return "("+fecha+": "+usuario+"("+puntuacion+"): "+comentario+")\n";
+		return "("+fecha+": "+usuario+"("+puntuacion+"): "+comentario+")";
 	}
 }
