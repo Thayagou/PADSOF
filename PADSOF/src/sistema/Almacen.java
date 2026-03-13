@@ -1,113 +1,190 @@
 package sistema;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import javax.swing.ImageIcon;
 
-import venta.*;
-import venta.descuentos.CondicionDescuento;
-import venta.descuentos.Descuento;
-import venta.productos.Categoria;
-import venta.productos.Comic;
-import venta.productos.Figura;
-import venta.productos.Juego;
-import venta.productos.Pack;
-import venta.productos.Producto;
-import venta.productos.Stock;
-import venta.productos.TipoJuego;
-import wallapop.ArticuloSegundaMano;
+import venta.descuentos.*;
+import venta.productos.*;
+import wallapop.*;
 
 public class Almacen {
 	private Map<String, Stock> inventario  = new HashMap<>();
 	private Map<String, Categoria> categorias = new HashMap<>();
 	private List<Descuento> descuentos = new LinkedList<>();
 	private List<ArticuloSegundaMano> articulos = new LinkedList<>();
-
+	
+	/**
+	 * Crea un nuevo almacen
+	 */
 	public Almacen() { }
 	
+	/**
+	 * Crea y añade un nuevo cómic al inventario
+	 * @param uds Unidades de producto
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del producto
+	 * @param precio Precio del producto
+	 * @param image Imagen del producto
+	 * @param fecha Fecha de publicación del cómic
+	 * @param autor Autor del cómic
+	 * @param numPaginas Numero de páginas del cómic
+	 * @param editorial Editorial del cómic
+	 * @param categorias Categorías a las que pertenece el producto
+	 * @return boolean, true en caso de correcta inserción , false en caso contrario
+	 */
 	public boolean anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria[] categorias) {
 		if(inventario.containsKey(nombre)) {
 			if(inventario.get(nombre).getProducto().isEliminado() == true) {
-				inventario.get(nombre).getProducto().setEliminado(false);
+				inventario.get(nombre).getProducto().restaurar();
 				return true;
 			}else
 				return false;
 		}
 		Comic comic = new Comic(nombre, descripcion, precio, image, fecha, autor, numPaginas, editorial, categorias);
-		for(Categoria c : categorias) {
-			c.anadirProducto(comic);
-		}
 		this.inventario.put(nombre, new Stock(comic, uds));
 		return true;
 	}
 	
+	/**
+	 * Crea y añade un nuevo juego al inventario
+	 * @param uds Unidades de producto
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del producto
+	 * @param precio Precio del producto
+	 * @param image Imagen del producto
+	 * @param numJugadores Número de jugadores del juego
+	 * @param rangoEdad Rango de edad del juego
+	 * @param tipo Tipo de juego
+	 * @param categorias Categorías a las que pertenece el producto
+	 * @return boolean, true en caso de correcta inserción , false en caso contrario
+	 */
 	public boolean anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria[] categorias) {
 		if(inventario.containsKey(nombre)) {
 			if(inventario.get(nombre).getProducto().isEliminado() == true) {
-				inventario.get(nombre).getProducto().setEliminado(false);
+				inventario.get(nombre).getProducto().restaurar();
 				return true;
 			}else
 				return false;
 		}
 		Juego juego = new Juego(nombre, descripcion, precio, image, numJugadores, rangoEdad, tipo, categorias);
-		for(Categoria c : categorias) {
-			c.anadirProducto(juego);
-		}
 		this.inventario.put(nombre, new Stock(juego, uds));
 		return true;
 	}
 	
+	/**
+	 * Crea y añade una nueva figura al inventario
+	 * @param uds Unidades de producto
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripcion del producto
+	 * @param precio Precio del producto
+	 * @param image Imagen del producto
+	 * @param dimensiones Dimensiones de la figura
+	 * @param marca Marca de la figura
+	 * @param material Material de la figura
+	 * @param categorias Categorías a las que pertenece el producto
+	 * @return boolean, true en caso de correcta inserción , false en caso contrario
+	 */
 	public boolean anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria[] categorias) {
 		if(inventario.containsKey(nombre)) {
 			if(inventario.get(nombre).getProducto().isEliminado() == true) {
-				inventario.get(nombre).getProducto().setEliminado(false);
+				inventario.get(nombre).getProducto().restaurar();
 				return true;
 			}else
 				return false;
 		}
 		Figura figura = new Figura(nombre, descripcion, precio, image, dimensiones, material, marca, categorias);
-		for(Categoria c : categorias) {
-			c.anadirProducto(figura);
-		}
 		this.inventario.put(nombre, new Stock(figura, uds));
 		return true;
 	}
 	
+	/**
+	 * Crea y añade un nuevo pack al inventario
+	 * @param uds Unidades de producto
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripcion del producto
+	 * @param precio Precio del producto
+	 * @param image Imagen del producto
+	 * @param productos Productos contenidos en el pack
+	 * @param categorias Categorías a las que pertenece el producto
+	 * @return boolean, true en caso de correcta inserción , false en caso contrario
+	 */
 	public boolean anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria[] categorias) {
 		if(inventario.containsKey(nombre)) {
 			if(inventario.get(nombre).getProducto().isEliminado() == true) {
-				inventario.get(nombre).getProducto().setEliminado(false);
+				inventario.get(nombre).getProducto().restaurar();
 				return true;
 			}else
 				return false;
 		}
 		
-		Pack pack= new Pack(new HashSet<>(Arrays.asList(productos)), nombre, descripcion, precio, image, categorias);
-		for(Categoria c : categorias) {
-			c.anadirProducto(pack);
-		}
+		Pack pack= new Pack(productos, nombre, descripcion, precio, image, categorias);
 		this.inventario.put(nombre, new Stock(pack, uds));
 		return true;
 	}
 	
-	public int getStock(String nombre) {
-		return inventario.get(nombre).getUdsEnStock();
+	/**
+	 * Devuelve las unidades en stock de un producto concreto
+	 * @param producto Producto del que se devuelve las unidades
+	 * @return int, unidades en stock del producto, -1 en caso de error
+	 */
+	public int getStock(Producto producto) {
+		Stock s = inventario.get(producto.getNombre());
+		if(s == null)
+			return -1;
+		return s.getUdsEnStock();
 	}
 	
+	/**
+	 * Eliminar un producto del inventario
+	 * @param producto Producto que se quiere eliminar
+	 * @return true si se elimina correctamente
+	 */
 	public boolean eliminarProducto(Producto producto) {
-		producto.setEliminado(true);
+		producto.eliminar();
 		return true;
 	}
 	
-	public boolean anadirProductosDeFichero() {
+	/**
+	 * Añade una lista de productos desde un fichero
+	 * @return true en caso de que se añadan correctamente, false en caso contrario
+	 */
+	public boolean anadirProductosDeFichero(String fProductos) {
+		String linea;
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(fProductos))) {
+			while((linea = br.readLine()) != null) {
+				String tipo = linea.substring(0, 2);
+				if(tipo.equals("#c:")) {
+					
+				} else if(tipo.equals("#j:")) {
+					
+				} else if(tipo.equals("#f:")) {
+					
+				} else if(tipo.equals("#p:")) {
+					
+				}
+				return false;
+		    }
+		} catch (IOException e) {
+			return false;
+		}
 		return true;
 	}
 	
+	/**
+	 * Crea y añade una categoría al almacén
+	 * @param nombre Nombre de la categoría
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirCategoria(String nombre) {
 		if(categorias.containsKey(nombre)) {
 			if(categorias.get(nombre).isEliminada() == true) {
-				categorias.get(nombre).setEliminada(false);
+				categorias.get(nombre).restaurar();
 				return true;
 			} else
 				return false;
@@ -117,89 +194,181 @@ public class Almacen {
 		return true;
 	}
 	
+	/**
+	 * Elimina una categoría del almacén
+	 * @param nombre Nombre de la categoría
+	 * @return true en caso de que se elimine correctamente, false en caso contrario
+	 */
 	public boolean eliminarCategoria(String nombre) {
-		categorias.get(nombre).setEliminada(true);
+		categorias.get(nombre).eliminar();
 		return true;
 	}
 	
+	/**
+	 * Añade un producto a una categoría
+	 * @param producto Producto al que se quiere añadir
+	 * @param categoria Categoría que se quiere añadir
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirProductoACategoria(Producto producto, Categoria categoria) {
-			return categoria.anadirProducto(producto);
+			return producto.anadirCategorias(categoria);
 	}
 	
+	/**
+	 * Quita un producto de una categoría
+	 * @param producto Producto que se quiere quitar
+	 * @param categoria Categoría de la que se quiere quitar
+	 * @return true en caso de que se quite correctamente, false en caso contrario
+	 */
 	public boolean quitarProductoDeCategoria(Producto producto, Categoria categoria) {
-		categoria.quitarProducto(producto);
+		producto.quitarCategorias(categoria);
 		return true;
 	}
 	
-	public boolean modificarCategoria(String nombre, String nuevoNombre) {
-		Categoria categoria = categorias.get(nombre);
-		if(categoria == null) {
+	/**
+	 * Modifica el nombre de una categoría
+	 * @param categoria Categoría que se quiere cambiar
+	 * @param nuevoNombre Nuevo nombre para la categoría
+	 * @return true en caso de que se modifique correctamente, false en caso contrario
+	 */
+	public boolean modificarCategoria(Categoria categoria, String nuevoNombre) {
+		if(!categorias.containsKey(categoria.getNombre())) {
 			return false;
 		}
 		categoria.setNombre(nuevoNombre);
 		return true;
 	}
 	
+	/**
+	 * Crea y añade un descuento de dinero a un producto
+	 * @param producto Producto al que se asocia el descuento
+	 * @param valorMin Valor mínimo para ser aplicado
+	 * @param inicio Fecha de inicio del descuento
+	 * @param fin Fecha de fin del descuento
+	 * @param condicion Tipo de condición para el descuento
+	 * @param precio Precio que se descuenta
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirDescuentoDinero(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) {
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
 		if(!puedeAplicarseDescuento(producto))
 			return false;
-		producto.setDescuento(descuento);
+		producto.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
 	
+	/**
+	 * Crea y añade un descuento de dinero a una categoría
+	 * @param categoria Categoría a la que se asocia el descuento
+	 * @param valorMin Valor mínimo para ser aplicado
+	 * @param inicio Fecha de inicio del descuento
+	 * @param fin Fecha de fin del descuento
+	 * @param condicion Tipo de condición para el descuento
+	 * @param precio Precio que se descuenta
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirDescuentoDinero(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) {
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
 		if(!puedeAplicarseDescuento(categoria))
 			return false;
-		categoria.setDescuento(descuento);
+		categoria.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
 	
+	/**
+	 * Crea y añade un descuento de porcentaje a un producto
+	 * @param producto Producto al que se asocia el descuento
+	 * @param valorMin Valor mínimo para ser aplicado
+	 * @param inicio Fecha de inicio del descuento
+	 * @param fin Fecha de fin del descuento
+	 * @param condicion Tipo de condición para el descuento
+	 * @param porcentaje Porcentaje que se descuenta
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirDescuentoPorcentaje(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) {
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
 		if(!puedeAplicarseDescuento(producto))
 			return false;
-		producto.setDescuento(descuento);
+		producto.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
 	
+	/**
+	 * Crea y añade un descuento de porcentaje a una categoría
+	 * @param categoria Categoría a la que se asocia el descuento
+	 * @param valorMin Valor mínimo para ser aplicado
+	 * @param inicio Fecha de inicio del descuento
+	 * @param fin Fecha de fin del descuento
+	 * @param condicion Tipo de condición para el descuento
+	 * @param porcentaje Porcentaje que se descuenta
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirDescuentoPorcentaje(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) {
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
 		if(!puedeAplicarseDescuento(categoria))
 			return false;
-		categoria.setDescuento(descuento);
+		categoria.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
 	
+	/**
+	 * Crea y añade un descuento de regalo a un producto
+	 * @param producto Producto al que se asocia el descuento
+	 * @param valorMin Valor mínimo para ser aplicado
+	 * @param inicio Fecha de inicio del descuento
+	 * @param fin Fecha de fin del descuento
+	 * @param condicion Tipo de condición para el descuento
+	 * @param regalo Regalo que se da
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirDescuentoRegalo(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) {
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
 		if(!puedeAplicarseDescuento(producto))
 			return false;
-		producto.setDescuento(descuento);
+		producto.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
 	
+	/**
+	 * Crea y añade un descuento de regalo a una categoría
+	 * @param categoria Categoría a la que se asocia el descuento
+	 * @param valorMin Valor mínimo para ser aplicado
+	 * @param inicio Fecha de inicio del descuento
+	 * @param fin Fecha de fin del descuento
+	 * @param condicion Tipo de condición para el descuento
+	 * @param regalo Regalo que se da
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirDescuentoRegalo(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) {
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
 		if(!puedeAplicarseDescuento(categoria))
 			return false;
-		categoria.setDescuento(descuento);
+		categoria.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
 	
+	/**
+	 * Devuelve si se puede aplicar el descuento a un producto
+	 * @param producto Producto que se mira si se puede aplicar su descuento
+	 * @return boolean, true si se puede aplicar, false en caso contrario
+	 */
 	private boolean puedeAplicarseDescuento(Producto producto) {
 		if(producto.tieneDescuento())
 			return false;
 		return true;
 	}
 	
+	/**
+	 * Devuelve si se puede aplicar el descuento a una categoría
+	 * @param producto Categoría que se mira si se puede aplicar su descuento
+	 * @return boolean, true si se puede aplicar, false en caso contrario
+	 */
 	private boolean puedeAplicarseDescuento(Categoria categoria) {
 		if(categoria.tieneDescuento())
 			return false;
@@ -210,13 +379,26 @@ public class Almacen {
 		return true;
 	}
 	
+	/**
+	 * Elimina todos los descuentos que estén caducados
+	 * @return true cuando todos los descuentos caducados hayan sido eliminados
+	 */
 	public boolean eliminarDescuentosCaducados() {
 		for(Descuento d : descuentos) {
-			d.isVigente();
+			if(d.isVigente()) {
+				descuentos.remove(d);
+			}
 		}
 		return true;
 	}
 	
+	/**
+	 * Devuelve una lista de productos que cumplen unas ciertas condiciones de categorías y precio
+	 * @param categorias Categorías a las que deben pertenecer los productos
+	 * @param precioMin Precio mínimo de los productos
+	 * @param precioMax Precio máximo de los productos
+	 * @return Producto[], un array de productos que cumplen las condiciones
+	 */
 	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax) {
 		List<Producto> productos = new ArrayList<>();
 		for(Categoria c : categorias) {
@@ -229,11 +411,21 @@ public class Almacen {
 		return productos.toArray(new Producto[0]);
 	}
 	
+	/**
+	 * Añade un artículo de segunda mano ya creado al almacén
+	 * @param articulo, Artículo que se añade
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
 	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) {
 		return articulos.add(articulo);
 	}
 	
-	public boolean quitarArticulosSegundaMano(ArticuloSegundaMano articulo) {
+	/**
+	 * Elimina un artículo de segunda mano del almacén
+	 * @param articulo, Artículo que se elimina
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
+	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) {
 		return articulos.remove(articulo);
 	}
 }
