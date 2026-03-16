@@ -95,10 +95,18 @@ public class Categoria {
 	
 	/**
 	 * Método para comprobar si la categoría tiene descuento
+	 * Utiliza actualizacion en diferido para quitar el descuento si esta caducado
 	 * @return true si tiene descuento, false si no
 	 */
 	public boolean tieneDescuento() {
-		return descuento != null;
+		if(this.descuento != null) {
+			if(!this.descuento.isCaducado()) {
+				return true;
+			} else {
+				this.quitarDescuento();
+				return false;
+			}
+		} else return false;
 	}
 	
 	/**

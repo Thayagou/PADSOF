@@ -59,17 +59,28 @@ public abstract class Descuento {
 	
 	/**
 	 * Método para comprobar si un descuento está vigente.
-	 * A la vez, si no está vigente lo marca como finalizado, aplicando una actualización en diferido
+	 * A la vez, si está caducado lo marca como finalizado, aplicando una actualización en diferido
 	 * @return true si está vigente, false si no
 	 */
 	public boolean isVigente() {
 	    if (finalizado) return false;
 	    LocalDateTime ahora = LocalDateTime.now();
-	    if(!ahora.isBefore(inicio) && !ahora.isAfter(fin)) return true;
+	    if(ahora.isAfter(inicio)) return isCaducado();
 	    else {
-	    	finalizado = true;
 	    	return false;
 	    }
+	}
+	
+	/**
+	 * Método para comprobar si un descuento ha caducado.
+	 * @return true si el descuento está caducado, false si no
+	 */
+	public boolean isCaducado() {
+		if(LocalDateTime.now().isBefore(fin)) return true;
+		else {
+			finalizado = true;
+			return false;
+		}
 	}
 
 	/**
