@@ -18,6 +18,7 @@ public class Pack extends Producto {
 	 */
 	public Pack(Stock[] stocks, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) {
 		super(nombre, desc, precio, imagen, categorias);
+		if(stocks.length < 2) throw new IllegalArgumentException("No se puede crear un pack con menos de dos productos distintos\n");
 		for(Stock s : stocks) productos.add(s);
 	}
 	

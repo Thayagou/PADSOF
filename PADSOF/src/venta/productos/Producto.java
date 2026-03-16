@@ -135,6 +135,11 @@ public abstract class Producto {
 	public boolean anadirCategorias(Categoria...categorias) {
 		boolean ret = true;
 		for(Categoria c : categorias) {
+			if(this.categorias.contains(c)) {
+				ret = false;
+				continue;
+			}
+			
 			if(c.tieneDescuento()) {
 				if(descuento == null) {
 					descuento = c.getDescuento();

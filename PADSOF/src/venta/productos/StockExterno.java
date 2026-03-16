@@ -42,6 +42,6 @@ public class StockExterno extends Stock {
 	
 	@Override
 	public String toString() {
-		return getProducto().getNombre() + "x" + getUdsEnStock() + ". Precio por unidad: " + precioFinal;
+		return getProducto().getNombre() + " x " + getUdsEnStock() + ". Precio por unidad: " + precioFinal;
 	}
 }
