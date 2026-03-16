@@ -4,7 +4,7 @@ import java.util.*;
 import java.time.*;
 import venta.*;
 import venta.descuentos.Descuento;
-import venta.productos.Producto;
+import venta.productos.*;
 import venta.productos.StockExterno;
 
 public class Carrito {
@@ -17,6 +17,40 @@ public class Carrito {
 	 */
 	public Carrito() {
 		calcularFechaCaducidad();
+	}
+	
+	/**
+	 * Método para obtener la lista de items no regalo del carrito
+	 * @return Array con la lista de stocks del carrito
+	 */
+	public StockExterno[] getItems() {
+		return items.values().toArray(new StockExterno[0]);
+	}
+	
+	/**
+	 * Método para obtener la lista de regalos del carrito
+	 * @return Array con los regalos del carrito
+	 */
+	public StockExterno[] getRegalos() {
+		return regalos.values().toArray(new StockExterno[0]);
+	}
+	
+	/**
+	 * Método para obtener los items y regalos del carrito en un solo array
+	 * @return Array con todo el contenido del carrito
+	 */
+	public StockExterno[] getContenido() {
+		StockExterno[] items = getItems();
+		StockExterno[] regalos = getRegalos();
+		StockExterno[] merge = new StockExterno[items.length + regalos.length];
+		
+		for(int i=0; i<items.length; i++) {
+			merge[i] = items[i];
+		}
+		for(int i=0; i<regalos.length; i++) {
+			merge[i+items.length] = regalos[i];
+		}
+		return merge;
 	}
 
 	/**
@@ -46,7 +80,7 @@ public class Carrito {
 	 */
 	public void anadirProducto(Producto p) {
 		if(!items.containsKey(p)) {
-			items.put(p,  new StockExterno(p, 1, 0));
+			items.put(p,  new StockExterno(p, 1));
 		} else {
 			items.get(p).incrementarStock();
 		}

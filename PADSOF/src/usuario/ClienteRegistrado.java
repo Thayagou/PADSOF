@@ -2,6 +2,7 @@ package usuario;
 
 import java.util.*;
 
+import venta.pedidos.Pedido;
 import wallapop.ArticuloSegundaMano;
 import wallapop.Cartera;
 
@@ -72,6 +73,15 @@ public class ClienteRegistrado extends Cliente {
 		} else {
 			return intereses.remove(interes);
 		}
+	}
+	
+	/**
+	 * Método para crear un pedido a partir del carrito
+	 * @return Pedido con el contenido del carrito
+	 */
+	public Pedido carritoAPedido() {
+		carrito.calcularCarrito();
+		return new Pedido(this, carrito.getContenido());
 	}
 	
 	@Override
