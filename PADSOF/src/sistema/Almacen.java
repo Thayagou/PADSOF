@@ -132,11 +132,20 @@ public class Almacen {
 	 * @param producto Producto del que se devuelve las unidades
 	 * @return int, unidades en stock del producto, -1 en caso de error
 	 */
-	public int getStock(Producto producto) {
+	public int getUnidades(Producto producto) {
 		Stock s = inventario.get(producto.getNombre());
 		if(s == null)
 			return -1;
 		return s.getUdsEnStock();
+	}
+	
+	/**
+	 * Devuelve el stock de un producto
+	 * @param producto Producto del que se quiere el stock
+	 * @return Stock del producto
+	 */
+	public Stock getStock(Producto producto) {
+		return inventario.get(producto.getNombre());
 	}
 	
 	/**
@@ -146,6 +155,34 @@ public class Almacen {
 	 */
 	public boolean eliminarProducto(Producto producto) {
 		producto.eliminar();
+		return true;
+	}
+	
+	/**
+	 * Método para modificar los datos de un producto
+	 * @param producto Producto a modificar
+	 * @param udsStock Nuevas unidades en stock del producto
+	 * @param nombre Nombre del producto
+	 * @param desc Descripicón del producto
+	 * @param precio Precio del producto
+	 * @param imagen Imagen del producto
+	 * @param categorias Nuevas categorias del producto
+	 * @return ture si se pudo modificar, false si no se pudo
+	 */
+	public boolean modificarProducto(Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) {
+		if(!this.categorias.containsKey(producto.getNombre()))
+			return false;
+		
+		Stock st = this.getStock(producto);
+		st.setUdsEnStock(udsStock);
+		
+		this.inventario.remove(producto.getNombre());
+		producto.setNombre(nombre);
+		this.inventario.put(nombre, st);
+		producto.setDescripcion(desc);
+		producto.setPrecio(precio);
+		producto.setImagen(imagen);
+		producto.setCategorias(categorias); /* !!! Este metodo puede fallar parcialmente*/
 		return true;
 	}
 	
@@ -232,10 +269,12 @@ public class Almacen {
 	 * @return true en caso de que se modifique correctamente, false en caso contrario
 	 */
 	public boolean modificarCategoria(Categoria categoria, String nuevoNombre) {
-		if(!categorias.containsKey(categoria.getNombre())) {
+		if((!categorias.containsKey(categoria.getNombre())) || categorias.containsKey(nuevoNombre)) {
 			return false;
 		}
+		categorias.remove(categoria.getNombre());
 		categoria.setNombre(nuevoNombre);
+		categorias.put(nuevoNombre, categoria);
 		return true;
 	}
 	
@@ -251,9 +290,8 @@ public class Almacen {
 	 */
 	public boolean anadirDescuentoDinero(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) {
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
-		if(!puedeAplicarseDescuento(producto))
+		if(!producto.anadirDescuento(descuento))
 			return false;
-		producto.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
@@ -270,9 +308,8 @@ public class Almacen {
 	 */
 	public boolean anadirDescuentoDinero(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) {
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
-		if(!puedeAplicarseDescuento(categoria))
+		if(!categoria.anadirDescuento(descuento))
 			return false;
-		categoria.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
@@ -289,9 +326,8 @@ public class Almacen {
 	 */
 	public boolean anadirDescuentoPorcentaje(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) {
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
-		if(!puedeAplicarseDescuento(producto))
+		if(!producto.anadirDescuento(descuento))
 			return false;
-		producto.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
@@ -308,9 +344,8 @@ public class Almacen {
 	 */
 	public boolean anadirDescuentoPorcentaje(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) {
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
-		if(!puedeAplicarseDescuento(categoria))
+		if(!categoria.anadirDescuento(descuento))
 			return false;
-		categoria.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
@@ -327,9 +362,8 @@ public class Almacen {
 	 */
 	public boolean anadirDescuentoRegalo(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) {
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
-		if(!puedeAplicarseDescuento(producto))
+		if(!producto.anadirDescuento(descuento))
 			return false;
-		producto.anadirDescuento(descuento);
 		descuentos.add(descuento);
 		return true;
 	}
@@ -346,36 +380,9 @@ public class Almacen {
 	 */
 	public boolean anadirDescuentoRegalo(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) {
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
-		if(!puedeAplicarseDescuento(categoria))
+		if(!categoria.anadirDescuento(descuento))
 			return false;
-		categoria.anadirDescuento(descuento);
 		descuentos.add(descuento);
-		return true;
-	}
-	
-	/**
-	 * Devuelve si se puede aplicar el descuento a un producto
-	 * @param producto Producto que se mira si se puede aplicar su descuento
-	 * @return boolean, true si se puede aplicar, false en caso contrario
-	 */
-	private boolean puedeAplicarseDescuento(Producto producto) {
-		if(producto.tieneDescuento())
-			return false;
-		return true;
-	}
-	
-	/**
-	 * Devuelve si se puede aplicar el descuento a una categoría
-	 * @param producto Categoría que se mira si se puede aplicar su descuento
-	 * @return boolean, true si se puede aplicar, false en caso contrario
-	 */
-	private boolean puedeAplicarseDescuento(Categoria categoria) {
-		if(categoria.tieneDescuento())
-			return false;
-		for(Producto p : categoria.getProductos()) {
-			if(p.tieneDescuento())
-				return false;
-		}
 		return true;
 	}
 	
@@ -385,7 +392,7 @@ public class Almacen {
 	 */
 	public boolean eliminarDescuentosCaducados() {
 		for(Descuento d : descuentos) {
-			if(d.isVigente()) {
+			if(!d.isVigente()) {
 				descuentos.remove(d);
 			}
 		}

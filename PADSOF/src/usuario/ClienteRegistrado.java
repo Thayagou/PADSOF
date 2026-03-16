@@ -3,6 +3,8 @@ package usuario;
 import java.util.*;
 
 import venta.pedidos.Pedido;
+import venta.productos.Producto;
+import venta.productos.Resena;
 import wallapop.ArticuloSegundaMano;
 import wallapop.Cartera;
 
@@ -11,6 +13,7 @@ public class ClienteRegistrado extends Cliente {
 	private Cartera cartera;
 	private List<Notificacion> notificaciones;
 	private Set<TipoNotificacion> intereses;
+	private List<Pedido> misCompras;
 	
 	public ClienteRegistrado(String nombre, String contrasena) {
 		super(nombre, contrasena);
@@ -18,6 +21,7 @@ public class ClienteRegistrado extends Cliente {
 		this.cartera = new Cartera(this);
 		this.notificaciones = new LinkedList<>();
 		this.intereses = new HashSet<>();
+		this.misCompras = new LinkedList<>();
 	}
 	
 	public boolean cambiarContrasena(String contrasena, String confirmarContrasena) {
@@ -75,13 +79,27 @@ public class ClienteRegistrado extends Cliente {
 		}
 	}
 	
+	public Pedido[] getCompras() {
+		return misCompras.toArray(new Pedido[0]);
+	}
+	
+	public boolean anadirResena(int estrellas, String comentario, Producto producto) {
+		if(estrellas < 0 || estrellas > 5)
+			return false;
+		
+		producto.anadirResena(new Resena(estrellas, comentario, this));
+		return true;
+	}
+	
 	/**
 	 * Método para crear un pedido a partir del carrito
 	 * @return Pedido con el contenido del carrito
 	 */
 	public Pedido carritoAPedido() {
 		carrito.calcularCarrito();
-		return new Pedido(this, carrito.getContenido());
+		Pedido pedido = new Pedido(this, carrito.getContenido());
+		misCompras.add(pedido);
+		return pedido;
 	}
 	
 	@Override
