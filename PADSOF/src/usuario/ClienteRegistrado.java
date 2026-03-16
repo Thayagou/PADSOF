@@ -71,12 +71,12 @@ public class ClienteRegistrado extends Cliente {
 		return this.intereses;
 	}
 	
-	public boolean gestionarInteres(TipoNotificacion interes, boolean activa) {
-		if(activa) {
-			return this.intereses.add(interes);
-		} else {
-			return intereses.remove(interes);
-		}
+	public boolean anadirInteres(TipoNotificacion interes) {
+		return this.intereses.add(interes);
+	}
+	
+	public boolean quitarInteres(TipoNotificacion interes) {
+		return intereses.remove(interes);
 	}
 	
 	public Pedido[] getCompras() {
