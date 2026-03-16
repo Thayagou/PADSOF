@@ -40,26 +40,26 @@ public class ClienteRegistrado extends Cliente {
 		return this.cartera;
 	}
 	
-	public List<ArticuloSegundaMano> verCartera(){
-		List<ArticuloSegundaMano> articulos = new LinkedList<>();
+	public ArticuloSegundaMano[] verCartera(){
+		List<ArticuloSegundaMano> articulos = new ArrayList<>();
 		for(ArticuloSegundaMano ar : this.cartera.getArticulos()) {
 			articulos.add(ar);
 		}
-		return articulos;
+		return articulos.toArray(new ArticuloSegundaMano[0]);
 	}
 
-	public List<Notificacion> getNotificaciones() {
-		return this.notificaciones;
+	public Notificacion[] getNotificaciones() {
+		return this.notificaciones.toArray( new Notificacion[0]);
 	}
 	
-	public List<Notificacion> getNotificacionesDeInteres() {
+	public Notificacion[] getNotificacionesDeInteres() {
 		List<Notificacion> deInteres = new LinkedList<>();
 		for(Notificacion n : notificaciones) {
 			if(this.intereses.contains(n.getTipo())) {
 				deInteres.add(n);
 			}
 		}
-		return deInteres;
+		return deInteres.toArray( new Notificacion[0]);
 	}
 	
 	public boolean addNotificacion(Notificacion notificacion) {
@@ -67,8 +67,8 @@ public class ClienteRegistrado extends Cliente {
 		return true;
 	}
 
-	public Set<TipoNotificacion> getIntereses() {
-		return this.intereses;
+	public TipoNotificacion[] getIntereses() {
+		return this.intereses.toArray(new TipoNotificacion[0]);
 	}
 	
 	public boolean anadirInteres(TipoNotificacion interes) {
