@@ -82,26 +82,6 @@ public class TestVentaI1 {
 		
 		Pedido pedidoCliente = cliente.carritoAPedido();
 		System.out.println("Pedido hecho por el cliente: " + pedidoCliente);
-		
-		/*Creamos también un pedido de forma manual*/
-		StockExterno item1 = new StockExterno(pComic, 3);
-		StockExterno item2 = new StockExterno(pJuego, 5);
-		StockExterno item3 = new StockExterno(pFigura, 1);
-		StockExterno item4 = new StockExterno(pPack, 2);
-		
-		item1.setPrecioFinal(item1.getProducto().getDescuento().getPrecioDescontado(item1.getUdsEnStock(), 0, item1.getProducto().getPrecio()));
-		item3.setPrecioFinal(item3.getProducto().getDescuento().getPrecioDescontado(item3.getUdsEnStock(), 0, item3.getProducto().getPrecio()));
-		item4.setPrecioFinal(item4.getProducto().getDescuento().getPrecioDescontado(item4.getUdsEnStock(), 0, item4.getProducto().getPrecio()));
-		
-		ArrayList<Producto> regalos = new ArrayList<Producto>();
-		regalos.add(item1.getProducto().getDescuento().getRegalo(item1.getUdsEnStock(), 0));
-		regalos.add(item3.getProducto().getDescuento().getRegalo(item3.getUdsEnStock(), 0));
-		regalos.add(item4.getProducto().getDescuento().getRegalo(item4.getUdsEnStock(), 0));
-		
-		Pedido pedido = new Pedido(null, item1, item2, item3, item4);
-		
-		System.out.println("\nPedido hecho a mano: "+pedido);
-		System.out.println("\nRegalos del pedido: "+regalos);
 
 
 	}

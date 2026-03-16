@@ -197,6 +197,7 @@ public abstract class Producto {
 	 * @return Descuento del producto
 	 */
 	public Descuento getDescuento() {
+		if(!tieneDescuento()) return null;
 		return descuento;
 	}
 
