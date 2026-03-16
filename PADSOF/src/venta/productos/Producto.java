@@ -135,7 +135,7 @@ public abstract class Producto {
 	public boolean anadirCategorias(Categoria...categorias) {
 		boolean ret = true;
 		for(Categoria c : categorias) {
-			if(this.categorias.contains(c)) {
+			if(this.categorias.contains(c) || c == null) {
 				ret = false;
 				continue;
 			}

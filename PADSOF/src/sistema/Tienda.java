@@ -2,6 +2,8 @@ package sistema;
 
 import java.util.*;
 
+import es.uam.eps.padsof.telecard.OrderRejectedException;
+import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
 import estadistica.Historial;
 import usuario.*;
 import venta.productos.*;
@@ -207,7 +209,7 @@ public class Tienda {
 		if(cliente == null) return false;
 		Carrito carrito = cliente.getCarrito();
 		
-		carrito.calcularCarrito();
+		double precio = carrito.calcularCarrito();
 		
 		for(StockExterno st : carrito.getRegalos()) {
 			Stock stTienda = getAlmacen().getStock(st.getProducto());
@@ -217,13 +219,19 @@ public class Tienda {
 			stTienda.reducirStock(st.getUdsEnStock());
 		}
 		
-		if(!Sistema.getInstancia().pagoTarjeta()) {
-			/*Manejo si el pago falló*/
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Introduce numero de tarjeta: ");
+		String tarjeta = sc.next();
+
+		try {
+			TeleChargeAndPaySystem.charge(tarjeta, "Compra en tienda de comics.", precio);
+		} catch (OrderRejectedException e) {
+			e.printStackTrace();
 			for(StockExterno st : carrito.getRegalos()) {
 				getAlmacen().getStock(st.getProducto()).incrementarStock(st.getUdsEnStock());
 			}
 			return false;
-		}
+		} 
 		
 		Pedido pedido = cliente.carritoAPedido();
 		carrito.vaciarCarrito();
