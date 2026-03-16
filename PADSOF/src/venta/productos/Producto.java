@@ -167,6 +167,16 @@ public abstract class Producto {
 				c.quitarProducto(this);
 		}
 	}
+	
+	/**
+	 * Método para cambiar todas las categorias de golpe
+	 * @param categorias Nuevas categorias para el producto
+	 * @return true si se añadieron todas las categorias, false si alguna no pudo añadirse.
+	 */
+	public boolean setCategorias(Categoria...categorias) {
+		this.quitarCategorias(this.getCategorias());
+		return this.anadirCategorias(categorias);
+	}
 
 	/**
 	 * Metodo para obtener la puntuacion media del producto

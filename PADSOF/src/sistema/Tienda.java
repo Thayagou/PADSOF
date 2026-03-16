@@ -4,18 +4,42 @@ import java.util.*;
 
 import estadistica.Historial;
 import usuario.*;
+import venta.productos.*;
 
+/**
+ * Clase tienda que recoge todas las funcionalidades de la aplicación
+ * 
+ * Autores: Juan Ibáñez, Tiago Oselka, Claudia Sainz
+ */
 public class Tienda {
 	private Almacen almacen;
-	private Historial registro;
+	private Historial historial;
 	private Map<String, Usuario> usuarios;
 	
-
+	/**
+	 * Creador de la tienda
+	 */
 	public Tienda() {
 		almacen = new Almacen();
-		registro = new Historial();
+		historial = new Historial();
 		usuarios = new HashMap<>();
 		usuarios.put("GESTOR", new Gestor("GESTOR", "GESTOR123"));
+	}
+	
+	/**
+	 * Getter del almacen de la tienda
+	 * @return Almacen de la tienda
+	 */
+	public Almacen getAlmacen() {
+		return almacen;
+	}
+	
+	/**
+	 * Getter del historial de la tienda
+	 * @return Historial de la tienda
+	 */
+	public Historial getHistorial() {
+		return historial;
 	}
 	
 	/**
@@ -118,6 +142,40 @@ public class Tienda {
 		Empleado emp = getEmpleado(nombre);
 		if(emp == null) return false;
 		emp.darDeBaja();
+		return true;
+	}
+	
+	/**
+	 * Método para añadir un producto a un carrito
+	 * @param usrName Nombre del usuario a cuyo carrito se añade el producto
+	 * @param producto Producto que se añade al carrito
+	 * @return true si se pudo añadir el producto, false si no
+	 */
+	public boolean anadirACarritoDe(String usrName, Producto producto) {
+		ClienteRegistrado cliente = getCliente(usrName);
+		Stock st = almacen.getStock(producto);
+		if(cliente == null || producto == null || st == null) return false;
+		
+		if(!st.disponible()) return false;
+		
+		cliente.getCarrito().anadirProducto(producto);
+		st.reducirStock();
+		return true;
+	}
+	
+	/**
+	 * Método para quitar un producto del carrito de un cliente
+	 * @param usrName Nombre del cliente con el carrito
+	 * @param producto Producto que se quiere quitar (una unidad)
+	 * @return true si se pudo quitar el producto, false si no
+	 */
+	public boolean quitarDeCarritoDe(String usrName, Producto producto) {
+		ClienteRegistrado cliente = getCliente(usrName);
+		Stock st = almacen.getStock(producto);
+		if(cliente == null || producto == null || st == null) return false;
+		
+		cliente.getCarrito().quitarProducto(producto);
+		st.incrementarStock();
 		return true;
 	}
 }
