@@ -45,6 +45,18 @@ public class Cartera {
 	public boolean addIntercambio(Intercambio intercambio) {
 		return intercambios.add(intercambio);
 	}
+	
+	public boolean aceptarIntercambio(Intercambio i) {	
+		return i.aceptarIntercambio(this);
+	}
+	
+	public boolean rechazarIntercambio(Intercambio i) {	
+		return i.rechazarIntercambio(this);
+	}
+	
+	public boolean cancelarIntercambio(Intercambio i) {	
+		return i.cancelarIntercambio(this);
+	}
 }
 
 

@@ -66,6 +66,14 @@ public class ArticuloSegundaMano {
 	public boolean isDisponible() {
 		return disponible;
 	}
+	
+	public void reservar() {
+		disponible = false;
+	}
+	
+	public void disponibilizar() {
+		disponible = true;
+	}
 
 	public void setValoracion(Valoracion valoracion) {
 		this.valoracion = valoracion;
