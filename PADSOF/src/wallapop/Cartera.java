@@ -34,8 +34,8 @@ public class Cartera {
 		return articulos;
 	}
 	
-	public String getNombreDueno() {
-		return dueno.getNombre();
+	public ClienteRegistrado getDueno() {
+		return dueno;
 	}
 	
 	public boolean addArticulo(ArticuloSegundaMano articulo) {

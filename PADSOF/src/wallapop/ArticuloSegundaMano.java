@@ -2,22 +2,25 @@ package wallapop;
 
 import java.util.*;
 
+import sistema.AsignadorId;
 import venta.productos.Categoria;
+import usuario.ClienteRegistrado;
 
 import java.awt.Image;
 
 public class ArticuloSegundaMano {
-	int id;
-	String nombre;
-	String descripcion;
-	Cartera dueno;
-	Image image;
-	List<Categoria> categorias = new ArrayList<>();
-	String interesadoEn;
-	boolean disponible;
-	Valoracion valoracion;
+	private final long id;
+	private String nombre;
+	private String descripcion;
+	private Cartera dueno;
+	private Image image;
+	private List<Categoria> categorias = new ArrayList<>();
+	private String interesadoEn;
+	private boolean disponible;
+	private Valoracion valoracion;
 	
 	public ArticuloSegundaMano(String nombre, String desc, Cartera dueno, List<Categoria> categorias, String interesadoEn) {
+		id = AsignadorId.getInstancia().siguienteId();
 		this.nombre = nombre;
 		this.descripcion = desc;
 		this.dueno = dueno;
@@ -32,11 +35,15 @@ public class ArticuloSegundaMano {
 		return nombre;
 	}
 	
+	public Valoracion getValoracion() {
+		return valoracion;
+	}
+	
 	@Override
 	public String toString() {
 		return nombre + 
 				"\nDescripcion: " + descripcion + 
-				"\nPropietario: " + dueno.getNombreDueno() +
+				"\nPropietario: " + dueno.getDueno().getNombre() +
 				"\nCategorias:" + categorias + 
 				"\nInteresado en: " + interesadoEn +
 				"\nDisponible: " + disponible + 
@@ -55,8 +62,8 @@ public class ArticuloSegundaMano {
 		return image;
 	}
 
-	public List<Categoria> getCategorias() {
-		return categorias;
+	public Categoria[] getCategorias() {
+		return categorias.toArray(new Categoria[0]);
 	}
 
 	public String getInteresadoEn() {
@@ -75,8 +82,12 @@ public class ArticuloSegundaMano {
 		disponible = true;
 	}
 
-	public void setValoracion(Valoracion valoracion) {
+	public void anadirValoracion(Valoracion valoracion) {
 		this.valoracion = valoracion;
+	}
+	
+	public ClienteRegistrado getPropietario() {
+		return dueno.getDueno();
 	}
 	
 	

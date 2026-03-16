@@ -3,11 +3,12 @@ package wallapop;
 import java.time.*;
 import java.util.*;
 
+import sistema.AsignadorId;
 import usuario.ClienteRegistrado;
 import usuario.Empleado;
 
 public class Intercambio {
-	private int id;
+	private final long id;
 	private Cartera emisor;
 	private List<ArticuloSegundaMano> ofrecidos = new ArrayList<>();
 	private Cartera receptor;
@@ -37,6 +38,7 @@ public class Intercambio {
 				throw new IllegalArgumentException("Los artÍculos solicitados deben ser del mismo dueno");
 			}
 		}
+		id = AsignadorId.getInstancia().siguienteId();
 		
 		this.emisor = emisor;
 		for(ArticuloSegundaMano art : ofrecidos) {
@@ -145,9 +147,9 @@ public class Intercambio {
 
 	@Override
 	public String toString() {
-		return "\nCliente emisor: " + emisor.getNombreDueno() + 
+		return "\nCliente emisor: " + emisor.getDueno().getNombre() + 
 				"\nArticulos ofrecidos: " + ofrecidos + 
-				"\nCliente receptor: " + receptor.getNombreDueno() +
+				"\nCliente receptor: " + receptor.getDueno().getNombre() +
 				"\nArticulso solicitados: " + solicitados +
 				"\nEstado del intercambio: " + estado +
 				((estado == EstadoIntercambio.OFERTADO) ? ("Fecha de caducidad de la oferta:" + fechaCaducaOferta):"") +
