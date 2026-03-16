@@ -141,7 +141,7 @@ public abstract class Producto {
 			}
 			
 			if(c.tieneDescuento()) {
-				if(descuento == null) {
+				if(!this.tieneDescuento()) {
 					descuento = c.getDescuento();
 				} else {
 					ret = false;
@@ -206,7 +206,7 @@ public abstract class Producto {
 	 * @return true si se pudo añadir el descuento, false si no se pudo
 	 */
 	public boolean anadirDescuento(Descuento descuento) {
-		if(this.descuento == null) {
+		if(!this.tieneDescuento()) {
 			this.descuento = descuento;
 			return true;
 		}
@@ -222,10 +222,18 @@ public abstract class Producto {
 	
 	/**
 	 * Método para comprobar si el producto tiene descuento
+	 * Se usa una actualizacion en diferido para quitar el descuento si esta caducado
 	 * @return true si sí lo tiene, false si no
 	 */
 	public boolean tieneDescuento() {
-		return this.descuento != null;
+		if(this.descuento != null) {
+			if(!this.descuento.isCaducado()) {
+				return true;
+			} else {
+				this.quitarDescuento();
+				return false;
+			}
+		} else return false;
 	}
 
 	/**
