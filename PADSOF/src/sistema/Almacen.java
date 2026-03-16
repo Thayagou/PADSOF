@@ -38,13 +38,9 @@ public class Almacen {
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
 	public boolean anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria[] categorias) {
-		if(inventario.containsKey(nombre)) {
-			if(inventario.get(nombre).getProducto().isEliminado() == true) {
-				inventario.get(nombre).getProducto().restaurar();
-				return true;
-			}else
-				return false;
-		}
+		if(inventario.containsKey(nombre)) 
+			return false;
+			
 		Comic comic = new Comic(nombre, descripcion, precio, image, fecha, autor, numPaginas, editorial, categorias);
 		this.inventario.put(nombre, new Stock(comic, uds));
 		return true;
@@ -64,13 +60,9 @@ public class Almacen {
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
 	public boolean anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria[] categorias) {
-		if(inventario.containsKey(nombre)) {
-			if(inventario.get(nombre).getProducto().isEliminado() == true) {
-				inventario.get(nombre).getProducto().restaurar();
-				return true;
-			}else
-				return false;
-		}
+		if(inventario.containsKey(nombre))
+			return false;
+			
 		Juego juego = new Juego(nombre, descripcion, precio, image, numJugadores, rangoEdad, tipo, categorias);
 		this.inventario.put(nombre, new Stock(juego, uds));
 		return true;
@@ -90,13 +82,9 @@ public class Almacen {
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
 	public boolean anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria[] categorias) {
-		if(inventario.containsKey(nombre)) {
-			if(inventario.get(nombre).getProducto().isEliminado() == true) {
-				inventario.get(nombre).getProducto().restaurar();
-				return true;
-			}else
-				return false;
-		}
+		if(inventario.containsKey(nombre))
+			return false;
+	
 		Figura figura = new Figura(nombre, descripcion, precio, image, dimensiones, material, marca, categorias);
 		this.inventario.put(nombre, new Stock(figura, uds));
 		return true;
@@ -114,13 +102,8 @@ public class Almacen {
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
 	public boolean anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria[] categorias) {
-		if(inventario.containsKey(nombre)) {
-			if(inventario.get(nombre).getProducto().isEliminado() == true) {
-				inventario.get(nombre).getProducto().restaurar();
-				return true;
-			}else
-				return false;
-		}
+		if(inventario.containsKey(nombre))
+			return false;
 		
 		Pack pack= new Pack(productos, nombre, descripcion, precio, image, categorias);
 		this.inventario.put(nombre, new Stock(pack, uds));
@@ -219,13 +202,8 @@ public class Almacen {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
 	public boolean anadirCategoria(String nombre) {
-		if(categorias.containsKey(nombre)) {
-			if(categorias.get(nombre).isEliminada() == true) {
-				categorias.get(nombre).restaurar();
-				return true;
-			} else
-				return false;
-		}
+		if(categorias.containsKey(nombre))
+			return false;
 		
 		this.categorias.put(nombre, new Categoria(nombre));
 		return true;
@@ -236,8 +214,8 @@ public class Almacen {
 	 * @param nombre Nombre de la categoría
 	 * @return true en caso de que se elimine correctamente, false en caso contrario
 	 */
-	public boolean eliminarCategoria(String nombre) {
-		categorias.get(nombre).eliminar();
+	public boolean eliminarCategoria(Categoria categoria) {
+		categoria.eliminar();
 		return true;
 	}
 	
