@@ -1,8 +1,6 @@
 package sistema;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -138,6 +136,7 @@ public class Almacen {
 	 */
 	public boolean eliminarProducto(Producto producto) {
 		producto.eliminar();
+		inventario.remove(producto.getNombre());
 		return true;
 	}
 	
@@ -178,17 +177,30 @@ public class Almacen {
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(fProductos))) {
 			while((linea = br.readLine()) != null) {
-				String tipo = linea.substring(0, 2);
-				if(tipo.equals("#c:")) {
+				String partes[] = linea.split(";");
+				
+				String nombre = partes[1];
+				String desc = partes[2];
+				double precio = Double.parseDouble(partes[3]);
+				int uds = Integer.parseInt(partes[4]);
+				String categorias[] = partes[5].split(",");
+				
+				if(partes[0].equals("C")) {
+					int numPags = Integer.parseInt(partes[6]);
+					String autor = partes[7];
+					String editorial = partes[8];
+					String fecha[] = partes[9].split(",");
+					LocalDate fechaPublicacion = LocalDate.of(fecha[0], fecha[1], fecha[2]);
 					
-				} else if(tipo.equals("#j:")) {
+					Comic comic = new Comic(nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias);
+					inventario.put(partes[1], new Stock(comic, uds));
+				} else if(partes[0].equals("J")) {
 					
-				} else if(tipo.equals("#f:")) {
+				} else if(partes[0].equals("F")) {
 					
-				} else if(tipo.equals("#p:")) {
-					
+				} else {
+					return false;
 				}
-				return false;
 		    }
 		} catch (IOException e) {
 			return false;
@@ -216,6 +228,7 @@ public class Almacen {
 	 */
 	public boolean eliminarCategoria(Categoria categoria) {
 		categoria.eliminar();
+		categorias.remove(categoria.getNombre());
 		return true;
 	}
 	
