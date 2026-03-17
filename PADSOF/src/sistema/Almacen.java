@@ -3,6 +3,7 @@ package sistema;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 import javax.swing.ImageIcon;
 
@@ -179,7 +180,8 @@ public class Almacen {
 	
 	/**
 	 * Añade una lista de productos desde un fichero
-	 * @return true en caso de que se añadan correctamente, false en caso contrario
+	 * @param fProductos, nombre del fichero con datos de productos a añadir
+	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
 	 */
 	public boolean anadirProductosDeFichero(String fProductos) {
 		String linea;
@@ -192,21 +194,37 @@ public class Almacen {
 				String desc = partes[2];
 				double precio = Double.parseDouble(partes[3]);
 				int uds = Integer.parseInt(partes[4]);
-				String categorias[] = partes[5].split(",");
+				
+				String nombreCateg[] = partes[5].split(",");
+				List <Categoria> categorias = new ArrayList<>();
+				for(String c : nombreCateg) {
+					if(this.categorias.containsKey(c)) {
+						categorias.add(this.categorias.get(c));
+					} else {
+						return false;
+					}
+				}
 				
 				if(partes[0].equals("C")) {
 					int numPags = Integer.parseInt(partes[6]);
 					String autor = partes[7];
 					String editorial = partes[8];
 					String fecha[] = partes[9].split(",");
-					LocalDate fechaPublicacion = LocalDate.of(fecha[0], fecha[1], fecha[2]);
+					LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 					
-					Comic comic = new Comic(nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias);
-					inventario.put(partes[1], new Stock(comic, uds));
+					this.anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
 				} else if(partes[0].equals("J")) {
+					int numJugs = Integer.parseInt(partes[10]);
+					String rangoEdad = partes[11];
+					TipoJuego tipoJuego = TipoJuego.valueOf(partes[12]);
 					
+					this.anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
 				} else if(partes[0].equals("F")) {
+					String marca = partes[13];
+					String material = partes[14];
+					String dimensiones = partes[15];
 					
+					this.anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
 				} else {
 					return false;
 				}
@@ -409,6 +427,24 @@ public class Almacen {
 	}
 	
 	/**
+	 * Añade un artículo de segunda mano ya creado al almacén
+	 * @param articulo, Artículo que se añade
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
+	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) {
+		return articulos.add(articulo);
+	}
+	
+	/**
+	 * Elimina un artículo de segunda mano del almacén
+	 * @param articulo, Artículo que se elimina
+	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 */
+	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) {
+		return articulos.remove(articulo);
+	}
+	
+	/**
 	 * Devuelve una lista de productos que cumplen unas ciertas condiciones de categorías y precio
 	 * @param categorias Categorías a las que deben pertenecer los productos
 	 * @param precioMin Precio mínimo de los productos
@@ -427,21 +463,7 @@ public class Almacen {
 		return productos.toArray(new Producto[0]);
 	}
 	
-	/**
-	 * Añade un artículo de segunda mano ya creado al almacén
-	 * @param articulo, Artículo que se añade
-	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 */
-	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) {
-		return articulos.add(articulo);
-	}
-	
-	/**
-	 * Elimina un artículo de segunda mano del almacén
-	 * @param articulo, Artículo que se elimina
-	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 */
-	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) {
-		return articulos.remove(articulo);
+	public Producto[] getListaRecomendacion() {
+		return null;
 	}
 }
