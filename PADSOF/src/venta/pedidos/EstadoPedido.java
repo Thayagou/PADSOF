@@ -5,4 +5,14 @@ public enum EstadoPedido {
 	EN_PREPARACION,
 	LISTO,
 	RECOGIDO;
+
+	public EstadoPedido getSiguienteEstado() {
+		EstadoPedido[] valores = EstadoPedido.values();
+		int pos = this.ordinal();
+		
+		if (pos + 1 < valores.length) {
+			return valores[pos + 1];
+		} else return valores[valores.length - 1];
+		
+	}
 }

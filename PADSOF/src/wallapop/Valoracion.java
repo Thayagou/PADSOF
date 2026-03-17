@@ -1,10 +1,12 @@
 package wallapop;
 
 import java.time.*;
-import usuario.Empleado;
+
+import usuario.*;
+import sistema.AsignadorId;
 
 public class Valoracion {
-	private int id;
+	private final long id;
 	private ArticuloSegundaMano articuloValorado;
 	private LocalDateTime fechaSolicitud;
 	private double precioPagado;
@@ -14,13 +16,14 @@ public class Valoracion {
 	private double precioEstimado;
 	
 	public Valoracion(ArticuloSegundaMano articulo, double precioPagado) {
+		id = AsignadorId.getInstancia().siguienteId();
 		this.fechaSolicitud = LocalDateTime.now();
 		this.articuloValorado = articulo;
 		this.precioPagado = precioPagado;
 		this.estadoArticulo = EstadoFisicoArticulo.PENDIENTE;
 	}
 	
-	public boolean Valorar(Empleado empleado, double precioEstimado, EstadoFisicoArticulo estado) {
+	public boolean valorar(Empleado empleado, double precioEstimado, EstadoFisicoArticulo estado) {
 		if (empleado == null || estado == null || precioEstimado < 0) return false;
 		
 		this.empleado = empleado;
@@ -29,6 +32,10 @@ public class Valoracion {
 		estadoArticulo = estado;
 		
 		return true;
+	}
+	
+	public ClienteRegistrado getDuenoArticulo() {
+		return articuloValorado.getPropietario();
 	}
 	
 	@Override

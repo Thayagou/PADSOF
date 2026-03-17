@@ -35,7 +35,7 @@ public class Almacen {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria[] categorias) {
+	public boolean anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) {
 		if(inventario.containsKey(nombre)) 
 			return false;
 			
@@ -57,7 +57,7 @@ public class Almacen {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria[] categorias) {
+	public boolean anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) {
 		if(inventario.containsKey(nombre))
 			return false;
 			
@@ -79,7 +79,7 @@ public class Almacen {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria[] categorias) {
+	public boolean anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) {
 		if(inventario.containsKey(nombre))
 			return false;
 	
@@ -99,7 +99,7 @@ public class Almacen {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria[] categorias) {
+	public boolean anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) {
 		if(inventario.containsKey(nombre))
 			return false;
 		
@@ -121,12 +121,21 @@ public class Almacen {
 	}
 	
 	/**
-	 * Devuelve el stock de un producto
+	 * Método para obtener el stock de un producto
 	 * @param producto Producto del que se quiere el stock
 	 * @return Stock del producto
 	 */
 	public Stock getStock(Producto producto) {
 		return inventario.get(producto.getNombre());
+	}
+	
+	/**
+	 * Método para obtener el stock de un producto con su nombre
+	 * @param nombre Nombre del producto
+	 * @return Stock del producto con ese nombre
+	 */
+	public Stock getStock(String nombre) {
+		return inventario.get(nombre);
 	}
 	
 	/**
@@ -206,6 +215,15 @@ public class Almacen {
 			return false;
 		}
 		return true;
+	}
+	
+	/**
+	 * Método para obtener una categoría con su nombre
+	 * @param nombre Nombre de la categoría
+	 * @return Categoría con el nombre que se introduce
+	 */
+	public Categoria getCategoria(String nombre) {
+		return categorias.get(nombre);
 	}
 	
 	/**

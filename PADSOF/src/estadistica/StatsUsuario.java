@@ -25,4 +25,25 @@ public class StatsUsuario {
 		
 		return true;
 	}
+	
+	public boolean actualizarUltimoIntercambio(int uds) {
+		if (uds < 0) return false;
+		
+		if (estadisticas.getLast().getMes().equals(YearMonth.now()) == false) 
+			estadisticas.add(new StatsMensualCliente());
+		
+		return estadisticas.getLast().incrementarIntercambio(uds);
+	}
+	
+	public boolean actualizarUltimaValoracion(double precio) {
+		if (precio < 0) return false;
+		
+		if (estadisticas.getLast().getMes().equals(YearMonth.now()) == false) 
+			estadisticas.add(new StatsMensualCliente());
+		
+		return estadisticas.getLast().incrementarValoracion(precio);
+	}
+	
+	
+
 }

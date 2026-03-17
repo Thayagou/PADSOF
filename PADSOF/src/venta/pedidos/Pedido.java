@@ -158,6 +158,14 @@ public class Pedido {
 	public EstadoPedido getEstado() {
 		return estado;
 	}
+	
+	/**
+	 * Setter del estado del pedido
+	 * @param estado Estado del pedido
+	 */
+	public void setEstadoPedido(EstadoPedido estado) {
+		this.estado = estado; 
+	}
 
 	/**
 	 * Getter del cliente que hizo el pedido

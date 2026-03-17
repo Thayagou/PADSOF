@@ -8,7 +8,7 @@ import venta.productos.Categoria;
 public class TestWallapop {
 
 	public static void main(String[] args) {
-		ClienteRegistrado emisor = new ClienteRegistrado("Pepe"), receptor = new ClienteRegistrado("Ignacio");
+		/*ClienteRegistrado emisor = new ClienteRegistrado("Pepe"), receptor = new ClienteRegistrado("Ignacio");
 		Cartera carteraEmisor = new Cartera(emisor), carteraReceptor = new Cartera(receptor);
 		
 		Categoria comic = new Categoria("Comic"), superheroe = new Categoria("Superheroes"),
@@ -27,11 +27,11 @@ public class TestWallapop {
 		carteraEmisor.addArticulo(art3);
 		carteraReceptor.addArticulo(art2);
 		carteraReceptor.addArticulo(art4);
-		Intercambio inter = new Intercambio(carteraEmisor.getArticulos(), carteraReceptor.getArticulos());
+		//Intercambio inter = new Intercambio(carteraEmisor.getArticulos(), carteraReceptor.getArticulos());
 		
 		System.out.println(carteraEmisor);
 		System.out.println(carteraReceptor);
-		System.out.println(inter);
+		//System.out.println(inter);*/
 	}
 
 }
