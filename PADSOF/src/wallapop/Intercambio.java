@@ -22,20 +22,20 @@ public class Intercambio {
 	public Intercambio (ArticuloSegundaMano[] ofrecidos, ArticuloSegundaMano[] solicitados) throws IllegalArgumentException {
 		Cartera emisor, receptor;
 		if (ofrecidos.length < 1 || solicitados.length < 1) {
-			throw new IllegalArgumentException("Se debe solicitar y pedir al menos un artÍculo");
+			throw new IllegalArgumentException("Se debe solicitar y pedir al menos un artículo");
 		}
 		
 		emisor = ofrecidos[0].getDueno();
 		for (ArticuloSegundaMano art: ofrecidos) {
 			if (!emisor.equals(art.getDueno())) {
-				throw new IllegalArgumentException("Los artÍculos ofrecidos deben ser del mismo dueno");
+				throw new IllegalArgumentException("Los artículos ofrecidos deben ser del mismo dueno");
 			}
 		}
 		
 		receptor = solicitados[0].getDueno();
 		for (ArticuloSegundaMano art: solicitados) {
 			if (!emisor.equals(art.getDueno())) {
-				throw new IllegalArgumentException("Los artÍculos solicitados deben ser del mismo dueno");
+				throw new IllegalArgumentException("Los artículos solicitados deben ser del mismo dueno");
 			}
 		}
 		id = AsignadorId.getInstancia().siguienteId();

@@ -7,17 +7,21 @@ import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
 import estadistica.Historial;
 import usuario.*;
 import venta.productos.*;
+import wallapop.ArticuloSegundaMano;
+import wallapop.Intercambio;
 import venta.pedidos.*;
 
 /**
  * Clase tienda que recoge todas las funcionalidades de la aplicación
  * 
- * Autores: Juan Ibáñez, Tiago Oselka, Claudia Sainz
+ * @author Juan Ibáñez, Tiago Oselka, Claudia Saiz
  */
 public class Tienda {
 	private Almacen almacen;
 	private Historial historial;
-	private Map<String, Usuario> usuarios;
+	private Map<String, ClienteRegistrado> clientes;
+	private Map<String, Empleado> empleados;
+	private Gestor gestor;
 	
 	/**
 	 * Creador de la tienda
@@ -25,8 +29,9 @@ public class Tienda {
 	public Tienda() {
 		almacen = new Almacen();
 		historial = new Historial();
-		usuarios = new HashMap<>();
-		usuarios.put("GESTOR", new Gestor("GESTOR", "GESTOR123"));
+		clientes = new HashMap<>();
+		empleados = new HashMap<>();
+		gestor = new Gestor("GESTOR", "GESTOR123");
 	}
 	
 	/**
@@ -50,16 +55,7 @@ public class Tienda {
 	 * @return Gestor de la tienda
 	 */
 	public Gestor getGestor() {
-		return (Gestor)usuarios.get("GESTOR");
-	}
-	
-	/**
-	 * Método para obtener un usuario con el nombre
-	 * @param nombre Nombre del usuario
-	 * @return Usuario obtenido con el nombre
-	 */
-	public Usuario getUsuario(String nombre) {
-		return usuarios.get(nombre);
+		return gestor;
 	}
 	
 	/**
@@ -68,11 +64,15 @@ public class Tienda {
 	 * @return Empleado obtenido con ese nombre
 	 */
 	public Empleado getEmpleado(String nombre) {
-		Usuario usr = usuarios.get(nombre);
-		if(usr instanceof Empleado) {
-			return (Empleado)usr;
-		}
-		return null;
+		return empleados.get(nombre);
+	}
+	
+	/**
+	 * Devuelve los empleados de la tienda
+	 * @return array de los empleados de las tiendas
+	 */
+	public Empleado[] getEmpleados() {
+		return empleados.values().toArray(new Empleado[0]);
 	}
 	
 	/**
@@ -81,11 +81,15 @@ public class Tienda {
 	 * @return Cliente obtenido con ese nombre
 	 */
 	public ClienteRegistrado getCliente(String nombre) {
-		Usuario usr = usuarios.get(nombre);
-		if(usr instanceof ClienteRegistrado) {
-			return (ClienteRegistrado)usr;
-		}
-		return null;
+		return clientes.get(nombre);
+	}
+	
+	/**
+	 * Devuelve los clientes registrados de la tienda
+	 * @return array de los clientes registrados de la tienda
+	 */
+	public ClienteRegistrado[] getClientes() {
+		return clientes.values().toArray(new ClienteRegistrado[0]);
 	}
 	
 	/**
@@ -96,12 +100,12 @@ public class Tienda {
 	 * @return Usuario que se creó
 	 */
 	public Usuario registrarse(String nombre, String contrasena, String confirmarContrasena) {
+		if(!comprobarUnicidadNombre(nombre)) return null;
 		if(!contrasena.equals(confirmarContrasena))
 			return null;
-		if(usuarios.containsKey(nombre))
-			return null;
-		usuarios.put(nombre, new ClienteRegistrado(nombre, contrasena));
-		return usuarios.get(nombre);
+		
+		clientes.put(nombre, new ClienteRegistrado(nombre, contrasena));
+		return clientes.get(nombre);
 	}
 	
 	/**
@@ -111,9 +115,19 @@ public class Tienda {
 	 * @return Usuario que está registrado con ese nombre de usuario
 	 */
 	public Usuario iniciarSesion(String nombre, String contrasena) {
-		if(!usuarios.containsKey(nombre)) return null;
-		if(usuarios.get(nombre).getContrasena().equals(contrasena))
-			return usuarios.get(nombre);
+		if(gestor.getNombre().equals(nombre)) {
+			if(gestor.getContrasena().equals(contrasena))
+				return gestor;
+			return null;
+		} else if(clientes.containsKey(nombre)) {
+			if(clientes.get(nombre).getContrasena().equals(contrasena))
+				return clientes.get(nombre);
+			return null;
+		} else if(empleados.containsKey(nombre)) {
+			if(empleados.get(nombre).getContrasena().equals(contrasena))
+				return empleados.get(nombre);
+			return null;
+		}
 		return null;
 	}
 	
@@ -132,7 +146,8 @@ public class Tienda {
 			emp.setPermisos(permisos);
 			return true;
 		}
-		usuarios.put(nombre, new Empleado(nombre, contrasena, permisos));
+		if(!comprobarUnicidadNombre(nombre)) return false;
+		empleados.put(nombre, new Empleado(nombre, contrasena, permisos));
 		return true;
 	}
 	
@@ -145,6 +160,62 @@ public class Tienda {
 		Empleado emp = getEmpleado(nombre);
 		if(emp == null) return false;
 		emp.darDeBaja();
+		return true;
+	}
+	
+	/**
+	 * Comprueba que no exista un usuario con el nombre que se da
+	 * @param nombre Nombre que se quiere comprobar
+	 * @return boolean, true si el nombre es único, false si el nombre ya existe
+	 */
+	private boolean comprobarUnicidadNombre(String nombre) {
+		if(gestor.getNombre().equals(nombre)) return false;
+		if(clientes.containsKey(nombre)) return false;
+		if(empleados.containsKey(nombre)) return false;
+		
+		return true;
+	}
+	
+	/**
+	 * Acepta un intercambio en nombre de un cliente registrado
+	 * @param cliente Cliente que acepta el intercambio
+	 * @param intercambio Intercambio que es aceptado
+	 * @return boolean, true si el intercambio se ha aceptado correctamente, false en caso contrario
+	 */
+	public boolean aceptarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) {
+		cliente.getCartera().aceptarIntercambio(intercambio);
+		
+		return true;
+	}
+	
+	/**
+	 * Rechaza un intercambio en nombre de un cliente registrado
+	 * @param cliente Cliente que acepta el intercambio
+	 * @param intercambio Intercambio que es rechazado
+	 * @return boolean, true si el intercambio se ha rechazado correctamente, false en caso contrario
+	 */
+	public boolean rechazarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) {
+		return true;
+	}
+	
+	/**
+	 * Hace una oferta de intercambio en el que se ofrecen un conjunto de artículos a cambio de otro conjunto de artículos
+	 * @param cliente Cliente que hace la oferta de intercambio
+	 * @param ofrecidos Artículos que se ofrecen
+	 * @param solicitados Artículos que se piden a cambio
+	 * @return boolean, true si el intercambio se ha hecho correctamente, false en caso contrario
+	 */
+	public boolean hacerOfertaIntercambio(ClienteRegistrado cliente, ArticuloSegundaMano[] ofrecidos, ArticuloSegundaMano[] solicitados) {
+		return true;
+	}
+	
+	/**
+	 * Solicita una valoración de un artículo en nombre de un cliente 
+	 * @param cliente Cliente que solicita la valoración
+	 * @param articulo Artículo del que se pide valoración
+	 * @return boolean, true si la solicitud se ha hecho, false en caso contrario
+	 */
+	public boolean solicitarValoracion(ClienteRegistrado cliente, ArticuloSegundaMano articulo) {
 		return true;
 	}
 	
