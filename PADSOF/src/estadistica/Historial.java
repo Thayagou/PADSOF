@@ -32,7 +32,7 @@ public class Historial {
 			if (statsProductos.containsKey(p) == false) statsProductos.put(p, new StatsProducto(p));
 			
 			statProducto = statsProductos.get(p);
-			statProducto.actualizarUltima(stExt.getUdsEnStock(), stExt.getPrecioFinal());
+			statProducto.actualizarUltima(stExt.getUdsEnStock(), stExt.getPrecioUnitarioFinal());
 			udsVendidas +=stExt.getUdsEnStock();
 		}
 		
