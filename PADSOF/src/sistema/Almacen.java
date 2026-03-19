@@ -11,6 +11,11 @@ import venta.descuentos.*;
 import venta.productos.*;
 import wallapop.*;
 
+/**
+ * Clase que implementa el almacén de la tienda con funcionalidades de venta y gestion de productos
+ * 
+ * Autores: Juan Ibáñez, Tiago Oselka, Claudia Saiz
+ */
 public class Almacen {
 	private Map<String, Stock> inventario  = new HashMap<>();
 	private Map<String, Categoria> categorias = new HashMap<>();
@@ -451,11 +456,11 @@ public class Almacen {
 	 * @param precioMax Precio máximo de los productos
 	 * @return Producto[], un array de productos que cumplen las condiciones
 	 */
-	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax) {
+	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin) {
 		List<Producto> productos = new ArrayList<>();
 		for(Categoria c : categorias) {
 			for(Producto p : c.getProductos()) {
-				if(p.getPrecio() >= precioMin && p.getPrecio() <= precioMax) {
+				if(p.getPrecio() >= precioMin && p.getPrecio() <= precioMax && p.getPuntuacionMedia() >= estrellasMin) {
 					productos.add(p);
 				}
 			}
