@@ -135,7 +135,7 @@ public class Categoria {
 	 * Método para quitar un producto de una categoría
 	 * @param p Producto que se quita de la categoría
 	 */
-	public void quitarProducto(Producto p) throws IllegalArgumentException {
+	void quitarProducto(Producto p) throws IllegalArgumentException {
 		if(p == null) throw new IllegalArgumentException();
 		productos.remove(p);
 	}

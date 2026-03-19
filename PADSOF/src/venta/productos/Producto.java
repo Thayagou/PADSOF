@@ -152,7 +152,10 @@ public abstract class Producto {
 	 * @param categorias Categorias que se van a añadir al producto
 	 * @return true si se añadieron todas las categorias, false si alguna no pudo añadirse.
 	 */
-	public boolean anadirCategorias(Categoria...categorias) throws IncompatibleCategoriesException {
+	public boolean anadirCategorias(Categoria...categorias) throws IncompatibleCategoriesException, IllegalArgumentException {
+		if(categorias == null) throw new IllegalArgumentException();
+		for(Categoria c : categorias) if(c == null) throw new IllegalArgumentException();
+		
 		if(!puedeAnadirCategorias(categorias)) throw new IncompatibleCategoriesException("Las categorías no son compatibles entre sí o con el producto debido a los descuentos");
 		for(Categoria c : categorias) {			
 			if(c.tieneDescuento()) {
