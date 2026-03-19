@@ -18,7 +18,7 @@ public class Pack extends Producto {
 	 * @param categorias Array de categorías del pack
 	 */
 	public Pack(Stock[] stocks, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) 
-			throws PackDemasiadoPequeno, IncompatibleCategoriesException {
+			throws PackDemasiadoPequeno, IncompatibleCategoriesException, IllegalArgumentException {
 		super(nombre, desc, precio, imagen, categorias);
 		
 		if(stocks == null) throw new IllegalArgumentException("Array de stocks nulo");
