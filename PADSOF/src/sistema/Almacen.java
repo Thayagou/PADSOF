@@ -180,7 +180,7 @@ public class Almacen {
 			throws IllegalArgumentException, IncompatibleCategoriesException {
 		if(producto == null || udsStock < 0 || nombre == null || desc == null || precio < 0 || categorias == null) throw new IllegalArgumentException();
 		
-		if(!this.categorias.containsKey(producto.getNombre()))
+		if(!this.inventario.containsKey(producto.getNombre()))
 			return false;
 		
 		producto.setCategorias(categorias);	/*Se puede lanzar una excepción aquí si las categorias son incompatibles*/
@@ -465,11 +465,7 @@ public class Almacen {
 	 * @return true cuando todos los descuentos caducados hayan sido eliminados
 	 */
 	public boolean eliminarDescuentosCaducados() {
-		for(Descuento d : descuentos) {
-			if(!d.isVigente()) {
-				descuentos.remove(d);
-			}
-		}
+		descuentos.removeIf(d -> !d.isCaducado());
 		return true;
 	}
 	
