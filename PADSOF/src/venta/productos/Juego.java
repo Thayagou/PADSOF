@@ -2,6 +2,8 @@ package venta.productos;
 
 import javax.swing.ImageIcon;
 
+import exceptions.IncompatibleCategoriesException;
+
 public class Juego extends Producto {
 	private int numJugadores;
 	private String rangoEdad;
@@ -18,8 +20,12 @@ public class Juego extends Producto {
 	 * @param tipo Tipo de juego
 	 * @param categorias Array de categorías del juego
 	 */
-	public Juego(String nombre, String desc, double precio, ImageIcon imagen, int numJug, String rango, TipoJuego tipo, Categoria...categorias) {
+	public Juego(String nombre, String desc, double precio, ImageIcon imagen, int numJug, String rango, TipoJuego tipo, Categoria...categorias) 
+			throws IllegalArgumentException, IncompatibleCategoriesException {
 		super(nombre, desc, precio, imagen, categorias);
+		
+		if(numJug < 0 || rango == null || tipo == null) throw new IllegalArgumentException();
+		
 		this.numJugadores = numJug;
 		this.rangoEdad = rango;
 		this.tipo = tipo;

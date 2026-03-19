@@ -17,6 +17,8 @@ public class DescuentoRegalo extends Descuento {
 	 */
 	public DescuentoRegalo(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) {
 		super(valorMin, inicio, fin, condicion);
+		
+		if(regalo == null) throw new IllegalArgumentException();
 		this.regalo = regalo;
 	}
 
@@ -24,7 +26,9 @@ public class DescuentoRegalo extends Descuento {
 	 * Método para obtener el regalo que se añade al carrito
 	 */
 	@Override
-	public Producto getRegalo(int numUds, double volumen) {
+	public Producto getRegalo(int numUds, double volumen) throws IllegalArgumentException {
+		if(numUds < 0 || volumen < 0) throw new IllegalArgumentException();
+		
 		if(this.cumpleCondiciones(numUds, volumen)) {
 			return regalo;
 		} else {

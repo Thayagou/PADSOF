@@ -2,6 +2,8 @@ package venta.productos;
 
 import javax.swing.ImageIcon;
 
+import exceptions.IncompatibleCategoriesException;
+
 public class Figura extends Producto {
 	private String dimensiones;
 	private String marca;
@@ -18,8 +20,12 @@ public class Figura extends Producto {
 	 * @param material Material de la figura
 	 * @param categorias Array de categorias de la figura
 	 */
-	public Figura(String nombre, String desc, double precio, ImageIcon imagen, String dim, String marca, String material, Categoria...categorias) {
+	public Figura(String nombre, String desc, double precio, ImageIcon imagen, String dim, String marca, String material, Categoria...categorias) 
+			throws IllegalArgumentException, IncompatibleCategoriesException {
 		super(nombre, desc, precio, imagen, categorias);
+		
+		if(dim == null || marca == null || material == null) throw new IllegalArgumentException();
+		
 		this.dimensiones = dim;
 		this.marca = marca;
 		this.material = material;

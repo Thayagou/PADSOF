@@ -4,6 +4,8 @@ import java.time.*;
 
 import javax.swing.ImageIcon;
 
+import exceptions.IncompatibleCategoriesException;
+
 public class Comic extends Producto {
 	private LocalDate fechaPublicacion;
 	private String autor;
@@ -22,8 +24,12 @@ public class Comic extends Producto {
 	 * @param editorial Editorial que publica el comic
 	 * @param categorias Array de categorías del cómic
 	 */
-	public Comic(String nombre, String desc, double precio, ImageIcon imagen, LocalDate fecha, String autor, int pags, String editorial, Categoria...categorias) {
+	public Comic(String nombre, String desc, double precio, ImageIcon imagen, LocalDate fecha, String autor, int pags, String editorial, Categoria...categorias) 
+			throws IllegalArgumentException, IncompatibleCategoriesException {
 		super(nombre, desc, precio, imagen, categorias);
+		
+		if(fecha == null || autor == null || pags < 0 || editorial == null) throw new IllegalArgumentException();
+		
 		this.fechaPublicacion = fecha;
 		this.autor = autor;
 		this.numPaginas = pags;
@@ -33,6 +39,7 @@ public class Comic extends Producto {
 	/**
 	 * Método para imprimir las características del comic
 	 */
+	@Override
 	public String getCaracteristicas() {
 		return String.format("(fecha de publicacion=%s, Autor=%s, Numero de paginas=%d, Editorial=%s)",
 				fechaPublicacion, autor, numPaginas, editorial);
