@@ -63,6 +63,19 @@ public class Empleado extends Usuario{
 	}
 	
 	public boolean enviarNotificacion(String mensaje, TipoNotificacion tipo) {
+		if(tipo.equals(TipoNotificacion.INTERCAMBIO) || tipo.equals(TipoNotificacion.VALORACION)) {
+			if(!this.permisos.contains(Permiso.INTERCAMBIOS))
+				return false;
+		} else if (tipo.equals(TipoNotificacion.PEDIDO)) {
+			if(!this.permisos.contains(Permiso.PEDIDOS))
+				return false;
+		} else if (tipo.equals(TipoNotificacion.CADUCIDAD) || tipo.equals(TipoNotificacion.PRODUCTO_AGOTADO)) {
+			if(!this.permisos.contains(Permiso.PRODUCTOS))
+				return false;
+		} else {
+			return false;
+		}
+		
 		Notificacion notificacion = new Notificacion(mensaje, tipo);
 		notificaciones.add(notificacion);
 		return true;

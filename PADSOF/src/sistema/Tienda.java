@@ -237,7 +237,7 @@ public class Tienda {
 		historial.guardarValoracion(valoracion);
 		
 		for(Empleado e : this.getEmpleados()) {
-			e.enviarNotificacion("Se ha hecho una nueva solicitud de valoración de un artículo de segunda mano", TipoNotificacion.INTERCAMBIO);
+			e.enviarNotificacion("Se ha hecho una nueva solicitud de valoración de un artículo de segunda mano", TipoNotificacion.VALORACION);
 		}
 		return true;
 	}

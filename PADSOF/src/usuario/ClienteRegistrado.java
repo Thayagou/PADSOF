@@ -8,7 +8,7 @@ import venta.productos.Resena;
 import wallapop.ArticuloSegundaMano;
 import wallapop.Cartera;
 
-public class ClienteRegistrado extends Cliente {
+public class ClienteRegistrado extends Usuario {
 	private Carrito carrito;
 	private Cartera cartera;
 	private List<Notificacion> notificaciones;
@@ -51,18 +51,9 @@ public class ClienteRegistrado extends Cliente {
 	public Notificacion[] getNotificaciones() {
 		return this.notificaciones.toArray( new Notificacion[0]);
 	}
-	
-	public Notificacion[] getNotificacionesDeInteres() {
-		List<Notificacion> deInteres = new LinkedList<>();
-		for(Notificacion n : notificaciones) {
-			if(this.intereses.contains(n.getTipo())) {
-				deInteres.add(n);
-			}
-		}
-		return deInteres.toArray( new Notificacion[0]);
-	}
 
 	public boolean enviarNotificacion(String mensaje, TipoNotificacion tipo) {
+		if(!intereses.contains(tipo)) return false;
 		Notificacion notificacion = new Notificacion(mensaje, tipo);
 		notificaciones.add(notificacion);
 		return true;
@@ -101,6 +92,10 @@ public class ClienteRegistrado extends Cliente {
 		Pedido pedido = new Pedido(this, carrito.getContenido());
 		misCompras.add(pedido);
 		return pedido;
+	}
+	
+	public boolean tienePermiso() {
+		return false;
 	}
 	
 	@Override
