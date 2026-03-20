@@ -4,6 +4,7 @@ import java.time.*;
 
 import usuario.*;
 import sistema.AsignadorId;
+import sistema.Sistema;
 
 public class Valoracion {
 	private final long id;
@@ -15,11 +16,11 @@ public class Valoracion {
 	private LocalDateTime fechaValoracion;
 	private double precioEstimado;
 	
-	public Valoracion(ArticuloSegundaMano articulo, double precioPagado) {
+	public Valoracion(ArticuloSegundaMano articulo) {
 		id = AsignadorId.getInstancia().siguienteId();
 		this.fechaSolicitud = LocalDateTime.now();
 		this.articuloValorado = articulo;
-		this.precioPagado = precioPagado;
+		this.precioPagado = Sistema.getInstancia().getPrecioValoracion();
 		this.estadoArticulo = EstadoFisicoArticulo.PENDIENTE;
 	}
 	

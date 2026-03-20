@@ -62,7 +62,8 @@ public class Empleado extends Usuario{
 		return notificaciones;
 	}
 	
-	public boolean addNotificacion(Notificacion notificacion) {
+	public boolean enviarNotificacion(String mensaje, TipoNotificacion tipo) {
+		Notificacion notificacion = new Notificacion(mensaje, tipo);
 		notificaciones.add(notificacion);
 		return true;
 	}
