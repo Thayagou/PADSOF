@@ -26,7 +26,12 @@ public class Pedido {
 	 * @param cliente Cliente que realiza el pedido
 	 * @param stocks Array de los stocks externos de los productos del pedido
 	 */
-	public Pedido(ClienteRegistrado cliente, StockExterno...stocks) {
+	public Pedido(ClienteRegistrado cliente, StockExterno...stocks) throws IllegalArgumentException {
+		if(cliente == null || stocks == null) throw new IllegalArgumentException();
+		for(StockExterno st : stocks) {
+			if(st == null) throw new IllegalArgumentException("StockExterno null entre los items del pedido");
+		}
+		
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.fechaPago = LocalDateTime.now();
 		this.estado = EstadoPedido.PAGADO;
@@ -34,8 +39,8 @@ public class Pedido {
 		
 		double precioTotal = 0;
 		for(StockExterno s : stocks) {
-			itemsPedido.add(new StockExterno(s.getProducto(), s.getUdsEnStock(), s.getPrecioFinal()));
-			precioTotal += s.getPrecioFinal();
+			itemsPedido.add(new StockExterno(s.getProducto(), s.getUdsEnStock(), s.getPrecioUnitarioFinal()));
+			precioTotal += s.getPrecioTotal();
 		}
 		this.precioTotal = precioTotal;
 	}
@@ -46,45 +51,6 @@ public class Pedido {
 	 */
 	public double getPrecioTotal() {
 		return precioTotal;
-	}
-	
-	/**
-	 * Método para marcar el pedido como En_Preparación
-	 * @param emp Empleado que marca el pedido
-	 * @return true si se pudo marcar, false si no
-	 */
-	public boolean marcarEnPreparacion(Empleado emp) {
-		if(estado != EstadoPedido.PAGADO) return false;
-		fechaPreparacion = LocalDateTime.now();
-		empPreparacion = emp;
-		estado = EstadoPedido.EN_PREPARACION;
-		return true;
-	}
-	
-	/**
-	 * Método para marcar el pedido como Listo
-	 * @param emp Empleado que marca el pedido
-	 * @return true si se pudo marcar, false si no
-	 */
-	public boolean marcarListo(Empleado emp) {
-		if(estado != EstadoPedido.EN_PREPARACION) return false;
-		fechaListo = LocalDateTime.now();
-		empListo = emp;
-		estado = EstadoPedido.LISTO;
-		return true;
-	}
-	
-	/**
-	 * Método para marcar el pedido como Recogido
-	 * @param emp Empleado que marca el pedido
-	 * @return true si se pudo marcar, false si no
-	 */
-	public boolean marcarRecogido(Empleado emp) {
-		if(estado != EstadoPedido.LISTO) return false;
-		fechaRecogida = LocalDateTime.now();
-		empRecogida = emp;
-		estado = EstadoPedido.RECOGIDO;
-		return true;
 	}
 
 	/**
@@ -160,11 +126,31 @@ public class Pedido {
 	}
 	
 	/**
-	 * Setter del estado del pedido
-	 * @param estado Estado del pedido
+	 * Avanza el estado del pedido
+	 * @param emp Empleado que actualiza el estado del pedido
 	 */
-	public void setEstadoPedido(EstadoPedido estado) {
-		this.estado = estado; 
+	public void nextEstadoPedido(Empleado emp) throws IllegalArgumentException {
+		if(emp == null) throw new IllegalArgumentException();
+		
+		if(estado.ordinal() == EstadoPedido.values().length - 1) return;
+		
+		estado = estado.getSiguienteEstado();
+		switch(estado) {
+		case EN_PREPARACION:
+			empPreparacion = emp;
+			fechaPreparacion = LocalDateTime.now();
+			return;
+		case LISTO:
+			empListo = emp;
+			fechaListo = LocalDateTime.now();
+			return;
+		case RECOGIDO:
+			empRecogida = emp;
+			fechaRecogida = LocalDateTime.now();
+			return;
+		default:
+			break;
+		}
 	}
 
 	/**

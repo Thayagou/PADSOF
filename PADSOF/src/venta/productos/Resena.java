@@ -15,9 +15,10 @@ public class Resena {
 	 * @param comentario Comentario de la reseña
 	 * @param usuario Usuario que realiza la reseña
 	 */
-	public Resena(double puntuacion, String comentario, ClienteRegistrado usuario) {
+	public Resena(double puntuacion, String comentario, ClienteRegistrado usuario) throws IllegalArgumentException {
+		if(comentario == null || usuario == null) throw new IllegalArgumentException();
 		if(puntuacion < 0 || puntuacion > 5) {
-			throw new IllegalArgumentException("Resena con puntuacion invalida");
+			throw new IllegalArgumentException("Reseña con puntuacion inválida");
 		}
 		this.puntuacion = puntuacion;
 		this.comentario = comentario;

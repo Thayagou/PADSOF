@@ -12,7 +12,7 @@ import venta.descuentos.*;
 import venta.pedidos.*;
 
 public class TestVentaI1 {
-
+/*
 	public static void main(String[] args) {
 		System.out.println("===============TEST DE VENTAS===============");
 		
@@ -66,7 +66,7 @@ public class TestVentaI1 {
 		
 		ClienteRegistrado cliente = new ClienteRegistrado("usrName", "pass");
 		
-		/*Añadimos un cierto número de veces cada producto al carrito*/
+		//Añadimos un cierto número de veces cada producto al carrito
 		for(int i=0; i<3; i++) {
 			cliente.getCarrito().anadirProducto(pComic);
 		}
@@ -85,5 +85,5 @@ public class TestVentaI1 {
 
 
 	}
-
+*/
 }

@@ -2,10 +2,8 @@ package usuario;
 
 import java.util.*;
 import java.time.*;
-import venta.*;
-import venta.descuentos.Descuento;
+import venta.descuentos.*;
 import venta.productos.*;
-import venta.productos.StockExterno;
 
 public class Carrito {
 	private LocalDateTime fechaCaducidad;
@@ -124,7 +122,7 @@ public class Carrito {
 		
 		calcularDescuentos();
 		for(StockExterno s : items.values()) {
-			pTotal += s.getPrecioFinal()*s.getUdsEnStock();
+			pTotal += s.getPrecioTotal();
 		}
 		return pTotal;
 	}
@@ -153,7 +151,7 @@ public class Carrito {
 		
 		/*Primero inicializamos todos los precios finales a los precios del producto*/
 		for(StockExterno s : items.values()) {
-			s.setPrecioFinal(s.getProducto().getPrecio());
+			s.setPrecioUnitarioFinal(s.getProducto().getPrecio());
 		}
 		
 		/*Creamos un HashMap con los productos por descuento*/
@@ -183,7 +181,7 @@ public class Carrito {
 			/*Asignamos el precio final con descuento a cada Stock*/
 			for(StockExterno s : productos) {
 				double precio = s.getProducto().getPrecio();
-				s.setPrecioFinal(d.getPrecioDescontado(numUds, pBase, precio));
+				s.setPrecioUnitarioFinal(d.getPrecioDescontado(numUds, pBase, precio));
 			}
 		}		
 	}

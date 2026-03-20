@@ -1,7 +1,7 @@
 package venta.productos;
 
 public class StockExterno extends Stock {
-	private double precioFinal;
+	private double precioUnitarioFinal;	/*Precio unitario del producto del stock, no el precio total del stock*/
 	
 	/**
 	 * Creador de un StockExterno
@@ -9,9 +9,10 @@ public class StockExterno extends Stock {
 	 * @param uds Número de unidades en el stock
 	 * @param precio Precio final unitario del producto en el contexto de un carrito o pedido
 	 */
-	public StockExterno(Producto p, int uds, double precio) {
+	public StockExterno(Producto p, int uds, double precio) throws IllegalArgumentException {
 		super(p, uds);
-		this.precioFinal = precio;
+		if(precio < 0) throw new IllegalArgumentException("No se puede establecer un precio negativo");
+		this.precioUnitarioFinal = precio;
 	}
 	
 	/**
@@ -19,29 +20,38 @@ public class StockExterno extends Stock {
 	 * @param p Producto del stock
 	 * @param uds Número de unidades en el stock
 	 */
-	public StockExterno(Producto p, int uds) {
+	public StockExterno(Producto p, int uds) throws IllegalArgumentException {
 		super(p, uds);
-		this.precioFinal = getProducto().getPrecio();
+		this.precioUnitarioFinal = getProducto().getPrecio();
 	}
 
 	/**
 	 * Getter del precio final del producto
 	 * @return Precio final de venta de un producto en el contexto de un carrito o pedido
 	 */
-	public double getPrecioFinal() {
-		return precioFinal;
+	public double getPrecioUnitarioFinal() {
+		return precioUnitarioFinal;
 	}
 
 	/**
 	 * Setter del precio final del producto
 	 * @param precioFinal Precio final de venta de un producto en el contexto de un carrito o pedido
 	 */
-	public void setPrecioFinal(double precioFinal) {
-		this.precioFinal = precioFinal;
+	public void setPrecioUnitarioFinal(double precioFinal) throws IllegalArgumentException{
+		if(precioFinal < 0) throw new IllegalArgumentException("No se puede establecer un precio negativo");
+		this.precioUnitarioFinal = precioFinal;
+	}
+	
+	/**
+	 * Método para obtener el precio total del stock
+	 * @return Precio total del stock entre todas las unidades
+	 */
+	public double getPrecioTotal() {
+		return getPrecioUnitarioFinal()*getUdsEnStock();
 	}
 	
 	@Override
 	public String toString() {
-		return getProducto().getNombre() + " x " + getUdsEnStock() + ". Precio por unidad: " + precioFinal;
+		return getProducto().getNombre() + " x " + getUdsEnStock() + ". Precio por unidad: " + precioUnitarioFinal;
 	}
 }

@@ -7,6 +7,7 @@ import java.time.Month;
 import java.util.*;
 import javax.swing.ImageIcon;
 
+import exceptions.*;
 import venta.descuentos.*;
 import venta.productos.*;
 import wallapop.*;
@@ -41,7 +42,8 @@ public class Almacen {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) {
+	public boolean anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
+			throws IllegalArgumentException, IncompatibleCategoriesException {
 		if(inventario.containsKey(nombre)) 
 			return false;
 			
@@ -63,7 +65,8 @@ public class Almacen {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) {
+	public boolean anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
+			throws IllegalArgumentException, IncompatibleCategoriesException{
 		if(inventario.containsKey(nombre))
 			return false;
 			
@@ -85,7 +88,8 @@ public class Almacen {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) {
+	public boolean anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
+			throws IllegalArgumentException, IncompatibleCategoriesException{
 		if(inventario.containsKey(nombre))
 			return false;
 	
@@ -105,7 +109,8 @@ public class Almacen {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) {
+	public boolean anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
+			throws IllegalArgumentException, IncompatibleCategoriesException, PackDemasiadoPequeno {
 		if(inventario.containsKey(nombre))
 			return false;
 		
@@ -119,7 +124,9 @@ public class Almacen {
 	 * @param producto Producto del que se devuelve las unidades
 	 * @return int, unidades en stock del producto, -1 en caso de error
 	 */
-	public int getUnidades(Producto producto) {
+	public int getUnidades(Producto producto) throws IllegalArgumentException {
+		if(producto == null) throw new IllegalArgumentException();
+		
 		Stock s = inventario.get(producto.getNombre());
 		if(s == null)
 			return -1;
@@ -131,7 +138,8 @@ public class Almacen {
 	 * @param producto Producto del que se quiere el stock
 	 * @return Stock del producto
 	 */
-	public Stock getStock(Producto producto) {
+	public Stock getStock(Producto producto) throws IllegalArgumentException {
+		if(producto == null) throw new IllegalArgumentException();
 		return inventario.get(producto.getNombre());
 	}
 	
@@ -149,7 +157,9 @@ public class Almacen {
 	 * @param producto Producto que se quiere eliminar
 	 * @return true si se elimina correctamente
 	 */
-	public boolean eliminarProducto(Producto producto) {
+	public boolean eliminarProducto(Producto producto) throws IllegalArgumentException {
+		if(producto == null) throw new IllegalArgumentException();
+		
 		producto.eliminar();
 		inventario.remove(producto.getNombre());
 		return true;
@@ -166,9 +176,14 @@ public class Almacen {
 	 * @param categorias Nuevas categorias del producto
 	 * @return ture si se pudo modificar, false si no se pudo
 	 */
-	public boolean modificarProducto(Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) {
-		if(!this.categorias.containsKey(producto.getNombre()))
+	public boolean modificarProducto(Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) 
+			throws IllegalArgumentException, IncompatibleCategoriesException {
+		if(producto == null || udsStock < 0 || nombre == null || desc == null || precio < 0 || categorias == null) throw new IllegalArgumentException();
+		
+		if(!this.inventario.containsKey(producto.getNombre()))
 			return false;
+		
+		producto.setCategorias(categorias);	/*Se puede lanzar una excepción aquí si las categorias son incompatibles*/
 		
 		Stock st = this.getStock(producto);
 		st.setUdsEnStock(udsStock);
@@ -176,10 +191,11 @@ public class Almacen {
 		this.inventario.remove(producto.getNombre());
 		producto.setNombre(nombre);
 		this.inventario.put(nombre, st);
+		
 		producto.setDescripcion(desc);
 		producto.setPrecio(precio);
 		producto.setImagen(imagen);
-		producto.setCategorias(categorias); /* !!! Este metodo puede fallar parcialmente*/
+		
 		return true;
 	}
 	
@@ -252,11 +268,11 @@ public class Almacen {
 	/**
 	 * Crea y añade una categoría al almacén
 	 * @param nombre Nombre de la categoría
-	 * @return true en caso de que se añada correctamente, false en caso contrario
+	 * @return true si se pudo añadir, false si ya existe una categoria con ese nombre
 	 */
-	public boolean anadirCategoria(String nombre) {
-		if(categorias.containsKey(nombre))
-			return false;
+	public boolean anadirCategoria(String nombre) throws IllegalArgumentException {
+		if(nombre == null) throw new IllegalArgumentException();
+		if(categorias.containsKey(nombre)) return false;
 		
 		this.categorias.put(nombre, new Categoria(nombre));
 		return true;
@@ -267,7 +283,9 @@ public class Almacen {
 	 * @param nombre Nombre de la categoría
 	 * @return true en caso de que se elimine correctamente, false en caso contrario
 	 */
-	public boolean eliminarCategoria(Categoria categoria) {
+	public boolean eliminarCategoria(Categoria categoria) throws IllegalArgumentException {
+		if(categoria == null) throw new IllegalArgumentException();
+		
 		categoria.eliminar();
 		categorias.remove(categoria.getNombre());
 		return true;
@@ -279,8 +297,10 @@ public class Almacen {
 	 * @param categoria Categoría que se quiere añadir
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirProductoACategoria(Producto producto, Categoria categoria) {
-			return producto.anadirCategorias(categoria);
+	public boolean anadirProductoACategoria(Producto producto, Categoria categoria) throws IllegalArgumentException, IncompatibleCategoriesException {
+		if(producto == null || categoria == null) throw new IllegalArgumentException();
+		
+		return producto.anadirCategorias(categoria);
 	}
 	
 	/**
@@ -289,7 +309,9 @@ public class Almacen {
 	 * @param categoria Categoría de la que se quiere quitar
 	 * @return true en caso de que se quite correctamente, false en caso contrario
 	 */
-	public boolean quitarProductoDeCategoria(Producto producto, Categoria categoria) {
+	public boolean quitarProductoDeCategoria(Producto producto, Categoria categoria) throws IllegalArgumentException {
+		if(producto == null || categoria == null) throw new IllegalArgumentException();
+		
 		producto.quitarCategorias(categoria);
 		return true;
 	}
@@ -300,7 +322,9 @@ public class Almacen {
 	 * @param nuevoNombre Nuevo nombre para la categoría
 	 * @return true en caso de que se modifique correctamente, false en caso contrario
 	 */
-	public boolean modificarCategoria(Categoria categoria, String nuevoNombre) {
+	public boolean modificarCategoria(Categoria categoria, String nuevoNombre) throws IllegalArgumentException {
+		if(categoria == null || nuevoNombre == null) throw new IllegalArgumentException();
+		
 		if((!categorias.containsKey(categoria.getNombre())) || categorias.containsKey(nuevoNombre)) {
 			return false;
 		}
@@ -320,7 +344,10 @@ public class Almacen {
 	 * @param precio Precio que se descuenta
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoDinero(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) {
+	public boolean anadirDescuentoDinero(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
+			throws IllegalArgumentException, HasDiscountException {
+		if(producto == null || valorMin < 0 || inicio == null || fin == null || condicion == null || precio < 0) throw new IllegalArgumentException();
+		
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
 		if(!producto.anadirDescuento(descuento))
 			return false;
@@ -338,7 +365,10 @@ public class Almacen {
 	 * @param precio Precio que se descuenta
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoDinero(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) {
+	public boolean anadirDescuentoDinero(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
+			throws IllegalArgumentException, HasDiscountException {
+		if(categoria == null || valorMin < 0 || inicio == null || fin == null || condicion == null || precio < 0) throw new IllegalArgumentException();
+		
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
 		if(!categoria.anadirDescuento(descuento))
 			return false;
@@ -356,7 +386,10 @@ public class Almacen {
 	 * @param porcentaje Porcentaje que se descuenta
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoPorcentaje(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) {
+	public boolean anadirDescuentoPorcentaje(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
+			throws IllegalArgumentException, HasDiscountException {
+		if(producto == null || valorMin < 0 || inicio == null || fin == null || condicion == null || porcentaje < 0) throw new IllegalArgumentException();
+		
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
 		if(!producto.anadirDescuento(descuento))
 			return false;
@@ -374,7 +407,10 @@ public class Almacen {
 	 * @param porcentaje Porcentaje que se descuenta
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoPorcentaje(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) {
+	public boolean anadirDescuentoPorcentaje(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
+			throws IllegalArgumentException, HasDiscountException {
+		if(categoria == null || valorMin < 0 || inicio == null || fin == null || condicion == null || porcentaje < 0) throw new IllegalArgumentException();
+		
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
 		if(!categoria.anadirDescuento(descuento))
 			return false;
@@ -392,7 +428,10 @@ public class Almacen {
 	 * @param regalo Regalo que se da
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoRegalo(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) {
+	public boolean anadirDescuentoRegalo(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
+			throws IllegalArgumentException, HasDiscountException {
+		if(producto == null || valorMin < 0 || inicio == null || fin == null || condicion == null || regalo == null) throw new IllegalArgumentException();
+		
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
 		if(!producto.anadirDescuento(descuento))
 			return false;
@@ -410,7 +449,10 @@ public class Almacen {
 	 * @param regalo Regalo que se da
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoRegalo(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) {
+	public boolean anadirDescuentoRegalo(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
+			throws IllegalArgumentException, HasDiscountException {
+		if(categoria == null || valorMin < 0 || inicio == null || fin == null || condicion == null || regalo == null) throw new IllegalArgumentException();
+		
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
 		if(!categoria.anadirDescuento(descuento))
 			return false;
@@ -423,11 +465,7 @@ public class Almacen {
 	 * @return true cuando todos los descuentos caducados hayan sido eliminados
 	 */
 	public boolean eliminarDescuentosCaducados() {
-		for(Descuento d : descuentos) {
-			if(!d.isVigente()) {
-				descuentos.remove(d);
-			}
-		}
+		descuentos.removeIf(d -> !d.isCaducado());
 		return true;
 	}
 	
@@ -436,7 +474,8 @@ public class Almacen {
 	 * @param articulo, Artículo que se añade
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) {
+	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) throws IllegalArgumentException {
+		if(articulo == null) throw new IllegalArgumentException();
 		return articulos.add(articulo);
 	}
 	
@@ -446,6 +485,7 @@ public class Almacen {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
 	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) {
+		if(articulo == null) throw new IllegalArgumentException();
 		return articulos.remove(articulo);
 	}
 	
@@ -456,9 +496,13 @@ public class Almacen {
 	 * @param precioMax Precio máximo de los productos
 	 * @return Producto[], un array de productos que cumplen las condiciones
 	 */
-	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin) {
+	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin) throws IllegalArgumentException {
+		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new IllegalArgumentException();
+		
 		List<Producto> productos = new ArrayList<>();
 		for(Categoria c : categorias) {
+			if(c == null) continue;
+			
 			for(Producto p : c.getProductos()) {
 				if(p.getPrecio() >= precioMin && p.getPrecio() <= precioMax && p.getPuntuacionMedia() >= estrellasMin) {
 					productos.add(p);

@@ -1,5 +1,6 @@
 package venta.productos;
 
+import exceptions.*;
 import java.util.*;
 
 import javax.swing.ImageIcon;
@@ -16,9 +17,18 @@ public class Pack extends Producto {
 	 * @param imagen Imagen del pack
 	 * @param categorias Array de categorías del pack
 	 */
-	public Pack(Stock[] stocks, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) {
+	public Pack(Stock[] stocks, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) 
+			throws PackDemasiadoPequeno, IncompatibleCategoriesException, IllegalArgumentException {
 		super(nombre, desc, precio, imagen, categorias);
-		if(stocks.length < 2) throw new IllegalArgumentException("No se puede crear un pack con menos de dos productos distintos\n");
+		
+		if(stocks == null) throw new IllegalArgumentException("Array de stocks nulo");
+		for(Stock st : stocks) {
+			if(st == null) throw new IllegalArgumentException("Stock null entre los stocks del pack");
+		}
+		
+		if((stocks.length == 1 && stocks[0].getUdsEnStock() < 2) || stocks.length == 0){
+			throw new PackDemasiadoPequeno("No se puede crear un pack con menos de dos productos");
+		}
 		for(Stock s : stocks) productos.add(s);
 	}
 	

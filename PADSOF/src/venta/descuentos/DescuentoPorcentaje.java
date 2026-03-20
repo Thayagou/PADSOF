@@ -13,8 +13,10 @@ public class DescuentoPorcentaje extends Descuento {
 	 * @param condicion Tipo de condicion del descuento
 	 * @param porcentaje Porcentaje de dinero que se descuenta si se aplica el descuento
 	 */
-	public DescuentoPorcentaje(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) {
+	public DescuentoPorcentaje(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) throws IllegalArgumentException {
 		super(valorMin, inicio, fin, condicion);
+		
+		if(porcentaje < 0 || porcentaje > 100) throw new IllegalArgumentException();
 		this.porcentaje = porcentaje;
 	}
 	
@@ -23,7 +25,9 @@ public class DescuentoPorcentaje extends Descuento {
 	 * Le resta al precio original el porcentaje del descuento.
 	 */
 	@Override
-	public double getPrecioDescontado(int numUds, double volumen, double precio) {
+	public double getPrecioDescontado(int numUds, double volumen, double precio) throws IllegalArgumentException {
+		if(numUds < 0 || volumen < 0 || precio < 0) throw new IllegalArgumentException();
+		
 		if(this.cumpleCondiciones(numUds, volumen)) {
 			return precio-(precio*(porcentaje/100));
 		} else {
