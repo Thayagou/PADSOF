@@ -9,6 +9,7 @@ import usuario.*;
 import venta.productos.*;
 import wallapop.ArticuloSegundaMano;
 import wallapop.Intercambio;
+import wallapop.Valoracion;
 import venta.pedidos.*;
 
 /**
@@ -184,7 +185,10 @@ public class Tienda {
 	 */
 	public boolean aceptarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) {
 		cliente.getCartera().aceptarIntercambio(intercambio);
-		
+		for(Empleado e : this.getEmpleados()) {
+			e.enviarNotificacion("Un nuevo intercambio ha sido aceptado", TipoNotificacion.INTERCAMBIO);
+		}
+		cliente.enviarNotificacion("Su oferta de intercambio ha sido aceptada", TipoNotificacion.INTERCAMBIO);
 		return true;
 	}
 	
@@ -195,6 +199,8 @@ public class Tienda {
 	 * @return boolean, true si el intercambio se ha rechazado correctamente, false en caso contrario
 	 */
 	public boolean rechazarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) {
+		cliente.getCartera().rechazarIntercambio(intercambio);
+		cliente.enviarNotificacion("Su oferta de intercambio ha sido rechazada", TipoNotificacion.INTERCAMBIO);
 		return true;
 	}
 	
@@ -206,6 +212,15 @@ public class Tienda {
 	 * @return boolean, true si el intercambio se ha hecho correctamente, false en caso contrario
 	 */
 	public boolean hacerOfertaIntercambio(ClienteRegistrado cliente, ArticuloSegundaMano[] ofrecidos, ArticuloSegundaMano[] solicitados) {
+		ClienteRegistrado clienteRecibe = solicitados[0].getDueno().getDueno();
+		if(clienteRecibe == null) return false;
+		
+		Intercambio intercambio = new Intercambio(ofrecidos, solicitados);
+		historial.guardarIntercambio(intercambio);
+		
+		cliente.getCartera().addIntercambio(intercambio);
+		clienteRecibe.getCartera().addIntercambio(intercambio);
+		clienteRecibe.enviarNotificacion("Ha recibido una nueva oferta de intercambio", TipoNotificacion.INTERCAMBIO);
 		return true;
 	}
 	
@@ -216,6 +231,14 @@ public class Tienda {
 	 * @return boolean, true si la solicitud se ha hecho, false en caso contrario
 	 */
 	public boolean solicitarValoracion(ClienteRegistrado cliente, ArticuloSegundaMano articulo) {
+		if(cliente == null || articulo == null) return false;
+		Valoracion valoracion = new Valoracion(articulo);
+		articulo.anadirValoracion(valoracion);
+		historial.guardarValoracion(valoracion);
+		
+		for(Empleado e : this.getEmpleados()) {
+			e.enviarNotificacion("Se ha hecho una nueva solicitud de valoración de un artículo de segunda mano", TipoNotificacion.VALORACION);
+		}
 		return true;
 	}
 	
@@ -310,8 +333,7 @@ public class Tienda {
 		getHistorial().guardarPedido(pedido);
 		long codigoPedido = pedido.getId();
 		
-		Notificacion notificacion = new Notificacion("Tu pedido con código "+codigoPedido+" ya está pagado! Se te notificará cuando esté listo para recoger.", TipoNotificacion.PEDIDO);
-		cliente.addNotificacion(notificacion);
+		cliente.enviarNotificacion("Tu pedido con código "+codigoPedido+" ya está pagado! Se te notificará cuando esté listo para recoger.", TipoNotificacion.PEDIDO);
 		
 		return true;
 	}
