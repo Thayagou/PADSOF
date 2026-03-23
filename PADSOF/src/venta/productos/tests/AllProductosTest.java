@@ -1,5 +1,10 @@
 package venta.productos.tests;
 
+/**
+ * Clase que ejecuta todos los tests del paquete productos
+ * 
+ * @author Juan Ibáñez
+ */
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 

@@ -10,6 +10,11 @@ import exceptions.*;
 import venta.descuentos.*;
 import venta.productos.*;
 
+/**
+ * Clase con los tests de los métodos de la clase Categoria
+ * 
+ * @author Juan Ibáñez
+ */
 class CategoriaTest {
 
     private Categoria categoria;
@@ -114,7 +119,7 @@ class CategoriaTest {
         Descuento d1 = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         Descuento d2 = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 20);
         categoria.anadirDescuento(d1);
-        assertThrows(HasDiscountException.class, () -> categoria.anadirDescuento(d2));
+        assertThrows(DoubleDiscountException.class, () -> categoria.anadirDescuento(d2));
     }
 
     @Test
@@ -124,7 +129,7 @@ class CategoriaTest {
         Descuento dCategoria = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 20);
         producto1.anadirCategorias(categoria);
         producto1.anadirDescuento(dProducto);
-        assertThrows(HasDiscountException.class, () -> categoria.anadirDescuento(dCategoria));
+        assertThrows(DoubleDiscountException.class, () -> categoria.anadirDescuento(dCategoria));
     }
 
     @Test

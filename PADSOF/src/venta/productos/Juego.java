@@ -2,8 +2,13 @@ package venta.productos;
 
 import javax.swing.ImageIcon;
 
-import exceptions.IncompatibleCategoriesException;
+import exceptions.*;
 
+/**
+ * Clase que define el subtipo de Producto, Juego
+ * 
+ * @author Juan Ibáñez
+ */
 public class Juego extends Producto {
 	private int numJugadores;
 	private String rangoEdad;
@@ -21,10 +26,11 @@ public class Juego extends Producto {
 	 * @param categorias Array de categorías del juego
 	 */
 	public Juego(String nombre, String desc, double precio, ImageIcon imagen, int numJug, String rango, TipoJuego tipo, Categoria...categorias) 
-			throws IllegalArgumentException, IncompatibleCategoriesException {
+			throws InvalidArgumentException, DoubleDiscountException {
 		super(nombre, desc, precio, imagen, categorias);
 		
-		if(numJug < 0 || rango == null || tipo == null) throw new IllegalArgumentException();
+		if(rango == null || tipo == null) throw new InvalidArgumentException("No se pueden dejar características vacías");
+		if(numJug < 0) throw new InvalidArgumentException("El número de jugadores no puede ser negativo");
 		
 		this.numJugadores = numJug;
 		this.rangoEdad = rango;

@@ -6,6 +6,11 @@ import org.junit.jupiter.api.*;
 
 import venta.productos.*;
 
+/**
+ * Clase con los tests de los métodos de la clase StockExterno
+ * 
+ * @author Juan Ibáñez
+ */
 class StockExternoTest {
 
     private Producto producto;

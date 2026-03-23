@@ -10,6 +10,11 @@ import usuario.*;
 import venta.pedidos.*;
 import venta.productos.*;
 
+/**
+ * Clase con los tests de los métodos de la clase Pedido
+ * 
+ * @author Juan Ibáñez
+ */
 public class PedidoTest {
 
     private ClienteRegistrado cliente;

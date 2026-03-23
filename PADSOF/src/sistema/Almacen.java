@@ -29,6 +29,14 @@ public class Almacen {
 	public Almacen() { }
 	
 	/**
+	 * Método para obtener todas las categorías del almacen
+	 * @return Array de categorías del almacen
+	 */
+	public Categoria[] getCategorias() {
+		return categorias.values().toArray(new Categoria[0]);
+	}
+	
+	/**
 	 * Crea y añade un nuevo cómic al inventario
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
@@ -43,7 +51,7 @@ public class Almacen {
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
 	public boolean anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
-			throws IllegalArgumentException, IncompatibleCategoriesException {
+			throws InvalidArgumentException, DoubleDiscountException {
 		if(inventario.containsKey(nombre)) 
 			return false;
 			
@@ -66,7 +74,7 @@ public class Almacen {
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
 	public boolean anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
-			throws IllegalArgumentException, IncompatibleCategoriesException{
+			throws InvalidArgumentException, DoubleDiscountException {
 		if(inventario.containsKey(nombre))
 			return false;
 			
@@ -89,7 +97,7 @@ public class Almacen {
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
 	public boolean anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
-			throws IllegalArgumentException, IncompatibleCategoriesException{
+			throws InvalidArgumentException, DoubleDiscountException {
 		if(inventario.containsKey(nombre))
 			return false;
 	
@@ -110,7 +118,7 @@ public class Almacen {
 	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
 	public boolean anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
-			throws IllegalArgumentException, IncompatibleCategoriesException, PackDemasiadoPequeno {
+			throws InvalidArgumentException, DoubleDiscountException {
 		if(inventario.containsKey(nombre))
 			return false;
 		
@@ -124,8 +132,8 @@ public class Almacen {
 	 * @param producto Producto del que se devuelve las unidades
 	 * @return int, unidades en stock del producto, -1 en caso de error
 	 */
-	public int getUnidades(Producto producto) throws IllegalArgumentException {
-		if(producto == null) throw new IllegalArgumentException();
+	public int getUnidades(Producto producto) throws InvalidArgumentException {
+		if(producto == null) throw new InvalidArgumentException("El producto no puede ser null");
 		
 		Stock s = inventario.get(producto.getNombre());
 		if(s == null)
@@ -138,8 +146,8 @@ public class Almacen {
 	 * @param producto Producto del que se quiere el stock
 	 * @return Stock del producto
 	 */
-	public Stock getStock(Producto producto) throws IllegalArgumentException {
-		if(producto == null) throw new IllegalArgumentException();
+	public Stock getStock(Producto producto) throws InvalidArgumentException {
+		if(producto == null) throw new InvalidArgumentException("El producto no puede ser null");
 		return inventario.get(producto.getNombre());
 	}
 	
@@ -157,8 +165,8 @@ public class Almacen {
 	 * @param producto Producto que se quiere eliminar
 	 * @return true si se elimina correctamente
 	 */
-	public boolean eliminarProducto(Producto producto) throws IllegalArgumentException {
-		if(producto == null) throw new IllegalArgumentException();
+	public boolean eliminarProducto(Producto producto) throws InvalidArgumentException {
+		if(producto == null) throw new InvalidArgumentException("El producto a eliminar no puede ser null");
 		
 		producto.eliminar();
 		inventario.remove(producto.getNombre());
@@ -177,8 +185,11 @@ public class Almacen {
 	 * @return ture si se pudo modificar, false si no se pudo
 	 */
 	public boolean modificarProducto(Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) 
-			throws IllegalArgumentException, IncompatibleCategoriesException {
-		if(producto == null || udsStock < 0 || nombre == null || desc == null || precio < 0 || categorias == null) throw new IllegalArgumentException();
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(producto == null || nombre == null || desc == null || categorias == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(udsStock < 0) throw new InvalidArgumentException("Las unidades en stock no pueden ser negativas");
+		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo");
+		
 		
 		if(!this.inventario.containsKey(producto.getNombre()))
 			return false;
@@ -204,7 +215,8 @@ public class Almacen {
 	 * @param fProductos, nombre del fichero con datos de productos a añadir
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
 	 */
-	public boolean anadirProductosDeFichero(String fProductos) {
+	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException {
+		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío");
 		String linea;
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(fProductos))) {
@@ -270,8 +282,8 @@ public class Almacen {
 	 * @param nombre Nombre de la categoría
 	 * @return true si se pudo añadir, false si ya existe una categoria con ese nombre
 	 */
-	public boolean anadirCategoria(String nombre) throws IllegalArgumentException {
-		if(nombre == null) throw new IllegalArgumentException();
+	public boolean anadirCategoria(String nombre) throws InvalidArgumentException {
+		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
 		if(categorias.containsKey(nombre)) return false;
 		
 		this.categorias.put(nombre, new Categoria(nombre));
@@ -283,8 +295,8 @@ public class Almacen {
 	 * @param nombre Nombre de la categoría
 	 * @return true en caso de que se elimine correctamente, false en caso contrario
 	 */
-	public boolean eliminarCategoria(Categoria categoria) throws IllegalArgumentException {
-		if(categoria == null) throw new IllegalArgumentException();
+	public boolean eliminarCategoria(Categoria categoria) throws InvalidArgumentException {
+		if(categoria == null) throw new InvalidArgumentException("La categoría a eliminar no puede ser null");
 		
 		categoria.eliminar();
 		categorias.remove(categoria.getNombre());
@@ -297,8 +309,9 @@ public class Almacen {
 	 * @param categoria Categoría que se quiere añadir
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirProductoACategoria(Producto producto, Categoria categoria) throws IllegalArgumentException, IncompatibleCategoriesException {
-		if(producto == null || categoria == null) throw new IllegalArgumentException();
+	public boolean anadirProductoACategoria(Producto producto, Categoria categoria)
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
 		
 		return producto.anadirCategorias(categoria);
 	}
@@ -309,8 +322,8 @@ public class Almacen {
 	 * @param categoria Categoría de la que se quiere quitar
 	 * @return true en caso de que se quite correctamente, false en caso contrario
 	 */
-	public boolean quitarProductoDeCategoria(Producto producto, Categoria categoria) throws IllegalArgumentException {
-		if(producto == null || categoria == null) throw new IllegalArgumentException();
+	public boolean quitarProductoDeCategoria(Producto producto, Categoria categoria) throws InvalidArgumentException {
+		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
 		
 		producto.quitarCategorias(categoria);
 		return true;
@@ -322,8 +335,8 @@ public class Almacen {
 	 * @param nuevoNombre Nuevo nombre para la categoría
 	 * @return true en caso de que se modifique correctamente, false en caso contrario
 	 */
-	public boolean modificarCategoria(Categoria categoria, String nuevoNombre) throws IllegalArgumentException {
-		if(categoria == null || nuevoNombre == null) throw new IllegalArgumentException();
+	public boolean modificarCategoria(Categoria categoria, String nuevoNombre) throws InvalidArgumentException {
+		if(categoria == null || nuevoNombre == null) throw new InvalidArgumentException("La categoría y el nombre no pueden ser null");
 		
 		if((!categorias.containsKey(categoria.getNombre())) || categorias.containsKey(nuevoNombre)) {
 			return false;
@@ -345,8 +358,8 @@ public class Almacen {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
 	public boolean anadirDescuentoDinero(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
-			throws IllegalArgumentException, HasDiscountException {
-		if(producto == null || valorMin < 0 || inicio == null || fin == null || condicion == null || precio < 0) throw new IllegalArgumentException();
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(producto == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
 		if(!producto.anadirDescuento(descuento))
@@ -366,8 +379,8 @@ public class Almacen {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
 	public boolean anadirDescuentoDinero(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
-			throws IllegalArgumentException, HasDiscountException {
-		if(categoria == null || valorMin < 0 || inicio == null || fin == null || condicion == null || precio < 0) throw new IllegalArgumentException();
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(categoria == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
 		if(!categoria.anadirDescuento(descuento))
@@ -387,8 +400,8 @@ public class Almacen {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
 	public boolean anadirDescuentoPorcentaje(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
-			throws IllegalArgumentException, HasDiscountException {
-		if(producto == null || valorMin < 0 || inicio == null || fin == null || condicion == null || porcentaje < 0) throw new IllegalArgumentException();
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(producto == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
 		if(!producto.anadirDescuento(descuento))
@@ -408,8 +421,8 @@ public class Almacen {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
 	public boolean anadirDescuentoPorcentaje(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
-			throws IllegalArgumentException, HasDiscountException {
-		if(categoria == null || valorMin < 0 || inicio == null || fin == null || condicion == null || porcentaje < 0) throw new IllegalArgumentException();
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(categoria == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
 		if(!categoria.anadirDescuento(descuento))
@@ -429,8 +442,8 @@ public class Almacen {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
 	public boolean anadirDescuentoRegalo(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
-			throws IllegalArgumentException, HasDiscountException {
-		if(producto == null || valorMin < 0 || inicio == null || fin == null || condicion == null || regalo == null) throw new IllegalArgumentException();
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(producto == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
 		if(!producto.anadirDescuento(descuento))
@@ -450,8 +463,8 @@ public class Almacen {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
 	public boolean anadirDescuentoRegalo(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
-			throws IllegalArgumentException, HasDiscountException {
-		if(categoria == null || valorMin < 0 || inicio == null || fin == null || condicion == null || regalo == null) throw new IllegalArgumentException();
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(categoria == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
 		if(!categoria.anadirDescuento(descuento))

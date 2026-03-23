@@ -13,6 +13,11 @@ import org.junit.jupiter.api.*;
 
 import exceptions.*;
 
+/**
+ * Clase con los tests de los métodos de la clase Producto
+ * 
+ * @author Juan Ibáñez
+ */
 class ProductoTest {
 	private Producto producto;
 	private Categoria cat1;
@@ -156,7 +161,7 @@ class ProductoTest {
         Descuento d1 = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         Descuento d2 = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 20);
         producto.anadirDescuento(d1);
-        assertThrows(HasDiscountException.class, () -> producto.anadirDescuento(d2));
+        assertThrows(DoubleDiscountException.class, () -> producto.anadirDescuento(d2));
     }
     
     @Test

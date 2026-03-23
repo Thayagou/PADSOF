@@ -9,6 +9,11 @@ import java.time.*;
 import venta.descuentos.*;
 import venta.productos.*;
 
+/**
+ * Clase con los tests de los métodos de las subclases de Descuento
+ * 
+ * @author Juan Ibáñez
+ */
 class DescuentoSubTest {
 
     private Producto regalo;

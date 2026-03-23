@@ -9,6 +9,11 @@ import java.time.*;
 import usuario.*;
 import venta.productos.*;
 
+/**
+ * Clase con los tests de la clase Resena
+ * 
+ * @author Juan Ibáñez
+ */
 class ResenaTest {
 
     private ClienteRegistrado usuario;

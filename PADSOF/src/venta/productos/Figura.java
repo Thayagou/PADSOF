@@ -2,8 +2,13 @@ package venta.productos;
 
 import javax.swing.ImageIcon;
 
-import exceptions.IncompatibleCategoriesException;
+import exceptions.*;
 
+/**
+ * Clase que define el subtipo de Procuto, Figura
+ * 
+ * @author Juan Ibáñez
+ */
 public class Figura extends Producto {
 	private String dimensiones;
 	private String marca;
@@ -21,10 +26,10 @@ public class Figura extends Producto {
 	 * @param categorias Array de categorias de la figura
 	 */
 	public Figura(String nombre, String desc, double precio, ImageIcon imagen, String dim, String marca, String material, Categoria...categorias) 
-			throws IllegalArgumentException, IncompatibleCategoriesException {
+			throws InvalidArgumentException, DoubleDiscountException {
 		super(nombre, desc, precio, imagen, categorias);
 		
-		if(dim == null || marca == null || material == null) throw new IllegalArgumentException();
+		if(dim == null || marca == null || material == null) throw new InvalidArgumentException("No se pueden dejar características vacías");
 		
 		this.dimensiones = dim;
 		this.marca = marca;

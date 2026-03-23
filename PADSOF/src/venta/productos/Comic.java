@@ -4,8 +4,15 @@ import java.time.*;
 
 import javax.swing.ImageIcon;
 
+import exceptions.DoubleDiscountException;
 import exceptions.IncompatibleCategoriesException;
+import exceptions.InvalidArgumentException;
 
+/**
+ * Clase que define el subtipo de Producto, Comic
+ * 
+ * @author Juan Ibáñez
+ */
 public class Comic extends Producto {
 	private LocalDate fechaPublicacion;
 	private String autor;
@@ -25,10 +32,11 @@ public class Comic extends Producto {
 	 * @param categorias Array de categorías del cómic
 	 */
 	public Comic(String nombre, String desc, double precio, ImageIcon imagen, LocalDate fecha, String autor, int pags, String editorial, Categoria...categorias) 
-			throws IllegalArgumentException, IncompatibleCategoriesException {
+			throws InvalidArgumentException, DoubleDiscountException {
 		super(nombre, desc, precio, imagen, categorias);
 		
-		if(fecha == null || autor == null || pags < 0 || editorial == null) throw new IllegalArgumentException();
+		if(fecha == null || autor == null || editorial == null) throw new InvalidArgumentException("No se pueden dejar características vacías");
+		if(pags < 0) throw new InvalidArgumentException("El número de páginas no puede ser negativo");
 		
 		this.fechaPublicacion = fecha;
 		this.autor = autor;

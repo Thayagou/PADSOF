@@ -9,6 +9,11 @@ import java.time.*;
 import exceptions.*;
 import venta.productos.*;
 
+/**
+ * Clase con los tests de los métodos de las subclases de Producto
+ * 
+ * @author Juan Ibáñez
+ */
 class ProductoSubTest {
 
     private Categoria cat1;

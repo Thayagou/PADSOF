@@ -1,5 +1,10 @@
 package venta.pedidos;
 
+/**
+ * Clase enum con los posibles estados de un pedido
+ * 
+ * @author Juan Ibáñez
+ */
 public enum EstadoPedido {
 	PAGADO,
 	EN_PREPARACION,
