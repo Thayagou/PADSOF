@@ -30,14 +30,6 @@ public class Almacen {
 	public Almacen() { }
 	
 	/**
-	 * Método para obtener todas las categorías del almacen
-	 * @return Array de categorías del almacen
-	 */
-	public Categoria[] getCategorias() {
-		return categorias.values().toArray(new Categoria[0]);
-	}
-	
-	/**
 	 * Crea y añade un nuevo cómic al inventario
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
@@ -143,6 +135,14 @@ public class Almacen {
 	}
 	
 	/**
+	 * Método para obtener todas las categorías del almacen
+	 * @return Array de categorías del almacen
+	 */
+	public Categoria[] getCategorias() {
+		return categorias.values().toArray(new Categoria[0]);
+	}
+	
+	/**
 	 * Método para obtener el stock de un producto
 	 * @param producto Producto del que se quiere el stock
 	 * @return Stock del producto
@@ -157,7 +157,8 @@ public class Almacen {
 	 * @param nombre Nombre del producto
 	 * @return Stock del producto con ese nombre
 	 */
-	public Stock getStock(String nombre) {
+	public Stock getStock(String nombre) throws InvalidArgumentException {
+		if(!inventario.containsKey(nombre)) throw new InvalidArgumentException("El producto no se encuantra en la tienda");
 		return inventario.get(nombre);
 	}
 	
@@ -215,8 +216,9 @@ public class Almacen {
 	 * Añade una lista de productos desde un fichero
 	 * @param fProductos, nombre del fichero con datos de productos a añadir
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
+	 * @throws DoubleDiscountException, IncompatibleCategoriesException 
 	 */
-	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException {
+	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException, DoubleDiscountException, IncompatibleCategoriesException {
 		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío");
 		String linea;
 		
@@ -307,7 +309,8 @@ public class Almacen {
 	 * @param nombre Nombre de la categoría
 	 * @return Categoría con el nombre que se introduce
 	 */
-	public Categoria getCategoria(String nombre) {
+	public Categoria getCategoria(String nombre) throws InvalidArgumentException {
+		if(!categorias.containsKey(nombre)) throw new InvalidArgumentException("La categoria no se encuentra en la tienda");
 		return categorias.get(nombre);
 	}
 	
@@ -521,8 +524,8 @@ public class Almacen {
 	 * @param articulo, Artículo que se añade
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) throws IllegalArgumentException {
-		if(articulo == null) throw new IllegalArgumentException();
+	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) throws InvalidArgumentException {
+		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null");
 		return articulos.add(articulo);
 	}
 	
@@ -531,8 +534,8 @@ public class Almacen {
 	 * @param articulo, Artículo que se elimina
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) {
-		if(articulo == null) throw new IllegalArgumentException();
+	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) throws InvalidArgumentException {
+		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null");
 		return articulos.remove(articulo);
 	}
 	
@@ -542,9 +545,10 @@ public class Almacen {
 	 * @param precioMin Precio mínimo de los productos
 	 * @param precioMax Precio máximo de los productos
 	 * @return Producto[], un array de productos que cumplen las condiciones
+	 * @throws InvalidArgumentException 
 	 */
-	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin) throws IllegalArgumentException {
-		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new IllegalArgumentException();
+	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin) throws InvalidArgumentException {
+		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
 		
 		List<Producto> productos = new ArrayList<>();
 		for(Categoria c : categorias) {

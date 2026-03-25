@@ -250,8 +250,9 @@ public class Tienda {
 	 * @param usrName Nombre del usuario a cuyo carrito se añade el producto
 	 * @param producto Producto que se añade al carrito
 	 * @return true si se pudo añadir el producto, false si no
+	 * @throws InvalidArgumentException
 	 */
-	public boolean anadirACarritoDe(String usrName, Producto producto) {
+	public boolean anadirACarritoDe(String usrName, Producto producto) throws InvalidArgumentException {
 		ClienteRegistrado cliente = getCliente(usrName);
 		Stock st = almacen.getStock(producto);
 		if(cliente == null || producto == null || st == null) return false;
@@ -268,8 +269,9 @@ public class Tienda {
 	 * @param usrName Nombre del cliente con el carrito
 	 * @param producto Producto que se quiere quitar (una unidad)
 	 * @return true si se pudo quitar el producto, false si no
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean quitarDeCarritoDe(String usrName, Producto producto) {
+	public boolean quitarDeCarritoDe(String usrName, Producto producto) throws InvalidArgumentException {
 		ClienteRegistrado cliente = getCliente(usrName);
 		Stock st = almacen.getStock(producto);
 		if(cliente == null || producto == null || st == null) return false;
@@ -283,8 +285,9 @@ public class Tienda {
 	 * Método para cancelar el carrito de un cliente, devolviendo el stock a la tienda
 	 * @param usrName Nombre del cliente del que se cancela el carrito
 	 * @return true si se pudo cancelar el carrito, false si no existe el cliente
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean cancelarCarritoDe(String usrName) {
+	public boolean cancelarCarritoDe(String usrName) throws InvalidArgumentException {
 		ClienteRegistrado cliente = getCliente(usrName);
 		if(cliente == null) return false;
 		
