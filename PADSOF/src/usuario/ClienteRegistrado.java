@@ -15,7 +15,8 @@ public class ClienteRegistrado extends Usuario {
 	private Set<TipoNotificacion> intereses;
 	private List<Pedido> misCompras;
 	
-	public ClienteRegistrado(String nombre, String contrasena) {
+	public ClienteRegistrado(String nombre, String contrasena) 
+			throws IllegalArgumentException {
 		super(nombre, contrasena);
 		this.carrito = new Carrito();
 		this.cartera = new Cartera(this);

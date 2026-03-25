@@ -4,7 +4,9 @@ public abstract class Usuario {
 	private String nombre;
 	protected String contrasena;
 
-	public Usuario(String nombre, String contrasena) {
+	public Usuario(String nombre, String contrasena) 
+		throws IllegalArgumentException {
+		if(nombre == null || contrasena == null) throw new NullPointerException("Null arguments for creating new user");
 		this.nombre = nombre;
 		this.contrasena = contrasena;
 	}

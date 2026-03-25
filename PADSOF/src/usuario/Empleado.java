@@ -7,7 +7,8 @@ public class Empleado extends Usuario{
 	private List<Notificacion> notificaciones;
 	private boolean deAlta;
 	
-	public Empleado(String nombre, String contrasena, Permiso...perms) {
+	public Empleado(String nombre, String contrasena, Permiso...perms) 
+			throws IllegalArgumentException {
 		super(nombre, contrasena);
 		
 		if(perms.length > 3) {

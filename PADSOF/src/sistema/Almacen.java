@@ -1,6 +1,7 @@
 package sistema;
 
 import java.io.*;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -27,14 +28,6 @@ public class Almacen {
 	 * Crea un nuevo almacen
 	 */
 	public Almacen() { }
-	
-	/**
-	 * Método para obtener todas las categorías del almacen
-	 * @return Array de categorías del almacen
-	 */
-	public Categoria[] getCategorias() {
-		return categorias.values().toArray(new Categoria[0]);
-	}
 	
 	/**
 	 * Crea y añade un nuevo cómic al inventario
@@ -142,6 +135,14 @@ public class Almacen {
 	}
 	
 	/**
+	 * Método para obtener todas las categorías del almacen
+	 * @return Array de categorías del almacen
+	 */
+	public Categoria[] getCategorias() {
+		return categorias.values().toArray(new Categoria[0]);
+	}
+	
+	/**
 	 * Método para obtener el stock de un producto
 	 * @param producto Producto del que se quiere el stock
 	 * @return Stock del producto
@@ -156,7 +157,8 @@ public class Almacen {
 	 * @param nombre Nombre del producto
 	 * @return Stock del producto con ese nombre
 	 */
-	public Stock getStock(String nombre) {
+	public Stock getStock(String nombre) throws InvalidArgumentException {
+		if(!inventario.containsKey(nombre)) throw new InvalidArgumentException("El producto no se encuantra en la tienda");
 		return inventario.get(nombre);
 	}
 	
@@ -214,19 +216,32 @@ public class Almacen {
 	 * Añade una lista de productos desde un fichero
 	 * @param fProductos, nombre del fichero con datos de productos a añadir
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
+	 * @throws DoubleDiscountException, IncompatibleCategoriesException 
 	 */
-	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException {
+	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException, DoubleDiscountException, IncompatibleCategoriesException {
 		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío");
 		String linea;
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(fProductos))) {
 			while((linea = br.readLine()) != null) {
 				String partes[] = linea.split(";");
+				if(partes.length != 16) {
+					throw new IllegalArgumentException("Formato de archivo incorrecto: número de argumentos no es 16");
+				}
+				
 				
 				String nombre = partes[1];
 				String desc = partes[2];
-				double precio = Double.parseDouble(partes[3]);
-				int uds = Integer.parseInt(partes[4]);
+				double precio;
+				int uds;
+				try {
+	                precio = Double.parseDouble(partes[3]);
+	                uds    = Integer.parseInt(partes[4]);
+	            } catch (NumberFormatException e) {
+	                throw new IllegalArgumentException(
+	                    "Datos de producto inválidos: " + e.getMessage(), e
+	                );
+	            }
 				
 				String nombreCateg[] = partes[5].split(",");
 				List <Categoria> categorias = new ArrayList<>();
@@ -234,37 +249,58 @@ public class Almacen {
 					if(this.categorias.containsKey(c)) {
 						categorias.add(this.categorias.get(c));
 					} else {
-						return false;
+						throw new IncompatibleCategoriesException("Categoría no existente: " + c);
 					}
 				}
 				
-				if(partes[0].equals("C")) {
-					int numPags = Integer.parseInt(partes[6]);
-					String autor = partes[7];
-					String editorial = partes[8];
-					String fecha[] = partes[9].split(",");
-					LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
-					
-					this.anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
-				} else if(partes[0].equals("J")) {
-					int numJugs = Integer.parseInt(partes[10]);
-					String rangoEdad = partes[11];
-					TipoJuego tipoJuego = TipoJuego.valueOf(partes[12]);
-					
-					this.anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
-				} else if(partes[0].equals("F")) {
-					String marca = partes[13];
-					String material = partes[14];
-					String dimensiones = partes[15];
-					
-					this.anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
-				} else {
-					return false;
+				switch (partes[0]) {
+					case "C" -> {
+						try {
+							int numPags = Integer.parseInt(partes[6]);
+							String autor = partes[7];
+							String editorial = partes[8];
+							String fecha[] = partes[9].split(",");
+							LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
+							
+							this.anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+						} catch (IllegalArgumentException | DateTimeException e) {
+	                        throw new IllegalArgumentException("Datos de cómic inválidos: " + e.getMessage(), e);
+	                    }
+						
+					}
+					case "J" ->  {
+						try {
+							int numJugs = Integer.parseInt(partes[10]);
+							String rangoEdad = partes[11];
+							TipoJuego tipoJuego = TipoJuego.valueOf(partes[12]);
+							
+							this.anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+						} catch(IllegalArgumentException e) {
+							throw new IllegalArgumentException("Datos de juego inválidos: " + e.getMessage(), e);
+						}
+					}
+					case "F" ->  {
+						try {
+							String marca = partes[13];
+							String material = partes[14];
+							String dimensiones = partes[15];
+							
+							this.anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+						} catch (IllegalArgumentException e) {
+							throw new IllegalArgumentException("Datos de figura inválidos: " + e.getMessage(), e);
+						}
+						
+					}
+					default ->  {
+						throw new IllegalArgumentException("Tipo de producto no existente");
+					}
 				}
 		    }
-		} catch (IOException e) {
-			return false;
-		}
+		} catch (FileNotFoundException e) {
+	        throw new IllegalArgumentException("Fichero no encontrado: " + fProductos, e);
+	    } catch (IOException e) {
+	        throw new IllegalArgumentException("Error de lectura en el fichero: " + e.getMessage(), e);
+	    }
 		return true;
 	}
 	
@@ -273,7 +309,8 @@ public class Almacen {
 	 * @param nombre Nombre de la categoría
 	 * @return Categoría con el nombre que se introduce
 	 */
-	public Categoria getCategoria(String nombre) {
+	public Categoria getCategoria(String nombre) throws InvalidArgumentException {
+		if(!categorias.containsKey(nombre)) throw new InvalidArgumentException("La categoria no se encuentra en la tienda");
 		return categorias.get(nombre);
 	}
 	
@@ -487,8 +524,8 @@ public class Almacen {
 	 * @param articulo, Artículo que se añade
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) throws IllegalArgumentException {
-		if(articulo == null) throw new IllegalArgumentException();
+	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) throws InvalidArgumentException {
+		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null");
 		return articulos.add(articulo);
 	}
 	
@@ -497,8 +534,8 @@ public class Almacen {
 	 * @param articulo, Artículo que se elimina
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) {
-		if(articulo == null) throw new IllegalArgumentException();
+	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) throws InvalidArgumentException {
+		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null");
 		return articulos.remove(articulo);
 	}
 	
@@ -508,9 +545,10 @@ public class Almacen {
 	 * @param precioMin Precio mínimo de los productos
 	 * @param precioMax Precio máximo de los productos
 	 * @return Producto[], un array de productos que cumplen las condiciones
+	 * @throws InvalidArgumentException 
 	 */
-	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin) throws IllegalArgumentException {
-		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new IllegalArgumentException();
+	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin) throws InvalidArgumentException {
+		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
 		
 		List<Producto> productos = new ArrayList<>();
 		for(Categoria c : categorias) {

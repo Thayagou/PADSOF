@@ -7,7 +7,8 @@ import sistema.Sistema;
 
 public class Gestor extends Usuario {
 
-	public Gestor(String nombre, String contrasena) {
+	public Gestor(String nombre, String contrasena) 
+		throws IllegalArgumentException {
 		super(nombre, contrasena);
 	}
 
