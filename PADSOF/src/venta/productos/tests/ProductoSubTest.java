@@ -37,22 +37,22 @@ class ProductoSubTest {
 
     @Test
     void testComicFechaNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Comic("Spiderman", "desc", 10.0, null, null, "Stan Lee", 100, "Marvel"));
+        assertThrows(InvalidArgumentException.class, () -> new Comic("Spiderman", "desc", 10.0, null, null, "Stan Lee", 100, "Marvel"));
     }
 
     @Test
     void testComicAutorNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Comic("Spiderman", "desc", 10.0, null, LocalDate.of(2020, 1, 1), null, 100, "Marvel"));
+        assertThrows(InvalidArgumentException.class, () -> new Comic("Spiderman", "desc", 10.0, null, LocalDate.of(2020, 1, 1), null, 100, "Marvel"));
     }
 
     @Test
     void testComicPaginasNegativas() {
-        assertThrows(IllegalArgumentException.class, () -> new Comic("Spiderman", "desc", 10.0, null, LocalDate.of(2020, 1, 1), "Stan Lee", -1, "Marvel"));
+        assertThrows(InvalidArgumentException.class, () -> new Comic("Spiderman", "desc", 10.0, null, LocalDate.of(2020, 1, 1), "Stan Lee", -1, "Marvel"));
     }
 
     @Test
     void testComicEditorialNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Comic("Spiderman", "desc", 10.0, null, LocalDate.of(2020, 1, 1), "Stan Lee", 100, null));
+        assertThrows(InvalidArgumentException.class, () -> new Comic("Spiderman", "desc", 10.0, null, LocalDate.of(2020, 1, 1), "Stan Lee", 100, null));
     }
 
     // --- Figura ---
@@ -69,17 +69,17 @@ class ProductoSubTest {
 
     @Test
     void testFiguraDimensionesNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Figura("Batman", "desc", 12.0, null, null, "DC", "Plástico"));
+        assertThrows(InvalidArgumentException.class, () -> new Figura("Batman", "desc", 12.0, null, null, "DC", "Plástico"));
     }
 
     @Test
     void testFiguraMarcaNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Figura("Batman", "desc", 12.0, null, "20x12 cm", null, "Plástico"));
+        assertThrows(InvalidArgumentException.class, () -> new Figura("Batman", "desc", 12.0, null, "20x12 cm", null, "Plástico"));
     }
 
     @Test
     void testFiguraMaterialNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Figura("Batman", "desc", 12.0, null, "20x12 cm", "DC", null));
+        assertThrows(InvalidArgumentException.class, () -> new Figura("Batman", "desc", 12.0, null, "20x12 cm", "DC", null));
     }
 
     // --- Juego ---
@@ -96,17 +96,17 @@ class ProductoSubTest {
 
     @Test
     void testJuegoNumJugadoresNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> new Juego("Monopoly", "desc", 25.0, null, -1, "8+", TipoJuego.TABLERO));
+        assertThrows(InvalidArgumentException.class, () -> new Juego("Monopoly", "desc", 25.0, null, -1, "8+", TipoJuego.TABLERO));
     }
 
     @Test
     void testJuegoRangoNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Juego("Monopoly", "desc", 25.0, null, 6, null, TipoJuego.TABLERO));
+        assertThrows(InvalidArgumentException.class, () -> new Juego("Monopoly", "desc", 25.0, null, 6, null, TipoJuego.TABLERO));
     }
 
     @Test
     void testJuegoTipoNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Juego("Monopoly", "desc", 25.0, null, 6, "8+", null));
+        assertThrows(InvalidArgumentException.class, () -> new Juego("Monopoly", "desc", 25.0, null, 6, "8+", null));
     }
 
     // --- Pack ---
@@ -126,26 +126,26 @@ class ProductoSubTest {
 
     @Test
     void testPackStocksNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Pack(null, "Pack", "desc", 20.0, null));
+        assertThrows(InvalidArgumentException.class, () -> new Pack(null, "Pack", "desc", 20.0, null));
     }
 
     @Test
     void testPackStockNullEnArray() throws Exception {
         Producto p1 = new Comic("Spiderman", "desc", 10.0, null, LocalDate.of(2020, 1, 1), "Stan Lee", 100, "Marvel");
         Stock[] stocks = { new Stock(p1, 1), null };
-        assertThrows(IllegalArgumentException.class, () -> new Pack(stocks, "Pack", "desc", 20.0, null));
+        assertThrows(InvalidArgumentException.class, () -> new Pack(stocks, "Pack", "desc", 20.0, null));
     }
 
     @Test
     void testPackDemasiadoPequeno() throws Exception {
         Producto p1 = new Comic("Spiderman", "desc", 10.0, null, LocalDate.of(2020, 1, 1), "Stan Lee", 100, "Marvel");
         Stock[] stocks = { new Stock(p1, 1) };
-        assertThrows(PackDemasiadoPequeno.class, () -> new Pack(stocks, "Pack", "desc", 20.0, null));
+        assertThrows(InvalidArgumentException.class, () -> new Pack(stocks, "Pack", "desc", 20.0, null));
     }
 
     @Test
     void testPackVacio() {
-        assertThrows(PackDemasiadoPequeno.class, () -> new Pack(new Stock[0], "Pack", "desc", 20.0, null));
+        assertThrows(InvalidArgumentException.class, () -> new Pack(new Stock[0], "Pack", "desc", 20.0, null));
     }
 
     @Test

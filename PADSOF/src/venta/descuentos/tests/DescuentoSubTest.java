@@ -8,6 +8,7 @@ import java.time.*;
 
 import venta.descuentos.*;
 import venta.productos.*;
+import exceptions.*;
 
 /**
  * Clase con los tests de los métodos de las subclases de Descuento
@@ -42,36 +43,36 @@ class DescuentoSubTest {
 
     @Test
     void testDescuentoPorcentajeNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, -1));
+        assertThrows(InvalidArgumentException.class, () -> new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, -1));
     }
 
     @Test
     void testDescuentoPorcentajeMayorDeCien() {
-        assertThrows(IllegalArgumentException.class, () -> new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 101));
+        assertThrows(InvalidArgumentException.class, () -> new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 101));
     }
 
     // --- DescuentoPorcentaje getPrecioDescontado ---
 
     @Test
-    void testDescuentoPorcentajeAplicado() {
+    void testDescuentoPorcentajeAplicado() throws Exception {
         Descuento d = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         assertEquals(9.0, d.getPrecioDescontado(1, 0, 10.0));
     }
 
     @Test
-    void testDescuentoPorcentajeNoAplicadoPorCondicion() {
+    void testDescuentoPorcentajeNoAplicadoPorCondicion() throws Exception {
         Descuento d = new DescuentoPorcentaje(5, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.CANTIDAD, 10);
         assertEquals(10.0, d.getPrecioDescontado(3, 0, 10.0));
     }
 
     @Test
-    void testDescuentoPorcentajeCienPorCien() {
+    void testDescuentoPorcentajeCienPorCien() throws Exception {
         Descuento d = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 100);
         assertEquals(0.0, d.getPrecioDescontado(1, 0, 10.0));
     }
 
     @Test
-    void testDescuentoPorcentajeNoVigente() {
+    void testDescuentoPorcentajeNoVigente() throws Exception {
         Descuento d = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         d.finalizarDescuento();
         assertEquals(10.0, d.getPrecioDescontado(1, 0, 10.0));
@@ -91,33 +92,33 @@ class DescuentoSubTest {
 
     @Test
     void testDescuentoDineroNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> new DescuentoDinero(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, -1.0));
+        assertThrows(InvalidArgumentException.class, () -> new DescuentoDinero(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, -1.0));
     }
 
     // --- DescuentoDinero getPrecioDescontado ---
 
     @Test
-    void testDescuentoDineroAplicado() {
+    void testDescuentoDineroAplicado() throws Exception {
         Descuento d = new DescuentoDinero(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 4.0);
         // descuento de 4€ repartido entre 2 uds = 2€ por unidad → 10 - 2 = 8
         assertEquals(8.0, d.getPrecioDescontado(2, 0, 10.0));
     }
 
     @Test
-    void testDescuentoDineroNoAplicadoPorCondicion() {
+    void testDescuentoDineroNoAplicadoPorCondicion() throws Exception {
         Descuento d = new DescuentoDinero(5, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.CANTIDAD, 4.0);
         assertEquals(10.0, d.getPrecioDescontado(3, 0, 10.0));
     }
 
     @Test
-    void testDescuentoDineroNuncaNegativo() {
+    void testDescuentoDineroNuncaNegativo() throws Exception {
         // El descuento es mayor que el precio, debe devolver 0
         Descuento d = new DescuentoDinero(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 100.0);
         assertEquals(0.0, d.getPrecioDescontado(1, 0, 10.0));
     }
 
     @Test
-    void testDescuentoDineroNoVigente() {
+    void testDescuentoDineroNoVigente() throws Exception {
         Descuento d = new DescuentoDinero(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 4.0);
         d.finalizarDescuento();
         assertEquals(10.0, d.getPrecioDescontado(1, 0, 10.0));
@@ -132,39 +133,39 @@ class DescuentoSubTest {
 
     @Test
     void testDescuentoRegaloNull() {
-        assertThrows(IllegalArgumentException.class, () -> new DescuentoRegalo(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, null));
+        assertThrows(InvalidArgumentException.class, () -> new DescuentoRegalo(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, null));
     }
 
     // --- DescuentoRegalo getRegalo ---
 
     @Test
-    void testDescuentoRegaloDevuelveRegalo() {
+    void testDescuentoRegaloDevuelveRegalo() throws Exception {
         Descuento d = new DescuentoRegalo(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, regalo);
         assertEquals(regalo, d.getRegalo(1, 0));
     }
 
     @Test
-    void testDescuentoRegaloNoAplicadoPorCondicion() {
+    void testDescuentoRegaloNoAplicadoPorCondicion() throws Exception {
         Descuento d = new DescuentoRegalo(5, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.CANTIDAD, regalo);
         assertNull(d.getRegalo(3, 0));
     }
 
     @Test
-    void testDescuentoRegaloNoVigente() {
+    void testDescuentoRegaloNoVigente() throws Exception {
         Descuento d = new DescuentoRegalo(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, regalo);
         d.finalizarDescuento();
         assertNull(d.getRegalo(1, 0));
     }
 
     @Test
-    void testDescuentoRegaloNumUdsNegativo() {
+    void testDescuentoRegaloNumUdsNegativo() throws Exception {
         Descuento d = new DescuentoRegalo(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, regalo);
-        assertThrows(IllegalArgumentException.class, () -> d.getRegalo(-1, 0));
+        assertThrows(InvalidArgumentException.class, () -> d.getRegalo(-1, 0));
     }
 
     @Test
-    void testDescuentoRegaloVolumenNegativo() {
+    void testDescuentoRegaloVolumenNegativo() throws Exception {
         Descuento d = new DescuentoRegalo(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, regalo);
-        assertThrows(IllegalArgumentException.class, () -> d.getRegalo(1, -1.0));
+        assertThrows(InvalidArgumentException.class, () -> d.getRegalo(1, -1.0));
     }
 }

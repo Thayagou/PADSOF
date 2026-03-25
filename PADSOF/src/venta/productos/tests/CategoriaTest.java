@@ -40,20 +40,20 @@ class CategoriaTest {
 
     @Test
     void testConstructorNombreNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Categoria(null));
+        assertThrows(InvalidArgumentException.class, () -> new Categoria(null));
     }
 
     // --- setNombre ---
 
     @Test
-    void testSetNombreValido() {
+    void testSetNombreValido() throws Exception {
         categoria.setNombre("Villanos");
         assertEquals("Villanos", categoria.getNombre());
     }
 
     @Test
     void testSetNombreNull() {
-        assertThrows(IllegalArgumentException.class, () -> categoria.setNombre(null));
+        assertThrows(InvalidArgumentException.class, () -> categoria.setNombre(null));
     }
 
     // --- Eliminar / Restaurar ---
@@ -111,7 +111,7 @@ class CategoriaTest {
 
     @Test
     void testAnadirDescuentoNull() {
-        assertThrows(IllegalArgumentException.class, () -> categoria.anadirDescuento(null));
+        assertThrows(InvalidArgumentException.class, () -> categoria.anadirDescuento(null));
     }
 
     @Test

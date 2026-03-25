@@ -42,17 +42,17 @@ class ProductoTest {
 	
 	@Test
     void testConstructorNombreNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Comic(null, "desc", 10.0, null, LocalDate.of(2020,1,1), "autor", 10, "editorial"));
+        assertThrows(InvalidArgumentException.class, () -> new Comic(null, "desc", 10.0, null, LocalDate.of(2020,1,1), "autor", 10, "editorial"));
     }
 
     @Test
     void testConstructorDescNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Comic("nombre", null, 10.0, null, LocalDate.of(2020,1,1), "autor", 10, "editorial"));
+        assertThrows(InvalidArgumentException.class, () -> new Comic("nombre", null, 10.0, null, LocalDate.of(2020,1,1), "autor", 10, "editorial"));
     }
 
     @Test
     void testConstructorPrecioNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> new Comic("nombre", "desc", -1.0, null, LocalDate.of(2020,1,1), "autor", 10, "editorial"));
+        assertThrows(InvalidArgumentException.class, () -> new Comic("nombre", "desc", -1.0, null, LocalDate.of(2020,1,1), "autor", 10, "editorial"));
     }
     
     @Test
@@ -102,12 +102,12 @@ class ProductoTest {
 	
 	@Test
     void testAnadirCategoriaNull() {
-        assertThrows(IllegalArgumentException.class, () -> producto.anadirCategorias((Categoria[]) null));
+        assertThrows(InvalidArgumentException.class, () -> producto.anadirCategorias((Categoria[]) null));
     }
 
     @Test
     void testAnadirCategoriaRepetida() {
-        assertThrows(IncompatibleCategoriesException.class, () -> producto.anadirCategorias(cat1));
+        assertThrows(DoubleDiscountException.class, () -> producto.anadirCategorias(cat1));
     }
     
     @Test
@@ -133,7 +133,7 @@ class ProductoTest {
         Descuento d2 = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 20);
     	cat2.anadirDescuento(d1);
     	producto.anadirDescuento(d2);
-    	assertThrows(IncompatibleCategoriesException.class, () -> producto.anadirCategorias(cat2));
+    	assertThrows(DoubleDiscountException.class, () -> producto.anadirCategorias(cat2));
     }
 
     @Test

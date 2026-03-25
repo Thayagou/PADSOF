@@ -44,8 +44,8 @@ public class StockExterno extends Stock {
 	 * Setter del precio final del producto
 	 * @param precioFinal Precio final de venta de un producto en el contexto de un carrito o pedido
 	 */
-	public void setPrecioUnitarioFinal(double precioFinal) throws IllegalArgumentException{
-		if(precioFinal < 0) throw new IllegalArgumentException("No se puede establecer un precio negativo");
+	public void setPrecioUnitarioFinal(double precioFinal) throws InvalidArgumentException{
+		if(precioFinal < 0) throw new InvalidArgumentException("No se puede establecer un precio negativo");
 		this.precioUnitarioFinal = precioFinal;
 	}
 	

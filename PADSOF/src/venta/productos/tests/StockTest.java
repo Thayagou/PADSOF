@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
 import venta.productos.*;
+import exceptions.*;
 
 /**
  * Clase con los tests de los métodos de la clase Stock
@@ -33,12 +34,12 @@ class StockTest {
 
     @Test
     void testConstructorProductoNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Stock(null, 5));
+        assertThrows(InvalidArgumentException.class, () -> new Stock(null, 5));
     }
 
     @Test
     void testConstructorUnidadesNegativas() {
-        assertThrows(IllegalArgumentException.class, () -> new Stock(producto, -1));
+        assertThrows(InvalidArgumentException.class, () -> new Stock(producto, -1));
     }
 
     @Test
@@ -49,20 +50,20 @@ class StockTest {
     // --- setUdsEnStock ---
 
     @Test
-    void testSetUdsEnStockValido() {
+    void testSetUdsEnStockValido() throws Exception {
         stock.setUdsEnStock(10);
         assertEquals(10, stock.getUdsEnStock());
     }
 
     @Test
-    void testSetUdsEnStockCero() {
+    void testSetUdsEnStockCero() throws Exception {
         stock.setUdsEnStock(0);
         assertEquals(0, stock.getUdsEnStock());
     }
 
     @Test
     void testSetUdsEnStockNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> stock.setUdsEnStock(-1));
+        assertThrows(InvalidArgumentException.class, () -> stock.setUdsEnStock(-1));
     }
 
     // --- reducirStock (1 unidad) ---
@@ -74,7 +75,7 @@ class StockTest {
     }
 
     @Test
-    void testReducirStockConCeroUnidades() {
+    void testReducirStockConCeroUnidades() throws Exception {
         stock.setUdsEnStock(0);
         stock.reducirStock();
         assertEquals(0, stock.getUdsEnStock());
@@ -83,26 +84,26 @@ class StockTest {
     // --- reducirStock (n unidades) ---
 
     @Test
-    void testReducirStockNUnidades() {
+    void testReducirStockNUnidades() throws Exception {
         stock.reducirStock(3);
         assertEquals(2, stock.getUdsEnStock());
     }
 
     @Test
-    void testReducirStockMasDeLoQueHay() {
+    void testReducirStockMasDeLoQueHay() throws Exception {
         stock.reducirStock(10);
         assertEquals(0, stock.getUdsEnStock());
     }
 
     @Test
-    void testReducirStockExactamenteLasQueHay() {
+    void testReducirStockExactamenteLasQueHay() throws Exception {
         stock.reducirStock(5);
         assertEquals(0, stock.getUdsEnStock());
     }
 
     @Test
     void testReducirStockNUnidadesNegativas() {
-        assertThrows(IllegalArgumentException.class, () -> stock.reducirStock(-1));
+        assertThrows(InvalidArgumentException.class, () -> stock.reducirStock(-1));
     }
 
     // --- incrementarStock (1 unidad) ---
@@ -116,20 +117,20 @@ class StockTest {
     // --- incrementarStock (n unidades) ---
 
     @Test
-    void testIncrementarStockNUnidades() {
+    void testIncrementarStockNUnidades() throws Exception {
         stock.incrementarStock(3);
         assertEquals(8, stock.getUdsEnStock());
     }
 
     @Test
-    void testIncrementarStockCeroUnidades() {
+    void testIncrementarStockCeroUnidades() throws Exception {
         stock.incrementarStock(0);
         assertEquals(5, stock.getUdsEnStock());
     }
 
     @Test
     void testIncrementarStockNUnidadesNegativas() {
-        assertThrows(IllegalArgumentException.class, () -> stock.incrementarStock(-1));
+        assertThrows(InvalidArgumentException.class, () -> stock.incrementarStock(-1));
     }
 
     // --- disponible() ---
@@ -140,7 +141,7 @@ class StockTest {
     }
 
     @Test
-    void testDisponibleSinUnidades() {
+    void testDisponibleSinUnidades() throws Exception {
         stock.setUdsEnStock(0);
         assertFalse(stock.disponible());
     }
