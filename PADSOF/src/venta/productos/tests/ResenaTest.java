@@ -8,7 +8,13 @@ import java.time.*;
 
 import usuario.*;
 import venta.productos.*;
+import exceptions.*;
 
+/**
+ * Clase con los tests de la clase Resena
+ * 
+ * @author Juan Ibáñez
+ */
 class ResenaTest {
 
     private ClienteRegistrado usuario;
@@ -33,22 +39,22 @@ class ResenaTest {
 
     @Test
     void testConstructorComentarioNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Resena(4.0, null, usuario));
+        assertThrows(InvalidArgumentException.class, () -> new Resena(4.0, null, usuario));
     }
 
     @Test
     void testConstructorUsuarioNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Resena(4.0, "Muy bueno", null));
+        assertThrows(InvalidArgumentException.class, () -> new Resena(4.0, "Muy bueno", null));
     }
 
     @Test
     void testConstructorPuntuacionNegativa() {
-        assertThrows(IllegalArgumentException.class, () -> new Resena(-1.0, "Muy bueno", usuario));
+        assertThrows(InvalidArgumentException.class, () -> new Resena(-1.0, "Muy bueno", usuario));
     }
 
     @Test
     void testConstructorPuntuacionMayorDeCinco() {
-        assertThrows(IllegalArgumentException.class, () -> new Resena(5.1, "Muy bueno", usuario));
+        assertThrows(InvalidArgumentException.class, () -> new Resena(5.1, "Muy bueno", usuario));
     }
 
     @Test

@@ -1,0 +1,4 @@
+#c: "Comic1" "Este comic es la polla" 20.8 null 13/07/1984 "Claudia" 209 "Anaya" "Aventura Romance Fantasía"
+#j:
+#f:
+#p:

@@ -4,8 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
 
+import exceptions.InvalidArgumentException;
 import venta.productos.*;
 
+/**
+ * Clase con los tests de los métodos de la clase StockExterno
+ * 
+ * @author Juan Ibáñez
+ */
 class StockExternoTest {
 
     private Producto producto;
@@ -29,7 +35,7 @@ class StockExternoTest {
 
     @Test
     void testConstructorConPrecioNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> new StockExterno(producto, 5, -1.0));
+        assertThrows(InvalidArgumentException.class, () -> new StockExterno(producto, 5, -1.0));
     }
 
     @Test
@@ -39,49 +45,49 @@ class StockExternoTest {
 
     @Test
     void testConstructorProductoNull() {
-        assertThrows(IllegalArgumentException.class, () -> new StockExterno(null, 5, 20.0));
+        assertThrows(InvalidArgumentException.class, () -> new StockExterno(null, 5, 20.0));
     }
 
     @Test
     void testConstructorUnidadesNegativas() {
-        assertThrows(IllegalArgumentException.class, () -> new StockExterno(producto, -1, 20.0));
+        assertThrows(InvalidArgumentException.class, () -> new StockExterno(producto, -1, 20.0));
     }
 
     // --- Constructor sin precio ---
 
     @Test
-    void testConstructorSinPrecioUsaPrecioProducto() {
+    void testConstructorSinPrecioUsaPrecioProducto() throws Exception {
         StockExterno se = new StockExterno(producto, 3);
         assertEquals(producto.getPrecio(), se.getPrecioUnitarioFinal());
     }
 
     @Test
     void testConstructorSinPrecioProductoNull() {
-        assertThrows(IllegalArgumentException.class, () -> new StockExterno(null, 5));
+        assertThrows(InvalidArgumentException.class, () -> new StockExterno(null, 5));
     }
 
     @Test
     void testConstructorSinPrecioUnidadesNegativas() {
-        assertThrows(IllegalArgumentException.class, () -> new StockExterno(producto, -1));
+        assertThrows(InvalidArgumentException.class, () -> new StockExterno(producto, -1));
     }
 
     // --- setPrecioUnitarioFinal ---
 
     @Test
-    void testSetPrecioUnitarioFinalValido() {
+    void testSetPrecioUnitarioFinalValido() throws Exception {
         stockExterno.setPrecioUnitarioFinal(30.0);
         assertEquals(30.0, stockExterno.getPrecioUnitarioFinal());
     }
 
     @Test
-    void testSetPrecioUnitarioFinalCero() {
+    void testSetPrecioUnitarioFinalCero() throws Exception {
         stockExterno.setPrecioUnitarioFinal(0.0);
         assertEquals(0.0, stockExterno.getPrecioUnitarioFinal());
     }
 
     @Test
     void testSetPrecioUnitarioFinalNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> stockExterno.setPrecioUnitarioFinal(-1.0));
+        assertThrows(InvalidArgumentException.class, () -> stockExterno.setPrecioUnitarioFinal(-1));
     }
 
     // --- getPrecioTotal ---
@@ -92,19 +98,19 @@ class StockExternoTest {
     }
 
     @Test
-    void testGetPrecioTotalCeroUnidades() {
+    void testGetPrecioTotalCeroUnidades() throws Exception {
         StockExterno se = new StockExterno(producto, 0, 20.0);
         assertEquals(0.0, se.getPrecioTotal());
     }
 
     @Test
-    void testGetPrecioTotalTrasModificarPrecio() {
+    void testGetPrecioTotalTrasModificarPrecio() throws Exception {
         stockExterno.setPrecioUnitarioFinal(10.0);
         assertEquals(50.0, stockExterno.getPrecioTotal());
     }
 
     @Test
-    void testGetPrecioTotalTrasModificarUnidades() {
+    void testGetPrecioTotalTrasModificarUnidades() throws Exception {
         stockExterno.setUdsEnStock(2);
         assertEquals(40.0, stockExterno.getPrecioTotal());
     }
@@ -117,7 +123,7 @@ class StockExternoTest {
     }
 
     @Test
-    void testEqualsDistintoStockExterno() {
+    void testEqualsDistintoStockExterno() throws Exception {
         StockExterno otro = new StockExterno(producto, 5, 20.0);
         assertNotEquals(stockExterno, otro);
     }

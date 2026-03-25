@@ -6,7 +6,13 @@ import java.util.*;
 import sistema.AsignadorId;
 import usuario.*;
 import venta.productos.StockExterno;
+import exceptions.*;
 
+/**
+ * Clase básica Pedido
+ * 
+ * @author Juan Ibáñez
+ */
 public class Pedido {
 	private final long id;
 	private final LocalDateTime fechaPago;
@@ -26,10 +32,10 @@ public class Pedido {
 	 * @param cliente Cliente que realiza el pedido
 	 * @param stocks Array de los stocks externos de los productos del pedido
 	 */
-	public Pedido(ClienteRegistrado cliente, StockExterno...stocks) throws IllegalArgumentException {
-		if(cliente == null || stocks == null) throw new IllegalArgumentException();
+	public Pedido(ClienteRegistrado cliente, StockExterno...stocks) throws InvalidArgumentException {
+		if(cliente == null || stocks == null) throw new InvalidArgumentException("Argumento null en el pedido");
 		for(StockExterno st : stocks) {
-			if(st == null) throw new IllegalArgumentException("StockExterno null entre los items del pedido");
+			if(st == null) throw new InvalidArgumentException("StockExterno null entre los items del pedido");
 		}
 		
 		this.id = AsignadorId.getInstancia().siguienteId();
@@ -129,8 +135,8 @@ public class Pedido {
 	 * Avanza el estado del pedido
 	 * @param emp Empleado que actualiza el estado del pedido
 	 */
-	public void nextEstadoPedido(Empleado emp) throws IllegalArgumentException {
-		if(emp == null) throw new IllegalArgumentException();
+	public void nextEstadoPedido(Empleado emp) throws InvalidArgumentException {
+		if(emp == null) throw new InvalidArgumentException("El empleado no puede ser null");
 		
 		if(estado.ordinal() == EstadoPedido.values().length - 1) return;
 		

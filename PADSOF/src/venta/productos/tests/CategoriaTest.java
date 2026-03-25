@@ -10,6 +10,11 @@ import exceptions.*;
 import venta.descuentos.*;
 import venta.productos.*;
 
+/**
+ * Clase con los tests de los métodos de la clase Categoria
+ * 
+ * @author Juan Ibáñez
+ */
 class CategoriaTest {
 
     private Categoria categoria;
@@ -35,20 +40,20 @@ class CategoriaTest {
 
     @Test
     void testConstructorNombreNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Categoria(null));
+        assertThrows(InvalidArgumentException.class, () -> new Categoria(null));
     }
 
     // --- setNombre ---
 
     @Test
-    void testSetNombreValido() {
+    void testSetNombreValido() throws Exception {
         categoria.setNombre("Villanos");
         assertEquals("Villanos", categoria.getNombre());
     }
 
     @Test
     void testSetNombreNull() {
-        assertThrows(IllegalArgumentException.class, () -> categoria.setNombre(null));
+        assertThrows(InvalidArgumentException.class, () -> categoria.setNombre(null));
     }
 
     // --- Eliminar / Restaurar ---
@@ -106,7 +111,7 @@ class CategoriaTest {
 
     @Test
     void testAnadirDescuentoNull() {
-        assertThrows(IllegalArgumentException.class, () -> categoria.anadirDescuento(null));
+        assertThrows(InvalidArgumentException.class, () -> categoria.anadirDescuento(null));
     }
 
     @Test
@@ -114,7 +119,7 @@ class CategoriaTest {
         Descuento d1 = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         Descuento d2 = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 20);
         categoria.anadirDescuento(d1);
-        assertThrows(HasDiscountException.class, () -> categoria.anadirDescuento(d2));
+        assertThrows(DoubleDiscountException.class, () -> categoria.anadirDescuento(d2));
     }
 
     @Test
@@ -124,7 +129,7 @@ class CategoriaTest {
         Descuento dCategoria = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 20);
         producto1.anadirCategorias(categoria);
         producto1.anadirDescuento(dProducto);
-        assertThrows(HasDiscountException.class, () -> categoria.anadirDescuento(dCategoria));
+        assertThrows(DoubleDiscountException.class, () -> categoria.anadirDescuento(dCategoria));
     }
 
     @Test

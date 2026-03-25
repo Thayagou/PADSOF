@@ -8,7 +8,13 @@ import java.time.*;
 
 import venta.descuentos.*;
 import venta.productos.*;
+import exceptions.*;
 
+/**
+ * Clase con los tests de los métodos de la clase Descuento
+ * 
+ * @author Juan Ibáñez
+ */
 class DescuentoTest {
 
     private Descuento descPorc;
@@ -24,7 +30,7 @@ class DescuentoTest {
     // --- Constructor ---
 
     @Test
-    void testConstructorValido() {
+    void testConstructorValido() throws Exception {
         assertNotNull(descPorc);
         assertEquals(CondicionDescuento.SIN_CONDICION, descPorc.getCondicion());
         assertEquals(0, descPorc.getValorMin());
@@ -35,29 +41,29 @@ class DescuentoTest {
     }
 
     @Test
-    void testConstructorValorMinNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> new DescuentoPorcentaje(-1, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10));
+    void testConstructorValorMinNegativo() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> new DescuentoPorcentaje(-1, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10));
     }
 
     @Test
-    void testConstructorInicioNull() {
-        assertThrows(IllegalArgumentException.class, () -> new DescuentoPorcentaje(0, null, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10));
+    void testConstructorInicioNull() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> new DescuentoPorcentaje(0, null, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10));
     }
 
     @Test
-    void testConstructorFinNull() {
-        assertThrows(IllegalArgumentException.class, () -> new DescuentoPorcentaje(0, LocalDateTime.MIN, null, CondicionDescuento.SIN_CONDICION, 10));
+    void testConstructorFinNull() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> new DescuentoPorcentaje(0, LocalDateTime.MIN, null, CondicionDescuento.SIN_CONDICION, 10));
     }
 
     @Test
-    void testConstructorCondicionNull() {
-        assertThrows(IllegalArgumentException.class, () -> new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, null, 10));
+    void testConstructorCondicionNull() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, null, 10));
     }
 
     // --- getId ---
 
     @Test
-    void testGetIdUnico() {
+    void testGetIdUnico() throws Exception {
         Descuento otro = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         assertNotEquals(descPorc.getId(), otro.getId());
     }
@@ -65,24 +71,24 @@ class DescuentoTest {
     // --- isVigente ---
 
     @Test
-    void testIsVigenteActivo() {
+    void testIsVigenteActivo() throws Exception {
         assertTrue(descPorc.isVigente());
     }
 
     @Test
-    void testIsVigenteNoEmpezado() {
+    void testIsVigenteNoEmpezado() throws Exception {
         Descuento noEmpezado = new DescuentoPorcentaje(0, LocalDateTime.now().plusHours(1), LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         assertFalse(noEmpezado.isVigente());
     }
 
     @Test
-    void testIsVigenteFinalizado() {
+    void testIsVigenteFinalizado() throws Exception {
         descPorc.finalizarDescuento();
         assertFalse(descPorc.isVigente());
     }
 
     @Test
-    void testIsVigenteCaducado() {
+    void testIsVigenteCaducado() throws Exception {
         Descuento caducado = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MIN, CondicionDescuento.SIN_CONDICION, 10);
         assertFalse(caducado.isVigente());
     }
@@ -90,18 +96,18 @@ class DescuentoTest {
     // --- isCaducado ---
 
     @Test
-    void testIsCaducadoFalse() {
+    void testIsCaducadoFalse() throws Exception {
         assertFalse(descPorc.isCaducado());
     }
 
     @Test
-    void testIsCaducadoTrue() {
+    void testIsCaducadoTrue() throws Exception {
         Descuento caducado = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MIN, CondicionDescuento.SIN_CONDICION, 10);
         assertTrue(caducado.isCaducado());
     }
 
     @Test
-    void testIsCaducadoMarcaComoFinalizado() {
+    void testIsCaducadoMarcaComoFinalizado() throws Exception {
         Descuento caducado = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MIN, CondicionDescuento.SIN_CONDICION, 10);
         caducado.isCaducado();
         assertFalse(caducado.isVigente());
@@ -110,7 +116,7 @@ class DescuentoTest {
     // --- finalizarDescuento ---
 
     @Test
-    void testFinalizarDescuento() {
+    void testFinalizarDescuento() throws Exception {
         descPorc.finalizarDescuento();
         assertFalse(descPorc.isVigente());
     }
@@ -118,36 +124,36 @@ class DescuentoTest {
     // --- cumpleCondiciones ---
 
     @Test
-    void testCumpleCondicionesSinCondicion() {
+    void testCumpleCondicionesSinCondicion() throws Exception {
         assertTrue(descPorc.cumpleCondiciones(1, 10.0));
     }
 
     @Test
-    void testCumpleCondicionesNoVigente() {
+    void testCumpleCondicionesNoVigente() throws Exception {
         descPorc.finalizarDescuento();
         assertFalse(descPorc.cumpleCondiciones(1, 10.0));
     }
 
     @Test
-    void testCumpleCondicionesCantidadSuficiente() {
+    void testCumpleCondicionesCantidadSuficiente() throws Exception {
         Descuento dCantidad = new DescuentoPorcentaje(3, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.CANTIDAD, 10);
         assertTrue(dCantidad.cumpleCondiciones(3, 0));
     }
 
     @Test
-    void testCumpleCondicionesCantidadInsuficiente() {
+    void testCumpleCondicionesCantidadInsuficiente() throws Exception {
         Descuento dCantidad = new DescuentoPorcentaje(3, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.CANTIDAD, 10);
         assertFalse(dCantidad.cumpleCondiciones(2, 0));
     }
 
     @Test
-    void testCumpleCondicionesVolumenSuficiente() {
+    void testCumpleCondicionesVolumenSuficiente() throws Exception {
         Descuento dVolumen = new DescuentoPorcentaje(50, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.VOLUMEN, 10);
         assertTrue(dVolumen.cumpleCondiciones(1, 50.0));
     }
 
     @Test
-    void testCumpleCondicionesVolumenInsuficiente() {
+    void testCumpleCondicionesVolumenInsuficiente() throws Exception {
         Descuento dVolumen = new DescuentoPorcentaje(50, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.VOLUMEN, 10);
         assertFalse(dVolumen.cumpleCondiciones(1, 49.0));
     }
@@ -155,58 +161,58 @@ class DescuentoTest {
     // --- getPrecioDescontado (base, sin override) ---
     
     @Test
-    void testGetPrecioDescontadoBaseDevuelvePrecio() {
+    void testGetPrecioDescontadoBaseDevuelvePrecio() throws Exception {
         // La implementación base de Descuento devuelve el precio sin modificar
         assertEquals(10.0, descReg.getPrecioDescontado(1, 0, 10.0));
     }
 
     @Test
-    void testGetPrecioDescontadoNumUdsNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> descPorc.getPrecioDescontado(-1, 0, 10.0));
+    void testGetPrecioDescontadoNumUdsNegativo() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> descPorc.getPrecioDescontado(-1, 0, 10.0));
     }
 
     @Test
-    void testGetPrecioDescontadoVolumenNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> descPorc.getPrecioDescontado(1, -1, 10.0));
+    void testGetPrecioDescontadoVolumenNegativo() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> descPorc.getPrecioDescontado(1, -1, 10.0));
     }
 
     @Test
-    void testGetPrecioDescontadoPrecioNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> descPorc.getPrecioDescontado(1, 0, -1.0));
+    void testGetPrecioDescontadoPrecioNegativo() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> descPorc.getPrecioDescontado(1, 0, -1.0));
     }
 
     // --- getRegalo (base, sin override) ---
 
     @Test
-    void testGetRegaloBaseDevuelveNull() {
+    void testGetRegaloBaseDevuelveNull() throws Exception {
         assertNull(descPorc.getRegalo(1, 10.0));
     }
 
     @Test
-    void testGetRegaloNumUdsNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> descPorc.getRegalo(-1, 10.0));
+    void testGetRegaloNumUdsNegativo() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> descPorc.getRegalo(-1, 10.0));
     }
 
     @Test
-    void testGetRegaloVolumenNegativo() {
-        assertThrows(IllegalArgumentException.class, () -> descPorc.getRegalo(1, -1.0));
+    void testGetRegaloVolumenNegativo() throws Exception {
+        assertThrows(InvalidArgumentException.class, () -> descPorc.getRegalo(1, -1.0));
     }
 
     // --- equals ---
 
     @Test
-    void testEqualsMismoObjeto() {
+    void testEqualsMismoObjeto() throws Exception {
         assertEquals(descPorc, descPorc);
     }
 
     @Test
-    void testEqualsDistintoDescuento() {
+    void testEqualsDistintoDescuento() throws Exception {
         Descuento otro = new DescuentoPorcentaje(0, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         assertNotEquals(descPorc, otro);
     }
 
     @Test
-    void testEqualsNull() {
+    void testEqualsNull() throws Exception {
         assertNotEquals(descPorc, null);
     }
 }

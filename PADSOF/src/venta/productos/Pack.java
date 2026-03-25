@@ -5,6 +5,11 @@ import java.util.*;
 
 import javax.swing.ImageIcon;
 
+/**
+ * Clase que define el subtipo de Producto, Pack
+ * 
+ * @author Juan Ibáñez
+ */
 public class Pack extends Producto {
 	private Set<Stock> productos = new HashSet<Stock>();
 	
@@ -18,16 +23,16 @@ public class Pack extends Producto {
 	 * @param categorias Array de categorías del pack
 	 */
 	public Pack(Stock[] stocks, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) 
-			throws PackDemasiadoPequeno, IncompatibleCategoriesException, IllegalArgumentException {
+			throws DoubleDiscountException, InvalidArgumentException{
 		super(nombre, desc, precio, imagen, categorias);
 		
-		if(stocks == null) throw new IllegalArgumentException("Array de stocks nulo");
+		if(stocks == null) throw new InvalidArgumentException("El array de stocks no puede ser null");
 		for(Stock st : stocks) {
-			if(st == null) throw new IllegalArgumentException("Stock null entre los stocks del pack");
+			if(st == null) throw new InvalidArgumentException("No puede haber un stock null entre los stocks del pack");
 		}
 		
 		if((stocks.length == 1 && stocks[0].getUdsEnStock() < 2) || stocks.length == 0){
-			throw new PackDemasiadoPequeno("No se puede crear un pack con menos de dos productos");
+			throw new InvalidArgumentException("No se puede crear un pack con menos de dos productos");
 		}
 		for(Stock s : stocks) productos.add(s);
 	}

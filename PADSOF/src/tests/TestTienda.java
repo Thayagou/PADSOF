@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 
 public class TestTienda {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Tienda tienda = new Tienda();
 		ImageIcon imagen = null;
 		tienda.registrarse("Usuario1", "1", "1");

@@ -9,7 +9,13 @@ import java.time.*;
 import usuario.*;
 import venta.pedidos.*;
 import venta.productos.*;
+import exceptions.*;
 
+/**
+ * Clase con los tests de los métodos de la clase Pedido
+ * 
+ * @author Juan Ibáñez
+ */
 public class PedidoTest {
 
     private ClienteRegistrado cliente;
@@ -44,17 +50,17 @@ public class PedidoTest {
 
     @Test
     void testConstructorClienteNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Pedido(null, stock1));
+        assertThrows(InvalidArgumentException.class, () -> new Pedido(null, stock1));
     }
 
     @Test
     void testConstructorStocksNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Pedido(cliente, (StockExterno[]) null));
+        assertThrows(InvalidArgumentException.class, () -> new Pedido(cliente, (StockExterno[]) null));
     }
 
     @Test
     void testConstructorStockNullEnArray() {
-        assertThrows(IllegalArgumentException.class, () -> new Pedido(cliente, stock1, null));
+        assertThrows(InvalidArgumentException.class, () -> new Pedido(cliente, stock1, null));
     }
 
     // --- getId ---
@@ -106,7 +112,7 @@ public class PedidoTest {
     // --- nextEstadoPedido ---
 
     @Test
-    void testNextEstadoPedidoDePageadoAEnPreparacion() {
+    void testNextEstadoPedidoDePageadoAEnPreparacion() throws Exception {
         pedido.nextEstadoPedido(empleado);
         assertEquals(EstadoPedido.EN_PREPARACION, pedido.getEstado());
         assertEquals(empleado, pedido.getEmpPreparacion());
@@ -114,7 +120,7 @@ public class PedidoTest {
     }
 
     @Test
-    void testNextEstadoPedidoDeEnPreparacionAListo() {
+    void testNextEstadoPedidoDeEnPreparacionAListo() throws Exception {
         pedido.nextEstadoPedido(empleado);
         pedido.nextEstadoPedido(empleado);
         assertEquals(EstadoPedido.LISTO, pedido.getEstado());
@@ -123,7 +129,7 @@ public class PedidoTest {
     }
 
     @Test
-    void testNextEstadoPedidoDeListoARecogido() {
+    void testNextEstadoPedidoDeListoARecogido() throws Exception {
         pedido.nextEstadoPedido(empleado);
         pedido.nextEstadoPedido(empleado);
         pedido.nextEstadoPedido(empleado);
@@ -133,7 +139,7 @@ public class PedidoTest {
     }
 
     @Test
-    void testNextEstadoPedidoNoAvanzaMasDeRecogido() {
+    void testNextEstadoPedidoNoAvanzaMasDeRecogido() throws Exception {
         pedido.nextEstadoPedido(empleado);
         pedido.nextEstadoPedido(empleado);
         pedido.nextEstadoPedido(empleado);
@@ -143,7 +149,7 @@ public class PedidoTest {
 
     @Test
     void testNextEstadoPedidoEmpleadoNull() {
-        assertThrows(IllegalArgumentException.class, () -> pedido.nextEstadoPedido(null));
+        assertThrows(InvalidArgumentException.class, () -> pedido.nextEstadoPedido(null));
     }
 
     @Test

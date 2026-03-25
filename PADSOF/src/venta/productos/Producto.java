@@ -6,6 +6,11 @@ import exceptions.*;
 
 import sistema.AsignadorId;
 
+/**
+ * Clase básica Producto
+ * 
+ * @author Juan Ibáñez
+ */
 public abstract class Producto {
 	private final long id;
 	private String nombre;
@@ -26,8 +31,9 @@ public abstract class Producto {
 	 * @param categorias Listado de las categorías a las que pertenece el producto
 	 */
 	public Producto(String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias ) 
-			throws IllegalArgumentException, IncompatibleCategoriesException {
-		if(nombre == null || desc == null || precio < 0 || categorias == null) throw new IllegalArgumentException();
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(nombre == null || desc == null || categorias == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo");
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.nombre = nombre;
 		this.descripcion = desc;
@@ -152,11 +158,11 @@ public abstract class Producto {
 	 * @param categorias Categorias que se van a añadir al producto
 	 * @return true si se añadieron todas las categorias, false si alguna no pudo añadirse.
 	 */
-	public boolean anadirCategorias(Categoria...categorias) throws IncompatibleCategoriesException, IllegalArgumentException {
-		if(categorias == null) throw new IllegalArgumentException();
-		for(Categoria c : categorias) if(c == null) throw new IllegalArgumentException();
+	public boolean anadirCategorias(Categoria...categorias) throws DoubleDiscountException, InvalidArgumentException {
+		if(categorias == null) throw new InvalidArgumentException("Array de categorías null");
+		for(Categoria c : categorias) if(c == null) throw new InvalidArgumentException("No puede haber categorías null entre las categorías");
 		
-		if(!puedeAnadirCategorias(categorias)) throw new IncompatibleCategoriesException("Las categorías no son compatibles entre sí o con el producto debido a los descuentos");
+		if(!puedeAnadirCategorias(categorias)) throw new DoubleDiscountException("Las categorías no son compatibles entre sí o con el producto debido a los descuentos");
 		for(Categoria c : categorias) {			
 			if(c.tieneDescuento()) {
 				if(!this.tieneDescuento()) {
@@ -178,8 +184,12 @@ public abstract class Producto {
 			if(c.tieneDescuento()) {
 				descuento = null;
 			}
-			if(this.categorias.remove(c))
-				c.quitarProducto(this);
+			if(this.categorias.remove(c)) {
+				try{
+					c.quitarProducto(this);
+				} catch(Exception e) {};
+			}
+				
 		}
 	}
 	
@@ -188,7 +198,7 @@ public abstract class Producto {
 	 * @param categorias Nuevas categorias para el producto
 	 * @return true scuando se añaden todas las categorias sin lanzar una excepcion
 	 */
-	public boolean setCategorias(Categoria...categorias) throws IncompatibleCategoriesException {
+	public boolean setCategorias(Categoria...categorias) throws InvalidArgumentException, DoubleDiscountException {
 		this.quitarCategorias(this.getCategorias());
 		this.anadirCategorias(categorias);
 		return true;
@@ -222,8 +232,8 @@ public abstract class Producto {
 	 * @param descuento Nuevo descuento del producto
 	 * @return true si se pudo añadir el descuento, false si no se pudo
 	 */
-	public boolean anadirDescuento(Descuento descuento) throws HasDiscountException {
-		if(tieneDescuento()) throw new HasDiscountException("El producto ya tiene un descuento");
+	public boolean anadirDescuento(Descuento descuento) throws DoubleDiscountException {
+		if(tieneDescuento()) throw new DoubleDiscountException("El producto ya tiene un descuento");
 		this.descuento = descuento;
 		return true;
 	}

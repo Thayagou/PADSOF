@@ -3,6 +3,7 @@ package aplicacion;
 import java.util.*;
 import sistema.*;
 import usuario.*;
+import venta.productos.*;
 
 public class Main {
 	private static Tienda tienda;
@@ -78,7 +79,33 @@ public class Main {
 				ClienteRegistrado c = t.getCliente(u.getNombre());
 				if(c == null) break loopC;
 				
-				getAction("r: recomendaciones | ");
+				getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | a: cuenta | n: notificaciones");
+				switch(action) {
+				case 'b':
+					List<Categoria> categorias = new ArrayList<Categoria>();
+					for(Categoria cat : t.getAlmacen().getCategorias()) {
+						getAction("Incluir categoria" + cat.getNombre() + "? s/n");
+						if(action == 's') {
+							categorias.add(cat);
+						}
+					}
+					double precioMin = getUserInputInt("Precio minimo: ");
+					double precioMax = getUserInputInt("Precio maximo: ");
+					double estrellasMin = getUserInputInt("Estrellas minimas: ");
+					
+					try{
+						t.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
+					}catch(IllegalArgumentException e){
+						
+					}
+					
+				case 'r':
+				case 's':
+				case 'w':
+				case 'c':
+				case 'a':
+				case 'n':
+				}
 			}
 			
 			
