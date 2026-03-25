@@ -5,6 +5,7 @@ import java.util.*;
 import es.uam.eps.padsof.telecard.OrderRejectedException;
 import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
 import estadistica.Historial;
+import exceptions.*;
 import usuario.*;
 import venta.productos.*;
 import wallapop.ArticuloSegundaMano;
@@ -100,8 +101,10 @@ public class Tienda {
 	 * @param confirmarContrasena Confirmacion de la contraseña
 	 * @return Usuario que se creó
 	 */
-	public Usuario registrarse(String nombre, String contrasena, String confirmarContrasena) {
-		if(!comprobarUnicidadNombre(nombre)) return null;
+	public Usuario registrarse (String nombre, String contrasena, String confirmarContrasena) throws IllegalArgumentException, NotValidUserException {
+		if(!comprobarUnicidadNombre(nombre))
+			throw new NotValidUserException("Error en registrarse");
+			
 		if(!contrasena.equals(confirmarContrasena))
 			return null;
 		
@@ -115,7 +118,7 @@ public class Tienda {
 	 * @param contrasena Contraseña de la cuenta
 	 * @return Usuario que está registrado con ese nombre de usuario
 	 */
-	public Usuario iniciarSesion(String nombre, String contrasena) {
+	public Usuario iniciarSesion(String nombre, String contrasena) throws IllegalArgumentException, NotValidUserException {
 		if(gestor.getNombre().equals(nombre)) {
 			if(gestor.getContrasena().equals(contrasena))
 				return gestor;
@@ -125,11 +128,11 @@ public class Tienda {
 				return clientes.get(nombre);
 			return null;
 		} else if(empleados.containsKey(nombre)) {
-			if(empleados.get(nombre).getContrasena().equals(contrasena))
+			if(empleados.get(nombre).getContrasena().equals(contrasena) && empleados.get(nombre).estaDeAlta())
 				return empleados.get(nombre);
 			return null;
 		}
-		return null;
+		throw new NotValidUserException("Error en iniciar sesión");
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 package sistema;
 
 import java.io.*;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -204,17 +205,29 @@ public class Almacen {
 	 * @param fProductos, nombre del fichero con datos de productos a añadir
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
 	 */
-	public boolean anadirProductosDeFichero(String fProductos) {
+	public boolean anadirProductosDeFichero(String fProductos) throws IllegalArgumentException, IncompatibleCategoriesException {
 		String linea;
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(fProductos))) {
 			while((linea = br.readLine()) != null) {
 				String partes[] = linea.split(";");
+				if(partes.length != 16) {
+					throw new IllegalArgumentException("Formato de archivo incorrecto: número de argumentos no es 16");
+				}
+				
 				
 				String nombre = partes[1];
 				String desc = partes[2];
-				double precio = Double.parseDouble(partes[3]);
-				int uds = Integer.parseInt(partes[4]);
+				double precio;
+				int uds;
+				try {
+	                precio = Double.parseDouble(partes[3]);
+	                uds    = Integer.parseInt(partes[4]);
+	            } catch (NumberFormatException e) {
+	                throw new IllegalArgumentException(
+	                    "Datos de producto inválidos: " + e.getMessage(), e
+	                );
+	            }
 				
 				String nombreCateg[] = partes[5].split(",");
 				List <Categoria> categorias = new ArrayList<>();
@@ -222,37 +235,58 @@ public class Almacen {
 					if(this.categorias.containsKey(c)) {
 						categorias.add(this.categorias.get(c));
 					} else {
-						return false;
+						throw new IncompatibleCategoriesException("Categoría no existente: " + c);
 					}
 				}
 				
-				if(partes[0].equals("C")) {
-					int numPags = Integer.parseInt(partes[6]);
-					String autor = partes[7];
-					String editorial = partes[8];
-					String fecha[] = partes[9].split(",");
-					LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
-					
-					this.anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
-				} else if(partes[0].equals("J")) {
-					int numJugs = Integer.parseInt(partes[10]);
-					String rangoEdad = partes[11];
-					TipoJuego tipoJuego = TipoJuego.valueOf(partes[12]);
-					
-					this.anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
-				} else if(partes[0].equals("F")) {
-					String marca = partes[13];
-					String material = partes[14];
-					String dimensiones = partes[15];
-					
-					this.anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
-				} else {
-					return false;
+				switch (partes[0]) {
+					case "C" -> {
+						try {
+							int numPags = Integer.parseInt(partes[6]);
+							String autor = partes[7];
+							String editorial = partes[8];
+							String fecha[] = partes[9].split(",");
+							LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
+							
+							this.anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+						} catch (IllegalArgumentException | DateTimeException e) {
+	                        throw new IllegalArgumentException("Datos de cómic inválidos: " + e.getMessage(), e);
+	                    }
+						
+					}
+					case "J" ->  {
+						try {
+							int numJugs = Integer.parseInt(partes[10]);
+							String rangoEdad = partes[11];
+							TipoJuego tipoJuego = TipoJuego.valueOf(partes[12]);
+							
+							this.anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+						} catch(IllegalArgumentException e) {
+							throw new IllegalArgumentException("Datos de juego inválidos: " + e.getMessage(), e);
+						}
+					}
+					case "F" ->  {
+						try {
+							String marca = partes[13];
+							String material = partes[14];
+							String dimensiones = partes[15];
+							
+							this.anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+						} catch (IllegalArgumentException e) {
+							throw new IllegalArgumentException("Datos de figura inválidos: " + e.getMessage(), e);
+						}
+						
+					}
+					default ->  {
+						throw new IllegalArgumentException("Tipo de producto no existente");
+					}
 				}
 		    }
-		} catch (IOException e) {
-			return false;
-		}
+		} catch (FileNotFoundException e) {
+	        throw new IllegalArgumentException("Fichero no encontrado: " + fProductos, e);
+	    } catch (IOException e) {
+	        throw new IllegalArgumentException("Error de lectura en el fichero: " + e.getMessage(), e);
+	    }
 		return true;
 	}
 	
