@@ -11,6 +11,7 @@ import wallapop.ArticuloSegundaMano;
 import wallapop.Intercambio;
 import wallapop.Valoracion;
 import venta.pedidos.*;
+import exceptions.*;
 
 /**
  * Clase tienda que recoge todas las funcionalidades de la aplicación
@@ -100,8 +101,9 @@ public class Tienda {
 	 * @param confirmarContrasena Confirmacion de la contraseña
 	 * @return Usuario que se creó
 	 */
-	public Usuario registrarse(String nombre, String contrasena, String confirmarContrasena) {
-		if(!comprobarUnicidadNombre(nombre)) return null;
+	public Usuario registrarse(String nombre, String contrasena, String confirmarContrasena) throws InvalidArgumentException, NotValidUserException {
+		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
+		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Error en registrarse");
 		if(!contrasena.equals(confirmarContrasena))
 			return null;
 		
@@ -115,21 +117,20 @@ public class Tienda {
 	 * @param contrasena Contraseña de la cuenta
 	 * @return Usuario que está registrado con ese nombre de usuario
 	 */
-	public Usuario iniciarSesion(String nombre, String contrasena) {
+	public Usuario iniciarSesion(String nombre, String contrasena) throws InvalidArgumentException, NotValidUserException {
 		if(gestor.getNombre().equals(nombre)) {
 			if(gestor.getContrasena().equals(contrasena))
 				return gestor;
-			return null;
 		} else if(clientes.containsKey(nombre)) {
 			if(clientes.get(nombre).getContrasena().equals(contrasena))
 				return clientes.get(nombre);
-			return null;
 		} else if(empleados.containsKey(nombre)) {
-			if(empleados.get(nombre).getContrasena().equals(contrasena))
+			if(empleados.get(nombre).getContrasena().equals(contrasena) && empleados.get(nombre).estaDeAlta())
 				return empleados.get(nombre);
-			return null;
+		} else {
+			throw new NotValidUserException("No se encontró un usuario con ese nombre");
 		}
-		return null;
+		throw new NotValidUserException("La contraseña es incorrecta");
 	}
 	
 	/**
@@ -247,8 +248,11 @@ public class Tienda {
 	 * @param usrName Nombre del usuario a cuyo carrito se añade el producto
 	 * @param producto Producto que se añade al carrito
 	 * @return true si se pudo añadir el producto, false si no
+	 * @throws InvalidArgumentException
 	 */
-	public boolean anadirACarritoDe(String usrName, Producto producto) {
+	public boolean anadirACarritoDe(String usrName, Producto producto) throws InvalidArgumentException {
+		if(usrName == null || producto == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
+		
 		ClienteRegistrado cliente = getCliente(usrName);
 		Stock st = almacen.getStock(producto);
 		if(cliente == null || producto == null || st == null) return false;
@@ -265,8 +269,10 @@ public class Tienda {
 	 * @param usrName Nombre del cliente con el carrito
 	 * @param producto Producto que se quiere quitar (una unidad)
 	 * @return true si se pudo quitar el producto, false si no
+	 * @throws InvalidArgumentException
 	 */
-	public boolean quitarDeCarritoDe(String usrName, Producto producto) {
+	public boolean quitarDeCarritoDe(String usrName, Producto producto) throws InvalidArgumentException {
+		if(usrName == null || producto == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		ClienteRegistrado cliente = getCliente(usrName);
 		Stock st = almacen.getStock(producto);
 		if(cliente == null || producto == null || st == null) return false;
@@ -280,8 +286,11 @@ public class Tienda {
 	 * Método para cancelar el carrito de un cliente, devolviendo el stock a la tienda
 	 * @param usrName Nombre del cliente del que se cancela el carrito
 	 * @return true si se pudo cancelar el carrito, false si no existe el cliente
+	 * @throws InvalidArgumentException
 	 */
-	public boolean cancelarCarritoDe(String usrName) {
+	public boolean cancelarCarritoDe(String usrName) throws InvalidArgumentException {
+		if(usrName == null) throw new InvalidArgumentException("No se puede dejar el nombre de usuario vacío");
+		
 		ClienteRegistrado cliente = getCliente(usrName);
 		if(cliente == null) return false;
 		
@@ -296,9 +305,10 @@ public class Tienda {
 	/**
 	 * Método para realizar el pago de un carrito
 	 * @param usrName Nombre del usuario cuyo carrito se va a pagar
+	 * @param numTarjeta Número de tarjeta que se introduce para pagar
 	 * @return true si se pudo realizar el pago, false si no
 	 */
-	public boolean pagarCarritoDe(String usrName) {
+	public boolean pagarCarritoDe(String usrName, String numTarjeta) throws InvalidArgumentException {
 		ClienteRegistrado cliente = getCliente(usrName);
 		if(cliente == null) return false;
 		Carrito carrito = cliente.getCarrito();
@@ -312,13 +322,9 @@ public class Tienda {
 			}
 			stTienda.reducirStock(st.getUdsEnStock());
 		}
-		
-		Scanner sc = new Scanner(System.in);
-		System.out.print("Introduce numero de tarjeta: ");
-		String tarjeta = sc.next();
 
 		try {
-			TeleChargeAndPaySystem.charge(tarjeta, "Compra en tienda de comics.", precio);
+			TeleChargeAndPaySystem.charge(numTarjeta, "Compra en tienda de comics.", precio);
 		} catch (OrderRejectedException e) {
 			e.printStackTrace();
 			for(StockExterno st : carrito.getRegalos()) {

@@ -205,7 +205,7 @@ class ProductoTest {
     
     @Test
     void testPuntuacionMediaSinResenas() {
-        assertEquals(0.0, producto.getPuntuacionMedia());
+        assertEquals(5.0, producto.getPuntuacionMedia());
     }
     
     @Test

@@ -209,7 +209,7 @@ public abstract class Producto {
 	 * @return Puntuacion media de las reseñas del producto
 	 */
 	public double getPuntuacionMedia() {
-		if(resenas.isEmpty()) return 0.0;
+		if(resenas.isEmpty()) return 5.0;
 		
 		double suma = 0;
 		for(Resena r : resenas) {

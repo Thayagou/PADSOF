@@ -1,18 +1,23 @@
-package tests;
+package aplicacion;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import sistema.*;
 import usuario.*;
-import venta.descuentos.CondicionDescuento;
+import venta.descuentos.*;
 import venta.productos.*;
 import venta.pedidos.*;
 import javax.swing.ImageIcon;
 
-public class TestTienda {
+
+public class PruebaDeUso {
 
 	public static void main(String[] args) throws Exception {
 		Tienda tienda = new Tienda();
+		
+		
+		/*Setup de la tienda, sus productos y sus clientes*/
+		
 		ImageIcon imagen = null;
 		tienda.registrarse("Usuario1", "1", "1");
 		tienda.registrarse("Usuario2", "2", "2");
@@ -31,8 +36,20 @@ public class TestTienda {
 		tienda.getAlmacen().anadirPack(1, "Hulk Pack", "Comic y figura de Hulk", 38.75, imagen, stocksDelPack, cAventura, cInfantil);
 		Stock stPack = tienda.getAlmacen().getStock("Hulk Pack");
 		
+		
+		
+		/*=======================PRUEBA DE USO DE LAS FUNCIONALIDADES DE VENTA =============================*/
+		
 		System.out.println("Se añade un descuento correctamente: "+tienda.getAlmacen().anadirDescuentoPorcentaje(cAventura, 30, LocalDateTime.MIN, LocalDateTime.MAX, CondicionDescuento.VOLUMEN, 20));
 		System.out.println(tienda.getAlmacen().getStock("Hulk Pack").getProducto());
+		
+		//Buscar productos de la tienda
+		Categoria[] categoriasBusqueda = {cAventura};
+		System.out.println("Resultado de búsqueda con filtros 'Aventura', entre 0 y 100 euros, y más de 3 estrellas:\n");
+		System.out.println(tienda.getAlmacen().getProductosPorFiltros(categoriasBusqueda , 0, 100, 3));
+		
+		//Ver la información detallada de unproducto
+		System.out.println();		
 		
 		tienda.anadirACarritoDe("Usuario1", stComic.getProducto());
 		tienda.anadirACarritoDe("Usuario1", stFigura.getProducto());
@@ -44,7 +61,9 @@ public class TestTienda {
 		Pedido pedido = tienda.getCliente("Usuario1").carritoAPedido();
 		System.out.println(pedido);
 		
-		tienda.pagarCarritoDe("Usuario1");		
+		tienda.pagarCarritoDe("Usuario1", "123412341234");
+		
+		
 	}
 
 }
