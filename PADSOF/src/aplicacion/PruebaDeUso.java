@@ -100,10 +100,14 @@ public class PruebaDeUso {
 		
 		//Vemos que se enviarion las notificaciones correspondientes a cada uno
 		System.out.println("\nNotificaciones de Usuario1:\n");
-		System.out.println(tienda.getCliente("Usuario1").getNotificaciones());
+		for (Notificacion n: tienda.getCliente("Usuario1").getNotificaciones()) {
+			System.out.println(n);
+		}
 		
 		System.out.println("\nNotificaciones de Empleado2:\n");
-		System.out.println(tienda.getEmpleado("Empleado2").getNotificaciones());
+		/*for (Notificacion n: tienda.getEmpleado("Empleado2").getNotificaciones()) {
+			System.out.println(n);
+		}*/
 
 		
 		

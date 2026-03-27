@@ -565,6 +565,7 @@ public class Almacen {
 	}
 	
 	public Producto[] getListaRecomendacion() {
+		Map<Producto, Double> recomendacion = new HashMap<>();
 		return null;
 	}
 }
