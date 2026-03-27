@@ -1,14 +1,20 @@
 package estadistica;
 
-import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.List;
-
 import usuario.ClienteRegistrado;
+import venta.productos.*;
+import java.util.*;
 
+import sistema.Sistema;
+
+/**
+ * Clase StatsUsuario que nos permite almacenar la infromación referente a los usuarios
+ */
 public class StatsUsuario {
 	ClienteRegistrado cliente;
-	List<StatsMensualCliente> estadisticas = new ArrayList<>();
+	double totalGastado = 0;
+	long udsCompradas = 0;
+	long udsIntercambiadas = 0;
+	Map<Categoria, Double> intereses = new HashMap<>();
 	
 	public StatsUsuario(ClienteRegistrado cliente) {
 		this.cliente = cliente;
@@ -17,33 +23,51 @@ public class StatsUsuario {
 	public boolean actualizarUltimaVenta(int udsCompradas, double precio) {
 		if (udsCompradas < 0 || precio < 0) return false;
 		
-		if (estadisticas.getLast().getMes().equals(YearMonth.now()) == false) {
-			estadisticas.add(new StatsMensualCliente());
-		}
-		
-		estadisticas.getLast().incrementar(udsCompradas, precio);
+		totalGastado += precio;
+		this.udsCompradas += udsCompradas;
 		
 		return true;
 	}
 	
-	public boolean actualizarUltimoIntercambio(int uds) {
-		if (uds < 0) return false;
+	public boolean actualizarUltimoIntercambio(int udsIntercambiadas) {
+		if (udsIntercambiadas < 0) return false;
 		
-		if (estadisticas.getLast().getMes().equals(YearMonth.now()) == false) 
-			estadisticas.add(new StatsMensualCliente());
+		this.udsIntercambiadas+= udsIntercambiadas; 
 		
-		return estadisticas.getLast().incrementarIntercambio(uds);
+		return true;
 	}
 	
-	public boolean actualizarUltimaValoracion(double precio) {
-		if (precio < 0) return false;
+	public boolean actualizarUltimaValoracion(double precioValoracion) {
+		if (precioValoracion < 0) return false;
 		
-		if (estadisticas.getLast().getMes().equals(YearMonth.now()) == false) 
-			estadisticas.add(new StatsMensualCliente());
+		totalGastado += precioValoracion;
 		
-		return estadisticas.getLast().incrementarValoracion(precio);
+		return true;
 	}
 	
+	public double getGastoTotal() {
+		return totalGastado;
+	}
 	
+	public void actualizarBusqueda(Categoria...categorias) {
+		double peso = Sistema.getInstancia().getPonderacionBusqueda();
+		for (Categoria c: categorias) {
+			intereses.putIfAbsent(c, 0.0);
+		
+			intereses.put(c, intereses.get(c) + peso);
+		}
+	}
+	
+	public void actualizarCompra(Map<Categoria, Double> vector) {
+		//double peso = Sistema.getInstancia().getPonderacionCompra();
+		double peso = 0;
+		for (Categoria c : vector.keySet()) {			
+			intereses.merge(c, vector.get(c) * peso, (a,b)->a+b);
+		}
+	}
+	
+	public Map<Categoria, Double> getVectorIntereses() {
+		return Collections.unmodifiableMap(intereses);
+	}
 
 }

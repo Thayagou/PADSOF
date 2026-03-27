@@ -2,40 +2,65 @@ package estadistica;
 
 import java.time.*;
 
+/**
+ * Clase StatsMensual que nos permite almacenar las unidades y recaudación. Unidades es un término intensionalmente ambiguo para poder almacenar distintos parámetros
+ */
 public class StatsMensual {
 	private YearMonth mes;
 	private int unidades = 0;
 	private double recaudacion = 0;
 	
+	/**
+	 * Constructor de la clase. Se inicializan a 0 las unidades y la recaudación y se asigna el mes actual a la instancia
+	 */
 	public StatsMensual() {
 		this.mes = YearMonth.now();
 	}
 	
+	/**
+	 * Actualiza la información almacenada dentro de la instancia
+	 * @param uds Unidades a incrementar
+	 * @param precio Recaudación a incrementar
+	 * @return true si se actualiza correctamente, false en caso contrario
+	 */
 	public boolean incrementar(int uds, double precio) {
+		if (uds < 0 || precio < 0) return false;
+		
 		unidades += uds;
 		recaudacion += precio;
 		
 		return true;
 	}
 	
+	/**
+	 * Getter del mes
+	 * @return el mes
+	 */
+	public YearMonth getMes() {
+		return mes;
+	}
 	
+	/**
+	 * Getter de las unidades
+	 * @return las unidades
+	 */
+	public int getUnidades() {
+		return unidades;
+	}
+	
+	/**
+	 * Getter de la recaudación
+	 * @return la recaudación
+	 */
+	public double getRecaudacion() {
+		return recaudacion;
+	}
 	
 	@Override
 	public String toString() {
 		return "Estadisticas mensual del " + mes + 
 				"Unidades: " + unidades + 
 				"Recaudacion=" + recaudacion;
-	}
-
-	public YearMonth getMes() {
-		return mes;
-	}
-	public int getUnidades() {
-		return unidades;
-	}
-	public double getRecaudacion() {
-		return recaudacion;
-	}
-	
+	}	
 	
 }

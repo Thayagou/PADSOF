@@ -8,6 +8,10 @@ public class Sistema {
 	private Duration tiempoCaducaCarrito;
 	private Duration tiempoCaducaOferta;
 	private double precioValoracion;
+	private double ponderacionCategoria;
+	private double ponderacionUdsCompra;
+	private double ponderacionPrecioCompra;
+	private double ponderacionBusqueda;
 	private Set<ParametroRecomendacion> parametros;
 
 	private Sistema(Duration tiempoCarrito, Duration tiempoOferta, double precioValoracion, ParametroRecomendacion... parametrosIniciales) {
@@ -47,6 +51,22 @@ public class Sistema {
 
 	public double getPrecioValoracion() {
 		return precioValoracion;
+	}
+
+	public double getPonderacionCategoria() {
+		return ponderacionCategoria;
+	}
+
+	public double getPonderacionUdsCompra() {
+		return ponderacionUdsCompra;
+	}
+	
+	public double getPonderacionPrecioCompra() {
+		return ponderacionPrecioCompra;
+	}
+
+	public double getPonderacionBusqueda() {
+		return ponderacionBusqueda;
 	}
 
 	public boolean setPrecioValoracion(double precioValoracion) {
