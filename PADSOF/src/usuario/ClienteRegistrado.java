@@ -2,11 +2,13 @@ package usuario;
 
 import java.util.*;
 
+import exceptions.InvalidArgumentException;
 import venta.pedidos.Pedido;
 import venta.productos.Producto;
 import venta.productos.Resena;
 import wallapop.ArticuloSegundaMano;
 import wallapop.Cartera;
+import exceptions.*;
 
 public class ClienteRegistrado extends Usuario {
 	private Carrito carrito;
@@ -76,9 +78,9 @@ public class ClienteRegistrado extends Usuario {
 		return misCompras.toArray(new Pedido[0]);
 	}
 	
-	public boolean anadirResena(int estrellas, String comentario, Producto producto) {
-		if(estrellas < 0 || estrellas > 5)
-			return false;
+	public boolean anadirResena(int estrellas, String comentario, Producto producto) throws InvalidArgumentException {
+		if(comentario == null || producto == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
+		if(estrellas < 0 || estrellas > 5) throw new InvalidArgumentException("La puntuacion debe ser un valor entre 0 y 5");
 		
 		producto.anadirResena(new Resena(estrellas, comentario, this));
 		return true;
@@ -89,10 +91,14 @@ public class ClienteRegistrado extends Usuario {
 	 * @return Pedido con el contenido del carrito
 	 */
 	public Pedido carritoAPedido() {
-		carrito.calcularCarrito();
-		Pedido pedido = new Pedido(this, carrito.getContenido());
-		misCompras.add(pedido);
-		return pedido;
+		try {
+			carrito.calcularCarrito();
+			Pedido pedido = new Pedido(this, carrito.getContenido());
+			misCompras.add(pedido);
+			return pedido;
+		} catch(CustomException e) {
+			throw new RuntimeException("Carrito con contenido null", e);
+		}
 	}
 	
 	public boolean tienePermiso() {
