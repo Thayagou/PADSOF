@@ -1,8 +1,15 @@
 package venta.productos;
 
 import java.util.*;
+
+import exceptions.*;
 import venta.descuentos.*;
 
+/**
+ * Clase básica Categoría
+ * 
+ * @author Juan Ibáñez
+ */
 public class Categoria {
 	private String nombre;
 	private boolean eliminada;
@@ -13,7 +20,8 @@ public class Categoria {
 	 * Creador de la clase Categoria
 	 * @param nombre Nombre de la categoría
 	 */
-	public Categoria(String nombre) {
+	public Categoria(String nombre) throws InvalidArgumentException {
+		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
 		this.nombre = nombre;
 		this.eliminada = false;
 		this.descuento = null;
@@ -31,7 +39,8 @@ public class Categoria {
 	 * Setter del nombre de la categoría
 	 * @param nombre Nuevo nombre para la categoría
 	 */
-	public void setNombre(String nombre) {
+	public void setNombre(String nombre) throws InvalidArgumentException {
+		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
 		this.nombre = nombre;
 	}
 
@@ -70,11 +79,12 @@ public class Categoria {
 	 * @param descuento Descuento que se añade a la categoría
 	 * @return true si se pudo añadir el descuento, false si no
 	 */
-	public boolean anadirDescuento(Descuento descuento) {
-		if(descuento == null || this.tieneDescuento()) return false;
+	public boolean anadirDescuento(Descuento descuento) throws InvalidArgumentException, DoubleDiscountException {
+		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null");
+		if(this.tieneDescuento()) throw new DoubleDiscountException("La categoría ya tiene un descuento");
 		
 		for(Producto p : productos) {
-			if(p.tieneDescuento()) return false;
+			if(p.tieneDescuento()) throw new DoubleDiscountException("Uno de los productos de la categoría ya tiene descuento");
 		}
 		this.descuento = descuento;
 		for(Producto p : productos) {
@@ -121,7 +131,8 @@ public class Categoria {
 	 * Método para añadir un producto a la categoría
 	 * @param p Producto que se añade
 	 */
-	void anadirProducto(Producto p) {
+	void anadirProducto(Producto p) throws InvalidArgumentException {
+		if(p == null) throw new InvalidArgumentException("El producto no puede ser null");
 		productos.add(p);
 	}
 	
@@ -129,7 +140,8 @@ public class Categoria {
 	 * Método para quitar un producto de una categoría
 	 * @param p Producto que se quita de la categoría
 	 */
-	public void quitarProducto(Producto p) {
+	void quitarProducto(Producto p) throws InvalidArgumentException {
+		if(p == null) throw new InvalidArgumentException("No se puede quitar un producto null");
 		productos.remove(p);
 	}
 

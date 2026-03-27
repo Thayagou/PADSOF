@@ -1,7 +1,13 @@
 package venta.productos;
 
 import sistema.AsignadorId;
+import exceptions.*;
 
+/**
+ * Clase básica Stock
+ * 
+ * @author Juan Ibáñez
+ */
 public class Stock {
 	private final long id;
 	private Producto producto;
@@ -12,7 +18,9 @@ public class Stock {
 	 * @param p Producto del stock
 	 * @param uds Unidades en stock del producto
 	 */
-	public Stock(Producto p, int uds) {
+	public Stock(Producto p, int uds) throws InvalidArgumentException {
+		if(p == null) throw new InvalidArgumentException("El producto no puede ser null");
+		if(uds < 0) throw new InvalidArgumentException("El número de unidades no puede ser negativo");
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.producto = p;
 		this.udsEnStock = uds;
@@ -38,7 +46,8 @@ public class Stock {
 	 * Setter de las unidades del stock
 	 * @param udsEnStock Unidades del producto en el stock
 	 */
-	public void setUdsEnStock(int udsEnStock) {
+	public void setUdsEnStock(int udsEnStock) throws InvalidArgumentException {
+		if(udsEnStock < 0) throw new InvalidArgumentException("No se pueden establecer unidades negativas");
 		this.udsEnStock = udsEnStock;
 	}
 	
@@ -54,9 +63,8 @@ public class Stock {
 	 * Método para reducir el stock en n unidades
 	 * @param unidades Número de unidades a reducir
 	 */
-	public void reducirStock(int unidades) {
-		if(unidades < 0)
-			throw new IllegalArgumentException("No se pueden reducir unidades negativas");
+	public void reducirStock(int unidades) throws InvalidArgumentException {
+		if(unidades < 0) throw new InvalidArgumentException("No se pueden reducir unidades negativas");
 		if((udsEnStock -= unidades) < 0)
 			udsEnStock = 0;
 	}
@@ -72,9 +80,8 @@ public class Stock {
 	 * Método para incrementar el stock en n unidades
 	 * @param unidades Número de unidades a incrementar
 	 */
-	public void incrementarStock(int unidades) {
-		if(unidades < 0)
-			throw new IllegalArgumentException("No se pueden incrementar unidades negativas");
+	public void incrementarStock(int unidades) throws InvalidArgumentException {
+		if(unidades < 0) throw new InvalidArgumentException("No se pueden incrementar unidades negativas");
 		this.udsEnStock += unidades;
 	}
 

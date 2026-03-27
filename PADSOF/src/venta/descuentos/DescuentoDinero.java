@@ -1,7 +1,13 @@
 package venta.descuentos;
 
 import java.time.LocalDateTime;
+import exceptions.*;
 
+/**
+ * Clase básica de los descuentos por dinero
+ * 
+ * @author Juan Ibáñez
+ */
 public class DescuentoDinero extends Descuento {
 	private double dinero;
 	
@@ -13,8 +19,10 @@ public class DescuentoDinero extends Descuento {
 	 * @param condicion Tipo de condicion del descuento
 	 * @param dinero Dinero que se descuenta si se aplica el descuento
 	 */
-	public DescuentoDinero(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double dinero) {
+	public DescuentoDinero(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double dinero) throws InvalidArgumentException {
 		super(valorMin, inicio, fin, condicion);
+		
+		if(dinero < 0) throw new InvalidArgumentException("El dinero descontado no puede ser negativo");
 		this.dinero = dinero;
 	}
 	
@@ -24,8 +32,11 @@ public class DescuentoDinero extends Descuento {
 	 * repartiendo el descuento entre cada unidad de producto para las estadísticas.
 	 */
 	@Override
-	public double getPrecioDescontado(int numUds, double volumen, double precio) {
+	public double getPrecioDescontado(int numUds, double volumen, double precio) throws InvalidArgumentException {
+		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
+		
 		if(this.cumpleCondiciones(numUds, volumen)) {
+			if((precio - dinero/numUds) < 0) return 0;
 			return precio - dinero/numUds;
 		} else {
 			return precio;

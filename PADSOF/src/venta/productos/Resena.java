@@ -2,7 +2,13 @@ package venta.productos;
 
 import java.time.*;
 import usuario.ClienteRegistrado;
+import exceptions.*;
 
+/**
+ * Clase básica Resena que define una reseña de un usuario
+ * 
+ * @author Juan Ibáñez
+ */
 public class Resena {
 	private double puntuacion;
 	private String comentario;
@@ -15,9 +21,10 @@ public class Resena {
 	 * @param comentario Comentario de la reseña
 	 * @param usuario Usuario que realiza la reseña
 	 */
-	public Resena(double puntuacion, String comentario, ClienteRegistrado usuario) {
+	public Resena(double puntuacion, String comentario, ClienteRegistrado usuario) throws InvalidArgumentException {
+		if(comentario == null || usuario == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		if(puntuacion < 0 || puntuacion > 5) {
-			throw new IllegalArgumentException("Resena con puntuacion invalida");
+			throw new InvalidArgumentException("Reseña con puntuacion inválida");
 		}
 		this.puntuacion = puntuacion;
 		this.comentario = comentario;

@@ -4,7 +4,13 @@ import java.time.*;
 
 import sistema.AsignadorId;
 import venta.productos.Producto;
+import exceptions.*;
 
+/**
+ * Clase básica Descuento
+ * 
+ * @author Juan Ibáñez
+ */
 public abstract class Descuento {
 	private final long id;
 	private double valorMin;
@@ -20,7 +26,10 @@ public abstract class Descuento {
 	 * @param fin Fecha y hora de finalizacion del descuento
 	 * @param condicion Tipo de condicion del descuento
 	 */
-	public Descuento(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion) {
+	public Descuento(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion) throws InvalidArgumentException {
+		if(inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos en el descuento");
+		if(valorMin < 0) throw new InvalidArgumentException("El valor mínimo del descuento no puede ser negativo");
+		
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.valorMin = valorMin;
 		this.inicio = inicio;
@@ -36,7 +45,8 @@ public abstract class Descuento {
 	 * @param precio Precio unitario sobre el cual se quiere calcular el descuento
 	 * @return Precio de una sola unidad de producto tras aplicar el descuento
 	 */
-	public double getPrecioDescontado(int numUds, double volumen, double precio) {
+	public double getPrecioDescontado(int numUds, double volumen, double precio) throws InvalidArgumentException {
+		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
 		return precio;
 	}
 	
@@ -46,7 +56,8 @@ public abstract class Descuento {
 	 * @param volumen Volumen de compra para ver si se cumple la condicion de volumen de compra
 	 * @return Regalo del descuento o null si no cumple las condiciones o no es descuento de regalo
 	 */
-	public Producto getRegalo(int numUds, double volumen) {
+	public Producto getRegalo(int numUds, double volumen) throws InvalidArgumentException {
+		if(numUds < 0 || volumen < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
 		return null;
 	}
 	
@@ -64,8 +75,7 @@ public abstract class Descuento {
 	 */
 	public boolean isVigente() {
 	    if (finalizado) return false;
-	    LocalDateTime ahora = LocalDateTime.now();
-	    if(ahora.isAfter(inicio)) return isCaducado();
+	    if(LocalDateTime.now().isAfter(inicio)) return !isCaducado();
 	    else {
 	    	return false;
 	    }
@@ -76,10 +86,10 @@ public abstract class Descuento {
 	 * @return true si el descuento está caducado, false si no
 	 */
 	public boolean isCaducado() {
-		if(LocalDateTime.now().isBefore(fin)) return true;
+		if(LocalDateTime.now().isBefore(fin)) return false;
 		else {
 			finalizado = true;
-			return false;
+			return true;
 		}
 	}
 

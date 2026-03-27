@@ -2,10 +2,9 @@ package usuario;
 
 import java.util.*;
 import java.time.*;
-import venta.*;
-import venta.descuentos.Descuento;
+import venta.descuentos.*;
 import venta.productos.*;
-import venta.productos.StockExterno;
+import exceptions.*;
 
 public class Carrito {
 	private LocalDateTime fechaCaducidad;
@@ -64,8 +63,10 @@ public class Carrito {
 	/**
 	 * Metodo para añadir un regalo a la lista de regalos
 	 * @param p Producto que se quiere añadir como regalo.
+	 * @throws InvalidArgumentException si se pasa un producto null
 	 */
-	private void anadirRegalo(Producto p) {
+	private void anadirRegalo(Producto p) throws InvalidArgumentException {
+		if(p == null) throw new InvalidArgumentException("No se puede añadir un regalo null");
 		if(!regalos.containsKey(p)) {
 			regalos.put(p,  new StockExterno(p, 1, 0));
 		} else {
@@ -77,8 +78,10 @@ public class Carrito {
 	/**
 	 * Metodo para añadir un producto al carrito
 	 * @param p Producto que se quiere añadir al carrito
+	 * @throws InvalidArgumentException si se pasa un producto null
 	 */
-	public void anadirProducto(Producto p) {
+	public void anadirProducto(Producto p) throws InvalidArgumentException {
+		if(p == null) throw new InvalidArgumentException("No se puede añadir un producto null");
 		if(!items.containsKey(p)) {
 			items.put(p,  new StockExterno(p, 1));
 		} else {
@@ -124,7 +127,7 @@ public class Carrito {
 		
 		calcularDescuentos();
 		for(StockExterno s : items.values()) {
-			pTotal += s.getPrecioFinal()*s.getUdsEnStock();
+			pTotal += s.getPrecioTotal();
 		}
 		return pTotal;
 	}
@@ -148,43 +151,68 @@ public class Carrito {
 	 * También añade los regalos necesarios al carrito.
 	 */
 	private void calcularDescuentos() {
-		regalos.clear();
-		double pBase = calcularPrecioBase();
-		
-		/*Primero inicializamos todos los precios finales a los precios del producto*/
-		for(StockExterno s : items.values()) {
-			s.setPrecioFinal(s.getProducto().getPrecio());
+		try {
+			regalos.clear();
+			double pBase = calcularPrecioBase();
+			
+			/*Primero inicializamos todos los precios finales a los precios del producto*/
+			for(StockExterno s : items.values()) {
+				s.setPrecioUnitarioFinal(s.getProducto().getPrecio());
+			}
+			
+			/*Creamos un HashMap con los productos por descuento*/
+			HashMap<Descuento, ArrayList<StockExterno>> productosPorDescuento = new HashMap<Descuento, ArrayList<StockExterno>>();
+			for(StockExterno s : items.values()) {
+				if(s.getProducto().tieneDescuento()) {
+					productosPorDescuento.computeIfAbsent(s.getProducto().getDescuento(), k -> new ArrayList<>()).add(s);
+				}
+			}
+			
+			/*Calculamos los precios descontados y los regalos que añadir*/
+			for(Map.Entry<Descuento, ArrayList<StockExterno>> entry : productosPorDescuento.entrySet()) {
+				Descuento d = entry.getKey();
+				ArrayList<StockExterno> productos = entry.getValue();
+				int numUds = 0;
+				
+				/*Tomamos el total de unidades de los productos con ese descuento*/
+				for(StockExterno s : productos) {
+					numUds += s.getUdsEnStock();
+				}
+				
+				Producto regalo = d.getRegalo(numUds, pBase);
+				
+				if(regalo != null) {
+					anadirRegalo(regalo);
+				}
+				
+				/*Asignamos el precio final con descuento a cada Stock*/
+				for(StockExterno s : productos) {
+					double precio = s.getProducto().getPrecio();
+					s.setPrecioUnitarioFinal(d.getPrecioDescontado(numUds, pBase, precio));
+				}
+			}	
+		} catch(InvalidArgumentException e) {
+			throw new RuntimeException("Objeto con estado inválido encontrado al calcular los descuentos", e);
+		}
+	}
+	
+	/**
+	 * Método para imprimir un carrito
+	 */
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append("Carrito:\n");
+		s.append("\n Precio total: "+calcularCarrito());
+		s.append("\n Items del carrito:\n");
+		for(StockExterno st : items.values()) {
+			s.append("  " + st.toString() + "\n");
+		}
+		s.append("\n Regalos:\n");
+		for(StockExterno st : regalos.values()) {
+			s.append("  " + st.toString() + "\n");
 		}
 		
-		/*Creamos un HashMap con los productos por descuento*/
-		HashMap<Descuento, ArrayList<StockExterno>> productosPorDescuento = new HashMap<Descuento, ArrayList<StockExterno>>();
-		for(StockExterno s : items.values()) {
-			if(s.getProducto().tieneDescuento()) {
-				productosPorDescuento.computeIfAbsent(s.getProducto().getDescuento(), k -> new ArrayList<>()).add(s);
-			}
-		}
-		
-		/*Calculamos los precios descontados y los regalos que añadir*/
-		for(Map.Entry<Descuento, ArrayList<StockExterno>> entry : productosPorDescuento.entrySet()) {
-			Descuento d = entry.getKey();
-			ArrayList<StockExterno> productos = entry.getValue();
-			int numUds = 0;
-			
-			/*Tomamos el total de unidades de los productos con ese descuento*/
-			for(StockExterno s : productos) {
-				numUds += s.getUdsEnStock();
-			}
-			
-			Producto regalo = d.getRegalo(numUds, pBase);
-			if(regalo != null) {
-				anadirRegalo(regalo);
-			}
-			
-			/*Asignamos el precio final con descuento a cada Stock*/
-			for(StockExterno s : productos) {
-				double precio = s.getProducto().getPrecio();
-				s.setPrecioFinal(d.getPrecioDescontado(numUds, pBase, precio));
-			}
-		}		
+		return s.toString();
 	}
 }

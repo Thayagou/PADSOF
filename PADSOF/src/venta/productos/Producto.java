@@ -2,9 +2,15 @@ package venta.productos;
 import java.util.*;
 import javax.swing.ImageIcon;
 import venta.descuentos.*;
+import exceptions.*;
 
 import sistema.AsignadorId;
 
+/**
+ * Clase básica Producto
+ * 
+ * @author Juan Ibáñez
+ */
 public abstract class Producto {
 	private final long id;
 	private String nombre;
@@ -24,7 +30,10 @@ public abstract class Producto {
 	 * @param imagen Imagen del producto
 	 * @param categorias Listado de las categorías a las que pertenece el producto
 	 */
-	public Producto(String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias ) {
+	public Producto(String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias ) 
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(nombre == null || desc == null || categorias == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo");
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.nombre = nombre;
 		this.descripcion = desc;
@@ -33,9 +42,7 @@ public abstract class Producto {
 		this.descuento = null;
 		this.eliminado = false;
 		
-		if(!anadirCategorias(categorias)) {
-			throw new IllegalArgumentException("El producto no puede tener multiples descuentos por categoria");
-		}
+		anadirCategorias(categorias);
 	}
 	
 	/**
@@ -128,30 +135,44 @@ public abstract class Producto {
 	}
 	
 	/**
+	 * Método para comprobar si se pueden añadir las categorías al producto
+	 * @param categorias Categorias a comprobar si son compatibles
+	 * @return true si todas las categorias se pueden añadir, false si no
+	 */
+	public boolean puedeAnadirCategorias(Categoria...categorias) {
+		Descuento descuento = this.getDescuento();
+		for(Categoria c : categorias) {
+			if(c == null || this.categorias.contains(c)) {
+				return false;
+			}
+			if(c.tieneDescuento()) {
+				if(descuento != null && !descuento.equals(c.getDescuento())) return false;
+				descuento = c.getDescuento();
+			}
+		}
+		return true;
+	}
+	
+	/**
 	 * Metodo para añadir categorias al producto
 	 * @param categorias Categorias que se van a añadir al producto
 	 * @return true si se añadieron todas las categorias, false si alguna no pudo añadirse.
 	 */
-	public boolean anadirCategorias(Categoria...categorias) {
-		boolean ret = true;
-		for(Categoria c : categorias) {
-			if(this.categorias.contains(c) || c == null) {
-				ret = false;
-				continue;
-			}
-			
+	public boolean anadirCategorias(Categoria...categorias) throws DoubleDiscountException, InvalidArgumentException {
+		if(categorias == null) throw new InvalidArgumentException("Array de categorías null");
+		for(Categoria c : categorias) if(c == null) throw new InvalidArgumentException("No puede haber categorías null entre las categorías");
+		
+		if(!puedeAnadirCategorias(categorias)) throw new DoubleDiscountException("Las categorías no son compatibles entre sí o con el producto debido a los descuentos");
+		for(Categoria c : categorias) {			
 			if(c.tieneDescuento()) {
 				if(!this.tieneDescuento()) {
 					descuento = c.getDescuento();
-				} else {
-					ret = false;
-					continue;
 				}
 			}
 			this.categorias.add(c);
 			c.anadirProducto(this);
 		}
-		return ret;
+		return true;
 	}
 	
 	/**
@@ -163,19 +184,24 @@ public abstract class Producto {
 			if(c.tieneDescuento()) {
 				descuento = null;
 			}
-			if(this.categorias.remove(c))
-				c.quitarProducto(this);
+			if(this.categorias.remove(c)) {
+				try{
+					c.quitarProducto(this);
+				} catch(Exception e) {};
+			}
+				
 		}
 	}
 	
 	/**
 	 * Método para cambiar todas las categorias de golpe
 	 * @param categorias Nuevas categorias para el producto
-	 * @return true si se añadieron todas las categorias, false si alguna no pudo añadirse.
+	 * @return true scuando se añaden todas las categorias sin lanzar una excepcion
 	 */
-	public boolean setCategorias(Categoria...categorias) {
+	public boolean setCategorias(Categoria...categorias) throws InvalidArgumentException, DoubleDiscountException {
 		this.quitarCategorias(this.getCategorias());
-		return this.anadirCategorias(categorias);
+		this.anadirCategorias(categorias);
+		return true;
 	}
 
 	/**
@@ -183,7 +209,7 @@ public abstract class Producto {
 	 * @return Puntuacion media de las reseñas del producto
 	 */
 	public double getPuntuacionMedia() {
-		if(resenas.isEmpty()) return 0.0;
+		if(resenas.isEmpty()) return 5.0;
 		
 		double suma = 0;
 		for(Resena r : resenas) {
@@ -206,12 +232,10 @@ public abstract class Producto {
 	 * @param descuento Nuevo descuento del producto
 	 * @return true si se pudo añadir el descuento, false si no se pudo
 	 */
-	public boolean anadirDescuento(Descuento descuento) {
-		if(!this.tieneDescuento()) {
-			this.descuento = descuento;
-			return true;
-		}
-		return false;
+	public boolean anadirDescuento(Descuento descuento) throws DoubleDiscountException {
+		if(tieneDescuento()) throw new DoubleDiscountException("El producto ya tiene un descuento");
+		this.descuento = descuento;
+		return true;
 	}
 	
 	/**
