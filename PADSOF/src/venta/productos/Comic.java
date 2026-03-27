@@ -4,9 +4,7 @@ import java.time.*;
 
 import javax.swing.ImageIcon;
 
-import exceptions.DoubleDiscountException;
-import exceptions.IncompatibleCategoriesException;
-import exceptions.InvalidArgumentException;
+import exceptions.*;
 
 /**
  * Clase que define el subtipo de Producto, Comic
