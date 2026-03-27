@@ -45,4 +45,9 @@ public class Notificacion {
 		return this.tipo;
 	}
 	
+	@Override
+	public String toString() {
+		return this.tipo + contenido + fecha;
+	}
+	
 }
