@@ -5,7 +5,6 @@ import java.util.*;
 import es.uam.eps.padsof.telecard.OrderRejectedException;
 import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
 import estadistica.Historial;
-import exceptions.*;
 import usuario.*;
 import venta.productos.*;
 import wallapop.ArticuloSegundaMano;
@@ -102,16 +101,9 @@ public class Tienda {
 	 * @param confirmarContrasena Confirmacion de la contraseña
 	 * @return Usuario que se creó
 	 */
-<<<<<<< HEAD
 	public Usuario registrarse(String nombre, String contrasena, String confirmarContrasena) throws InvalidArgumentException, NotValidUserException {
 		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Error en registrarse");
-=======
-	public Usuario registrarse (String nombre, String contrasena, String confirmarContrasena) throws IllegalArgumentException, NotValidUserException {
-		if(!comprobarUnicidadNombre(nombre))
-			throw new NotValidUserException("Error en registrarse");
-			
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF
 		if(!contrasena.equals(confirmarContrasena))
 			return null;
 		
@@ -125,11 +117,7 @@ public class Tienda {
 	 * @param contrasena Contraseña de la cuenta
 	 * @return Usuario que está registrado con ese nombre de usuario
 	 */
-<<<<<<< HEAD
 	public Usuario iniciarSesion(String nombre, String contrasena) throws InvalidArgumentException, NotValidUserException {
-=======
-	public Usuario iniciarSesion(String nombre, String contrasena) throws IllegalArgumentException, NotValidUserException {
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF
 		if(gestor.getNombre().equals(nombre)) {
 			if(gestor.getContrasena().equals(contrasena))
 				return gestor;
@@ -142,11 +130,7 @@ public class Tienda {
 		} else {
 			throw new NotValidUserException("No se encontró un usuario con ese nombre");
 		}
-<<<<<<< HEAD
 		throw new NotValidUserException("La contraseña es incorrecta");
-=======
-		throw new NotValidUserException("Error en iniciar sesión");
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF
 	}
 	
 	/**
@@ -267,11 +251,8 @@ public class Tienda {
 	 * @throws InvalidArgumentException
 	 */
 	public boolean anadirACarritoDe(String usrName, Producto producto) throws InvalidArgumentException {
-<<<<<<< HEAD
 		if(usrName == null || producto == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		
-=======
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF
 		ClienteRegistrado cliente = getCliente(usrName);
 		Stock st = almacen.getStock(producto);
 		if(cliente == null || producto == null || st == null) return false;
@@ -288,17 +269,10 @@ public class Tienda {
 	 * @param usrName Nombre del cliente con el carrito
 	 * @param producto Producto que se quiere quitar (una unidad)
 	 * @return true si se pudo quitar el producto, false si no
-<<<<<<< HEAD
 	 * @throws InvalidArgumentException
-=======
-	 * @throws InvalidArgumentException 
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF
 	 */
 	public boolean quitarDeCarritoDe(String usrName, Producto producto) throws InvalidArgumentException {
-<<<<<<< HEAD
 		if(usrName == null || producto == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
-=======
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF
 		ClienteRegistrado cliente = getCliente(usrName);
 		Stock st = almacen.getStock(producto);
 		if(cliente == null || producto == null || st == null) return false;
@@ -312,18 +286,11 @@ public class Tienda {
 	 * Método para cancelar el carrito de un cliente, devolviendo el stock a la tienda
 	 * @param usrName Nombre del cliente del que se cancela el carrito
 	 * @return true si se pudo cancelar el carrito, false si no existe el cliente
-<<<<<<< HEAD
 	 * @throws InvalidArgumentException
-=======
-	 * @throws InvalidArgumentException 
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF
 	 */
 	public boolean cancelarCarritoDe(String usrName) throws InvalidArgumentException {
-<<<<<<< HEAD
 		if(usrName == null) throw new InvalidArgumentException("No se puede dejar el nombre de usuario vacío");
 		
-=======
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF
 		ClienteRegistrado cliente = getCliente(usrName);
 		if(cliente == null) return false;
 		
