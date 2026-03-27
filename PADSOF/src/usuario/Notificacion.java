@@ -50,5 +50,4 @@ public class Notificacion {
 	public String toString() {
 		return this.tipo.name() + contenido + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
-	
 }
