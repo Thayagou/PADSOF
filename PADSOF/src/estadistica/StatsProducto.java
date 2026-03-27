@@ -26,7 +26,7 @@ public class StatsProducto {
 	public boolean actualizarUltima(int udsVendidas, double precio) {
 		if (udsVendidas < 0 || precio < 0) return false;
 		
-		if (estadisticas.getLast().getMes().equals(YearMonth.now()) == false) {
+		if (estadisticas.isEmpty() || estadisticas.getLast().getMes().equals(YearMonth.now()) == false) {
 			estadisticas.add(new StatsMensual());
 		}
 		
