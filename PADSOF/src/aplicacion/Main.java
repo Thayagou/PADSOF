@@ -1,12 +1,15 @@
 package aplicacion;
 
 import java.util.*;
+
+import exceptions.InvalidArgumentException;
+import exceptions.NotValidUserException;
 import sistema.*;
 import usuario.*;
 import venta.productos.*;
 
 public class Main {
-	private static Tienda tienda;
+	private static Tienda tienda = new Tienda();
 	private static char action;
 	private static Scanner sc = new Scanner(System.in);
 	
@@ -34,7 +37,7 @@ public class Main {
 		action = sc.next().charAt(0);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InvalidArgumentException, NotValidUserException {
 		Tienda t = tienda;
 		Usuario u;
 		

@@ -547,7 +547,8 @@ public class Almacen {
 	 * @return Producto[], un array de productos que cumplen las condiciones
 	 * @throws InvalidArgumentException 
 	 */
-	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin) throws InvalidArgumentException {
+	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin)
+			throws InvalidArgumentException {
 		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
 		
 		List<Producto> productos = new ArrayList<>();
