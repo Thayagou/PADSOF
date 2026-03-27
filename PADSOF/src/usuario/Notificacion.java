@@ -1,6 +1,7 @@
 package usuario;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Notificacion {
 	private LocalDate fecha;
@@ -47,7 +48,7 @@ public class Notificacion {
 	
 	@Override
 	public String toString() {
-		return this.tipo + contenido + fecha;
+		return this.tipo.name() + contenido + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 	
 }
