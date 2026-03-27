@@ -47,12 +47,12 @@ public class Historial {
 		for (StockExterno stExt: productos) {
 			p = stExt.getProducto();
 			statsProductos.computeIfAbsent(p, prod->new StatsProducto(prod)).
-				actualizarUltima(stExt.getUdsEnStock(), stExt.getPrecioFinal());
+				actualizarUltima(stExt.getUdsEnStock(), stExt.getPrecioTotal());
 			
 			udsVendidas +=stExt.getUdsEnStock();
 
 			for (Categoria c: p.getCategorias()) {
-				vectorCompra.merge(c, pesoUds * stExt.getUdsEnStock() + pesoPrecio * stExt.getPrecioFinal(), (a,b)->Double.sum(a, b));
+				vectorCompra.merge(c, pesoUds * stExt.getUdsEnStock() + pesoPrecio * stExt.getPrecioTotal(), (a,b)->Double.sum(a, b));
 			}			
 		}
 				
