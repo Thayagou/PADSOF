@@ -218,7 +218,7 @@ public class Almacen {
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
 	 * @throws DoubleDiscountException, IncompatibleCategoriesException 
 	 */
-	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException, DoubleDiscountException, IncompatibleCategoriesException {
+	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException {
 		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío");
 		String linea;
 		
@@ -249,7 +249,7 @@ public class Almacen {
 					if(this.categorias.containsKey(c)) {
 						categorias.add(this.categorias.get(c));
 					} else {
-						throw new IncompatibleCategoriesException("Categoría no existente: " + c);
+						throw new InvalidArgumentException("Categoría no existente: " + c);
 					}
 				}
 				

@@ -19,9 +19,13 @@ public class PruebaDeUso {
 		/*Setup de la tienda, sus productos y sus clientes*/
 		
 		ImageIcon imagen = null;
+		
+		//Registrarse en la tienda
 		tienda.registrarse("Usuario1", "1", "1");
 		tienda.registrarse("Usuario2", "2", "2");
 		tienda.darDeAltaEmpleado("Empleado1", "123", Permiso.PRODUCTOS);
+		tienda.darDeAltaEmpleado("Empleado2", "pass", Permiso.PEDIDOS);
+		tienda.darDeAltaEmpleado("Empleado3", "pass", Permiso.INTERCAMBIOS);
 		
 		tienda.getAlmacen().anadirCategoria("Infantil");
 		Categoria cInfantil = tienda.getAlmacen().getCategoria("Infantil");
@@ -45,23 +49,62 @@ public class PruebaDeUso {
 		
 		//Buscar productos de la tienda
 		Categoria[] categoriasBusqueda = {cAventura};
-		System.out.println("Resultado de búsqueda con filtros 'Aventura', entre 0 y 100 euros, y más de 3 estrellas:\n");
-		System.out.println(tienda.getAlmacen().getProductosPorFiltros(categoriasBusqueda , 0, 100, 3));
+		System.out.println("\nResultado de búsqueda con filtros 'Aventura', entre 0 y 100 euros, y más de 3 estrellas:\n");
+		for(Producto p : tienda.getAlmacen().getProductosPorFiltros(categoriasBusqueda , 0, 100, 3)) {
+			System.out.println("\n"+p);
+		}
 		
-		//Ver la información detallada de unproducto
-		System.out.println();		
 		
+		//Ver la información detallada de unproducto (el primero de los resultados)
+		System.out.println("\nInformacion detallada del primer resultado:\n");
+		System.out.println(tienda.getAlmacen().getProductosPorFiltros(categoriasBusqueda , 0, 100, 3)[0]);
+		
+		//Añadir productos al carrito del Usuario
+			tienda.anadirACarritoDe("Usuario1", stComic.getProducto());
+			tienda.anadirACarritoDe("Usuario1", stFigura.getProducto());
+			tienda.anadirACarritoDe("Usuario1", stPack.getProducto());
+			
+			System.out.println("\nCarrito de Usuario 1\n");
+			System.out.println(tienda.getCliente("Usuario1").getCarrito());
+			
+			//Cancelamos su compra
+			tienda.cancelarCarritoDe("Usuario1");
+			
+			System.out.println("\nCarrito de Usuario 1 tras cancelar el carrito:\n");
+			System.out.println(tienda.getCliente("Usuario1").getCarrito());
+		
+		//Volvemos a añadir productos al carrito del Usuario
 		tienda.anadirACarritoDe("Usuario1", stComic.getProducto());
 		tienda.anadirACarritoDe("Usuario1", stFigura.getProducto());
 		tienda.anadirACarritoDe("Usuario1", stPack.getProducto());
 		
+		//Quitamos uno de los productos
+		tienda.quitarDeCarritoDe("Usuario1", stComic.getProducto());
+		
+		//Intentamos comprar un producto agotado
 		boolean ret = tienda.anadirACarritoDe("Usuario2", stPack.getProducto());
 		System.out.println("Se impide añadir productos agotados al carrito: " + !(ret));
+
+		//Usuario1 paga la compra
+		tienda.pagarCarritoDe("Usuario1", "1234123412341234");
 		
-		Pedido pedido = tienda.getCliente("Usuario1").carritoAPedido();
-		System.out.println(pedido);
+		//Comprobamos que se guardó el pedido conrrectamente
+		System.out.println("\nPedidos pendientes de la tienda:\n");
+		for(Pedido ped : tienda.getHistorial().getPedidosPendientes())
+			System.out.println(ped);
 		
-		tienda.pagarCarritoDe("Usuario1", "123412341234");
+		//Empleado2 marca el pedido en cada estado hasta Listo
+		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //En preparacion
+		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Listo
+		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Recogido
+		
+		//Vemos que se enviarion las notificaciones correspondientes a cada uno
+		System.out.println("\nNotificaciones de Usuario1:\n");
+		System.out.println(tienda.getCliente("Usuario1").getNotificaciones());
+		
+		System.out.println("\nNotificaciones de Empleado2:\n");
+		System.out.println(tienda.getEmpleado("Empleado2").getNotificaciones());
+
 		
 		
 	}
