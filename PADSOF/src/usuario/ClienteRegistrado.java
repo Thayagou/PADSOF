@@ -1,5 +1,6 @@
 package usuario;
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -13,7 +14,8 @@ import wallapop.Cartera;
 import exceptions.*;
 import estadistica.StatsUsuario;
 
-public class ClienteRegistrado extends Usuario {
+public class ClienteRegistrado extends Usuario implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Carrito carrito;
 	private Cartera cartera;
 	private List<Notificacion> notificaciones;

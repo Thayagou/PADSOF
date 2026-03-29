@@ -1,10 +1,11 @@
 package usuario;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Formatter;
 
-public class Notificacion {
+public class Notificacion implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private LocalDate fecha;
 	private String contenido;
 	private boolean leida;
@@ -46,7 +47,7 @@ public class Notificacion {
 	public TipoNotificacion getTipo() {
 		return this.tipo;
 	}
-		
+	
 	@Override
 	public String toString() {
 		return this.tipo.name() + contenido + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
