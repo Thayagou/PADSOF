@@ -18,6 +18,7 @@ public class StatsUsuario implements Serializable {
 	long udsCompradas = 0;
 	long udsIntercambiadas = 0;
 	Map<Categoria, Double> intereses = new HashMap<>();
+	double norma = 0;
 	
 	public StatsUsuario(ClienteRegistrado cliente) {
 		this.cliente = cliente;
@@ -55,22 +56,40 @@ public class StatsUsuario implements Serializable {
 	public void actualizarBusqueda(Categoria...categorias) {
 		double peso = Sistema.getInstancia().getPonderacionBusqueda();
 		for (Categoria c: categorias) {
-			intereses.putIfAbsent(c, 0.0);
-		
-			intereses.put(c, intereses.get(c) + peso);
+			intereses.merge(c, peso, (a,b)->a+b);
 		}
+		
+		norma = Math.sqrt(intereses.values().stream().mapToDouble(a->a*a).sum());
 	}
 	
 	public void actualizarCompra(Map<Categoria, Double> vector) {
-		//double peso = Sistema.getInstancia().getPonderacionCompra();
-		double peso = 0;
 		for (Categoria c : vector.keySet()) {			
-			intereses.merge(c, vector.get(c) * peso, (a,b)->a+b);
+			intereses.merge(c, vector.get(c), (a,b)->a+b);
 		}
+		
+		norma = Math.sqrt(intereses.values().stream().mapToDouble(a->a*a).sum());
 	}
 	
 	public Map<Categoria, Double> getVectorIntereses() {
 		return Collections.unmodifiableMap(intereses);
+	}
+	
+	public double getNorma() {
+		return norma;
+	}
+	
+	public double getCompatibilidad(Map<Categoria, Double> v1, double n1) {
+		double prodEscalar = 0; 
+
+		for (Categoria c: intereses.keySet()) {
+			if (v1.containsKey(c) == false) continue;
+			
+			prodEscalar += intereses.get(c)*v1.get(c);
+		}
+		
+		prodEscalar /= (n1*norma);
+		
+		return prodEscalar;
 	}
 
 }

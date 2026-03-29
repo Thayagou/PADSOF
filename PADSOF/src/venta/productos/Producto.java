@@ -4,6 +4,7 @@ import java.util.*;
 import javax.swing.ImageIcon;
 import venta.descuentos.*;
 import exceptions.*;
+import estadistica.StatsProducto;
 
 import sistema.AsignadorId;
 
@@ -23,6 +24,7 @@ public abstract class Producto implements Serializable {
 	private Set<Categoria> categorias = new HashSet<Categoria>();
 	private Descuento descuento;
 	private boolean eliminado;
+	private StatsProducto estadisticas;
 	
 	/**
 	 * Creador de producto
@@ -127,6 +129,14 @@ public abstract class Producto implements Serializable {
 	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
 	}
+	
+	/**
+	 * Setter de las estadísticas del producto
+	 * @param stats Instancia de StatsProducto con todas sus estadísticas
+	 */
+	public void setStatsProducto(StatsProducto stats) {
+		estadisticas = stats;
+	}
 
 	/**
 	 * Método para obtener las categorías del producto
@@ -134,6 +144,22 @@ public abstract class Producto implements Serializable {
 	 */
 	public Categoria[] getCategorias() {
 		return categorias.toArray(new Categoria[0]);
+	}
+	
+	/**
+	 * Obtiene el vector de recomendación de un producto a partir de su estadística
+	 * @return Un vector en formato de mapa, que asigna a cada categoría una ponderación de interés
+	 */
+	public Map<Categoria, Double> getVectorRecomendacion() {
+		return estadisticas.getVectorRecomendacion();
+	}
+	
+	/**
+	 * Obtiene la norma del vector de recomendaciones
+	 * @return Norma del vector
+	 */
+	public double getNormaVector() {
+		return estadisticas.getNormaVector();
 	}
 	
 	/**

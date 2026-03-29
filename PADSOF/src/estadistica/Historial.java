@@ -224,8 +224,6 @@ public class Historial implements Serializable {
 	}
 	
 	
-	
-	
 }
 
 
