@@ -1,6 +1,8 @@
 package wallapop;
 
-public enum EstadoFisicoArticulo {
+import java.io.Serializable;
+
+public enum EstadoFisicoArticulo implements Serializable {
 	PERFECTO,
 	MUY_BUENO,
 	USO_LIGERO,

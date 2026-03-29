@@ -1,9 +1,9 @@
 package aplicacion;
 
+import java.io.*;
 import java.util.*;
 
-import exceptions.InvalidArgumentException;
-import exceptions.NotValidUserException;
+import exceptions.*;
 import sistema.*;
 import usuario.*;
 import venta.productos.*;
@@ -37,100 +37,123 @@ public class Main {
 		action = sc.next().charAt(0);
 	}
 
-	public static void main(String[] args) throws InvalidArgumentException, NotValidUserException {
-		Tienda t = tienda;
-		Usuario u;
+	public static void main(String[] args) {
+		Usuario usuario;
 		
-		while(true) {
-			loopSinRegistrar:
-			while(true) {
-				getAction("r: registrarse | i: iniciar sesión ");
+		cargarTienda();
+		
+		try {
+			while (action != 'e') {
 				
-				switch(action) {
-				case 'r':
-					String nombreR = getUserInputString("Introducir nombre: ");
-					String contrasenaR = getUserInputString("Introducir contraseña: ");
-					String confirmacionR = getUserInputString("Repetir contraseña: ");
-					
-					u = t.registrarse(nombreR, contrasenaR, confirmacionR);
-					
-					if(u == null) {
-						showMessage("No se pudo crear el usuario");
-						break;
-					} else {
-						break loopSinRegistrar;
-					}
-					
-				case 'i':
-					String nombreI = getUserInputString("Introducir nombre: ");
-					String contrasenaI = getUserInputString("Introducir contraseña: ");
-					
-					u = t.iniciarSesion(nombreI, contrasenaI);
-					
-					if(u == null) {
-						showMessage("No se pudo iniciar sesión");
-						break;
-					} else break loopSinRegistrar;
+				try {
+					usuario = menuInicio();
+					if (usuario == null) break;
+
+				} catch (NotValidUserException e){
+					System.out.println("Error al " + e.getMetodo() + " con el nombre de usuario '" + e.getNombre() + "': " + e.getMessage());
+					continue;
 				}
-			}
-			
-			
-			
-			loopC:
-			while(true) {
-				if(u == null) break loopC;
-				ClienteRegistrado c = t.getCliente(u.getNombre());
-				if(c == null) break loopC;
 				
-				getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | a: cuenta | n: notificaciones");
-				switch(action) {
-				case 'b':
-					List<Categoria> categorias = new ArrayList<Categoria>();
-					for(Categoria cat : t.getAlmacen().getCategorias()) {
-						getAction("Incluir categoria" + cat.getNombre() + "? s/n");
-						if(action == 's') {
-							categorias.add(cat);
-						}
-					}
-					double precioMin = getUserInputInt("Precio minimo: ");
-					double precioMax = getUserInputInt("Precio maximo: ");
-					double estrellasMin = getUserInputInt("Estrellas minimas: ");
-					
-					try{
-						t.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
-					}catch(IllegalArgumentException e){
-						
-					}
-					
-				case 'r':
-				case 's':
-				case 'w':
-				case 'c':
-				case 'a':
-				case 'n':
-				}
+				if (usuario instanceof Gestor) {
+			        menuGestor(tienda.getGestor());
+			    } else if (usuario instanceof Empleado) {
+			        menuEmpleado(tienda.getEmpleado(usuario.getNombre()));
+			    } else if (usuario instanceof ClienteRegistrado) {
+			        menuCliente(tienda.getCliente(usuario.getNombre()));
+			    }
 			}
 			
-			
-			
-			loopE:
-			while(true) {
-				if(u == null) break loopE;
-				Empleado e = t.getEmpleado(u.getNombre());
-				if(e == null) break loopE;
-			}
-			
-			
-			
-			loopG:
-			while(true) {
-				if(u == null) break loopG;
-				Gestor g = t.getGestor();
-				if(g == null) break loopG;
-				if(u != g) break loopG;
-			}
+		} catch (InvalidArgumentException e) {
+			System.out.println(e.getMessage());
 		}
 		
+		guardarTienda();
+		
+		return;
+	}
+	
+	static Usuario menuInicio() throws InvalidArgumentException, NotValidUserException {
+		while(action != 'e') {
+			getAction("r: registrarse | i: iniciar sesión | e: exit ");
+				
+			switch(action) {
+			case 'r':
+				String nombreR = getUserInputString("Introducir nombre: ");
+				String contrasenaR = getUserInputString("Introducir contraseña: ");					
+				String confirmacionR = getUserInputString("Repetir contraseña: ");
+				
+				Usuario usuario = tienda.registrarse(nombreR, contrasenaR, confirmacionR);
+				
+				return usuario;
+				
+			case 'i':
+				String nombreI = getUserInputString("Introducir nombre: ");
+				String contrasenaI = getUserInputString("Introducir contraseña: ");
+				
+				usuario = tienda.iniciarSesion(nombreI, contrasenaI);
+				
+				return usuario;
+			}	
+		}
+		return null;
+	}
+	
+	static void menuCliente(ClienteRegistrado cliente) throws InvalidArgumentException  {
+		while(action != 'e') {
+			if(cliente == null) return;
+			
+			getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | a: cuenta | n: notificaciones | e: exit");
+			switch(action) {
+			case 'b':
+				List<Categoria> categorias = new ArrayList<Categoria>();
+				for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+					getAction("Incluir categoria" + cat.getNombre() + "? s/n");
+					if(action == 's') {
+						categorias.add(cat);
+					}
+				}
+				double precioMin = getUserInputInt("Precio minimo: ");
+				double precioMax = getUserInputInt("Precio maximo: ");
+				double estrellasMin = getUserInputInt("Estrellas minimas: ");
+				
+				try{
+					tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
+				}catch(IllegalArgumentException e){
+					
+				}
+				
+			case 'r':
+			case 's':
+			case 'w':
+			case 'c':
+			case 'a':
+			case 'n':
+			}
+		}
 	}
 
+	static void menuEmpleado(Empleado empleado) throws InvalidArgumentException  { return;}
+		
+	static void menuGestor(Gestor gestor) throws InvalidArgumentException  { return;}
+	
+	static void cargarTienda() {
+		try {
+	        ObjectInputStream ois = new ObjectInputStream(
+	            new FileInputStream("tienda.dat"));
+	        tienda = (Tienda) ois.readObject();
+	        ois.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	static void guardarTienda() {
+		try {
+	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("tienda.dat"));
+	        oos.writeObject(tienda);
+	        oos.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 }

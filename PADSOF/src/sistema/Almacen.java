@@ -19,7 +19,8 @@ import wallapop.*;
  * 
  * Autores: Juan Ibáñez, Tiago Oselka, Claudia Saiz
  */
-public class Almacen {
+public class Almacen implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Map<String, Stock> inventario  = new HashMap<>();
 	private Map<String, Categoria> categorias = new HashMap<>();
 	private List<Descuento> descuentos = new LinkedList<>();

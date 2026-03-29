@@ -1,5 +1,6 @@
 package wallapop;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
@@ -7,7 +8,8 @@ import sistema.AsignadorId;
 import usuario.ClienteRegistrado;
 import usuario.Empleado;
 
-public class Intercambio {
+public class Intercambio implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private final long id;
 	private Cartera emisor;
 	private List<ArticuloSegundaMano> ofrecidos = new ArrayList<>();

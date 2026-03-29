@@ -1,11 +1,13 @@
 package venta.pedidos;
 
+import java.io.Serializable;
+
 /**
  * Clase enum con los posibles estados de un pedido
  * 
  * @author Juan Ibáñez
  */
-public enum EstadoPedido {
+public enum EstadoPedido implements Serializable {
 	PAGADO,
 	EN_PREPARACION,
 	LISTO,

@@ -1,12 +1,14 @@
 package wallapop;
 
+import java.io.Serializable;
 import java.time.*;
 
 import usuario.*;
 import sistema.AsignadorId;
 import sistema.Sistema;
 
-public class Valoracion {
+public class Valoracion implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private final long id;
 	private ArticuloSegundaMano articuloValorado;
 	private LocalDateTime fechaSolicitud;

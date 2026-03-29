@@ -1,11 +1,13 @@
 package estadistica;
 
+import java.io.Serializable;
 import java.time.*;
 
 /**
  * Clase StatsMensual que nos permite almacenar las unidades y recaudación. Unidades es un término intensionalmente ambiguo para poder almacenar distintos parámetros
  */
-public class StatsMensual {
+public class StatsMensual implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private YearMonth mes;
 	private int unidades = 0;
 	private double recaudacion = 0;

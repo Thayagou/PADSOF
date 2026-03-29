@@ -7,8 +7,10 @@ import venta.productos.Categoria;
 import usuario.ClienteRegistrado;
 
 import java.awt.Image;
+import java.io.Serializable;
 
-public class ArticuloSegundaMano {
+public class ArticuloSegundaMano implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private final long id;
 	private String nombre;
 	private String descripcion;

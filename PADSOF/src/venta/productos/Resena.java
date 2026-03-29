@@ -1,5 +1,6 @@
 package venta.productos;
 
+import java.io.Serializable;
 import java.time.*;
 import usuario.ClienteRegistrado;
 import exceptions.*;
@@ -9,7 +10,8 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez
  */
-public class Resena {
+public class Resena implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private double puntuacion;
 	private String comentario;
 	private LocalDate fecha;

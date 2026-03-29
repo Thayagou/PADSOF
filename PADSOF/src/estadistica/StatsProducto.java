@@ -1,5 +1,6 @@
 package estadistica;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
@@ -8,12 +9,13 @@ import venta.productos.*;
 /**
  * Clase StatsProducto nos permite almacenar información relevante de los productos de cada mes, junto a su vector de intereses
  */
-public class StatsProducto {
+
+public class StatsProducto implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Producto producto;
 	private List<StatsMensual> estadisticas = new ArrayList<>();
 	private Map<Categoria, Double> recomendacion = new HashMap<>();
-	private double norma = 0;
-	
+	private double norma = 0;	
 	
 	/**
 	 * Constructor de la clase StatsProducto

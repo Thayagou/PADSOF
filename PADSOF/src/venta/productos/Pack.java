@@ -1,6 +1,8 @@
 package venta.productos;
 
 import exceptions.*;
+
+import java.io.Serializable;
 import java.util.*;
 
 import javax.swing.ImageIcon;
@@ -10,7 +12,8 @@ import javax.swing.ImageIcon;
  * 
  * @author Juan Ibáñez
  */
-public class Pack extends Producto {
+public class Pack extends Producto implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Set<Stock> productos = new HashSet<Stock>();
 	
 	/**

@@ -1,5 +1,6 @@
 package venta.descuentos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import exceptions.*;
 
@@ -10,7 +11,8 @@ import venta.productos.Producto;
  * 
  * @author Juan Ibáñez
  */
-public class DescuentoRegalo extends Descuento {
+public class DescuentoRegalo extends Descuento implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Producto regalo;
 	
 	/**

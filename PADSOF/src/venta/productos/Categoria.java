@@ -1,5 +1,6 @@
 package venta.productos;
 
+import java.io.Serializable;
 import java.util.*;
 
 import exceptions.*;
@@ -10,7 +11,8 @@ import venta.descuentos.*;
  * 
  * @author Juan Ibáñez
  */
-public class Categoria {
+public class Categoria implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private boolean eliminada;
 	private Descuento descuento;

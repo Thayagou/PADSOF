@@ -2,6 +2,8 @@ package estadistica;
 
 import usuario.ClienteRegistrado;
 import venta.productos.*;
+
+import java.io.Serializable;
 import java.util.*;
 
 import sistema.Sistema;
@@ -9,7 +11,8 @@ import sistema.Sistema;
 /**
  * Clase StatsUsuario que nos permite almacenar la infromación referente a los usuarios
  */
-public class StatsUsuario {
+public class StatsUsuario implements Serializable {
+	private static final long serialVersionUID = 1L;
 	ClienteRegistrado cliente;
 	double totalGastado = 0;
 	long udsCompradas = 0;
