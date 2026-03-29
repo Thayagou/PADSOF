@@ -32,6 +32,11 @@ public class Main {
 		return sc.nextInt(0);
 	}
 	
+	static double getUserInputDouble(String message) {
+		System.out.println("\n"+message);
+		return sc.nextDouble();
+	}
+	
 	static void getAction(String message) {
 		System.out.println("\n"+message);
 		action = sc.next().charAt(0);
@@ -74,7 +79,7 @@ public class Main {
 	
 	static Usuario menuInicio() throws InvalidArgumentException, NotValidUserException {
 		while(action != 'e') {
-			getAction("r: registrarse | i: iniciar sesión | e: exit ");
+			getAction("r: registrarse | i: iniciar sesión | b: buscar | e: exit ");
 				
 			switch(action) {
 			case 'r':
@@ -93,6 +98,25 @@ public class Main {
 				usuario = tienda.iniciarSesion(nombreI, contrasenaI);
 				
 				return usuario;
+				
+			case 'b':
+				List<Categoria> categorias = new ArrayList<Categoria>();
+				for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+					getAction("Incluir categoria" + cat.getNombre() + "? s/n");
+					if(action == 's') {
+						categorias.add(cat);
+					}
+				}
+				double precioMin = getUserInputDouble("Precio minimo: ");
+				double precioMax = getUserInputDouble("Precio maximo: ");
+				double estrellasMin = getUserInputDouble("Estrellas minimas: ");
+				
+				try{
+					tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
+				}catch(IllegalArgumentException e){
+					
+				}
+				// Ver mas informacion de los productos
 			}	
 		}
 		return null;
@@ -112,9 +136,9 @@ public class Main {
 						categorias.add(cat);
 					}
 				}
-				double precioMin = getUserInputInt("Precio minimo: ");
-				double precioMax = getUserInputInt("Precio maximo: ");
-				double estrellasMin = getUserInputInt("Estrellas minimas: ");
+				double precioMin = getUserInputDouble("Precio minimo: ");
+				double precioMax = getUserInputDouble("Precio maximo: ");
+				double estrellasMin = getUserInputDouble("Estrellas minimas: ");
 				
 				try{
 					tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
@@ -123,6 +147,7 @@ public class Main {
 				}
 				
 			case 'r':
+				
 			case 's':
 			case 'w':
 			case 'c':
@@ -132,9 +157,23 @@ public class Main {
 		}
 	}
 
-	static void menuEmpleado(Empleado empleado) throws InvalidArgumentException  { return;}
+	static void menuEmpleado(Empleado empleado) throws InvalidArgumentException  {
+		while(action != 'e') {
+			if(empleado == null) return;
+			
+			getAction("v: valorar articulo | c: confirmar intercambio | g: gestionar pedidos | p: gestionar productos");
+			switch(action) {
+			case 'v':
+			case 'c':
+			case 'g':
+			case 'p':
+			}
+		}
+	}
 		
-	static void menuGestor(Gestor gestor) throws InvalidArgumentException  { return;}
+	static void menuGestor(Gestor gestor) throws InvalidArgumentException  {
+		
+	}
 	
 	static void cargarTienda() {
 		try {

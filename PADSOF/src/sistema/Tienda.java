@@ -104,7 +104,7 @@ public class Tienda implements Serializable {
 	 * @return Usuario que se creó
 	 */
 	public Usuario registrarse(String nombre, String contrasena, String confirmarContrasena) throws InvalidArgumentException, NotValidUserException {
-		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("Error en registrarse: No se pueden dejar argumentos vacíos");
+		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Ya existe un usuario con ese nombre", "registrarse", nombre);
 		if(!contrasena.equals(confirmarContrasena)) throw new NotValidUserException("Ha fallado la comprobación de contraseña", "registrarse", nombre);
 		
@@ -129,9 +129,9 @@ public class Tienda implements Serializable {
 			if(empleados.get(nombre).getContrasena().equals(contrasena) && empleados.get(nombre).estaDeAlta())
 				return empleados.get(nombre);
 		} else {
-			throw new NotValidUserException("No se encontró el usuario", "registrarse", nombre);
+			throw new NotValidUserException("No se encontró el usuario", "iniciar sesión", nombre);
 		}
-		throw new NotValidUserException("La contraseña es incorrecta", "registrarse", nombre);
+		throw new NotValidUserException("La contraseña es incorrecta", "iniciar sesión", nombre);
 	}
 	
 	/**
