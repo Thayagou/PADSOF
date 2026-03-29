@@ -2,13 +2,16 @@ package usuario;
 
 import java.util.*;
 
+
 import exceptions.InvalidArgumentException;
 import venta.pedidos.Pedido;
 import venta.productos.Producto;
 import venta.productos.Resena;
+import venta.productos.Categoria;
 import wallapop.ArticuloSegundaMano;
 import wallapop.Cartera;
 import exceptions.*;
+import estadistica.StatsUsuario;
 
 public class ClienteRegistrado extends Usuario {
 	private Carrito carrito;
@@ -16,6 +19,7 @@ public class ClienteRegistrado extends Usuario {
 	private List<Notificacion> notificaciones;
 	private Set<TipoNotificacion> intereses;
 	private List<Pedido> misCompras;
+	private StatsUsuario estadisticas;
 	
 	public ClienteRegistrado(String nombre, String contrasena) 
 			throws IllegalArgumentException {
@@ -53,6 +57,32 @@ public class ClienteRegistrado extends Usuario {
 
 	public Notificacion[] getNotificaciones() {
 		return this.notificaciones.toArray( new Notificacion[0]);
+	}
+	
+	/**
+	 * Obtiene el vector de categorías de interés del cliente a partir de sus estadísticas
+	 * @return Un vector en formato de mapa, que asigna a cada categoría una ponderación de interés
+	 */
+	public Map<Categoria, Double> getVectorRecomendacion() {
+		return estadisticas.getVectorIntereses();
+	}
+	
+	/**
+	 * Obtiene la norma del vector de recomendaciones
+	 * @return Norma del vector
+	 */
+	public double getNormaVectorRecomendaciones() {
+		return estadisticas.getNorma();
+	}
+	
+	/**
+	 * Dado un vector de categorías con valores asociados y su norma, obtiene el producto escalar normalizado con su propio vector de intereses
+	 * @param vector Vector de Categorías->ponderación 
+	 * @param norma Norma del vector enviado
+	 * @return valor resultante del producto escalar
+	 */
+	public double getCompatibilidad(Map<Categoria, Double> vector, double norma) {
+		return estadisticas.getCompatibilidad(vector, norma);
 	}
 
 	public boolean enviarNotificacion(String mensaje, TipoNotificacion tipo) {

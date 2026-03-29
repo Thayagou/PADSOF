@@ -145,6 +145,22 @@ public abstract class Producto {
 	}
 	
 	/**
+	 * Obtiene el vector de recomendación de un producto a partir de su estadística
+	 * @return Un vector en formato de mapa, que asigna a cada categoría una ponderación de interés
+	 */
+	public Map<Categoria, Double> getVectorRecomendacion() {
+		return estadisticas.getVectorRecomendacion();
+	}
+	
+	/**
+	 * Obtiene la norma del vector de recomendaciones
+	 * @return Norma del vector
+	 */
+	public double getNormaVector() {
+		return estadisticas.getNormaVector();
+	}
+	
+	/**
 	 * Método para comprobar si se pueden añadir las categorías al producto
 	 * @param categorias Categorias a comprobar si son compatibles
 	 * @return true si todas las categorias se pueden añadir, false si no

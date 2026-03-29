@@ -9,10 +9,10 @@ import venta.productos.*;
  * Clase StatsProducto nos permite almacenar información relevante de los productos de cada mes, junto a su vector de intereses
  */
 public class StatsProducto {
-	Producto producto;
-	List<StatsMensual> estadisticas = new ArrayList<>();
-	double sumaRecomendacion;
-	Map<Categoria, Double> recomendacion = new HashMap<>();
+	private Producto producto;
+	private List<StatsMensual> estadisticas = new ArrayList<>();
+	private Map<Categoria, Double> recomendacion = new HashMap<>();
+	private double norma = 0;
 	
 	
 	/**
@@ -35,26 +35,6 @@ public class StatsProducto {
 		return true;
 	}
 	
-	
-	/**
-	 * A partir del vector de preferencias de un usuario hace un producto escalar para obtener el valor de semejanza entre el producto y el usuario
-	 * @param user Vector de preferencias de un usuario
-	 * @param sumaUsuario Norma del vector
-	 * @return valor de compatibilidad resultante
-	 */
-	public double getCompatibilidad(Vector<Double> user, double sumaUsuario) {
-		int i;
-		double total = 0;
-		
-		for (i = 0; i < recomendacion.size(); i++) {
-			total += user.get(i)* recomendacion.get(i);
-		}
-		
-		total /= sumaUsuario*sumaRecomendacion;
-		
-		return total;
-	}
-	
 	/**
 	 * Obtiene la estadística del último mes
 	 * @return Devuelve la del mes actual y si no existe, devuelve null. 
@@ -67,6 +47,10 @@ public class StatsProducto {
 	
 	public Map<Categoria, Double> getVectorRecomendacion() {
 		return Collections.unmodifiableMap(recomendacion);
+	}
+	
+	public double getNormaVector() {
+		return norma;
 	}
 	
 	

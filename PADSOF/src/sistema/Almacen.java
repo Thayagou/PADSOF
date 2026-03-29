@@ -565,20 +565,58 @@ public class Almacen {
 		return productos.toArray(new Producto[0]);
 	}
 	
+	/**
+	 * Devuelve una lista de productos ordenada según su compatibilidad con el cliente 
+	 * @param cliente Cliente de la tienda al cual se le va a calcular la lista de recomendación
+	 * @return dicha lista de productos
+	 */
 	public Producto[] getListaRecomendacion(ClienteRegistrado cliente) {
 		Map<Producto, Double> recomendacion = new HashMap<>();
+		Map<ClienteRegistrado, Double> similaridadEntreClientes = new HashMap<>(); // Usamos este map para evitar recalcular el grado de similaridad entre usuarios
 		PriorityQueue<Producto> pq = new PriorityQueue<>(Comparator.comparingDouble(p->recomendacion.get(p)));
+		Set<ParametroRecomendacion> parametros = Sistema.getInstancia().getParametros();
 		Producto p;
+		double pondValoraciones = Sistema.getInstancia().getPonderacionValoracionesProducto();
+		double pondProdRecomendado = Sistema.getInstancia().getPonderacionProductoRecomendado();
+		double valoracionPrevista, compatibilidadPrevista, valorAsociado;
+		int numValoraciones;
+		int nElements = Sistema.getInstancia().getNumProductosRecomendados();
+		boolean usarValoraciones = parametros.contains(ParametroRecomendacion.USUARIOS_SIMILARES);
+		
 		
 		for (Stock st: inventario.values()) {
 			if (st.disponible() == false) continue;
 			p = st.getProducto();
 			if (p.isEliminado()) continue;
+
+			// En vez de considerar únicamente la puntuación, hace una media ponderada de la puntuación teniendo en cuenta los usuarios más similares a este mismo
+			if (usarValoraciones) {
+				valoracionPrevista = 0;
+				numValoraciones = 0;
+				
+				for (Resena r: p.getResenas()) {
+					similaridadEntreClientes.putIfAbsent(r.getUsuario(), cliente.getCompatibilidad(r.getUsuario().getVectorRecomendacion(), r.getUsuario().getNormaVectorRecomendaciones()));
+					valoracionPrevista += r.getPuntuacion()*similaridadEntreClientes.get(r.getUsuario());
+					numValoraciones++;
+				}
+				valoracionPrevista /= numValoraciones;	
+				
+			} else {
+				valoracionPrevista = p.getPuntuacionMedia();
+			}
 			
 			
+			compatibilidadPrevista = cliente.getCompatibilidad(p.getVectorRecomendacion(), p.getNormaVector());
+			valorAsociado = compatibilidadPrevista * pondProdRecomendado + valoracionPrevista* pondValoraciones;
+			
+			recomendacion.put(p, valorAsociado);
+			
+			pq.offer(p);
+			if (pq.size() > nElements) pq.poll();
 		}
 		
-		return null;
+		return pq.toArray(new Producto[0]);
 		
 	}
 }
+

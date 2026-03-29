@@ -9,16 +9,19 @@ public class Sistema {
 	private Duration tiempoCaducaOferta;
 	private double precioValoracion;
 	private double ponderacionCategoria;
-	private double ponderacionUdsCompra;
-	private double ponderacionPrecioCompra;
-	private double ponderacionBusqueda;
-	private Set<ParametroRecomendacion> parametros;
+	private double ponderacionUdsCompra = 0;
+	private double ponderacionPrecioCompra = 0;
+	private double ponderacionValoracionesProducto = 0;
+	private double ponderacionProductoRecomendado = 0;
+	private double ponderacionBusqueda = 0;
+	private int numProdsRecomendados = 0;
+	private Set<ParametroRecomendacion> parametros = new HashSet<>();
 
 	private Sistema(Duration tiempoCarrito, Duration tiempoOferta, double precioValoracion, ParametroRecomendacion... parametrosIniciales) {
 		this.tiempoCaducaCarrito = tiempoCarrito;
 		this.tiempoCaducaOferta = tiempoOferta;
 		this.precioValoracion = precioValoracion;
-		this.parametros = new HashSet<>();
+
 		for(ParametroRecomendacion p : parametrosIniciales) {
 			this.parametros.add(p);
 		}
@@ -67,6 +70,18 @@ public class Sistema {
 
 	public double getPonderacionBusqueda() {
 		return ponderacionBusqueda;
+	}
+	
+	public int getNumProductosRecomendados() {
+		return numProdsRecomendados;
+	}
+
+	public double getPonderacionValoracionesProducto() {
+		return ponderacionValoracionesProducto;
+	}
+
+	public double getPonderacionProductoRecomendado() {
+		return ponderacionProductoRecomendado;
 	}
 
 	public boolean setPrecioValoracion(double precioValoracion) {
