@@ -9,6 +9,7 @@ import java.util.*;
 import javax.swing.ImageIcon;
 
 import exceptions.*;
+import usuario.ClienteRegistrado;
 import venta.descuentos.*;
 import venta.productos.*;
 import wallapop.*;
@@ -564,8 +565,20 @@ public class Almacen {
 		return productos.toArray(new Producto[0]);
 	}
 	
-	public Producto[] getListaRecomendacion() {
+	public Producto[] getListaRecomendacion(ClienteRegistrado cliente) {
 		Map<Producto, Double> recomendacion = new HashMap<>();
+		PriorityQueue<Producto> pq = new PriorityQueue<>(Comparator.comparingDouble(p->recomendacion.get(p)));
+		Producto p;
+		
+		for (Stock st: inventario.values()) {
+			if (st.disponible() == false) continue;
+			p = st.getProducto();
+			if (p.isEliminado()) continue;
+			
+			
+		}
+		
 		return null;
+		
 	}
 }

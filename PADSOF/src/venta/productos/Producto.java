@@ -3,6 +3,7 @@ import java.util.*;
 import javax.swing.ImageIcon;
 import venta.descuentos.*;
 import exceptions.*;
+import estadistica.StatsProducto;
 
 import sistema.AsignadorId;
 
@@ -21,6 +22,7 @@ public abstract class Producto {
 	private Set<Categoria> categorias = new HashSet<Categoria>();
 	private Descuento descuento;
 	private boolean eliminado;
+	private StatsProducto estadisticas;
 	
 	/**
 	 * Creador de producto
@@ -124,6 +126,14 @@ public abstract class Producto {
 	 */
 	public void setImagen(ImageIcon imagen) {
 		this.imagen = imagen;
+	}
+	
+	/**
+	 * Setter de las estadísticas del producto
+	 * @param stats Instancia de StatsProducto con todas sus estadísticas
+	 */
+	public void setStatsProducto(StatsProducto stats) {
+		estadisticas = stats;
 	}
 
 	/**
