@@ -103,8 +103,8 @@ public class PruebaDeUso {
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Listo
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Recogido**/
 		
-		System.out.println(tienda.getCliente("Usuario1"));
-		System.out.println(tienda.getCliente("Usuario2"));
+		//System.out.println(tienda.getCliente("Usuario1"));
+		//System.out.println(tienda.getCliente("Usuario2"));
 		//Vemos que se enviarion las notificaciones correspondientes a cada uno
 		System.out.println("\nNotificaciones de Usuario1:\n");
 		for (Notificacion n: tienda.getCliente("Usuario1").getNotificaciones()) {

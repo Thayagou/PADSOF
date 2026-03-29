@@ -39,6 +39,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	
 	public void guardarUsuario(ClienteRegistrado cliente) {
 		statsClientes.putIfAbsent(cliente, new StatsUsuario(cliente));
+		System.out.println("Se almacenó el cliente "+cliente.getNombre());
 	}
 
 	@Override
@@ -81,8 +82,7 @@ public class Historial implements Serializable, ObservadorProducto {
 		statsClientes.putIfAbsent(cliente, new StatsUsuario(cliente));
 		StatsUsuario statCliente = statsClientes.get(cliente);
 		
-		statCliente.actualizarCompra(vectorCompra);
-		statCliente.actualizarUltimaVenta(udsVendidas, precio);
+		statCliente.actualizarCompra(vectorCompra, udsVendidas, precio);
 		
 		YearMonth month = YearMonth.now();
 		if (ventasMensuales.get(month) == null) ventasMensuales.put(month, new StatsMensual());
