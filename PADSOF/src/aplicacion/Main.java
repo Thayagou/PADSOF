@@ -23,7 +23,7 @@ public class Main {
 	}
 	
 	static String getUserInputString(String message) {
-		System.out.println("\n"+message);
+		System.out.println(message);
 		return sc.next();
 	}
 	
@@ -38,7 +38,7 @@ public class Main {
 	}
 	
 	static void getAction(String message) {
-		System.out.println("\n"+message);
+		System.out.println(message);
 		action = sc.next().charAt(0);
 	}
 

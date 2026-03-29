@@ -20,8 +20,13 @@ public class StatsUsuario implements Serializable {
 	Map<Categoria, Double> intereses = new HashMap<>();
 	double norma = 0;
 	
+	/**
+	 * Contructor de la clase ClienteRegistrado
+	 * @param cliente Cliente a almacenar
+	 */
 	public StatsUsuario(ClienteRegistrado cliente) {
 		this.cliente = cliente;
+		cliente.setEstadisticas(this);
 	}
 	
 	public boolean actualizarUltimaVenta(int udsCompradas, double precio) {
@@ -63,12 +68,17 @@ public class StatsUsuario implements Serializable {
 	}
 	
 	public void actualizarCompra(Map<Categoria, Double> vector) {
+		System.out.println("\n\nPASAPORAQUIIIIIIIIIIIIIIII\n\n");
 		for (Categoria c : vector.keySet()) {			
 			intereses.merge(c, vector.get(c), (a,b)->a+b);
 		}
 		
+		System.out.println("inteseses: "+intereses);
+		
 		norma = Math.sqrt(intereses.values().stream().mapToDouble(a->a*a).sum());
 	}
+	
+	
 	
 	public Map<Categoria, Double> getVectorIntereses() {
 		return Collections.unmodifiableMap(intereses);
@@ -90,6 +100,12 @@ public class StatsUsuario implements Serializable {
 		prodEscalar /= (n1*norma);
 		
 		return prodEscalar;
+	}
+	
+	@Override
+	public String toString() {
+		return "\n  Total gastado: "+totalGastado+ "\n  Unidades compradas: "+ udsCompradas+ 
+				"\n  Unidades intercambiadas: "+ udsIntercambiadas + "\n  Vector recomendación: "+ intereses; 
 	}
 
 }

@@ -50,6 +50,6 @@ public class Notificacion implements Serializable {
 	
 	@Override
 	public String toString() {
-		return this.tipo.name() + contenido + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		return this.tipo.name() +": "+ contenido + " Fecha: "+ fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 }

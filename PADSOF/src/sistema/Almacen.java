@@ -8,6 +8,7 @@ import java.time.Month;
 import java.util.*;
 import javax.swing.ImageIcon;
 
+import estadistica.ObservadorProducto;
 import exceptions.*;
 import usuario.ClienteRegistrado;
 import venta.descuentos.*;
@@ -25,11 +26,14 @@ public class Almacen implements Serializable {
 	private Map<String, Categoria> categorias = new HashMap<>();
 	private List<Descuento> descuentos = new LinkedList<>();
 	private List<ArticuloSegundaMano> articulos = new LinkedList<>();
+	private ObservadorProducto observador;
 	
 	/**
 	 * Crea un nuevo almacen
 	 */
-	public Almacen() { }
+	public Almacen(ObservadorProducto obs) {
+		observador = obs;
+	}
 	
 	/**
 	 * Crea y añade un nuevo cómic al inventario
@@ -52,6 +56,8 @@ public class Almacen implements Serializable {
 			
 		Comic comic = new Comic(nombre, descripcion, precio, image, fecha, autor, numPaginas, editorial, categorias);
 		this.inventario.put(nombre, new Stock(comic, uds));
+		observador.guardarProducto(comic);
+		
 		return true;
 	}
 	
@@ -75,6 +81,7 @@ public class Almacen implements Serializable {
 			
 		Juego juego = new Juego(nombre, descripcion, precio, image, numJugadores, rangoEdad, tipo, categorias);
 		this.inventario.put(nombre, new Stock(juego, uds));
+		observador.guardarProducto(juego);
 		return true;
 	}
 	
@@ -98,6 +105,7 @@ public class Almacen implements Serializable {
 	
 		Figura figura = new Figura(nombre, descripcion, precio, image, dimensiones, material, marca, categorias);
 		this.inventario.put(nombre, new Stock(figura, uds));
+		observador.guardarProducto(figura);
 		return true;
 	}
 	
@@ -119,6 +127,7 @@ public class Almacen implements Serializable {
 		
 		Pack pack= new Pack(productos, nombre, descripcion, precio, image, categorias);
 		this.inventario.put(nombre, new Stock(pack, uds));
+		observador.guardarProducto(pack);
 		return true;
 	}
 	
@@ -210,6 +219,8 @@ public class Almacen implements Serializable {
 		producto.setDescripcion(desc);
 		producto.setPrecio(precio);
 		producto.setImagen(imagen);
+		
+		observador.actualizarVector(producto);
 		
 		return true;
 	}

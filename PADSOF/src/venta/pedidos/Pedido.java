@@ -180,12 +180,17 @@ public class Pedido implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
-		s.append(String.format("Pedido id=%d\n  Items:\n", id));
+		s.append(String.format("\nPedido id=%d\n  Items:\n", id));
 		for(StockExterno st : itemsPedido) {
 			s.append("  " + st.toString() + "\n");
 		}
 		s.append("\n  Precio total: "+precioTotal);
-		s.append("\n  Fecha de pedido: "+fechaPago);
+		s.append("\n  Fecha de realización del pedido: "+fechaPago+"\n");
+		s.append("\n  Estado pedido: " + estado+"\n");
+		if (this.empPreparacion != null) s.append("  En preparación desde: " + fechaPreparacion+ " por: "+ empPreparacion.getNombre() + "\n");
+		if (this.empListo != null) s.append("  Listo desde: " + fechaListo+ " por: "+ empListo.getNombre() + "\n");
+		if (this.empRecogida != null) s.append("  Recogido desde: " + fechaRecogida+ " por: "+ empRecogida.getNombre() + "\n");
+		
 		return s.toString();
 	}
 }

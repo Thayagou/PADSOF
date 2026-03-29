@@ -2,6 +2,7 @@ package estadistica;
 
 import java.util.*;
 
+import exceptions.InvalidArgumentException;
 import sistema.Sistema;
 
 import java.io.Serializable;
@@ -16,20 +17,36 @@ import usuario.*;
  * Clase Historial, encargada de guardar y manejar las estadísticas de usuarios y productos
  * @author Tiago Oselka
  */
-public class Historial implements Serializable {
+public class Historial implements Serializable, ObservadorProducto {
 	private static final long serialVersionUID = 1L;
-	List<Pedido> pedidos = new ArrayList<>();
-	List<Valoracion> valoraciones = new ArrayList<>();
-	List<Intercambio> intercambios = new ArrayList<>();
-	Map<Producto, StatsProducto> statsProductos = new HashMap<>();
-	Map<ClienteRegistrado, StatsUsuario> statsClientes = new HashMap<>();
-	Map<YearMonth, StatsMensual> ventasMensuales = new HashMap<>();
-	Map<YearMonth, StatsMensual> wallapopMensuales = new HashMap<>();
+	private List<Pedido> pedidos = new ArrayList<>();
+	private List<Valoracion> valoraciones = new ArrayList<>();
+	private List<Intercambio> intercambios = new ArrayList<>();
+	private Map<Producto, StatsProducto> statsProductos = new HashMap<>();
+	private Map<ClienteRegistrado, StatsUsuario> statsClientes = new HashMap<>();
+	private Map<YearMonth, StatsMensual> ventasMensuales = new HashMap<>();
+	private Map<YearMonth, StatsMensual> wallapopMensuales = new HashMap<>();
 
 	/**
 	 * Constructor de la clase historial
 	 */
 	public Historial() { }
+	
+	@Override
+	public void guardarProducto(Producto p) {
+		statsProductos.putIfAbsent(p, new StatsProducto(p));		
+	}
+	
+	public void guardarUsuario(ClienteRegistrado cliente) {
+		statsClientes.putIfAbsent(cliente, new StatsUsuario(cliente));
+	}
+
+	@Override
+	public void actualizarVector(Producto p) {
+		StatsProducto stats = statsProductos.get(p);
+		
+		
+	}
 	
 	/**
 	 * Método para guardar un pedido, actualizando las estadísticas de la tienda, de los productos y del cliente que lo ha comprado
@@ -72,7 +89,7 @@ public class Historial implements Serializable {
 		StatsMensual statVenta = ventasMensuales.get(month);
 		statVenta.incrementar(udsVendidas, precio);
 			
-		
+		System.out.println(cliente);
 		pedidos.add(pedido);
 		
 		return true;
@@ -158,11 +175,16 @@ public class Historial implements Serializable {
 	 * @param empleado Empleado de la tienda que debe tener el permiso de PEDIDOS
 	 * @param pedido Pedido cuyo estado se pretende avanzar
 	 * @return true si se ha avanzado correctamente, false en caso contrario
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean avanzarEstadoPedido(Empleado empleado, Pedido pedido) {
+	public boolean avanzarEstadoPedido(Empleado empleado, Pedido pedido) throws InvalidArgumentException {
 		if (empleado.tienePermiso(Permiso.PEDIDOS) == false) return false;
 		
-		//pedido.nextEstadoPedido(empleado);
+		pedido.nextEstadoPedido(empleado);
+
+		ClienteRegistrado cliente = pedido.getCliente();
+		
+		cliente.enviarNotificacion("Tu pedido con código "+pedido.getId()+" ha avanzado al estado "+pedido.getEstado()+".", TipoNotificacion.PEDIDO);
 		
 		return true;
 	}
@@ -221,8 +243,7 @@ public class Historial implements Serializable {
 		Arrays.sort(ordenar, (a, b)->Double.compare(a.getGastoTotal(), b.getGastoTotal()));
 		
 		return ordenar;
-	}
-	
+	}	
 	
 }
 

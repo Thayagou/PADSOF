@@ -21,21 +21,17 @@ import exceptions.*;
  */
 public class Tienda implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private Historial historial = new Historial();
 	private Almacen almacen;
-	private Historial historial;
-	private Map<String, ClienteRegistrado> clientes;
-	private Map<String, Empleado> empleados;
-	private Gestor gestor;
+	private Map<String, ClienteRegistrado> clientes = new HashMap<>();
+	private Map<String, Empleado> empleados = new HashMap<>();
+	private Gestor gestor = new Gestor("GESTOR", "GESTOR123");
 	
 	/**
-	 * Creador de la tienda
+	 * Constructor de la tienda
 	 */
-	public Tienda() {
-		almacen = new Almacen();
-		historial = new Historial();
-		clientes = new HashMap<>();
-		empleados = new HashMap<>();
-		gestor = new Gestor("GESTOR", "GESTOR123");
+	public Tienda() { 
+		almacen = new Almacen(historial);
 	}
 	
 	/**
@@ -108,7 +104,9 @@ public class Tienda implements Serializable {
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Ya existe un usuario con ese nombre", "registrarse", nombre);
 		if(!contrasena.equals(confirmarContrasena)) throw new NotValidUserException("Ha fallado la comprobación de contraseña", "registrarse", nombre);
 		
-		clientes.put(nombre, new ClienteRegistrado(nombre, contrasena));
+		ClienteRegistrado cliente = new ClienteRegistrado(nombre, contrasena);
+		clientes.put(nombre, cliente);
+		historial.guardarUsuario(cliente);
 		return clientes.get(nombre);
 	}
 	
@@ -338,9 +336,14 @@ public class Tienda implements Serializable {
 		carrito.vaciarCarrito();
 		
 		getHistorial().guardarPedido(pedido);
+		System.out.println(cliente);
 		long codigoPedido = pedido.getId();
 		
 		cliente.enviarNotificacion("Tu pedido con código "+codigoPedido+" ya está pagado! Se te notificará cuando esté listo para recoger.", TipoNotificacion.PEDIDO);
+		
+		for(Empleado e : this.getEmpleados()) {
+			e.enviarNotificacion("Se ha realizado un nuevo pedido", TipoNotificacion.PEDIDO);
+		}
 		
 		return true;
 	}
