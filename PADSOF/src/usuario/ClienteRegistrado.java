@@ -1,5 +1,6 @@
 package usuario;
 
+import java.io.Serializable;
 import java.util.*;
 
 import exceptions.InvalidArgumentException;
@@ -10,7 +11,8 @@ import wallapop.ArticuloSegundaMano;
 import wallapop.Cartera;
 import exceptions.*;
 
-public class ClienteRegistrado extends Usuario {
+public class ClienteRegistrado extends Usuario implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Carrito carrito;
 	private Cartera cartera;
 	private List<Notificacion> notificaciones;

@@ -1,9 +1,11 @@
 package usuario;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Notificacion {
+public class Notificacion implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private LocalDate fecha;
 	private String contenido;
 	private boolean leida;

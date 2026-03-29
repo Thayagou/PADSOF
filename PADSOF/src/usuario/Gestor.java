@@ -1,11 +1,13 @@
 package usuario;
 
+import java.io.Serializable;
 import java.time.Duration;
 
 import sistema.ParametroRecomendacion;
 import sistema.Sistema;
 
-public class Gestor extends Usuario {
+public class Gestor extends Usuario implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	public Gestor(String nombre, String contrasena) 
 		throws IllegalArgumentException {

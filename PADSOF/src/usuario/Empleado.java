@@ -1,8 +1,10 @@
 package usuario;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Empleado extends Usuario{
+public class Empleado extends Usuario implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Set<Permiso> permisos;
 	private List<Notificacion> notificaciones;
 	private boolean deAlta;

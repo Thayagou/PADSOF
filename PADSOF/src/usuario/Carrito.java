@@ -1,12 +1,14 @@
 package usuario;
 
 import java.util.*;
+import java.io.Serializable;
 import java.time.*;
 import venta.descuentos.*;
 import venta.productos.*;
 import exceptions.*;
 
-public class Carrito {
+public class Carrito implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private LocalDateTime fechaCaducidad;
 	private Map<Producto, StockExterno> items = new HashMap<Producto, StockExterno>();
 	private Map<Producto, StockExterno> regalos = new HashMap<Producto, StockExterno>();
