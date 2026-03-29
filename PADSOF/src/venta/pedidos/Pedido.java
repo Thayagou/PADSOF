@@ -1,5 +1,6 @@
 package venta.pedidos;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
@@ -13,7 +14,8 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez
  */
-public class Pedido {
+public class Pedido implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private final long id;
 	private final LocalDateTime fechaPago;
 	private LocalDateTime fechaPreparacion;

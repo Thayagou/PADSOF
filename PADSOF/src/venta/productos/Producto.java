@@ -1,4 +1,5 @@
 package venta.productos;
+import java.io.Serializable;
 import java.util.*;
 import javax.swing.ImageIcon;
 import venta.descuentos.*;
@@ -11,7 +12,8 @@ import sistema.AsignadorId;
  * 
  * @author Juan Ibáñez
  */
-public abstract class Producto {
+public abstract class Producto implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private final long id;
 	private String nombre;
 	private String descripcion;

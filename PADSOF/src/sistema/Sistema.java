@@ -1,9 +1,11 @@
 package sistema;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
-public class Sistema {
+public class Sistema implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private static Sistema instancia;
 	private Duration tiempoCaducaCarrito;
 	private Duration tiempoCaducaOferta;

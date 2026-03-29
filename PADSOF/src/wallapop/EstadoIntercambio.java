@@ -1,6 +1,8 @@
 package wallapop;
 
-public enum EstadoIntercambio {
+import java.io.Serializable;
+
+public enum EstadoIntercambio implements Serializable {
 	OFERTADO,
 	CANCELADO,
 	RECHAZADO,

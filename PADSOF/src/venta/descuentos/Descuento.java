@@ -1,5 +1,6 @@
 package venta.descuentos;
 
+import java.io.Serializable;
 import java.time.*;
 
 import sistema.AsignadorId;
@@ -11,7 +12,8 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez
  */
-public abstract class Descuento {
+public abstract class Descuento implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private final long id;
 	private double valorMin;
 	private LocalDateTime inicio;

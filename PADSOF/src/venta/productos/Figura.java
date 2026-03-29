@@ -1,5 +1,7 @@
 package venta.productos;
 
+import java.io.Serializable;
+
 import javax.swing.ImageIcon;
 
 import exceptions.*;
@@ -9,7 +11,8 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez
  */
-public class Figura extends Producto {
+public class Figura extends Producto implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String dimensiones;
 	private String marca;
 	private String material;

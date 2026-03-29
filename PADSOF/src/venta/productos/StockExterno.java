@@ -1,5 +1,6 @@
 package venta.productos;
 
+import java.io.Serializable;
 import exceptions.*;
 
 /**
@@ -7,7 +8,8 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez
  */
-public class StockExterno extends Stock {
+public class StockExterno extends Stock implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private double precioUnitarioFinal;	/*Precio unitario del producto del stock, no el precio total del stock*/
 	
 	/**

@@ -1,6 +1,9 @@
 package sistema;
 
-public class AsignadorId {
+import java.io.Serializable;
+
+public class AsignadorId implements Serializable {
+	private static final long serialVersionUID = 1L;
     private static AsignadorId instancia;
     private long contadorIds;
     

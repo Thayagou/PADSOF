@@ -1,5 +1,6 @@
 package venta.productos;
 
+import java.io.Serializable;
 import java.time.*;
 
 import javax.swing.ImageIcon;
@@ -11,7 +12,8 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez
  */
-public class Comic extends Producto {
+public class Comic extends Producto implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private LocalDate fechaPublicacion;
 	private String autor;
 	private int numPaginas;

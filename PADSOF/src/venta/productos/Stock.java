@@ -1,6 +1,9 @@
 package venta.productos;
 
 import sistema.AsignadorId;
+
+import java.io.Serializable;
+
 import exceptions.*;
 
 /**
@@ -8,7 +11,8 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez
  */
-public class Stock {
+public class Stock implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private final long id;
 	private Producto producto;
 	private int udsEnStock;

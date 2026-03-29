@@ -4,6 +4,7 @@ import java.util.*;
 
 import sistema.Sistema;
 
+import java.io.Serializable;
 import java.time.YearMonth;
 import venta.productos.*;
 import venta.pedidos.EstadoPedido;
@@ -15,7 +16,8 @@ import usuario.*;
  * Clase Historial, encargada de guardar y manejar las estadísticas de usuarios y productos
  * @author Tiago Oselka
  */
-public class Historial {
+public class Historial implements Serializable {
+	private static final long serialVersionUID = 1L;
 	List<Pedido> pedidos = new ArrayList<>();
 	List<Valoracion> valoraciones = new ArrayList<>();
 	List<Intercambio> intercambios = new ArrayList<>();
