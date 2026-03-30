@@ -93,7 +93,7 @@ public class Main {
 		try {
 	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
 	        oos.writeObject(tienda);
-	        oos.close();
+	        oos.reset();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -102,7 +102,7 @@ public class Main {
 	public static void main(String[] args) {
 		Usuario usuario;
 		
-		//cargarTienda();
+		cargarTienda();
 		
 		try {
 			while (!action.equals("e")) {
@@ -408,7 +408,7 @@ public class Main {
 		case "mp":
 			actionModificarProducto();
 			
-		case "b":
+		case "bp":
 			actionBorrarProducto();
 			
 		case "mc":
@@ -476,7 +476,7 @@ public class Main {
 	}
 	
 	static void actionModificarProducto() throws InvalidArgumentException {
-		String nombre = getUserInputString("Introduzca el nombre del producto que quiere modificar");
+		String nombre = getUserInputLine("Introduzca el nombre del producto que quiere modificar": );
 		Producto[] productos = tienda.getAlmacen().getProductosCoincidentes(nombre);
 		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "modificar producto");
 		
@@ -484,16 +484,27 @@ public class Main {
 		for(Producto p : productos) {
 			System.out.println(i + ") " + p + "\n");
 		}
-		int num = getUserInputInt("Introduzca el número del producto que desea borrar");
+		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");
+		char campo = getUserInputChar("Introduce el campo que desea modificar (n: nombre | d: descripción | )");
 		tienda.getAlmacen().eliminarProducto(productos[num-1]);
 	}
 	
-	static void actionBorrarProducto() {
+	static void actionBorrarProducto() throws InvalidArgumentException {
+		String nombre = getUserInputString("Introduzca el nombre del producto que quiere borrar: ");
+		Producto[] productos = tienda.getAlmacen().getProductosCoincidentes(nombre);
+		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "borrar producto");
 		
+		int i = 1;
+		for(Producto p : productos) {
+			System.out.println(i + ") " + p + "\n");
+			i++;
+		}
+		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");
+		tienda.getAlmacen().eliminarProducto(productos[num-1]);
 	}
 	
 	static void actionModificarCategoria() {
-		
+		String nombre = getUserInputLine("Introduzca el nombre de la categoría que desea modificar: ");
 	}
 	
 	static void actionCrearPack() {
