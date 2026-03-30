@@ -11,7 +11,7 @@ import venta.descuentos.*;
  * 
  * @author Juan Ibáñez
  */
-public class Categoria implements Serializable {
+public class Categoria implements Serializable, Descontable {
 	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private boolean eliminada;
