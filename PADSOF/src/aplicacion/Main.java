@@ -76,11 +76,39 @@ public class Main {
 		System.out.println("\n"+message);
 		action = sc.next();
 	}
+	
+	/**
+	 * Carga los datos de la tienda desde un fichero
+	 * 
+	 */
+	static void cargarTienda() {
+		try {
+	        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
+	        tienda = (Tienda) ois.readObject();
+	        ois.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	/**
+	 * Guarda los datos de la tienda en un fichero
+	 * 
+	 */
+	static void guardarTienda() {
+		try {
+	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
+	        oos.writeObject(tienda);
+	        oos.reset();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 
 	public static void main(String[] args) {
 		Usuario usuario;
 		
-		//cargarTienda();
+		cargarTienda();
 		
 		try {
 			while (!action.equals("e")) {
@@ -214,6 +242,8 @@ public class Main {
 				}
 			} catch (InvalidArgumentException e) {
 				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\u001B[0m");
+			} catch (InvalidPermitException e) {
+				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\nNecesitas el permiso: " + e.getPermiso() + "\u001B[0m");
 			}
 		}
 	}
@@ -247,65 +277,43 @@ public class Main {
 	}
 
 	/**
-	 * Carga los datos de la tienda desde un fichero
-	 * 
-	 */
-	static void cargarTienda() {
-		try {
-	        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
-	        tienda = (Tienda) ois.readObject();
-	        ois.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
-	/**
-	 * Guarda los datos de la tienda en un fichero
-	 * 
-	 */
-	static void guardarTienda() {
-		try {
-	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-	        oos.writeObject(tienda);
-	        oos.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
-	/**
 	 * Realiza la acción de valorar un artículo de segunda mano
 	 * 
-	 * @param empleado
+	 * @param empleado Empleado que desea valorar un artículo
 	 * @throws InvalidArgumentException
+	 * @throws InvalidPermit 
 	 */
-	static void actionValorarArticulo(Empleado empleado) throws InvalidArgumentException {
+	static void actionValorarArticulo(Empleado empleado) throws InvalidArgumentException, InvalidPermitException {
+		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "valorar artículo", "Intercambios");
 		int i = 1;
 		Valoracion[] valoraciones = tienda.getHistorial().getValoracionesPendientes();
 		if (valoraciones.length < 1) throw new InvalidArgumentException("No existen valoraciones pendientes en este momento", "valorar articulo");
 		for(Valoracion v : valoraciones) {
-			System.out.println(i + ") " + v);
+			System.out.println(i + ") " + v + "\n");
+			i++;
 		}
 		int num = getUserInputInt("Escriba el número del artículo que desea valorar: ");
 		double precio = getUserInputDouble("Precio estimado: ");
 		EstadoFisicoArticulo est = EstadoFisicoArticulo.valueOf(getUserInputString("Estado del artículo: "));
 		
-		tienda.getHistorial().valorarArticulo(empleado, tienda.getHistorial().getValoracionesPendientes()[num-1].getArticulo(), precio, est);
+		tienda.getHistorial().valorarArticulo(empleado, valoraciones[num-1].getArticulo(), precio, est);
 	}
 	
 	/**
 	 * Realiza la acción de confirmar un intercambio
 	 * 
-	 * @param empleado
+	 * @param empleado Empleado que desea confirmar un intercambio
 	 * @throws InvalidArgumentException
+	 * @throws InvalidPermit 
 	 */
-	static void actionConfirmarIntercambio(Empleado empleado) throws InvalidArgumentException {
+	static void actionConfirmarIntercambio(Empleado empleado) throws InvalidArgumentException, InvalidPermitException {
+		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "validar intercambio", "Intercambios");
 		int i = 1;
 		Intercambio[] intercambios = tienda.getHistorial().getIntercambiosPendientes();
 		if(intercambios.length < 1) throw new InvalidArgumentException("No existen intercambios pendientes en este momento", "confirmar intercambio");
 		for (Intercambio t : intercambios) {
-			System.out.println(i + ") " + t);
+			System.out.println(i + ") " + t + "\n");
+			i++;
 		}
 		int num = getUserInputInt("Escriba el número del intercambio que desea confirmar: ");
 		tienda.getHistorial().validarIntercambio(empleado, intercambios[num-1]);
@@ -314,15 +322,18 @@ public class Main {
 	/**
 	 * Realiza la acción de gestionar pedidos pendientes 
 	 * 
-	 * @param empleado
+	 * @param empleado Empleado que desea gestionar pedidos
 	 * @throws InvalidArgumentException
+	 * @throws InvalidPermit 
 	 */
-	static void actionGestionarPedidos(Empleado empleado) throws InvalidArgumentException {
+	static void actionGestionarPedidos(Empleado empleado) throws InvalidArgumentException, InvalidPermitException {
+		if(!empleado.tienePermiso(Permiso.PEDIDOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", "Pedidos");
 		int i = 1;
 		Pedido[] pedidos= tienda.getHistorial().getPedidosPendientes();
 		if(pedidos.length < 1) throw new InvalidArgumentException("No existen pedidos pendientes en este momento", "gestionar pedidos");
 		for(Pedido p : pedidos) {
-			System.out.println(i + ") " + p);
+			System.out.println(i + ") " + p + "\n");
+			i++;
 		}
 		int num = getUserInputInt("Escriba el número del pedido que desea avanzar: ");
 		tienda.getHistorial().avanzarEstadoPedido(empleado, pedidos[num-1]);
@@ -331,63 +342,39 @@ public class Main {
 	/**
 	 * Realiza la acción de gestionar productos 
 	 * 
-	 * @param empleado
+	 * @param empleado Empleado que desea gestionar productos
 	 * @throws InvalidArgumentException
 	 * @throws DoubleDiscountException
+	 * @throws InvalidPermit 
 	 */
-	static void actionGestionarProductos(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException {
+	static void actionGestionarProductos(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+		if(!usuario.tienePermiso(Permiso.PRODUCTOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar productos", "Productos");
+		
 		getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | mc: modificar categorias | p: crear packs | e: exit");
 		
 		switch(action) {
 		case "a":
-			char tipo = getUserInputChar("Tipo de producto (c: comic | j: juego | f: figura): ");
-			String nombre = getUserInputLine("Nombre: ");
-			String desc = getUserInputLine("Descripción: ");
-			double precio = getUserInputDouble("Precio: ");
-			int uds = getUserInputInt("Unidades: ");
-			
-			List<Categoria> categorias = new ArrayList<Categoria>();
-			for(Categoria cat : tienda.getAlmacen().getCategorias()) {
-				getAction("Incluir categoria" + cat.getNombre() + "? s/n");
-				if(action == "s") {
-					categorias.add(cat);
-				}
-			}
-			switch(tipo) {
-			case 'C':
-				int numPags = getUserInputInt("Número de páginas: ");
-				String autor = getUserInputLine("Autor: ");
-				String editorial = getUserInputLine("Editorial: ");
-				String fecha[] = getUserInputString("Fecha(DD/MM/YYYY): ").split("/");
-				LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
-				
-				tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
-			case 'J':
-				int numJugs = getUserInputInt("Número de jugadores: ");
-				String rangoEdad = getUserInputString("Rango de edad: ");
-				TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
-				
-				tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
-			case 'F':
-				String marca = getUserInputString("Marca: ");
-				String material = getUserInputString("Material: ");
-				String dimensiones = getUserInputString("Dimensiones: ");
-				
-				tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
-			}
+			actionAnadirProducto();
 			
 		case "c":
-			String fichero = getUserInputString("Nombre del archivo: ");
-			tienda.getAlmacen().anadirProductosDeFichero(fichero);
+			actionCargarFicheroProductos();
 			
 		case "mp":
-		case "b":
+			actionModificarProducto();
+			
+		case "bp":
+			actionBorrarProducto();
+			
 		case "mc":
+			actionModificarCategoria();
+			
 		case "p":
+			actionCrearPack();
 			
 		}
 	}
 	
+
 	/**
 	 * Realiza la acción de añadir un descuento a un producto o categoría dentro de la tienda
 	 * 
@@ -489,6 +476,95 @@ public class Main {
 	
 	private static void actionConfigurarSistema(Gestor gestor) {
 		
+	}
+		
+	 /**
+	  * Añade un nuevo producto por la interfaz
+	  * 
+	  * @throws InvalidArgumentException
+	  * @throws DoubleDiscountException
+	  */
+	static void actionAnadirProducto() throws InvalidArgumentException, DoubleDiscountException {
+		char tipo = getUserInputChar("Tipo de producto (c: comic | j: juego | f: figura): ");
+		String nombre = getUserInputLine("Nombre: ");
+		String desc = getUserInputLine("Descripción: ");
+		double precio = getUserInputDouble("Precio: ");
+		int uds = getUserInputInt("Unidades: ");
+		
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+			getAction("Incluir categoria " + cat.getNombre() + "? s/n");
+			if(action == "s") {
+				categorias.add(cat);
+			}
+		}
+		switch(tipo) {
+		case 'C':
+			int numPags = getUserInputInt("Número de páginas: ");
+			String autor = getUserInputLine("Autor: ");
+			String editorial = getUserInputLine("Editorial: ");
+			String fecha[] = getUserInputString("Fecha(YYYY/MM/DD): ").split("/");
+			LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
+			
+			tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+		case 'J':
+			int numJugs = getUserInputInt("Número de jugadores: ");
+			String rangoEdad = getUserInputString("Rango de edad: ");
+			TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
+			
+			tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+		case 'F':
+			String marca = getUserInputString("Marca: ");
+			String material = getUserInputString("Material: ");
+			String dimensiones = getUserInputString("Dimensiones: ");
+			
+			tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+		}
+	}
+	
+	/**
+	 * Añade varios nuevos productos por un fichero
+	 * 
+	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException
+	 */
+	static void actionCargarFicheroProductos() throws DoubleDiscountException, InvalidArgumentException {
+		String fichero = getUserInputString("Nombre del archivo: ");
+		tienda.getAlmacen().anadirProductosDeFichero(fichero);
+	}
+	
+	static void actionModificarProducto() throws InvalidArgumentException {
+		String nombre = getUserInputLine("Introduzca el nombre del producto que quiere modificar: " );
+		Producto[] productos = tienda.getAlmacen().getProductosCoincidentes(nombre);
+		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "modificar producto");
+		
+		int i = 1;
+		for(Producto p : productos) {
+			System.out.println(i + ") " + p + "\n");
+		}
+		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");
+		char campo = getUserInputChar("Introduce el campo que desea modificar (n: nombre | d: descripción | )");
+	}
+	
+	static void actionBorrarProducto() throws InvalidArgumentException {
+		String nombre = getUserInputString("Introduzca el nombre del producto que quiere borrar: ");
+		Producto[] productos = tienda.getAlmacen().getProductosCoincidentes(nombre);
+		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "borrar producto");
+		
+		int i = 1;
+		for(Producto p : productos) {
+			System.out.println(i + ") " + p + "\n");
+			i++;
+		}
+		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");
+		tienda.getAlmacen().eliminarProducto(productos[num-1]);
+	}
+	
+	static void actionModificarCategoria() {
+		String nombre = getUserInputLine("Introduzca el nombre de la categoría que desea modificar: ");
+	}
+	
+	static void actionCrearPack() {
 		
 	}
 }

@@ -1,5 +1,7 @@
 package aplicacion;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import sistema.*;
@@ -86,7 +88,7 @@ public class PruebaDeUso {
 		System.out.println("Se impide añadir productos agotados al carrito: " + !(ret));
 
 		//Usuario1 paga la compra
-		tienda.pagarCarritoDe("Usuario1", "1234123412341234");
+		//tienda.pagarCarritoDe("Usuario1", "1234123412341234");
 		System.out.println("Aqui justo después\n\n");
 		System.out.println(tienda.getCliente("Usuario1"));
 		//Comprobamos que se guardó el pedido conrrectamente
@@ -95,7 +97,7 @@ public class PruebaDeUso {
 			System.out.println(ped);
 		
 		//Empleado2 marca el pedido en cada estado hasta Listo
-		Pedido pedido = tienda.getHistorial().getPedidosPendientes()[0];
+		/*Pedido pedido = tienda.getHistorial().getPedidosPendientes()[0];
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //En preparacion
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //Listo
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //Recogido
@@ -116,7 +118,13 @@ public class PruebaDeUso {
 			System.out.println(n);
 		}
 
-		
+		try {
+	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("tienda.dat"));
+	        oos.writeObject(tienda);
+	        oos.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 		
 	}
 

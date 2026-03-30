@@ -150,7 +150,8 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 		}
 	}
 	
-	public boolean tienePermiso() {
+	@Override
+	public boolean tienePermiso(Permiso p) {
 		return false;
 	}
 	
@@ -163,4 +164,5 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 				+ "\nNotificaciones: " + notificaciones
 				+ "\nEstadisticas: " + estadisticas;
 	}
+
 }

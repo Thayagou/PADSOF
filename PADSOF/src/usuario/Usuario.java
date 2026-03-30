@@ -27,4 +27,6 @@ public abstract class Usuario implements Serializable {
 		return "Nombre: " + nombre +
 				"\nContraseña: " + contrasena;
 	}
+
+	public abstract boolean tienePermiso(Permiso productos);
 }
