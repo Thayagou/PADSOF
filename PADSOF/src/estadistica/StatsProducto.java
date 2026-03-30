@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
+import sistema.Sistema;
 import venta.productos.*;
 
 /**
@@ -23,6 +24,19 @@ public class StatsProducto implements Serializable {
 	 */
 	public StatsProducto(Producto producto) {
 		this.producto = producto;
+		double valor = Sistema.getInstancia().getPonderacionCategoria();
+		
+		for (Categoria c: producto.getCategorias()) {
+			recomendacion.put(c, valor);
+		}
+	}
+
+	public void actualizarVector() {
+		double valor = Sistema.getInstancia().getPonderacionCategoria();
+		
+		for (Categoria c: producto.getCategorias()) {
+			recomendacion.putIfAbsent(c, valor);
+		}
 	}
 	
 	public boolean actualizarUltima(int udsVendidas, double precio) {

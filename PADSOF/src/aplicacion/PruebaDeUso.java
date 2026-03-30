@@ -87,17 +87,24 @@ public class PruebaDeUso {
 
 		//Usuario1 paga la compra
 		tienda.pagarCarritoDe("Usuario1", "1234123412341234");
-		
+		System.out.println("Aqui justo después\n\n");
+		System.out.println(tienda.getCliente("Usuario1"));
 		//Comprobamos que se guardó el pedido conrrectamente
 		System.out.println("\nPedidos pendientes de la tienda:\n");
 		for(Pedido ped : tienda.getHistorial().getPedidosPendientes())
 			System.out.println(ped);
 		
 		//Empleado2 marca el pedido en cada estado hasta Listo
-		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //En preparacion
+		Pedido pedido = tienda.getHistorial().getPedidosPendientes()[0];
+		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //En preparacion
+		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //Listo
+		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //Recogido
+		/**tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //En preparacion
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Listo
-		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Recogido
+		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Recogido**/
 		
+		//System.out.println(tienda.getCliente("Usuario1"));
+		//System.out.println(tienda.getCliente("Usuario2"));
 		//Vemos que se enviarion las notificaciones correspondientes a cada uno
 		System.out.println("\nNotificaciones de Usuario1:\n");
 		for (Notificacion n: tienda.getCliente("Usuario1").getNotificaciones()) {
@@ -105,9 +112,9 @@ public class PruebaDeUso {
 		}
 		
 		System.out.println("\nNotificaciones de Empleado2:\n");
-		/*for (Notificacion n: tienda.getEmpleado("Empleado2").getNotificaciones()) {
+		for (Notificacion n: tienda.getEmpleado("Empleado2").getNotificaciones()) {
 			System.out.println(n);
-		}*/
+		}
 
 		
 		

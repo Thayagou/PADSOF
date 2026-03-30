@@ -30,6 +30,7 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 		this.cartera = new Cartera(this);
 		this.notificaciones = new LinkedList<>();
 		this.intereses = new HashSet<>();
+		intereses.add(TipoNotificacion.PEDIDO);
 		this.misCompras = new LinkedList<>();
 	}
 	
@@ -62,6 +63,14 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 	}
 	
 	/**
+	 * Setter de la instancia de las estadísticas del usuario
+	 * @param estadistcas Estadísticas asociadas al usuario
+	 */
+	public void setEstadisticas(StatsUsuario estadistcas) {
+		this.estadisticas = estadistcas;
+	}
+	
+	/**
 	 * Obtiene el vector de categorías de interés del cliente a partir de sus estadísticas
 	 * @return Un vector en formato de mapa, que asigna a cada categoría una ponderación de interés
 	 */
@@ -85,6 +94,14 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 	 */
 	public double getCompatibilidad(Map<Categoria, Double> vector, double norma) {
 		return estadisticas.getCompatibilidad(vector, norma);
+	}
+	
+	/**
+	 * Actualiza el vector de estadísticas del usuario a partir de una búsqueda realizada por este
+	 * @param categorias Categorías que se han introducido en la búsqueda
+	 */
+	public void actualizarPorBusqueda(Categoria...categorias) {
+		estadisticas.actualizarBusqueda(categorias);
 	}
 
 	public boolean enviarNotificacion(String mensaje, TipoNotificacion tipo) {
@@ -141,7 +158,9 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 	public String toString() {
 		return super.toString() + "\nCarrito: " + carrito
 				+ "\nCartera: " + cartera
+				+ "\nPedidos realizados: " + misCompras
 				+ "\nIntereses: " + intereses
-				+ "\nNotificaciones: " + notificaciones;
+				+ "\nNotificaciones: " + notificaciones
+				+ "\nEstadisticas: " + estadisticas;
 	}
 }

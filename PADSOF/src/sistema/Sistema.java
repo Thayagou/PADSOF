@@ -10,13 +10,13 @@ public class Sistema implements Serializable {
 	private Duration tiempoCaducaCarrito;
 	private Duration tiempoCaducaOferta;
 	private double precioValoracion;
-	private double ponderacionCategoria;
-	private double ponderacionUdsCompra = 0;
-	private double ponderacionPrecioCompra = 0;
-	private double ponderacionValoracionesProducto = 0;
-	private double ponderacionProductoRecomendado = 0;
-	private double ponderacionBusqueda = 0;
-	private int numProdsRecomendados = 0;
+	private double ponderacionCategoria = 1;
+	private double ponderacionUdsCompra = 1;
+	private double ponderacionPrecioCompra = 1;
+	private double ponderacionValoracionesProducto = 1;
+	private double ponderacionProductoRecomendado = 1;
+	private double ponderacionBusqueda = 1;
+	private int numProdsRecomendados = 10;
 	private Set<ParametroRecomendacion> parametros = new HashSet<>();
 
 	private Sistema(Duration tiempoCarrito, Duration tiempoOferta, double precioValoracion, ParametroRecomendacion... parametrosIniciales) {

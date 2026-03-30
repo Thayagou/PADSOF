@@ -27,9 +27,9 @@ public class Cartera implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Propietario: "+ dueno + 
-				"\n" + articulos +
-				"\n" + intercambios;
+		return 
+				"\nArticulos de segunda mano: " + articulos +
+				"\nIntercambios: " + intercambios;
 	}
 	
 	public List<ArticuloSegundaMano> getArticulos() {

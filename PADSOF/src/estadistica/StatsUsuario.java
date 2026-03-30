@@ -20,17 +20,13 @@ public class StatsUsuario implements Serializable {
 	Map<Categoria, Double> intereses = new HashMap<>();
 	double norma = 0;
 	
+	/**
+	 * Contructor de la clase ClienteRegistrado
+	 * @param cliente Cliente a almacenar
+	 */
 	public StatsUsuario(ClienteRegistrado cliente) {
 		this.cliente = cliente;
-	}
-	
-	public boolean actualizarUltimaVenta(int udsCompradas, double precio) {
-		if (udsCompradas < 0 || precio < 0) return false;
-		
-		totalGastado += precio;
-		this.udsCompradas += udsCompradas;
-		
-		return true;
+		cliente.setEstadisticas(this);
 	}
 	
 	public boolean actualizarUltimoIntercambio(int udsIntercambiadas) {
@@ -62,13 +58,26 @@ public class StatsUsuario implements Serializable {
 		norma = Math.sqrt(intereses.values().stream().mapToDouble(a->a*a).sum());
 	}
 	
-	public void actualizarCompra(Map<Categoria, Double> vector) {
+	public boolean actualizarCompra(Map<Categoria, Double> vector, int udsCompradas, double precio) {
+		System.out.println("\n\nPASAPORAQUIIIIIIIIIIIIIIII\n\n");
+		if (udsCompradas < 0 || precio < 0) return false;
+		
+		totalGastado += precio;
+		this.udsCompradas += udsCompradas;
+		
 		for (Categoria c : vector.keySet()) {			
 			intereses.merge(c, vector.get(c), (a,b)->a+b);
 		}
 		
+		System.out.println("inteseses: "+intereses);
+		System.out.println(this);
+		
 		norma = Math.sqrt(intereses.values().stream().mapToDouble(a->a*a).sum());
+		
+		return true;
 	}
+	
+	
 	
 	public Map<Categoria, Double> getVectorIntereses() {
 		return Collections.unmodifiableMap(intereses);
@@ -90,6 +99,13 @@ public class StatsUsuario implements Serializable {
 		prodEscalar /= (n1*norma);
 		
 		return prodEscalar;
+	}
+	
+	@Override
+	public String toString() {
+		return "Estadística de "+cliente.getNombre() +
+				"\n  Total gastado: "+totalGastado+ "\n  Unidades compradas: "+ udsCompradas+ 
+				"\n  Unidades intercambiadas: "+ udsIntercambiadas + "\n  Vector recomendación: "+ intereses; 
 	}
 
 }
