@@ -39,7 +39,6 @@ public class Historial implements Serializable, ObservadorProducto {
 	
 	public void guardarUsuario(ClienteRegistrado cliente) {
 		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
-		System.out.println("Se almacenó el cliente "+cliente.getNombre());
 	}
 
 	@Override

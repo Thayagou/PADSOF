@@ -13,7 +13,7 @@ import sistema.AsignadorId;
  * 
  * @author Juan Ibáñez
  */
-public abstract class Producto implements Serializable {
+public abstract class Producto implements Serializable, Descontable {
 	private static final long serialVersionUID = 1L;
 	private final long id;
 	private String nombre;
