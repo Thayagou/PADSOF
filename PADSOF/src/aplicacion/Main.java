@@ -16,6 +16,7 @@ public class Main {
 	private static Tienda tienda = new Tienda();
 	private static String action = "";
 	private static Scanner sc = new Scanner(System.in);
+	private static String filename = "tienda.dat";
 	
 	static void cleanScreen() {
 		for(int i = 0; i < 50 ; i++) System.out.println("\n");
@@ -43,7 +44,7 @@ public class Main {
 	
 	static int getUserInputInt(String message) {
 		System.out.println("\n"+message);
-		return sc.nextInt(0);
+		return sc.nextInt();
 	}
 	
 	static double getUserInputDouble(String message) {
@@ -171,91 +172,28 @@ public class Main {
 		}
 	}
 
-	static void menuEmpleado(Empleado empleado) throws InvalidArgumentException, DoubleDiscountException  {
+	static void menuEmpleado(Empleado empleado) throws DoubleDiscountException {
+		if(empleado == null) return;
+		
 		while(!action.equals("e")) {
-			if(empleado == null) return;
-			int i, num;
+			getAction("v: valorar articulo | c: confirmar intercambio | pd: gestionar pedidos | pr: gestionar productos y categorias| e: exit");
 			
-			getAction("v: valorar articulo | c: confirmar intercambio | p: gestionar pedidos | p: gestionar productos y categorias| e: exit");
-			switch(action) {
-			case "v":
-				i = 1;
-				for(Valoracion v : tienda.getHistorial().getValoracionesPendientes()) {
-					System.out.println(i + ") " + v);
-				}
-				num = getUserInputInt("Escriba el número del artículo que desea valorar: ");
-				double precio = getUserInputDouble("Precio estimado: ");
-				EstadoFisicoArticulo est = EstadoFisicoArticulo.valueOf(getUserInputString("Estado del artículo: "));
-				
-				tienda.getHistorial().valorarArticulo(empleado, tienda.getHistorial().getValoracionesPendientes()[num-1].getArticulo(), precio, est);
-				
-			case "c":
-				i = 1;
-				for(Intercambio t : tienda.getHistorial().getIntercambiosPendientes()) {
-					System.out.println(i + ") " + t);
-				}
-				num = getUserInputInt("Escriba el número del intercambio que desea confirmar: ");
-				tienda.getHistorial().validarIntercambio(empleado, tienda.getHistorial().getIntercambiosPendientes()[num-1]);
-				
-			case "g":
-				i = 1;
-				for(Pedido p : tienda.getHistorial().getPedidosPendientes()) {
-					System.out.println(i + ") " + p);
-				}
-				num = getUserInputInt("Escriba el número del pedido que desea avanzar: ");
-				tienda.getHistorial().avanzarEstadoPedido(empleado, tienda.getHistorial().getPedidosPendientes()[num-1]);
-				
-			case "p":
-				getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | mc: modificar categorias | p: crear packs | e: exit");
-				
+			try {
 				switch(action) {
-				case "a":
-					char tipo = getUserInputChar("Tipo de producto (C/J/F): ");
-					String nombre = getUserInputString("Nombre: ");
-					String desc = getUserInputString("Descripción: ");
-					precio = getUserInputDouble("Precio: ");
-					int uds = getUserInputInt("Unidades: ");
-					
-					List<Categoria> categorias = new ArrayList<Categoria>();
-					for(Categoria cat : tienda.getAlmacen().getCategorias()) {
-						getAction("Incluir categoria" + cat.getNombre() + "? s/n");
-						if(action == "s") {
-							categorias.add(cat);
-						}
-					}
-					switch(tipo) {
-					case 'C':
-						int numPags = getUserInputInt("Número de páginas: ");
-						String autor = getUserInputString("Autor: ");
-						String editorial = getUserInputString("Editorial: ");
-						String fecha[] = getUserInputString("Fecha(DD/MM/YYYY): ").split("/");
-						LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
-						
-						tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
-					case 'J':
-						int numJugs = getUserInputInt("Número de jugadores: ");
-						String rangoEdad = getUserInputString("Rango de edad: ");
-						TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
-						
-						tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
-					case 'F':
-						String marca = getUserInputString("Marca: ");
-						String material = getUserInputString("Material: ");
-						String dimensiones = getUserInputString("Dimensiones: ");
-						
-						tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
-					}
+				case "v":
+					actionValorarArticulo(empleado);
 					
 				case "c":
-					String fichero = getUserInputString("Nombre del archivo: ");
-					tienda.getAlmacen().anadirProductosDeFichero(fichero);
+					actionConfirmarIntercambio(empleado);
 					
-				case "mp":
-				case "b":
-				case "mc":
-				case "p":
+				case "pd":
+					actionGestionarPedidos(empleado);
 					
+				case "pr":
+					actionGestionarProductos(empleado);
 				}
+			} catch (InvalidArgumentException e) {
+				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\u001B[0m");
 			}
 		}
 	}
@@ -264,10 +202,13 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Carga los datos de la tienda desde un fichero
+	 * 
+	 */
 	static void cargarTienda() {
 		try {
-	        ObjectInputStream ois = new ObjectInputStream(
-	            new FileInputStream("tienda.dat"));
+	        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
 	        tienda = (Tienda) ois.readObject();
 	        ois.close();
 	    } catch (Exception e) {
@@ -275,13 +216,131 @@ public class Main {
 	    }
 	}
 	
+	/**
+	 * Guarda los datos de la tienda en un fichero
+	 * 
+	 */
 	static void guardarTienda() {
 		try {
-	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("tienda.dat"));
+	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
 	        oos.writeObject(tienda);
 	        oos.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	/**
+	 * Realiza la acción de valorar un artículo de segunda mano
+	 * 
+	 * @param empleado
+	 * @throws InvalidArgumentException
+	 */
+	static void actionValorarArticulo(Empleado empleado) throws InvalidArgumentException {
+		int i = 1;
+		Valoracion[] valoraciones = tienda.getHistorial().getValoracionesPendientes();
+		if (valoraciones.length < 1) throw new InvalidArgumentException("No existen valoraciones pendientes en este momento", "valorar articulo");
+		for(Valoracion v : valoraciones) {
+			System.out.println(i + ") " + v);
+		}
+		int num = getUserInputInt("Escriba el número del artículo que desea valorar: ");
+		double precio = getUserInputDouble("Precio estimado: ");
+		EstadoFisicoArticulo est = EstadoFisicoArticulo.valueOf(getUserInputString("Estado del artículo: "));
+		
+		tienda.getHistorial().valorarArticulo(empleado, tienda.getHistorial().getValoracionesPendientes()[num-1].getArticulo(), precio, est);
+	}
+	
+	/**
+	 * Realiza la acción de confirmar un intercambio
+	 * 
+	 * @param empleado
+	 * @throws InvalidArgumentException
+	 */
+	static void actionConfirmarIntercambio(Empleado empleado) throws InvalidArgumentException {
+		int i = 1;
+		Intercambio[] intercambios = tienda.getHistorial().getIntercambiosPendientes();
+		if(intercambios.length < 1) throw new InvalidArgumentException("No existen intercambios pendientes en este momento", "confirmar intercambio");
+		for (Intercambio t : intercambios) {
+			System.out.println(i + ") " + t);
+		}
+		int num = getUserInputInt("Escriba el número del intercambio que desea confirmar: ");
+		tienda.getHistorial().validarIntercambio(empleado, intercambios[num-1]);
+	}
+	
+	/**
+	 * Realiza la acción de gestionar pedidos pendientes 
+	 * 
+	 * @param empleado
+	 * @throws InvalidArgumentException
+	 */
+	static void actionGestionarPedidos(Empleado empleado) throws InvalidArgumentException {
+		int i = 1;
+		Pedido[] pedidos= tienda.getHistorial().getPedidosPendientes();
+		if(pedidos.length < 1) throw new InvalidArgumentException("No existen pedidos pendientes en este momento", "gestionar pedidos");
+		for(Pedido p : pedidos) {
+			System.out.println(i + ") " + p);
+		}
+		int num = getUserInputInt("Escriba el número del pedido que desea avanzar: ");
+		tienda.getHistorial().avanzarEstadoPedido(empleado, pedidos[num-1]);
+	}
+	
+	/**
+	 * Realiza la acción de gestionar productos 
+	 * 
+	 * @param empleado
+	 * @throws InvalidArgumentException
+	 * @throws DoubleDiscountException
+	 */
+	static void actionGestionarProductos(Empleado empleado) throws InvalidArgumentException, DoubleDiscountException {
+		getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | mc: modificar categorias | p: crear packs | e: exit");
+		
+		switch(action) {
+		case "a":
+			char tipo = getUserInputChar("Tipo de producto (c: comic | j: juego | f: figura): ");
+			String nombre = getUserInputLine("Nombre: ");
+			String desc = getUserInputLine("Descripción: ");
+			double precio = getUserInputDouble("Precio: ");
+			int uds = getUserInputInt("Unidades: ");
+			
+			List<Categoria> categorias = new ArrayList<Categoria>();
+			for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+				getAction("Incluir categoria" + cat.getNombre() + "? s/n");
+				if(action == "s") {
+					categorias.add(cat);
+				}
+			}
+			switch(tipo) {
+			case 'C':
+				int numPags = getUserInputInt("Número de páginas: ");
+				String autor = getUserInputLine("Autor: ");
+				String editorial = getUserInputLine("Editorial: ");
+				String fecha[] = getUserInputString("Fecha(DD/MM/YYYY): ").split("/");
+				LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
+				
+				tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+			case 'J':
+				int numJugs = getUserInputInt("Número de jugadores: ");
+				String rangoEdad = getUserInputString("Rango de edad: ");
+				TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
+				
+				tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+			case 'F':
+				String marca = getUserInputString("Marca: ");
+				String material = getUserInputString("Material: ");
+				String dimensiones = getUserInputString("Dimensiones: ");
+				
+				tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+			}
+			
+		case "c":
+			String fichero = getUserInputString("Nombre del archivo: ");
+			tienda.getAlmacen().anadirProductosDeFichero(fichero);
+			
+		case "mp":
+		case "b":
+		case "mc":
+		case "p":
+			
+		}
 	}
 }
