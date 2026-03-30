@@ -33,7 +33,9 @@ public class Main {
 	
 	static char getUserInputChar(String message) {
 		System.out.println("\n"+message);
-		return sc.next().charAt(0);
+		char c = sc.next().charAt(0);
+		sc.nextLine();
+		return c;
 	}
 	
 	static String getUserInputString(String message) {
@@ -48,12 +50,16 @@ public class Main {
 	
 	static int getUserInputInt(String message) {
 		System.out.println("\n"+message);
-		return sc.nextInt();
+		int n = sc.nextInt();
+		sc.nextLine();
+		return n;
 	}
 	
 	static double getUserInputDouble(String message) {
 		System.out.println("\n"+message);
-		return sc.nextDouble();
+		double r = sc.nextDouble();
+		sc.nextLine();
+		return r;
 	}
 	
 	static LocalDateTime getUserInputLocalDateTime(String message) {
@@ -217,81 +223,29 @@ public class Main {
 			if(gestor == null) return;
 			
 			getAction("ad: añadir descuentos | cs: configurar sistema | ce: consultar estadísticas | gp: gestionar productos y categorias | ge: gestionar empleados | e: exit");
-			switch(action) {
-			case "ad":
-				Producto[] productos;
-				String aplicadoSobre = getUserInputString("Aplicar descuento sobre (c: categoría | p: producto): ");
-				Descontable desc;
-				switch (aplicadoSobre) {
-					case "c":
-						Categoria[] categorias = tienda.getAlmacen().getCategorias();
-						for (int i = 1; i < categorias.length; i++) {
-							System.out.println(i+") "+ categorias[i-1].getNombre());
-						}
-					case "p":
-						String prod = getUserInputLine("Enter para elegir entre todo el inventario o : ");
-						productos = tienda.getAlmacen().getProductosCoincidentes(prod);
+			try {
+				switch(action) {
+					case "ad":
+						actionAnadirDescuento(gestor);
 						
-						for (int i = 1; i <= productos.length; i++) {
-							System.out.println(i + ") " + productos[i-1].getNombre());
-						}
+					case "cs":
+						actionConfigurarSistema(gestor);
 						
-						int index = getUserInputInt("Número de producto para aplicar el descuento: ");
-						if (index <= 0 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido");
-						// Mirar esto arriba!!!!!!!
-						Producto p = productos[index-1];
+					case "ce":
+						
+					case "gp":
+						
+					case "ge":
 				}
-				
-				double valorMin;
-				String cond = getUserInputString("Tipo de condición (c: cantidad | v: volumen | sc: sin condiciones): ");
-				switch (cond) {
-					case "c":
-					case "v":
-						valorMin = getUserInputDouble("Valor mínimo para la compensación (número no negativo): ");
-						sc.nextLine();
-						break;
-					default:
-						valorMin = 0;
-				}
-				
-				try {
-					LocalDateTime fechaInicio = getUserInputLocalDateTime("Fecha de inicio (formato DD/MM/YYYY hh:mm) : ");
-					LocalDateTime fechaFin = getUserInputLocalDateTime("Fecha de inicio (formato DD/MM/YYYY hh:mm) : ");
-				} catch(DateTimeParseException e) {
-					System.out.println( "\u001B[31m" + "Fecha introducida con formato incorrecto\n" + "\u001B[0m");
-				}
-				
-				String tipo = getUserInputString("Tipo de compensación (d: dinero | p: porcentaje | r: regalo): ");
-				switch (tipo) {
-				case "d": 
-					
-				case "p":
-				case "r":
-					String regalo = getUserInputLine("Enter para elegir entre todo el inventario o : ");
-					productos = tienda.getAlmacen().getProductosCoincidentes(regalo);
-					
-					for (int i = 1; i <= productos.length; i++) {
-						System.out.println(i + ") " + productos[i-1].getNombre());
-					}
-					
-					int index = getUserInputInt("Número de producto para elegir como regalo: ");
-					if (index <= 0 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido");
-					// Mirar esto arriba!!!!!!!
-					Producto p = productos[index-1];
-				}
-				
-			case "cs":
-				
-			case "ce":
-				
-			case "gp":
-				
-			case "ge":
 
+			} catch (InvalidArgumentException e) {
+				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\u001B[0m");
+			} catch (DoubleDiscountException e) {
+				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\u001B[0m");
 			}
 		}
 	}
-	
+
 	/**
 	 * Carga los datos de la tienda desde un fichero
 	 * 
@@ -432,5 +386,109 @@ public class Main {
 		case "p":
 			
 		}
+	}
+	
+	/**
+	 * Realiza la acción de añadir un descuento a un producto o categoría dentro de la tienda
+	 * 
+	 * @param gestor Gestor de la tienda
+	 * @throws InvalidArgumentException Excepción lanzada en caso de que alguno de los argumentos introducidos no sean válidos
+	 * @throws DoubleDiscountException
+	 */
+	static void actionAnadirDescuento(Gestor gestor) throws InvalidArgumentException, DoubleDiscountException {
+		Producto[] productos;
+		String aplicadoSobre = getUserInputString("Aplicar descuento sobre (c: categoría | p: producto): ");
+		int index;
+		Categoria c = null;
+		Producto p = null;
+
+		switch (aplicadoSobre) {
+			case "c":
+				Categoria[] categorias = tienda.getAlmacen().getCategorias();
+				for (int i = 1; i < categorias.length; i++) {
+					System.out.println(i+") "+ categorias[i-1].getNombre());
+				}
+				
+				index = getUserInputInt("Número de producto para aplicar el descuento: ");
+				if (index <= 0 || index > categorias.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
+				c = categorias[index-1];
+				
+			case "p":
+				String prod = getUserInputLine("Enter para elegir entre todo el inventario o : ");
+				productos = tienda.getAlmacen().getProductosCoincidentes(prod);
+				
+				for (int i = 1; i <= productos.length; i++) {
+					System.out.println(i + ") " + productos[i-1].getNombre());
+				}
+				
+				index = getUserInputInt("Número de producto para aplicar el descuento: ");
+				if (index <= 0 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
+				// Mirar esto arriba!!!!!!!
+				p = productos[index-1];
+		}
+		
+		double valorMin;
+		CondicionDescuento condicion;
+		String cond = getUserInputString("Tipo de condición (c: cantidad | v: volumen | sc: sin condiciones): ");
+		switch (cond) {
+			case "c":
+				valorMin = getUserInputDouble("Valor mínimo para la compensación (número no negativo): ");
+				condicion = CondicionDescuento.CANTIDAD;
+				break;
+			case "v":
+				valorMin = getUserInputDouble("Valor mínimo para la compensación (número no negativo): ");
+				condicion = CondicionDescuento.VOLUMEN;
+				break;
+			default:
+				condicion = CondicionDescuento.SIN_CONDICION;
+				valorMin = 0;
+		}
+		
+		LocalDateTime fechaInicio = null, fechaFin = null;
+		
+		try {	
+			fechaInicio = getUserInputLocalDateTime("Fecha de inicio (formato DD/MM/YYYY hh:mm) : ");
+			fechaFin = getUserInputLocalDateTime("Fecha de inicio (formato DD/MM/YYYY hh:mm) : ");
+		} catch(DateTimeParseException e) {
+			throw new InvalidArgumentException("Formato de fecha incorrecto", "añadir descuento");
+		}
+
+		
+		String tipo = getUserInputString("Tipo de compensación (d: dinero | p: porcentaje | r: regalo): ");
+		switch (tipo) {
+		case "d": 
+			double precio = getUserInputDouble("Precio a descontar: ");
+			if (p != null) tienda.getAlmacen().anadirDescuentoDinero(p, valorMin, fechaInicio, fechaFin, condicion, precio);
+			else if (c != null) tienda.getAlmacen().anadirDescuentoDinero(c, valorMin, fechaInicio, fechaFin, condicion, precio);
+			
+		case "p":
+			double porcentaje = getUserInputDouble("Porcentaje a descontar (Rango 0-100): ");
+			if (porcentaje < 0 || porcentaje > 100) throw new InvalidArgumentException("Rango de porcentaje incorrecto", "añadir descuento");
+			
+			if (p != null) tienda.getAlmacen().anadirDescuentoDinero(p, valorMin, fechaInicio, fechaFin, condicion, porcentaje);
+			else if (c != null) tienda.getAlmacen().anadirDescuentoDinero(c, valorMin, fechaInicio, fechaFin, condicion, porcentaje);
+			
+		case "r":
+			String nombre = getUserInputLine("Enter para elegir entre todo el inventario o : ");
+			productos = tienda.getAlmacen().getProductosCoincidentes(nombre);
+			
+			for (int i = 1; i <= productos.length; i++) {
+				System.out.println(i + ") " + productos[i-1].getNombre());
+			}
+			
+			index = getUserInputInt("Número de producto para elegir como regalo: ");
+			if (index <= 0 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
+			// Mirar esto arriba!!!!!!!
+			Producto regalo = productos[index-1];
+			
+			if (p != null) tienda.getAlmacen().anadirDescuentoRegalo(p, valorMin, fechaInicio, fechaFin, condicion, regalo);
+			else if (c != null) tienda.getAlmacen().anadirDescuentoRegalo(c, valorMin, fechaInicio, fechaFin, condicion, regalo);
+			
+		}
+	}
+	
+	private static void actionConfigurarSistema(Gestor gestor) {
+		
+		
 	}
 }
