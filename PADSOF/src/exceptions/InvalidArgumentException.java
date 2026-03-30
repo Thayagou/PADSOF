@@ -10,4 +10,8 @@ public class InvalidArgumentException extends CustomException {
 	public InvalidArgumentException(String message) {
 		super(message);
 	}
+	
+	public InvalidArgumentException(String message, String metodo) {
+		super(message, metodo);
+	}
 }
