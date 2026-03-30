@@ -3,6 +3,7 @@ package estadistica;
 import java.util.*;
 
 import exceptions.InvalidArgumentException;
+import exceptions.InvalidPermit;
 import sistema.Sistema;
 
 import java.io.Serializable;
@@ -176,9 +177,10 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param pedido Pedido cuyo estado se pretende avanzar
 	 * @return true si se ha avanzado correctamente, false en caso contrario
 	 * @throws InvalidArgumentException 
+	 * @throws InvalidPermit 
 	 */
-	public boolean avanzarEstadoPedido(Empleado empleado, Pedido pedido) throws InvalidArgumentException {
-		if (empleado.tienePermiso(Permiso.PEDIDOS) == false) return false;
+	public boolean avanzarEstadoPedido(Empleado empleado, Pedido pedido) throws InvalidArgumentException, InvalidPermit {
+		if (empleado.tienePermiso(Permiso.PEDIDOS) == false) throw new InvalidPermit("No tienes el permiso para hacer esta acción", "gestionar pedidos", "Pedidos");
 		
 		pedido.nextEstadoPedido(empleado);
 
@@ -196,9 +198,10 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param precioEstimado Valor monetario asignado por el empleado
 	 * @param estado Estado del producto asignado por el empleado
 	 * @return true si se valora correctamente, false en caso contario
+	 * @throws InvalidPermit 
 	 */
-	public boolean valorarArticulo(Empleado empleado, ArticuloSegundaMano articulo, double precioEstimado, EstadoFisicoArticulo estado) {
-		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) return false;
+	public boolean valorarArticulo(Empleado empleado, ArticuloSegundaMano articulo, double precioEstimado, EstadoFisicoArticulo estado) throws InvalidPermit {
+		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermit("No tienes el permiso para hacer esta acción", "valorar artículo", "Intercambios");
 		if (articulo.getValoracion() == null) return false;
 		
 		Valoracion valoracion = articulo.getValoracion();
@@ -212,9 +215,10 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param empleado Empleado de la tienda que debe tener el permiso de INTERCAMBIOS
 	 * @param intercambio Intercambio cuyo estado debe ser ACEPTADO
 	 * @return true si se valida correctamente, false en caso contrario
+	 * @throws InvalidPermit 
 	 */
-	public boolean validarIntercambio(Empleado empleado, Intercambio intercambio) {
-		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) return false;
+	public boolean validarIntercambio(Empleado empleado, Intercambio intercambio) throws InvalidPermit {
+		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermit("No tienes el permiso para hacer esta acción", "validar intercambio", "Intercambios");
 		
 		if (intercambio.getEstado().equals(EstadoIntercambio.ACEPTADO) == false) return false;
 		
