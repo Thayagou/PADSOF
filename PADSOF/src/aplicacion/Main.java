@@ -1,16 +1,20 @@
 package aplicacion;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 
 import exceptions.*;
 import sistema.*;
 import usuario.*;
+import venta.pedidos.Pedido;
 import venta.productos.*;
+import wallapop.*;
 
 public class Main {
 	private static Tienda tienda = new Tienda();
-	private static char action;
+	private static String action = "";
 	private static Scanner sc = new Scanner(System.in);
 	
 	static void cleanScreen() {
@@ -22,9 +26,14 @@ public class Main {
 		System.out.println("\n"+message);
 	}
 	
+	static char getUserInputChar(String message) {
+		System.out.println("\n"+message);
+		return sc.next().charAt(0);
+	}
+	
 	static String getUserInputString(String message) {
 		System.out.println("\n"+message);
-		return sc.next();
+		return sc.next().trim();
 	}
 	
 	static int getUserInputInt(String message) {
@@ -39,7 +48,7 @@ public class Main {
 	
 	static void getAction(String message) {
 		System.out.println("\n"+message);
-		action = sc.next().charAt(0);
+		action = sc.next();
 	}
 
 	public static void main(String[] args) {
@@ -48,7 +57,7 @@ public class Main {
 		cargarTienda();
 		
 		try {
-			while (action != 'e') {
+			while (!action.equals("e")) {
 				
 				try {
 					usuario = menuInicio();
@@ -68,7 +77,7 @@ public class Main {
 			    }
 			}
 			
-		} catch (InvalidArgumentException e) {
+		} catch (InvalidArgumentException | DoubleDiscountException e) {
 			System.out.println(e.getMessage());
 		}
 		
@@ -78,11 +87,11 @@ public class Main {
 	}
 	
 	static Usuario menuInicio() throws InvalidArgumentException, NotValidUserException {
-		while(action != 'e') {
+		while(!action.equals("e")) {
 			getAction("r: registrarse | i: iniciar sesión | b: buscar | e: exit ");
 				
 			switch(action) {
-			case 'r':
+			case "r":
 				String nombreR = getUserInputString("Introducir nombre: ");
 				String contrasenaR = getUserInputString("Introducir contraseña: ");					
 				String confirmacionR = getUserInputString("Repetir contraseña: ");
@@ -91,7 +100,7 @@ public class Main {
 				
 				return usuario;
 				
-			case 'i':
+			case "i":
 				String nombreI = getUserInputString("Introducir nombre: ");
 				String contrasenaI = getUserInputString("Introducir contraseña: ");
 				
@@ -99,11 +108,11 @@ public class Main {
 				
 				return usuario;
 				
-			case 'b':
+			case "b":
 				List<Categoria> categorias = new ArrayList<Categoria>();
 				for(Categoria cat : tienda.getAlmacen().getCategorias()) {
 					getAction("Incluir categoria" + cat.getNombre() + "? s/n");
-					if(action == 's') {
+					if(action == "s") {
 						categorias.add(cat);
 					}
 				}
@@ -123,16 +132,16 @@ public class Main {
 	}
 	
 	static void menuCliente(ClienteRegistrado cliente) throws InvalidArgumentException  {
-		while(action != 'e') {
+		while(!action.equals("e")) {
 			if(cliente == null) return;
 			
 			getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | a: cuenta | n: notificaciones | e: exit");
 			switch(action) {
-			case 'b':
+			case "b":
 				List<Categoria> categorias = new ArrayList<Categoria>();
 				for(Categoria cat : tienda.getAlmacen().getCategorias()) {
 					getAction("Incluir categoria" + cat.getNombre() + "? s/n");
-					if(action == 's') {
+					if(action == "s") {
 						categorias.add(cat);
 					}
 				}
@@ -146,27 +155,102 @@ public class Main {
 					
 				}
 				
-			case 'r':
+			case "r":
 				
-			case 's':
-			case 'w':
-			case 'c':
-			case 'a':
-			case 'n':
+			case "s":
+			case "w":
+			case "c":
+			case "a":
+			case "n":
 			}
 		}
 	}
 
-	static void menuEmpleado(Empleado empleado) throws InvalidArgumentException  {
-		while(action != 'e') {
+	static void menuEmpleado(Empleado empleado) throws InvalidArgumentException, DoubleDiscountException  {
+		while(!action.equals("e")) {
 			if(empleado == null) return;
+			int i, num;
 			
-			getAction("v: valorar articulo | c: confirmar intercambio | g: gestionar pedidos | p: gestionar productos");
+			getAction("v: valorar articulo | c: confirmar intercambio | p: gestionar pedidos | p: gestionar productos y categorias| e: exit");
 			switch(action) {
-			case 'v':
-			case 'c':
-			case 'g':
-			case 'p':
+			case "v":
+				i = 1;
+				for(Valoracion v : tienda.getHistorial().getValoracionesPendientes()) {
+					System.out.println(i + ") " + v);
+				}
+				num = getUserInputInt("Escriba el número del artículo que desea valorar: ");
+				double precio = getUserInputDouble("Precio estimado: ");
+				EstadoFisicoArticulo est = EstadoFisicoArticulo.valueOf(getUserInputString("Estado del artículo: "));
+				
+				tienda.getHistorial().valorarArticulo(empleado, tienda.getHistorial().getValoracionesPendientes()[num-1].getArticulo(), precio, est);
+				
+			case "c":
+				i = 1;
+				for(Intercambio t : tienda.getHistorial().getIntercambiosPendientes()) {
+					System.out.println(i + ") " + t);
+				}
+				num = getUserInputInt("Escriba el número del intercambio que desea confirmar: ");
+				tienda.getHistorial().validarIntercambio(empleado, tienda.getHistorial().getIntercambiosPendientes()[num-1]);
+				
+			case "g":
+				i = 1;
+				for(Pedido p : tienda.getHistorial().getPedidosPendientes()) {
+					System.out.println(i + ") " + p);
+				}
+				num = getUserInputInt("Escriba el número del pedido que desea avanzar: ");
+				tienda.getHistorial().avanzarEstadoPedido(empleado, tienda.getHistorial().getPedidosPendientes()[num-1]);
+				
+			case "p":
+				getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | mc: modificar categorias | p: crear packs | e: exit");
+				
+				switch(action) {
+				case "a":
+					char tipo = getUserInputChar("Tipo de producto (C/J/F): ");
+					String nombre = getUserInputString("Nombre: ");
+					String desc = getUserInputString("Descripción: ");
+					precio = getUserInputDouble("Precio: ");
+					int uds = getUserInputInt("Unidades: ");
+					
+					List<Categoria> categorias = new ArrayList<Categoria>();
+					for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+						getAction("Incluir categoria" + cat.getNombre() + "? s/n");
+						if(action == "s") {
+							categorias.add(cat);
+						}
+					}
+					switch(tipo) {
+					case 'C':
+						int numPags = getUserInputInt("Número de páginas: ");
+						String autor = getUserInputString("Autor: ");
+						String editorial = getUserInputString("Editorial: ");
+						String fecha[] = getUserInputString("Fecha(DD/MM/YYYY): ").split("/");
+						LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
+						
+						tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+					case 'J':
+						int numJugs = getUserInputInt("Número de jugadores: ");
+						String rangoEdad = getUserInputString("Rango de edad: ");
+						TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
+						
+						tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+					case 'F':
+						String marca = getUserInputString("Marca: ");
+						String material = getUserInputString("Material: ");
+						String dimensiones = getUserInputString("Dimensiones: ");
+						
+						tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+					}
+					
+				case "c":
+					String fichero = getUserInputString("Nombre del archivo: ");
+					tienda.getAlmacen().anadirProductosDeFichero(fichero);
+					
+				case "mp":
+				case "b":
+				case "mc":
+				case "p":
+					
+				}
 			}
 		}
 	}
