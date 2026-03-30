@@ -36,6 +36,11 @@ public class Main {
 		return sc.next().trim();
 	}
 	
+	static String getUserInputLine(String message) {
+		System.out.println("\n"+message);
+		return sc.nextLine().trim();
+	}
+	
 	static int getUserInputInt(String message) {
 		System.out.println("\n"+message);
 		return sc.nextInt(0);

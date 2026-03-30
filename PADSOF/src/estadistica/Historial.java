@@ -38,7 +38,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	}
 	
 	public void guardarUsuario(ClienteRegistrado cliente) {
-		statsClientes.putIfAbsent(cliente, new StatsUsuario(cliente));
+		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
 		System.out.println("Se almacenó el cliente "+cliente.getNombre());
 	}
 
@@ -79,7 +79,7 @@ public class Historial implements Serializable, ObservadorProducto {
 		double precio = pedido.getPrecioTotal();
 		
 		ClienteRegistrado cliente = pedido.getCliente();
-		statsClientes.putIfAbsent(cliente, new StatsUsuario(cliente));
+		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
 		StatsUsuario statCliente = statsClientes.get(cliente);
 		
 		statCliente.actualizarCompra(vectorCompra, udsVendidas, precio);
