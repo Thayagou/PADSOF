@@ -25,7 +25,7 @@ public class Tienda implements Serializable {
 	private Almacen almacen;
 	private Map<String, ClienteRegistrado> clientes = new HashMap<>();
 	private Map<String, Empleado> empleados = new HashMap<>();
-	private Gestor gestor = new Gestor("GESTOR", "GESTOR123");
+	private Gestor gestor = new Gestor("gestor", "g123");
 	
 	/**
 	 * Constructor de la tienda
@@ -117,6 +117,7 @@ public class Tienda implements Serializable {
 	 * @return Usuario que está registrado con ese nombre de usuario
 	 */
 	public Usuario iniciarSesion(String nombre, String contrasena) throws InvalidArgumentException, NotValidUserException {
+		System.out.println(gestor);
 		if(gestor.getNombre().equals(nombre)) {
 			if(gestor.getContrasena().equals(contrasena))
 				return gestor;

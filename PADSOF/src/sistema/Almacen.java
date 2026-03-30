@@ -328,6 +328,30 @@ public class Almacen implements Serializable {
 	}
 	
 	/**
+	 * Devuelve una lista de productos que coinciden con el nombre insertado
+	 * @param nombre Nombre de producto a coincidir
+	 * @return La lista de productos en formato de array de productos
+	 */
+	public Producto[] getProductosCoincidentes(String nombre) {
+		if(nombre.isBlank()) 
+			return inventario.values().toArray(new Producto[0]);
+		
+		List<Producto> lista = new ArrayList<>();
+		
+		for(Stock st: inventario.values()) {
+			Producto p = st.getProducto();
+			if (p.isEliminado()) continue;
+			String nombreProd = p.getNombre();
+			if (nombreProd.contains(nombre)) 
+				lista.add(p);			
+		}
+		
+		return lista.toArray(new Producto[0]);
+	}
+	
+	
+	
+	/**
 	 * Crea y añade una categoría al almacén
 	 * @param nombre Nombre de la categoría
 	 * @return true si se pudo añadir, false si ya existe una categoria con ese nombre

@@ -2,7 +2,10 @@ package aplicacion;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import exceptions.*;
@@ -43,13 +46,23 @@ public class Main {
 	
 	static int getUserInputInt(String message) {
 		System.out.println("\n"+message);
-		return sc.nextInt(0);
+		return sc.nextInt();
 	}
 	
 	static double getUserInputDouble(String message) {
 		System.out.println("\n"+message);
 		return sc.nextDouble();
 	}
+	
+	static LocalDateTime getUserInputLocalDateTime(String message) {
+		System.out.println("\n"+message);
+		String input = sc.nextLine();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		LocalDateTime fecha = LocalDateTime.parse(input, formatter);
+		
+		return fecha;
+	}
+	
 	
 	static void getAction(String message) {
 		System.out.println("\n"+message);
@@ -59,7 +72,7 @@ public class Main {
 	public static void main(String[] args) {
 		Usuario usuario;
 		
-		cargarTienda();
+		//cargarTienda();
 		
 		try {
 			while (!action.equals("e")) {
@@ -261,7 +274,60 @@ public class Main {
 	}
 		
 	static void menuGestor(Gestor gestor) throws InvalidArgumentException  {
-		
+		while(!action.equals("e")) {
+			if(gestor == null) return;
+			
+			getAction("ad: añadir descuentos | cs: configurar sistema | ce: consultar estadísticas | gp: gestionar productos y categorias | ge: gestionar empleados | e: exit");
+			switch(action) {
+			case "ad":
+				double valorMin;
+				String cond = getUserInputString("Tipo de condición (c: cantidad | v: volumen | sc: sin condiciones): ");
+				switch (cond) {
+					case "c":
+					case "v":
+						valorMin = getUserInputDouble("Valor mínimo para la compensación (número no negativo): ");
+						sc.nextLine();
+						break;
+					default:
+						valorMin = 0;
+				}
+				
+				try {
+					LocalDateTime fechaInicio = getUserInputLocalDateTime("Fecha de inicio (formato DD/MM/YYYY hh:mm) : ");
+					LocalDateTime fechaFin = getUserInputLocalDateTime("Fecha de inicio (formato DD/MM/YYYY hh:mm) : ");
+				} catch(DateTimeParseException e) {
+					System.out.println( "\u001B[31m" + "Fecha introducida con formato incorrecto\n" + "\u001B[0m");
+				}
+				
+				String tipo = getUserInputString("Tipo de compensación (d: dinero | p: porcentaje | r: regalo): ");
+				switch (tipo) {
+				case "d": 
+					
+				case "p":
+				case "r":
+					String regalo = getUserInputLine("Enter para elegir entre todo el inventario o : ");
+					Producto[] productos = tienda.getAlmacen().getProductosCoincidentes(regalo);
+					
+					for (int i = 1; i <= productos.length; i++) {
+						System.out.println(i + ")" + productos[i]);
+					}
+					
+					int index = getUserInputInt("Número de producto para elegir como regalo: ");
+					if (index <= 0 || index > productos.length) break;
+					// Mirar esto arriba!!!!!!!
+					Producto p = productos[index-1];
+				}
+				
+			case "cs":
+				
+			case "ce":
+				
+			case "gp":
+				
+			case "ge":
+
+			}
+		}
 	}
 	
 	static void cargarTienda() {
