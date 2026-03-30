@@ -13,6 +13,7 @@ import sistema.*;
 import usuario.*;
 import venta.pedidos.Pedido;
 import venta.productos.*;
+import venta.descuentos.*;
 import wallapop.*;
 
 public class Main {
@@ -218,6 +219,29 @@ public class Main {
 			getAction("ad: añadir descuentos | cs: configurar sistema | ce: consultar estadísticas | gp: gestionar productos y categorias | ge: gestionar empleados | e: exit");
 			switch(action) {
 			case "ad":
+				Producto[] productos;
+				String aplicadoSobre = getUserInputString("Aplicar descuento sobre (c: categoría | p: producto): ");
+				Descontable desc;
+				switch (aplicadoSobre) {
+					case "c":
+						Categoria[] categorias = tienda.getAlmacen().getCategorias();
+						for (int i = 1; i < categorias.length; i++) {
+							System.out.println(i+") "+ categorias[i-1].getNombre());
+						}
+					case "p":
+						String prod = getUserInputLine("Enter para elegir entre todo el inventario o : ");
+						productos = tienda.getAlmacen().getProductosCoincidentes(prod);
+						
+						for (int i = 1; i <= productos.length; i++) {
+							System.out.println(i + ") " + productos[i-1].getNombre());
+						}
+						
+						int index = getUserInputInt("Número de producto para aplicar el descuento: ");
+						if (index <= 0 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido");
+						// Mirar esto arriba!!!!!!!
+						Producto p = productos[index-1];
+				}
+				
 				double valorMin;
 				String cond = getUserInputString("Tipo de condición (c: cantidad | v: volumen | sc: sin condiciones): ");
 				switch (cond) {
@@ -244,14 +268,14 @@ public class Main {
 				case "p":
 				case "r":
 					String regalo = getUserInputLine("Enter para elegir entre todo el inventario o : ");
-					Producto[] productos = tienda.getAlmacen().getProductosCoincidentes(regalo);
+					productos = tienda.getAlmacen().getProductosCoincidentes(regalo);
 					
 					for (int i = 1; i <= productos.length; i++) {
-						System.out.println(i + ")" + productos[i]);
+						System.out.println(i + ") " + productos[i-1].getNombre());
 					}
 					
 					int index = getUserInputInt("Número de producto para elegir como regalo: ");
-					if (index <= 0 || index > productos.length) break;
+					if (index <= 0 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido");
 					// Mirar esto arriba!!!!!!!
 					Producto p = productos[index-1];
 				}
@@ -357,7 +381,7 @@ public class Main {
 	 * @throws InvalidArgumentException
 	 * @throws DoubleDiscountException
 	 */
-	static void actionGestionarProductos(Empleado empleado) throws InvalidArgumentException, DoubleDiscountException {
+	static void actionGestionarProductos(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException {
 		getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | mc: modificar categorias | p: crear packs | e: exit");
 		
 		switch(action) {

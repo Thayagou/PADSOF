@@ -342,14 +342,12 @@ public class Almacen implements Serializable {
 			Producto p = st.getProducto();
 			if (p.isEliminado()) continue;
 			String nombreProd = p.getNombre();
-			if (nombreProd.contains(nombre)) 
+			if (nombreProd.toLowerCase().contains(nombre.toLowerCase())) 
 				lista.add(p);			
 		}
 		
 		return lista.toArray(new Producto[0]);
 	}
-	
-	
 	
 	/**
 	 * Crea y añade una categoría al almacén
@@ -421,30 +419,10 @@ public class Almacen implements Serializable {
 		return true;
 	}
 	
-	/**
-	 * Crea y añade un descuento de dinero a un producto
-	 * @param producto Producto al que se asocia el descuento
-	 * @param valorMin Valor mínimo para ser aplicado
-	 * @param inicio Fecha de inicio del descuento
-	 * @param fin Fecha de fin del descuento
-	 * @param condicion Tipo de condición para el descuento
-	 * @param precio Precio que se descuenta
-	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 */
-	public boolean anadirDescuentoDinero(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
-			throws InvalidArgumentException, DoubleDiscountException {
-		if(producto == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
-		
-		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
-		if(!producto.anadirDescuento(descuento))
-			return false;
-		descuentos.add(descuento);
-		return true;
-	}
 	
 	/**
 	 * Crea y añade un descuento de dinero a una categoría
-	 * @param categoria Categoría a la que se asocia el descuento
+	 * @param desc Instancia de una clase que implemente la interfaz Descontable
 	 * @param valorMin Valor mínimo para ser aplicado
 	 * @param inicio Fecha de inicio del descuento
 	 * @param fin Fecha de fin del descuento
@@ -452,33 +430,12 @@ public class Almacen implements Serializable {
 	 * @param precio Precio que se descuenta
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoDinero(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
+	public boolean anadirDescuentoDinero(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(categoria == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
-		if(!categoria.anadirDescuento(descuento))
-			return false;
-		descuentos.add(descuento);
-		return true;
-	}
-	
-	/**
-	 * Crea y añade un descuento de porcentaje a un producto
-	 * @param producto Producto al que se asocia el descuento
-	 * @param valorMin Valor mínimo para ser aplicado
-	 * @param inicio Fecha de inicio del descuento
-	 * @param fin Fecha de fin del descuento
-	 * @param condicion Tipo de condición para el descuento
-	 * @param porcentaje Porcentaje que se descuenta
-	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 */
-	public boolean anadirDescuentoPorcentaje(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
-			throws InvalidArgumentException, DoubleDiscountException {
-		if(producto == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
-		
-		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
-		if(!producto.anadirDescuento(descuento))
+		if(!desc.anadirDescuento(descuento))
 			return false;
 		descuentos.add(descuento);
 		return true;
@@ -486,7 +443,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Crea y añade un descuento de porcentaje a una categoría
-	 * @param categoria Categoría a la que se asocia el descuento
+	 * @param desc Instancia de una clase que implemente la interfaz Descontable
 	 * @param valorMin Valor mínimo para ser aplicado
 	 * @param inicio Fecha de inicio del descuento
 	 * @param fin Fecha de fin del descuento
@@ -494,12 +451,12 @@ public class Almacen implements Serializable {
 	 * @param porcentaje Porcentaje que se descuenta
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoPorcentaje(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
+	public boolean anadirDescuentoPorcentaje(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(categoria == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
-		if(!categoria.anadirDescuento(descuento))
+		if(!desc.anadirDescuento(descuento))
 			return false;
 		descuentos.add(descuento);
 		return true;
@@ -507,7 +464,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Crea y añade un descuento de regalo a un producto
-	 * @param producto Producto al que se asocia el descuento
+	 * @param desc Instancia de una clase que implemente la interfaz Descontable
 	 * @param valorMin Valor mínimo para ser aplicado
 	 * @param inicio Fecha de inicio del descuento
 	 * @param fin Fecha de fin del descuento
@@ -515,33 +472,12 @@ public class Almacen implements Serializable {
 	 * @param regalo Regalo que se da
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 */
-	public boolean anadirDescuentoRegalo(Producto producto, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
+	public boolean anadirDescuentoRegalo(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(producto == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
-		if(!producto.anadirDescuento(descuento))
-			return false;
-		descuentos.add(descuento);
-		return true;
-	}
-	
-	/**
-	 * Crea y añade un descuento de regalo a una categoría
-	 * @param categoria Categoría a la que se asocia el descuento
-	 * @param valorMin Valor mínimo para ser aplicado
-	 * @param inicio Fecha de inicio del descuento
-	 * @param fin Fecha de fin del descuento
-	 * @param condicion Tipo de condición para el descuento
-	 * @param regalo Regalo que se da
-	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 */
-	public boolean anadirDescuentoRegalo(Categoria categoria, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
-			throws InvalidArgumentException, DoubleDiscountException {
-		if(categoria == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
-		
-		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
-		if(!categoria.anadirDescuento(descuento))
+		if(!desc.anadirDescuento(descuento))
 			return false;
 		descuentos.add(descuento);
 		return true;
