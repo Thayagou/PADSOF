@@ -349,7 +349,7 @@ public class Main {
 	static void actionGestionarProductos(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		if(!usuario.tienePermiso(Permiso.PRODUCTOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar productos", "Productos");
 		
-		getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | mc: modificar categorias | p: crear packs | e: exit");
+		getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | cc: crear categorias | mc: modificar categorias | p: crear packs | e: exit");
 		
 		switch(action) {
 		case "a":
@@ -366,6 +366,10 @@ public class Main {
 			
 		case "bp":
 			actionBorrarProducto();
+			break;
+			
+		case "cc":
+			actionCrearCategoria();
 			break;
 			
 		case "mc":
@@ -511,18 +515,21 @@ public class Main {
 			LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 			
 			tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+			break;
 		case 'j':
 			int numJugs = getUserInputInt("Número de jugadores: ");
 			String rangoEdad = getUserInputString("Rango de edad: ");
 			TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
 			
 			tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+			break;
 		case 'f':
 			String marca = getUserInputString("Marca: ");
 			String material = getUserInputString("Material: ");
 			String dimensiones = getUserInputString("Dimensiones: ");
 			
 			tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+			break;
 		}
 	}
 	
@@ -565,11 +572,34 @@ public class Main {
 		tienda.getAlmacen().eliminarProducto(productos[num-1]);
 	}
 	
-	static void actionModificarCategoria() {
+	static void actionCrearCategoria() throws InvalidArgumentException {
+		String nuevo = getUserInputString("Introduzca el nombre de la nueva categoría: ");
+		tienda.getAlmacen().anadirCategoria(nuevo);
+	}
+	
+	static void actionModificarCategoria() throws InvalidArgumentException {
 		String nombre = getUserInputLine("Introduzca el nombre de la categoría que desea modificar: ");
+		Categoria[] categorias = tienda.getAlmacen().getCategoriasCoincidentes(nombre);
+		
+		if(categorias.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "borrar producto");
+		
+		int i = 1;
+		for(Categoria c : categorias) {
+			System.out.println(i + ") " + c + "\n");
+			i++;
+		}
+		int num = getUserInputInt("Introduzca el número del producto que desea modificar: ");
+		String nuevo = getUserInputString("Introduzca el nuevo nombre de la categoría: ");
+		tienda.getAlmacen().modificarCategoria(categorias[num-1], nuevo);
 	}
 	
 	static void actionCrearPack() {
-		
+		List<Producto> productos = new ArrayList<>();
+		for(Producto p : tienda.getAlmacen().getProductosCoincidentes("")) {
+			getAction("Incluir categoria " + p.getNombre() + "? s/n");
+			if(action == "s") {
+				productos.add(p);
+			}
+		}
 	}
 }
