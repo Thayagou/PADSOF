@@ -174,6 +174,14 @@ public class Almacen implements Serializable {
 	}
 	
 	/**
+	 * Método para obtener el inventario total de la tienda
+	 * @return array de Stock, el inventario total de la tienda
+	 */
+	public Stock[] getInventario() {
+		return inventario.values().toArray(new Stock[0]);
+	}
+	
+	/**
 	 * Eliminar un producto del inventario
 	 * @param producto Producto que se quiere eliminar
 	 * @return true si se elimina correctamente
@@ -236,11 +244,6 @@ public class Almacen implements Serializable {
 		try (BufferedReader br = new BufferedReader(new FileReader(fProductos))) {
 			while((linea = br.readLine()) != null) {
 				String partes[] = linea.split(";");
-				if(partes.length != 16) {
-					throw new IllegalArgumentException("Formato de archivo incorrecto: número de argumentos no es 16");
-				}
-				
-				
 				String nombre = partes[1];
 				String desc = partes[2];
 				double precio;
@@ -249,9 +252,7 @@ public class Almacen implements Serializable {
 	                precio = Double.parseDouble(partes[3]);
 	                uds    = Integer.parseInt(partes[4]);
 	            } catch (NumberFormatException e) {
-	                throw new IllegalArgumentException(
-	                    "Datos de producto inválidos: " + e.getMessage(), e
-	                );
+	                throw new InvalidArgumentException("Datos de producto inválidos: " + e.getMessage(), "cargar fichero de productos");
 	            }
 				
 				String nombreCateg[] = partes[5].split(",");
@@ -260,7 +261,7 @@ public class Almacen implements Serializable {
 					if(this.categorias.containsKey(c)) {
 						categorias.add(this.categorias.get(c));
 					} else {
-						throw new InvalidArgumentException("Categoría no existente: " + c);
+						throw new InvalidArgumentException("Categoría no existente: " + c, "cargar fichero de productos");
 					}
 				}
 				
@@ -275,9 +276,9 @@ public class Almacen implements Serializable {
 							
 							this.anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
 						} catch (IllegalArgumentException | DateTimeException e) {
-	                        throw new IllegalArgumentException("Datos de cómic inválidos: " + e.getMessage(), e);
+	                        throw new InvalidArgumentException("Datos de cómic inválidos: " + e.getMessage(), "cargar fichero de productos");
 	                    }
-						
+						break;
 					}
 					case "J" ->  {
 						try {
@@ -287,8 +288,9 @@ public class Almacen implements Serializable {
 							
 							this.anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
 						} catch(IllegalArgumentException e) {
-							throw new IllegalArgumentException("Datos de juego inválidos: " + e.getMessage(), e);
+							throw new InvalidArgumentException("Datos de juego inválidos: " + e.getMessage(), "cargar fichero de productos");
 						}
+						break;
 					}
 					case "F" ->  {
 						try {
@@ -298,19 +300,19 @@ public class Almacen implements Serializable {
 							
 							this.anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
 						} catch (IllegalArgumentException e) {
-							throw new IllegalArgumentException("Datos de figura inválidos: " + e.getMessage(), e);
+							throw new InvalidArgumentException("Datos de figura inválidos: " + e.getMessage(), "cargar fichero de productos");
 						}
-						
+						break;
 					}
 					default ->  {
-						throw new IllegalArgumentException("Tipo de producto no existente");
+						throw new InvalidArgumentException("Tipo de producto no existente", "cargar fichero de productos");
 					}
 				}
 		    }
 		} catch (FileNotFoundException e) {
-	        throw new IllegalArgumentException("Fichero no encontrado: " + fProductos, e);
+	        throw new InvalidArgumentException("Fichero no encontrado: " + fProductos, "cargar fichero de productos");
 	    } catch (IOException e) {
-	        throw new IllegalArgumentException("Error de lectura en el fichero: " + e.getMessage(), e);
+	        throw new InvalidArgumentException("Error de lectura en el fichero: " + e.getMessage(), "cargar fichero de productos");
 	    }
 		return true;
 	}
@@ -331,8 +333,15 @@ public class Almacen implements Serializable {
 	 * @return La lista de productos en formato de array de productos
 	 */
 	public Producto[] getProductosCoincidentes(String nombre) {
-		if(nombre.isBlank()) 
-			return inventario.values().toArray(new Producto[0]);
+		if(nombre.isBlank()) {
+			Producto[] productos = new Producto[inventario.size()];
+
+			int i = 0;
+			for (Stock s : inventario.values()) {
+			    productos[i++] = s.getProducto();
+			}
+			return productos;
+		}
 		
 		List<Producto> lista = new ArrayList<>();
 		
@@ -343,7 +352,6 @@ public class Almacen implements Serializable {
 			if (nombreProd.toLowerCase().contains(nombre.toLowerCase())) 
 				lista.add(p);			
 		}
-		
 		return lista.toArray(new Producto[0]);
 	}
 	

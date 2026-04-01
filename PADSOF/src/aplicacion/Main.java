@@ -98,7 +98,7 @@ public class Main {
 	
 	static void getAction(String message) {
 		showMessage(message);
-		action = sc.next();
+		action = sc.next().trim();
 	}
 	
 	/**
@@ -133,15 +133,9 @@ public class Main {
 		
 		try {
 			while (!action.equals("e")) {
-				
-				try {
-					usuario = menuInicio();
-					if (usuario == null) break;
 
-				} catch (NotValidUserException e){
-					showMessage("Error al " + e.getMessage());
-					continue;
-				}
+				usuario = menuInicio();
+				if (usuario == null) break;
 				
 				if (usuario instanceof Gestor) {
 			        menuGestor(tienda.getGestor());
@@ -152,8 +146,9 @@ public class Main {
 			    }
 			}
 			
-		} catch (InvalidArgumentException | DoubleDiscountException e) {
-			showMessage(e.getMessage());
+		} catch (RuntimeException e) {
+			showMessage("Error no manejado: " + e.getMessage());
+			e.printStackTrace();
 		}
 		
 		guardarTienda();
@@ -161,92 +156,70 @@ public class Main {
 		return;
 	}
 	
-	static Usuario menuInicio() throws InvalidArgumentException, NotValidUserException {
+	static Usuario menuInicio() {
 		while(!action.equals("e")) {
+			
 			getAction("r: registrarse | i: iniciar sesión | b: buscar | e: exit ");
-				
-			switch(action) {
-			case "r":
-				String nombreR = getUserInputString("Introducir nombre: ");
-				String contrasenaR = getUserInputString("Introducir contraseña: ");					
-				String confirmacionR = getUserInputString("Repetir contraseña: ");
-				
-				Usuario usuario = tienda.registrarse(nombreR, contrasenaR, confirmacionR);
-				
-				return usuario;
-				
-			case "i":
-				String nombreI = getUserInputString("Introducir nombre: ");
-				String contrasenaI = getUserInputString("Introducir contraseña: ");
-				
-				usuario = tienda.iniciarSesion(nombreI, contrasenaI);
-				
-				return usuario;
-				
-			case "b":
-				List<Categoria> categorias = new ArrayList<Categoria>();
-				for(Categoria cat : tienda.getAlmacen().getCategorias()) {
-					getAction("Incluir categoria" + cat.getNombre() + "? s/n");
-					if(action == "s") {
-						categorias.add(cat);
-					}
+			try {
+
+				switch(action) {
+				case "r":
+					String nombreR = getUserInputString("Introducir nombre: ");
+					String contrasenaR = getUserInputString("Introducir contraseña: ");					
+					String confirmacionR = getUserInputString("Repetir contraseña: ");
+					
+					Usuario usuario = tienda.registrarse(nombreR, contrasenaR, confirmacionR);
+					
+					return usuario;
+					
+				case "i":
+					String nombreI = getUserInputString("Introducir nombre: ");
+					String contrasenaI = getUserInputString("Introducir contraseña: ");
+					
+					usuario = tienda.iniciarSesion(nombreI, contrasenaI);
+					
+					return usuario;
+					
+				case "b":
+					actionBuscarPorFiltros();
 				}
-				double precioMin = getUserInputDouble("Precio minimo: ");
-				double precioMax = getUserInputDouble("Precio maximo: ");
-				double estrellasMin = getUserInputDouble("Estrellas minimas: ");
-				
-				try{
-					tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
-				}catch(IllegalArgumentException e){
-					showMessage(e.getMessage());
-				}
-				// Ver mas informacion de los productos
-			}	
+			} catch (NotValidUserException | InvalidArgumentException e) {
+				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
+			}
 		}
 		return null;
 	}
 	
-	static void menuCliente(ClienteRegistrado cliente) throws InvalidArgumentException  {
+	static void menuCliente(ClienteRegistrado cliente)  {
+		if(cliente == null) return;
 		while(!action.equals("e")) {
-			if(cliente == null) return;
 			
 			getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | a: cuenta | n: notificaciones | e: exit");
-			switch(action) {
-			case "b":
-				List<Categoria> categorias = new ArrayList<Categoria>();
-				for(Categoria cat : tienda.getAlmacen().getCategorias()) {
-					getAction("Incluir categoria" + cat.getNombre() + "? s/n");
-					if(action == "s") {
-						categorias.add(cat);
-					}
-				}
-				double precioMin = getUserInputDouble("Precio minimo: ");
-				double precioMax = getUserInputDouble("Precio maximo: ");
-				double estrellasMin = getUserInputDouble("Estrellas minimas: ");
-				
-				try{
-					tienda.getAlmacen().getProductosPorFiltros(cliente, categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
-				}catch(IllegalArgumentException e){
+
+			try {
+				switch(action) {
+				case "b":
+					actionBuscarPorFiltros(cliente);
 					
+				case "r":
+					
+				case "s":
+				case "w":
+				case "c":
+				case "a":
+				case "n":
 				}
-				
-			case "r":
-				
-			case "s":
-			case "w":
-			case "c":
-			case "a":
-			case "n":
+			} catch (InvalidArgumentException e) {
+				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
 			}
 		}
 	}
 
-	static void menuEmpleado(Empleado empleado) throws DoubleDiscountException {
+	static void menuEmpleado(Empleado empleado) {
 		if(empleado == null) return;
-		
 		while(!action.equals("e")) {
-			getAction("v: valorar articulo | c: confirmar intercambio | pd: gestionar pedidos | pr: gestionar productos y categorias| e: exit");
 			
+			getAction("v: valorar articulo | c: confirmar intercambio | pd: gestionar pedidos | pr: gestionar productos y categorias| e: exit");
 			try {
 				switch(action) {
 				case "v":
@@ -265,43 +238,42 @@ public class Main {
 					actionGestionarProductos(empleado);
 					break;
 				}
-			} catch (InvalidArgumentException e) {
-				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
-			} catch (InvalidPermitException e) {
-				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
-			} catch (ArticuloSinValoracionException e) {
-				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
+			} catch (InvalidArgumentException | InvalidPermitException | ArticuloSinValoracionException | DoubleDiscountException e ) {
+				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
 			} 
 		}
 	}
 		
-	static void menuGestor(Gestor gestor) throws InvalidArgumentException  {
+	static void menuGestor(Gestor gestor) {
+		if(gestor == null) return;
 		while(!action.equals("e")) {
-			if(gestor == null) return;
 			
 			getAction("ad: añadir descuentos | cs: configurar sistema | ce: consultar estadísticas | gp: gestionar productos y categorias | ge: gestionar empleados | e: exit");
 			try {
 				switch(action) {
 					case "ad":
 						actionAnadirDescuento(gestor);
+						break;
 						
 					case "cs":
 						actionConfigurarSistema(gestor);
+						break;
 						
 					case "ce":
 						actionConsultarEstadisticas(gestor);
+						break;
+						
 					case "gp":
 						actionGestionarProductos(gestor);
+						break;
+						
 					case "ge":
 						actionGestionarEmpleados(gestor);
+						break;
 				}
 
-			} catch (InvalidArgumentException e) {
-				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
-			} catch (DoubleDiscountException e) {
-				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
-			} catch (InvalidPermitException e) {
-				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
+			} catch (InvalidArgumentException | DoubleDiscountException | InvalidPermitException e) {
+				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
 			}
 		}
 	}
@@ -377,7 +349,7 @@ public class Main {
 	static void actionGestionarProductos(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		if(!usuario.tienePermiso(Permiso.PRODUCTOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar productos", "Productos");
 		
-		getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | mc: modificar categorias | p: crear packs | e: exit");
+		getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | cc: crear categorias | mc: modificar categorias | p: crear packs | e: exit");
 		
 		switch(action) {
 		case "a":
@@ -394,6 +366,10 @@ public class Main {
 			
 		case "bp":
 			actionBorrarProducto();
+			break;
+			
+		case "cc":
+			actionCrearCategoria();
 			break;
 			
 		case "mc":
@@ -703,18 +679,21 @@ public class Main {
 			LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 			
 			tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+			break;
 		case 'j':
 			int numJugs = getUserInputInt("Número de jugadores: ");
 			String rangoEdad = getUserInputString("Rango de edad: ");
 			TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
 			
 			tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+			break;
 		case 'f':
 			String marca = getUserInputString("Marca: ");
 			String material = getUserInputString("Material: ");
 			String dimensiones = getUserInputString("Dimensiones: ");
 			
 			tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+			break;
 		}
 	}
 	
@@ -728,7 +707,7 @@ public class Main {
 		tienda.getAlmacen().anadirProductosDeFichero(fichero);
 	}
 	
-	static void actionModificarProducto() throws InvalidArgumentException {
+	static void actionModificarProducto() throws InvalidArgumentException, DoubleDiscountException {
 		String nombre = getUserInputLine("Introduzca el nombre del producto que quiere modificar: " );
 		Producto[] productos = tienda.getAlmacen().getProductosCoincidentes(nombre);
 		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "modificar producto");
@@ -738,10 +717,22 @@ public class Main {
 			showMessage(i + ") " + p);
 			i++;
 		}
-		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");
-		char campo = getUserInputChar("Introduce el campo que desea modificar (n: nombre | d: descripción | )");
-		tienda.getAlmacen().eliminarProducto(productos[num-1]);
-		/////
+		int num = getUserInputInt("Introduzca el número del producto que desea modificar: ");
+		showMessage("Introduzca los nuevo datos del producto");
+		
+		String nombrePr = getUserInputLine("Nombre: ");
+		String desc = getUserInputLine("Descripción: ");
+		double precio = getUserInputDouble("Precio: ");
+		int uds = getUserInputInt("Unidades: ");
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+			char inc = getUserInputChar("Incluir categoria " + cat.getNombre() + "? s/n");
+			if(inc == 's') {
+				categorias.add(cat);
+			}
+		}
+		
+		tienda.getAlmacen().modificarProducto(productos[num-1], uds, nombrePr, desc, precio, null, categorias.toArray(new Categoria[0]));
 	}
 	
 	static void actionBorrarProducto() throws InvalidArgumentException {
@@ -758,11 +749,63 @@ public class Main {
 		tienda.getAlmacen().eliminarProducto(productos[num-1]);
 	}
 	
-	static void actionModificarCategoria() {
-		String nombre = getUserInputLine("Introduzca el nombre de la categoría que desea modificar: ");
+	static void actionCrearCategoria() throws InvalidArgumentException {
+		String nuevo = getUserInputString("Introduzca el nombre de la nueva categoría: ");
+		tienda.getAlmacen().anadirCategoria(nuevo);
 	}
 	
-	static void actionCrearPack() {
+	static void actionModificarCategoria() throws InvalidArgumentException {
+		String nombre = getUserInputLine("Introduzca el nombre de la categoría que desea modificar: ");
+		Categoria[] categorias = tienda.getAlmacen().getCategoriasCoincidentes(nombre);
 		
+		if(categorias.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "borrar producto");
+		
+		int i = 1;
+		for(Categoria c : categorias) {
+			showMessage(i + ") " + c + "\n");
+			i++;
+		}
+		int num = getUserInputInt("Introduzca el número del producto que desea modificar: ");
+		String nuevo = getUserInputString("Introduzca el nuevo nombre de la categoría: ");
+		tienda.getAlmacen().modificarCategoria(categorias[num-1], nuevo);
+	}
+	
+	static void actionCrearPack() throws InvalidArgumentException, DoubleDiscountException {
+		List<Stock> productos = new ArrayList<>();
+		for(Stock s : tienda.getAlmacen().getInventario()) {
+			char inc = getUserInputChar("Incluir producto " + s.getProducto().getNombre() + "? s/n");
+			if(inc == 's') {
+				productos.add(s);
+			}
+		}
+		
+		String nombre = getUserInputLine("Nombre: ");
+		String desc = getUserInputLine("Descripción: ");
+		double precio = getUserInputDouble("Precio: ");
+		int uds = getUserInputInt("Unidades: ");
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+			char inc = getUserInputChar("Incluir categoria " + cat.getNombre() + "? s/n");
+			if(inc == 's') {
+				categorias.add(cat);
+			}
+		}
+		
+		tienda.getAlmacen().anadirPack(uds, nombre, desc, precio, null, productos.toArray(new Stock[0]), categorias.toArray(new Categoria[0]));
+	}
+	
+	static void actionBuscarPorFiltros(ClienteRegistrado cliente) throws InvalidArgumentException {
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+			getAction("Incluir categoria" + cat.getNombre() + "? s/n");
+			if(action == "s") {
+				categorias.add(cat);
+			}
+		}
+		double precioMin = getUserInputDouble("Precio minimo: ");
+		double precioMax = getUserInputDouble("Precio maximo: ");
+		double estrellasMin = getUserInputDouble("Estrellas minimas: ");
+		
+		tienda.getAlmacen().getProductosPorFiltros(cliente, categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
 	}
 }
