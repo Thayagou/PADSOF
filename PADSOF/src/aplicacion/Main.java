@@ -4,10 +4,13 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
+import estadistica.StatsMensual;
+import estadistica.StatsUsuario;
 import exceptions.*;
 import sistema.*;
 import usuario.*;
@@ -23,7 +26,7 @@ public class Main {
 	private static String filename = "tienda.dat";
 	
 	static void cleanScreen() {
-		for(int i = 0; i < 50 ; i++) System.out.println("\n");
+		for(int i = 0; i < 50 ; i++) showMessage("\n");
 	}
 	
 	static void showMessage(String message) {
@@ -32,38 +35,38 @@ public class Main {
 	}
 	
 	static char getUserInputChar(String message) {
-		System.out.println("\n"+message);
+		showMessage(message);
 		char c = sc.next().charAt(0);
 		sc.nextLine();
 		return c;
 	}
 	
 	static String getUserInputString(String message) {
-		System.out.println("\n"+message);
+		showMessage(message);
 		return sc.next().trim();
 	}
 	
 	static String getUserInputLine(String message) {
-		System.out.println("\n"+message);
+		showMessage(message);
 		return sc.nextLine().trim();
 	}
 	
 	static int getUserInputInt(String message) {
-		System.out.println("\n"+message);
+		showMessage(message);
 		int n = sc.nextInt();
 		sc.nextLine();
 		return n;
 	}
 	
 	static double getUserInputDouble(String message) {
-		System.out.println("\n"+message);
+		showMessage(message);
 		double r = sc.nextDouble();
 		sc.nextLine();
 		return r;
 	}
 	
 	static LocalDateTime getUserInputLocalDateTime(String message) {
-		System.out.println("\n"+message);
+		showMessage(message);
 		String input = sc.nextLine();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		LocalDateTime fecha = LocalDateTime.parse(input, formatter);
@@ -71,9 +74,18 @@ public class Main {
 		return fecha;
 	}
 	
+	static YearMonth getUserInputYearMonth(String message) {
+		showMessage(message);
+		String input = sc.nextLine();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+		YearMonth fecha = YearMonth.parse(input, formatter);
+		
+		return fecha;		
+	}
+	
 	
 	static void getAction(String message) {
-		System.out.println("\n"+message);
+		showMessage(message);
 		action = sc.next();
 	}
 	
@@ -94,14 +106,12 @@ public class Main {
 	 * Guarda los datos de la tienda en un fichero
 	 */
 	static void guardarTienda() {
-		try {
-	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-	        oos.writeObject(tienda);
-	        oos.reset();
-	        oos.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))){
+			oos.writeObject(tienda);
+			oos.reset();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
@@ -117,7 +127,7 @@ public class Main {
 					if (usuario == null) break;
 
 				} catch (NotValidUserException e){
-					System.out.println("Error al " + e.getMetodo() + " con el nombre de usuario '" + e.getNombre() + "': " + e.getMessage());
+					showMessage("Error al " + e.getMessage());
 					continue;
 				}
 				
@@ -131,7 +141,7 @@ public class Main {
 			}
 			
 		} catch (InvalidArgumentException | DoubleDiscountException e) {
-			System.out.println(e.getMessage());
+			showMessage(e.getMessage());
 		}
 		
 		guardarTienda();
@@ -176,7 +186,7 @@ public class Main {
 				try{
 					tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
 				}catch(IllegalArgumentException e){
-					
+					showMessage(e.getMessage());
 				}
 				// Ver mas informacion de los productos
 			}	
@@ -244,10 +254,12 @@ public class Main {
 					break;
 				}
 			} catch (InvalidArgumentException e) {
-				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\u001B[0m");
+				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
 			} catch (InvalidPermitException e) {
-				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\nNecesitas el permiso: " + e.getPermiso() + "\u001B[0m");
-			}
+				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
+			} catch (ArticuloSinValoracionException e) {
+				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
+			} 
 		}
 	}
 		
@@ -265,33 +277,35 @@ public class Main {
 						actionConfigurarSistema(gestor);
 						
 					case "ce":
-						
+						actionConsultarEstadisticas(gestor);
 					case "gp":
 						
 					case "ge":
 				}
 
 			} catch (InvalidArgumentException e) {
-				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\u001B[0m");
+				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
 			} catch (DoubleDiscountException e) {
-				System.out.println("\n\u001B[31mError al " + e.getMetodo() + ": " + e.getMessage() + "\u001B[0m");
+				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
 			}
 		}
 	}
+
 
 	/**
 	 * Realiza la acción de valorar un artículo de segunda mano
 	 * @param empleado Empleado que desea valorar un artículo
 	 * @throws InvalidArgumentException
+	 * @throws ArticuloSinValoracionException Se lanza en caso de que el artículo que se intenta valorar no tenga una valoración solicitada
 	 * @throws InvalidPermit 
 	 */
-	static void actionValorarArticulo(Empleado empleado) throws InvalidArgumentException, InvalidPermitException {
+	static void actionValorarArticulo(Empleado empleado) throws InvalidArgumentException, InvalidPermitException, ArticuloSinValoracionException {
 		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "valorar artículo", "Intercambios");
 		int i = 1;
 		Valoracion[] valoraciones = tienda.getHistorial().getValoracionesPendientes();
 		if (valoraciones.length < 1) throw new InvalidArgumentException("No existen valoraciones pendientes en este momento", "valorar articulo");
 		for(Valoracion v : valoraciones) {
-			System.out.println(i + ") " + v + "\n");
+			showMessage(i + ") " + v);
 			i++;
 		}
 		int num = getUserInputInt("Escriba el número del artículo que desea valorar: ");
@@ -313,7 +327,7 @@ public class Main {
 		Intercambio[] intercambios = tienda.getHistorial().getIntercambiosPendientes();
 		if(intercambios.length < 1) throw new InvalidArgumentException("No existen intercambios pendientes en este momento", "confirmar intercambio");
 		for (Intercambio t : intercambios) {
-			System.out.println(i + ") " + t + "\n");
+			showMessage(i + ") " + t);
 			i++;
 		}
 		int num = getUserInputInt("Escriba el número del intercambio que desea confirmar: ");
@@ -332,7 +346,7 @@ public class Main {
 		Pedido[] pedidos= tienda.getHistorial().getPedidosPendientes();
 		if(pedidos.length < 1) throw new InvalidArgumentException("No existen pedidos pendientes en este momento", "gestionar pedidos");
 		for(Pedido p : pedidos) {
-			System.out.println(i + ") " + p + "\n");
+			showMessage(i + ") " + p);
 			i++;
 		}
 		int num = getUserInputInt("Escriba el número del pedido que desea avanzar: ");
@@ -402,7 +416,7 @@ public class Main {
 			case "c":
 				Categoria[] categorias = tienda.getAlmacen().getCategorias();
 				for (int i = 1; i < categorias.length; i++) {
-					System.out.println(i+") "+ categorias[i-1].getNombre());
+					showMessage(i+") "+ categorias[i-1].getNombre());
 				}
 				
 				index = getUserInputInt("Número de producto para aplicar el descuento: ");
@@ -414,7 +428,7 @@ public class Main {
 				productos = tienda.getAlmacen().getProductosCoincidentes(prod);
 				
 				for (int i = 1; i <= productos.length; i++) {
-					System.out.println(i + ") " + productos[i-1].getNombre());
+					showMessage(i + ") " + productos[i-1].getNombre());
 				}
 				
 				index = getUserInputInt("Número de producto para aplicar el descuento: ");
@@ -469,7 +483,7 @@ public class Main {
 			productos = tienda.getAlmacen().getProductosCoincidentes(nombre);
 			
 			for (int i = 1; i <= productos.length; i++) {
-				System.out.println(i + ") " + productos[i-1].getNombre());
+				showMessage(i + ") " + productos[i-1].getNombre());
 			}
 			
 			index = getUserInputInt("Número de producto para elegir como regalo: ");
@@ -483,8 +497,99 @@ public class Main {
 		}
 	}
 	
-	private static void actionConfigurarSistema(Gestor gestor) {
+	/**
+	 * 
+	 * @param gestor
+	 * @throws InvalidArgumentException 
+	 */
+	private static void actionConfigurarSistema(Gestor gestor) throws InvalidArgumentException {
+		showMessage("=== Ponderaciones de los parámetros del sistema ===");
+		showMessage("  Categoría:              " + Sistema.getInstancia().getPonderacionCategoria());
+		showMessage("  Unidades compradas:     " + Sistema.getInstancia().getPonderacionUdsCompra());
+		showMessage("  Precio de compra:       " + Sistema.getInstancia().getPonderacionPrecioCompra());
+		showMessage("  Valoraciones producto:  " + Sistema.getInstancia().getPonderacionValoracionesProducto());
+		showMessage("  Producto recomendado:   " + Sistema.getInstancia().getPonderacionProductoRecomendado());
+		showMessage("  Búsqueda:               " + Sistema.getInstancia().getPonderacionBusqueda());
+		showMessage("===================================================");
 		
+		String parametroString = getUserInputString(
+			"Introducir el parámetro a modificar (c: categoría | uc: unidades compradas | pp: precio pagado | vp: valoraciones producto | pr: producto recomendado | b: búsqueda): ");
+	    double valor = getUserInputDouble("Introducir el nuevo valor: ");
+
+	    
+        switch (parametroString) {
+            case "c":
+            	tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.CATEGORIA, valor);
+            	break;
+            case "uc":
+            	tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.UDS_COMPRADAS, valor);
+            	break;
+            case "pp":
+            	tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.PRECIO_COMPRA, valor);
+            	break;
+            case "vp":
+            	tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.VALORACIONES_PRODUCTO, valor);
+            	break;
+            case "pr": 
+            	tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.PRODUCTO_RECOMENDADO, valor);
+            	break;
+            case "b":
+            	tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.BUSQUEDA, valor);
+            	break;
+        }
+	    
+	}
+	
+	private static void actionConsultarEstadisticas(Gestor gestor) throws InvalidArgumentException {
+		String tipo = getUserInputString(
+				"Introducir la estadística a consultar (Productos mas vendidos en un periodo: p | Usuarios más activos: u | Ventas en un periodo: v | Intercambio en un periodo: i): ");
+		YearMonth inicio = null, fin = null;
+		int i = 1;
+		switch (tipo) {
+		case "p": 
+			inicio = getUserInputYearMonth("Introducir mes de inicio (formato MM/yyyy): ");
+			fin = getUserInputYearMonth("Introducir mes de final (formato MM/yyyy): ");
+			
+			List<Map.Entry<Producto, StatsMensual>> listaProductos = tienda.getHistorial().getProductosMayorRecaudacion(inicio, fin);
+			StatsMensual total = listaProductos.removeFirst().getValue();
+			showMessage("Productos más vendidos entre " + inicio + " y " + fin);
+			showMessage("  Total recaudado: " + total.getRecaudacion() + "\n  Numero de unidades vendidas: " + total.getUnidades());
+			i = 1;
+			for (Map.Entry<Producto, StatsMensual> par: listaProductos) {
+				StatsMensual stats = par.getValue();
+				Double porcVentas = (stats.getRecaudacion()/total.getRecaudacion()) * 100;
+				showMessage("  " + i+") "+ par.getKey().getNombre() + ": " + stats.getRecaudacion() + "€ ("+porcVentas+"%) " + stats.getUnidades() +" uds vendidas");
+				i++;
+			}
+		case "u":
+			List<StatsUsuario> listaUsuarios = tienda.getHistorial().getUsuariosMasActivos();
+			i = 1;
+			for (StatsUsuario stats: listaUsuarios) {
+				showMessage("  " +i+") "+ stats.getCliente().getNombre() + " Total: " + stats.getGastoTotal() + "€ " + "Productos comprados: " + stats.getUdsCompradas() + "Artículos intercambiados: " + stats.getUdsIntercambiadas());
+				i++;
+			}
+		case "v":
+			inicio = getUserInputYearMonth("Introducir mes de inicio (formato MM/yyyy): ");
+			fin = getUserInputYearMonth("Introducir mes de final (formato MM/yyyy): ");
+			
+			List<StatsMensual> ventasPorMeses = tienda.getHistorial().getVentasEntreMeses(inicio, fin);
+		
+			for (StatsMensual stats: ventasPorMeses) {
+				showMessage(stats.getMes() + ") " + "Total: " + stats.getRecaudacion() + "Uds vendidas: " + stats.getUnidades());
+			}
+			
+		case "i":
+			inicio = getUserInputYearMonth("Introducir mes de inicio (formato MM/yyyy): ");
+			fin = getUserInputYearMonth("Introducir mes de final (formato MM/yyyy): ");
+			
+			List<StatsMensual> intercambiosPorMeses = tienda.getHistorial().getVentasEntreMeses(inicio, fin);
+			
+			for (StatsMensual stats: intercambiosPorMeses) {
+				showMessage(stats.getMes() + ") " + "Total: " + stats.getRecaudacion() + "€ Uds vendidas: " + stats.getUnidades());
+			}
+		default:
+			throw new InvalidArgumentException("Tipo inválido de estadística", "consultar estadísticas");
+		}
 	}
 		
 	 /**
@@ -550,7 +655,8 @@ public class Main {
 		
 		int i = 1;
 		for(Producto p : productos) {
-			System.out.println(i + ") " + p + "\n");
+			showMessage(i + ") " + p);
+			i++;
 		}
 		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");
 		char campo = getUserInputChar("Introduce el campo que desea modificar (n: nombre | d: descripción | )");
@@ -565,7 +671,7 @@ public class Main {
 		
 		int i = 1;
 		for(Producto p : productos) {
-			System.out.println(i + ") " + p + "\n");
+			showMessage(i + ") " + p);
 			i++;
 		}
 		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");

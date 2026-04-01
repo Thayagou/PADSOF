@@ -61,10 +61,37 @@ public class StatsProducto implements Serializable {
 		return estadisticas.getLast();
 	}
 	
+	public StatsMensual getEstadisticasEntreMeses(YearMonth inicio, YearMonth fin) {
+		StatsMensual stats = new StatsMensual(), 
+				clave = new StatsMensual(inicio);
+		
+		int indexIni = Collections.binarySearch(estadisticas, clave);
+		clave.setMes(fin);
+		int indexFin = Collections.binarySearch(estadisticas, clave);
+		
+		if (indexIni < 0) indexIni = -indexIni - 1;
+		if (indexFin < 0) indexFin = -indexFin - 1;
+
+		for (int i = indexIni; i < indexFin ;i++) {
+			stats.incrementar(estadisticas.get(i).getUnidades(), estadisticas.get(i).getRecaudacion());
+		}
+		
+		return stats;
+	}
+	
 	public Map<Categoria, Double> getVectorRecomendacion() {
 		return Collections.unmodifiableMap(recomendacion);
 	}
 	
+	
+	/**
+	 * Getter del producto asociado
+	 * @return el producto asociado
+	 */
+	public Producto getProducto() {
+		return producto;
+	}
+
 	public double getNormaVector() {
 		return norma;
 	}

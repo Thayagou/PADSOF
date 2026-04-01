@@ -574,7 +574,7 @@ public class Almacen implements Serializable {
 		double valoracionPrevista, compatibilidadPrevista, valorAsociado;
 		int numValoraciones;
 		int nElements = Sistema.getInstancia().getNumProductosRecomendados();
-		boolean usarValoraciones = parametros.contains(ParametroRecomendacion.USUARIOS_SIMILARES);
+		boolean usarValoraciones = parametros.contains(ParametroRecomendacion.VALORACIONES_PRODUCTO);
 		
 		
 		for (Stock st: inventario.values()) {

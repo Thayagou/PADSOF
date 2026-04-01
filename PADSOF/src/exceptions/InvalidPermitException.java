@@ -12,5 +12,10 @@ public class InvalidPermitException extends CustomException {
 	public String getPermiso() {
 		return permiso;
 	}
+	
+	@Override
+	public String getMessage() {
+		return super.getMessage() + "\nNecesitas el permiso: " + permiso;
+	}
 
 }

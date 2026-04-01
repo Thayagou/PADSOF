@@ -165,6 +165,42 @@ public class Tienda implements Serializable {
 		return true;
 	}
 	
+	
+	/**
+	 * Método que se utiliza para gestionar los parámetros del sistema de recomendación desde el sistema
+	 * @param gestor Instancia del gestor de la tienda
+	 * @param parametro Parámetro de recomendación
+	 * @param valor Ponderación a establecer del parámetro
+	 * @throws InvalidArgumentException Se lanza en caso de error en algún parámetro de entrada
+	 */
+	public void gestionarParametroDeSistema(Gestor gestor, ParametroRecomendacion parametro, double valor) throws InvalidArgumentException {
+		if (gestor == null) throw new InvalidArgumentException("Gestor introducido es null", "gestionar parámetros del sistema");
+	    if (parametro == null || valor < 0)throw new InvalidArgumentException("Algún parámetro de recomendación inválido", "gestionar parámetros del sistema");
+	    switch (parametro) {
+	    case CATEGORIA:
+	        	Sistema.getInstancia().setPonderacionCategoria(gestor, valor);
+	            break;
+	        case UDS_COMPRADAS:
+	        	Sistema.getInstancia().setPonderacionUdsCompra(gestor, valor);
+	        	break;
+	        case PRECIO_COMPRA:
+	        	Sistema.getInstancia().setPonderacionPrecioCompra(gestor, valor);
+	        	break;
+	        case VALORACIONES_PRODUCTO:
+	        	Sistema.getInstancia().setPonderacionValoracionesProducto(gestor, valor);
+	            break;
+	        case PRODUCTO_RECOMENDADO:
+	        	Sistema.getInstancia().setPonderacionProductoRecomendado(gestor, valor);
+	        	break;
+	        case BUSQUEDA:
+	        	Sistema.getInstancia().setPonderacionBusqueda(gestor, valor);
+	        	break;
+	        default:
+	        	throw new InvalidArgumentException("Parámetro de recomendación inválido", "gestionar parámetros del sistema");
+	    }
+	}
+
+	
 	/**
 	 * Comprueba que no exista un usuario con el nombre que se da
 	 * @param nombre Nombre que se quiere comprobar
@@ -211,8 +247,9 @@ public class Tienda implements Serializable {
 	 * @param ofrecidos Artículos que se ofrecen
 	 * @param solicitados Artículos que se piden a cambio
 	 * @return boolean, true si el intercambio se ha hecho correctamente, false en caso contrario
+	 * @throws InvalidArgumentException Se lanza en caso de error a la hora de guardar el intercambio
 	 */
-	public boolean hacerOfertaIntercambio(ClienteRegistrado cliente, ArticuloSegundaMano[] ofrecidos, ArticuloSegundaMano[] solicitados) {
+	public boolean hacerOfertaIntercambio(ClienteRegistrado cliente, ArticuloSegundaMano[] ofrecidos, ArticuloSegundaMano[] solicitados) throws InvalidArgumentException {
 		ClienteRegistrado clienteRecibe = solicitados[0].getDueno().getDueno();
 		if(clienteRecibe == null) return false;
 		
@@ -230,8 +267,9 @@ public class Tienda implements Serializable {
 	 * @param cliente Cliente que solicita la valoración
 	 * @param articulo Artículo del que se pide valoración
 	 * @return boolean, true si la solicitud se ha hecho, false en caso contrario
+	 * @throws InvalidArgumentException Se lanza en caso de error a la hora de guardar la valoración
 	 */
-	public boolean solicitarValoracion(ClienteRegistrado cliente, ArticuloSegundaMano articulo) {
+	public boolean solicitarValoracion(ClienteRegistrado cliente, ArticuloSegundaMano articulo) throws InvalidArgumentException {
 		if(cliente == null || articulo == null) return false;
 		Valoracion valoracion = new Valoracion(articulo);
 		articulo.anadirValoracion(valoracion);
