@@ -131,19 +131,26 @@ public abstract class Producto implements Serializable, Descontable {
 	}
 	
 	/**
+	 * Método para obtener las categorías del producto
+	 * @return Array de las categorías del producto
+	 */
+	public Categoria[] getCategorias() {
+		return categorias.toArray(new Categoria[0]);
+	}
+	
+	/**
 	 * Setter de las estadísticas del producto
 	 * @param stats Instancia de StatsProducto con todas sus estadísticas
 	 */
 	public void setStatsProducto(StatsProducto stats) {
 		estadisticas = stats;
 	}
-
+	
 	/**
-	 * Método para obtener las categorías del producto
-	 * @return Array de las categorías del producto
+	 * Actualiza el vector de estadísticas de un producto tras hacer una llamada a añadir/modificar categorías
 	 */
-	public Categoria[] getCategorias() {
-		return categorias.toArray(new Categoria[0]);
+	private void actualizarVector() {
+		estadisticas.actualizarVector();
 	}
 	
 	/**
@@ -200,6 +207,9 @@ public abstract class Producto implements Serializable, Descontable {
 			this.categorias.add(c);
 			c.anadirProducto(this);
 		}
+		
+		actualizarVector();
+		
 		return true;
 	}
 	
@@ -219,6 +229,8 @@ public abstract class Producto implements Serializable, Descontable {
 			}
 				
 		}
+		
+		actualizarVector();
 	}
 	
 	/**

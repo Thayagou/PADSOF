@@ -220,8 +220,6 @@ public class Almacen implements Serializable {
 		producto.setPrecio(precio);
 		producto.setImagen(imagen);
 		
-		observador.actualizarVector(producto);
-		
 		return true;
 	}
 	
@@ -535,6 +533,24 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Devuelve una lista de productos que cumplen unas ciertas condiciones de categorías y precio
+	 * @param cliente Cliente del cual se desea actualizar el vector de intereses
+	 * @param categorias Categorías a las que deben pertenecer los productos
+	 * @param precioMin Precio mínimo de los productos
+	 * @param precioMax Precio máximo de los productos
+	 * @return Producto[], un array de productos que cumplen las condiciones
+	 * @throws InvalidArgumentException 
+	 */
+	public Producto[] getProductosPorFiltros(ClienteRegistrado cliente,Categoria[] categorias, double precioMin, double precioMax, double estrellasMin)
+			throws InvalidArgumentException {
+		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
+		
+		cliente.actualizarPorBusqueda(categorias);
+		
+		return getProductosPorFiltros(categorias, precioMin, precioMax, estrellasMin);
+	}
+	
+	/**
+	 * Devuelve una lista de productos que cumplen unas ciertas condiciones de categorías y precio
 	 * @param categorias Categorías a las que deben pertenecer los productos
 	 * @param precioMin Precio mínimo de los productos
 	 * @param precioMax Precio máximo de los productos
@@ -545,7 +561,7 @@ public class Almacen implements Serializable {
 			throws InvalidArgumentException {
 		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
 		
-		List<Producto> productos = new ArrayList<>();
+		Set<Producto> productos = new HashSet<>();
 		for(Categoria c : categorias) {
 			if(c == null) continue;
 			
@@ -555,6 +571,8 @@ public class Almacen implements Serializable {
 				}
 			}
 		}
+		
+		
 		return productos.toArray(new Producto[0]);
 	}
 	

@@ -83,6 +83,18 @@ public class Main {
 		return fecha;		
 	}
 	
+	static List<Integer> getUserInputIntList(String message) {
+		showMessage(message);
+		String input = sc.nextLine();
+		String[] split = input.trim().split("\\s+");
+		List<Integer> list = new ArrayList<>();
+		for (String s: split) {
+			list.add(Integer.parseInt(s));
+		}
+		
+		return list;
+	}
+	
 	
 	static void getAction(String message) {
 		showMessage(message);
@@ -213,7 +225,7 @@ public class Main {
 				double estrellasMin = getUserInputDouble("Estrellas minimas: ");
 				
 				try{
-					tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
+					tienda.getAlmacen().getProductosPorFiltros(cliente, categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
 				}catch(IllegalArgumentException e){
 					
 				}
@@ -279,18 +291,20 @@ public class Main {
 					case "ce":
 						actionConsultarEstadisticas(gestor);
 					case "gp":
-						
+						actionGestionarProductos(gestor);
 					case "ge":
+						actionGestionarEmpleados(gestor);
 				}
 
 			} catch (InvalidArgumentException e) {
 				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
 			} catch (DoubleDiscountException e) {
 				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
+			} catch (InvalidPermitException e) {
+				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
 			}
 		}
 	}
-
 
 	/**
 	 * Realiza la acción de valorar un artículo de segunda mano
@@ -587,7 +601,80 @@ public class Main {
 			throw new InvalidArgumentException("Tipo inválido de estadística", "consultar estadísticas");
 		}
 	}
+	
+	/**
+	 * Gestiona los empleados existentes de la tienda o añade uno nuevo
+	 * @param gestor Gestor de la tienda
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan parámetros inválidos
+	 */
+	private static void actionGestionarEmpleados(Gestor gestor) throws InvalidArgumentException {
+		String tipo = getUserInputString("Introducir acción a realizar (Dar de alta nuevo empleado: da | Gestionar permisos empleados existentes: ge): ");
 		
+		switch(tipo) {
+		case "da":
+			actionDarDeAltaEmpleado(gestor);
+		case "ge":
+			actionGestionarEmpleadosExistentes(gestor);
+		}
+	}
+		
+	private static void actionDarDeAltaEmpleado(Gestor gestor) throws InvalidArgumentException {
+		String nombre = getUserInputString("Introducir nombre del nuevo usuario: ");
+		String contrasena = getUserInputString("Introducir contraseña del nuevo usuario: ");
+		Set<Permiso> permisos = getPermisosConcedidos();
+		
+		tienda.darDeAltaEmpleado(nombre, contrasena, permisos.toArray(new Permiso[0]));
+	}
+
+	/**
+	 * Gestiona los empleados existentes
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan parámetros inválidos
+	 */
+	 private static void actionGestionarEmpleadosExistentes(Gestor gestor) throws InvalidArgumentException {
+		 Empleado[] empleados = tienda.getEmpleados();
+			if (empleados.length == 0) {
+				showMessage("No hay empleados actualmente en la tienda");
+				return;
+			}
+			
+			int i = 1;
+			for (Empleado e: empleados) {
+				showMessage("  " + i + ") " + e.getNombre());
+				i++;
+			}
+			
+			int index = getUserInputInt("Introducir índice de empleado que se desea gestionar (1 - "+ empleados.length +"): ");
+			if (index < 1 || index > empleados.length) throw new InvalidArgumentException("Índice de empleado inválido", "gestionar empleados");
+			
+			String accion = getUserInputString("Introducir accción a realizar con " + empleados[index-1].getNombre() + " (Dar de baja: db | Gestionar permisos: gp): ");
+			switch (accion) {
+			case "db": 
+				tienda.darDeBajaEmpleado(empleados[index-1].getNombre());
+				break;
+				
+			case "gp":
+				Set<Permiso> permisos = getPermisosConcedidos();
+				empleados[index-1].setPermisos(permisos.toArray(new Permiso[0]));
+				break;
+			}
+	}
+	 
+	private static Set<Permiso> getPermisosConcedidos() throws InvalidArgumentException {
+		Permiso[] permisosDisp = Permiso.values();
+		int i = 1;
+		for (Permiso p: permisosDisp) {
+			showMessage("  " + i + ") " + p.name());
+		}
+		List<Integer> listaPermisos = getUserInputIntList("Introducir la lista de números de permisos que quieras conceder al empleado (1 - " + permisosDisp.length + "): ");
+		Set<Permiso> permisosConcedidos = new HashSet<>();
+		for (Integer j: listaPermisos) {
+			if (j < 1 || j > listaPermisos.size()) throw new InvalidArgumentException("Índice de permiso inválido", "gestionar empleados");
+			permisosConcedidos.add(permisosDisp[listaPermisos.get(j - 1)]);
+		}
+		
+		return permisosConcedidos;
+	}
+
 	 /**
 	  * Añade un nuevo producto por la interfaz
 	  * @throws InvalidArgumentException

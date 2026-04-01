@@ -43,12 +43,6 @@ public class Historial implements Serializable, ObservadorProducto {
 	public void guardarUsuario(ClienteRegistrado cliente) {
 		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
 	}
-
-	@Override
-	public void actualizarVector(Producto p) {
-		StatsProducto stats = statsProductos.get(p);
-		stats.actualizarVector();		
-	}
 	
 	/**
 	 * Obtiene las estadísticas de las ventas de la tienda mes a mes ordenadas 
@@ -132,8 +126,9 @@ public class Historial implements Serializable, ObservadorProducto {
 		
 		for (StockExterno stExt: productos) {
 			p = stExt.getProducto();
-			statsProductos.computeIfAbsent(p, prod->new StatsProducto(prod)).
-				actualizarUltima(stExt.getUdsEnStock(), stExt.getPrecioTotal());
+			if (statsProductos.containsKey(p) == false) statsProductos.put(p, new StatsProducto(p));
+				
+			statsProductos.get(p).actualizarUltima(stExt.getUdsEnStock(), stExt.getPrecioTotal());
 			
 			udsVendidas +=stExt.getUdsEnStock();
 
