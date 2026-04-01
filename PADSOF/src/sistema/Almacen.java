@@ -174,6 +174,14 @@ public class Almacen implements Serializable {
 	}
 	
 	/**
+	 * Método para obtener el inventario total de la tienda
+	 * @return array de Stock, el inventario total de la tienda
+	 */
+	public Stock[] getInventario() {
+		return inventario.values().toArray(new Stock[0]);
+	}
+	
+	/**
 	 * Eliminar un producto del inventario
 	 * @param producto Producto que se quiere eliminar
 	 * @return true si se elimina correctamente
