@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Empleado extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Set<Permiso> permisos;
+	private Set<Permiso> permisos = new HashSet<>();;
 	private List<Notificacion> notificaciones = new ArrayList<>();
 	private boolean deAlta;
 	
@@ -16,8 +16,7 @@ public class Empleado extends Usuario implements Serializable {
 		if(perms.length > 3) {
 			throw new IllegalArgumentException();
 		}
-		
-		this.permisos = new HashSet<>();
+
 		for(Permiso p : perms) {
 			this.permisos.add(p);
 		}

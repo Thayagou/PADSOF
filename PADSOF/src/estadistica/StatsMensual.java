@@ -6,7 +6,7 @@ import java.time.*;
 /**
  * Clase StatsMensual que nos permite almacenar las unidades y recaudación. Unidades es un término intensionalmente ambiguo para poder almacenar distintos parámetros
  */
-public class StatsMensual implements Serializable {
+public class StatsMensual implements Serializable, Comparable<StatsMensual> {
 	private static final long serialVersionUID = 1L;
 	private YearMonth mes;
 	private int unidades = 0;
@@ -17,6 +17,14 @@ public class StatsMensual implements Serializable {
 	 */
 	public StatsMensual() {
 		this.mes = YearMonth.now();
+	}
+	
+	/**
+	 * Constructor de la clase. Se inicializan a 0 las unidades y la recaudación y se asigna el mes introducido a la instancia
+	 * @param mes Mes de la estadística
+	 */
+	public StatsMensual(YearMonth mes) {
+		this.mes = mes;
 	}
 	
 	/**
@@ -43,6 +51,14 @@ public class StatsMensual implements Serializable {
 	}
 	
 	/**
+	 * Setter del mes
+	 * @param mes Mes a establecer
+	 */
+	public void setMes(YearMonth mes) {
+		this.mes = mes;
+	}
+	
+	/**
 	 * Getter de las unidades
 	 * @return las unidades
 	 */
@@ -63,6 +79,14 @@ public class StatsMensual implements Serializable {
 		return "Estadisticas mensual del " + mes + 
 				"Unidades: " + unidades + 
 				"Recaudacion=" + recaudacion;
+	}
+
+	/**
+	 * Implementación del comparador de la implementación de la interfaz comparator
+	 */
+	@Override
+	public int compareTo(StatsMensual stats) {
+		return this.mes.compareTo(stats.mes);
 	}	
 	
 }

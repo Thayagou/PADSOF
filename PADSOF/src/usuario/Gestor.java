@@ -2,16 +2,21 @@ package usuario;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.HashSet;
+import java.util.Set;
 
 import sistema.ParametroRecomendacion;
 import sistema.Sistema;
 
 public class Gestor extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private Set<Permiso> permisos  = new HashSet<>();
 
 	public Gestor(String nombre, String contrasena) 
 		throws IllegalArgumentException {
 		super(nombre, contrasena);
+		permisos.add(Permiso.SISTEMA);
+		permisos.add(Permiso.PRODUCTOS);
 	}
 
 	public boolean anadirPermisos(Empleado e, Permiso...permisos) {
@@ -31,10 +36,7 @@ public class Gestor extends Usuario implements Serializable {
 	}
 	
 	public boolean tienePermiso(Permiso p) {
-		if(p == Permiso.PRODUCTOS)
-			return true;
-		else
-			return false;
+		return permisos.contains(p);
 	}
 	
 	public boolean modificarTiempoCaducidadCarrito(Duration tiempo) {

@@ -20,4 +20,9 @@ public abstract class CustomException extends Exception {
 	public String getMetodo() {
 		return metodo;
 	}
+	
+	@Override
+	public String getMessage() {
+		return  metodo + ": " + super.getMessage();
+	}
 }
