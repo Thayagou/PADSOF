@@ -91,7 +91,6 @@ public class Main {
 	
 	/**
 	 * Carga los datos de la tienda desde un fichero
-	 * 
 	 */
 	static void cargarTienda() {
 		try {
@@ -105,7 +104,6 @@ public class Main {
 	
 	/**
 	 * Guarda los datos de la tienda en un fichero
-	 * 
 	 */
 	static void guardarTienda() {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))){
@@ -241,15 +239,19 @@ public class Main {
 				switch(action) {
 				case "v":
 					actionValorarArticulo(empleado);
+					break;
 					
 				case "c":
 					actionConfirmarIntercambio(empleado);
+					break;
 					
 				case "pd":
 					actionGestionarPedidos(empleado);
+					break;
 					
 				case "pr":
 					actionGestionarProductos(empleado);
+					break;
 				}
 			} catch (InvalidArgumentException e) {
 				showMessage("\u001B[31mError al " + e.getMessage() + "\u001B[0m");
@@ -292,7 +294,6 @@ public class Main {
 
 	/**
 	 * Realiza la acción de valorar un artículo de segunda mano
-	 * 
 	 * @param empleado Empleado que desea valorar un artículo
 	 * @throws InvalidArgumentException
 	 * @throws ArticuloSinValoracionException Se lanza en caso de que el artículo que se intenta valorar no tenga una valoración solicitada
@@ -316,7 +317,6 @@ public class Main {
 	
 	/**
 	 * Realiza la acción de confirmar un intercambio
-	 * 
 	 * @param empleado Empleado que desea confirmar un intercambio
 	 * @throws InvalidArgumentException
 	 * @throws InvalidPermit 
@@ -335,8 +335,7 @@ public class Main {
 	}
 	
 	/**
-	 * Realiza la acción de gestionar pedidos pendientes 
-	 * 
+	 * Realiza la acción de gestionar pedidos pendientes
 	 * @param empleado Empleado que desea gestionar pedidos
 	 * @throws InvalidArgumentException
 	 * @throws InvalidPermit 
@@ -356,7 +355,6 @@ public class Main {
 	
 	/**
 	 * Realiza la acción de gestionar productos 
-	 * 
 	 * @param empleado Empleado que desea gestionar productos
 	 * @throws InvalidArgumentException
 	 * @throws DoubleDiscountException
@@ -370,21 +368,27 @@ public class Main {
 		switch(action) {
 		case "a":
 			actionAnadirProducto();
+			break;
 			
 		case "c":
 			actionCargarFicheroProductos();
+			break;
 			
 		case "mp":
 			actionModificarProducto();
+			break;
 			
 		case "bp":
 			actionBorrarProducto();
+			break;
 			
 		case "mc":
 			actionModificarCategoria();
+			break;
 			
 		case "p":
 			actionCrearPack();
+			break;
 			
 		}
 	}
@@ -586,7 +590,6 @@ public class Main {
 		
 	 /**
 	  * Añade un nuevo producto por la interfaz
-	  * 
 	  * @throws InvalidArgumentException
 	  * @throws DoubleDiscountException
 	  */
@@ -605,7 +608,7 @@ public class Main {
 			}
 		}
 		switch(tipo) {
-		case 'C':
+		case 'c':
 			int numPags = getUserInputInt("Número de páginas: ");
 			String autor = getUserInputLine("Autor: ");
 			String editorial = getUserInputLine("Editorial: ");
@@ -613,13 +616,13 @@ public class Main {
 			LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 			
 			tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
-		case 'J':
+		case 'j':
 			int numJugs = getUserInputInt("Número de jugadores: ");
 			String rangoEdad = getUserInputString("Rango de edad: ");
 			TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
 			
 			tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
-		case 'F':
+		case 'f':
 			String marca = getUserInputString("Marca: ");
 			String material = getUserInputString("Material: ");
 			String dimensiones = getUserInputString("Dimensiones: ");
@@ -630,7 +633,6 @@ public class Main {
 	
 	/**
 	 * Añade varios nuevos productos por un fichero
-	 * 
 	 * @throws DoubleDiscountException
 	 * @throws InvalidArgumentException
 	 */
@@ -651,6 +653,8 @@ public class Main {
 		}
 		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");
 		char campo = getUserInputChar("Introduce el campo que desea modificar (n: nombre | d: descripción | )");
+		tienda.getAlmacen().eliminarProducto(productos[num-1]);
+		/////
 	}
 	
 	static void actionBorrarProducto() throws InvalidArgumentException {

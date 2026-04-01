@@ -350,6 +350,27 @@ public class Almacen implements Serializable {
 	}
 	
 	/**
+	 * Devuelve una lista de categorias que coinciden con el nombre insertado
+	 * @param nombre Nombre de categorias a coincidir
+	 * @return La lista de categorias en formato de array
+	 */
+	public Categoria[] getCategoriasCoincidentes(String nombre) {
+		if(nombre.isBlank()) 
+			return categorias.values().toArray(new Categoria[0]);
+		
+		List<Categoria> lista = new ArrayList<>();
+		
+		for(Categoria c: categorias.values()) {
+			if (c.isEliminada()) continue;
+			String nombreCat = c.getNombre();
+			if (nombreCat.toLowerCase().contains(nombre.toLowerCase())) 
+				lista.add(c);			
+		}
+		
+		return lista.toArray(new Categoria[0]);
+	}
+	
+	/**
 	 * Crea y añade una categoría al almacén
 	 * @param nombre Nombre de la categoría
 	 * @return true si se pudo añadir, false si ya existe una categoria con ese nombre
