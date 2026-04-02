@@ -36,6 +36,10 @@ public class Empleado extends Usuario implements Serializable {
 		deAlta = true;
 	}
 	
+	public boolean getDeAlta() {
+		return deAlta;
+	}
+	
 	public void setPermisos(Permiso[] permisos) {
 		this.permisos.removeAll(this.permisos);
 		for(Permiso p : permisos) {

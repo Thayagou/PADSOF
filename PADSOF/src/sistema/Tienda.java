@@ -72,7 +72,7 @@ public class Tienda implements Serializable {
 	 * @return array de los empleados de las tiendas
 	 */
 	public Empleado[] getEmpleados() {
-		return empleados.values().toArray(new Empleado[0]);
+		return empleados.values().stream().filter(e->e.getDeAlta()==true).toArray(Empleado[]::new);
 	}
 	
 	/**

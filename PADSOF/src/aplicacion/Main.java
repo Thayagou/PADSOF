@@ -85,6 +85,18 @@ public class Main {
 		return fecha;		
 	}
 	
+	static List<Integer> getUserInputIntList(String message) {
+		showMessage(message);
+		String input = sc.nextLine();
+		String[] split = input.trim().split("\\s+");
+		List<Integer> list = new ArrayList<>();
+		for (String s: split) {
+			list.add(Integer.parseInt(s));
+		}
+		
+		return list;
+	}
+	
 	
 	static void getAction(String message) {
 		showMessage(message);
@@ -212,7 +224,7 @@ public class Main {
 		if(empleado == null) return;
 		while(!action.equals("e")) {
 			
-			getAction("v: valorar articulo | c: confirmar intercambio | pd: gestionar pedidos | pr: gestionar productos y categorias| e: exit");
+			getAction("v: valorar articulo | c: confirmar intercambio | pd: gestionar pedidos | pr: gestionar productos y categorias | cs: cerrar sesión |e: exit");
 			try {
 				switch(action) {
 				case "v":
@@ -230,6 +242,9 @@ public class Main {
 				case "pr":
 					actionGestionarProductos(empleado);
 					break;
+				
+				case "cs":
+					return;
 				}
 			} catch (InvalidArgumentException | InvalidPermitException | ArticuloSinValoracionException | DoubleDiscountException e ) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
@@ -243,23 +258,34 @@ public class Main {
 		if(gestor == null) return;
 		while(!action.equals("e")) {
 			
-			getAction("ad: añadir descuentos | cs: configurar sistema | ce: consultar estadísticas | gp: gestionar productos y categorias | ge: gestionar empleados | e: exit");
+			getAction("ad: añadir descuentos | csi: configurar sistema | ce: consultar estadísticas | gp: gestionar productos y categorias | ge: gestionar empleados | cs: cerrar sesión | e: exit");
 			try {
 				switch(action) {
-					case "ad":
-						actionAnadirDescuento(gestor);
-						
-					case "cs":
-						actionConfigurarSistema(gestor);
-						
-					case "ce":
-						actionConsultarEstadisticas(gestor);
-					case "gp":
-						
-					case "ge":
-				}
+				case "ad":
+					actionAnadirDescuento(gestor);
+					break;
 
-			} catch (InvalidArgumentException | DoubleDiscountException e) {
+				case "csi":
+					actionConfigurarSistema(gestor);
+					break;
+
+				case "ce":
+					actionConsultarEstadisticas(gestor);
+					break;
+					
+				case "gp":
+					actionGestionarProductos(gestor);
+					break;
+
+				case "ge":
+					actionGestionarEmpleados(gestor);
+					break;
+				
+				case "cs":
+					return;
+			}
+
+		} catch (InvalidArgumentException | DoubleDiscountException | InvalidPermitException e) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
 			} catch (IllegalArgumentException e) {
 				showMessage("Error: el valor introducido no pudo ser parseado correctamente");
@@ -537,6 +563,7 @@ public class Main {
 				showMessage("  " + i+") "+ par.getKey().getNombre() + ": " + stats.getRecaudacion() + "€ ("+porcVentas+"%) " + stats.getUnidades() +" uds vendidas");
 				i++;
 			}
+			break;
 		case "u":
 			List<StatsUsuario> listaUsuarios = tienda.getHistorial().getUsuariosMasActivos();
 			i = 1;
@@ -544,6 +571,7 @@ public class Main {
 				showMessage("  " +i+") "+ stats.getCliente().getNombre() + " Total: " + stats.getGastoTotal() + "€ " + "Productos comprados: " + stats.getUdsCompradas() + "Artículos intercambiados: " + stats.getUdsIntercambiadas());
 				i++;
 			}
+			break;
 		case "v":
 			inicio = getUserInputYearMonth("Introducir mes de inicio (formato MM/yyyy): ");
 			fin = getUserInputYearMonth("Introducir mes de final (formato MM/yyyy): ");
@@ -553,6 +581,7 @@ public class Main {
 			for (StatsMensual stats: ventasPorMeses) {
 				showMessage(stats.getMes() + ") " + "Total: " + stats.getRecaudacion() + "Uds vendidas: " + stats.getUnidades());
 			}
+			break;
 			
 		case "i":
 			inicio = getUserInputYearMonth("Introducir mes de inicio (formato MM/yyyy): ");
@@ -563,9 +592,109 @@ public class Main {
 			for (StatsMensual stats: intercambiosPorMeses) {
 				showMessage(stats.getMes() + ") " + "Total: " + stats.getRecaudacion() + "€ Uds vendidas: " + stats.getUnidades());
 			}
+			break;
 		default:
 			throw new InvalidArgumentException("Tipo inválido de estadística", "consultar estadísticas");
 		}
+	}
+	
+	private static void actionGestionarEmpleados(Gestor gestor) throws InvalidArgumentException {
+		String tipo = getUserInputString("Introducir acción a realizar (Dar de alta nuevo empleado: da | Gestionar permisos empleados existentes: ge): ");
+		
+		switch(tipo) {
+		case "da":
+			actionDarDeAltaEmpleado(gestor);
+			break;
+		case "ge":
+			actionGestionarEmpleadosExistentes(gestor);
+			break;
+		}
+	}
+
+	private static void actionDarDeAltaEmpleado(Gestor gestor) throws InvalidArgumentException {
+		String nombre = getUserInputString("Introducir nombre del nuevo usuario: ");
+		String contrasena = getUserInputString("Introducir contraseña del nuevo usuario: ");
+		Set<Permiso> permisos = getPermisosSeleccionados();
+		
+		tienda.darDeAltaEmpleado(nombre, contrasena, permisos.toArray(new Permiso[0]));
+	}
+
+	/**
+	 * Gestiona los empleados existentes
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan parámetros inválidos
+	 */
+	 private static void actionGestionarEmpleadosExistentes(Gestor gestor) throws InvalidArgumentException {
+		 Empleado[] empleados = tienda.getEmpleados();
+			if (empleados.length == 0) {
+				showMessage("No hay empleados actualmente en la tienda");
+				return;
+			}
+			
+			int i = 1;
+			for (Empleado e: empleados) {
+				showMessage("  " + i + ") " + e.getNombre());
+				i++;
+			}
+			
+			int index = getUserInputInt("Introducir índice de empleado que se desea gestionar (1 - "+ empleados.length +"): ");
+			if (index < 1 || index > empleados.length) throw new InvalidArgumentException("Índice de empleado inválido", "gestionar empleados");
+			
+			String accion = getUserInputString("Introducir accción a realizar con " + empleados[index-1].getNombre() + " (Dar de baja: db | Gestionar permisos: gp): ");
+			switch (accion) {
+			case "db": 
+				tienda.darDeBajaEmpleado(empleados[index-1].getNombre());
+				break;
+				
+			case "gp":
+				actionGestionarPermisos(empleados[index-1]);
+				break;
+			}
+	}
+
+	private static void actionGestionarPermisos(Empleado empleado) throws InvalidArgumentException {
+		showMessage("Información del empleado:\n"+empleado);
+		
+		Set<Permiso> permisos;
+		String c = getUserInputString("Quiere conceder o quitar permisos? (conceder: c | quitar: q): ");
+		switch (c) {
+		case "c":
+			permisos = getPermisosSeleccionados();
+			
+			for (Permiso p: permisos) {
+				empleado.addPermiso(p);
+			}
+			break;
+		case "q": 
+			permisos = getPermisosSeleccionados();
+			
+			for (Permiso p: permisos) {
+				empleado.quitarPermiso(p);
+			}
+			break;
+		}
+	}
+	 
+	/**
+	 * Obtiene un set de permisos a partir del usuario
+	 * @return set de permisos obtenidos
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 */
+	private static Set<Permiso> getPermisosSeleccionados() throws InvalidArgumentException {
+		Permiso[] permisosDisp = Permiso.values();
+		int i = 1;
+		for (Permiso p: permisosDisp) {
+			showMessage("  " + i + ") " + p.name());
+			i++;
+		}
+		List<Integer> listaPermisos = getUserInputIntList("Introducir la lista de números de permisos (1 - " + permisosDisp.length + "): ");
+
+		Set<Permiso> permisosConcedidos = new HashSet<>();
+		for (Integer j: listaPermisos) {
+			if (j < 1 || j > permisosDisp.length) throw new InvalidArgumentException("Índice de permiso inválido", "gestionar empleados");
+			permisosConcedidos.add(permisosDisp[j-1]);
+		}
+		
+		return permisosConcedidos;
 	}
 		
 	 /**
