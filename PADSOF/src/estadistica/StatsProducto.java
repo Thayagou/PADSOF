@@ -23,6 +23,7 @@ public class StatsProducto implements Serializable {
 	 * @param producto Producto respecto al cual se calculan las estadísticas
 	 */
 	public StatsProducto(Producto producto) {
+		System.out.println("entraaa");
 		this.producto = producto;
 		double valor = Sistema.getInstancia().getPonderacionCategoria();
 		

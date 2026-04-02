@@ -4,7 +4,8 @@ import java.util.*;
 import javax.swing.ImageIcon;
 import venta.descuentos.*;
 import exceptions.*;
-import estadistica.StatsProducto;
+import estadistica.*;
+import venta.productos.caracteristicas.*;
 
 import sistema.AsignadorId;
 
@@ -151,7 +152,7 @@ public abstract class Producto implements Serializable, Descontable {
 	 * Actualiza el vector de estadísticas de un producto tras hacer una llamada a añadir/modificar categorías
 	 */
 	private void actualizarVector() {
-		estadisticas.actualizarVector();
+		if(estadisticas != null) estadisticas.actualizarVector();
 	}
 	
 	/**
@@ -346,6 +347,12 @@ public abstract class Producto implements Serializable, Descontable {
 	 * @return Descripción de las características, según el tipo
 	 */
 	public abstract String getCaracteristicas();
+	
+	/**
+	 * Método abstracto para modificar las características de un producto
+	 * @param caracteristicas Objeto que contiene las características del producto
+	 */
+	public abstract void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException;
 	
 	/**
 	 * Método para determinar si dos productos son iguales, usando la id

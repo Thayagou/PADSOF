@@ -1,10 +1,11 @@
 package venta.productos;
 
 import exceptions.*;
+import venta.productos.caracteristicas.CaracteristicasProducto;
 
 import java.io.Serializable;
 import java.util.*;
-
+import venta.productos.caracteristicas.*;
 import javax.swing.ImageIcon;
 
 /**
@@ -46,6 +47,25 @@ public class Pack extends Producto implements Serializable {
 	 */
 	public Stock[] getProductos() {
 		return productos.toArray(new Stock[0]);
+	}
+	
+	/**
+	 * Setter de los productos del pack
+	 * @param stocks Array con los nuevos Stocks del pack
+	 */
+	public void setProductos(Stock...stocks) {
+		productos.clear();
+		for(Stock st : stocks) {
+			productos.add(st);
+		}
+	}
+	
+	@Override
+	public void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException {
+		if(!(c instanceof CaracteristicasPack)) throw new InvalidArgumentException("Se esperaba CaracteristicasPack");
+		CaracteristicasPack a = (CaracteristicasPack)c;
+		if(a.stocks == null) throw new InvalidArgumentException("Array de stocks vacío");
+		this.setProductos(a.stocks);
 	}
 
 	/**
