@@ -564,19 +564,19 @@ public class Almacen implements Serializable {
 	 */
 	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin)
 			throws InvalidArgumentException {
-		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
+		if(categorias == null || precioMin < 0 || precioMax < precioMin || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
 		
 		Set<Producto> productos = new HashSet<>();
 		for(Categoria c : categorias) {
 			if(c == null) continue;
-			
+		
 			for(Producto p : c.getProductos()) {
+				if(p == null) break;
 				if(p.getPrecio() >= precioMin && p.getPrecio() <= precioMax && p.getPuntuacionMedia() >= estrellasMin) {
 					productos.add(p);
 				}
 			}
 		}
-		
 		
 		return productos.toArray(new Producto[0]);
 	}
