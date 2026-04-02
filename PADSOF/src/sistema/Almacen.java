@@ -572,12 +572,11 @@ public class Almacen implements Serializable {
 		
 			for(Producto p : c.getProductos()) {
 				if(p == null) break;
-				if(p.getPrecio() >= precioMin && p.getPrecio() <= precioMax && p.getPuntuacionMedia() >= estrellasMin) {
+				if(p.getPrecio() >= precioMin && p.getPrecio() <= precioMax && p.getPuntuacionMedia() >= estrellasMin && p.isEliminado() == false) {
 					productos.add(p);
 				}
 			}
 		}
-		
 		return productos.toArray(new Producto[0]);
 	}
 	
