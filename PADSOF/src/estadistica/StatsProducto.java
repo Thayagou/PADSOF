@@ -29,6 +29,8 @@ public class StatsProducto implements Serializable {
 		for (Categoria c: producto.getCategorias()) {
 			recomendacion.put(c, valor);
 		}
+		
+		producto.setStatsProducto(this);
 	}
 
 	public void actualizarVector() {
@@ -95,6 +97,14 @@ public class StatsProducto implements Serializable {
 	public double getNormaVector() {
 		return norma;
 	}
+
+	@Override
+	public String toString() {
+		return "StatsProducto [producto=" + producto.getNombre() + ", estadisticas=" + estadisticas + ", recomendacion="
+				+ recomendacion + ", norma=" + norma + "]";
+	}
+	
+	
 	
 	
 }

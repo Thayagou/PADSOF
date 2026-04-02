@@ -35,11 +35,19 @@ public class Historial implements Serializable, ObservadorProducto {
 		totalVenta = new StatsMensual();
 	}
 	
+	/**
+	 * Guarda un producto en el historial y le asigna estadísticas
+	 */
 	@Override
 	public void guardarProducto(Producto p) {
-		statsProductos.putIfAbsent(p, new StatsProducto(p));		
+		System.out.println("pasa");
+		if (statsProductos.containsKey(p) == false) statsProductos.put(p, new StatsProducto(p));	
 	}
 	
+	/**
+	 * Guarda un usuario en el historial y le asigna estadísticas
+	 * @param cliente Cliente de la tienda a almacenar
+	 */
 	public void guardarUsuario(ClienteRegistrado cliente) {
 		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
 	}
@@ -54,6 +62,23 @@ public class Historial implements Serializable, ObservadorProducto {
 		List<StatsMensual> estadisticas = new ArrayList<>(ventasMensuales.subMap(inicio, true, fin, true).values());
 		
 		return estadisticas;
+	}
+	
+	/**
+	 * Obtiene el valor acumulado de las ventas entre los meses establecidos
+	 * @param inicio Mes desde el cual se desea conocer las estadísticas
+	 * @param fin Mes hasta el cual se desea conocer las estadísticas
+	 * @return StatsMensual con el acumulado entre meses
+	 */
+	public StatsMensual getVentasEntreMesesAcumulado(YearMonth inicio, YearMonth fin) {
+		List<StatsMensual> lista = getVentasEntreMeses(inicio, fin);
+		
+		StatsMensual acumulado = new StatsMensual();
+		for (StatsMensual stats: lista) {
+			acumulado.incrementar(stats.getUnidades(), stats.getRecaudacion());
+		}
+		
+		return acumulado;
 	}
 	
 	/**
@@ -88,14 +113,7 @@ public class Historial implements Serializable, ObservadorProducto {
 		}
 		
 		Collections.sort(lista, (a,b)->Double.compare(a.getValue().getRecaudacion(), b.getValue().getRecaudacion()));
-		
-		StatsMensual total = new StatsMensual();
-		for (StatsMensual stats: this.getVentasEntreMeses(inicio, fin)) {
-			total.incrementar(stats.getUnidades(), stats.getRecaudacion());
-		}
-		
-		lista.addFirst(Map.entry(null, total));
-		
+				
 		return lista;
 	}
 	
@@ -318,7 +336,16 @@ public class Historial implements Serializable, ObservadorProducto {
 		Collections.sort(clientes, (a,b)->Double.compare(a.getGastoTotal(), b.getGastoTotal()));
 		
 		return clientes;		
+	}
+
+	@Override
+	public String toString() {
+		return "Historial [pedidos=" + pedidos + ", valoraciones=" + valoraciones + ", intercambios=" + intercambios
+				+ ", statsProductos=" + statsProductos + ", statsClientes=" + statsClientes + ", ventasMensuales="
+				+ ventasMensuales + ", totalVenta=" + totalVenta + ", wallapopMensuales=" + wallapopMensuales + "]";
 	}	
+	
+	
 	
 	
 	

@@ -56,6 +56,7 @@ public class Almacen implements Serializable {
 			
 		Comic comic = new Comic(nombre, descripcion, precio, image, fecha, autor, numPaginas, editorial, categorias);
 		this.inventario.put(nombre, new Stock(comic, uds));
+		System.out.println("pasaaaaaa");
 		observador.guardarProducto(comic);
 		
 		return true;

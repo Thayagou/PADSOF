@@ -43,7 +43,9 @@ public class Main {
 	
 	static String getUserInputString(String message) {
 		showMessage(message);
-		return sc.next().trim();
+		String s = sc.next().trim();
+		sc.nextLine();
+		return s;
 	}
 	
 	static String getUserInputLine(String message) {
@@ -545,7 +547,7 @@ public class Main {
 			fin = getUserInputYearMonth("Introducir mes de final (formato MM/yyyy): ");
 			
 			List<Map.Entry<Producto, StatsMensual>> listaProductos = tienda.getHistorial().getProductosMayorRecaudacion(inicio, fin);
-			StatsMensual total = listaProductos.removeFirst().getValue();
+			StatsMensual total = tienda.getHistorial().getVentasEntreMesesAcumulado(inicio, fin);
 			showMessage("Productos más vendidos entre " + inicio + " y " + fin);
 			showMessage("  Total recaudado: " + total.getRecaudacion() + "\n  Numero de unidades vendidas: " + total.getUnidades());
 			i = 1;
