@@ -169,7 +169,7 @@ public class Main {
 					return usuario;
 					
 				case "b":
-					actionBuscarPorFiltros();
+					//actionBuscarPorFiltros();
 				}
 			} catch (NotValidUserException | InvalidArgumentException e) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
@@ -186,7 +186,9 @@ public class Main {
 			try {
 				switch(action) {
 				case "b":
-					actionBuscarPorFiltros();
+					System.out.println(cliente);
+					actionBuscarPorFiltros(cliente);
+					System.out.println(cliente);
 					
 				case "r":
 					
@@ -198,6 +200,8 @@ public class Main {
 				}
 			} catch (InvalidArgumentException e) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
+			} catch (IllegalArgumentException e) {
+				showMessage("Error: el valor introducido no pudo ser parseado correctamente");
 			}
 		}
 	}
@@ -227,7 +231,9 @@ public class Main {
 				}
 			} catch (InvalidArgumentException | InvalidPermitException | ArticuloSinValoracionException | DoubleDiscountException e ) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
-			} 
+			} catch (IllegalArgumentException e) {
+				showMessage("Error: el valor introducido no pudo ser parseado correctamente");
+			}
 		}
 	}
 		
@@ -253,6 +259,8 @@ public class Main {
 
 			} catch (InvalidArgumentException | DoubleDiscountException e) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
+			} catch (IllegalArgumentException e) {
+				showMessage("Error: el valor introducido no pudo ser parseado correctamente");
 			}
 		}
 	}

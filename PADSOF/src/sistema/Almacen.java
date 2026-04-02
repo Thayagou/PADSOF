@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
 import javax.swing.ImageIcon;
-
+import venta.productos.caracteristicas.*;
 import estadistica.ObservadorProducto;
 import exceptions.*;
 import usuario.ClienteRegistrado;
@@ -36,6 +36,25 @@ public class Almacen implements Serializable {
 	}
 	
 	/**
+	 * Método para añadir un nuevo producto al almacén
+	 * @param uds Número de unidades del producto
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del producto
+	 * @param precio Precio del producto
+	 * @param image Imagen del producto
+	 * @param caracteristicas Objeto que contiene las características específicas del producto
+	 * @param categorias Array de categorías del producto
+	 * @throws InvalidArgumentException Si alguno de los argumentos es inválido
+	 * @throws DoubleDiscountException Si las categorías son incompatibles entre sí o con el producto por descuentos
+	 */
+	public void anadirProducto(int uds, String nombre, String descripcion, double precio, ImageIcon image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
+			throws InvalidArgumentException, DoubleDiscountException {
+		if(inventario.containsKey(nombre)) throw new InvalidArgumentException("Ya existe un producto con el mismo nombre en el almacén");
+		Producto p = caracteristicas.crearProducto(nombre, descripcion, precio, image, categorias);
+		this.inventario.put(nombre, new Stock(p, uds));
+	}
+	
+	/**
 	 * Crea y añade un nuevo cómic al inventario
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
@@ -47,18 +66,10 @@ public class Almacen implements Serializable {
 	 * @param numPaginas Numero de páginas del cómic
 	 * @param editorial Editorial del cómic
 	 * @param categorias Categorías a las que pertenece el producto
-	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
+	public void anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(inventario.containsKey(nombre)) 
-			return false;
-			
-		Comic comic = new Comic(nombre, descripcion, precio, image, fecha, autor, numPaginas, editorial, categorias);
-		this.inventario.put(nombre, new Stock(comic, uds));
-		observador.guardarProducto(comic);
-		
-		return true;
+		anadirProducto(uds, nombre, descripcion, precio, image, new CaracteristicasComic(fecha, autor, numPaginas, editorial), categorias);
 	}
 	
 	/**
@@ -72,17 +83,10 @@ public class Almacen implements Serializable {
 	 * @param rangoEdad Rango de edad del juego
 	 * @param tipo Tipo de juego
 	 * @param categorias Categorías a las que pertenece el producto
-	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
+	public void anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(inventario.containsKey(nombre))
-			return false;
-			
-		Juego juego = new Juego(nombre, descripcion, precio, image, numJugadores, rangoEdad, tipo, categorias);
-		this.inventario.put(nombre, new Stock(juego, uds));
-		observador.guardarProducto(juego);
-		return true;
+		anadirProducto(uds, nombre, descripcion, precio, image, new CaracteristicasJuego(numJugadores, rangoEdad, tipo), categorias);
 	}
 	
 	/**
@@ -96,17 +100,10 @@ public class Almacen implements Serializable {
 	 * @param marca Marca de la figura
 	 * @param material Material de la figura
 	 * @param categorias Categorías a las que pertenece el producto
-	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
+	public void anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(inventario.containsKey(nombre))
-			return false;
-	
-		Figura figura = new Figura(nombre, descripcion, precio, image, dimensiones, material, marca, categorias);
-		this.inventario.put(nombre, new Stock(figura, uds));
-		observador.guardarProducto(figura);
-		return true;
+		anadirProducto(uds, nombre, descripcion, precio, image, new CaracteristicasFigura(dimensiones, marca, material), categorias);
 	}
 	
 	/**
@@ -118,17 +115,10 @@ public class Almacen implements Serializable {
 	 * @param image Imagen del producto
 	 * @param productos Productos contenidos en el pack
 	 * @param categorias Categorías a las que pertenece el producto
-	 * @return boolean, true en caso de correcta inserción , false en caso contrario
 	 */
-	public boolean anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
+	public void anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(inventario.containsKey(nombre))
-			return false;
-		
-		Pack pack= new Pack(productos, nombre, descripcion, precio, image, categorias);
-		this.inventario.put(nombre, new Stock(pack, uds));
-		observador.guardarProducto(pack);
-		return true;
+		anadirProducto(uds, nombre, descripcion, precio, image, new CaracteristicasPack(productos), categorias);
 	}
 	
 	/**
@@ -203,32 +193,38 @@ public class Almacen implements Serializable {
 	 * @param precio Precio del producto
 	 * @param imagen Imagen del producto
 	 * @param categorias Nuevas categorias del producto
-	 * @return ture si se pudo modificar, false si no se pudo
 	 */
-	public boolean modificarProducto(Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) 
+	public void modificarProducto(Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, CaracteristicasProducto caracteristicas, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(producto == null || nombre == null || desc == null || categorias == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(producto == null || nombre == null || desc == null || caracteristicas == null || categorias == null)
+			throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		if(udsStock < 0) throw new InvalidArgumentException("Las unidades en stock no pueden ser negativas");
 		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo");
 		
 		
 		if(!this.inventario.containsKey(producto.getNombre()))
-			return false;
+			throw new InvalidArgumentException("El producto no existe en el almacén");
 		
+		Categoria[] categoriasViejas = producto.getCategorias();
 		producto.setCategorias(categorias);	/*Se puede lanzar una excepción aquí si las categorias son incompatibles*/
 		
-		Stock st = this.getStock(producto);
-		st.setUdsEnStock(udsStock);
-		
-		this.inventario.remove(producto.getNombre());
-		producto.setNombre(nombre);
-		this.inventario.put(nombre, st);
-		
-		producto.setDescripcion(desc);
-		producto.setPrecio(precio);
-		producto.setImagen(imagen);
-		
-		return true;
+		try {
+			producto.setCaracteristicas(caracteristicas);
+			
+			Stock st = this.getStock(producto);
+			st.setUdsEnStock(udsStock);
+			
+			this.inventario.remove(producto.getNombre());
+			producto.setNombre(nombre);
+			this.inventario.put(nombre, st);
+			
+			producto.setDescripcion(desc);
+			producto.setPrecio(precio);
+			producto.setImagen(imagen);
+		} catch(InvalidArgumentException e) {
+			producto.setCategorias(categoriasViejas);
+			throw new InvalidArgumentException("Algo falló al intentar modificar el producto por argumentos inválidos");
+		}
 	}
 	
 	/**
@@ -515,7 +511,7 @@ public class Almacen implements Serializable {
 	 * @return true cuando todos los descuentos caducados hayan sido eliminados
 	 */
 	public boolean eliminarDescuentosCaducados() {
-		descuentos.removeIf(d -> !d.isCaducado());
+		descuentos.removeIf(d -> d.isCaducado());
 		return true;
 	}
 	

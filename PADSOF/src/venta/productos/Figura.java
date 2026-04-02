@@ -3,7 +3,7 @@ package venta.productos;
 import java.io.Serializable;
 
 import javax.swing.ImageIcon;
-
+import venta.productos.caracteristicas.*;
 import exceptions.*;
 
 /**
@@ -37,6 +37,17 @@ public class Figura extends Producto implements Serializable {
 		this.dimensiones = dim;
 		this.marca = marca;
 		this.material = material;
+	}
+	
+	@Override
+	public void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException {
+		if(!(c instanceof CaracteristicasFigura)) throw new InvalidArgumentException("Se esperaba CaracteristicasFigura");
+		CaracteristicasFigura a = (CaracteristicasFigura)c;
+		if(a.dimensiones == null || a.marca == null || a.material == null)
+			throw new InvalidArgumentException("Atributos de figura inválidos");
+		this.dimensiones = a.dimensiones;
+		this.marca = a.marca;
+		this.material = a.material;
 	}
 	
 	/**

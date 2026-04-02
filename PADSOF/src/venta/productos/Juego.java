@@ -3,8 +3,9 @@ package venta.productos;
 import java.io.Serializable;
 
 import javax.swing.ImageIcon;
-
+import venta.productos.caracteristicas.*;
 import exceptions.*;
+import venta.productos.caracteristicas.CaracteristicasProducto;
 
 /**
  * Clase que define el subtipo de Producto, Juego
@@ -38,6 +39,17 @@ public class Juego extends Producto implements Serializable {
 		this.numJugadores = numJug;
 		this.rangoEdad = rango;
 		this.tipo = tipo;
+	}
+	
+	@Override
+	public void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException {
+		if(!(c instanceof CaracteristicasJuego)) throw new InvalidArgumentException("Se esperaba CaracteristicasJuego");
+		CaracteristicasJuego a = (CaracteristicasJuego)c;
+		if(a.numJugadores < 0 || a.rangoEdad == null || a.tipo == null)
+			throw new InvalidArgumentException("Atributos inválidos del juego");
+		this.numJugadores = a.numJugadores;
+		this.rangoEdad = a.rangoEdad;
+		this.tipo = a.tipo;
 	}
 	
 	/**
