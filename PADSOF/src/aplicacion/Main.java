@@ -9,13 +9,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
-import estadistica.StatsMensual;
-import estadistica.StatsUsuario;
+import estadistica.*;
 import exceptions.*;
 import sistema.*;
 import usuario.*;
 import venta.pedidos.Pedido;
 import venta.productos.*;
+import venta.productos.caracteristicas.*;
 import venta.descuentos.*;
 import wallapop.*;
 
@@ -171,7 +171,7 @@ public class Main {
 					return usuario;
 					
 				case "b":
-					//actionBuscarPorFiltros();
+					actionBuscarPorFiltros();
 				}
 			} catch (NotValidUserException | InvalidArgumentException e) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
@@ -188,17 +188,33 @@ public class Main {
 			try {
 				switch(action) {
 				case "b":
-					System.out.println(cliente);
 					actionBuscarPorFiltros(cliente);
-					System.out.println(cliente);
+					break;
 					
 				case "r":
+					actionRecomendaciones(cliente);
+					break;
 					
 				case "s":
+					actionBuscarSegundaMano(cliente);
+					break;
+					
 				case "w":
+					actionVerCartera(cliente);
+					break;
+					
 				case "c":
+					actionVerCarrito(cliente);
+					break;
+					
 				case "a":
+					actionVerCuenta(cliente);
+					break;
+					
 				case "n":
+					actionVerNotificaciones(cliente);
+					break;
+					
 				}
 			} catch (InvalidArgumentException e) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
@@ -631,8 +647,7 @@ public class Main {
 		
 		int i = 1;
 		for(Producto p : productos) {
-			showMessage(i + ") " + p);
-			i++;
+			showMessage(i++ + ") " + p);
 		}
 		int num = getUserInputInt("Introduzca el número del producto que desea modificar: ");
 		showMessage("Introduzca los nuevo datos del producto");
@@ -649,7 +664,41 @@ public class Main {
 			}
 		}
 		
-		tienda.getAlmacen().modificarProducto(productos[num-1], uds, nombrePr, desc, precio, null, categorias.toArray(new Categoria[0]));
+		CaracteristicasProducto carargs;
+		Producto producto = productos[num-1];
+		if (producto instanceof Comic) {
+			int numPags = getUserInputInt("Número de páginas: ");
+			String autor = getUserInputLine("Autor: ");
+			String editorial = getUserInputLine("Editorial: ");
+			String fecha[] = getUserInputString("Fecha(YYYY/MM/DD): ").split("/");
+			LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
+			
+			carargs = new CaracteristicasComic(fechaPublicacion, autor, numPags, editorial);
+		} else if (producto instanceof Juego) {
+			int numJugs = getUserInputInt("Número de jugadores: ");
+			String rangoEdad = getUserInputString("Rango de edad: ");
+			TipoJuego tipoJuego = TipoJuego.valueOf(getUserInputString("Tipo de juego: "));
+			
+			carargs = new CaracteristicasJuego(numJugs, rangoEdad, tipoJuego);
+		} else if (producto instanceof Figura) {
+			String marca = getUserInputString("Marca: ");
+			String material = getUserInputString("Material: ");
+			String dimensiones = getUserInputString("Dimensiones: ");
+			
+			carargs = new CaracteristicasFigura(marca, material, dimensiones);
+		} else if (producto instanceof Pack) {
+			List<Stock> prods = new ArrayList<>();
+			for(Stock s : tienda.getAlmacen().getInventario()) {
+				char inc = getUserInputChar("Incluir producto " + s.getProducto().getNombre() + "? s/n");
+				if(inc == 's') {
+					prods.add(s);
+				}
+			}
+			
+			carargs = new CaracteristicasPack(prods.toArray(new Stock[0]));
+		} else throw new IllegalArgumentException("Error con el tipo de producto");
+		
+		tienda.getAlmacen().modificarProducto(producto, uds, nombrePr, desc, precio, null, carargs, categorias.toArray(new Categoria[0]));
 	}
 	
 	static void actionBorrarProducto() throws InvalidArgumentException {
@@ -659,8 +708,7 @@ public class Main {
 		
 		int i = 1;
 		for(Producto p : productos) {
-			showMessage(i + ") " + p);
-			i++;
+			showMessage(i++ + ") " + p);
 		}
 		int num = getUserInputInt("Introduzca el número del producto que desea borrar: ");
 		tienda.getAlmacen().eliminarProducto(productos[num-1]);
@@ -679,8 +727,7 @@ public class Main {
 		
 		int i = 1;
 		for(Categoria c : categorias) {
-			showMessage(i + ") " + c + "\n");
-			i++;
+			showMessage(i++ + ") " + c + "\n");
 		}
 		int num = getUserInputInt("Introduzca el número del producto que desea modificar: ");
 		String nuevo = getUserInputString("Introduzca el nuevo nombre de la categoría: ");
@@ -740,6 +787,67 @@ public class Main {
 		int num = getUserInputInt("Introduzca el número del producto que desea añadir: ");
 		
 		cliente.getCarrito().anadirProducto(productos[num-1]);
+		
+	}
+	
+	static void actionRecomendaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
+		Producto[] productos = tienda.getAlmacen().getListaRecomendacion(cliente);
+		int i = 1;
+		for(Producto p : productos) {
+			showMessage(i++ + ") " + p);
+		}
+		
+		char dec = getUserInputChar("¿Desea añadir al carrito alguno de estos productos? (Pulsar 's' si lo desea)");
+		if(dec != 's') return;
+		
+		int num = getUserInputInt("Introduzca el número del producto que desea añadir: ");
+		cliente.getCarrito().anadirProducto(productos[num-1]);
+	}
+	
+	static void actionBuscarSegundaMano(ClienteRegistrado cliente) {
+		
+	}
+	
+	static void actionVerCartera(ClienteRegistrado cliente) {
+		
+	}
+	
+	static void actionVerCarrito(ClienteRegistrado cliente) throws InvalidArgumentException {
+		Stock[] productos= cliente.getCarrito().getContenido();
+		int i = 1;
+		for(Stock p : productos) {
+			showMessage(i++ + ") " + p);
+		}
+		
+		getAction("¿Qué desea hacer? (p: pagar | c: cancelar carrito | q: quitar producto | v: volver)");
+		switch(action) {
+		case "p":
+			String numTarjeta = getUserInputString("Introduzca su número de tarjeta(16 dígitos): ");
+			boolean st = tienda.pagarCarritoDe(cliente, numTarjeta);
+			if (st) {
+				showMessage("Su compra se ha efectuado correctamente");
+			} else {
+				showMessage("Ha ocurrido un error al intentar realizar la compra");
+			}
+			break;
+			
+		case "c":
+			tienda.cancelarCarritoDe(cliente);
+			break;
+			
+		case "q":
+			int num = getUserInputInt("Introduzca el número deproducto que desea quitar: ");
+			tienda.quitarDeCarritoDe(cliente, productos[num-1].getProducto());
+			break;
+			
+		}
+	}
+	
+	static void actionVerCuenta(ClienteRegistrado cliente) {
+		
+	}
+	
+	static void actionVerNotificaciones(ClienteRegistrado cliente) {
 		
 	}
 }

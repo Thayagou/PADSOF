@@ -14,6 +14,6 @@ public class NotValidUserException extends CustomException{
 	}
 	
 	public String getMessage() {
-		return super.getMessage() + " Con el nombre de usuario " + nombre;
+		return super.getMessage() + " con el nombre de usuario " + nombre;
 	}
 }

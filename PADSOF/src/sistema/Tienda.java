@@ -288,13 +288,9 @@ public class Tienda implements Serializable {
 	 * @return true si se pudo añadir el producto, false si no
 	 * @throws InvalidArgumentException
 	 */
-	public boolean anadirACarritoDe(String usrName, Producto producto) throws InvalidArgumentException {
-		if(usrName == null || producto == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
-		
-		ClienteRegistrado cliente = getCliente(usrName);
+	public boolean anadirACarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException {
+		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		Stock st = almacen.getStock(producto);
-		if(cliente == null || producto == null || st == null) return false;
-		
 		if(!st.disponible()) return false;
 		
 		cliente.getCarrito().anadirProducto(producto);
@@ -309,14 +305,11 @@ public class Tienda implements Serializable {
 	 * @return true si se pudo quitar el producto, false si no
 	 * @throws InvalidArgumentException
 	 */
-	public boolean quitarDeCarritoDe(String usrName, Producto producto) throws InvalidArgumentException {
-		if(usrName == null || producto == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
-		ClienteRegistrado cliente = getCliente(usrName);
-		Stock st = almacen.getStock(producto);
-		if(cliente == null || producto == null || st == null) return false;
+	public boolean quitarDeCarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException {
+		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		
 		cliente.getCarrito().quitarProducto(producto);
-		st.incrementarStock();
+		almacen.getStock(producto).incrementarStock();
 		return true;
 	}
 	
@@ -326,10 +319,7 @@ public class Tienda implements Serializable {
 	 * @return true si se pudo cancelar el carrito, false si no existe el cliente
 	 * @throws InvalidArgumentException
 	 */
-	public boolean cancelarCarritoDe(String usrName) throws InvalidArgumentException {
-		if(usrName == null) throw new InvalidArgumentException("No se puede dejar el nombre de usuario vacío");
-		
-		ClienteRegistrado cliente = getCliente(usrName);
+	public boolean cancelarCarritoDe(ClienteRegistrado cliente) throws InvalidArgumentException {
 		if(cliente == null) return false;
 		
 		for(StockExterno st : cliente.getCarrito().getItems()) {
@@ -346,8 +336,7 @@ public class Tienda implements Serializable {
 	 * @param numTarjeta Número de tarjeta que se introduce para pagar
 	 * @return true si se pudo realizar el pago, false si no
 	 */
-	public boolean pagarCarritoDe(String usrName, String numTarjeta) throws InvalidArgumentException {
-		ClienteRegistrado cliente = getCliente(usrName);
+	public boolean pagarCarritoDe(ClienteRegistrado cliente, String numTarjeta) throws InvalidArgumentException {
 		if(cliente == null) return false;
 		Carrito carrito = cliente.getCarrito();
 		
