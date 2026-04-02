@@ -6,6 +6,7 @@ import java.time.*;
 import javax.swing.ImageIcon;
 
 import exceptions.*;
+import venta.productos.caracteristicas.*;
 
 /**
  * Clase que define el subtipo de Producto, Comic
@@ -42,6 +43,20 @@ public class Comic extends Producto implements Serializable {
 		this.autor = autor;
 		this.numPaginas = pags;
 		this.editorial = editorial;
+	}
+	
+	@Override
+	public void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException {
+		if(!(c instanceof CaracteristicasComic)) throw new InvalidArgumentException("Se esperaban CaracteristicasComic");
+		CaracteristicasComic carac = (CaracteristicasComic)c;
+		
+		if(carac.fechaPublicacion == null || carac.autor == null || carac.numPaginas < 0 || carac.editorial == null)
+			throw new InvalidArgumentException("Características con atributos inválidos");
+		
+		this.fechaPublicacion = carac.fechaPublicacion;
+		this.autor = carac.autor;
+		this.numPaginas = carac.numPaginas;
+		this.editorial = carac.editorial;
 	}
 	
 	/**
