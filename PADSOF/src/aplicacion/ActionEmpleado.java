@@ -11,12 +11,16 @@ import wallapop.*;
 
 public class ActionEmpleado {
 	
+	/**
+	 * Muestra el menú principal desde el que un empleado puede realizar sus tareas
+	 * @param empleado Empleado que ha iniciado sesión
+	 */
 	static void menuEmpleado(Empleado empleado) {
 		if(empleado == null) return;
 		while(!Main.action.equals("e")) {
 			
-			Main.getAction("v: valorar articulo | c: confirmar intercambio | pd: gestionar pedidos | pr: gestionar productos y categorias | cs: cerrar sesión |e: exit");
 			try {
+				Main.getAction("v: valorar articulo | c: confirmar intercambio | pd: gestionar pedidos | pr: gestionar productos y categorias | cs: cerrar sesión | e: exit");
 				switch(Main.action) {
 				case "v":
 					actionValorarArticulo(empleado);
@@ -36,56 +40,59 @@ public class ActionEmpleado {
 				
 				case "cs":
 					return;
+				default:
+					throw new InvalidArgumentException("Introduzca un comando válido", "menu empleado");
 				}
-			} catch (InvalidArgumentException | InvalidPermitException | ArticuloSinValoracionException | DoubleDiscountException e ) {
+			} catch (CustomException e ) {
 				Main.showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
-			} catch (IllegalArgumentException e) {
-				Main.showMessage("Error: el valor introducido no pudo ser parseado correctamente");
+			} catch (RuntimeException e) {
+				e.printStackTrace();
 			}
 		}
 	}
-	
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// MÉTODOS ACCIONES DE EMPLEADO
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
 	 * Realiza la acción de valorar un artículo de segunda mano
 	 * @param empleado Empleado que desea valorar un artículo
 	 * @throws InvalidArgumentException
 	 * @throws ArticuloSinValoracionException Se lanza en caso de que el artículo que se intenta valorar no tenga una valoración solicitada
+	 * @throws InvalidUserInputException 
 	 * @throws InvalidPermit 
 	 */
-	static void actionValorarArticulo(Empleado empleado) throws InvalidArgumentException, InvalidPermitException, ArticuloSinValoracionException {
+	static void actionValorarArticulo(Empleado empleado) throws InvalidArgumentException, InvalidPermitException, ArticuloSinValoracionException, InvalidUserInputException {
 		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "valorar artículo", "Intercambios");
 		int i = 1;
 		Valoracion[] valoraciones = Main.tienda.getHistorial().getValoracionesPendientes();
 		if (valoraciones.length < 1) throw new InvalidArgumentException("No existen valoraciones pendientes en este momento", "valorar articulo");
 		for(Valoracion v : valoraciones) {
-			Main.showMessage(i + ") " + v);
-			i++;
+			Main.showMessage(i++ + ") " + v);
 		}
 		int num = Main.getUserInputInt("Escriba el número del artículo que desea valorar: ");
 		double precio = Main.getUserInputDouble("Precio estimado: ");
-		EstadoFisicoArticulo est = EstadoFisicoArticulo.valueOf(Main.getUserInputString("Estado del artículo: "));
+		i = 1;
+		Main.showMessage("Estado del artículo: ");
+		for(EstadoFisicoArticulo e: EstadoFisicoArticulo.values()) {
+			Main.showMessage(i++ + ") " + e.name());
+		}
+		int num2 = Main.getUserInputInt("Introduzca el número del estado que desea asignarle: ");
 		
-		Main.tienda.getHistorial().valorarArticulo(empleado, valoraciones[num-1].getArticulo(), precio, est);
+		Main.tienda.getHistorial().valorarArticulo(empleado, valoraciones[num-1].getArticulo(), precio, EstadoFisicoArticulo.values()[num2-1]);
 	}
 	
 	/**
 	 * Realiza la acción de confirmar un intercambio
 	 * @param empleado Empleado que desea confirmar un intercambio
 	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 * @throws InvalidPermit 
 	 */
-	static void actionConfirmarIntercambio(Empleado empleado) throws InvalidArgumentException, InvalidPermitException {
+	static void actionConfirmarIntercambio(Empleado empleado) throws InvalidArgumentException, InvalidPermitException, InvalidUserInputException {
 		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "validar intercambio", "Intercambios");
 		int i = 1;
 		Intercambio[] intercambios = Main.tienda.getHistorial().getIntercambiosPendientes();
 		if(intercambios.length < 1) throw new InvalidArgumentException("No existen intercambios pendientes en este momento", "confirmar intercambio");
 		for (Intercambio t : intercambios) {
-			Main.showMessage(i + ") " + t);
-			i++;
+			Main.showMessage(i++ + ") " + t);
 		}
 		int num = Main.getUserInputInt("Escriba el número del intercambio que desea confirmar: ");
 		Main.tienda.getHistorial().validarIntercambio(empleado, intercambios[num-1]);
@@ -95,29 +102,30 @@ public class ActionEmpleado {
 	 * Realiza la acción de gestionar pedidos pendientes
 	 * @param empleado Empleado que desea gestionar pedidos
 	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 * @throws InvalidPermit 
 	 */
-	static void actionGestionarPedidos(Empleado empleado) throws InvalidArgumentException, InvalidPermitException {
+	static void actionGestionarPedidos(Empleado empleado) throws InvalidArgumentException, InvalidPermitException, InvalidUserInputException {
 		if(!empleado.tienePermiso(Permiso.PEDIDOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", "Pedidos");
 		int i = 1;
 		Pedido[] pedidos= Main.tienda.getHistorial().getPedidosPendientes();
 		if(pedidos.length < 1) throw new InvalidArgumentException("No existen pedidos pendientes en este momento", "gestionar pedidos");
 		for(Pedido p : pedidos) {
-			Main.showMessage(i + ") " + p);
-			i++;
+			Main.showMessage(i++ + ") " + p);
 		}
 		int num = Main.getUserInputInt("Escriba el número del pedido que desea avanzar: ");
 		Main.tienda.getHistorial().avanzarEstadoPedido(empleado, pedidos[num-1]);
 	}
 	
 	/**
-	 * Realiza la acción de gestionar productos 
-	 * @param empleado Empleado que desea gestionar productos
+	 * Permite a un usuario gestionar productos
+	 * @param usuario Usuario que desea gestionar productos
 	 * @throws InvalidArgumentException
 	 * @throws DoubleDiscountException
+	 * @throws InvalidUserInputException 
 	 * @throws InvalidPermit 
 	 */
-	static void actionGestionarProductos(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+	static void actionGestionarProductos(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException, InvalidUserInputException {
 		if(!usuario.tienePermiso(Permiso.PRODUCTOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar productos", "Productos");
 		
 		Main.getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | cc: crear categorias | mc: modificar categorias | p: crear packs | e: exit");
@@ -153,17 +161,14 @@ public class ActionEmpleado {
 			
 		}
 	}
-	
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// MÉTODOS GESTIONAR PRODUCTO
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 	 /**
 	  * Añade un nuevo producto por la interfaz
 	  * @throws InvalidArgumentException
 	  * @throws DoubleDiscountException
+	 * @throws InvalidUserInputException 
 	  */
-	static void actionAnadirProducto() throws InvalidArgumentException, DoubleDiscountException {
+	static void actionAnadirProducto() throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException {
 		char tipo = Main.getUserInputChar("Tipo de producto (c: comic | j: juego | f: figura): ");
 		String nombre = Main.getUserInputLine("Nombre: ");
 		String desc = Main.getUserInputLine("Descripción: ");
@@ -190,9 +195,14 @@ public class ActionEmpleado {
 		case 'j':
 			int numJugs = Main.getUserInputInt("Número de jugadores: ");
 			String rangoEdad = Main.getUserInputString("Rango de edad: ");
-			TipoJuego tipoJuego = TipoJuego.valueOf(Main.getUserInputString("Tipo de juego: "));
+			int i = 1;
+			Main.showMessage("Tipos de juego: ");
+			for(TipoJuego e: TipoJuego.values()) {
+				Main.showMessage(i++ + ") " + e.name());
+			}
+			int num = Main.getUserInputInt("Introduzca el número del tipo de juego: ");
 			
-			Main.tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+			Main.tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, TipoJuego.values()[num-1], categorias.toArray(new Categoria[0]));
 			break;
 		case 'f':
 			String marca = Main.getUserInputString("Marca: ");
@@ -201,6 +211,8 @@ public class ActionEmpleado {
 			
 			Main.tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
 			break;
+		default:
+			throw new InvalidArgumentException("Debe introducir un tipo válido de producto", "añadir producto");
 		}
 	}
 	
@@ -208,13 +220,20 @@ public class ActionEmpleado {
 	 * Añade varios nuevos productos por un fichero
 	 * @throws DoubleDiscountException
 	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	static void actionCargarFicheroProductos() throws DoubleDiscountException, InvalidArgumentException {
+	static void actionCargarFicheroProductos() throws DoubleDiscountException, InvalidArgumentException, InvalidUserInputException {
 		String fichero = Main.getUserInputString("Nombre del archivo: ");
 		Main.tienda.getAlmacen().anadirProductosDeFichero(fichero);
 	}
 	
-	static void actionModificarProducto() throws InvalidArgumentException, DoubleDiscountException {
+	/**
+	 * Modifica un producto a través de la interfaz
+	 * @throws InvalidArgumentException
+	 * @throws DoubleDiscountException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionModificarProducto() throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException {
 		String nombre = Main.getUserInputLine("Introduzca el nombre del producto que quiere modificar: " );
 		Producto[] productos = Main.tienda.getAlmacen().getProductosCoincidentes(nombre);
 		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "modificar producto");
@@ -251,9 +270,13 @@ public class ActionEmpleado {
 		} else if (producto instanceof Juego) {
 			int numJugs = Main.getUserInputInt("Número de jugadores: ");
 			String rangoEdad = Main.getUserInputString("Rango de edad: ");
-			TipoJuego tipoJuego = TipoJuego.valueOf(Main.getUserInputString("Tipo de juego: "));
+			Main.showMessage("Tipos de juego: ");
+			for(TipoJuego e: TipoJuego.values()) {
+				Main.showMessage(i++ + ") " + e.name());
+			}
+			int num2 = Main.getUserInputInt("Introduzca el número del tipo de juego: ");
 			
-			carargs = new CaracteristicasJuego(numJugs, rangoEdad, tipoJuego);
+			carargs = new CaracteristicasJuego(numJugs, rangoEdad, TipoJuego.values()[num2-1]);
 		} else if (producto instanceof Figura) {
 			String marca = Main.getUserInputString("Marca: ");
 			String material = Main.getUserInputString("Material: ");
@@ -275,7 +298,12 @@ public class ActionEmpleado {
 		Main.tienda.getAlmacen().modificarProducto(producto, uds, nombrePr, desc, precio, null, carargs, categorias.toArray(new Categoria[0]));
 	}
 	
-	static void actionBorrarProducto() throws InvalidArgumentException {
+	/**
+	 * Borra un producto de la tienda
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionBorrarProducto() throws InvalidArgumentException, InvalidUserInputException {
 		String nombre = Main.getUserInputString("Introduzca el nombre del producto que quiere borrar: ");
 		Producto[] productos = Main.tienda.getAlmacen().getProductosCoincidentes(nombre);
 		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "borrar producto");
@@ -288,12 +316,22 @@ public class ActionEmpleado {
 		Main.tienda.getAlmacen().eliminarProducto(productos[num-1]);
 	}
 	
-	static void actionCrearCategoria() throws InvalidArgumentException {
+	/**
+	 * Crea una nueva categoría
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionCrearCategoria() throws InvalidArgumentException, InvalidUserInputException {
 		String nuevo = Main.getUserInputString("Introduzca el nombre de la nueva categoría: ");
 		Main.tienda.getAlmacen().anadirCategoria(nuevo);
 	}
 	
-	static void actionModificarCategoria() throws InvalidArgumentException {
+	/**
+	 * Modifica el nombre de una categoría
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionModificarCategoria() throws InvalidArgumentException, InvalidUserInputException {
 		String nombre = Main.getUserInputLine("Introduzca el nombre de la categoría que desea modificar: ");
 		Categoria[] categorias = Main.tienda.getAlmacen().getCategoriasCoincidentes(nombre);
 		
@@ -308,7 +346,13 @@ public class ActionEmpleado {
 		Main.tienda.getAlmacen().modificarCategoria(categorias[num-1], nuevo);
 	}
 	
-	static void actionCrearPack() throws InvalidArgumentException, DoubleDiscountException {
+	/**
+	 * Crea un nuevo pack
+	 * @throws InvalidArgumentException
+	 * @throws DoubleDiscountException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionCrearPack() throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException {
 		List<Stock> productos = new ArrayList<>();
 		for(Stock s : Main.tienda.getAlmacen().getInventario()) {
 			char inc = Main.getUserInputChar("Incluir producto " + s.getProducto().getNombre() + "? s/n");
@@ -316,7 +360,6 @@ public class ActionEmpleado {
 				productos.add(s);
 			}
 		}
-		
 		String nombre = Main.getUserInputLine("Nombre: ");
 		String desc = Main.getUserInputLine("Descripción: ");
 		double precio = Main.getUserInputDouble("Precio: ");

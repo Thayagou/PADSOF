@@ -25,74 +25,113 @@ public class Main {
 		System.out.println("\n"+message);
 	}
 	
-	protected static char getUserInputChar(String message) {
+	protected static char getUserInputChar(String message) throws InvalidUserInputException {
 		showMessage(message);
-		char c = sc.next().charAt(0);
-		sc.nextLine();
-		return c;
-	}
-	
-	protected static String getUserInputString(String message) {
-		showMessage(message);
-		String s = sc.next().trim();
-		sc.nextLine();
-		return s;
-	}
-	
-	protected static String getUserInputLine(String message) {
-		showMessage(message);
-		return sc.nextLine().trim();
-	}
-	
-	protected static int getUserInputInt(String message) {
-		showMessage(message);
-		int n = sc.nextInt();
-		sc.nextLine();
-		return n;
-	}
-	
-	protected static double getUserInputDouble(String message) {
-		showMessage(message);
-		double r = sc.nextDouble();
-		sc.nextLine();
-		return r;
-	}
-	
-	protected static LocalDateTime getUserInputLocalDateTime(String message) {
-		showMessage(message);
-		String input = sc.nextLine();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-		LocalDateTime fecha = LocalDateTime.parse(input, formatter);
-		
-		return fecha;
-	}
-	
-	protected static YearMonth getUserInputYearMonth(String message) {
-		showMessage(message);
-		String input = sc.nextLine();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
-		YearMonth fecha = YearMonth.parse(input, formatter);
-		
-		return fecha;		
-	}
-	
-	protected static List<Integer> getUserInputIntList(String message) {
-		showMessage(message);
-		String input = sc.nextLine();
-		String[] split = input.trim().split("\\s+");
-		List<Integer> list = new ArrayList<>();
-		for (String s: split) {
-			list.add(Integer.parseInt(s));
+		try {
+			char c = sc.next().charAt(0);
+			return c;
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser una letra", "lectura");
+		} finally {
+			sc.nextLine();
 		}
-		
-		return list;
+	}
+	
+	protected static String getUserInputString(String message) throws InvalidUserInputException {
+		showMessage(message);
+		try {
+			String s = sc.next().trim();
+			return s;
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser una palabra", "lectura");
+		} finally {
+			sc.nextLine();
+		}
+	}
+	
+	protected static String getUserInputLine(String message) throws InvalidUserInputException {
+		showMessage(message);
+		try {
+			return sc.nextLine().trim();
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser una frase", "lectura");
+		}
+	}
+	
+	protected static int getUserInputInt(String message) throws InvalidUserInputException {
+		showMessage(message);
+		try {
+			int n = sc.nextInt();
+			return n;
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser un int", "lectura");
+		} finally {
+			sc.nextLine();
+		}
+	}
+	
+	protected static double getUserInputDouble(String message) throws InvalidUserInputException {
+		showMessage(message);
+		try {
+			double r = sc.nextDouble();
+			return r;
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser un double", "lectura");
+		} finally {
+			sc.nextLine();
+		}
+	}
+	
+	protected static LocalDateTime getUserInputLocalDateTime(String message) throws InvalidUserInputException {
+		showMessage(message);
+		try {
+			String input = sc.nextLine();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+			LocalDateTime fecha = LocalDateTime.parse(input, formatter);
+			return fecha;
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser una fecha", "lectura");
+		}
+	}
+	
+	protected static YearMonth getUserInputYearMonth(String message) throws InvalidUserInputException {
+		showMessage(message);
+		try {
+			String input = sc.nextLine();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+			YearMonth fecha = YearMonth.parse(input, formatter);
+			return fecha;
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser una fecha", "lectura");
+		}
+	}
+	
+	protected static List<Integer> getUserInputIntList(String message) throws InvalidUserInputException {
+		showMessage(message);
+		try {
+			String input = sc.nextLine();
+			String[] split = input.trim().split("\\s+");
+			List<Integer> list = new ArrayList<>();
+			for (String s: split) {
+				list.add(Integer.parseInt(s));
+			}
+			return list;
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser una lista de números", "lectura");
+		}
 	}
 	
 	
-	protected static void getAction(String message) {
+	protected static void getAction(String message) throws InvalidUserInputException {
 		showMessage(message);
-		action = sc.next().trim();
-		sc.nextLine();
+		try {
+			action = sc.next().trim();
+
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser un comando", "lectura");
+		} finally {
+			sc.nextLine();
+		}
 	}
 	
 	/**
@@ -152,9 +191,8 @@ public class Main {
 	
 	static Usuario menuInicio() {
 		while(!action.equals("e")) {
-			
-			getAction("r: registrarse | i: iniciar sesión | b: buscar | e: exit ");
 			try {
+				getAction("r: registrarse | i: iniciar sesión | b: buscar | e: exit ");
 
 				switch(action) {
 				case "r":
@@ -177,14 +215,14 @@ public class Main {
 				case "b":
 					actionBuscarPorFiltros();
 				}
-			} catch (NotValidUserException | InvalidArgumentException e) {
+			} catch (NotValidUserException | InvalidArgumentException | InvalidUserInputException e) {
 				showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
 			}
 		}
 		return null;
 	}
 	
-	static Producto[] actionBuscarPorFiltros() throws InvalidArgumentException {
+	static Producto[] actionBuscarPorFiltros() throws InvalidArgumentException, InvalidUserInputException {
 		List<Categoria> categorias = new ArrayList<Categoria>();
 		for(Categoria cat : tienda.getAlmacen().getCategorias()) {
 			getAction("Incluir categoria " + cat.getNombre() + "? s/n");
