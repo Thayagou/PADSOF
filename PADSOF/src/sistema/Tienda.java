@@ -3,8 +3,7 @@ package sistema;
 import java.io.Serializable;
 import java.util.*;
 
-import es.uam.eps.padsof.telecard.OrderRejectedException;
-import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+import es.uam.eps.padsof.telecard.*;
 import estadistica.Historial;
 import usuario.*;
 import venta.productos.*;
@@ -304,10 +303,10 @@ public class Tienda implements Serializable {
 		return true;
 	}
 	
-	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, Categoria[] categorias, String interesadoEn) {
+	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, Categoria[] categorias, String interesadoEn) throws InvalidArgumentException {
 		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, categorias, interesadoEn);
 		cartera.addArticulo(nuevo);
-		this.getAlmacen().anadirArticuloSegundaMano(nuevo);
+		return this.getAlmacen().anadirArticuloSegundaMano(nuevo);
 	}
 	
 	/**
