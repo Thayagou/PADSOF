@@ -117,7 +117,6 @@ public class Tienda implements Serializable {
 	 * @return Usuario que está registrado con ese nombre de usuario
 	 */
 	public Usuario iniciarSesion(String nombre, String contrasena) throws InvalidArgumentException, NotValidUserException {
-		System.out.println(gestor);
 		if(gestor.getNombre().equals(nombre)) {
 			if(gestor.getContrasena().equals(contrasena))
 				return gestor;
@@ -219,13 +218,27 @@ public class Tienda implements Serializable {
 	 * @param cliente Cliente que acepta el intercambio
 	 * @param intercambio Intercambio que es aceptado
 	 * @return boolean, true si el intercambio se ha aceptado correctamente, false en caso contrario
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean aceptarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) {
+	public boolean aceptarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) throws InvalidArgumentException {
 		cliente.getCartera().aceptarIntercambio(intercambio);
 		for(Empleado e : this.getEmpleados()) {
 			e.enviarNotificacion("Un nuevo intercambio ha sido aceptado", TipoNotificacion.INTERCAMBIO);
 		}
-		cliente.enviarNotificacion("Su oferta de intercambio ha sido aceptada", TipoNotificacion.INTERCAMBIO);
+		intercambio.getEmisor().getDueno().enviarNotificacion("Su oferta de intercambio ha sido aceptada", TipoNotificacion.INTERCAMBIO);
+		return true;
+	}
+	
+	/**
+	 * Cancela un intercambio pendiente
+	 * @param cliente El cliente que ha hecho la oferta y que la cancela
+	 * @param intercambio Intercambio que es cancelado
+	 * @return boolean, true si el intercambio se ha aceptado correctamente, false en caso contrario
+	 * @throws InvalidArgumentException 
+	 */
+	public boolean cancelarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) throws InvalidArgumentException {
+		cliente.getCartera().cancelarIntercambio(intercambio);
+		intercambio.getReceptor().getDueno().enviarNotificacion("Una de sus ofertas pendientes ha sido cancelada", TipoNotificacion.INTERCAMBIO);
 		return true;
 	}
 	
@@ -234,10 +247,11 @@ public class Tienda implements Serializable {
 	 * @param cliente Cliente que acepta el intercambio
 	 * @param intercambio Intercambio que es rechazado
 	 * @return boolean, true si el intercambio se ha rechazado correctamente, false en caso contrario
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean rechazarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) {
+	public boolean rechazarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) throws InvalidArgumentException {
 		cliente.getCartera().rechazarIntercambio(intercambio);
-		cliente.enviarNotificacion("Su oferta de intercambio ha sido rechazada", TipoNotificacion.INTERCAMBIO);
+		intercambio.getEmisor().getDueno().enviarNotificacion("Su oferta de intercambio ha sido rechazada", TipoNotificacion.INTERCAMBIO);
 		return true;
 	}
 	
@@ -269,12 +283,20 @@ public class Tienda implements Serializable {
 	 * @return boolean, true si la solicitud se ha hecho, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza en caso de error a la hora de guardar la valoración
 	 */
-	public boolean solicitarValoracion(ClienteRegistrado cliente, ArticuloSegundaMano articulo) throws InvalidArgumentException {
-		if(cliente == null || articulo == null) return false;
+	public boolean solicitarValoracion(ClienteRegistrado cliente, ArticuloSegundaMano articulo, String numTarjeta) throws InvalidArgumentException {
+		if(cliente == null || articulo == null || numTarjeta == null) return false;
+		if(articulo.getValoracion()!= null) throw new InvalidArgumentException("Este artículo ya ha sido valorado", "solicitar valoración");
+		
+		try {
+			TeleChargeAndPaySystem.charge(numTarjeta, "Pago de valoración de artículo de segunda mano.", Sistema.getInstancia().getPrecioValoracion());
+		} catch (OrderRejectedException e) {
+			e.printStackTrace();
+			return false;
+		} 
+		
 		Valoracion valoracion = new Valoracion(articulo);
 		articulo.anadirValoracion(valoracion);
 		historial.guardarValoracion(valoracion);
-		
 		for(Empleado e : this.getEmpleados()) {
 			e.enviarNotificacion("Se ha hecho una nueva solicitud de valoración de un artículo de segunda mano", TipoNotificacion.VALORACION);
 		}

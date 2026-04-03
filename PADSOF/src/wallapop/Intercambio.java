@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.time.*;
 import java.util.*;
 
+import exceptions.InvalidArgumentException;
 import sistema.AsignadorId;
-import usuario.ClienteRegistrado;
 import usuario.Empleado;
 
 public class Intercambio implements Serializable {
@@ -90,33 +90,28 @@ public class Intercambio implements Serializable {
 		return true;
 	}
 	
-	public boolean aceptarIntercambio (Cartera carteraCliente) {
-		if (estado.equals(EstadoIntercambio.OFERTADO) == false) return false;
+	public boolean aceptarIntercambio () throws InvalidArgumentException {
+		if (estado.equals(EstadoIntercambio.OFERTADO) == false) throw new InvalidArgumentException("Este intercambio no esta en estado ofertado", "aceptar intercambio");
 		
-		if (this.receptor.equals(carteraCliente)) estado = EstadoIntercambio.ACEPTADO;
-		else return false;
-		
+		estado = EstadoIntercambio.ACEPTADO;
 		for (ArticuloSegundaMano art: solicitados) art.reservar();
-		
 		return true;
 	}
 	
-	public boolean rechazarIntercambio (Cartera carteraCliente) {
-		if (this.receptor.equals(carteraCliente) == false) return false;
+	public boolean rechazarIntercambio () throws InvalidArgumentException {
+		if (estado.equals(EstadoIntercambio.OFERTADO) == false) throw new InvalidArgumentException("Este intercambio no esta en estado ofertado", "aceptar intercambio");
 		
 		this.liberarOfertado();
 		estado = EstadoIntercambio.RECHAZADO;
-		
 		return true;
 	}
 	
 	
-	public boolean cancelarIntercambio(Cartera carteraCliente) {
-		if (this.emisor.equals(carteraCliente) == false) return false;
+	public boolean cancelarIntercambio() throws InvalidArgumentException {
+		if (estado.equals(EstadoIntercambio.OFERTADO) == false) throw new InvalidArgumentException("Este intercambio no esta en estado ofertado", "aceptar intercambio");
 		
 		this.liberarOfertado();
 		estado = EstadoIntercambio.CANCELADO;
-		
 		return true;
 	}
 	
@@ -129,7 +124,6 @@ public class Intercambio implements Serializable {
 	
 	private boolean liberarOfertado() {
 		if (estado.equals(EstadoIntercambio.OFERTADO) == false) return false;
-		
 		for (ArticuloSegundaMano art: ofrecidos) art.disponibilizar();
 		
 		return true;
@@ -149,7 +143,8 @@ public class Intercambio implements Serializable {
 
 	@Override
 	public String toString() {
-		return "\nCliente emisor: " + emisor.getDueno().getNombre() + 
+		return "\nId: " + id +
+				"\nCliente emisor: " + emisor.getDueno().getNombre() + 
 				"\nArticulos ofrecidos: " + ofrecidos + 
 				"\nCliente receptor: " + receptor.getDueno().getNombre() +
 				"\nArticulso solicitados: " + solicitados +

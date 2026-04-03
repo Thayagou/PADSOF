@@ -951,19 +951,67 @@ public class Main {
 		}
 		dec = getUserInputChar("¿Desea realizar una oferta de intercambio a este usuario? (Pulsar 's' si lo desea)");
 		if(dec != 's') return;
-		List pide = getUserInputIntList("Indique los números de los artículos que desea pedir: (Números separados por espacios)");
+		List<Integer> pide = getUserInputIntList("Indique los números de los artículos que desea pedir: (Números separados por espacios)");
+		ArticuloSegundaMano[] pideArts = getArticulosSeleccionados(articulos[num-1].getDueno().getArticulosDisponibles(), pide).toArray(new ArticuloSegundaMano[0]);
 		
 		showMessage("Su cartera: ");
+		i = 1;
 		for(ArticuloSegundaMano a : cliente.getCartera().getArticulosDisponibles()) {
 			showMessage(i++ + ") " + a);
 		}
-		List ofrece = getUserInputIntList("Indique los números de los artículos que desea ofrecer: (Números separados por espacios)");
+		List<Integer> ofrece = getUserInputIntList("Indique los números de los artículos que desea ofrecer: (Números separados por espacios)");
+		ArticuloSegundaMano[] ofreceArts = getArticulosSeleccionados(cliente.getCartera().getArticulosDisponibles(), ofrece).toArray(new ArticuloSegundaMano[0]);
 		
-		ArticuloSegundaMano = 
+		tienda.hacerOfertaIntercambio(cliente, pideArts, ofreceArts);
 	}
 	
-	static void actionVerCartera(ClienteRegistrado cliente) {
+	static void actionVerCartera(ClienteRegistrado cliente) throws InvalidArgumentException {
+		showMessage("Su cartera: ");
+		ArticuloSegundaMano[] articulos = cliente.getCartera().getArticulos();
+		int i = 1, num;
+		for(ArticuloSegundaMano a : articulos) {
+			showMessage(i++ + ") " + a);
+		}
 		
+		getAction("p: pedir valoración de un artículo | i: ver intercambios pendientes | a: añadir artículo de segunda mano | q: quitar artículo de segunda mano | v: volver");
+		switch(action) {
+		case "p":
+			num = getUserInputInt("Introduzca el número del artículo que desea pedir una valoración: ");
+			String numTarjeta = getUserInputString("Introduzca su tarjeta de crédito para realizar el pago de la valoración(16 dígitos): ");
+			tienda.solicitarValoracion(cliente, articulos[num-1], numTarjeta);
+			break;
+			
+		case "i":
+			Intercambio[] intercambios = cliente.getCartera().getIntercambiosPendientes();
+			i = 1;
+			for(Intercambio it : intercambios) {
+				showMessage(i++ + ") " + it);
+			}
+			
+			getAction("a: aceptar intercambio | r: rechazar intercambio | c: cancelar intercambio | v: volver");
+			switch(action) {
+			case "a":
+				num = getUserInputInt("Introduzca el número del intercambio que desea aceptar: ");
+				tienda.aceptarIntercambio(cliente, intercambios[num-1]);
+				break;
+			case "r":
+				num = getUserInputInt("Introduzca el número del intercambio que desea rechazar: ");
+				tienda.rechazarIntercambio(cliente, intercambios[num-1]);
+				break;
+			case "c":
+				num = getUserInputInt("Introduzca el número del intercambio que desea cancelar: ");
+				tienda.cancelarIntercambio(cliente, intercambios[num-1]);
+				break;
+			}
+			break;
+			
+		case "a":
+			
+			break;
+			
+		case "q":
+			break;
+		}		
 	}
 	
 	static void actionVerCarrito(ClienteRegistrado cliente) throws InvalidArgumentException {
@@ -1003,5 +1051,19 @@ public class Main {
 	
 	static void actionVerNotificaciones(ClienteRegistrado cliente) {
 		
+	}
+	
+	/**
+	 * Obtiene un set de articulos a partir de un array de permisos y una lista de números
+	 * @return set de articulos obtenidos
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 */
+	private static Set<ArticuloSegundaMano> getArticulosSeleccionados(ArticuloSegundaMano[] listaArts, List<Integer> nums) throws InvalidArgumentException {
+		Set<ArticuloSegundaMano> articulos = new HashSet<>();
+		for (Integer i : nums) {
+			if (i < 1 || i > listaArts.length) throw new InvalidArgumentException("Índice de permiso inválido", "hacer oferta de intercambio");
+			articulos.add(listaArts[i-1]);
+		}
+		return articulos;
 	}
 }
