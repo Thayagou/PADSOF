@@ -21,14 +21,24 @@ public class ArticuloSegundaMano implements Serializable {
 	private boolean disponible;
 	private Valoracion valoracion;
 	
-	public ArticuloSegundaMano(String nombre, String desc, Cartera dueno, List<Categoria> categorias, String interesadoEn) {
+	/**
+	 * Constructor de un artículo de segunda mano
+	 * @param nombre Nombre del artículo
+	 * @param desc Descripción del artículo
+	 * @param dueno Cartera a la que pertenece este artículo
+	 * @param categorias Categorías a las que pertenece el artículo
+	 * @param interesadoEn Describe por lo que 
+	 */
+	public ArticuloSegundaMano(String nombre, String desc, Cartera dueno, Categoria[] categorias, String interesadoEn) {
 		id = AsignadorId.getInstancia().siguienteId();
 		this.nombre = nombre;
 		this.descripcion = desc;
 		this.dueno = dueno;
-		if (categorias != null) {
-			this.categorias.addAll(categorias);
+		
+		for (Categoria c: categorias) {
+			this.categorias.add(c);
 		}
+		
 		this.interesadoEn = interesadoEn;
 		this.disponible = false;
 	}	
