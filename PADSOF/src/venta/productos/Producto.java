@@ -37,8 +37,8 @@ public abstract class Producto implements Serializable, Descontable {
 	 */
 	public Producto(String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias ) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(nombre == null || desc == null || categorias == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
-		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo");
+		if(nombre == null || desc == null || categorias == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos", "crear producto");
+		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo", "crear producto");
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.nombre = nombre;
 		this.descripcion = desc;

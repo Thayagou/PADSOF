@@ -1,3 +1,6 @@
+/**
+ * Este paquete contiene la interfaz que permite interactuar con la tienda
+ */
 package aplicacion;
 
 import java.time.*;
@@ -9,10 +12,14 @@ import venta.productos.*;
 import venta.productos.caracteristicas.*;
 import wallapop.*;
 
+/**
+ * Clase ActionEmpleado, contiene todos los métodos que permiten que un empleado realice sus tareas
+ * @author Tiago Oselka, Claudia Saiz
+ */
 public class ActionEmpleado {
 	
 	/**
-	 * Muestra el menú principal desde el que un empleado puede realizar sus tareas
+	 * Muestra el menú principal de un empleado desde el que puede realizar sus tareas
 	 * @param empleado Empleado que ha iniciado sesión
 	 */
 	static void menuEmpleado(Empleado empleado) {
@@ -68,6 +75,7 @@ public class ActionEmpleado {
 			Main.showMessage(i++ + ") " + v);
 		}
 		int num = Main.getUserInputInt("Escriba el número del artículo que desea valorar: ");
+		if(num < 1 || num > valoraciones.length) throw new InvalidArgumentException("Número de valoración inválido", "valorar artículo");
 		double precio = Main.getUserInputDouble("Precio estimado: ");
 		i = 1;
 		Main.showMessage("Estado del artículo: ");
@@ -75,6 +83,7 @@ public class ActionEmpleado {
 			Main.showMessage(i++ + ") " + e.name());
 		}
 		int num2 = Main.getUserInputInt("Introduzca el número del estado que desea asignarle: ");
+		if(num2 < 1 || num2 > EstadoFisicoArticulo.values().length) throw new InvalidArgumentException("Número de estado inválido", "valorar artículo");
 		
 		Main.tienda.getHistorial().valorarArticulo(empleado, valoraciones[num-1].getArticulo(), precio, EstadoFisicoArticulo.values()[num2-1]);
 	}
@@ -95,6 +104,7 @@ public class ActionEmpleado {
 			Main.showMessage(i++ + ") " + t);
 		}
 		int num = Main.getUserInputInt("Escriba el número del intercambio que desea confirmar: ");
+		if(num < 1 || num > intercambios.length) throw new InvalidArgumentException("Número de intercambio inválido", "confirmar intercambio");
 		Main.tienda.getHistorial().validarIntercambio(empleado, intercambios[num-1]);
 	}
 	
@@ -114,6 +124,7 @@ public class ActionEmpleado {
 			Main.showMessage(i++ + ") " + p);
 		}
 		int num = Main.getUserInputInt("Escriba el número del pedido que desea avanzar: ");
+		if(num < 1 || num > pedidos.length) throw new InvalidArgumentException("Número de pedido inválido", "gestionar pedidos");
 		Main.tienda.getHistorial().avanzarEstadoPedido(empleado, pedidos[num-1]);
 	}
 	
@@ -201,6 +212,7 @@ public class ActionEmpleado {
 				Main.showMessage(i++ + ") " + e.name());
 			}
 			int num = Main.getUserInputInt("Introduzca el número del tipo de juego: ");
+			if(num < 1 || num > TipoJuego.values().length) throw new InvalidArgumentException("Número de tipo de juego inválido", "añadir producto");
 			
 			Main.tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, TipoJuego.values()[num-1], categorias.toArray(new Categoria[0]));
 			break;
@@ -243,7 +255,8 @@ public class ActionEmpleado {
 			Main.showMessage(i++ + ") " + p);
 		}
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea modificar: ");
-		Main.showMessage("Introduzca los nuevo datos del producto");
+		if(num < 1 || num > productos.length) throw new InvalidArgumentException("Número de producto inválido", "modificar producto");
+		Main.showMessage("Introduzca los nuevos datos del producto");
 		
 		String nombrePr = Main.getUserInputLine("Nombre: ");
 		String desc = Main.getUserInputLine("Descripción: ");
@@ -275,6 +288,7 @@ public class ActionEmpleado {
 				Main.showMessage(i++ + ") " + e.name());
 			}
 			int num2 = Main.getUserInputInt("Introduzca el número del tipo de juego: ");
+			if(num2 < 1 || num2 > TipoJuego.values().length) throw new InvalidArgumentException("Número de tipo de juego inválido", "añadir producto");
 			
 			carargs = new CaracteristicasJuego(numJugs, rangoEdad, TipoJuego.values()[num2-1]);
 		} else if (producto instanceof Figura) {
@@ -313,6 +327,7 @@ public class ActionEmpleado {
 			Main.showMessage(i++ + ") " + p);
 		}
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea borrar: ");
+		if(num < 1 || num > productos.length) throw new InvalidArgumentException("Número de producto inválido", "borrar producto");
 		Main.tienda.getAlmacen().eliminarProducto(productos[num-1]);
 	}
 	
@@ -342,6 +357,7 @@ public class ActionEmpleado {
 			Main.showMessage(i++ + ") " + c + "\n");
 		}
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea modificar: ");
+		if(num < 1 || num > categorias.length) throw new InvalidArgumentException("Número de categoria inválido", "modificar categoría");
 		String nuevo = Main.getUserInputString("Introduzca el nuevo nombre de la categoría: ");
 		Main.tienda.getAlmacen().modificarCategoria(categorias[num-1], nuevo);
 	}
