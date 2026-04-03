@@ -979,12 +979,17 @@ public class Main {
 			showMessage(i++ + ") " + a);
 		}
 		
-		getAction("p: pedir valoración de un artículo | i: ver intercambios pendientes | a: añadir artículo de segunda mano | q: quitar artículo de segunda mano | v: volver");
+		getAction("p: pedir valoración de un artículo | i: ver intercambios pendientes | a: añadir artículo de segunda mano | v: volver");
 		switch(action) {
 		case "p":
 			num = getUserInputInt("Introduzca el número del artículo que desea pedir una valoración: ");
 			String numTarjeta = getUserInputString("Introduzca su tarjeta de crédito para realizar el pago de la valoración(16 dígitos): ");
-			tienda.solicitarValoracion(cliente, articulos[num-1], numTarjeta);
+			boolean st = tienda.solicitarValoracion(cliente, articulos[num-1], numTarjeta);
+			if (st) {
+				showMessage("El pago de su valoración se ha efectuado correctamente");
+			} else {
+				showMessage("Ha ocurrido un error al intentar realizar el pago");
+			}
 			break;
 			
 		case "i":
@@ -1012,10 +1017,18 @@ public class Main {
 			break;
 			
 		case "a":
+			String nombre = getUserInputLine("Nombre: ");
+			String desc = getUserInputLine("Descripción: ");
+			List<Categoria> categorias = new ArrayList<Categoria>();
+			for(Categoria cat : tienda.getAlmacen().getCategorias()) {
+				getAction("Incluir categoria " + cat.getNombre() + "? s/n");
+				if(action.equals("s")) {
+					categorias.add(cat);
+				}
+			}
+			String mensaje = getUserInputLine("Breve mensaje informando sobre lo que estás interesado en recibir: ");
 			
-			break;
-			
-		case "q":
+			tienda.anadirArticulo(nombre, desc, cliente.getCartera(), categorias.toArray(new Categoria[0]), mensaje);
 			break;
 		}		
 	}
@@ -1068,14 +1081,11 @@ public class Main {
 		
 		showMessage(pedidos[index-1].toString());
 		
-		getAction("¿Desea valorar algún producto de este pedido? (s: si | n: no): ");
+		getAction("¿Desea valorar algún producto de este pedido? (Pulsar 's' si lo desea): ");
 		switch(action) {
 		case "s":
 			actionValorarProducto(cliente, pedidos[index-1]);
 			break;
-			
-		case "n":
-			return;
 		}
 		
 	}

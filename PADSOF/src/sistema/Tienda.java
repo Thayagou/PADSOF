@@ -9,6 +9,7 @@ import estadistica.Historial;
 import usuario.*;
 import venta.productos.*;
 import wallapop.ArticuloSegundaMano;
+import wallapop.Cartera;
 import wallapop.Intercambio;
 import wallapop.Valoracion;
 import venta.pedidos.*;
@@ -301,6 +302,12 @@ public class Tienda implements Serializable {
 			e.enviarNotificacion("Se ha hecho una nueva solicitud de valoración de un artículo de segunda mano", TipoNotificacion.VALORACION);
 		}
 		return true;
+	}
+	
+	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, Categoria[] categorias, String interesadoEn) {
+		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, categorias, interesadoEn);
+		cartera.addArticulo(nuevo);
+		this.getAlmacen().anadirArticuloSegundaMano(nuevo);
 	}
 	
 	/**
