@@ -9,6 +9,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
+import javax.management.InvalidApplicationException;
+
 import estadistica.*;
 import exceptions.*;
 import sistema.*;
@@ -197,7 +199,7 @@ public class Main {
 		if(cliente == null) return;
 		while(!action.equals("e")) {
 			
-			getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | a: cuenta | n: notificaciones | e: exit");
+			getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | p: Ver pedidos anteriores y valorar | a: cuenta | n: notificaciones | e: exit");
 			try {
 				switch(action) {
 				case "b":
@@ -219,6 +221,9 @@ public class Main {
 				case "c":
 					actionVerCarrito(cliente);
 					break;
+					
+				case "p":
+					actionVerPedidos(cliente);
 					
 				case "a":
 					actionVerCuenta(cliente);
@@ -917,8 +922,7 @@ public class Main {
 		
 		int num = getUserInputInt("Introduzca el número del producto que desea añadir: ");
 		
-		cliente.getCarrito().anadirProducto(productos[num-1]);
-		
+		tienda.anadirACarritoDe(cliente, productos[num-1]);	
 	}
 	
 	static void actionRecomendaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
@@ -975,6 +979,62 @@ public class Main {
 	}
 	
 	/**
+	 * 
+	 * @param cliente
+	 * @throws InvalidArgumentException
+	 */
+	private static void actionVerPedidos(ClienteRegistrado cliente) throws InvalidArgumentException {
+		Pedido[] pedidos = cliente.getPedidos();
+		int i = 1;
+		for (Pedido p: pedidos) {
+			showMessage("  " + i++ + ") Id: " + p.getId() + " Fecha realización: " + p.getFechaPago() + " Estado: " + p.getEstado().name());
+		}
+		
+		int index = getUserInputInt("Introducir número de pedido a consultar (1 - " + pedidos.length + "): ");
+		if (index < 1 || index > pedidos.length) throw new InvalidArgumentException("Número de pedido inválido", "ver pedidos");
+		
+		showMessage(pedidos[index-1].toString());
+		
+		getAction("¿Desea valorar algún producto de este pedido? (s: si | n: no): ");
+		switch(action) {
+		case "s":
+			actionValorarProducto(cliente, pedidos[index-1]);
+			break;
+			
+		case "n":
+			return;
+		}
+		
+	}
+
+	/**
+	 * A partir de un pedido realizado por el cliente permite valorar un producto comprado
+	 * @param cliente Cliente que realiza la valoración
+	 * @param p Pedido del cual se obtiene el producto
+	 * @throws InvalidArgumentException En caso de que algún ínidce introducido no sea válido se lanza una excepción
+	 */
+	private static void actionValorarProducto(ClienteRegistrado cliente, Pedido p) throws InvalidArgumentException {
+		int i;
+		StockExterno[] productos = p.getItemsPedido();
+		i = 1;
+		showMessage("Productos entre los que elegir: ");
+		for (StockExterno st: productos) {
+			showMessage("  " + i++ + ") " + st.getProducto().getNombre());
+		}
+		
+		int index = getUserInputInt("Introducir número de producto a valorar (1 - " + productos.length + "): ");
+		if (index < 1 || index > productos.length) throw new InvalidArgumentException("Número de producto inválido", "valorar producto");
+		
+		double punt = getUserInputDouble("Introducir puntuación (0 - 5 estrellas): ");
+		if (punt < 0 || punt > 5) throw new InvalidArgumentException("El rango de la puntuación es inválido", "valorar producto");
+		
+		String comentario = getUserInputLine("Añade un comentario del producto (sin dar saltos de línea): ");
+		
+		Resena resena = new Resena(punt, comentario, cliente);
+		productos[index-1].getProducto().anadirResena(resena);
+	}
+	
+	/**
 	 * Muestra la información de cuenta de un usuario
 	 * @param cliente Cliente de la tienda
 	 * @throws InvalidArgumentException En caso de que haya problemas al cambiar la contraseña se lanza esta excepción
@@ -995,6 +1055,11 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Permite al cliente gestionar todo lo referente a sus notificaciones
+	 * @param cliente Cliente actual de la tienda
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 */
 	private static void actionGestionarNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
 		getAction("¿Qué desea hacer? (g: gestionar intereses de notificaciones | v: ver notificaciones): ");
 		
@@ -1009,6 +1074,11 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Permite al cliente gestionar sus intereses de notificaciones dentro de la tienda
+	 * @param cliente Cliente actual
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 */
 	static void actionGestionarInteresesNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
 		Set<TipoNotificacion> intesesesActuales = new HashSet<>(Arrays.asList(cliente.getIntereses()));
 		showMessage("Tus intereses de notificaciones: " + intesesesActuales);
@@ -1052,6 +1122,11 @@ public class Main {
 		return interesesSeleccionados;
 	}
 	
+	/**
+	 * Muestra las notificaciones no eliminadas del cliente y da la opción de marcarlas como leído o de eliminarlas
+	 * @param cliente Cliente actual
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 */
 	static void actionVerNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
 		Notificacion[] notificaciones = cliente.getNotificaciones();
 		int i = 1;
@@ -1062,7 +1137,7 @@ public class Main {
 		int index = getUserInputInt("Introducir número de la notificación (1 - " + notificaciones.length + "): ");
 		if (index < 1 || index > notificaciones.length) throw new InvalidArgumentException("Número de notificación inválido", "gestionar notificaciones");
 		
-		getAction("¿Qué desea hacer? (m: marcar como leída | en: eliminar notificación)");
+		getAction("¿Qué desea hacer? (m: marcar como leída | en: eliminar notificación | v: volver)");
 		
 		switch (action) {
 		case "m": 
@@ -1071,9 +1146,8 @@ public class Main {
 		case "en":
 			notificaciones[index-1].borrar();
 			break;
-		}
-		
-		
-		
+		case "v":
+			return;
+		}		
 	}
 }

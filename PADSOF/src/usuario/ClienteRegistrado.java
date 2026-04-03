@@ -154,6 +154,14 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 		}
 	}
 	
+	/**
+	 * Obtiene los pedidos realizados por el cliente
+	 * @return array de pedidos
+	 */
+	public Pedido[] getPedidos() {
+		return misCompras.toArray(new Pedido[0]);
+	}
+	
 	@Override
 	public boolean tienePermiso(Permiso p) {
 		return false;
