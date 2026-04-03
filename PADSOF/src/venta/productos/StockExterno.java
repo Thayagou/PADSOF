@@ -61,6 +61,6 @@ public class StockExterno extends Stock implements Serializable {
 	
 	@Override
 	public String toString() {
-		return getProducto().getNombre() + " x " + getUdsEnStock() + ". Precio por unidad: " + precioUnitarioFinal;
+		return getProducto().getNombre() + " x " + getUdsEnStock() + ". Precio por unidad: " + precioUnitarioFinal + "€. Precio acumulado: " + getPrecioTotal() + "€.";
 	}
 }

@@ -41,7 +41,7 @@ public class Notificacion implements Serializable {
 	}
 
 	public void borrar() {
-		this.borrada = false;
+		this.borrada = true;
 	}
 	
 	public TipoNotificacion getTipo() {

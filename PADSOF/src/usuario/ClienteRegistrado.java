@@ -34,12 +34,11 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 		this.misCompras = new LinkedList<>();
 	}
 	
-	public boolean cambiarContrasena(String contrasena, String confirmarContrasena) {
+	public void cambiarContrasena(String contrasenaAntigua, String contrasena, String confirmarContrasena) throws InvalidArgumentException {
+		if (contrasenaAntigua.equals(this.contrasena) == false) throw new InvalidArgumentException("La contraseña original introducida es incorrecta", "cambiar contraseña");
 		if(contrasena.equals(confirmarContrasena)) {
 			this.contrasena = contrasena;
-			return true;
-		}
-		return false;
+		} else throw new InvalidArgumentException("La confirmación de contraseña no es correcta", "cambiar contraseña");
 	}
 	
 	public Carrito getCarrito() {
@@ -58,8 +57,12 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 		return articulos.toArray(new ArticuloSegundaMano[0]);
 	}
 
+	/**
+	 * Obtiene las notificaciones no eliminadas de un cliente
+	 * @return Array de notificaciones filtradas
+	 */
 	public Notificacion[] getNotificaciones() {
-		return this.notificaciones.toArray( new Notificacion[0]);
+		return this.notificaciones.stream().filter(n->(n.isBorrada()==false)).toArray(Notificacion[]::new);
 	}
 	
 	/**
@@ -149,6 +152,14 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 		} catch(CustomException e) {
 			throw new RuntimeException("Carrito con contenido null", e);
 		}
+	}
+	
+	/**
+	 * Obtiene los pedidos realizados por el cliente
+	 * @return array de pedidos
+	 */
+	public Pedido[] getPedidos() {
+		return misCompras.toArray(new Pedido[0]);
 	}
 	
 	@Override

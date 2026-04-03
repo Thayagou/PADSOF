@@ -71,6 +71,6 @@ public class Resena implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "("+fecha+": "+usuario+"("+puntuacion+"): "+comentario+")";
+		return "("+fecha+": "+usuario.getNombre() + "("+puntuacion+"): "+comentario+")";
 	}
 }

@@ -23,8 +23,8 @@ public class PruebaDeUso {
 		ImageIcon imagen = null;
 		
 		//Registrarse en la tienda
-		tienda.registrarse("Usuario1", "1", "1");
-		tienda.registrarse("Usuario2", "2", "2");
+		ClienteRegistrado c1 = tienda.registrarse("Usuario1", "1", "1");
+		ClienteRegistrado c2 = tienda.registrarse("Usuario2", "2", "2");
 		tienda.darDeAltaEmpleado("Empleado1", "123", Permiso.PRODUCTOS);
 		tienda.darDeAltaEmpleado("Empleado2", "pass", Permiso.PEDIDOS);
 		tienda.darDeAltaEmpleado("Empleado3", "pass", Permiso.INTERCAMBIOS);
@@ -62,34 +62,34 @@ public class PruebaDeUso {
 		System.out.println(tienda.getAlmacen().getProductosPorFiltros(categoriasBusqueda , 0, 100, 3)[0]);
 		
 		//Añadir productos al carrito del Usuario
-			tienda.anadirACarritoDe("Usuario1", stComic.getProducto());
-			tienda.anadirACarritoDe("Usuario1", stFigura.getProducto());
-			tienda.anadirACarritoDe("Usuario1", stPack.getProducto());
+			tienda.anadirACarritoDe(c1, stComic.getProducto());
+			tienda.anadirACarritoDe(c1, stFigura.getProducto());
+			tienda.anadirACarritoDe(c1, stPack.getProducto());
 			
 			System.out.println("\nCarrito de Usuario 1\n");
-			System.out.println(tienda.getCliente("Usuario1").getCarrito());
+			System.out.println(c1.getCarrito());
 			
 			//Cancelamos su compra
-			tienda.cancelarCarritoDe("Usuario1");
+			tienda.cancelarCarritoDe(c1);
 			
 			System.out.println("\nCarrito de Usuario 1 tras cancelar el carrito:\n");
-			System.out.println(tienda.getCliente("Usuario1").getCarrito());
+			System.out.println(c1.getCarrito());
 		
 		//Volvemos a añadir productos al carrito del Usuario
-		tienda.anadirACarritoDe("Usuario1", stComic.getProducto());
-		tienda.anadirACarritoDe("Usuario1", stFigura.getProducto());
-		tienda.anadirACarritoDe("Usuario1", stPack.getProducto());
+		tienda.anadirACarritoDe(c1, stComic.getProducto());
+		tienda.anadirACarritoDe(c1, stFigura.getProducto());
+		tienda.anadirACarritoDe(c1, stPack.getProducto());
 		
 		//Quitamos uno de los productos
-		tienda.quitarDeCarritoDe("Usuario1", stComic.getProducto());
+		tienda.quitarDeCarritoDe(c1, stComic.getProducto());
 		
 		//Intentamos comprar un producto agotado
-		boolean ret = tienda.anadirACarritoDe("Usuario2", stPack.getProducto());
+		boolean ret = tienda.anadirACarritoDe(c2, stPack.getProducto());
 		System.out.println("Se impide añadir productos agotados al carrito: " + !(ret));
 
 		//Usuario1 paga la compra
-		tienda.pagarCarritoDe("Usuario1", "1234123412341234");
-		System.out.println(tienda.getCliente("Usuario1"));
+		tienda.pagarCarritoDe(c1, "1234123412341234");
+		System.out.println(c1);
 		//Comprobamos que se guardó el pedido conrrectamente
 		System.out.println("\nPedidos pendientes de la tienda:\n");
 		for(Pedido ped : tienda.getHistorial().getPedidosPendientes())
@@ -104,11 +104,11 @@ public class PruebaDeUso {
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Listo
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Recogido*/
 		
-		//System.out.println(tienda.getCliente("Usuario1"));
-		//System.out.println(tienda.getCliente("Usuario2"));
+		//System.out.println(c1);
+		//System.out.println(c2);
 		//Vemos que se enviarion las notificaciones correspondientes a cada uno
 		System.out.println("\nNotificaciones de Usuario1:\n");
-		for (Notificacion n: tienda.getCliente("Usuario1").getNotificaciones()) {
+		for (Notificacion n: c1.getNotificaciones()) {
 			System.out.println(n);
 		}
 		
@@ -117,7 +117,7 @@ public class PruebaDeUso {
 			System.out.println(n);
 		}
 		
-		System.out.println(tienda.getCliente("Usuario1"));
+		System.out.println(c1);
 
 		try {
 	        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("tienda.dat"));
