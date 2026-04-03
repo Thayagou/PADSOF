@@ -13,7 +13,7 @@ public class ActionCliente {
 		if(cliente == null) return;
 		while(!Main.action.equals("e")) {
 			
-			Main.getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | p: Ver pedidos anteriores y valorar | a: cuenta | n: notificaciones | e: exit");
+			Main.getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | p: Ver pedidos anteriores y valorar | a: cuenta | n: notificaciones | cs: cerrar sesión | e: exit");
 			try {
 				switch(Main.action) {
 				case "b":
@@ -46,6 +46,8 @@ public class ActionCliente {
 				case "n":
 					actionGestionarNotificaciones(cliente);
 					break;
+				case "cs":
+					return;
 					
 				}
 			} catch (InvalidArgumentException e) {
