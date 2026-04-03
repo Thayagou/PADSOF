@@ -83,10 +83,10 @@ public class Categoria implements Serializable, Descontable {
 	 */
 	public boolean anadirDescuento(Descuento descuento) throws InvalidArgumentException, DoubleDiscountException {
 		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null");
-		if(this.tieneDescuento()) throw new DoubleDiscountException("La categoría ya tiene un descuento");
+		if(this.tieneDescuento()) throw new DoubleDiscountException("La categoría ya tiene un descuento", "añadir descuento a categoría", getNombre());
 		
 		for(Producto p : productos) {
-			if(p.tieneDescuento()) throw new DoubleDiscountException("Uno de los productos de la categoría ya tiene descuento");
+			if(p.tieneDescuento()) throw new DoubleDiscountException("Uno de los productos de la categoría ya tiene descuento", "añadir descuento a categoría", getNombre());
 		}
 		this.descuento = descuento;
 		for(Producto p : productos) {

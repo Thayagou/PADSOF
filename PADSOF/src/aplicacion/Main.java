@@ -324,7 +324,7 @@ public class Main {
 	 * @throws InvalidPermit 
 	 */
 	static void actionValorarArticulo(Empleado empleado) throws InvalidArgumentException, InvalidPermitException, ArticuloSinValoracionException {
-		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "valorar artículo", "Intercambios");
+		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "valorar artículo", Permiso.INTERCAMBIOS, empleado );
 		int i = 1;
 		Valoracion[] valoraciones = tienda.getHistorial().getValoracionesPendientes();
 		if (valoraciones.length < 1) throw new InvalidArgumentException("No existen valoraciones pendientes en este momento", "valorar articulo");
@@ -346,7 +346,7 @@ public class Main {
 	 * @throws InvalidPermit 
 	 */
 	static void actionConfirmarIntercambio(Empleado empleado) throws InvalidArgumentException, InvalidPermitException {
-		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "validar intercambio", "Intercambios");
+		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "validar intercambio", Permiso.INTERCAMBIOS, empleado);
 		int i = 1;
 		Intercambio[] intercambios = tienda.getHistorial().getIntercambiosPendientes();
 		if(intercambios.length < 1) throw new InvalidArgumentException("No existen intercambios pendientes en este momento", "confirmar intercambio");
@@ -365,7 +365,7 @@ public class Main {
 	 * @throws InvalidPermit 
 	 */
 	static void actionGestionarPedidos(Empleado empleado) throws InvalidArgumentException, InvalidPermitException {
-		if(!empleado.tienePermiso(Permiso.PEDIDOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", "Pedidos");
+		if(!empleado.tienePermiso(Permiso.PEDIDOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", Permiso.PEDIDOS, empleado);
 		int i = 1;
 		Pedido[] pedidos= tienda.getHistorial().getPedidosPendientes();
 		if(pedidos.length < 1) throw new InvalidArgumentException("No existen pedidos pendientes en este momento", "gestionar pedidos");
@@ -385,7 +385,7 @@ public class Main {
 	 * @throws InvalidPermit 
 	 */
 	static void actionGestionarProductos(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
-		if(!usuario.tienePermiso(Permiso.PRODUCTOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar productos", "Productos");
+		if(!usuario.tienePermiso(Permiso.PRODUCTOS)) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar productos", Permiso.PRODUCTOS, usuario);
 		
 		getAction("a: añadir producto | c: cargar fichero de productos | mp: modificar producto | bp: borrar producto | cc: crear categorias | mc: modificar categorias | p: crear packs | e: exit");
 		

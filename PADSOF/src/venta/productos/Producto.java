@@ -28,7 +28,7 @@ public abstract class Producto implements Serializable, Descontable {
 	private StatsProducto estadisticas;
 	
 	/**
-	 * Creador de producto
+	 * Constructor de producto
 	 * @param nombre Nombre del producto
 	 * @param desc Descripción del producto
 	 * @param precio Precio del producto
@@ -198,7 +198,7 @@ public abstract class Producto implements Serializable, Descontable {
 		if(categorias == null) throw new InvalidArgumentException("Array de categorías null");
 		for(Categoria c : categorias) if(c == null) throw new InvalidArgumentException("No puede haber categorías null entre las categorías");
 		
-		if(!puedeAnadirCategorias(categorias)) throw new DoubleDiscountException("Las categorías no son compatibles entre sí o con el producto debido a los descuentos");
+		if(!puedeAnadirCategorias(categorias)) throw new DoubleDiscountException("Las categorías no son compatibles entre sí o con el producto debido a los descuentos", "añadir categorías", this.getNombre());
 		for(Categoria c : categorias) {			
 			if(c.tieneDescuento()) {
 				if(!this.tieneDescuento()) {
@@ -275,7 +275,7 @@ public abstract class Producto implements Serializable, Descontable {
 	 */
 	public boolean anadirDescuento(Descuento descuento) throws InvalidArgumentException, DoubleDiscountException {
 		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null");
-		if(tieneDescuento()) throw new DoubleDiscountException("El producto ya tiene un descuento");
+		if(tieneDescuento()) throw new DoubleDiscountException("El producto ya tiene un descuento", "añadir descuento a producto", getNombre());
 		this.descuento = descuento;
 		return true;
 	}
