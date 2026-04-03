@@ -1,20 +1,32 @@
+/**
+ * Este paquete contiene la interfaz que permite interactuar con la tienda
+ */
 package aplicacion;
 
 import java.util.*;
-import exceptions.InvalidArgumentException;
+
+import exceptions.*;
 import usuario.*;
 import venta.pedidos.Pedido;
 import venta.productos.*;
 import wallapop.*;
 
+/**
+ * Clase ActionCliente, contiene todos los métodos que permiten que un cliente navegue por la tienda
+ * @author Tiago Oselka, Claudia Saiz
+ */
 public class ActionCliente {
 	
+	/**
+	 * Muestra el menú principal de un cliente desde el que puede realizar las diferentes funcionalidades
+	 * @param cliente Cliente que ha iniciado sesión
+	 */
 	static void menuCliente(ClienteRegistrado cliente) {
 		if(cliente == null) return;
 		while(!Main.action.equals("e")) {
 			
-			Main.getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | p: Ver pedidos anteriores y valorar | a: cuenta | n: notificaciones | cs: cerrar sesión | e: exit");
 			try {
+				Main.getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | p: ver pedidos anteriores y valorar | a: cuenta | n: notificaciones | cs: cerrar sesión | e: exit)");
 				switch(Main.action) {
 				case "b":
 					actionBuscarPorFiltros(cliente);
@@ -50,39 +62,57 @@ public class ActionCliente {
 					return;
 					
 				}
-			} catch (InvalidArgumentException e) {
+			} catch (CustomException e) {
 				Main.showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
-			} catch (IllegalArgumentException e) {
-				Main.showMessage("Error: el valor introducido no pudo ser parseado correctamente");
+			} catch (RuntimeException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 	
-	static void actionBuscarPorFiltros(ClienteRegistrado cliente) throws InvalidArgumentException {
+	/**
+	 * Realiza una búsqueda por filtros de productos de la tienda
+	 * @param cliente Cliente que desea realizar la búsqueda
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionBuscarPorFiltros(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Producto[] productos = Main.actionBuscarPorFiltros();
+		if(productos.length < 1) throw new InvalidArgumentException("No hay productos en la tienda en este momento", "buscar por filtros");
 		char dec = Main.getUserInputChar("¿Desea añadir al carrito alguno de estos productos? (Pulsar 's' si lo desea)");
 		if(dec != 's') return;
-		
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea añadir: ");
 		
 		Main.tienda.anadirACarritoDe(cliente, productos[num-1]);	
 	}
 	
-	static void actionRecomendaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
+	/**
+	 * Muestra la lista de productos recomendados a un cliente específico
+	 * @param cliente Cliente del que se muestra la lista de recomendaciones
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionRecomendaciones(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Producto[] productos = Main.tienda.getAlmacen().getListaRecomendacion(cliente);
 		int i = 1;
+		if(productos.length < 1) throw new InvalidArgumentException("No hay productos en la tienda en este momento", "ver recomendaciones");
 		for(Producto p : productos) {
 			Main.showMessage(i++ + ") " + p);
 		}
-		
 		char dec = Main.getUserInputChar("¿Desea añadir al carrito alguno de estos productos? (Pulsar 's' si lo desea)");
 		if(dec != 's') return;
 		
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea añadir: ");
-		cliente.getCarrito().anadirProducto(productos[num-1]);
+		Main.tienda.anadirACarritoDe(cliente, productos[num-1]);
 	}
 	
-	static void actionVerSegundaMano(ClienteRegistrado cliente) throws InvalidArgumentException {
+	/**
+	 * Muestra la lista de artículos disponibles para un cliente y permite realizar una oferta de intercambio
+	 * @param cliente Cliente que desea ver los artículos disponibles
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionVerSegundaMano(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		ArticuloSegundaMano[] articulos = Main.tienda.getAlmacen().getArticulosParaCliente(cliente);
 		if(articulos.length < 1) throw new InvalidArgumentException("No hay artículos disponibles para intercambiar", "ver artículos de segunda mano");
 		int i = 1;
@@ -92,31 +122,46 @@ public class ActionCliente {
 		char dec = Main.getUserInputChar("¿Desea ver la cartera del propietario de alguno de estos artículos? (Pulsar 's' si lo desea)");
 		if(dec != 's') return;
 		
+		// Elegir productos que se piden
 		int num = Main.getUserInputInt("Introduzca el número del artículo cuyo propietario quiere ver: ");
+		if (num < 1 || num > articulos.length) throw new InvalidArgumentException("Número de artículo inválido", "hacer oferta de intercambio");
+		
 		Main.showMessage("Cartera de " + articulos[num-1].getPropietario().getNombre() + ": ");
 		i = 1;
-		for(ArticuloSegundaMano a : articulos[num-1].getDueno().getArticulosDisponibles()) {
+		ArticuloSegundaMano[] pidesArticulos = articulos[num-1].getDueno().getArticulosDisponibles();
+		if(pidesArticulos.length < 1) throw new InvalidArgumentException("Este usuario no tiene artículos disponibles para intercambiar", "hacer oferta de intercambio");
+		for(ArticuloSegundaMano a : pidesArticulos) {
 			Main.showMessage(i++ + ") " + a);
 		}
 		dec = Main.getUserInputChar("¿Desea realizar una oferta de intercambio a este usuario? (Pulsar 's' si lo desea)");
 		if(dec != 's') return;
 		List<Integer> pide = Main.getUserInputIntList("Indique los números de los artículos que desea pedir: (Números separados por espacios)");
-		ArticuloSegundaMano[] pideArts = getArticulosSeleccionados(articulos[num-1].getDueno().getArticulosDisponibles(), pide).toArray(new ArticuloSegundaMano[0]);
+		ArticuloSegundaMano[] pideArts = getArticulosSeleccionados(pidesArticulos, pide).toArray(new ArticuloSegundaMano[0]);
 		
+		// Elegir productos que se ofrecen
 		Main.showMessage("Su cartera: ");
 		i = 1;
-		for(ArticuloSegundaMano a : cliente.getCartera().getArticulosDisponibles()) {
+		ArticuloSegundaMano[] tusArticulos = cliente.getCartera().getArticulosDisponibles();
+		if(tusArticulos.length < 1) throw new InvalidArgumentException("No tienes artículos disponibles para intercambiar", "hacer oferta de intercambio");
+		for(ArticuloSegundaMano a : tusArticulos) {
 			Main.showMessage(i++ + ") " + a);
 		}
 		List<Integer> ofrece = Main.getUserInputIntList("Indique los números de los artículos que desea ofrecer: (Números separados por espacios)");
-		ArticuloSegundaMano[] ofreceArts = getArticulosSeleccionados(cliente.getCartera().getArticulosDisponibles(), ofrece).toArray(new ArticuloSegundaMano[0]);
+		ArticuloSegundaMano[] ofreceArts = getArticulosSeleccionados(tusArticulos, ofrece).toArray(new ArticuloSegundaMano[0]);
 		
 		Main.tienda.hacerOfertaIntercambio(cliente, pideArts, ofreceArts);
 	}
 	
-	static void actionVerCartera(ClienteRegistrado cliente) throws InvalidArgumentException {
+	/**
+	 * Permite ver la cartera del cliente y realizar varias tareas relacionadas
+	 * @param cliente Cliente que desea ver su cartera
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	static void actionVerCartera(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Main.showMessage("Su cartera: ");
 		ArticuloSegundaMano[] articulos = cliente.getCartera().getArticulos();
+		if(articulos.length < 1) throw new InvalidArgumentException("No tienes artículos ahora mismo en la cartera", "ver cartera");
 		int i = 1, num;
 		for(ArticuloSegundaMano a : articulos) {
 			Main.showMessage(i++ + ") " + a);
@@ -126,6 +171,7 @@ public class ActionCliente {
 		switch(Main.action) {
 		case "p":
 			num = Main.getUserInputInt("Introduzca el número del artículo que desea pedir una valoración: ");
+			if (num < 1 || num > articulos.length) throw new InvalidArgumentException("Número de artículo inválido", "pedir valoración");
 			String numTarjeta = Main.getUserInputString("Introduzca su tarjeta de crédito para realizar el pago de la valoración(16 dígitos): ");
 			boolean st = Main.tienda.solicitarValoracion(cliente, articulos[num-1], numTarjeta);
 			if (st) {
@@ -146,14 +192,17 @@ public class ActionCliente {
 			switch(Main.action) {
 			case "a":
 				num = Main.getUserInputInt("Introduzca el número del intercambio que desea aceptar: ");
+				if (num < 1 || num > intercambios.length) throw new InvalidArgumentException("Número de intercambio inválido", "aceptar intercambio");
 				Main.tienda.aceptarIntercambio(cliente, intercambios[num-1]);
 				break;
 			case "r":
 				num = Main.getUserInputInt("Introduzca el número del intercambio que desea rechazar: ");
+				if (num < 1 || num > intercambios.length) throw new InvalidArgumentException("Número de intercambio inválido", "rechazar intercambio");
 				Main.tienda.rechazarIntercambio(cliente, intercambios[num-1]);
 				break;
 			case "c":
 				num = Main.getUserInputInt("Introduzca el número del intercambio que desea cancelar: ");
+				if (num < 1 || num > intercambios.length) throw new InvalidArgumentException("Número de intercambio inválido", "cancelar intercambio");
 				Main.tienda.cancelarIntercambio(cliente, intercambios[num-1]);
 				break;
 			}
@@ -180,8 +229,9 @@ public class ActionCliente {
 	 * Permite ver el carrito y efectuar diferentes acciones sobre él
 	 * @param cliente Cliente que desea ver su carrito
 	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	static void actionVerCarrito(ClienteRegistrado cliente) throws InvalidArgumentException {
+	static void actionVerCarrito(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Stock[] productos= cliente.getCarrito().getContenido();
 		int i = 1;
 		for(Stock p : productos) {
@@ -206,6 +256,7 @@ public class ActionCliente {
 			
 		case "q":
 			int num = Main.getUserInputInt("Introduzca el número deproducto que desea quitar: ");
+			if (num < 1 || num > productos.length) throw new InvalidArgumentException("Número de producto inválido", "quitar producto de carrito");
 			Main.tienda.quitarDeCarritoDe(cliente, productos[num-1].getProducto());
 			break;
 			
@@ -216,8 +267,9 @@ public class ActionCliente {
 	 * Permite ver los pedidos que ha realizado un cliente
 	 * @param cliente Cliente que desea ver sus pedidos
 	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	private static void actionVerPedidos(ClienteRegistrado cliente) throws InvalidArgumentException {
+	private static void actionVerPedidos(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Pedido[] pedidos = cliente.getPedidos();
 		int i = 1;
 		for (Pedido p: pedidos) {
@@ -242,9 +294,10 @@ public class ActionCliente {
 	 * A partir de un pedido realizado por el cliente permite valorar un producto comprado
 	 * @param cliente Cliente que realiza la valoración
 	 * @param p Pedido del cual se obtiene el producto
-	 * @throws InvalidArgumentException En caso de que algún ínidce introducido no sea válido se lanza una excepción
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	private static void actionValorarProducto(ClienteRegistrado cliente, Pedido p) throws InvalidArgumentException {
+	private static void actionValorarProducto(ClienteRegistrado cliente, Pedido p) throws InvalidArgumentException, InvalidUserInputException {
 		int i;
 		StockExterno[] productos = p.getItemsPedido();
 		i = 1;
@@ -268,9 +321,10 @@ public class ActionCliente {
 	/**
 	 * Muestra la información de cuenta de un usuario
 	 * @param cliente Cliente de la tienda
-	 * @throws InvalidArgumentException En caso de que haya problemas al cambiar la contraseña se lanza esta excepción
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	static void actionVerCuenta(ClienteRegistrado cliente) throws InvalidArgumentException {
+	static void actionVerCuenta(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Main.showMessage("Nombre de usuario: " + cliente.getNombre());
 		
 		String tipo = Main.getUserInputString("Desea cambiar su contraseña? (s: si | n: no): ");
@@ -289,9 +343,10 @@ public class ActionCliente {
 	/**
 	 * Permite al cliente gestionar todo lo referente a sus notificaciones
 	 * @param cliente Cliente actual de la tienda
-	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	private static void actionGestionarNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
+	private static void actionGestionarNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Main.getAction("¿Qué desea hacer? (g: gestionar intereses de notificaciones | v: ver notificaciones): ");
 		
 		switch (Main.action) {
@@ -308,9 +363,10 @@ public class ActionCliente {
 	/**
 	 * Permite al cliente gestionar sus intereses de notificaciones dentro de la tienda
 	 * @param cliente Cliente actual
-	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	static void actionGestionarInteresesNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
+	static void actionGestionarInteresesNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Set<TipoNotificacion> intesesesActuales = new HashSet<>(Arrays.asList(cliente.getIntereses()));
 		Main.showMessage("Tus intereses de notificaciones: " + intesesesActuales);
 		
@@ -334,9 +390,10 @@ public class ActionCliente {
 	/**
 	 * Obtiene un Set de tipos de notificación a partir de los seleccionados por el usuario
 	 * @return Dicho set de tipos
-	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	static private Set<TipoNotificacion> getInteresesDeNotificaciones() throws InvalidArgumentException {
+	static private Set<TipoNotificacion> getInteresesDeNotificaciones() throws InvalidArgumentException, InvalidUserInputException {
 		TipoNotificacion[] interesesDisponibles = TipoNotificacion.values();
 		int i = 1;
 		for (TipoNotificacion tn : interesesDisponibles) {
@@ -356,9 +413,10 @@ public class ActionCliente {
 	/**
 	 * Muestra las notificaciones no eliminadas del cliente y da la opción de marcarlas como leído o de eliminarlas
 	 * @param cliente Cliente actual
-	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	static void actionVerNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
+	static void actionVerNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Notificacion[] notificaciones = cliente.getNotificaciones();
 		int i = 1;
 		for (Notificacion n: notificaciones) {
@@ -383,14 +441,16 @@ public class ActionCliente {
 	}
 	
 	/**
-	 * Obtiene un set de articulos a partir de un array de permisos y una lista de números
+	 * Obtiene un set de articulos a partir de un array de articulos y una lista de números
+	 * @param listaArts Lista de artículos a la que se refieren los índices
+	 * @param nums Lista de índices
 	 * @return set de articulos obtenidos
-	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 * @throws InvalidArgumentException
 	 */
 	private static Set<ArticuloSegundaMano> getArticulosSeleccionados(ArticuloSegundaMano[] listaArts, List<Integer> nums) throws InvalidArgumentException {
 		Set<ArticuloSegundaMano> articulos = new HashSet<>();
 		for (Integer i : nums) {
-			if (i < 1 || i > listaArts.length) throw new InvalidArgumentException("Índice de permiso inválido", "hacer oferta de intercambio");
+			if (i < 1 || i > listaArts.length) throw new InvalidArgumentException("Número de artículo inválido", "hacer oferta de intercambio");
 			articulos.add(listaArts[i-1]);
 		}
 		return articulos;		

@@ -1,3 +1,6 @@
+/**
+ * Este paquete contiene la interfaz que permite interactuar con la tienda
+ */
 package aplicacion;
 
 import java.time.*;
@@ -10,13 +13,22 @@ import usuario.*;
 import venta.descuentos.*;
 import venta.productos.*;
 
+/**
+ * Clase ActionGestor, contiene todos los métodos que permiten que un gestor maneje la tienda
+ * @author Tiago Oselka, Claudia Saiz
+ */
 public class ActionGestor {
+	
+	/**
+	 * Muestra el menú principal del gestor desde el que puede realizar diferentes tareas
+	 * @param gestor Gestor de la tienda
+	 */
 	static void menuGestor(Gestor gestor) {
 		if(gestor == null) return;
 		while(!Main.action.equals("e")) {
 			
-			Main.getAction("ad: añadir descuentos | csi: configurar sistema | ce: consultar estadísticas | gp: gestionar productos y categorias | ge: gestionar empleados | cs: cerrar sesión | e: exit");
 			try {
+				Main.getAction("ad: añadir descuentos | csi: configurar sistema | ce: consultar estadísticas | gp: gestionar productos y categorias | ge: gestionar empleados | cs: cerrar sesión | e: exit");
 				switch(Main.action) {
 				case "ad":
 					actionAnadirDescuento(gestor);
@@ -42,7 +54,7 @@ public class ActionGestor {
 					return;
 			}
 
-		} catch (InvalidArgumentException | DoubleDiscountException | InvalidPermitException e) {
+		} catch (CustomException e) {
 				Main.showMessage("\u001B[31m" + e.getMessage() + "\u001B[0m");
 			} catch (IllegalArgumentException e) {
 				Main.showMessage("Error: el valor introducido no pudo ser parseado correctamente");
@@ -50,18 +62,14 @@ public class ActionGestor {
 		}
 	}
 	
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// MÉTODOS ACCIONES DE GESTOR
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
-	
 	/**
 	 * Realiza la acción de añadir un descuento a un producto o categoría dentro de la tienda
-	 * 
 	 * @param gestor Gestor de la tienda
-	 * @throws InvalidArgumentException Excepción lanzada en caso de que alguno de los argumentos introducidos no sean válidos
+	 * @throws InvalidArgumentException
 	 * @throws DoubleDiscountException
+	 * @throws InvalidUserInputException 
 	 */
-	static void actionAnadirDescuento(Gestor gestor) throws InvalidArgumentException, DoubleDiscountException {
+	static void actionAnadirDescuento(Gestor gestor) throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException {
 		Producto[] productos;
 		Main.getAction("Aplicar descuento sobre (c: categoría | p: producto): ");
 		int index;
@@ -127,6 +135,7 @@ public class ActionGestor {
 			double precio = Main.getUserInputDouble("Precio a descontar: ");
 			if (p != null) Main.tienda.getAlmacen().anadirDescuentoDinero(p, valorMin, fechaInicio, fechaFin, condicion, precio);
 			else if (c != null) Main.tienda.getAlmacen().anadirDescuentoDinero(c, valorMin, fechaInicio, fechaFin, condicion, precio);
+			break;
 			
 		case "p":
 			double porcentaje = Main.getUserInputDouble("Porcentaje a descontar (Rango 0-100): ");
@@ -134,6 +143,7 @@ public class ActionGestor {
 			
 			if (p != null) Main.tienda.getAlmacen().anadirDescuentoDinero(p, valorMin, fechaInicio, fechaFin, condicion, porcentaje);
 			else if (c != null) Main.tienda.getAlmacen().anadirDescuentoDinero(c, valorMin, fechaInicio, fechaFin, condicion, porcentaje);
+			break;
 			
 		case "r":
 			String nombre = Main.getUserInputLine("Enter para elegir entre todo el inventario o : ");
@@ -145,21 +155,21 @@ public class ActionGestor {
 			
 			index = Main.getUserInputInt("Número de producto para elegir como regalo: ");
 			if (index < 1 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
-			// Mirar esto arriba!!!!!!!
 			Producto regalo = productos[index-1];
 			
 			if (p != null) Main.tienda.getAlmacen().anadirDescuentoRegalo(p, valorMin, fechaInicio, fechaFin, condicion, regalo);
 			else if (c != null) Main.tienda.getAlmacen().anadirDescuentoRegalo(c, valorMin, fechaInicio, fechaFin, condicion, regalo);
-			
+			break;
 		}
 	}
 	
 	/**
-	 * 
-	 * @param gestor
+	 * Permite al gestor configurar los diferentes parámetros de la tienda
+	 * @param gestor Gestor de la tienda
 	 * @throws InvalidArgumentException 
+	 * @throws InvalidUserInputException 
 	 */
-	private static void actionConfigurarSistema(Gestor gestor) throws InvalidArgumentException {
+	private static void actionConfigurarSistema(Gestor gestor) throws InvalidArgumentException, InvalidUserInputException {
 		Main.showMessage("=== Ponderaciones de los parámetros del sistema ===");
 		Main.showMessage("  Categoría:              " + Sistema.getInstancia().getPonderacionCategoria());
 		Main.showMessage("  Unidades compradas:     " + Sistema.getInstancia().getPonderacionUdsCompra());
@@ -169,10 +179,9 @@ public class ActionGestor {
 		Main.showMessage("  Búsqueda:               " + Sistema.getInstancia().getPonderacionBusqueda());
 		Main.showMessage("===================================================");
 		
-		String parametroString = Main.getUserInputString(
-			"Introducir el parámetro a modificar (c: categoría | uc: unidades compradas | pp: precio pagado | vp: valoraciones producto | pr: producto recomendado | b: búsqueda): ");
+		String parametroString = Main.getUserInputString("Introducir el parámetro a modificar (c: categoría | uc: unidades compradas | pp: precio pagado | vp: valoraciones producto | pr: producto recomendado | b: búsqueda): ");
 	    double valor = Main.getUserInputDouble("Introducir el nuevo valor: ");
-
+	    if(valor < 1) throw new InvalidArgumentException("El nuevo parámtro debe ser positivo", "configurar sistema");
 	    
         switch (parametroString) {
             case "c":
@@ -197,9 +206,14 @@ public class ActionGestor {
 	    
 	}
 	
-	private static void actionConsultarEstadisticas(Gestor gestor) throws InvalidArgumentException {
-		String tipo = Main.getUserInputString(
-				"Introducir la estadística a consultar (Productos mas vendidos en un periodo: p | Usuarios más activos: u | Ventas en un periodo: v | Intercambio en un periodo: i): ");
+	/**
+	 * Permite al gestor consultar las estadísticas de la tienda
+	 * @param gestor Gestor de la tienda
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	private static void actionConsultarEstadisticas(Gestor gestor) throws InvalidArgumentException, InvalidUserInputException {
+		String tipo = Main.getUserInputString("Introducir la estadística a consultar (Productos mas vendidos en un periodo: p | Usuarios más activos: u | Ventas en un periodo: v | Intercambio en un periodo: i): ");
 		YearMonth inicio = null, fin = null;
 		int i = 1;
 		switch (tipo) {
@@ -215,18 +229,18 @@ public class ActionGestor {
 			for (Map.Entry<Producto, StatsMensual> par: listaProductos) {
 				StatsMensual stats = par.getValue();
 				Double porcVentas = (stats.getRecaudacion()/total.getRecaudacion()) * 100;
-				Main.showMessage("  " + i+") "+ par.getKey().getNombre() + ": " + stats.getRecaudacion() + "€ ("+porcVentas+"%) " + stats.getUnidades() +" uds vendidas");
-				i++;
+				Main.showMessage("  " + i++ +") "+ par.getKey().getNombre() + ": " + stats.getRecaudacion() + "€ ("+porcVentas+"%) " + stats.getUnidades() +" uds vendidas");
 			}
 			break;
+			
 		case "u":
 			List<StatsUsuario> listaUsuarios = Main.tienda.getHistorial().getUsuariosMasActivos();
 			i = 1;
 			for (StatsUsuario stats: listaUsuarios) {
-				Main.showMessage("  " +i+") "+ stats.getCliente().getNombre() + " Total: " + stats.getGastoTotal() + "€ " + "Productos comprados: " + stats.getUdsCompradas() + "Artículos intercambiados: " + stats.getUdsIntercambiadas());
-				i++;
+				Main.showMessage("  " + i++ +") "+ stats.getCliente().getNombre() + " Total: " + stats.getGastoTotal() + "€ " + "Productos comprados: " + stats.getUdsCompradas() + "Artículos intercambiados: " + stats.getUdsIntercambiadas());
 			}
 			break;
+			
 		case "v":
 			inicio = Main.getUserInputYearMonth("Introducir mes de inicio (formato MM/yyyy): ");
 			fin = Main.getUserInputYearMonth("Introducir mes de final (formato MM/yyyy): ");
@@ -253,7 +267,13 @@ public class ActionGestor {
 		}
 	}
 	
-	private static void actionGestionarEmpleados(Gestor gestor) throws InvalidArgumentException {
+	/**
+	 * Permite al gestor crear empleados y gestionar los existentes
+	 * @param gestor Gestor de la tienda
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	private static void actionGestionarEmpleados(Gestor gestor) throws InvalidArgumentException, InvalidUserInputException {
 		String tipo = Main.getUserInputString("Introducir acción a realizar (Dar de alta nuevo empleado: da | Gestionar permisos empleados existentes: ge): ");
 		
 		switch(tipo) {
@@ -266,7 +286,13 @@ public class ActionGestor {
 		}
 	}
 
-	private static void actionDarDeAltaEmpleado(Gestor gestor) throws InvalidArgumentException {
+	/**
+	 * Permite dar de alta a un nuevo empleado en la tienda
+	 * @param gestor Gestor de la tienda
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	private static void actionDarDeAltaEmpleado(Gestor gestor) throws InvalidArgumentException, InvalidUserInputException {
 		String nombre = Main.getUserInputString("Introducir nombre del nuevo usuario: ");
 		String contrasena = Main.getUserInputString("Introducir contraseña del nuevo usuario: ");
 		Set<Permiso> permisos = getPermisosSeleccionados();
@@ -276,14 +302,13 @@ public class ActionGestor {
 
 	/**
 	 * Gestiona los empleados existentes
-	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan parámetros inválidos
+	 * @param gestor Gestor de la tienda
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException 
 	 */
-	 private static void actionGestionarEmpleadosExistentes(Gestor gestor) throws InvalidArgumentException {
+	 private static void actionGestionarEmpleadosExistentes(Gestor gestor) throws InvalidArgumentException, InvalidUserInputException {
 		 Empleado[] empleados = Main.tienda.getEmpleados();
-			if (empleados.length == 0) {
-				Main.showMessage("No hay empleados actualmente en la tienda");
-				return;
-			}
+			if (empleados.length < 1) throw new InvalidArgumentException("No hay empleados actualmente en la tienda", "gestionar empleados");
 			
 			int i = 1;
 			for (Empleado e: empleados) {
@@ -291,7 +316,7 @@ public class ActionGestor {
 				i++;
 			}
 			
-			int index = Main.getUserInputInt("Introducir índice de empleado que se desea gestionar (1 - "+ empleados.length +"): ");
+			int index = Main.getUserInputInt("Introducir número de empleado que se desea gestionar (1 - "+ empleados.length +"): ");
 			if (index < 1 || index > empleados.length) throw new InvalidArgumentException("Índice de empleado inválido", "gestionar empleados");
 			
 			String accion = Main.getUserInputString("Introducir accción a realizar con " + empleados[index-1].getNombre() + " (Dar de baja: db | Gestionar permisos: gp): ");
@@ -306,7 +331,13 @@ public class ActionGestor {
 			}
 	}
 
-	private static void actionGestionarPermisos(Empleado empleado) throws InvalidArgumentException {
+	 /**
+	  * Permite gestionar los permisos de un empleado
+	  * @param empleado Empleado cuyos permisos se van a gestionar
+	  * @throws InvalidArgumentException
+	  * @throws InvalidUserInputException
+	  */
+	private static void actionGestionarPermisos(Empleado empleado) throws InvalidArgumentException, InvalidUserInputException {
 		Main.showMessage("Información del empleado:\n"+empleado);
 		
 		Set<Permiso> permisos;
@@ -314,14 +345,12 @@ public class ActionGestor {
 		switch (c) {
 		case "c":
 			permisos = getPermisosSeleccionados();
-			
 			for (Permiso p: permisos) {
 				empleado.addPermiso(p);
 			}
 			break;
 		case "q": 
 			permisos = getPermisosSeleccionados();
-			
 			for (Permiso p: permisos) {
 				empleado.quitarPermiso(p);
 			}
@@ -333,13 +362,13 @@ public class ActionGestor {
 	 * Obtiene un set de permisos a partir del usuario
 	 * @return set de permisos obtenidos
 	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 * @throws InvalidUserInputException 
 	 */
-	private static Set<Permiso> getPermisosSeleccionados() throws InvalidArgumentException {
+	private static Set<Permiso> getPermisosSeleccionados() throws InvalidArgumentException, InvalidUserInputException {
 		Permiso[] permisosDisp = Permiso.values();
 		int i = 1;
 		for (Permiso p: permisosDisp) {
-			Main.showMessage("  " + i + ") " + p.name());
-			i++;
+			Main.showMessage("  " + i++ + ") " + p.name());
 		}
 		List<Integer> listaPermisos = Main.getUserInputIntList("Introducir la lista de números de permisos (1 - " + permisosDisp.length + "): ");
 
