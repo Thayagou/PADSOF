@@ -15,7 +15,6 @@ public class Gestor extends Usuario implements Serializable {
 	public Gestor(String nombre, String contrasena) 
 		throws IllegalArgumentException {
 		super(nombre, contrasena);
-		permisos.add(Permiso.SISTEMA);
 		permisos.add(Permiso.PRODUCTOS);
 	}
 

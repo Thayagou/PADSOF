@@ -144,7 +144,6 @@ public abstract class Producto implements Serializable, Descontable {
 	 * @param stats Instancia de StatsProducto con todas sus estadísticas
 	 */
 	public void setStatsProducto(StatsProducto stats) {
-		System.out.println("Pasa p");
 		estadisticas = stats;
 	}
 	

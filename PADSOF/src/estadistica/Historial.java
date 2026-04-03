@@ -40,7 +40,6 @@ public class Historial implements Serializable, ObservadorProducto {
 	 */
 	@Override
 	public void guardarProducto(Producto p) {
-		System.out.println("pasa");
 		if (statsProductos.containsKey(p) == false) statsProductos.put(p, new StatsProducto(p));	
 	}
 	
