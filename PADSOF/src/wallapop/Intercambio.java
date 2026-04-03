@@ -157,6 +157,33 @@ public class Intercambio implements Serializable {
 	}
 	
 	/**
+	 * Invalida el intercambio si este se encuentra en estado ofertado y además alguno de los artículos se ha utilizado en otro intercambio
+	 * @param articulos Artículos que han participado en algún otro intercambio
+	 * @return true en caso de que se haya invalidado y false en caso contrario
+	 */
+	public boolean invalidarSiSolicitaArticulos(ArticuloSegundaMano[] articulos) {
+		if (this.estado.equals(EstadoIntercambio.OFERTADO) == false) return false;
+		
+		for (ArticuloSegundaMano art : articulos) {
+			for (ArticuloSegundaMano artSolicitado: solicitados) {
+				if (art.equals(artSolicitado)) {
+					// En algún caso de error teóricamente imposible, ignora este intercambio ya que se encuentra en estado OFERTADO
+					try {
+						liberarOfertado();
+					} catch (InvalidArgumentException e){
+						return false;
+					}
+					
+					estado = EstadoIntercambio.INVALIDADO;
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Getter de la cartera del emisor
 	 * @return cartera del emisor
 	 */
@@ -234,6 +261,14 @@ public class Intercambio implements Serializable {
 	 */
 	public LocalDateTime getFechaConfirmacion() {
 		return fechaConfirmacion;
+	}
+	
+	/**
+	 * Getter del id del intercambio
+	 * @return el id
+	 */
+	public long getId() {
+		return id;
 	}
 
 	@Override

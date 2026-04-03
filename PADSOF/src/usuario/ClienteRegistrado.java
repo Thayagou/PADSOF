@@ -104,8 +104,8 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 	 * @param categorias Categorías que se han introducido en la búsqueda
 	 * @throws InvalidArgumentException Se lanza desde el método llamado en caso de que alguna categoría introducida no sea válida
 	 */
-	public void actualizarPorBusqueda(Categoria...categorias) throws InvalidArgumentException {
-		estadisticas.actualizarBusqueda(categorias);
+	public void actualizarVectorInteresesPorBusqueda(Categoria...categorias) throws InvalidArgumentException {
+		estadisticas.actualizarVectorInteresesBusqueda(categorias);
 	}
 
 	public boolean enviarNotificacion(String mensaje, TipoNotificacion tipo) {

@@ -17,5 +17,7 @@ public enum EstadoIntercambio implements Serializable {
 	/** El intercambio se ha ofertado y el receptor lo ha aceptado */
 	ACEPTADO,
 	/** El intercambio se ha ofertado, aceptado por el receptor y se ha realizado físicamente */
-	CONFIRMADO
+	CONFIRMADO,
+	/** El intercambio se ha ofertado pero el receptor utilizó algún artículo en otro intercambio, por lo que se ha invalidado */
+	INVALIDADO
 }

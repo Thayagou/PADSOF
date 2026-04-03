@@ -18,7 +18,7 @@ import wallapop.*;
 /**
  * Clase que implementa el almacén de la tienda con funcionalidades de venta y gestion de productos
  * 
- * Autores: Juan Ibáñez, Tiago Oselka, Claudia Saiz
+ * @author Juan Ibáñez, Tiago Oselka, Claudia Saiz
  */
 public class Almacen implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -558,7 +558,7 @@ public class Almacen implements Serializable {
 			throws InvalidArgumentException {
 		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
 		
-		cliente.actualizarPorBusqueda(categorias);
+		cliente.actualizarVectorInteresesPorBusqueda(categorias);
 		
 		return getProductosPorFiltros(categorias, precioMin, precioMax, estrellasMin);
 	}

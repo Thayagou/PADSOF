@@ -225,7 +225,14 @@ public class Tienda implements Serializable {
 		for(Empleado e : this.getEmpleados()) {
 			e.enviarNotificacion("Un nuevo intercambio ha sido aceptado", TipoNotificacion.INTERCAMBIO);
 		}
-		intercambio.getEmisor().getDueno().enviarNotificacion("Su oferta de intercambio ha sido aceptada", TipoNotificacion.INTERCAMBIO);
+		intercambio.getEmisor().getDueno().enviarNotificacion("Su oferta de intercambio de Id: " + intercambio.getId() + " ha sido aceptada", TipoNotificacion.INTERCAMBIO);
+		
+		Intercambio[] intercambiosInvalidados = intercambio.getReceptor().invalidarIntercambiosConArticulos(intercambio.getSolicitados());
+		for (Intercambio i: intercambiosInvalidados) {
+			ClienteRegistrado emisorInvalidado = i.getEmisor().getDueno();
+			emisorInvalidado.enviarNotificacion("Su oferta de intercambio de Id: " + i.getId() + " ha sido invalidada", TipoNotificacion.INTERCAMBIO);
+		}
+		
 		return true;
 	}
 	
@@ -273,6 +280,14 @@ public class Tienda implements Serializable {
 		cliente.getCartera().addIntercambio(intercambio);
 		clienteRecibe.getCartera().addIntercambio(intercambio);
 		clienteRecibe.enviarNotificacion("Ha recibido una nueva oferta de intercambio", TipoNotificacion.INTERCAMBIO);
+		
+		Intercambio[] intercambiosInvalidados = intercambio.getEmisor().invalidarIntercambiosConArticulos(ofrecidos);
+		for (Intercambio i: intercambiosInvalidados) {
+			ClienteRegistrado emisorInvalidado = i.getEmisor().getDueno();
+			emisorInvalidado.enviarNotificacion("Su oferta de intercambio de Id: " + i.getId() + " ha sido invalidada", TipoNotificacion.INTERCAMBIO);
+		}
+		
+		
 		return true;
 	}
 	

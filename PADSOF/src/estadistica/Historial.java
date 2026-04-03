@@ -19,28 +19,33 @@ import usuario.*;
  */
 public class Historial implements Serializable, ObservadorProducto {
 	private static final long serialVersionUID = 1L;
+	/** Lista de todos los pedidos que se han realizado en la tienda */
 	private List<Pedido> pedidos = new ArrayList<>();
+	/** Lista de todas las valoraciones que se han solicitado en la tienda */
 	private List<Valoracion> valoraciones = new ArrayList<>();
+	/** Lista de todos los intercambios que se han realizado en la tienda */
 	private List<Intercambio> intercambios = new ArrayList<>();
+	/** Mapa que asigna a cada producto con su respectiva estadística */
 	private Map<Producto, StatsProducto> statsProductos = new HashMap<>();
+	/** Mapa que une asigna a cada cliente con su respectiva estadística */
 	private Map<ClienteRegistrado, StatsUsuario> statsClientes = new HashMap<>();
+	/** Mapa con las estadísticas mensuales de ventas ordenadas por meses */
 	private TreeMap<YearMonth, StatsMensual> ventasMensuales = new TreeMap<>();
-	private StatsMensual totalVenta;
+	/** Mapa con las estadísticas mensuales de los intercambios ordenadas por meses */
 	private TreeMap<YearMonth, StatsMensual> wallapopMensuales = new TreeMap<>();
 
 	/**
 	 * Constructor de la clase historial
 	 */
-	public Historial() { 
-		totalVenta = new StatsMensual();
-	}
+	public Historial() { }
 	
+	@Override
 	/**
 	 * Guarda un producto en el historial y le asigna estadísticas
+	 * @param producto Producto a almacenar
 	 */
-	@Override
-	public void guardarProducto(Producto p) {
-		if (statsProductos.containsKey(p) == false) statsProductos.put(p, new StatsProducto(p));	
+	public void guardarProducto(Producto producto) {
+		if (statsProductos.containsKey(producto) == false) statsProductos.put(producto, new StatsProducto(producto));	
 	}
 	
 	/**
@@ -49,79 +54,6 @@ public class Historial implements Serializable, ObservadorProducto {
 	 */
 	public void guardarUsuario(ClienteRegistrado cliente) {
 		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
-	}
-	
-	/**
-	 * Obtiene las estadísticas de las ventas de la tienda mes a mes ordenadas 
-	 * @param inicio Mes desde el cual se desea conocer las estadísticas
-	 * @param fin Mes hasta el cual se desea conocer las estadísticas
-	 * @return Lista con las estadísticas entre estos dos meses
-	 */
-	public List<StatsMensual> getVentasEntreMeses(YearMonth inicio, YearMonth fin) {
-		List<StatsMensual> estadisticas = new ArrayList<>(ventasMensuales.subMap(inicio, true, fin, true).values());
-		
-		return estadisticas;
-	}
-	
-	/**
-	 * Obtiene el valor acumulado de las ventas entre los meses establecidos
-	 * @param inicio Mes desde el cual se desea conocer las estadísticas
-	 * @param fin Mes hasta el cual se desea conocer las estadísticas
-	 * @return StatsMensual con el acumulado entre meses
-	 */
-	public StatsMensual getVentasEntreMesesAcumulado(YearMonth inicio, YearMonth fin) {
-		List<StatsMensual> lista = getVentasEntreMeses(inicio, fin);
-		
-		StatsMensual acumulado = new StatsMensual();
-		for (StatsMensual stats: lista) {
-			acumulado.incrementar(stats.getUnidades(), stats.getRecaudacion());
-		}
-		
-		return acumulado;
-	}
-	
-	/**
-	 * Obtiene las estadísticas de los intercambios de la tienda mes a mes ordenadas 
-	 * @param inicio Mes desde el cual se desea conocer las estadísticas
-	 * @param fin Mes hasta el cual se desea conocer las estadísticas
-	 * @return Lista con las estadísticas entre estos dos meses
-	 */
-	public List<StatsMensual> getIntercambiosEntreMeses(YearMonth inicio, YearMonth fin) {
-		List<StatsMensual> estadisticas = new ArrayList<>(wallapopMensuales.subMap(inicio, true, fin, true).values());
-		
-		return estadisticas;	
-	}
-	
-	/**
-	 * Obtiene una lista de los productos ordenada según la recaudación que han obtenido estos entre los meses especificados.
-	 * En el primer lugar de la lista se encuentra el par (null, total), que corresponde al total de las ventas en el periodo establecido
-	 * @param inicio Mes de inicio del que se desea obtener la lista
-	 * @param fin Mes final establecido
-	 * @return Lista de pares (Producto, StatsMensual), conteniendo en cada una la recaudación y las unidades vendidas de cada producto respectivamente
-	 * @throws InvalidArgumentException En caso de que los meses estén insertados en un orden incorrecto se lanza esta excepción
-	 */
-	public List<Map.Entry<Producto, StatsMensual>> getProductosMayorRecaudacion(YearMonth inicio, YearMonth fin) throws InvalidArgumentException {
-		if (inicio == null || fin == null) throw new InvalidArgumentException("Alguno de los meses introducidos no es válido", "obtener productos con mayor recaudación");
-		if (inicio.compareTo(fin) > 0) throw new InvalidArgumentException("El mes de inicio debe ser anterior al del final", "obtener productos con mayor recaudación");
-		
-		List<Map.Entry<Producto, StatsMensual>> lista = new ArrayList<>();
-		
-		for (StatsProducto stats: statsProductos.values()) {
-			StatsMensual s = stats.getEstadisticasEntreMeses(inicio, fin);
-			lista.add(Map.entry(stats.getProducto(), s));
-		}
-		
-		Collections.sort(lista, (a,b)->Double.compare(a.getValue().getRecaudacion(), b.getValue().getRecaudacion()));
-				
-		return lista;
-	}
-	
-	/**
-	 * Obtiene un StatsMensual que contiene la recaudación total de ventas de la tienda y el total de unidades vendidas
-	 * @return StatsMensual con el total de ventas
-	 */
-	public StatsMensual getTotalVenta() {
-		return totalVenta;
 	}
 	
 	/**
@@ -166,7 +98,6 @@ public class Historial implements Serializable, ObservadorProducto {
 		if (ventasMensuales.get(month) == null) ventasMensuales.put(month, new StatsMensual());
 		StatsMensual statVenta = ventasMensuales.get(month);
 		statVenta.incrementar(udsVendidas, precio);
-		totalVenta.incrementar(udsVendidas, precio);
 			
 		System.out.println(cliente);
 		pedidos.add(pedido);
@@ -208,6 +139,72 @@ public class Historial implements Serializable, ObservadorProducto {
 		valoraciones.add(valoracion);
 		
 		return true;
+	}
+	
+	/**
+	 * Obtiene las estadísticas de las ventas de la tienda mes a mes ordenadas 
+	 * @param inicio Mes desde el cual se desea conocer las estadísticas
+	 * @param fin Mes hasta el cual se desea conocer las estadísticas
+	 * @return Lista con las estadísticas entre estos dos meses
+	 */
+	public List<StatsMensual> getVentasEntreMeses(YearMonth inicio, YearMonth fin) {
+		List<StatsMensual> estadisticas = new ArrayList<>(ventasMensuales.subMap(inicio, true, fin, true).values());
+		
+		return estadisticas;
+	}
+	
+	/**
+	 * Obtiene el valor acumulado de las ventas entre los meses establecidos
+	 * @param inicio Mes desde el cual se desea conocer las estadísticas
+	 * @param fin Mes hasta el cual se desea conocer las estadísticas
+	 * @return StatsMensual con el acumulado entre meses
+	 * @throws InvalidArgumentException Se lanza en caso de haber problemas con las estadísticas acumuladas
+	 */
+	public StatsMensual getVentasEntreMesesAcumulado(YearMonth inicio, YearMonth fin) throws InvalidArgumentException {
+		List<StatsMensual> lista = getVentasEntreMeses(inicio, fin);
+		
+		StatsMensual acumulado = new StatsMensual();
+		for (StatsMensual stats: lista) {
+			acumulado.incrementar(stats.getUnidades(), stats.getRecaudacion());
+		}
+		
+		return acumulado;
+	}
+	
+	/**
+	 * Obtiene las estadísticas de los intercambios de la tienda mes a mes ordenadas 
+	 * @param inicio Mes desde el cual se desea conocer las estadísticas
+	 * @param fin Mes hasta el cual se desea conocer las estadísticas
+	 * @return Lista con las estadísticas entre estos dos meses
+	 */
+	public List<StatsMensual> getIntercambiosEntreMeses(YearMonth inicio, YearMonth fin) {
+		List<StatsMensual> estadisticas = new ArrayList<>(wallapopMensuales.subMap(inicio, true, fin, true).values());
+		
+		return estadisticas;	
+	}
+	
+	/**
+	 * Obtiene una lista de los productos ordenada según la recaudación que han obtenido estos entre los meses especificados.
+	 * En el primer lugar de la lista se encuentra el par (null, total), que corresponde al total de las ventas en el periodo establecido
+	 * @param inicio Mes de inicio del que se desea obtener la lista
+	 * @param fin Mes final establecido
+	 * @return Lista de pares (Producto, StatsMensual), conteniendo en cada una la recaudación y las unidades vendidas de cada producto respectivamente
+	 * @throws InvalidArgumentException En caso de que los meses estén insertados en un orden incorrecto se lanza esta excepción
+	 */
+	public List<Map.Entry<Producto, StatsMensual>> getProductosMayorRecaudacion(YearMonth inicio, YearMonth fin) throws InvalidArgumentException {
+		if (inicio == null || fin == null) throw new InvalidArgumentException("Alguno de los meses introducidos no es válido", "obtener productos con mayor recaudación");
+		if (inicio.compareTo(fin) > 0) throw new InvalidArgumentException("El mes de inicio debe ser anterior al del final", "obtener productos con mayor recaudación");
+		
+		List<Map.Entry<Producto, StatsMensual>> lista = new ArrayList<>();
+		
+		for (StatsProducto stats: statsProductos.values()) {
+			StatsMensual s = stats.getEstadisticasEntreMeses(inicio, fin);
+			lista.add(Map.entry(stats.getProducto(), s));
+		}
+		
+		Collections.sort(lista, (a,b)->Double.compare(a.getValue().getRecaudacion(), b.getValue().getRecaudacion()));
+				
+		return lista;
 	}
 	
 	/**
@@ -326,7 +323,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	public String toString() {
 		return "Historial [pedidos=" + pedidos + ", valoraciones=" + valoraciones + ", intercambios=" + intercambios
 				+ ", statsProductos=" + statsProductos + ", statsClientes=" + statsClientes + ", ventasMensuales="
-				+ ventasMensuales + ", totalVenta=" + totalVenta + ", wallapopMensuales=" + wallapopMensuales + "]";
+				+ ventasMensuales + ", wallapopMensuales=" + wallapopMensuales + "]";
 	}	
 	
 	

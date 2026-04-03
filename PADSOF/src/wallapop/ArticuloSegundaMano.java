@@ -150,9 +150,17 @@ public class ArticuloSegundaMano implements Serializable {
 		this.valoracion = valoracion;
 	}
 	
+	/**
+	 * Getter del id del artículo 
+	 * @return el id
+	 */
+	public long getId() {
+		return id;
+	}
+	
 	@Override
 	public String toString() {
-		return nombre + 
+		return nombre + " con Id" + id +
 				"\nDescripcion: " + descripcion + 
 				"\nPropietario: " + dueno.getDueno().getNombre() +
 				"\nCategorias:" + categorias + 
