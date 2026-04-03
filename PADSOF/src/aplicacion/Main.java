@@ -101,6 +101,7 @@ public class Main {
 	static void getAction(String message) {
 		showMessage(message);
 		action = sc.next().trim();
+		sc.nextLine();
 	}
 	
 	/**
@@ -224,7 +225,7 @@ public class Main {
 					break;
 					
 				case "n":
-					actionVerNotificaciones(cliente);
+					actionGestionarNotificaciones(cliente);
 					break;
 					
 				}
@@ -425,12 +426,12 @@ public class Main {
 	 */
 	static void actionAnadirDescuento(Gestor gestor) throws InvalidArgumentException, DoubleDiscountException {
 		Producto[] productos;
-		String aplicadoSobre = getUserInputString("Aplicar descuento sobre (c: categoría | p: producto): ");
+		getAction("Aplicar descuento sobre (c: categoría | p: producto): ");
 		int index;
 		Categoria c = null;
 		Producto p = null;
 
-		switch (aplicadoSobre) {
+		switch (action) {
 			case "c":
 				Categoria[] categorias = tienda.getAlmacen().getCategorias();
 				for (int i = 1; i < categorias.length; i++) {
@@ -438,8 +439,9 @@ public class Main {
 				}
 				
 				index = getUserInputInt("Número de producto para aplicar el descuento: ");
-				if (index <= 0 || index > categorias.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
+				if (index < 1 || index > categorias.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
 				c = categorias[index-1];
+				break;
 				
 			case "p":
 				String prod = getUserInputLine("Enter para elegir entre todo el inventario o : ");
@@ -450,9 +452,9 @@ public class Main {
 				}
 				
 				index = getUserInputInt("Número de producto para aplicar el descuento: ");
-				if (index <= 0 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
-				// Mirar esto arriba!!!!!!!
+				if (index < 1 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
 				p = productos[index-1];
+				break;
 		}
 		
 		double valorMin;
@@ -505,7 +507,7 @@ public class Main {
 			}
 			
 			index = getUserInputInt("Número de producto para elegir como regalo: ");
-			if (index <= 0 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
+			if (index < 1 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
 			// Mirar esto arriba!!!!!!!
 			Producto regalo = productos[index-1];
 			
@@ -972,11 +974,106 @@ public class Main {
 		}
 	}
 	
-	static void actionVerCuenta(ClienteRegistrado cliente) {
+	/**
+	 * Muestra la información de cuenta de un usuario
+	 * @param cliente Cliente de la tienda
+	 * @throws InvalidArgumentException En caso de que haya problemas al cambiar la contraseña se lanza esta excepción
+	 */
+	static void actionVerCuenta(ClienteRegistrado cliente) throws InvalidArgumentException {
+		showMessage("Nombre de usuario: " + cliente.getNombre());
+		
+		String tipo = getUserInputString("Desea cambiar su contraseña? (s: si | n: no): ");
+		if (tipo.equals("s")) {
+			String antigua = getUserInputString("Introducir contraseña antigua: ");
+			String nueva1 = getUserInputString("Introducir nueva contraseña: ");
+			String nueva2 = getUserInputString("Repetir contraseña nueva: ");
+			
+			cliente.cambiarContrasena(antigua, nueva1, nueva2);
+			showMessage("Se ha cambiado correctamente la contraseña");
+			
+		}
 		
 	}
 	
-	static void actionVerNotificaciones(ClienteRegistrado cliente) {
+	private static void actionGestionarNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
+		getAction("¿Qué desea hacer? (g: gestionar intereses de notificaciones | v: ver notificaciones): ");
+		
+		switch (action) {
+		case "g":
+			actionGestionarInteresesNotificaciones(cliente);
+			break;
+		case "v":
+			actionVerNotificaciones(cliente);
+			break;
+		}
+		
+	}
+	
+	static void actionGestionarInteresesNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
+		Set<TipoNotificacion> intesesesActuales = new HashSet<>(Arrays.asList(cliente.getIntereses()));
+		showMessage("Tus intereses de notificaciones: " + intesesesActuales);
+		
+		getAction("¿Desea quitar o añadir intereses? (a: añadir | el: eliminar): ");
+		Set<TipoNotificacion> intereses = getInteresesDeNotificaciones();
+		
+		switch(action) {
+		case "a":
+			for (TipoNotificacion tn: intereses) {
+				cliente.anadirInteres(tn);
+			}
+			break;
+		case "el":
+			for (TipoNotificacion tn: intereses) {
+				cliente.quitarInteres(tn);
+			}
+			break;
+		}
+	}
+	
+	/**
+	 * Obtiene un Set de tipos de notificación a partir de los seleccionados por el usuario
+	 * @return Dicho set de tipos
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan datos inválidos
+	 */
+	static private Set<TipoNotificacion> getInteresesDeNotificaciones() throws InvalidArgumentException {
+		TipoNotificacion[] interesesDisponibles = TipoNotificacion.values();
+		int i = 1;
+		for (TipoNotificacion tn : interesesDisponibles) {
+			showMessage("  " + i++ + ") " + tn.name());
+		}
+		List<Integer> listaIntereses = getUserInputIntList("Introducir la lista de números de permisos (1 - " + interesesDisponibles.length + "): ");
+		
+		Set<TipoNotificacion> interesesSeleccionados= new HashSet<>();
+		for (Integer j: listaIntereses) {
+			if (j < 1 || j > interesesDisponibles.length) throw new InvalidArgumentException("Número de interés inválido", "gestionar empleados");
+			interesesSeleccionados.add(interesesDisponibles[j-1]);
+		}
+		
+		return interesesSeleccionados;
+	}
+	
+	static void actionVerNotificaciones(ClienteRegistrado cliente) throws InvalidArgumentException {
+		Notificacion[] notificaciones = cliente.getNotificaciones();
+		int i = 1;
+		for (Notificacion n: notificaciones) {
+			showMessage("  " + i++ + " " + (n.isLeida() ? "leída" : "no leída") + ") " + n);
+		}
+		
+		int index = getUserInputInt("Introducir número de la notificación (1 - " + notificaciones.length + "): ");
+		if (index < 1 || index > notificaciones.length) throw new InvalidArgumentException("Número de notificación inválido", "gestionar notificaciones");
+		
+		getAction("¿Qué desea hacer? (m: marcar como leída | en: eliminar notificación)");
+		
+		switch (action) {
+		case "m": 
+			notificaciones[index-1].marcarLeida();
+			break;
+		case "en":
+			notificaciones[index-1].borrar();
+			break;
+		}
+		
+		
 		
 	}
 }

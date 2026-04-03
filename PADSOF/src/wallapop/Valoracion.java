@@ -18,6 +18,10 @@ public class Valoracion implements Serializable {
 	private LocalDateTime fechaValoracion;
 	private double precioEstimado;
 	
+	/**
+	 * Contructor 
+	 * @param articulo
+	 */
 	public Valoracion(ArticuloSegundaMano articulo) {
 		id = AsignadorId.getInstancia().siguienteId();
 		this.fechaSolicitud = LocalDateTime.now();
@@ -33,6 +37,8 @@ public class Valoracion implements Serializable {
 		this.precioEstimado = precioEstimado;
 		fechaValoracion = LocalDateTime.now();
 		estadoArticulo = estado;
+		
+		articuloValorado.disponibilizar();
 		
 		return true;
 	}

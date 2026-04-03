@@ -68,7 +68,7 @@ public class Tienda implements Serializable {
 	}
 	
 	/**
-	 * Devuelve los empleados de la tienda
+	 * Devuelve los empleados de la tienda que estén actualmente dados de alta
 	 * @return array de los empleados de las tiendas
 	 */
 	public Empleado[] getEmpleados() {
@@ -97,9 +97,9 @@ public class Tienda implements Serializable {
 	 * @param nombre Nombre de usuario del cliente
 	 * @param contrasena Contraseña de la cuenta
 	 * @param confirmarContrasena Confirmacion de la contraseña
-	 * @return Usuario que se creó
+	 * @return Usuario cliente que se creó
 	 */
-	public Usuario registrarse(String nombre, String contrasena, String confirmarContrasena) throws InvalidArgumentException, NotValidUserException {
+	public ClienteRegistrado registrarse(String nombre, String contrasena, String confirmarContrasena) throws InvalidArgumentException, NotValidUserException {
 		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Ya existe un usuario con ese nombre", "registrarse", nombre);
 		if(!contrasena.equals(confirmarContrasena)) throw new NotValidUserException("Ha fallado la comprobación de contraseña", "registrarse", nombre);
