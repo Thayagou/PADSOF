@@ -6,6 +6,7 @@ import java.time.*;
 import venta.descuentos.*;
 import venta.productos.*;
 import exceptions.*;
+import sistema.Sistema;
 
 public class Carrito implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -53,6 +54,29 @@ public class Carrito implements Serializable {
 		}
 		return merge;
 	}
+	
+	/**
+	 * Método privado para comprobar si un carrito ha caducado
+	 * @return true si ha caducado, false si no ha caducado
+	 */
+	private boolean isCaducado() {
+		return (fechaCaducidad.isBefore(LocalDateTime.now()));
+	}
+	
+	/**
+	 * Metodo para calcular la fecha en que caducará el carrito
+	 */
+	public void calcularFechaCaducidad() {
+		fechaCaducidad = LocalDateTime.now().plus(Sistema.getInstancia().getTiempoCaducaCarrito());
+	}
+	
+	/**
+	 * Método privado para vaciar el carrito si ha caducado
+	 */
+	private void vaciarSiCaducado() {
+		if(isCaducado())
+			vaciarCarrito();
+	}
 
 	/**
 	 * Metodo para vaciar el carrito de la compra
@@ -69,6 +93,8 @@ public class Carrito implements Serializable {
 	 */
 	private void anadirRegalo(Producto p) throws InvalidArgumentException {
 		if(p == null) throw new InvalidArgumentException("No se puede añadir un regalo null");
+		vaciarSiCaducado();
+		
 		if(!regalos.containsKey(p)) {
 			regalos.put(p,  new StockExterno(p, 1, 0));
 		} else {
@@ -84,6 +110,8 @@ public class Carrito implements Serializable {
 	 */
 	public void anadirProducto(Producto p) throws InvalidArgumentException {
 		if(p == null) throw new InvalidArgumentException("No se puede añadir un producto null");
+		vaciarSiCaducado();
+		
 		if(!items.containsKey(p)) {
 			items.put(p,  new StockExterno(p, 1));
 		} else {
@@ -97,6 +125,8 @@ public class Carrito implements Serializable {
 	 * @param p Producto del cual se quiere quitar una unidad del carrito.
 	 */
 	public void quitarProducto(Producto p) {
+		vaciarSiCaducado();
+		
 		if(items.containsKey(p)) {
 			items.get(p).reducirStock();
 			if(!items.get(p).disponible()) {
@@ -106,25 +136,11 @@ public class Carrito implements Serializable {
 	}
 	
 	/**
-	 * Metodo para comprobar si el carrito ha sobrepasado su fecha de caducidad
-	 * @return true si está caducado, false si no lo está
-	 */
-	public boolean estaCaducado() {
-		return (LocalDateTime.now().isAfter(fechaCaducidad));
-	}
-	
-	/**
-	 * Metodo para calcular la fecha en que caducará el carrito
-	 */
-	public void calcularFechaCaducidad() {
-//		fechaCaducidad = LocalDateTime.now() + TIEMPO_INACTIVIDAD
-	}
-	
-	/**
 	 * Método para calcular el carrito de la compra y todos sus datos.
 	 * @return Precio total del carrito.
 	 */
 	public double calcularCarrito() {
+		vaciarSiCaducado();
 		double pTotal = 0;
 		
 		calcularDescuentos();
@@ -203,6 +219,7 @@ public class Carrito implements Serializable {
 	 */
 	@Override
 	public String toString() {
+		vaciarSiCaducado();
 		StringBuilder s = new StringBuilder();
 		s.append("Carrito:\n");
 		s.append("\n Precio total: "+calcularCarrito());
