@@ -184,7 +184,7 @@ public class Main {
 		if(cliente == null) return;
 		while(!action.equals("e")) {
 			
-			getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | a: cuenta | n: notificaciones | e: exit");
+			getAction("b: buscar | r: recomendaciones | s: buscar segunda mano | w: cartera | c: carrito | a: cuenta | n: notificaciones | p: pedidos | e: exit");
 			try {
 				switch(action) {
 				case "b":
@@ -196,7 +196,7 @@ public class Main {
 					break;
 					
 				case "s":
-					actionBuscarSegundaMano(cliente);
+					actionVerSegundaMano(cliente);
 					break;
 					
 				case "w":
@@ -804,8 +804,33 @@ public class Main {
 		cliente.getCarrito().anadirProducto(productos[num-1]);
 	}
 	
-	static void actionBuscarSegundaMano(ClienteRegistrado cliente) {
+	static void actionVerSegundaMano(ClienteRegistrado cliente) throws InvalidArgumentException {
+		ArticuloSegundaMano[] articulos = tienda.getAlmacen().getArticulosParaCliente(cliente);
+		if(articulos.length < 1) throw new InvalidArgumentException("No hay artículos disponibles para intercambiar", "ver artículos de segunda mano");
+		int i = 1;
+		for (ArticuloSegundaMano a : articulos) {
+			showMessage(i++ + ") " + a);
+		}
+		char dec = getUserInputChar("¿Desea ver la cartera del propietario de alguno de estos artículos? (Pulsar 's' si lo desea)");
+		if(dec != 's') return;
 		
+		int num = getUserInputInt("Introduzca el número del artículo cuyo propietario quiere ver: ");
+		showMessage("Cartera de " + articulos[num-1].getPropietario().getNombre() + ": ");
+		i = 1;
+		for(ArticuloSegundaMano a : articulos[num-1].getDueno().getArticulosDisponibles()) {
+			showMessage(i++ + ") " + a);
+		}
+		dec = getUserInputChar("¿Desea realizar una oferta de intercambio a este usuario? (Pulsar 's' si lo desea)");
+		if(dec != 's') return;
+		List pide = getUserInputIntList("Indique los números de los artículos que desea pedir: (Números separados por espacios)");
+		
+		showMessage("Su cartera: ");
+		for(ArticuloSegundaMano a : cliente.getCartera().getArticulosDisponibles()) {
+			showMessage(i++ + ") " + a);
+		}
+		List ofrece = getUserInputIntList("Indique los números de los artículos que desea ofrecer: (Números separados por espacios)");
+		
+		ArticuloSegundaMano = 
 	}
 	
 	static void actionVerCartera(ClienteRegistrado cliente) {

@@ -537,6 +537,15 @@ public class Almacen implements Serializable {
 	}
 	
 	/**
+	 * Devuelve los articulos que hay disponibles para un cliente
+	 * @param cliente Cliente que desea ver el los articulos disponibles para él
+	 * @return Array de ArticuloSegundaMano que se pueden ver
+	 */
+	public ArticuloSegundaMano[] getArticulosParaCliente(ClienteRegistrado cliente) {
+		return articulos.stream().filter(a -> (a.isDisponible() && !a.getPropietario().getNombre().equals(cliente.getNombre()))).toArray(ArticuloSegundaMano[]::new);
+	}
+	
+	/**
 	 * Devuelve una lista de productos que cumplen unas ciertas condiciones de categorías y precio
 	 * @param cliente Cliente del cual se desea actualizar el vector de intereses
 	 * @param categorias Categorías a las que deben pertenecer los productos
