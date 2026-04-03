@@ -204,7 +204,8 @@ public class Historial implements Serializable, ObservadorProducto {
 		if (wallapopMensuales.get(month) == null) wallapopMensuales.put(month, new StatsMensual());
 		StatsMensual statWallapop = ventasMensuales.get(month);
 		statWallapop.incrementar(0, precio);
-
+		
+		valoraciones.add(valoracion);
 		
 		return true;
 	}
@@ -214,14 +215,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @return Array de Pedido, con aquellos pendientes
 	 */
 	public Pedido[] getPedidosPendientes() {
-		List<Pedido> pedidosPendientes = new ArrayList<>();
-		
-		for (Pedido pedido: pedidos) {
-			if (pedido.getEstado().equals(EstadoPedido.RECOGIDO) == false)
-				pedidosPendientes.add(pedido);
-		}
-		
-		return pedidosPendientes.toArray(new Pedido[0]);
+		return pedidos.stream().filter(p->p.getEstado().equals(EstadoPedido.RECOGIDO) == false).toArray(Pedido[]::new);
 	}
 	
 	/**
@@ -229,14 +223,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @return Array de Valoracion, con aquellas pendientes
 	 */
 	public Valoracion[] getValoracionesPendientes() {
-		List<Valoracion> valoracionesPendientes = new ArrayList<>();
-		
-		for (Valoracion valoracion: valoraciones) {
-			if (valoracion.getEstadoFisico().equals(EstadoFisicoArticulo.PENDIENTE))
-				valoracionesPendientes.add(valoracion);
-		}
-		
-		return valoracionesPendientes.toArray(new Valoracion[0]);
+		return valoraciones.stream().filter(v->v.getEstadoFisico().equals(EstadoFisicoArticulo.PENDIENTE)).toArray(Valoracion[]::new);
 	}
 	
 	/**
@@ -244,14 +231,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @return Array de Valoracion, con aquellas pendientes
 	 */
 	public Intercambio[] getIntercambiosPendientes() {
-		List<Intercambio> intercambiosPendientes = new ArrayList<>();
-		
-		for (Intercambio intercambio: intercambios) {
-			if (intercambio.getEstado().equals(EstadoIntercambio.ACEPTADO))
-				intercambiosPendientes.add(intercambio);
-		}
-		
-		return intercambiosPendientes.toArray(new Intercambio[0]);
+		return intercambios.stream().filter(i->i.getEstado().equals(EstadoIntercambio.ACEPTADO)).toArray(Intercambio[]::new);
 	}
 	
 	/**
@@ -263,7 +243,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @throws InvalidPermit Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
 	 */
 	public boolean avanzarEstadoPedido(Empleado empleado, Pedido pedido) throws InvalidArgumentException, InvalidPermitException {
-		if (empleado.tienePermiso(Permiso.PEDIDOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", "Pedidos");
+		if (empleado.tienePermiso(Permiso.PEDIDOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", Permiso.PEDIDOS, empleado);
 		
 		pedido.nextEstadoPedido(empleado);
 
@@ -281,20 +261,22 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param precioEstimado Valor monetario asignado por el empleado
 	 * @param estado Estado del producto asignado por el empleado
 	 * @return true si se valora correctamente, false en caso contario
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan parámetros inválidos
 	 * @throws ArticuloSinValoracionException Se lanza en caso de que el artículo que se intenta valorar no tiene valoración
 	 * @throws InvalidPermit Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
 	 */
 	public boolean valorarArticulo(Empleado empleado, ArticuloSegundaMano articulo, double precioEstimado, EstadoFisicoArticulo estado) throws InvalidPermitException, InvalidArgumentException, ArticuloSinValoracionException {
 		if (empleado == null || articulo == null || estado == null) throw new InvalidArgumentException("Algún argumento introducido no es válido", "valorar artículo de segunda mano");
 		if (precioEstimado < 0) throw new InvalidArgumentException("El precio estimado no puede ser negativo", "valorar artículo de segunda mano");
-		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "valorar artículo", "Intercambios");
-		if (articulo.getValoracion() == null) throw new ArticuloSinValoracionException("El artículo introducido no tiene valoracion", "valorar artículo de segunda mano", articulo.getNombre());
+		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "valorar artículo", Permiso.INTERCAMBIOS, empleado);
+		if (articulo.getValoracion() == null) throw new ArticuloSinValoracionException("El artículo introducido no tiene valoracion", "valorar artículo de segunda mano", articulo);
 		
 		Valoracion valoracion = articulo.getValoracion();
 		if (valoracion == null) return false;
 		
-		return valoracion.valorar(empleado, precioEstimado, estado);
+		valoracion.valorar(empleado, precioEstimado, estado);
+		
+		return true;
 	}
 	
 	/**
@@ -306,7 +288,8 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @throws InvalidPermit Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
 	 */
 	public boolean validarIntercambio(Empleado empleado, Intercambio intercambio) throws InvalidPermitException, InvalidArgumentException {
-		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "validar intercambio", "Intercambios");
+		if (empleado == null || intercambio == null) throw new InvalidArgumentException("Alguno de los parámetros introducidos es inválido", "validar intercambio");
+		if (empleado.tienePermiso(Permiso.INTERCAMBIOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "validar intercambio", Permiso.INTERCAMBIOS, empleado);
 		
 		if (intercambio.getEstado().equals(EstadoIntercambio.ACEPTADO) == false) return false;
 		
@@ -322,7 +305,9 @@ public class Historial implements Serializable, ObservadorProducto {
 		int nSolicitados = intercambio.getSolicitados().length;
 		statReceptor.actualizarUltimoIntercambio(nSolicitados);
 		
-		return intercambio.validarIntercambio(empleado);
+		intercambio.validarIntercambio(empleado);
+		
+		return true;
 	}
 	
 	/**
