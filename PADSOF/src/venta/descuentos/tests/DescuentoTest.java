@@ -9,6 +9,7 @@ import java.time.*;
 import venta.descuentos.*;
 import venta.productos.*;
 import exceptions.*;
+import sistema.Reloj;
 
 /**
  * Clase con los tests de los métodos de la clase Descuento
@@ -77,7 +78,7 @@ class DescuentoTest {
 
     @Test
     void testIsVigenteNoEmpezado() throws Exception {
-        Descuento noEmpezado = new DescuentoPorcentaje(0, LocalDateTime.now().plusHours(1), LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
+        Descuento noEmpezado = new DescuentoPorcentaje(0, Reloj.now().plusHours(1), LocalDateTime.MAX, CondicionDescuento.SIN_CONDICION, 10);
         assertFalse(noEmpezado.isVigente());
     }
 

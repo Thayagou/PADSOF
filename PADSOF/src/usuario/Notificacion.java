@@ -3,6 +3,7 @@ package usuario;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import sistema.Reloj;
 
 public class Notificacion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -13,7 +14,7 @@ public class Notificacion implements Serializable {
 	private TipoNotificacion tipo;
 	
 	public Notificacion(String contenido, TipoNotificacion tipo) {
-		this.fecha = LocalDate.now();
+		this.fecha = Reloj.localDateNow();
 		this.contenido = contenido;
 		this.leida = false;
 		this.borrada = false;

@@ -6,6 +6,7 @@ import java.time.*;
 import venta.descuentos.*;
 import venta.productos.*;
 import exceptions.*;
+import sistema.Reloj;
 import sistema.Sistema;
 
 public class Carrito implements Serializable {
@@ -60,14 +61,14 @@ public class Carrito implements Serializable {
 	 * @return true si ha caducado, false si no ha caducado
 	 */
 	private boolean isCaducado() {
-		return (fechaCaducidad.isBefore(LocalDateTime.now()));
+		return (fechaCaducidad.isBefore(Reloj.now()));
 	}
 	
 	/**
 	 * Metodo para calcular la fecha en que caducará el carrito
 	 */
 	public void calcularFechaCaducidad() {
-		fechaCaducidad = LocalDateTime.now().plus(Sistema.getInstancia().getTiempoCaducaCarrito());
+		fechaCaducidad = Reloj.now().plus(Sistema.getInstancia().getTiempoCaducaCarrito());
 	}
 	
 	/**

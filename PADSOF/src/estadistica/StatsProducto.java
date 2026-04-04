@@ -5,6 +5,7 @@ import java.time.*;
 import java.util.*;
 
 import exceptions.InvalidArgumentException;
+import sistema.Reloj;
 import sistema.Sistema;
 import venta.productos.*;
 
@@ -52,7 +53,7 @@ public class StatsProducto implements Serializable {
 	public boolean actualizarUltima(int udsVendidas, double precio) throws InvalidArgumentException {
 		if (udsVendidas < 0 || precio < 0) throw new InvalidArgumentException("Las unidades y valor gastado deben ser positivos", "actualizar estadísticas del producto");
 		
-		if (estadisticas.isEmpty() || estadisticas.getLast().getMes().equals(YearMonth.now()) == false) {
+		if (estadisticas.isEmpty() || estadisticas.getLast().getMes().equals(Reloj.mesNow()) == false) {
 			estadisticas.add(new StatsMensual());
 		}
 		

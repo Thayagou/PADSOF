@@ -12,6 +12,7 @@ import venta.pedidos.EstadoPedido;
 import venta.pedidos.Pedido;
 import wallapop.*;
 import usuario.*;
+import sistema.Reloj;
 
 /**
  * Clase Historial, encargada de guardar y manejar las estadísticas de usuarios y productos
@@ -94,7 +95,7 @@ public class Historial implements Serializable, ObservadorProducto {
 		
 		statCliente.actualizarCompra(vectorCompra, udsVendidas, precio);
 		
-		YearMonth month = YearMonth.now();
+		YearMonth month = Reloj.mesNow();
 		if (ventasMensuales.get(month) == null) ventasMensuales.put(month, new StatsMensual());
 		StatsMensual statVenta = ventasMensuales.get(month);
 		statVenta.incrementar(udsVendidas, precio);
@@ -131,7 +132,7 @@ public class Historial implements Serializable, ObservadorProducto {
 		StatsUsuario statCliente = statsClientes.get(cliente);
 		statCliente.actualizarUltimaValoracion(precio);
 		
-		YearMonth month = YearMonth.now();
+		YearMonth month = Reloj.mesNow();
 		if (wallapopMensuales.get(month) == null) wallapopMensuales.put(month, new StatsMensual());
 		StatsMensual statWallapop = ventasMensuales.get(month);
 		statWallapop.incrementar(0, precio);

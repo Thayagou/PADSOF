@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.*;
 
 import exceptions.InvalidArgumentException;
+import sistema.Reloj;
 
 /**
  * Clase StatsMensual que nos permite almacenar las unidades y recaudación. Unidades es un término intensionalmente ambiguo para poder almacenar distintos parámetros
@@ -18,7 +19,7 @@ public class StatsMensual implements Serializable, Comparable<StatsMensual> {
 	 * Constructor de la clase. Se inicializan a 0 las unidades y la recaudación y se asigna el mes actual a la instancia
 	 */
 	public StatsMensual() {
-		this.mes = YearMonth.now();
+		this.mes = Reloj.mesNow();
 	}
 	
 	/**

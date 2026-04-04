@@ -9,6 +9,7 @@ import java.time.*;
 import usuario.*;
 import venta.productos.*;
 import exceptions.*;
+import sistema.Reloj;
 
 /**
  * Clase con los tests de la clase Resena
@@ -34,7 +35,7 @@ class ResenaTest {
         assertEquals(4.0, resena.getPuntuacion());
         assertEquals("Muy bueno", resena.getComentario());
         assertEquals(usuario, resena.getUsuario());
-        assertEquals(LocalDate.now(), resena.getFecha());
+        assertEquals(Reloj.localDateNow(), resena.getFecha());
     }
 
     @Test
@@ -86,6 +87,6 @@ class ResenaTest {
 
     @Test
     void testGetFechaEsHoy() {
-        assertEquals(LocalDate.now(), resena.getFecha());
+        assertEquals(Reloj.localDateNow(), resena.getFecha());
     }
 }

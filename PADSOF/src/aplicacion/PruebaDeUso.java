@@ -34,7 +34,7 @@ public class PruebaDeUso {
 		tienda.getAlmacen().anadirCategoria("Aventuras");
 		Categoria cAventura = tienda.getAlmacen().getCategoria("Aventuras");
 		
-		tienda.getAlmacen().anadirComic(5, "El increíble Hulk", "Comic 199 de hulk", 17.50, imagen, LocalDate.now(), "Stan Lee", 50, "MarvelComics", cAventura);
+		tienda.getAlmacen().anadirComic(5, "El increíble Hulk", "Comic 199 de hulk", 17.50, imagen, Reloj.localDateNow(), "Stan Lee", 50, "MarvelComics", cAventura);
 		Stock stComic = tienda.getAlmacen().getStock("El increíble Hulk");
 		tienda.getAlmacen().anadirFigura(3, "Hulk Action Figure", "Figura de accion de Hulk", 29.50, imagen, "19x20 cm", "Lego", "Hierro", cInfantil);
 		Stock stFigura = tienda.getAlmacen().getStock("Hulk Action Figure");

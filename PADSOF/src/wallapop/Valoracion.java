@@ -6,6 +6,7 @@ import java.time.*;
 import exceptions.InvalidArgumentException;
 import usuario.*;
 import sistema.AsignadorId;
+import sistema.Reloj;
 import sistema.Sistema;
 
 /**
@@ -36,7 +37,7 @@ public class Valoracion implements Serializable {
 	 */
 	public Valoracion(ArticuloSegundaMano articulo) {
 		id = AsignadorId.getInstancia().siguienteId();
-		this.fechaSolicitud = LocalDateTime.now();
+		this.fechaSolicitud = Reloj.now();
 		this.articuloValorado = articulo;
 		this.precioPagado = Sistema.getInstancia().getPrecioValoracion();
 		this.estadoArticulo = EstadoFisicoArticulo.PENDIENTE;
@@ -54,7 +55,7 @@ public class Valoracion implements Serializable {
 		
 		this.empleado = empleado;
 		this.precioEstimado = precioEstimado;
-		fechaValoracion = LocalDateTime.now();
+		fechaValoracion = Reloj.now();
 		estadoArticulo = estado;
 		
 		articuloValorado.disponibilizar();

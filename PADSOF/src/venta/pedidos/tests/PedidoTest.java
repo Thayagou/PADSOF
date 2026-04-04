@@ -10,6 +10,7 @@ import usuario.*;
 import venta.pedidos.*;
 import venta.productos.*;
 import exceptions.*;
+import sistema.Reloj;
 
 /**
  * Clase con los tests de los métodos de la clase Pedido
@@ -105,8 +106,8 @@ public class PedidoTest {
 
     @Test
     void testGetFechaPagoEsAhora() {
-        assertTrue(pedido.getFechaPago().isBefore(LocalDateTime.now().plusSeconds(1)));
-        assertTrue(pedido.getFechaPago().isAfter(LocalDateTime.now().minusSeconds(5)));
+        assertTrue(pedido.getFechaPago().isBefore(Reloj.now().plusSeconds(1)));
+        assertTrue(pedido.getFechaPago().isAfter(Reloj.now().minusSeconds(5)));
     }
 
     // --- nextEstadoPedido ---

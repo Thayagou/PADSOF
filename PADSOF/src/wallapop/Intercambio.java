@@ -6,6 +6,7 @@ import java.util.*;
 
 import exceptions.InvalidArgumentException;
 import sistema.AsignadorId;
+import sistema.Reloj;
 import usuario.Empleado;
 
 /**
@@ -82,7 +83,7 @@ public class Intercambio implements Serializable {
 		if (estado.equals(EstadoIntercambio.OFERTADO) == false) throw new InvalidArgumentException("Este intercambio no esta en estado ofertado", "aceptar intercambio");
 		
 		estado = EstadoIntercambio.ACEPTADO;
-		fechaRespuesta = LocalDateTime.now();
+		fechaRespuesta = Reloj.now();
 		
 		for (ArticuloSegundaMano art: solicitados) art.reservar();
 		return true;
@@ -99,7 +100,7 @@ public class Intercambio implements Serializable {
 		this.liberarOfertado();
 		estado = EstadoIntercambio.RECHAZADO;
 
-		fechaRespuesta = LocalDateTime.now();
+		fechaRespuesta = Reloj.now();
 		return true;
 	}
 	
@@ -114,7 +115,7 @@ public class Intercambio implements Serializable {
 		this.liberarOfertado();
 		estado = EstadoIntercambio.CANCELADO;
 		
-		fechaRespuesta = LocalDateTime.now();
+		fechaRespuesta = Reloj.now();
 		return true;
 	}
 	
@@ -129,7 +130,7 @@ public class Intercambio implements Serializable {
 		this.liberarOfertado();
 		estado = EstadoIntercambio.CADUCADO;
 
-		fechaRespuesta = LocalDateTime.now();
+		fechaRespuesta = Reloj.now();
 		return true;
 	}
 	
@@ -152,7 +153,7 @@ public class Intercambio implements Serializable {
 	public void validarIntercambio(Empleado empleado) throws InvalidArgumentException {
 		if (empleado == null) throw new InvalidArgumentException("Empleado inválido introducido", "validar intercambio");
 		this.empleado = empleado;
-		this.fechaConfirmacion = LocalDateTime.now();
+		this.fechaConfirmacion = Reloj.now();
 		this.estado = EstadoIntercambio.CONFIRMADO;
 	}
 	
