@@ -131,7 +131,8 @@ public class Valoracion implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Articulo valorado: " + articuloValorado +
+		return  "Id de la valoración: " + id +
+				"Articulo valorado: " + articuloValorado +
 				"Fecha solicitud: " + fechaSolicitud +
 				"Precio pagado: " + precioPagado +
 				"Estado del articulo: " + estadoArticulo +
@@ -141,7 +142,8 @@ public class Valoracion implements Serializable {
 	}
 	
 	public String toStringSinArticulo() {
-		return "Fecha solicitud: " + fechaSolicitud +
+		return "Id de la valoración: " + id +
+				"Fecha solicitud: " + fechaSolicitud +
 				"Precio pagado: " + precioPagado +
 				"Estado del articulo: " + estadoArticulo +
 				((estadoArticulo == EstadoFisicoArticulo.PENDIENTE) ? "Pendiente de valorar\n" : 

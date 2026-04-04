@@ -2,7 +2,6 @@ package aplicacion;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import sistema.*;
 import usuario.*;
