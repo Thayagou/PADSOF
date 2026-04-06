@@ -319,7 +319,7 @@ public class Tienda implements Serializable {
 	}
 	
 	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, Categoria[] categorias, String interesadoEn) throws InvalidArgumentException {
-		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, categorias, interesadoEn);
+		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, interesadoEn, categorias);
 		cartera.addArticulo(nuevo);
 		return this.getAlmacen().anadirArticuloSegundaMano(nuevo);
 	}
