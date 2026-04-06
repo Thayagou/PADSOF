@@ -7,6 +7,8 @@ import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import exceptions.*;
 import sistema.*;
 import usuario.*;
@@ -232,7 +234,8 @@ public class Main {
 		Usuario usuario;
 		
 		cargarTienda();
-		
+		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
+				
 		try {
 			while (!action.equals("e")) {
 
@@ -253,7 +256,12 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		showMessage("Saliendo de la tienda...");
+		
+		GestorCaducidad.getInstancia().detener();
 		guardarTienda();
+		
+		showMessage("Datos guardados con éxito!");
 		
 		return;
 	}

@@ -65,6 +65,8 @@ public class Pack extends Producto implements Serializable {
 		if(!(c instanceof CaracteristicasPack)) throw new InvalidArgumentException("Se esperaba CaracteristicasPack");
 		CaracteristicasPack a = (CaracteristicasPack)c;
 		if(a.stocks == null) throw new InvalidArgumentException("Array de stocks vacío");
+		if((a.stocks.length == 1 && a.stocks[0].getUdsEnStock() < 2) || a.stocks.length == 0)
+			throw new InvalidArgumentException("No se puede tener un pack con menos de dos productos");
 		this.setProductos(a.stocks);
 	}
 

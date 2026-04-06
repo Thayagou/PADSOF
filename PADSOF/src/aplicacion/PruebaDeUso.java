@@ -10,6 +10,8 @@ import venta.productos.*;
 import venta.pedidos.*;
 import javax.swing.ImageIcon;
 
+import exceptions.ProductoNoDisponibleException;
+
 
 public class PruebaDeUso {
 
@@ -83,9 +85,12 @@ public class PruebaDeUso {
 		tienda.quitarDeCarritoDe(c1, stComic.getProducto());
 		
 		//Intentamos comprar un producto agotado
-		boolean ret = tienda.anadirACarritoDe(c2, stPack.getProducto());
-		System.out.println("Se impide añadir productos agotados al carrito: " + !(ret));
-
+		try {
+			tienda.anadirACarritoDe(c2, stPack.getProducto());
+		} catch(ProductoNoDisponibleException e) {
+			System.out.println("\nExcepción recogida al intentar añadir producto agotado: correcto");
+		}
+		
 		//Usuario1 paga la compra
 		tienda.pagarCarritoDe(c1, "1234123412341234");
 		System.out.println(c1);
