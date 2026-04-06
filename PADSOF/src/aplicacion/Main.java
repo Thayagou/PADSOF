@@ -235,7 +235,7 @@ public class Main {
 		
 		cargarTienda();
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
-		
+				
 		try {
 			while (!action.equals("e")) {
 
@@ -256,8 +256,12 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		showMessage("Saliendo de la tienda...");
+		
 		GestorCaducidad.getInstancia().detener();
 		guardarTienda();
+		
+		showMessage("Datos guardados con éxito!");
 		
 		return;
 	}

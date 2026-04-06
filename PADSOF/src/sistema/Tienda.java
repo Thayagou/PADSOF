@@ -331,6 +331,16 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		return true;
 	}
 	
+	/**
+	 * Método para añadir un nuevo artículo a la tienda
+	 * @param nombre Nombre del artículo
+	 * @param desc Descripción del artículo
+	 * @param cartera Cartera a la que se añade
+	 * @param categorias Categorías del artículo
+	 * @param interesadoEn Descripción de los intereses de intercambio
+	 * @return true si se pudo añadir 
+	 * @throws InvalidArgumentException 
+	 */
 	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, Categoria[] categorias, String interesadoEn) throws InvalidArgumentException {
 		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, categorias, interesadoEn);
 		cartera.addArticulo(nuevo);
@@ -344,14 +354,13 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @return true si se pudo añadir el producto, false si no
 	 * @throws InvalidArgumentException
 	 */
-	public boolean anadirACarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException {
+	public void anadirACarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException, ProductoNoDisponibleException {
 		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		Stock st = almacen.getStock(producto);
-		if(!st.disponible()) return false;
+		if(!st.disponible()) throw new ProductoNoDisponibleException("No queda stock del producto solicitado", producto);
 		
 		cliente.getCarrito().anadirProducto(producto);
 		st.reducirStock();
-		return true;
 	}
 	
 	/**
