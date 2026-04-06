@@ -7,19 +7,24 @@ import venta.descuentos.*;
 import venta.productos.*;
 import exceptions.*;
 import sistema.Reloj;
-import sistema.Sistema;
+import sistema.*;
 
-public class Carrito implements Serializable {
+public class Carrito implements Serializable, Caducable {
 	private static final long serialVersionUID = 1L;
 	private LocalDateTime fechaCaducidad;
 	private Map<Producto, StockExterno> items = new HashMap<Producto, StockExterno>();
 	private Map<Producto, StockExterno> regalos = new HashMap<Producto, StockExterno>();
+	private CarritoCaducadoObserver cliente;
+	private CarritoCaducadoObserver tienda;
 	
 	/**
 	 * Creador de la clase carrito
 	 */
-	public Carrito() {
+	public Carrito(CarritoCaducadoObserver cliente, CarritoCaducadoObserver tienda) {
+		this.cliente = cliente;
+		this.tienda = tienda;
 		calcularFechaCaducidad();
+		GestorCaducidad.getInstancia().registrar(this);
 	}
 	
 	/**
@@ -56,27 +61,25 @@ public class Carrito implements Serializable {
 		return merge;
 	}
 	
-	/**
-	 * Método privado para comprobar si un carrito ha caducado
-	 * @return true si ha caducado, false si no ha caducado
-	 */
-	private boolean isCaducado() {
-		return (fechaCaducidad.isBefore(Reloj.now()));
+	@Override
+	public LocalDateTime getFechaCaducidad() {
+		return fechaCaducidad;
+	}
+
+	@Override
+	public void caducar() {
+		tienda.carritoCaducado(this);
+		cliente.carritoCaducado(this);
+		vaciarCarrito();
 	}
 	
 	/**
 	 * Metodo para calcular la fecha en que caducará el carrito
 	 */
 	public void calcularFechaCaducidad() {
+		GestorCaducidad.getInstancia().desregistrar(this);
 		fechaCaducidad = Reloj.now().plus(Sistema.getInstancia().getTiempoCaducaCarrito());
-	}
-	
-	/**
-	 * Método privado para vaciar el carrito si ha caducado
-	 */
-	private void vaciarSiCaducado() {
-		if(isCaducado())
-			vaciarCarrito();
+		GestorCaducidad.getInstancia().registrar(this);
 	}
 
 	/**
@@ -85,6 +88,7 @@ public class Carrito implements Serializable {
 	public void vaciarCarrito() {
 		items.clear();
 		regalos.clear();
+		GestorCaducidad.getInstancia().desregistrar(this);
 	}
 	
 	/**
@@ -94,7 +98,6 @@ public class Carrito implements Serializable {
 	 */
 	private void anadirRegalo(Producto p) throws InvalidArgumentException {
 		if(p == null) throw new InvalidArgumentException("No se puede añadir un regalo null");
-		vaciarSiCaducado();
 		
 		if(!regalos.containsKey(p)) {
 			regalos.put(p,  new StockExterno(p, 1, 0));
@@ -111,7 +114,6 @@ public class Carrito implements Serializable {
 	 */
 	public void anadirProducto(Producto p) throws InvalidArgumentException {
 		if(p == null) throw new InvalidArgumentException("No se puede añadir un producto null");
-		vaciarSiCaducado();
 		
 		if(!items.containsKey(p)) {
 			items.put(p,  new StockExterno(p, 1));
@@ -126,12 +128,13 @@ public class Carrito implements Serializable {
 	 * @param p Producto del cual se quiere quitar una unidad del carrito.
 	 */
 	public void quitarProducto(Producto p) {
-		vaciarSiCaducado();
-		
 		if(items.containsKey(p)) {
 			items.get(p).reducirStock();
 			if(!items.get(p).disponible()) {
 				items.remove(p);
+			}
+			if(items.isEmpty()) {
+				vaciarCarrito();
 			}
 		}
 	}
@@ -141,7 +144,6 @@ public class Carrito implements Serializable {
 	 * @return Precio total del carrito.
 	 */
 	public double calcularCarrito() {
-		vaciarSiCaducado();
 		double pTotal = 0;
 		
 		calcularDescuentos();
@@ -220,7 +222,6 @@ public class Carrito implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		vaciarSiCaducado();
 		StringBuilder s = new StringBuilder();
 		s.append("Carrito:\n");
 		s.append("\n Precio total: "+calcularCarrito());

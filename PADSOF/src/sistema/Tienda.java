@@ -19,7 +19,7 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez, Tiago Oselka, Claudia Saiz
  */
-public class Tienda implements Serializable {
+public class Tienda implements Serializable, CarritoCaducadoObserver {
 	private static final long serialVersionUID = 1L;
 	private Historial historial = new Historial();
 	private Almacen almacen;
@@ -32,6 +32,19 @@ public class Tienda implements Serializable {
 	 */
 	public Tienda() { 
 		almacen = new Almacen(historial);
+	}
+	
+	@Override
+	public void carritoCaducado(Carrito carrito) {
+		for(StockExterno se : carrito.getItems()) {
+			try {
+				Stock st = almacen.getStock(se.getProducto().getNombre());
+				st.incrementarStock(se.getUdsEnStock());
+			} catch(InvalidArgumentException e) {
+				throw new RuntimeException("Error interno al devolver stock", e);
+			}
+			
+		}
 	}
 	
 	/**
@@ -104,7 +117,7 @@ public class Tienda implements Serializable {
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Ya existe un usuario con ese nombre", "registrarse", nombre);
 		if(!contrasena.equals(confirmarContrasena)) throw new NotValidUserException("Ha fallado la comprobación de contraseña", "registrarse", nombre);
 		
-		ClienteRegistrado cliente = new ClienteRegistrado(nombre, contrasena);
+		ClienteRegistrado cliente = new ClienteRegistrado(nombre, contrasena, this);
 		clientes.put(nombre, cliente);
 		historial.guardarUsuario(cliente);
 		return clientes.get(nombre);
