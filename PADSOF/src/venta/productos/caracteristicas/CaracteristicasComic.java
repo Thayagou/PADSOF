@@ -12,9 +12,13 @@ import venta.productos.*;
  * Esta clase representa las caracteristicas de un comic
  */
 public class CaracteristicasComic implements CaracteristicasProducto {
+	/** Fecha de publicacion del comic*/
 	public final LocalDate fechaPublicacion;
+	/** Autor del comic*/
 	public final String autor;
+	/** Número de páginas del comic*/
 	public final int numPaginas;
+	/** Editorial del comic*/
 	public final String editorial;
 
 	/**
@@ -30,18 +34,7 @@ public class CaracteristicasComic implements CaracteristicasProducto {
 		this.numPaginas = numPaginas;
 		this.editorial = editorial;
 	}
-	
-	/**
-	 * Sobreescribe el método que crea un producto
-	 * @param nombre Nombre del producto
-	 * @param descripcion Descripcion del producto
-	 * @param precio Precio del producto
-	 * @param image Imagen del producto
-	 * @param categorias Categorias del producto
-	 * @return Producto creado
-	 * @throws InvalidArgumentException Se lanza cuando algun argumento no es válido
-	 * @throws DoubleDiscountException Se lanza cuando hay conflicto de descuentos
-	 */
+
 	@Override
 	public Producto crearProducto(String nombre, String descripcion, double precio, ImageIcon image, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {

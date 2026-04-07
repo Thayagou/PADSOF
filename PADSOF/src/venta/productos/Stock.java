@@ -21,6 +21,7 @@ public class Stock implements Serializable {
 	 * Creador de la clase Stock
 	 * @param p Producto del stock
 	 * @param uds Unidades en stock del producto
+	 * @throws InvalidArgumentException Se lanza si los argumentos del nuevo Stock son inválidos
 	 */
 	public Stock(Producto p, int uds) throws InvalidArgumentException {
 		if(p == null) throw new InvalidArgumentException("El producto no puede ser null");
@@ -49,6 +50,7 @@ public class Stock implements Serializable {
 	/**
 	 * Setter de las unidades del stock
 	 * @param udsEnStock Unidades del producto en el stock
+	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public void setUdsEnStock(int udsEnStock) throws InvalidArgumentException {
 		if(udsEnStock < 0) throw new InvalidArgumentException("No se pueden establecer unidades negativas");
@@ -66,6 +68,7 @@ public class Stock implements Serializable {
 	/**
 	 * Método para reducir el stock en n unidades
 	 * @param unidades Número de unidades a reducir
+	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public void reducirStock(int unidades) throws InvalidArgumentException {
 		if(unidades < 0) throw new InvalidArgumentException("No se pueden reducir unidades negativas");
@@ -83,6 +86,7 @@ public class Stock implements Serializable {
 	/**
 	 * Método para incrementar el stock en n unidades
 	 * @param unidades Número de unidades a incrementar
+	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public void incrementarStock(int unidades) throws InvalidArgumentException {
 		if(unidades < 0) throw new InvalidArgumentException("No se pueden incrementar unidades negativas");

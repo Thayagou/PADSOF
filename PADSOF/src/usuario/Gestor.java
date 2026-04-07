@@ -84,7 +84,7 @@ public class Gestor extends Usuario implements Serializable {
 	
 	/**
 	 * Modifica el precio de una valoración
-	 * @param tiempo Nuevo precio de una valoración
+	 * @param precio Nuevo precio de una valoración
 	 * @return true si se modifico correctamente, false en caso contrario
 	 */
 	public boolean modificarPrecioValoracion(double precio) {

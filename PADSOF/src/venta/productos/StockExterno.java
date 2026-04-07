@@ -17,6 +17,7 @@ public class StockExterno extends Stock implements Serializable {
 	 * @param p Producto del stock
 	 * @param uds Número de unidades en el stock
 	 * @param precio Precio final unitario del producto en el contexto de un carrito o pedido
+	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public StockExterno(Producto p, int uds, double precio) throws InvalidArgumentException {
 		super(p, uds);
@@ -28,6 +29,7 @@ public class StockExterno extends Stock implements Serializable {
 	 * Creador de un StockExterno sin especificar precio final aun
 	 * @param p Producto del stock
 	 * @param uds Número de unidades en el stock
+	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public StockExterno(Producto p, int uds) throws InvalidArgumentException {
 		super(p, uds);
@@ -45,6 +47,7 @@ public class StockExterno extends Stock implements Serializable {
 	/**
 	 * Setter del precio final del producto
 	 * @param precioFinal Precio final de venta de un producto en el contexto de un carrito o pedido
+	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public void setPrecioUnitarioFinal(double precioFinal) throws InvalidArgumentException{
 		if(precioFinal < 0) throw new InvalidArgumentException("No se puede establecer un precio negativo");

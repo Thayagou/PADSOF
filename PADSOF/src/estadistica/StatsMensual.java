@@ -11,8 +11,11 @@ import sistema.Reloj;
  */
 public class StatsMensual implements Serializable, Comparable<StatsMensual> {
 	private static final long serialVersionUID = 1L;
+	/** Mes que representa las estadísticas */
 	private YearMonth mes;
+	/** unidades vendidasd ese mes*/
 	private int unidades = 0;
+	/** recaudacion total ese mes*/
 	private double recaudacion = 0;
 	
 	/**

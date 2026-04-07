@@ -20,10 +20,15 @@ import wallapop.*;
  */
 public class Almacen implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Inventario de productos*/
 	private Map<String, Stock> inventario  = new HashMap<>();
+	/**Categorias existentes*/
 	private Map<String, Categoria> categorias = new HashMap<>();
+	/**Descuentos existentes*/
 	private List<Descuento> descuentos = new LinkedList<>();
+	/**aARticulos existentes*/
 	private List<ArticuloSegundaMano> articulos = new LinkedList<>();
+	/*Observador que permite añadir productos a las estadísticas*/
 	private ObservadorProducto observador;
 	
 	/**

@@ -25,6 +25,8 @@ public class Pack extends Producto implements Serializable {
 	 * @param precio Precio del pack
 	 * @param imagen Imagen del pack
 	 * @param categorias Array de categorías del pack
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 * @throws DoubleDiscountException Se lanza si se produce un conflicto entre descuentos
 	 */
 	public Pack(Stock[] stocks, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) 
 			throws DoubleDiscountException, InvalidArgumentException{
