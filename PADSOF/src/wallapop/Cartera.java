@@ -137,6 +137,3 @@ public class Cartera implements Serializable{
 				"\nIntercambios: " + intercambios;
 	}
 }
-
-
-

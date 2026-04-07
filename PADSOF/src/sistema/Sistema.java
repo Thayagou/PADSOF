@@ -21,11 +21,11 @@ public class Sistema implements Serializable {
 	private Duration tiempoCaducaOferta;
 	/** Precio que debe pagar un cliente por la solicitud de una valoración */
 	private double precioValoracion;
-	/* Ponderación que tiene dentro del vector de producto el hecho de pertenecer a una categoría */
+	/** Ponderación que tiene dentro del vector de producto el hecho de pertenecer a una categoría */
 	private double ponderacionCategoria = 1;
-	/* Ponderación que tienen las unidades de productos comprados. Se utiliza a la hora de actualizar el vector de recomendación del cliente tras una compra */
+	/** Ponderación que tienen las unidades de productos comprados. Se utiliza a la hora de actualizar el vector de recomendación del cliente tras una compra */
 	private double ponderacionUdsCompra = 1;
-	/* Ponderación que tiene el precio pagado por un producto. Se utiliza a la hora de actualizar el vector de recomendación del cliente tras una compra */
+	/** Ponderación que tiene el precio pagado por un producto. Se utiliza a la hora de actualizar el vector de recomendación del cliente tras una compra */
 	private double ponderacionPrecioCompra = 1;
 	/** Ponderación que tiene la media de puntuación de un producto a la hora de calcular su valor de compatibilidad con un determinado usuario */
 	private double ponderacionValoracionesProducto = 1;

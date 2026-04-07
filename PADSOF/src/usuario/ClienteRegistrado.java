@@ -59,7 +59,7 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 	 * Cambia la contraseña por una nueva con confirmacion
 	 * @param contrasenaAntigua Contraseña antigua
 	 * @param contrasena Nueva contraseña
-	 * @param confirmarContrasena COnfirmacion de la nueva contraseña
+	 * @param confirmarContrasena Confirmacion de la nueva contraseña
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public void cambiarContrasena(String contrasenaAntigua, String contrasena, String confirmarContrasena) throws InvalidArgumentException {

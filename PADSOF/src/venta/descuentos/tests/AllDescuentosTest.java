@@ -9,15 +9,10 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 /**
- * Suite de tests de descuentos.
+ * Suite de tests de descuentos
  */
 @SelectClasses({ DescuentoTest.class, DescuentoSubTest.class })
 @Suite
-public class AllDescuentosTest {
+class AllDescuentosTest {
 	
-	/**
-     * Constructor privado para evitar instanciación.
-     */
-    private AllDescuentosTest() {
-    }
 }
