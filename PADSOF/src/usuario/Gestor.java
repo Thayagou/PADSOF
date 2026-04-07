@@ -5,7 +5,7 @@ import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
-import sistema.ParametroRecomendacion;
+import sistema.ParametroSistema;
 import sistema.Sistema;
 
 public class Gestor extends Usuario implements Serializable {
@@ -50,9 +50,9 @@ public class Gestor extends Usuario implements Serializable {
 		return Sistema.getInstancia().setPrecioValoracion(precio);
 	}
 	
-	public boolean establecerParametros(boolean activo, ParametroRecomendacion... parametros) {
+	public boolean establecerParametros(boolean activo, ParametroSistema... parametros) {
 		boolean status = true;
-		for(ParametroRecomendacion p : parametros) {
+		for(ParametroSistema p : parametros) {
 			status = Sistema.getInstancia().gestionarParametro(p, activo);
 		}
 		return status;

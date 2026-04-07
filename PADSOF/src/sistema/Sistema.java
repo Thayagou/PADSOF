@@ -20,21 +20,21 @@ public class Sistema implements Serializable {
 	private double ponderacionProductoRecomendado = 1;
 	private double ponderacionBusqueda = 1;
 	private int numProdsRecomendados = 10;
-	private Set<ParametroRecomendacion> parametros = new HashSet<>();
+	private Set<ParametroSistema> parametros = new HashSet<>();
 
-	private Sistema(Duration tiempoCarrito, Duration tiempoOferta, double precioValoracion, ParametroRecomendacion... parametrosIniciales) {
+	private Sistema(Duration tiempoCarrito, Duration tiempoOferta, double precioValoracion, ParametroSistema... parametrosIniciales) {
 		this.tiempoCaducaCarrito = tiempoCarrito;
 		this.tiempoCaducaOferta = tiempoOferta;
 		this.precioValoracion = precioValoracion;
 
-		for(ParametroRecomendacion p : parametrosIniciales) {
+		for(ParametroSistema p : parametrosIniciales) {
 			this.parametros.add(p);
 		}
 	}
 	
 	public static Sistema getInstancia() {
 		if (Sistema.instancia == null)
-			Sistema.instancia = new Sistema(Duration.ofDays(3), Duration.ofDays(3), 20.0, ParametroRecomendacion.values());
+			Sistema.instancia = new Sistema(Duration.ofDays(3), Duration.ofDays(3), 20.0, ParametroSistema.values());
 		
 		return Sistema.instancia;
 	}
@@ -137,11 +137,11 @@ public class Sistema implements Serializable {
 		return true;
 	}
 
-	public Set<ParametroRecomendacion> getParametros() {
+	public Set<ParametroSistema> getParametros() {
 		return parametros;
 	}
 
-	public boolean gestionarParametro(ParametroRecomendacion p, boolean activo) {
+	public boolean gestionarParametro(ParametroSistema p, boolean activo) {
 		if(activo)
 			return this.parametros.add(p);
 		else {
