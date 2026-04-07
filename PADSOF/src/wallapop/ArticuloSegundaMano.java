@@ -169,4 +169,3 @@ public class ArticuloSegundaMano implements Serializable {
 				"\nValoracion: " + (valoracion == null ? "Pendiente de solicitud" : valoracion.toStringSinArticulo());
 	}
 }
-

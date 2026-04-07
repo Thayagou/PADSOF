@@ -6,6 +6,7 @@ import exceptions.InvalidArgumentException;
 import sistema.*;
 import usuario.*;
 
+import java.lang.reflect.Field;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +25,7 @@ class GestorTest {
 
 	@AfterEach
 	void resetSistema() throws Exception {
-		java.lang.reflect.Field f = Sistema.class.getDeclaredField("instancia");
+		Field f = Sistema.class.getDeclaredField("instancia");
 		f.setAccessible(true);
 		f.set(null, null);
 	}
