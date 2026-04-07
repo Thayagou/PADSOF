@@ -13,8 +13,11 @@ import exceptions.*;
  */
 public class Figura extends Producto implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Dimensiones de la figura*/
 	private String dimensiones;
+	/**Marca de la figura*/
 	private String marca;
+	/**Material de la figura*/
 	private String material;
 	
 	/**

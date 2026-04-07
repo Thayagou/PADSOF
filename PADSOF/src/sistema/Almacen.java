@@ -26,9 +26,9 @@ public class Almacen implements Serializable {
 	private Map<String, Categoria> categorias = new HashMap<>();
 	/**Descuentos existentes*/
 	private List<Descuento> descuentos = new LinkedList<>();
-	/**aARticulos existentes*/
+	/**Articulos existentes*/
 	private List<ArticuloSegundaMano> articulos = new LinkedList<>();
-	/*Observador que permite añadir productos a las estadísticas*/
+	/**Observador que permite añadir productos a las estadísticas*/
 	private ObservadorProducto observador;
 	
 	/**

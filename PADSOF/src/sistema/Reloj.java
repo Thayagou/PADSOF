@@ -11,6 +11,12 @@ import java.time.YearMonth;
  * Reloj interno de la tienda que nos permite realizar mejor los tests
  */
 public class Reloj {
+	
+	/**
+     * Constructor privado para la instancia singleton
+     */
+    private Reloj() {}
+	
 	/** Reloj que llevará el tiempo interno, inicializado a tiempo real */
 	static private Clock clock = Clock.systemDefaultZone();
 	/** Boolean que representa si el reloj se encuentra o no fijo */

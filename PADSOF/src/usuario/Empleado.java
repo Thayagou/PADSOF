@@ -10,8 +10,11 @@ import exceptions.InvalidArgumentException;
  */
 public class Empleado extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Set<Permiso> permisos = new HashSet<>();;
+	/**Permisos que tiene el empleado*/
+	private Set<Permiso> permisos = new HashSet<>();
+	/**Lista de notificaciones del empleado*/
 	private List<Notificacion> notificaciones = new ArrayList<>();
+	/**Indica si el empleado esta de alta o no*/
 	private boolean deAlta;
 	
 	/**

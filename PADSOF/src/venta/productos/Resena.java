@@ -13,9 +13,13 @@ import sistema.Reloj;
  */
 public class Resena implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Puntuación de 0 a 5*/
 	private double puntuacion;
+	/**Comentario de la reseña*/
 	private String comentario;
+	/**Fecha en la que sehizo la reseña*/
 	private LocalDate fecha;
+	/**Usuario que realiza la reseña*/
 	private ClienteRegistrado usuario;
 	
 	/**

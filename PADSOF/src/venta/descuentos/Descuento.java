@@ -15,11 +15,17 @@ import exceptions.*;
  */
 public abstract class Descuento implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Id del descuento*/
 	private final long id;
+	/**Valor mínimo del descuento*/
 	private double valorMin;
+	/**Fecha de inicio del descuento*/
 	private LocalDateTime inicio;
+	/**Fecha de fin del descuento*/
 	private LocalDateTime fin;
+	/**Indica si se ha finalizado el descuento*/
 	private boolean finalizado;
+	/**Condidicón del descuento*/
 	private CondicionDescuento condicion;
 	
 	/**

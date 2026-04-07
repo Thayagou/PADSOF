@@ -13,9 +13,13 @@ import venta.descuentos.*;
  */
 public class Categoria implements Serializable, Descontable {
 	private static final long serialVersionUID = 1L;
+	/**Nombre de la categoría*/
 	private String nombre;
+	/**Indica si está eliminada la categoría*/
 	private boolean eliminada;
+	/**Descuento de la categoría si tiene*/
 	private Descuento descuento;
+	/**Productos que pertenecen a esa categoría*/
 	private Set<Producto> productos = new HashSet<Producto>();
 
 	/**

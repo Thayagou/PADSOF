@@ -10,10 +10,15 @@ import sistema.Reloj;
  */
 public class Notificacion implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Fecha en la que se ha enviado la notificación*/
 	private LocalDate fecha;
+	/**Contenido de la notificación*/
 	private String contenido;
+	/**Indica si ha sido leída*/
 	private boolean leida;
+	/**Indica si ha sido borrada*/
 	private boolean borrada;
+	/**Tipo de Notificación*/
 	private TipoNotificacion tipo;
 	
 	/**

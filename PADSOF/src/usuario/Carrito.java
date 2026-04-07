@@ -17,10 +17,15 @@ import sistema.*;
  */
 public class Carrito implements Serializable, Caducable {
 	private static final long serialVersionUID = 1L;
+	/**Fecha de caducidad del carrito*/
 	private LocalDateTime fechaCaducidad;
+	/**Mapa de items que están en el carrito*/
 	private Map<Producto, StockExterno> items = new HashMap<Producto, StockExterno>();
+	/**Mapa de regalos que se han añadido al carrito*/
 	private Map<Producto, StockExterno> regalos = new HashMap<Producto, StockExterno>();
+	/**Cliente propietario del carrito*/
 	private CarritoCaducadoObserver cliente;
+	/**Tienda en la que se encuentra el carrito*/
 	private CarritoCaducadoObserver tienda;
 	
 	/**

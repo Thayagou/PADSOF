@@ -15,9 +15,13 @@ import venta.productos.caracteristicas.*;
  */
 public class Comic extends Producto implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Fecha de publicación del comic*/
 	private LocalDate fechaPublicacion;
+	/**Autor del comic*/
 	private String autor;
+	/**Número de páginas del comic*/
 	private int numPaginas;
+	/**Editorial que publica el comic*/
 	private String editorial;
 	
 	/**

@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
  */
 public class Pack extends Producto implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Stocks de los productos que forman el pack con sus cantidades*/
 	private Set<Stock> productos = new HashSet<Stock>();
 	
 	/**

@@ -25,6 +25,11 @@ public class Main {
 	private static String filename = "tienda.dat";
 	
 	/**
+     * Constructor privado para el main singleton
+     */
+    private Main() {}
+	
+	/**
 	 * Limpia la pantalla actual
 	 */
 	static void cleanScreen() {
