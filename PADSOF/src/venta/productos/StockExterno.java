@@ -10,7 +10,8 @@ import exceptions.*;
  */
 public class StockExterno extends Stock implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private double precioUnitarioFinal;	/*Precio unitario del producto del stock, no el precio total del stock*/
+	/**Precio unitario del producto del stock, no el precio total del stock*/
+	private double precioUnitarioFinal;
 	
 	/**
 	 * Creador de un StockExterno

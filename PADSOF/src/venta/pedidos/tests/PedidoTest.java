@@ -15,7 +15,7 @@ import sistema.Reloj;
  * 
  * @author Juan Ibáñez
  */
-public class PedidoTest {
+class PedidoTest {
 
 	private ClienteRegistrado cliente;
 	private Empleado empleado;

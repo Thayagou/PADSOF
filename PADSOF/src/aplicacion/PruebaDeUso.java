@@ -16,6 +16,11 @@ import exceptions.*;
  * Clase que prueba algunos casos de uso de la tienda
  */
 public class PruebaDeUso {
+	
+	/**
+     * Constructor privado para la instancia singleton
+     */
+    private PruebaDeUso() {}
 
 	/**
 	 * main que se ejecuta

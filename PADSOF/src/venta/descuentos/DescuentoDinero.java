@@ -11,6 +11,7 @@ import exceptions.*;
  */
 public class DescuentoDinero extends Descuento implements Serializable{
 	private static final long serialVersionUID = 1L;
+	/**Dinero que se descuenta*/
 	private double dinero;
 	
 	/**

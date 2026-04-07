@@ -11,6 +11,7 @@ import exceptions.*;
  */
 public class DescuentoPorcentaje extends Descuento implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Porcentage de dinero que se descuenta*/
 	private double porcentaje;
 	
 	/**

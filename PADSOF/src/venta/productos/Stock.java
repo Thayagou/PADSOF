@@ -13,8 +13,11 @@ import exceptions.*;
  */
 public class Stock implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Id del stock*/
 	private final long id;
+	/**Producto del stock*/
 	private Producto producto;
+	/**Unidades en stock*/
 	private int udsEnStock;
 	
 	/**

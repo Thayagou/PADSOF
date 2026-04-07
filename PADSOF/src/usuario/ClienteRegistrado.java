@@ -20,11 +20,17 @@ import sistema.*;
  */
 public class ClienteRegistrado extends Usuario implements Serializable, CarritoCaducadoObserver {
 	private static final long serialVersionUID = 1L;
+	/**Carrito del cliente*/
 	private Carrito carrito;
+	/**Cartera del cliente*/
 	private Cartera cartera;
+	/**Lista de notificaciones del cliente*/
 	private List<Notificacion> notificaciones;
+	/**Set de intereses del cliente*/
 	private Set<TipoNotificacion> intereses;
+	/**Lista de pedidos realizados del cliente*/
 	private List<Pedido> misCompras;
+	/**Estadísticas personales del cliente*/
 	private StatsUsuario estadisticas;
 	
 	/**

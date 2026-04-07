@@ -17,17 +17,29 @@ import exceptions.*;
  */
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Id del pedido*/
 	private final long id;
+	/**Fecha de pago del pedido*/
 	private final LocalDateTime fechaPago;
+	/**Fecha de preparación del pedido*/
 	private LocalDateTime fechaPreparacion;
+	/**Empleado que ha preparado el pedido*/
 	private Empleado empPreparacion;
+	/**Fecha de listo del pedido*/
 	private LocalDateTime fechaListo;
+	/**Empleado que paso a listo el pedido*/
 	private Empleado empListo;
+	/**Fecha de recogida del pedido*/
 	private LocalDateTime fechaRecogida;
+	/**Empleado que marco recogido el pedido*/
 	private Empleado empRecogida;
+	/**Estado actual del pedido*/
 	private EstadoPedido estado;
+	/**Cliente que realizó el pedido*/
 	private final ClienteRegistrado cliente;
+	/**Stock de productos que forman el pedido*/
 	private final Set<StockExterno> itemsPedido = new HashSet<StockExterno>();
+	/**Precio total del pedido*/
 	private final double precioTotal;
 	
 	/**

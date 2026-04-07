@@ -12,6 +12,11 @@ public class GestorCaducidad {
 	private static GestorCaducidad instancia;
 
 	/**
+     * Constructor privado para la instancia singleton
+     */
+    private GestorCaducidad() {}
+	
+	/**
 	 * Método para obtener la instancia del GestorCaducidad
 	 * @return Instancia del GestorCaducidad
 	 */

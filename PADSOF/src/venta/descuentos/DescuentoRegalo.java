@@ -13,6 +13,7 @@ import venta.productos.Producto;
  */
 public class DescuentoRegalo extends Descuento implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Producto que se regala*/
 	private Producto regalo;
 	
 	/**

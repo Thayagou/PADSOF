@@ -16,15 +16,25 @@ import sistema.AsignadorId;
  */
 public abstract class Producto implements Serializable, Descontable {
 	private static final long serialVersionUID = 1L;
+	/**Id del producto*/
 	private final long id;
+	/**Nombre del producto*/
 	private String nombre;
+	/**Descripción del producto*/
 	private String descripcion;
+	/**Precio del producto*/
 	private double precio;
+	/**Imagen del producto*/
 	private ImageIcon imagen;
+	/**Reseñas que se han hecho al producto*/
 	private List<Resena> resenas = new ArrayList<Resena>();
+	/**Categorías a las que pertenece el producto*/
 	private Set<Categoria> categorias = new HashSet<Categoria>();
+	/**Descuento del producto si tiene*/
 	private Descuento descuento;
+	/**Indica si está eliminado el producto*/
 	private boolean eliminado;
+	/**Estadísticas del producto*/
 	private StatsProducto estadisticas;
 	
 	/**

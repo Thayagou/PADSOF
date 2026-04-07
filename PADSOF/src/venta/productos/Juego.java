@@ -14,8 +14,11 @@ import venta.productos.caracteristicas.CaracteristicasProducto;
  */
 public class Juego extends Producto implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Número de jugadores del juego*/
 	private int numJugadores;
+	/**Rango de edad recomendado del juego*/
 	private String rangoEdad;
+	/**Tipo de juego*/
 	private TipoJuego tipo;
 	
 	/**
@@ -25,7 +28,7 @@ public class Juego extends Producto implements Serializable {
 	 * @param precio Precio del juego
 	 * @param imagen Imagen del juego
 	 * @param numJug Número de jugadores del juego
-	 * @param rango Rango de edad recomendade del juego
+	 * @param rango Rango de edad recomendado del juego
 	 * @param tipo Tipo de juego
 	 * @param categorias Array de categorías del juego
 	 * @throws InvalidArgumentException Si alguno de los argumentos es inválido

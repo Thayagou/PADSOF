@@ -14,6 +14,7 @@ import sistema.Sistema;
  */
 public class Gestor extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Set de permisos del gestor*/
 	private Set<Permiso> permisos  = new HashSet<>();
 
 	/**
