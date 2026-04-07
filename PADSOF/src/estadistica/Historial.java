@@ -119,7 +119,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	
 	/**
 	 * Método para guardar la valoración de un artículo, actualizando las estadísticas del cliente que la ha solicitado y las de la tienda
-	 * @param pedido Pedido realizado por el usuario
+	 * @param valoracion Valoracion dada al articulo
 	 * @return true si se guarda correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Lanzado en caso de que se introduzcan argumentos inválidos
 	 */
@@ -238,7 +238,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param pedido Pedido cuyo estado se pretende avanzar
 	 * @return true si se ha avanzado correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza en caso de que alguno de los parámetros introducidos no sea válido
-	 * @throws InvalidPermit Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
+	 * @throws InvalidPermitException Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
 	 */
 	public boolean avanzarEstadoPedido(Empleado empleado, Pedido pedido) throws InvalidArgumentException, InvalidPermitException {
 		if (empleado.tienePermiso(Permiso.PEDIDOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", Permiso.PEDIDOS, empleado);
@@ -261,7 +261,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @return true si se valora correctamente, false en caso contario
 	 * @throws InvalidArgumentException Se lanza en caso de que se introduzcan parámetros inválidos
 	 * @throws ArticuloSinValoracionException Se lanza en caso de que el artículo que se intenta valorar no tiene valoración
-	 * @throws InvalidPermit Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
+	 * @throws InvalidPermitException Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
 	 */
 	public boolean valorarArticulo(Empleado empleado, ArticuloSegundaMano articulo, double precioEstimado, EstadoFisicoArticulo estado) throws InvalidPermitException, InvalidArgumentException, ArticuloSinValoracionException {
 		if (empleado == null || articulo == null || estado == null) throw new InvalidArgumentException("Algún argumento introducido no es válido", "valorar artículo de segunda mano");
@@ -283,7 +283,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param intercambio Intercambio cuyo estado debe ser ACEPTADO
 	 * @return true si se valida correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza en caso de que algún parámetro introducido no sea válido
-	 * @throws InvalidPermit Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
+	 * @throws InvalidPermitException Se lanza en caso de que el empleado introducido no tenga los correspondientes permisos
 	 */
 	public boolean validarIntercambio(Empleado empleado, Intercambio intercambio) throws InvalidPermitException, InvalidArgumentException {
 		if (empleado == null || intercambio == null) throw new InvalidArgumentException("Alguno de los parámetros introducidos es inválido", "validar intercambio");
@@ -326,11 +326,6 @@ public class Historial implements Serializable, ObservadorProducto {
 				+ ", statsProductos=" + statsProductos + ", statsClientes=" + statsClientes + ", ventasMensuales="
 				+ ventasMensuales + ", wallapopMensuales=" + wallapopMensuales + "]";
 	}	
-	
-	
-	
-	
-	
 }
 
 

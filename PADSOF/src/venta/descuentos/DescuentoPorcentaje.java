@@ -20,6 +20,7 @@ public class DescuentoPorcentaje extends Descuento implements Serializable {
 	 * @param fin Fecha y hora de finalizacion del descuento
 	 * @param condicion Tipo de condicion del descuento
 	 * @param porcentaje Porcentaje de dinero que se descuenta si se aplica el descuento
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public DescuentoPorcentaje(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) throws InvalidArgumentException {
 		super(valorMin, inicio, fin, condicion);
@@ -30,7 +31,8 @@ public class DescuentoPorcentaje extends Descuento implements Serializable {
 	
 	/**
 	 * Método para obtener el precio descontado.
-	 * Le resta al precio original el porcentaje del descuento.
+	 * Le resta al precio original el porcentaje del descuento
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	@Override
 	public double getPrecioDescontado(int numUds, double volumen, double precio) throws InvalidArgumentException {

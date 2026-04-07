@@ -8,7 +8,12 @@ import java.io.Serializable;
  * @author Juan Ibáñez
  */
 public enum CondicionDescuento implements Serializable {
+	/** Sin ninguna condición para aplicar el descuento */
 	SIN_CONDICION,
+
+	/** Descuento basado en la cantidad de productos */
 	CANTIDAD,
+
+	/** Descuento basado en el volumen de compra */
 	VOLUMEN;
 }

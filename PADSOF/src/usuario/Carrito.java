@@ -25,6 +25,8 @@ public class Carrito implements Serializable, Caducable {
 	
 	/**
 	 * Creador de la clase carrito
+	 * @param cliente Cliente al que pertenece el carrito
+	 * @param tienda CarritoCaducadoObserver que es la tienda
 	 */
 	public Carrito(CarritoCaducadoObserver cliente, CarritoCaducadoObserver tienda) {
 		this.cliente = cliente;

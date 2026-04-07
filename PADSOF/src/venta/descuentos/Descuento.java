@@ -28,6 +28,7 @@ public abstract class Descuento implements Serializable {
 	 * @param inicio Fecha y hora de inicio del descuento
 	 * @param fin Fecha y hora de finalizacion del descuento
 	 * @param condicion Tipo de condicion del descuento
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public Descuento(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion) throws InvalidArgumentException {
 		if(inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos en el descuento");
@@ -47,6 +48,7 @@ public abstract class Descuento implements Serializable {
 	 * @param volumen Volumen de compra para ver si se cumple la condicion de volumen de compra
 	 * @param precio Precio unitario sobre el cual se quiere calcular el descuento
 	 * @return Precio de una sola unidad de producto tras aplicar el descuento
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public double getPrecioDescontado(int numUds, double volumen, double precio) throws InvalidArgumentException {
 		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
@@ -58,6 +60,7 @@ public abstract class Descuento implements Serializable {
 	 * @param numUds Número de unidades para comprobar si se cumple la condicion de cantidad
 	 * @param volumen Volumen de compra para ver si se cumple la condicion de volumen de compra
 	 * @return Regalo del descuento o null si no cumple las condiciones o no es descuento de regalo
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public Producto getRegalo(int numUds, double volumen) throws InvalidArgumentException {
 		if(numUds < 0 || volumen < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");

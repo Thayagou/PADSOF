@@ -17,8 +17,6 @@ import wallapop.*;
 
 /**
  * Clase que implementa el almacén de la tienda con funcionalidades de venta y gestion de productos
- * 
- * @author Juan Ibáñez, Tiago Oselka, Claudia Saiz
  */
 public class Almacen implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -206,6 +204,7 @@ public class Almacen implements Serializable {
 	 * @param desc Descripicón del producto
 	 * @param precio Precio del producto
 	 * @param imagen Imagen del producto
+	 * @param caracteristicas Caracteristicas concretas de cada tipo de producto
 	 * @param categorias Nuevas categorias del producto
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
@@ -406,7 +405,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Elimina una categoría del almacén
-	 * @param nombre Nombre de la categoría
+	 * @param categoria Categoria que se borra
 	 * @return true en caso de que se elimine correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */

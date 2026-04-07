@@ -18,7 +18,7 @@ public interface Caducable extends Comparable<Caducable> {
 	 */
 	void caducar();
 
-	/*
+	/**
 	 * Método para comprobar si un caducable está caducado
 	 * @return true si ha caducado, false si no
 	 */

@@ -31,6 +31,8 @@ public class Comic extends Producto implements Serializable {
 	 * @param pags Número de páginas del comic
 	 * @param editorial Editorial que publica el comic
 	 * @param categorias Array de categorías del cómic
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 * @throws DoubleDiscountException Se lanza si se produce un conflicto entre descuentos
 	 */
 	public Comic(String nombre, String desc, double precio, ImageIcon imagen, LocalDate fecha, String autor, int pags, String editorial, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {

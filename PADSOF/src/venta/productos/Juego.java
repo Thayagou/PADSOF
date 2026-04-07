@@ -28,6 +28,8 @@ public class Juego extends Producto implements Serializable {
 	 * @param rango Rango de edad recomendade del juego
 	 * @param tipo Tipo de juego
 	 * @param categorias Array de categorías del juego
+	 * @throws InvalidArgumentException Si alguno de los argumentos es inválido
+	 * @throws DoubleDiscountException Si hay algún conflicto de descuentos por las categorías del producto
 	 */
 	public Juego(String nombre, String desc, double precio, ImageIcon imagen, int numJug, String rango, TipoJuego tipo, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
