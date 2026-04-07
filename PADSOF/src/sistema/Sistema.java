@@ -155,7 +155,4 @@ public class Sistema implements Serializable {
 	public boolean pagoTarjeta() {
 		return Math.random() < 1;
 	}
-	
-	
-
 }

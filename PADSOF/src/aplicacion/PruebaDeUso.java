@@ -2,6 +2,7 @@ package aplicacion;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import sistema.*;
 import usuario.*;
@@ -9,8 +10,6 @@ import venta.descuentos.*;
 import venta.productos.*;
 import venta.pedidos.*;
 import javax.swing.ImageIcon;
-
-import exceptions.ProductoNoDisponibleException;
 
 
 public class PruebaDeUso {
@@ -35,7 +34,7 @@ public class PruebaDeUso {
 		tienda.getAlmacen().anadirCategoria("Aventuras");
 		Categoria cAventura = tienda.getAlmacen().getCategoria("Aventuras");
 		
-		tienda.getAlmacen().anadirComic(5, "El increíble Hulk", "Comic 199 de hulk", 17.50, imagen, Reloj.localDateNow(), "Stan Lee", 50, "MarvelComics", cAventura);
+		tienda.getAlmacen().anadirComic(5, "El increíble Hulk", "Comic 199 de hulk", 17.50, imagen, LocalDate.now(), "Stan Lee", 50, "MarvelComics", cAventura);
 		Stock stComic = tienda.getAlmacen().getStock("El increíble Hulk");
 		tienda.getAlmacen().anadirFigura(3, "Hulk Action Figure", "Figura de accion de Hulk", 29.50, imagen, "19x20 cm", "Lego", "Hierro", cInfantil);
 		Stock stFigura = tienda.getAlmacen().getStock("Hulk Action Figure");
@@ -85,14 +84,11 @@ public class PruebaDeUso {
 		tienda.quitarDeCarritoDe(c1, stComic.getProducto());
 		
 		//Intentamos comprar un producto agotado
-		try {
-			tienda.anadirACarritoDe(c2, stPack.getProducto());
-		} catch(ProductoNoDisponibleException e) {
-			System.out.println("\nExcepción recogida al intentar añadir producto agotado: correcto");
-		}
-		
+		boolean ret = tienda.anadirACarritoDe(c2, stPack.getProducto());
+		System.out.println("Se impide añadir productos agotados al carrito: " + !(ret));
+
 		//Usuario1 paga la compra
-		tienda.pagarCarritoDe(c1, "1234123412341234");
+		//tienda.pagarCarritoDe(c1, "1234123412341234");
 		System.out.println(c1);
 		//Comprobamos que se guardó el pedido conrrectamente
 		System.out.println("\nPedidos pendientes de la tienda:\n");
@@ -100,11 +96,11 @@ public class PruebaDeUso {
 			System.out.println(ped);
 		
 		//Empleado2 marca el pedido en cada estado hasta Listo
-		Pedido pedido = tienda.getHistorial().getPedidosPendientes()[0];
+		/*Pedido pedido = tienda.getHistorial().getPedidosPendientes()[0];
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //En preparacion
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //Listo
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //Recogido
-		/*tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //En preparacion
+		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //En preparacion
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Listo
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Recogido*/
 		

@@ -1,3 +1,6 @@
+/**
+ * Este paquete recoje las subclases de usuario y otras clases relacionadas
+ */
 package usuario;
 
 import java.util.*;
@@ -9,6 +12,9 @@ import exceptions.*;
 import sistema.Reloj;
 import sistema.*;
 
+/**
+ * Clase que representa un carrito de compra de un cliente
+ */
 public class Carrito implements Serializable, Caducable {
 	private static final long serialVersionUID = 1L;
 	private LocalDateTime fechaCaducidad;
