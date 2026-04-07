@@ -19,6 +19,12 @@ import wallapop.*;
 public class ActionEmpleado {
 	
 	/**
+     * Constructor privado para evitar instanciación.
+     */
+    private ActionEmpleado() {
+    }
+	
+	/**
 	 * Muestra el menú principal de un empleado desde el que puede realizar sus tareas
 	 * @param empleado Empleado que ha iniciado sesión
 	 */

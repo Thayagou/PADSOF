@@ -20,6 +20,12 @@ import venta.productos.*;
 public class ActionGestor {
 	
 	/**
+     * Constructor privado para evitar instanciación.
+     */
+    private ActionGestor() {
+    }
+	
+	/**
 	 * Muestra el menú principal del gestor desde el que puede realizar diferentes tareas
 	 * @param gestor Gestor de la tienda
 	 */
