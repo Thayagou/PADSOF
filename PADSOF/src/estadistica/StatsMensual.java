@@ -3,6 +3,9 @@ package estadistica;
 import java.io.Serializable;
 import java.time.*;
 
+import exceptions.InvalidArgumentException;
+import sistema.Reloj;
+
 /**
  * Clase StatsMensual que nos permite almacenar las unidades y recaudación. Unidades es un término intensionalmente ambiguo para poder almacenar distintos parámetros
  */
@@ -16,7 +19,7 @@ public class StatsMensual implements Serializable, Comparable<StatsMensual> {
 	 * Constructor de la clase. Se inicializan a 0 las unidades y la recaudación y se asigna el mes actual a la instancia
 	 */
 	public StatsMensual() {
-		this.mes = YearMonth.now();
+		this.mes = Reloj.mesNow();
 	}
 	
 	/**
@@ -32,9 +35,10 @@ public class StatsMensual implements Serializable, Comparable<StatsMensual> {
 	 * @param uds Unidades a incrementar
 	 * @param precio Recaudación a incrementar
 	 * @return true si se actualiza correctamente, false en caso contrario
+	 * @throws InvalidArgumentException Se lanza en caso de que alguna entrada sea negativa
 	 */
-	public boolean incrementar(int uds, double precio) {
-		if (uds < 0 || precio < 0) return false;
+	public boolean incrementar(int uds, double precio) throws InvalidArgumentException {
+		if (uds < 0 || precio < 0) throw new InvalidArgumentException("Las unidades y precio deben ser positivos", "incrementar estadísticas mensuales");
 		
 		unidades += uds;
 		recaudacion += precio;

@@ -13,8 +13,9 @@ import wallapop.ArticuloSegundaMano;
 import wallapop.Cartera;
 import exceptions.*;
 import estadistica.StatsUsuario;
+import sistema.*;
 
-public class ClienteRegistrado extends Usuario implements Serializable {
+public class ClienteRegistrado extends Usuario implements Serializable, CarritoCaducadoObserver {
 	private static final long serialVersionUID = 1L;
 	private Carrito carrito;
 	private Cartera cartera;
@@ -23,15 +24,20 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 	private List<Pedido> misCompras;
 	private StatsUsuario estadisticas;
 	
-	public ClienteRegistrado(String nombre, String contrasena) 
+	public ClienteRegistrado(String nombre, String contrasena, CarritoCaducadoObserver tienda) 
 			throws IllegalArgumentException {
 		super(nombre, contrasena);
-		this.carrito = new Carrito();
+		this.carrito = new Carrito(this, tienda);
 		this.cartera = new Cartera(this);
 		this.notificaciones = new LinkedList<>();
 		this.intereses = new HashSet<>();
 		intereses.add(TipoNotificacion.PEDIDO);
 		this.misCompras = new LinkedList<>();
+	}
+	
+	@Override
+	public void carritoCaducado(Carrito carrito) {
+		this.enviarNotificacion("Su carrito ha sido cancelado por inactividad", TipoNotificacion.CADUCIDAD);
 	}
 	
 	public void cambiarContrasena(String contrasenaAntigua, String contrasena, String confirmarContrasena) throws InvalidArgumentException {
@@ -104,8 +110,8 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 	 * @param categorias Categorías que se han introducido en la búsqueda
 	 * @throws InvalidArgumentException Se lanza desde el método llamado en caso de que alguna categoría introducida no sea válida
 	 */
-	public void actualizarPorBusqueda(Categoria...categorias) throws InvalidArgumentException {
-		estadisticas.actualizarBusqueda(categorias);
+	public void actualizarVectorInteresesPorBusqueda(Categoria...categorias) throws InvalidArgumentException {
+		estadisticas.actualizarVectorInteresesBusqueda(categorias);
 	}
 
 	public boolean enviarNotificacion(String mensaje, TipoNotificacion tipo) {

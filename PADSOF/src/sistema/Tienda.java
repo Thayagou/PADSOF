@@ -19,7 +19,7 @@ import exceptions.*;
  * 
  * @author Juan Ibáñez, Tiago Oselka, Claudia Saiz
  */
-public class Tienda implements Serializable {
+public class Tienda implements Serializable, CarritoCaducadoObserver {
 	private static final long serialVersionUID = 1L;
 	private Historial historial = new Historial();
 	private Almacen almacen;
@@ -32,6 +32,19 @@ public class Tienda implements Serializable {
 	 */
 	public Tienda() { 
 		almacen = new Almacen(historial);
+	}
+	
+	@Override
+	public void carritoCaducado(Carrito carrito) {
+		for(StockExterno se : carrito.getItems()) {
+			try {
+				Stock st = almacen.getStock(se.getProducto().getNombre());
+				st.incrementarStock(se.getUdsEnStock());
+			} catch(InvalidArgumentException e) {
+				throw new RuntimeException("Error interno al devolver stock", e);
+			}
+			
+		}
 	}
 	
 	/**
@@ -104,7 +117,7 @@ public class Tienda implements Serializable {
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Ya existe un usuario con ese nombre", "registrarse", nombre);
 		if(!contrasena.equals(confirmarContrasena)) throw new NotValidUserException("Ha fallado la comprobación de contraseña", "registrarse", nombre);
 		
-		ClienteRegistrado cliente = new ClienteRegistrado(nombre, contrasena);
+		ClienteRegistrado cliente = new ClienteRegistrado(nombre, contrasena, this);
 		clientes.put(nombre, cliente);
 		historial.guardarUsuario(cliente);
 		return clientes.get(nombre);
@@ -225,7 +238,14 @@ public class Tienda implements Serializable {
 		for(Empleado e : this.getEmpleados()) {
 			e.enviarNotificacion("Un nuevo intercambio ha sido aceptado", TipoNotificacion.INTERCAMBIO);
 		}
-		intercambio.getEmisor().getDueno().enviarNotificacion("Su oferta de intercambio ha sido aceptada", TipoNotificacion.INTERCAMBIO);
+		intercambio.getEmisor().getDueno().enviarNotificacion("Su oferta de intercambio de Id: " + intercambio.getId() + " ha sido aceptada", TipoNotificacion.INTERCAMBIO);
+		
+		Intercambio[] intercambiosInvalidados = intercambio.getReceptor().invalidarIntercambiosConArticulos(intercambio.getSolicitados());
+		for (Intercambio i: intercambiosInvalidados) {
+			ClienteRegistrado emisorInvalidado = i.getEmisor().getDueno();
+			emisorInvalidado.enviarNotificacion("Su oferta de intercambio de Id: " + i.getId() + " ha sido invalidada", TipoNotificacion.INTERCAMBIO);
+		}
+		
 		return true;
 	}
 	
@@ -273,6 +293,14 @@ public class Tienda implements Serializable {
 		cliente.getCartera().addIntercambio(intercambio);
 		clienteRecibe.getCartera().addIntercambio(intercambio);
 		clienteRecibe.enviarNotificacion("Ha recibido una nueva oferta de intercambio", TipoNotificacion.INTERCAMBIO);
+		
+		Intercambio[] intercambiosInvalidados = intercambio.getEmisor().invalidarIntercambiosConArticulos(ofrecidos);
+		for (Intercambio i: intercambiosInvalidados) {
+			ClienteRegistrado emisorInvalidado = i.getEmisor().getDueno();
+			emisorInvalidado.enviarNotificacion("Su oferta de intercambio de Id: " + i.getId() + " ha sido invalidada", TipoNotificacion.INTERCAMBIO);
+		}
+		
+		
 		return true;
 	}
 	
@@ -303,6 +331,16 @@ public class Tienda implements Serializable {
 		return true;
 	}
 	
+	/**
+	 * Método para añadir un nuevo artículo a la tienda
+	 * @param nombre Nombre del artículo
+	 * @param desc Descripción del artículo
+	 * @param cartera Cartera a la que se añade
+	 * @param categorias Categorías del artículo
+	 * @param interesadoEn Descripción de los intereses de intercambio
+	 * @return true si se pudo añadir 
+	 * @throws InvalidArgumentException 
+	 */
 	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, Categoria[] categorias, String interesadoEn) throws InvalidArgumentException {
 		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, categorias, interesadoEn);
 		cartera.addArticulo(nuevo);
@@ -316,14 +354,13 @@ public class Tienda implements Serializable {
 	 * @return true si se pudo añadir el producto, false si no
 	 * @throws InvalidArgumentException
 	 */
-	public boolean anadirACarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException {
+	public void anadirACarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException, ProductoNoDisponibleException {
 		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
 		Stock st = almacen.getStock(producto);
-		if(!st.disponible()) return false;
+		if(!st.disponible()) throw new ProductoNoDisponibleException("No queda stock del producto solicitado", producto);
 		
 		cliente.getCarrito().anadirProducto(producto);
 		st.reducirStock();
-		return true;
 	}
 	
 	/**

@@ -14,11 +14,17 @@ import sistema.Sistema;
  */
 public class StatsUsuario implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/** Cliente del cual se almacenan las estadísticas */
 	ClienteRegistrado cliente;
+	/** Total gastado por el usuario en la tienda */
 	double totalGastado = 0;
+	/** Unidades totales de productos comprados por el cliente */
 	long udsCompradas = 0;
+	/** Unidades totales de artículos intercambiados por el cliente */
 	long udsIntercambiadas = 0;
+	/** Vector de intereses del usuario en formato de Map Categoria->valor double asignado */
 	Map<Categoria, Double> intereses = new HashMap<>();
+	/** Norma del vector de intereses */
 	double norma = 0;
 	
 	/**
@@ -58,7 +64,7 @@ public class StatsUsuario implements Serializable {
 	 * @param categorias VarArgs de categorías buscadas
 	 * @throws InvalidArgumentException Se lanza esta excepción en caso de que alguna de las categorías sea null
 	 */
-	public void actualizarBusqueda(Categoria...categorias) throws InvalidArgumentException {
+	public void actualizarVectorInteresesBusqueda(Categoria...categorias) throws InvalidArgumentException {
 		for (Categoria c: categorias) {
 			if (c == null) throw new InvalidArgumentException("Categoría inválida introducida", "actualizar vector de cliente a partir de búsqueda");
 		}
@@ -96,20 +102,20 @@ public class StatsUsuario implements Serializable {
 	
 	/**
 	 * Realiza un producto escalar normalizado entre el vector del cliente y uno introduciddo, de manera que el módulo resultante reside entre 0 y 1
-	 * @param v1 Vector de recomendación/intereses introducido
-	 * @param n1 Norma del vector introducido
+	 * @param vectorExt Vector de recomendación/intereses introducido
+	 * @param normaExt Norma del vector introducido
 	 * @return Resultado del producto escalar realizado
 	 */
-	public double getCompatibilidad(Map<Categoria, Double> v1, double n1) {
+	public double getCompatibilidad(Map<Categoria, Double> vectorExt, double normaExt) {
 		double prodEscalar = 0; 
 
 		for (Categoria c: intereses.keySet()) {
-			if (v1.containsKey(c) == false) continue;
+			if (vectorExt.containsKey(c) == false) continue;
 			
-			prodEscalar += intereses.get(c)*v1.get(c);
+			prodEscalar += intereses.get(c)*vectorExt.get(c);
 		}
 		
-		prodEscalar /= (n1*norma);
+		prodEscalar /= (normaExt*norma);
 		
 		return prodEscalar;
 	}

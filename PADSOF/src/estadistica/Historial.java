@@ -12,6 +12,7 @@ import venta.pedidos.EstadoPedido;
 import venta.pedidos.Pedido;
 import wallapop.*;
 import usuario.*;
+import sistema.Reloj;
 
 /**
  * Clase Historial, encargada de guardar y manejar las estadísticas de usuarios y productos
@@ -19,28 +20,33 @@ import usuario.*;
  */
 public class Historial implements Serializable, ObservadorProducto {
 	private static final long serialVersionUID = 1L;
+	/** Lista de todos los pedidos que se han realizado en la tienda */
 	private List<Pedido> pedidos = new ArrayList<>();
+	/** Lista de todas las valoraciones que se han solicitado en la tienda */
 	private List<Valoracion> valoraciones = new ArrayList<>();
+	/** Lista de todos los intercambios que se han realizado en la tienda */
 	private List<Intercambio> intercambios = new ArrayList<>();
+	/** Mapa que asigna a cada producto con su respectiva estadística */
 	private Map<Producto, StatsProducto> statsProductos = new HashMap<>();
+	/** Mapa que une asigna a cada cliente con su respectiva estadística */
 	private Map<ClienteRegistrado, StatsUsuario> statsClientes = new HashMap<>();
+	/** Mapa con las estadísticas mensuales de ventas ordenadas por meses */
 	private TreeMap<YearMonth, StatsMensual> ventasMensuales = new TreeMap<>();
-	private StatsMensual totalVenta;
+	/** Mapa con las estadísticas mensuales de los intercambios ordenadas por meses */
 	private TreeMap<YearMonth, StatsMensual> wallapopMensuales = new TreeMap<>();
 
 	/**
 	 * Constructor de la clase historial
 	 */
-	public Historial() { 
-		totalVenta = new StatsMensual();
-	}
+	public Historial() { }
 	
+	@Override
 	/**
 	 * Guarda un producto en el historial y le asigna estadísticas
+	 * @param producto Producto a almacenar
 	 */
-	@Override
-	public void guardarProducto(Producto p) {
-		if (statsProductos.containsKey(p) == false) statsProductos.put(p, new StatsProducto(p));	
+	public void guardarProducto(Producto producto) {
+		if (statsProductos.containsKey(producto) == false) statsProductos.put(producto, new StatsProducto(producto));	
 	}
 	
 	/**
@@ -49,6 +55,91 @@ public class Historial implements Serializable, ObservadorProducto {
 	 */
 	public void guardarUsuario(ClienteRegistrado cliente) {
 		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
+	}
+	
+	/**
+	 * Método para guardar un pedido, actualizando las estadísticas de la tienda, de los productos y del cliente que lo ha comprado
+	 * @param pedido Pedido realizado por el usuario
+	 * @return true si se guarda correctamente, false en caso contrario
+	 * @throws InvalidArgumentException Se lanza en caso de que algún parámetro introducido no sea válido
+	 * 
+	 */
+	public boolean guardarPedido(Pedido pedido) throws InvalidArgumentException {
+		if (pedido == null) throw new InvalidArgumentException("Pedido inválido introducido", "guardar pedido en las estadísticas");
+		StockExterno[] productos = pedido.getItemsPedido();
+		Producto p;
+		
+		Map<Categoria, Double> vectorCompra = new HashMap<>();
+		int udsVendidas = 0;
+		double pesoUds = Sistema.getInstancia().getPonderacionUdsCompra(), 
+				pesoPrecio = Sistema.getInstancia().getPonderacionPrecioCompra();
+		
+		for (StockExterno stExt: productos) {
+			p = stExt.getProducto();
+			if (statsProductos.containsKey(p) == false) statsProductos.put(p, new StatsProducto(p));
+				
+			statsProductos.get(p).actualizarUltima(stExt.getUdsEnStock(), stExt.getPrecioTotal());
+			
+			udsVendidas +=stExt.getUdsEnStock();
+
+			for (Categoria c: p.getCategorias()) {
+				vectorCompra.merge(c, pesoUds * stExt.getUdsEnStock() + pesoPrecio * stExt.getPrecioTotal(), (a,b)->Double.sum(a, b));
+			}			
+		}
+				
+		double precio = pedido.getPrecioTotal();
+		
+		ClienteRegistrado cliente = pedido.getCliente();
+		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
+		StatsUsuario statCliente = statsClientes.get(cliente);
+		
+		statCliente.actualizarCompra(vectorCompra, udsVendidas, precio);
+		
+		YearMonth month = Reloj.mesNow();
+		if (ventasMensuales.get(month) == null) ventasMensuales.put(month, new StatsMensual());
+		StatsMensual statVenta = ventasMensuales.get(month);
+		statVenta.incrementar(udsVendidas, precio);
+			
+		System.out.println(cliente);
+		pedidos.add(pedido);
+		
+		return true;
+	}
+	
+	/**
+	 * Método para guardar un intercambio cuando se crea nuevo. No actualiza las estadísticas al tratarse inicialmente de una oferta solamente
+	 * @param intercambio Intercambio propuesto
+	 * @return true si se añade correctamente, false en caso contario
+	 * @throws InvalidArgumentException Lanzado en caso de que se introduzcan argumentos inválidos
+	 */
+	public boolean guardarIntercambio(Intercambio intercambio) throws InvalidArgumentException {	
+		if (intercambio == null) throw new InvalidArgumentException("Intercambio inválido introducido", "guardar intercambio en las estadísticas");
+		return intercambios.add(intercambio);
+	}
+	
+	/**
+	 * Método para guardar la valoración de un artículo, actualizando las estadísticas del cliente que la ha solicitado y las de la tienda
+	 * @param pedido Pedido realizado por el usuario
+	 * @return true si se guarda correctamente, false en caso contrario
+	 * @throws InvalidArgumentException Lanzado en caso de que se introduzcan argumentos inválidos
+	 */
+	public boolean guardarValoracion(Valoracion valoracion) throws InvalidArgumentException {
+		if (valoracion == null) throw new InvalidArgumentException("Valoración inválida introducida", "guardar valoración en las estadísticas");
+		double precio = valoracion.getPrecioPagado();
+		
+		ClienteRegistrado cliente = valoracion.getDuenoArticulo();
+		if (statsClientes.get(cliente) == null) statsClientes.put(cliente, new StatsUsuario(cliente));
+		StatsUsuario statCliente = statsClientes.get(cliente);
+		statCliente.actualizarUltimaValoracion(precio);
+		
+		YearMonth month = Reloj.mesNow();
+		if (wallapopMensuales.get(month) == null) wallapopMensuales.put(month, new StatsMensual());
+		StatsMensual statWallapop = ventasMensuales.get(month);
+		statWallapop.incrementar(0, precio);
+		
+		valoraciones.add(valoracion);
+		
+		return true;
 	}
 	
 	/**
@@ -68,8 +159,9 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param inicio Mes desde el cual se desea conocer las estadísticas
 	 * @param fin Mes hasta el cual se desea conocer las estadísticas
 	 * @return StatsMensual con el acumulado entre meses
+	 * @throws InvalidArgumentException Se lanza en caso de haber problemas con las estadísticas acumuladas
 	 */
-	public StatsMensual getVentasEntreMesesAcumulado(YearMonth inicio, YearMonth fin) {
+	public StatsMensual getVentasEntreMesesAcumulado(YearMonth inicio, YearMonth fin) throws InvalidArgumentException {
 		List<StatsMensual> lista = getVentasEntreMeses(inicio, fin);
 		
 		StatsMensual acumulado = new StatsMensual();
@@ -114,100 +206,6 @@ public class Historial implements Serializable, ObservadorProducto {
 		Collections.sort(lista, (a,b)->Double.compare(a.getValue().getRecaudacion(), b.getValue().getRecaudacion()));
 				
 		return lista;
-	}
-	
-	/**
-	 * Obtiene un StatsMensual que contiene la recaudación total de ventas de la tienda y el total de unidades vendidas
-	 * @return StatsMensual con el total de ventas
-	 */
-	public StatsMensual getTotalVenta() {
-		return totalVenta;
-	}
-	
-	/**
-	 * Método para guardar un pedido, actualizando las estadísticas de la tienda, de los productos y del cliente que lo ha comprado
-	 * @param pedido Pedido realizado por el usuario
-	 * @return true si se guarda correctamente, false en caso contrario
-	 * @throws InvalidArgumentException Se lanza en caso de que algún parámetro introducido no sea válido
-	 * 
-	 */
-	public boolean guardarPedido(Pedido pedido) throws InvalidArgumentException {
-		if (pedido == null) throw new InvalidArgumentException("Pedido inválido introducido", "guardar pedido en las estadísticas");
-		StockExterno[] productos = pedido.getItemsPedido();
-		Producto p;
-		
-		Map<Categoria, Double> vectorCompra = new HashMap<>();
-		int udsVendidas = 0;
-		double pesoUds = Sistema.getInstancia().getPonderacionUdsCompra(), 
-				pesoPrecio = Sistema.getInstancia().getPonderacionPrecioCompra();
-		
-		for (StockExterno stExt: productos) {
-			p = stExt.getProducto();
-			if (statsProductos.containsKey(p) == false) statsProductos.put(p, new StatsProducto(p));
-				
-			statsProductos.get(p).actualizarUltima(stExt.getUdsEnStock(), stExt.getPrecioTotal());
-			
-			udsVendidas +=stExt.getUdsEnStock();
-
-			for (Categoria c: p.getCategorias()) {
-				vectorCompra.merge(c, pesoUds * stExt.getUdsEnStock() + pesoPrecio * stExt.getPrecioTotal(), (a,b)->Double.sum(a, b));
-			}			
-		}
-				
-		double precio = pedido.getPrecioTotal();
-		
-		ClienteRegistrado cliente = pedido.getCliente();
-		if (statsClientes.containsKey(cliente) == false) statsClientes.put(cliente, new StatsUsuario(cliente));
-		StatsUsuario statCliente = statsClientes.get(cliente);
-		
-		statCliente.actualizarCompra(vectorCompra, udsVendidas, precio);
-		
-		YearMonth month = YearMonth.now();
-		if (ventasMensuales.get(month) == null) ventasMensuales.put(month, new StatsMensual());
-		StatsMensual statVenta = ventasMensuales.get(month);
-		statVenta.incrementar(udsVendidas, precio);
-		totalVenta.incrementar(udsVendidas, precio);
-			
-		System.out.println(cliente);
-		pedidos.add(pedido);
-		
-		return true;
-	}
-	
-	/**
-	 * Método para guardar un intercambio cuando se crea nuevo. No actualiza las estadísticas al tratarse inicialmente de una oferta solamente
-	 * @param intercambio Intercambio propuesto
-	 * @return true si se añade correctamente, false en caso contario
-	 * @throws InvalidArgumentException Lanzado en caso de que se introduzcan argumentos inválidos
-	 */
-	public boolean guardarIntercambio(Intercambio intercambio) throws InvalidArgumentException {	
-		if (intercambio == null) throw new InvalidArgumentException("Intercambio inválido introducido", "guardar intercambio en las estadísticas");
-		return intercambios.add(intercambio);
-	}
-	
-	/**
-	 * Método para guardar la valoración de un artículo, actualizando las estadísticas del cliente que la ha solicitado y las de la tienda
-	 * @param pedido Pedido realizado por el usuario
-	 * @return true si se guarda correctamente, false en caso contrario
-	 * @throws InvalidArgumentException Lanzado en caso de que se introduzcan argumentos inválidos
-	 */
-	public boolean guardarValoracion(Valoracion valoracion) throws InvalidArgumentException {
-		if (valoracion == null) throw new InvalidArgumentException("Valoración inválida introducida", "guardar valoración en las estadísticas");
-		double precio = valoracion.getPrecioPagado();
-		
-		ClienteRegistrado cliente = valoracion.getDuenoArticulo();
-		if (statsClientes.get(cliente) == null) statsClientes.put(cliente, new StatsUsuario(cliente));
-		StatsUsuario statCliente = statsClientes.get(cliente);
-		statCliente.actualizarUltimaValoracion(precio);
-		
-		YearMonth month = YearMonth.now();
-		if (wallapopMensuales.get(month) == null) wallapopMensuales.put(month, new StatsMensual());
-		StatsMensual statWallapop = ventasMensuales.get(month);
-		statWallapop.incrementar(0, precio);
-		
-		valoraciones.add(valoracion);
-		
-		return true;
 	}
 	
 	/**
@@ -326,7 +324,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	public String toString() {
 		return "Historial [pedidos=" + pedidos + ", valoraciones=" + valoraciones + ", intercambios=" + intercambios
 				+ ", statsProductos=" + statsProductos + ", statsClientes=" + statsClientes + ", ventasMensuales="
-				+ ventasMensuales + ", totalVenta=" + totalVenta + ", wallapopMensuales=" + wallapopMensuales + "]";
+				+ ventasMensuales + ", wallapopMensuales=" + wallapopMensuales + "]";
 	}	
 	
 	

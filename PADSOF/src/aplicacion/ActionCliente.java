@@ -83,7 +83,11 @@ public class ActionCliente {
 		if(dec != 's') return;
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea añadir: ");
 		
-		Main.tienda.anadirACarritoDe(cliente, productos[num-1]);	
+		try{
+			Main.tienda.anadirACarritoDe(cliente, productos[num-1]);	
+		} catch(ProductoNoDisponibleException e){
+			Main.showMessage(String.format("El producto '%s' no tiene stock disponible", e.getProducto().getNombre()));
+		}
 	}
 	
 	/**
@@ -103,7 +107,12 @@ public class ActionCliente {
 		if(dec != 's') return;
 		
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea añadir: ");
-		Main.tienda.anadirACarritoDe(cliente, productos[num-1]);
+		try {
+			Main.tienda.anadirACarritoDe(cliente, productos[num-1]);
+		} catch(ProductoNoDisponibleException e) {
+			Main.showMessage(String.format("El producto '%s' no tiene stock disponible", e.getProducto().getNombre()));
+		}
+		
 	}
 	
 	/**

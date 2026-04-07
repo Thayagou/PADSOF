@@ -5,6 +5,7 @@ import java.time.*;
 import java.util.*;
 
 import sistema.AsignadorId;
+import sistema.Reloj;
 import usuario.*;
 import venta.productos.StockExterno;
 import exceptions.*;
@@ -41,7 +42,7 @@ public class Pedido implements Serializable {
 		}
 		
 		this.id = AsignadorId.getInstancia().siguienteId();
-		this.fechaPago = LocalDateTime.now();
+		this.fechaPago = Reloj.now();
 		this.estado = EstadoPedido.PAGADO;
 		this.cliente = cliente;
 		
@@ -146,15 +147,15 @@ public class Pedido implements Serializable {
 		switch(estado) {
 		case EN_PREPARACION:
 			empPreparacion = emp;
-			fechaPreparacion = LocalDateTime.now();
+			fechaPreparacion = Reloj.now();
 			return;
 		case LISTO:
 			empListo = emp;
-			fechaListo = LocalDateTime.now();
+			fechaListo = Reloj.now();
 			return;
 		case RECOGIDO:
 			empRecogida = emp;
-			fechaRecogida = LocalDateTime.now();
+			fechaRecogida = Reloj.now();
 			return;
 		default:
 			break;

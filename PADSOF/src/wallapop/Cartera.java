@@ -78,6 +78,18 @@ public class Cartera implements Serializable{
 		return intercambio.cancelarIntercambio();
 	}
 	
+	public Intercambio[] invalidarIntercambiosConArticulos(ArticuloSegundaMano[] articulos) {
+		List<Intercambio> invalidados = new ArrayList<>();
+		
+		for (Intercambio i: intercambios) {
+			if (i.invalidarSiSolicitaArticulos(articulos)) {
+				invalidados.add(i);
+			}
+		}
+		
+		return invalidados.toArray(new Intercambio[0]);
+	}
+	
 	/**
 	 * Getter del dueño de la cartera
 	 * @return El cliente al que pertenece

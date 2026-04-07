@@ -37,7 +37,6 @@ class CarritoTest {
 
 	/**
 	 * Crea un descuento de tipo regalo
-	 * 
 	 * @throws InvalidArgumentException
 	 */
 	private DescuentoRegalo crearDescuentoRegalo(double precioMin, Producto regalo) throws InvalidArgumentException {
@@ -46,7 +45,6 @@ class CarritoTest {
 
 	/**
 	 * Crea un descuento de tipo regalo
-	 * 
 	 * @throws InvalidArgumentException
 	 */
 	private DescuentoDinero crearDescuentoDinero(double precioMin, double dinero) throws InvalidArgumentException {
@@ -55,7 +53,6 @@ class CarritoTest {
 
 	/**
 	 * Crea un descuento de tipo regalo
-	 * 
 	 * @throws InvalidArgumentException
 	 */
 	private DescuentoPorcentaje crearDescuentoPorcentaje(double precioMin, double porcentaje)

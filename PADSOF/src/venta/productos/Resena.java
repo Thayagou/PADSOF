@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.*;
 import usuario.ClienteRegistrado;
 import exceptions.*;
+import sistema.Reloj;
 
 /**
  * Clase básica Resena que define una reseña de un usuario
@@ -30,7 +31,7 @@ public class Resena implements Serializable {
 		}
 		this.puntuacion = puntuacion;
 		this.comentario = comentario;
-		this.fecha = LocalDate.now();
+		this.fecha = Reloj.localDateNow();
 		this.usuario = usuario;
 	}
 

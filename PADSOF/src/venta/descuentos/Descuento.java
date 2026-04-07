@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.*;
 
 import sistema.AsignadorId;
+import sistema.Reloj;
 import venta.productos.Producto;
 import exceptions.*;
 
@@ -77,7 +78,7 @@ public abstract class Descuento implements Serializable {
 	 */
 	public boolean isVigente() {
 	    if (finalizado) return false;
-	    if(LocalDateTime.now().isAfter(inicio)) return !isCaducado();
+	    if(Reloj.now().isAfter(inicio)) return !isCaducado();
 	    else {
 	    	return false;
 	    }
@@ -88,7 +89,7 @@ public abstract class Descuento implements Serializable {
 	 * @return true si el descuento está caducado, false si no
 	 */
 	public boolean isCaducado() {
-		if(LocalDateTime.now().isBefore(fin)) return false;
+		if(Reloj.now().isBefore(fin)) return false;
 		else {
 			finalizado = true;
 			return true;
