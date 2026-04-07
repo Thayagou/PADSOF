@@ -5,6 +5,7 @@ package exceptions;
  */
 public class DoubleDiscountException extends CustomException {
 	private static final long serialVersionUID = 1L;
+	/** Nombre de producto/categoría en el que se produce el conflicto*/
 	private String nombre;
 	
 	/**

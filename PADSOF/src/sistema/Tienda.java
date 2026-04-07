@@ -22,10 +22,15 @@ import exceptions.*;
  */
 public class Tienda implements Serializable, CarritoCaducadoObserver {
 	private static final long serialVersionUID = 1L;
+	/** historial de la tienda*/
 	private Historial historial = new Historial();
+	/**almacen de la tienda*/
 	private Almacen almacen;
+	/**Mapa de clientes por nombre*/
 	private Map<String, ClienteRegistrado> clientes = new HashMap<>();
+	/**Mapa de empleados por nombre*/
 	private Map<String, Empleado> empleados = new HashMap<>();
+	/**Gestor de la tienda*/
 	private Gestor gestor;
 	
 	/**
@@ -114,6 +119,8 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param contrasena Contraseña de la cuenta
 	 * @param confirmarContrasena Confirmacion de la contraseña
 	 * @return Usuario cliente que se creó
+	 * @throws InvalidArgumentException Se lanza si los argumentos de entrada no son válidos
+	 * @throws NotValidUserException Se lanza si ya existe el usuario o la contraseña es incorrecta
 	 */
 	public ClienteRegistrado registrarse(String nombre, String contrasena, String confirmarContrasena) throws InvalidArgumentException, NotValidUserException {
 		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
@@ -131,6 +138,8 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param nombre Nombre de usuario
 	 * @param contrasena Contraseña de la cuenta
 	 * @return Usuario que está registrado con ese nombre de usuario
+	 * @throws InvalidArgumentException Se lanza si los argumentos de entrada no son válidos
+	 * @throws NotValidUserException Se lanza si el usuario no existe o la contraseña es incorrecta
 	 */
 	public Usuario iniciarSesion(String nombre, String contrasena) throws InvalidArgumentException, NotValidUserException {
 		if(gestor.getNombre().equals(nombre)) {
@@ -154,7 +163,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param contrasena Contraseña del usuario si se crea uno nuevo
 	 * @param permisos Permisos del empleado que se da de alta
 	 * @return true si se pudo dar de alta, false si ya existía y está dado de alta
-	 * @throws InvalidArgumentException Se lanza en caso de que algún parámetro sea inválido
+	 * @throws InvalidArgumentException Se lanza si los argumentos de entrada no son válidos
 	 */
 	public boolean darDeAltaEmpleado(String nombre, String contrasena, Permiso...permisos) throws InvalidArgumentException {
 		Empleado emp = getEmpleado(nombre);
@@ -334,6 +343,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * Solicita una valoración de un artículo en nombre de un cliente 
 	 * @param cliente Cliente que solicita la valoración
 	 * @param articulo Artículo del que se pide valoración
+	 * @param numTarjeta Número de tarjeta de crédito del cliente
 	 * @return boolean, true si la solicitud se ha hecho, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza en caso de error a la hora de guardar la valoración
 	 */
@@ -377,8 +387,8 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * Método para añadir un producto a un carrito
 	 * @param cliente Cliente al que se le añade un producto
 	 * @param producto Producto que se añade al carrito
-	 * @return true si se pudo añadir el producto, false si no
-	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 * @throws InvalidArgumentException Se lanza si los argumentos de entrada no son válidos
+	 * @throws ProductoNoDisponibleException Se lanza si el producto que se quiere añadir no está disponible
 	 */
 	public void anadirACarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException, ProductoNoDisponibleException {
 		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");

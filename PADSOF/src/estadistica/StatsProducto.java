@@ -15,9 +15,13 @@ import venta.productos.*;
 
 public class StatsProducto implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/** Producto */
 	private Producto producto;
+	/** Lista de estadísticas */
 	private List<StatsMensual> estadisticas = new ArrayList<>();
+	/** Vector para recomendar en función de categorías */
 	private Map<Categoria, Double> recomendacion = new HashMap<>();
+	/** Resultado de la operación de la norma */
 	private double norma = 0;	
 	
 	/**
@@ -35,6 +39,9 @@ public class StatsProducto implements Serializable {
 		producto.setStatsProducto(this);
 	}
 
+	/**
+	 * Actualiza el vector de intereses del producto
+	 */
 	public void actualizarVector() {
 		double valor = Sistema.getInstancia().getPonderacionCategoria();
 		

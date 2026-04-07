@@ -34,6 +34,7 @@ public class Pedido implements Serializable {
 	 * Creador de la clase Pedido
 	 * @param cliente Cliente que realiza el pedido
 	 * @param stocks Array de los stocks externos de los productos del pedido
+	 * @throws InvalidArgumentException Se lanza si los argumentos no son válidos
 	 */
 	public Pedido(ClienteRegistrado cliente, StockExterno...stocks) throws InvalidArgumentException {
 		if(cliente == null || stocks == null) throw new InvalidArgumentException("Argumento null en el pedido");
@@ -64,7 +65,7 @@ public class Pedido implements Serializable {
 
 	/**
 	 * Getter de la id del pedido
-	 * @return
+	 * @return el id del pedido
 	 */
 	public long getId() {
 		return id;
@@ -137,6 +138,7 @@ public class Pedido implements Serializable {
 	/**
 	 * Avanza el estado del pedido
 	 * @param emp Empleado que actualiza el estado del pedido
+	 * @throws InvalidArgumentException Se lanza si los argumentos no son válidos
 	 */
 	public void nextEstadoPedido(Empleado emp) throws InvalidArgumentException {
 		if(emp == null) throw new InvalidArgumentException("El empleado no puede ser null");

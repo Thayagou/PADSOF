@@ -10,8 +10,11 @@ import venta.productos.*;
  * Esta clase representa las caracteristicas de una figura
  */
 public class CaracteristicasFigura implements CaracteristicasProducto {
+	/** Dimensiones de la figura*/
 	public final String dimensiones;
+	/** Marca de la figura*/
 	public final String marca;
+	/** Material de la figura*/
 	public final String material;
 
 	/**
@@ -26,17 +29,6 @@ public class CaracteristicasFigura implements CaracteristicasProducto {
 		this.material = material;
 	}
 	
-	/**
-	 * Sobreescribe el método que crea un producto
-	 * @param nombre Nombre del producto
-	 * @param descripcion Descripcion del producto
-	 * @param precio Precio del producto
-	 * @param image Imagen del producto
-	 * @param categorias Categorias del producto
-	 * @return Producto creado
-	 * @throws InvalidArgumentException Se lanza cuando algun argumento no es válido
-	 * @throws DoubleDiscountException Se lanza cuando hay conflicto de descuentos
-	 */
 	@Override
 	public Producto crearProducto(String nombre, String descripcion, double precio, ImageIcon image, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {

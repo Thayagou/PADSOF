@@ -10,8 +10,11 @@ import venta.productos.*;
  * Esta clase representa las caracteristicas de un juego
  */
 public class CaracteristicasJuego implements CaracteristicasProducto {
+	/** Número de jugadores del juego*/
 	public final int numJugadores;
+	/** Rango de edad del juego*/
 	public final String rangoEdad;
+	/** Tipo de juego*/
 	public final TipoJuego tipo;
 	
 	/**

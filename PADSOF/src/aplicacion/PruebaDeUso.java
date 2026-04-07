@@ -10,11 +10,18 @@ import venta.productos.*;
 import venta.pedidos.*;
 import javax.swing.ImageIcon;
 
-import exceptions.ProductoNoDisponibleException;
+import exceptions.*;
 
-
+/**
+ * Clase que prueba algunos casos de uso de la tienda
+ */
 public class PruebaDeUso {
 
+	/**
+	 * main que se ejecuta
+	 * @param args Argumentos de entrada
+	 * @throws Exception Excepciones en general
+	 */
 	public static void main(String[] args) throws Exception {
 		Tienda tienda = new Tienda();
 		

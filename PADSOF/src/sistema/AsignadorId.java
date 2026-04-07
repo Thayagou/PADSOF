@@ -7,7 +7,9 @@ import java.io.Serializable;
  */
 public class AsignadorId implements Serializable {
 	private static final long serialVersionUID = 1L;
+	/**Instancia de AsignadorId*/
     private static AsignadorId instancia;
+    /**Contador de Ids*/
     private long contadorIds;
     
     /**

@@ -141,6 +141,10 @@ public class Valoracion implements Serializable {
 			
 	}
 	
+	/**
+	 * Devuelve la información de la valoración sin imprimir la información del artículo
+	 * @return string con la información de la valoración
+	 */
 	public String toStringSinArticulo() {
 		return "Id de la valoración: " + id +
 				"Fecha solicitud: " + fechaSolicitud +

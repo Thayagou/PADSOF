@@ -10,6 +10,7 @@ import venta.productos.*;
  * Esta clase representa las caracteristicas de un pack
  */
 public class CaracteristicasPack implements CaracteristicasProducto {
+	/** Productos que forman el pack*/
 	public final Stock[] stocks;
 	
 	/**
