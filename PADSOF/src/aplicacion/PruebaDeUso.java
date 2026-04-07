@@ -88,7 +88,7 @@ public class PruebaDeUso {
 		System.out.println("Se impide añadir productos agotados al carrito: " + !(ret));
 
 		//Usuario1 paga la compra
-		tienda.pagarCarritoDe(c1, "1234123412341234");
+		//tienda.pagarCarritoDe(c1, "1234123412341234");
 		System.out.println(c1);
 		//Comprobamos que se guardó el pedido conrrectamente
 		System.out.println("\nPedidos pendientes de la tienda:\n");
@@ -96,11 +96,11 @@ public class PruebaDeUso {
 			System.out.println(ped);
 		
 		//Empleado2 marca el pedido en cada estado hasta Listo
-		Pedido pedido = tienda.getHistorial().getPedidosPendientes()[0];
+		/*Pedido pedido = tienda.getHistorial().getPedidosPendientes()[0];
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //En preparacion
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //Listo
 		tienda.getHistorial().avanzarEstadoPedido(tienda.getEmpleado("Empleado2"), pedido); //Recogido
-		/*tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //En preparacion
+		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //En preparacion
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Listo
 		tienda.getHistorial().getPedidosPendientes()[0].nextEstadoPedido(tienda.getEmpleado("Empleado2")); //Recogido*/
 		
