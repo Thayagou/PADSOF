@@ -164,6 +164,30 @@ public class Main {
 	}
 	
 	/**
+	 * Muestra un mensaje y recoje una respuesta en forma de fecha
+	 * @param message Mensaje que se muestra
+	 * @return Duration Respuesta del usuario
+	 * @throws InvalidUserInputException
+	 */
+	protected static Duration getUserInputDuration(String message) throws InvalidUserInputException {
+		showMessage(message);
+		try {
+			String[] parts = sc.nextLine().split(":");
+			if (parts.length < 3) throw new IllegalArgumentException();
+			
+			int days = Integer.parseInt(parts[0]);
+			int hours = Integer.parseInt(parts[1]);
+			int mins = Integer.parseInt(parts[2]);
+			
+			Duration duracion = Duration.ofDays(days).plusHours(hours).plusMinutes(mins);
+			
+			return duracion;			
+		} catch (IllegalArgumentException | InputMismatchException e) {
+			throw new InvalidUserInputException("El valor introducido debe ser una duración DD:hh:mm", "lectura");
+		}
+	}
+	
+	/**
 	 * Muestra un mensaje y recoje una respuesta en forma de lista de enteros
 	 * @param message Mensaje que se muestra
 	 * @return List<Integer> Respuesta del usuario

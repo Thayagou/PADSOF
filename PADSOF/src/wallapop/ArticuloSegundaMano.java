@@ -38,10 +38,10 @@ public class ArticuloSegundaMano implements Serializable {
 	 * @param nombre Nombre del artículo
 	 * @param desc Descripción del artículo
 	 * @param dueno Cartera a la que pertenece este artículo
-	 * @param categorias Categorías a las que pertenece el artículo
 	 * @param interesadoEn Describe por lo que quiere intercambiar el dueño este artículo
+	 * @param categorias Categorías a las que pertenece el artículo
 	 */
-	public ArticuloSegundaMano(String nombre, String desc, Cartera dueno, Categoria[] categorias, String interesadoEn) {
+	public ArticuloSegundaMano(String nombre, String desc, Cartera dueno, String interesadoEn, Categoria...categorias) {
 		id = AsignadorId.getInstancia().siguienteId();
 		this.nombre = nombre;
 		this.descripcion = desc;

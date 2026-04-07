@@ -1,6 +1,7 @@
 package sistema;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.*;
 
 import es.uam.eps.padsof.telecard.*;
@@ -185,7 +186,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param valor Ponderación a establecer del parámetro
 	 * @throws InvalidArgumentException Se lanza en caso de error en algún parámetro de entrada
 	 */
-	public void gestionarParametroDeSistema(Gestor gestor, ParametroRecomendacion parametro, double valor) throws InvalidArgumentException {
+	public void gestionarParametroDeSistema(Gestor gestor, ParametroSistema parametro, double valor) throws InvalidArgumentException {
 		if (gestor == null) throw new InvalidArgumentException("Gestor introducido es null", "gestionar parámetros del sistema");
 	    if (parametro == null || valor < 0)throw new InvalidArgumentException("Algún parámetro de recomendación inválido", "gestionar parámetros del sistema");
 	    switch (parametro) {
@@ -211,7 +212,29 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	        	throw new InvalidArgumentException("Parámetro de recomendación inválido", "gestionar parámetros del sistema");
 	    }
 	}
-
+	
+	/**
+	 * Método que se utiliza para gestionar los parámetros de duración del sistema
+	 * @param gestor Instancia del gestor de la tienda
+	 * @param parametro Parámetro de recomendación
+	 * @param duracion Duración a establecer
+	 * @throws InvalidArgumentException Se lanza en caso de error en algún parámetro de entrada
+	 */
+	public void gestionarParametroDeSistema(Gestor gestor, ParametroSistema parametro, Duration duracion) throws InvalidArgumentException {
+		if (gestor == null) throw new InvalidArgumentException("Gestor introducido es null", "gestionar parámetros del sistema");
+	    if (parametro == null || duracion == null)throw new InvalidArgumentException("Algún parámetro de recomendación inválido", "gestionar parámetros del sistema");
+	    switch (parametro) {
+	    case DURACION_CARRITO:
+	    	Sistema.getInstancia().setTiempoCaducaCarrito(duracion);
+	    	break;
+	    case DURACION_OFERTA:
+	    	Sistema.getInstancia().setTiempoCaducaCarrito(duracion);
+	    	break;
+	    default:
+        	throw new InvalidArgumentException("Parámetro de recomendación inválido", "gestionar parámetros del sistema");
+	    }
+	}
+	
 	
 	/**
 	 * Comprueba que no exista un usuario con el nombre que se da
@@ -342,7 +365,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws InvalidArgumentException 
 	 */
 	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, Categoria[] categorias, String interesadoEn) throws InvalidArgumentException {
-		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, categorias, interesadoEn);
+		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, interesadoEn, categorias);
 		cartera.addArticulo(nuevo);
 		return this.getAlmacen().anadirArticuloSegundaMano(nuevo);
 	}

@@ -183,30 +183,44 @@ public class ActionGestor {
 		Main.showMessage("  Valoraciones producto:  " + Sistema.getInstancia().getPonderacionValoracionesProducto());
 		Main.showMessage("  Producto recomendado:   " + Sistema.getInstancia().getPonderacionProductoRecomendado());
 		Main.showMessage("  Búsqueda:               " + Sistema.getInstancia().getPonderacionBusqueda());
+		Main.showMessage("  Duración carrito:       " + Sistema.getInstancia().getTiempoCaducaCarrito());
+		Main.showMessage("  Duración ofertas:       " + Sistema.getInstancia().getTiempoCaducaOferta());
 		Main.showMessage("===================================================");
 		
-		String parametroString = Main.getUserInputString("Introducir el parámetro a modificar (c: categoría | uc: unidades compradas | pp: precio pagado | vp: valoraciones producto | pr: producto recomendado | b: búsqueda): ");
-	    double valor = Main.getUserInputDouble("Introducir el nuevo valor: ");
-	    if(valor < 1) throw new InvalidArgumentException("El nuevo parámtro debe ser positivo", "configurar sistema");
+		String parametroString = Main.getUserInputString("Introducir el parámetro a modificar (c: categoría | uc: unidades compradas | pp: precio pagado | vp: valoraciones producto | pr: producto recomendado | b: búsqueda | tcc: tiempo caducidad carrito | tco: tiempo caducidad ofertas): ");
+		double valor = -1;
+		Duration duracion = null;
+		if (parametroString.equals("tcc") || parametroString.equals("tco")) {
+	    	duracion = Main.getUserInputDuration("Introducir la nueva duración en formato DD:mm:ss (días:meses:segundos): ");
+	    } else {
+	    	valor = Main.getUserInputDouble("Introducir el nuevo valor: ");
+	    	if(valor < 1) throw new InvalidUserInputException("El nuevo parámtro debe ser positivo", "configurar sistema");
+	    }
 	    
         switch (parametroString) {
             case "c":
-            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.CATEGORIA, valor);
+            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.CATEGORIA, valor);
             	break;
             case "uc":
-            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.UDS_COMPRADAS, valor);
+            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.UDS_COMPRADAS, valor);
             	break;
             case "pp":
-            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.PRECIO_COMPRA, valor);
+            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.PRECIO_COMPRA, valor);
             	break;
             case "vp":
-            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.VALORACIONES_PRODUCTO, valor);
+            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.VALORACIONES_PRODUCTO, valor);
             	break;
             case "pr": 
-            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.PRODUCTO_RECOMENDADO, valor);
+            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.PRODUCTO_RECOMENDADO, valor);
             	break;
             case "b":
-            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroRecomendacion.BUSQUEDA, valor);
+            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.BUSQUEDA, valor);
+            	break;
+            case "tcc":
+            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.DURACION_CARRITO, duracion);
+            	break;
+            case "tco":
+            	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.DURACION_CARRITO, duracion);
             	break;
         }
 	    
