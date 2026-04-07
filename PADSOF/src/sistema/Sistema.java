@@ -13,25 +13,25 @@ import usuario.Gestor;
  */
 public class Sistema implements Serializable {
 	private static final long serialVersionUID = 1L;
-	/** Instancia única del sistema (singleton) */
+	/** Sistema es una clase Singleton por lo que tiene una instancia Static */
 	private static Sistema instancia;
-	/** Tiempo de caducidad del carrito */
+	/** Tiempo que tarda en caducarse un carrito desde que se le añade un último artículo */
 	private Duration tiempoCaducaCarrito;
-	/** Tiempo de caducidad de las ofertas */
+	/** Tiempo que tarda en caducarse una oferta de intercambio desde que esta es realizada */
 	private Duration tiempoCaducaOferta;
-	/** Precio de solicitar una valoración */
+	/** Precio que debe pagar un cliente por la solicitud de una valoración */
 	private double precioValoracion;
-	/** Ponderación de la categoría de productos */
+	/* Ponderación que tiene dentro del vector de producto el hecho de pertenecer a una categoría */
 	private double ponderacionCategoria = 1;
-	/** Ponderación basada en unidades compradas */
+	/* Ponderación que tienen las unidades de productos comprados. Se utiliza a la hora de actualizar el vector de recomendación del cliente tras una compra */
 	private double ponderacionUdsCompra = 1;
-	/** Ponderación basada en el precio de compra */
+	/* Ponderación que tiene el precio pagado por un producto. Se utiliza a la hora de actualizar el vector de recomendación del cliente tras una compra */
 	private double ponderacionPrecioCompra = 1;
-	/** Ponderación basada en las valoraciones de productos */
+	/** Ponderación que tiene la media de puntuación de un producto a la hora de calcular su valor de compatibilidad con un determinado usuario */
 	private double ponderacionValoracionesProducto = 1;
-	/** Ponderación de productos recomendados */
-	private double ponderacionProductoRecomendado = 1;
-	/** Ponderación basada en la búsqueda del usuario */
+	/** Ponderación que tiene la compatibilidad entre usuario y producto en el rango [0,1] a la hora de calcular su valor de compatibilidad con un determinado usuario */
+	private double ponderacionProductoRecomendado = 1; 
+	/** Ponderación que tiene la búsqueda por categorías sobre el vector de intereses del usuaro */
 	private double ponderacionBusqueda = 1;
 	/** Número de productos recomendados al usuario */
 	private int numProdsRecomendados = 10;

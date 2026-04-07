@@ -651,12 +651,12 @@ public class Almacen implements Serializable {
 			if (p.isEliminado()) continue;
 
 			// En vez de considerar únicamente la puntuación, hace una media ponderada de la puntuación teniendo en cuenta los usuarios más similares a este mismo
-			if (usarValoraciones || cliente.getNormaVectorRecomendaciones() == 0) {
+			if (usarValoraciones && cliente.getNormaVectorRecomendaciones() != 0) {
 				valoracionPrevista = 0;
 				numValoraciones = 0;
 				
 				for (Resena r: p.getResenas()) {
-					similaridadEntreClientes.putIfAbsent(r.getUsuario(), cliente.getCompatibilidad(r.getUsuario().getVectorRecomendacion(), r.getUsuario().getNormaVectorRecomendaciones()));
+					if(similaridadEntreClientes.containsKey(r.getUsuario()) == false) similaridadEntreClientes.put(r.getUsuario(), cliente.getCompatibilidad(r.getUsuario().getVectorRecomendacion(), r.getUsuario().getNormaVectorRecomendaciones()));
 					valoracionPrevista += r.getPuntuacion()*similaridadEntreClientes.get(r.getUsuario());
 					numValoraciones++;
 				}
