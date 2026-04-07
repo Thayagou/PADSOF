@@ -7,6 +7,7 @@ import java.util.*;
 import exceptions.InvalidArgumentException;
 import sistema.AsignadorId;
 import sistema.Reloj;
+import sistema.Sistema;
 import usuario.Empleado;
 
 /**
@@ -42,7 +43,6 @@ public class Intercambio implements Serializable {
 	 * @throws InvalidArgumentException Se lanza en caso de que alguno de los 
 	 */
 	public Intercambio (ArticuloSegundaMano[] ofrecidos, ArticuloSegundaMano[] solicitados) throws InvalidArgumentException {
-		Cartera emisor, receptor;
 		if (ofrecidos.length < 1 || solicitados.length < 1) {
 			throw new InvalidArgumentException("Se debe solicitar y pedir al menos un artículo", "crear intercambio");
 		}
@@ -53,16 +53,16 @@ public class Intercambio implements Serializable {
 				throw new InvalidArgumentException("Los artículos ofrecidos deben ser del mismo dueno", "crear intercambio");
 			}
 		}
-		
+
 		receptor = solicitados[0].getDueno();
 		for (ArticuloSegundaMano art: solicitados) {
-			if (!emisor.equals(art.getDueno())) {
+			if (!receptor.equals(art.getDueno())) {
 				throw new InvalidArgumentException("Los artículos solicitados deben ser del mismo dueno", "crear intercambio");
 			}
 		}
 		id = AsignadorId.getInstancia().siguienteId();
+		fechaCaducaOferta = Reloj.now().plus(Sistema.getInstancia().getTiempoCaducaOferta());
 		
-		this.emisor = emisor;
 		for(ArticuloSegundaMano art : ofrecidos) {
 			this.ofrecidos.add(art);
 			art.reservar();

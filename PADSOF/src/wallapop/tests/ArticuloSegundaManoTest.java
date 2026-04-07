@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InvalidArgumentException;
+import sistema.Tienda;
 
 import java.util.*;
 import venta.productos.Categoria;
@@ -21,16 +22,17 @@ import wallapop.Valoracion;
  * Clase con los tests de los métodos de la clase ArticuloSegundaMano
  */
 class ArticuloSegundaManoTest {
-
+	private Tienda tienda;
 	private ClienteRegistrado cliente;
 	private Cartera cartera;
 	private Categoria cat1;
 	private Categoria cat2;
 	private ArticuloSegundaMano articulo;
-
+	
 	@BeforeEach
 	void setUp() throws Exception {
-		cliente = new ClienteRegistrado("Usuario", "Pass");
+		tienda = new Tienda();
+		cliente = new ClienteRegistrado("Usuario", "Pass", tienda);
 		cartera = cliente.getCartera();
 		cat1 = new Categoria("Juego de mesa");
 		cat2 = new Categoria("Cartas");

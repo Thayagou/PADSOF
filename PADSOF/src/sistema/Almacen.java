@@ -651,7 +651,7 @@ public class Almacen implements Serializable {
 			if (p.isEliminado()) continue;
 
 			// En vez de considerar únicamente la puntuación, hace una media ponderada de la puntuación teniendo en cuenta los usuarios más similares a este mismo
-			if (usarValoraciones) {
+			if (usarValoraciones || cliente.getNormaVectorRecomendaciones() == 0) {
 				valoracionPrevista = 0;
 				numValoraciones = 0;
 				

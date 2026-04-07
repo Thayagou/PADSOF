@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InvalidArgumentException;
+import sistema.Tienda;
 import usuario.ClienteRegistrado;
 import usuario.Empleado;
 import venta.productos.Categoria;
@@ -21,7 +22,7 @@ import java.util.*;
  * Clase con los tests de los métodos de la clase Intercambio
  */
 class IntercambioTest {
-
+	private Tienda tienda;
 	private ClienteRegistrado emisor;
 	private ClienteRegistrado receptor;
 	private Cartera carteraEmisor;
@@ -38,8 +39,9 @@ class IntercambioTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		emisor = new ClienteRegistrado("Emisor", "Emisor123");
-		receptor = new ClienteRegistrado("Receptor", "Receptor123");
+		tienda = new Tienda();
+		emisor = new ClienteRegistrado("Emisor", "Emisor123", tienda);
+		receptor = new ClienteRegistrado("Receptor", "Receptor123", tienda);
 		carteraEmisor = emisor.getCartera();
 		carteraReceptor = receptor.getCartera();
 		empleado = new Empleado("Empleado", "pass");
@@ -51,21 +53,24 @@ class IntercambioTest {
 		artsReceptor = new ArticuloSegundaMano[3];
 
 		for (int i = 0; i < 3; i++) {
-			artsEmisor[i] = new ArticuloSegundaMano("Articulo emisor " + i, "Desc emisor " + i, carteraEmisor, "Cosas del receptor", cat2);
+			artsEmisor[i] = new ArticuloSegundaMano("Articulo emisor " + i, "Desc emisor " + i, carteraEmisor,
+					"Cosas del receptor", cat2);
 			carteraEmisor.addArticulo(artsEmisor[i]);
 			Valoracion v1 = new Valoracion(artsEmisor[i]);
 			v1.valorar(empleado, (i + 1) * 10, EstadoFisicoArticulo.MUY_BUENO);
 
-			artsReceptor[i] = new ArticuloSegundaMano("Articulo receptor " + i, "Desc receptor " + i, carteraReceptor, "Cosas del emisor", cat1);
+			artsReceptor[i] = new ArticuloSegundaMano("Articulo receptor " + i, "Desc receptor " + i, carteraReceptor,
+					"Cosas del emisor", cat1);
 			carteraReceptor.addArticulo(artsReceptor[i]);
 			Valoracion v2 = new Valoracion(artsReceptor[i]);
 			v2.valorar(empleado, (i + 1) * 10, EstadoFisicoArticulo.MUY_BUENO);
 		}
 	}
-	
+
 	@Test
 	void testConstructor() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 
 		assertNotNull(intercambio);
 		assertEquals(EstadoIntercambio.OFERTADO, intercambio.getEstado());
@@ -78,46 +83,62 @@ class IntercambioTest {
 
 	@Test
 	void testConstructorVariosArticulos() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[]{artsEmisor[0], artsEmisor[1]}, new ArticuloSegundaMano[]{artsReceptor[0], artsReceptor[1]});
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0], artsEmisor[1] },
+				new ArticuloSegundaMano[] { artsReceptor[0], artsReceptor[1] });
 
 		List<ArticuloSegundaMano> sol = List.of(intercambio.getSolicitados());
-		List<ArticuloSegundaMano> ofr = List.of(intercambio.getSolicitados());
+		List<ArticuloSegundaMano> ofr = List.of(intercambio.getOfrecidos());
+		
+		assertTrue(sol.contains(artsReceptor[0]));
+		assertTrue(sol.contains(artsReceptor[1]));
+		assertTrue(ofr.contains(artsEmisor[0]));
+		assertTrue(ofr.contains(artsEmisor[1]));
 	}
 
 	@Test
 	void testConstructorReservaArticulosOfrecidos() throws Exception {
-		// Los artículos ofrecidos deben quedar reservados (no disponibles) tras crear el intercambio
 		assertTrue(artsEmisor[0].isDisponible());
-		new Intercambio(new ArticuloSegundaMano[]{artsEmisor[0]},new ArticuloSegundaMano[]{artsReceptor[0]});
+		new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertFalse(artsEmisor[0].isDisponible());
 	}
 
 	@Test
 	void testConstructorNoReservaSolicitados() throws Exception {
-		// Los artículos solicitados NO se reservan hasta que el receptor acepte
 		assertTrue(artsReceptor[0].isDisponible());
-		new Intercambio(new ArticuloSegundaMano[] {artsEmisor[0]}, new ArticuloSegundaMano[] {artsReceptor[0]});
+		new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertTrue(artsReceptor[0].isDisponible());
 	}
 
 	@Test
 	void testConstructorSinOfrecidosLanzaExcepcion() {
-		assertThrows(InvalidArgumentException.class, ()->new Intercambio(new ArticuloSegundaMano[]{}, new ArticuloSegundaMano[]{artsReceptor[0]}));
+		assertThrows(InvalidArgumentException.class,
+				() -> new Intercambio(new ArticuloSegundaMano[] {}, new ArticuloSegundaMano[] { artsReceptor[0] }));
 	}
 
 	@Test
 	void testConstructorSinSolicitadosLanzaExcepcion() {
-		assertThrows(InvalidArgumentException.class, ()->new Intercambio(new ArticuloSegundaMano[]{artsEmisor[0]}, new ArticuloSegundaMano[]{}));
+		assertThrows(InvalidArgumentException.class,
+				() -> new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] {}));
 	}
 
 	@Test
 	void testConstructorOfrecidosDeDuenoDistintoLanzaExcepcion() throws Exception {
-		assertThrows(InvalidArgumentException.class, () -> new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0], artsReceptor[0] }, new ArticuloSegundaMano[] { artsReceptor[1] }));
+		assertThrows(InvalidArgumentException.class,
+				() -> new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0], artsReceptor[0] },
+						new ArticuloSegundaMano[] { artsReceptor[1] }));
+	}
+	
+	@Test
+	void testConstructorSolicitadosDeDuenoDistintoLanzaExcepcion() throws Exception {
+		assertThrows(InvalidArgumentException.class,
+				() -> new Intercambio(new ArticuloSegundaMano[] { artsReceptor[0] },
+						new ArticuloSegundaMano[] { artsEmisor[0], artsReceptor[1] }));
 	}
 
 	@Test
 	void testAceptarIntercambio() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] {artsEmisor[0]}, new ArticuloSegundaMano[] {artsReceptor[0]});
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 
 		assertTrue(carteraReceptor.aceptarIntercambio(intercambio));
 		assertEquals(EstadoIntercambio.ACEPTADO, intercambio.getEstado());
@@ -126,7 +147,8 @@ class IntercambioTest {
 
 	@Test
 	void testAceptarYReservar() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] {artsEmisor[0]}, new ArticuloSegundaMano[] {artsReceptor[0]});
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertTrue(artsReceptor[0].isDisponible());
 		carteraReceptor.aceptarIntercambio(intercambio);
 		assertFalse(artsReceptor[0].isDisponible());
@@ -134,16 +156,18 @@ class IntercambioTest {
 
 	@Test
 	void testAceptarIntercambioYaAceptadoExcepcion() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[]{artsEmisor[0]}, new ArticuloSegundaMano[]{artsReceptor[0]});
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 
 		carteraReceptor.aceptarIntercambio(intercambio);
 
-		assertThrows(InvalidArgumentException.class, ()-> carteraReceptor.aceptarIntercambio(intercambio));
+		assertThrows(InvalidArgumentException.class, () -> carteraReceptor.aceptarIntercambio(intercambio));
 	}
 
 	@Test
 	void testRechazarIntercambio() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[]{artsEmisor[0]}, new ArticuloSegundaMano[]{artsReceptor[0]});
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 
 		assertTrue(carteraReceptor.rechazarIntercambio(intercambio));
 		assertEquals(EstadoIntercambio.RECHAZADO, intercambio.getEstado());
@@ -152,22 +176,25 @@ class IntercambioTest {
 
 	@Test
 	void testRechazarLiberaOfrecidos() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
-		assertFalse(artsEmisor[0].isDisponible()); 
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
+		assertFalse(artsEmisor[0].isDisponible());
 		carteraReceptor.rechazarIntercambio(intercambio);
-		assertTrue(artsEmisor[0].isDisponible()); 
+		assertTrue(artsEmisor[0].isDisponible());
 	}
 
 	@Test
 	void testRechazarIntercambioNoOfertadoLanzaExcepcion() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		carteraReceptor.rechazarIntercambio(intercambio);
 		assertThrows(InvalidArgumentException.class, () -> intercambio.rechazarIntercambio());
 	}
 
 	@Test
 	void testCancelarIntercambio() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 
 		assertTrue(carteraEmisor.cancelarIntercambio(intercambio));
 		assertEquals(EstadoIntercambio.CANCELADO, intercambio.getEstado());
@@ -176,7 +203,8 @@ class IntercambioTest {
 
 	@Test
 	void testCancelarLiberaOfrecidos() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertFalse(artsEmisor[0].isDisponible());
 
 		carteraEmisor.cancelarIntercambio(intercambio);
@@ -185,17 +213,18 @@ class IntercambioTest {
 
 	@Test
 	void testCancelarIntercambioNoOfertadoLanzaExcepcion() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
-		
-		carteraEmisor.rechazarIntercambio(intercambio);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
+
 		assertThrows(InvalidArgumentException.class, () -> carteraEmisor.rechazarIntercambio(intercambio));
 	}
-	
+
 	@Test
 	void testCancelarIntercambioSiendoReceptor() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
-		
-		assertThrows(InvalidArgumentException.class, () -> carteraReceptor.rechazarIntercambio(intercambio));
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
+
+		assertThrows(InvalidArgumentException.class, ()->carteraReceptor.cancelarIntercambio(intercambio));
 	}
 
 	// Tests para comprobar localmente la caducidad
@@ -211,10 +240,8 @@ class IntercambioTest {
 
 	@Test
 	void testCaducarLiberaOfrecidos() throws Exception {
-		Intercambio intercambio = new Intercambio(
-			new ArticuloSegundaMano[]{artsEmisor[0]},
-			new ArticuloSegundaMano[]{artsReceptor[0]}
-		);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertFalse(artsEmisor[0].isDisponible());
 		intercambio.caducarIntercambio();
 		assertTrue(artsEmisor[0].isDisponible());
@@ -222,22 +249,19 @@ class IntercambioTest {
 
 	@Test
 	void testCaducarIntercambioNoOfertadoLanzaExcepcion() throws Exception {
-		Intercambio intercambio = new Intercambio(
-			new ArticuloSegundaMano[]{artsEmisor[0]},
-			new ArticuloSegundaMano[]{artsReceptor[0]}
-		);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		intercambio.caducarIntercambio();
 		assertThrows(InvalidArgumentException.class, () -> intercambio.caducarIntercambio());
 	}
 
-	// ─── validarIntercambio ───────────────────────────────────────────────────────
+	// ─── validarIntercambio
+	// ───────────────────────────────────────────────────────
 
 	@Test
 	void testValidarIntercambio() throws Exception {
-		Intercambio intercambio = new Intercambio(
-			new ArticuloSegundaMano[]{artsEmisor[0]},
-			new ArticuloSegundaMano[]{artsReceptor[0]}
-		);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		intercambio.aceptarIntercambio();
 		intercambio.validarIntercambio(empleado);
 
@@ -248,10 +272,8 @@ class IntercambioTest {
 
 	@Test
 	void testValidarIntercambioEmpleadoNullLanzaExcepcion() throws Exception {
-		Intercambio intercambio = new Intercambio(
-			new ArticuloSegundaMano[]{artsEmisor[0]},
-			new ArticuloSegundaMano[]{artsReceptor[0]}
-		);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		intercambio.aceptarIntercambio();
 		assertThrows(InvalidArgumentException.class, () -> intercambio.validarIntercambio(null));
 	}
@@ -260,9 +282,10 @@ class IntercambioTest {
 
 	@Test
 	void testInvalidarSiSolicitaArticulosCierto() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		// artsReceptor[0] está entre los solicitados → debe invalidarse
-		boolean resultado = intercambio.invalidarSiSolicitaArticulos(new ArticuloSegundaMano[]{artsReceptor[0]});
+		boolean resultado = intercambio.invalidarSiSolicitaArticulos(new ArticuloSegundaMano[] { artsReceptor[0] });
 
 		assertTrue(resultado);
 		assertEquals(EstadoIntercambio.INVALIDADO, intercambio.getEstado());
@@ -270,17 +293,19 @@ class IntercambioTest {
 
 	@Test
 	void testInvalidarLiberaOfrecidosCuandoInvalida() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertFalse(artsEmisor[0].isDisponible());
-		intercambio.invalidarSiSolicitaArticulos(new ArticuloSegundaMano[]{artsReceptor[0]});
+		intercambio.invalidarSiSolicitaArticulos(new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertTrue(artsEmisor[0].isDisponible());
 	}
 
 	@Test
 	void testInvalidarSiSolicitaArticulosFalso() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		// artsReceptor[2] NO está entre los solicitados → no se invalida
-		boolean resultado = intercambio.invalidarSiSolicitaArticulos(new ArticuloSegundaMano[]{artsReceptor[2]});
+		boolean resultado = intercambio.invalidarSiSolicitaArticulos(new ArticuloSegundaMano[] { artsReceptor[2] });
 
 		assertFalse(resultado);
 		assertEquals(EstadoIntercambio.OFERTADO, intercambio.getEstado());
@@ -288,49 +313,41 @@ class IntercambioTest {
 
 	@Test
 	void testInvalidarNoAfectaIntercambioNoOfertado() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		intercambio.aceptarIntercambio(); // ya no está OFERTADO
-		boolean resultado = intercambio.invalidarSiSolicitaArticulos(new ArticuloSegundaMano[]{artsReceptor[0]});
+		boolean resultado = intercambio.invalidarSiSolicitaArticulos(new ArticuloSegundaMano[] { artsReceptor[0] });
 
 		assertFalse(resultado);
 		assertEquals(EstadoIntercambio.ACEPTADO, intercambio.getEstado());
 	}
 
-	// ─── setEstado ────────────────────────────────────────────────────────────────
-
 	@Test
 	void testSetEstado() throws Exception {
-		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] }, new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		intercambio.setEstado(EstadoIntercambio.CANCELADO);
 		assertEquals(EstadoIntercambio.CANCELADO, intercambio.getEstado());
 	}
 
-	// ─── toString ─────────────────────────────────────────────────────────────────
-
 	@Test
 	void testToStringContieneEmisor() throws Exception {
-		Intercambio intercambio = new Intercambio(
-			new ArticuloSegundaMano[]{artsEmisor[0]},
-			new ArticuloSegundaMano[]{artsReceptor[0]}
-		);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertTrue(intercambio.toString().contains("Emisor"));
 	}
 
 	@Test
 	void testToStringContieneReceptor() throws Exception {
-		Intercambio intercambio = new Intercambio(
-			new ArticuloSegundaMano[]{artsEmisor[0]},
-			new ArticuloSegundaMano[]{artsReceptor[0]}
-		);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertTrue(intercambio.toString().contains("Receptor"));
 	}
 
 	@Test
 	void testToStringContieneEmpleadoTrasConfirmar() throws Exception {
-		Intercambio intercambio = new Intercambio(
-			new ArticuloSegundaMano[]{artsEmisor[0]},
-			new ArticuloSegundaMano[]{artsReceptor[0]}
-		);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		intercambio.aceptarIntercambio();
 		intercambio.validarIntercambio(empleado);
 		assertTrue(intercambio.toString().contains("Empleado"));

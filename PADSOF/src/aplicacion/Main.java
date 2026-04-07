@@ -19,7 +19,7 @@ import venta.productos.*;
  * @author Juan Ibañéz, Tiago Oselka, Claudia Saiz
  */
 public class Main {
-	protected static Tienda tienda = new Tienda();
+	protected static Tienda tienda;
 	protected static String action = "";
 	private static Scanner sc = new Scanner(System.in);
 	private static String filename = "tienda.dat";
@@ -178,17 +178,18 @@ public class Main {
 		showMessage(message);
 		try {
 			String[] parts = sc.nextLine().split(":");
-			if (parts.length < 3) throw new IllegalArgumentException();
+			if (parts.length < 4) throw new IllegalArgumentException();
 			
 			int days = Integer.parseInt(parts[0]);
 			int hours = Integer.parseInt(parts[1]);
 			int mins = Integer.parseInt(parts[2]);
+			int secs = Integer.parseInt(parts[4]);
 			
-			Duration duracion = Duration.ofDays(days).plusHours(hours).plusMinutes(mins);
+			Duration duracion = Duration.ofDays(days).plusHours(hours).plusMinutes(mins).plusSeconds(secs);
 			
 			return duracion;			
 		} catch (IllegalArgumentException | InputMismatchException e) {
-			throw new InvalidUserInputException("El valor introducido debe ser una duración DD:hh:mm", "lectura");
+			throw new InvalidUserInputException("El valor introducido debe ser una duración DD:hh:mm:ss", "lectura");
 		}
 	}
 	
