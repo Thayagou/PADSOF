@@ -15,10 +15,10 @@ public class InvalidPermitException extends CustomException {
 
 	/**
 	 * Constructor de la excepción InvalidPermitException
-	 * @param mensaje Mensaje principal de la excepción
+	 * @param message Mensaje principal de la excepción
 	 * @param metodo Método en el que se ha lanzado la excepción
 	 * @param permiso Permiso que le ha faltado al usuario para realizar la acción
-	 * @param user Usuario que ha interntado realizar la acción
+	 * @param user Usuario que ha intentado realizar la acción
 	 */
 	public InvalidPermitException(String message, String metodo, Permiso permiso, Usuario user) {
 		super(message, metodo);

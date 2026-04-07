@@ -6,6 +6,9 @@ import java.util.*;
 import exceptions.InvalidArgumentException;
 import usuario.ClienteRegistrado;
 
+/**
+ * Esta clase representa la cartera de artículos de segunda mano de un cliente
+ */
 public class Cartera implements Serializable{
 	private static final long serialVersionUID = 1L;
 	/** Cliente al que pertenece la cartera */
@@ -36,7 +39,7 @@ public class Cartera implements Serializable{
 	
 	/**
 	 * Añada un intercambio que ha subido el cliente a la cartera
-	 * @param articulo Artículo de segunda mano que se añade
+	 * @param intercambio Nuevo intercambio añadido
 	 * @return true si se ha añadido correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza en caso de que el cliente no participe en el intercambio pasado
 	 */
@@ -78,6 +81,11 @@ public class Cartera implements Serializable{
 		return intercambio.cancelarIntercambio();
 	}
 	
+	/**
+	 * Invalida los intercambios con artículos que hayan sido intercambiados ya
+	 * @param articulos Articulos intercambiados
+	 * @return Array con intercambios invalidados
+	 */
 	public Intercambio[] invalidarIntercambiosConArticulos(ArticuloSegundaMano[] articulos) {
 		List<Intercambio> invalidados = new ArrayList<>();
 		

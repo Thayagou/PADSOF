@@ -3,10 +3,12 @@ package sistema;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * Esta clase representa el gestionador de los objetos caducables
+ */
 public class GestorCaducidad {
 	private final PriorityQueue<Caducable> cola = new PriorityQueue<>();
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
 	private static GestorCaducidad instancia;
 
 	/**

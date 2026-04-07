@@ -26,13 +26,15 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	private Almacen almacen;
 	private Map<String, ClienteRegistrado> clientes = new HashMap<>();
 	private Map<String, Empleado> empleados = new HashMap<>();
-	private Gestor gestor = new Gestor("gestor", "g123");
+	private Gestor gestor;
 	
 	/**
 	 * Constructor de la tienda
+	 * @throws InvalidArgumentException Se lanza si los argumentos de crear el gestor son inválidos
 	 */
-	public Tienda() { 
+	public Tienda() throws InvalidArgumentException { 
 		almacen = new Almacen(historial);
+		gestor = new Gestor("gestor", "g123");
 	}
 	
 	@Override
@@ -254,7 +256,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param cliente Cliente que acepta el intercambio
 	 * @param intercambio Intercambio que es aceptado
 	 * @return boolean, true si el intercambio se ha aceptado correctamente, false en caso contrario
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public boolean aceptarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) throws InvalidArgumentException {
 		cliente.getCartera().aceptarIntercambio(intercambio);
@@ -277,7 +279,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param cliente El cliente que ha hecho la oferta y que la cancela
 	 * @param intercambio Intercambio que es cancelado
 	 * @return boolean, true si el intercambio se ha aceptado correctamente, false en caso contrario
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos 
 	 */
 	public boolean cancelarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) throws InvalidArgumentException {
 		cliente.getCartera().cancelarIntercambio(intercambio);
@@ -290,7 +292,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param cliente Cliente que acepta el intercambio
 	 * @param intercambio Intercambio que es rechazado
 	 * @return boolean, true si el intercambio se ha rechazado correctamente, false en caso contrario
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos 
 	 */
 	public boolean rechazarIntercambio(ClienteRegistrado cliente, Intercambio intercambio) throws InvalidArgumentException {
 		cliente.getCartera().rechazarIntercambio(intercambio);
@@ -362,7 +364,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param categorias Categorías del artículo
 	 * @param interesadoEn Descripción de los intereses de intercambio
 	 * @return true si se pudo añadir 
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos 
 	 */
 	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, Categoria[] categorias, String interesadoEn) throws InvalidArgumentException {
 		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, interesadoEn, categorias);
@@ -372,10 +374,10 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	
 	/**
 	 * Método para añadir un producto a un carrito
-	 * @param usrName Nombre del usuario a cuyo carrito se añade el producto
+	 * @param cliente Cliente al que se le añade un producto
 	 * @param producto Producto que se añade al carrito
 	 * @return true si se pudo añadir el producto, false si no
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public void anadirACarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException, ProductoNoDisponibleException {
 		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
@@ -388,10 +390,10 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	
 	/**
 	 * Método para quitar un producto del carrito de un cliente
-	 * @param usrName Nombre del cliente con el carrito
+	 * @param cliente Cliente propietario del carrito
 	 * @param producto Producto que se quiere quitar (una unidad)
 	 * @return true si se pudo quitar el producto, false si no
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public boolean quitarDeCarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException {
 		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
@@ -403,9 +405,9 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	
 	/**
 	 * Método para cancelar el carrito de un cliente, devolviendo el stock a la tienda
-	 * @param usrName Nombre del cliente del que se cancela el carrito
+	 * @param cliente Cliente propietario del carrito
 	 * @return true si se pudo cancelar el carrito, false si no existe el cliente
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public boolean cancelarCarritoDe(ClienteRegistrado cliente) throws InvalidArgumentException {
 		if(cliente == null) return false;
@@ -420,9 +422,10 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	
 	/**
 	 * Método para realizar el pago de un carrito
-	 * @param usrName Nombre del usuario cuyo carrito se va a pagar
+	 * @param cliente Cliente propietario del carrito
 	 * @param numTarjeta Número de tarjeta que se introduce para pagar
 	 * @return true si se pudo realizar el pago, false si no
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public boolean pagarCarritoDe(ClienteRegistrado cliente, String numTarjeta) throws InvalidArgumentException {
 		if(cliente == null) return false;

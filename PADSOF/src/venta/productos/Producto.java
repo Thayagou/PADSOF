@@ -34,6 +34,8 @@ public abstract class Producto implements Serializable, Descontable {
 	 * @param precio Precio del producto
 	 * @param imagen Imagen del producto
 	 * @param categorias Listado de las categorías a las que pertenece el producto
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 * @throws DoubleDiscountException Se lanza si hay conflixto de descuentos
 	 */
 	public Producto(String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias ) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -193,6 +195,8 @@ public abstract class Producto implements Serializable, Descontable {
 	 * Metodo para añadir categorias al producto
 	 * @param categorias Categorias que se van a añadir al producto
 	 * @return true si se añadieron todas las categorias, false si alguna no pudo añadirse.
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 * @throws DoubleDiscountException Se lanza si hay conflixto de descuentos
 	 */
 	public boolean anadirCategorias(Categoria...categorias) throws DoubleDiscountException, InvalidArgumentException {
 		if(categorias == null) throw new InvalidArgumentException("Array de categorías null");
@@ -238,6 +242,8 @@ public abstract class Producto implements Serializable, Descontable {
 	 * Método para cambiar todas las categorias de golpe
 	 * @param categorias Nuevas categorias para el producto
 	 * @return true scuando se añaden todas las categorias sin lanzar una excepcion
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 * @throws DoubleDiscountException Se lanza si hay conflixto de descuentos
 	 */
 	public boolean setCategorias(Categoria...categorias) throws InvalidArgumentException, DoubleDiscountException {
 		this.quitarCategorias(this.getCategorias());
@@ -272,6 +278,8 @@ public abstract class Producto implements Serializable, Descontable {
 	 * Método para añadir un descuento al producto
 	 * @param descuento Nuevo descuento del producto
 	 * @return true si se pudo añadir el descuento, false si no se pudo
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 * @throws DoubleDiscountException Se lanza si hay conflixto de descuentos
 	 */
 	public boolean anadirDescuento(Descuento descuento) throws InvalidArgumentException, DoubleDiscountException {
 		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null");
@@ -349,7 +357,8 @@ public abstract class Producto implements Serializable, Descontable {
 	
 	/**
 	 * Método abstracto para modificar las características de un producto
-	 * @param caracteristicas Objeto que contiene las características del producto
+	 * @param c Objeto que contiene las características del producto
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public abstract void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException;
 	

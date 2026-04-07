@@ -15,6 +15,9 @@ import exceptions.*;
 import estadistica.StatsUsuario;
 import sistema.*;
 
+/**
+ * Esta clase representa un cliente registrado en la tienda
+ */
 public class ClienteRegistrado extends Usuario implements Serializable, CarritoCaducadoObserver {
 	private static final long serialVersionUID = 1L;
 	private Carrito carrito;
@@ -24,8 +27,14 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 	private List<Pedido> misCompras;
 	private StatsUsuario estadisticas;
 	
-	public ClienteRegistrado(String nombre, String contrasena, CarritoCaducadoObserver tienda) 
-			throws IllegalArgumentException {
+	/**
+	 * Constructor de la clase
+	 * @param nombre Nombre del usuario
+	 * @param contrasena Contraseña del usuario
+	 * @param tienda observador tienda
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 */
+	public ClienteRegistrado(String nombre, String contrasena, CarritoCaducadoObserver tienda) throws InvalidArgumentException {
 		super(nombre, contrasena);
 		this.carrito = new Carrito(this, tienda);
 		this.cartera = new Cartera(this);
@@ -40,21 +49,40 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 		this.enviarNotificacion("Su carrito ha sido cancelado por inactividad", TipoNotificacion.CADUCIDAD);
 	}
 	
+	/**
+	 * Cambia la contraseña por una nueva con confirmacion
+	 * @param contrasenaAntigua Contraseña antigua
+	 * @param contrasena Nueva contraseña
+	 * @param confirmarContrasena COnfirmacion de la nueva contraseña
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 */
 	public void cambiarContrasena(String contrasenaAntigua, String contrasena, String confirmarContrasena) throws InvalidArgumentException {
 		if (contrasenaAntigua.equals(this.contrasena) == false) throw new InvalidArgumentException("La contraseña original introducida es incorrecta", "cambiar contraseña");
 		if(contrasena.equals(confirmarContrasena)) {
 			this.contrasena = contrasena;
 		} else throw new InvalidArgumentException("La confirmación de contraseña no es correcta", "cambiar contraseña");
 	}
-	
+
+	/**
+	 * Devuelve el carrito del cliente
+	 * @return Carrito del cliente
+	 */
 	public Carrito getCarrito() {
 		return this.carrito;
 	}
 	
+	/**
+	 * Devuelve la cartera del cliente
+	 * @return Cartera del cliente
+	 */
 	public Cartera getCartera() {
 		return this.cartera;
 	}
 	
+	/**
+	 * Devuelve los articulos que el cliente tiene en su cartera
+	 * @return array de ArticuloSegundaMano que tiene en la cartera
+	 */
 	public ArticuloSegundaMano[] verCartera(){
 		List<ArticuloSegundaMano> articulos = new ArrayList<>();
 		for(ArticuloSegundaMano ar : this.cartera.getArticulos()) {
@@ -73,7 +101,7 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 	
 	/**
 	 * Setter de la instancia de las estadísticas del usuario
-	 * @param estadistcas Estadísticas asociadas al usuario
+	 * @param estadisticas Estadísticas asociadas al usuario
 	 */
 	public void setEstadisticas(StatsUsuario estadisticas) {
 		this.estadisticas = estadisticas;
@@ -114,6 +142,12 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 		estadisticas.actualizarVectorInteresesBusqueda(categorias);
 	}
 
+	/**
+	 * Envía una notificación si el clinte esta interesado
+	 * @param mensaje Mensaje de la notificacion
+	 * @param tipo Tipo de notificacion
+	 * @return true si se ha enviado, false en caso contrario
+	 */
 	public boolean enviarNotificacion(String mensaje, TipoNotificacion tipo) {
 		if(!intereses.contains(tipo)) return false;
 		Notificacion notificacion = new Notificacion(mensaje, tipo);
@@ -121,22 +155,48 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 		return true;
 	}
 
+	/**
+	 * Devuelve el array de intereses del cliente
+	 * @return array de TipoNotificacion con los intereses del cliente
+	 */
 	public TipoNotificacion[] getIntereses() {
 		return this.intereses.toArray(new TipoNotificacion[0]);
 	}
 	
+	/**
+	 * Añade un interes al cliente
+	 * @param interes Interes añadido
+	 * @return true si se añadio correctamente, false en caso contrario
+	 */
 	public boolean anadirInteres(TipoNotificacion interes) {
 		return this.intereses.add(interes);
 	}
 	
+	/**
+	 * Quita un interes del cliente
+	 * @param interes Interes quitado
+	 * @return true si se quito correctamente, false en caso contrario
+	 */
 	public boolean quitarInteres(TipoNotificacion interes) {
 		return intereses.remove(interes);
 	}
 	
+	/**
+	 * Devuelve las compras que ha realizado el cliente
+	 * @return array de Pedido con las compras realizadas
+	 */
 	public Pedido[] getCompras() {
 		return misCompras.toArray(new Pedido[0]);
 	}
 	
+	/**
+	 * Añade una reseña a un producto comprado
+	 * @param estrellas Estrellas que le da
+	 * @param comentario Comentario sobre el producto
+	 * @param producto Producto que esta reseñando
+	 * @return true si la reseña se hizo correctamente, false en caso contrario
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 */
 	public boolean anadirResena(int estrellas, String comentario, Producto producto) throws InvalidArgumentException {
 		if(comentario == null || producto == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
 		if(estrellas < 0 || estrellas > 5) throw new InvalidArgumentException("La puntuacion debe ser un valor entre 0 y 5");

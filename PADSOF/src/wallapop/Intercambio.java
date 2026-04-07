@@ -147,7 +147,6 @@ public class Intercambio implements Serializable {
 	/**
 	 * Permite que un intercambio valide un intercambio
 	 * @param empleado Empleado que lo valida
-	 * @return true 
 	 * @throws InvalidArgumentException Se lanza en caso de que el empleado introducido sea null
 	 */
 	public void validarIntercambio(Empleado empleado) throws InvalidArgumentException {

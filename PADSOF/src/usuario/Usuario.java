@@ -4,6 +4,7 @@
 package usuario;
 
 import java.io.Serializable;
+import exceptions.*;
 
 /**
  * Clase abstracta que representa los usuarios de la tienda
@@ -17,11 +18,10 @@ public abstract class Usuario implements Serializable {
 	 * Constructor de un usuario
 	 * @param nombre Nombre del usuario
 	 * @param contrasena COntraseña del usuario
-	 * @throws IllegalArgumentException
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
-	public Usuario(String nombre, String contrasena) 
-		throws IllegalArgumentException {
-		if(nombre == null || contrasena == null) throw new NullPointerException("Null arguments for creating new user");
+	public Usuario(String nombre, String contrasena) throws InvalidArgumentException {
+		if(nombre == null || contrasena == null) throw new InvalidArgumentException("Null arguments for creating new user", "crear usuario");
 		this.nombre = nombre;
 		this.contrasena = contrasena;
 	}
@@ -52,5 +52,10 @@ public abstract class Usuario implements Serializable {
 				"\nContraseña: " + contrasena;
 	}
 
-	public abstract boolean tienePermiso(Permiso productos);
+	/**
+	 * Método abastracto que devuelve si un usuario tiene cierto permiso
+	 * @param permiso Permiso sobre el que se pregunta
+	 * @return true si tiene el permiso, false en caso contrario
+	 */
+	public abstract boolean tienePermiso(Permiso permiso);
 }

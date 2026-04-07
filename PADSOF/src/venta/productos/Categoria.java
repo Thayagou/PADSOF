@@ -21,6 +21,7 @@ public class Categoria implements Serializable, Descontable {
 	/**
 	 * Creador de la clase Categoria
 	 * @param nombre Nombre de la categoría
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public Categoria(String nombre) throws InvalidArgumentException {
 		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
@@ -40,6 +41,7 @@ public class Categoria implements Serializable, Descontable {
 	/**
 	 * Setter del nombre de la categoría
 	 * @param nombre Nuevo nombre para la categoría
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public void setNombre(String nombre) throws InvalidArgumentException {
 		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
@@ -80,6 +82,8 @@ public class Categoria implements Serializable, Descontable {
 	 * Método para añadir un descuento a una categoría
 	 * @param descuento Descuento que se añade a la categoría
 	 * @return true si se pudo añadir el descuento, false si no
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
+	 * @throws DoubleDiscountException Se lanza si uno de los productos ya tiene descuento
 	 */
 	public boolean anadirDescuento(Descuento descuento) throws InvalidArgumentException, DoubleDiscountException {
 		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null");
@@ -132,6 +136,7 @@ public class Categoria implements Serializable, Descontable {
 	/**
 	 * Método para añadir un producto a la categoría
 	 * @param p Producto que se añade
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	void anadirProducto(Producto p) throws InvalidArgumentException {
 		if(p == null) throw new InvalidArgumentException("El producto no puede ser null");
@@ -141,6 +146,7 @@ public class Categoria implements Serializable, Descontable {
 	/**
 	 * Método para quitar un producto de una categoría
 	 * @param p Producto que se quita de la categoría
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	void quitarProducto(Producto p) throws InvalidArgumentException {
 		if(p == null) throw new InvalidArgumentException("No se puede quitar un producto null");

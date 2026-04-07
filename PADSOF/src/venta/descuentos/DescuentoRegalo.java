@@ -22,6 +22,7 @@ public class DescuentoRegalo extends Descuento implements Serializable {
 	 * @param fin Fecha y hora de finalizacion del descuento
 	 * @param condicion Tipo de condicion del descuento
 	 * @param regalo Producto que se añade al carrito si se aplica el descuento
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public DescuentoRegalo(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) throws InvalidArgumentException {
 		super(valorMin, inicio, fin, condicion);
@@ -32,6 +33,9 @@ public class DescuentoRegalo extends Descuento implements Serializable {
 
 	/**
 	 * Método para obtener el regalo que se añade al carrito
+	 * @param numUds Número de unidades de regalo
+	 * @param volumen Volumen de compra mínimo
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	@Override
 	public Producto getRegalo(int numUds, double volumen) throws InvalidArgumentException {

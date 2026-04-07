@@ -7,7 +7,7 @@ import venta.productos.caracteristicas.*;
 import exceptions.*;
 
 /**
- * Clase que define el subtipo de Procuto, Figura
+ * Clase que define el subtipo de Producto, Figura
  * 
  * @author Juan Ibáñez
  */
@@ -27,6 +27,8 @@ public class Figura extends Producto implements Serializable {
 	 * @param marca Marca de la figura
 	 * @param material Material de la figura
 	 * @param categorias Array de categorias de la figura
+	 * @throws InvalidArgumentException Si alguno de los argumentos es inválido
+	 * @throws DoubleDiscountException Si hay algún conflicto de descuentos por las categorías del producto
 	 */
 	public Figura(String nombre, String desc, double precio, ImageIcon imagen, String dim, String marca, String material, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
