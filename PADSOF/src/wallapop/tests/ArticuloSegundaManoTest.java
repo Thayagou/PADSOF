@@ -22,15 +22,16 @@ import wallapop.Valoracion;
  * Clase con los tests de los métodos de la clase ArticuloSegundaMano
  */
 class ArticuloSegundaManoTest {
-	private Tienda tienda = new Tienda();
+	private Tienda tienda;
 	private ClienteRegistrado cliente;
 	private Cartera cartera;
 	private Categoria cat1;
 	private Categoria cat2;
 	private ArticuloSegundaMano articulo;
-
+	
 	@BeforeEach
 	void setUp() throws Exception {
+		tienda = new Tienda();
 		cliente = new ClienteRegistrado("Usuario", "Pass", tienda);
 		cartera = cliente.getCartera();
 		cat1 = new Categoria("Juego de mesa");

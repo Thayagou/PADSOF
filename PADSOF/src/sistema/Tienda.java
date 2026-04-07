@@ -88,7 +88,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @return array de los empleados de las tiendas
 	 */
 	public Empleado[] getEmpleados() {
-		return empleados.values().stream().filter(e->e.getDeAlta()==true).toArray(Empleado[]::new);
+		return empleados.values().stream().filter(e->e.estaDeAlta()==true).toArray(Empleado[]::new);
 	}
 	
 	/**
@@ -154,8 +154,9 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param contrasena Contraseña del usuario si se crea uno nuevo
 	 * @param permisos Permisos del empleado que se da de alta
 	 * @return true si se pudo dar de alta, false si ya existía y está dado de alta
+	 * @throws InvalidArgumentException Se lanza en caso de que algún parámetro sea inválido
 	 */
-	public boolean darDeAltaEmpleado(String nombre, String contrasena, Permiso...permisos) {
+	public boolean darDeAltaEmpleado(String nombre, String contrasena, Permiso...permisos) throws InvalidArgumentException {
 		Empleado emp = getEmpleado(nombre);
 		if(emp != null) {
 			if(emp.estaDeAlta()) return false;

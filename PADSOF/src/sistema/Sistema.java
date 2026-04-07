@@ -16,6 +16,7 @@ public class Sistema implements Serializable {
 	private double ponderacionCategoria = 1;
 	private double ponderacionUdsCompra = 1;
 	private double ponderacionPrecioCompra = 1;
+	
 	private double ponderacionValoracionesProducto = 1;
 	private double ponderacionProductoRecomendado = 1;
 	private double ponderacionBusqueda = 1;
