@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InvalidArgumentException;
+import sistema.Reloj;
+import sistema.Sistema;
 import sistema.Tienda;
 import usuario.ClienteRegistrado;
 import usuario.Empleado;

@@ -2,6 +2,7 @@ package wallapop;
 
 import java.util.*;
 
+import exceptions.InvalidArgumentException;
 import sistema.AsignadorId;
 import venta.productos.Categoria;
 import usuario.ClienteRegistrado;
@@ -31,7 +32,7 @@ public class ArticuloSegundaMano implements Serializable {
 	/** Indica si el artículo se encuentra o no disponible para los demás */
 	private boolean disponible;
 	/** Valoración que solicita el propietario y que es completada por algún empleado */
-	private Valoracion valoracion;
+	private Valoracion valoracion = null;
 	
 	/**
 	 * Constructor de un artículo de segunda mano
@@ -42,6 +43,7 @@ public class ArticuloSegundaMano implements Serializable {
 	 * @param categorias Categorías a las que pertenece el artículo
 	 */
 	public ArticuloSegundaMano(String nombre, String desc, Cartera dueno, String interesadoEn, Categoria...categorias) {
+		
 		id = AsignadorId.getInstancia().siguienteId();
 		this.nombre = nombre;
 		this.descripcion = desc;
@@ -144,9 +146,11 @@ public class ArticuloSegundaMano implements Serializable {
 	/**
 	 * Setter de la valoración
 	 * @param valoracion Valoracion dada al producto
+	 * @throws InvalidArgumentException Se lanza en caso de que algún argumento sea inválido
 	 */
-	public void anadirValoracion(Valoracion valoracion) {
-		if (this.valoracion != null) return;
+	public void anadirValoracion(Valoracion valoracion) throws InvalidArgumentException {
+		//if (this.valoracion != null) throw new InvalidArgumentException("El artículo ya ha sido valorado", "añadir valoración a artículo");
+		if (valoracion == null) throw new InvalidArgumentException("La valoración introducida es inválida", "añadir valoración a artículo");
 		this.valoracion = valoracion;
 	}
 	
@@ -166,7 +170,7 @@ public class ArticuloSegundaMano implements Serializable {
 				"\nCategorias:" + categorias + 
 				"\nInteresado en: " + interesadoEn +
 				"\nDisponible: " + disponible + 
-				"\nValoracion: " + (valoracion == null ? "Pendiente de solicitud" : valoracion.toStringSinArticulo());
+				"\nValoracion: \n" + (valoracion == null ? "Pendiente de solicitud" : valoracion.toStringSinArticulo());
 	}
 }
 

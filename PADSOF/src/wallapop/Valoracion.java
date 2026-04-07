@@ -34,13 +34,17 @@ public class Valoracion implements Serializable {
 	/**
 	 * Contructor de una valoración 
 	 * @param articulo Artículo de segunda mano del cual se ha solicitado una valoración
+	 * @throws InvalidArgumentException Se lanza en caso de que algún parámetro sea inválido
 	 */
-	public Valoracion(ArticuloSegundaMano articulo) {
+	public Valoracion(ArticuloSegundaMano articulo) throws InvalidArgumentException {
+		if (articulo == null) throw new InvalidArgumentException("El artículo introducido no es válido", "constructor de valoración");
 		id = AsignadorId.getInstancia().siguienteId();
 		this.fechaSolicitud = Reloj.now();
 		this.articuloValorado = articulo;
 		this.precioPagado = Sistema.getInstancia().getPrecioValoracion();
 		this.estadoArticulo = EstadoFisicoArticulo.PENDIENTE;
+		
+		articulo.anadirValoracion(this);
 	}
 	
 	/**
@@ -132,12 +136,11 @@ public class Valoracion implements Serializable {
 	@Override
 	public String toString() {
 		return  "Id de la valoración: " + id +
-				"Articulo valorado: " + articuloValorado +
-				"Fecha solicitud: " + fechaSolicitud +
-				"Precio pagado: " + precioPagado +
-				"Estado del articulo: " + estadoArticulo +
-				((estadoArticulo == EstadoFisicoArticulo.PENDIENTE) ? "Pendiente de valorar\n" : 
-					("\nFecha valoracion: "+ fechaValoracion + "\nEstado del articulo: " + "\nPrecio estimado: "+ estadoArticulo +"\nEmpleado: "+ empleado));
+				"\nArticulo valorado: " + articuloValorado +
+				"\nFecha solicitud: " + fechaSolicitud +
+				"\nPrecio pagado: " + precioPagado +
+				((estadoArticulo == EstadoFisicoArticulo.PENDIENTE) ? "\nPendiente de valorar\n" : 
+					("\nFecha valoracion: "+ fechaValoracion + "\nEstado del articulo: " + estadoArticulo + "\nPrecio estimado: "+ estadoArticulo +"\nEmpleado: "+ empleado.getNombre()));
 			
 	}
 	
@@ -147,11 +150,11 @@ public class Valoracion implements Serializable {
 	 */
 	public String toStringSinArticulo() {
 		return "Id de la valoración: " + id +
-				"Fecha solicitud: " + fechaSolicitud +
-				"Precio pagado: " + precioPagado +
-				"Estado del articulo: " + estadoArticulo +
+				"\nFecha solicitud: " + fechaSolicitud +
+				"\nPrecio pagado: " + precioPagado +
+				"\nEstado del articulo: " + estadoArticulo +
 				((estadoArticulo == EstadoFisicoArticulo.PENDIENTE) ? "Pendiente de valorar\n" : 
-					("\nFecha valoracion: "+ fechaValoracion + "\nEstado del articulo: " + "\nPrecio estimado: "+ estadoArticulo +"\nEmpleado: "+ empleado));
+					("\nFecha valoracion: "+ fechaValoracion + "\nEstado del articulo: " + "\nPrecio estimado: "+ estadoArticulo +"\nEmpleado: "+ empleado.getNombre()));
 		
 	}	
 }
