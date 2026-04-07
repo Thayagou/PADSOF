@@ -1,3 +1,6 @@
+/**
+ * Este paquete contiene los tests de las clases incluídas en el paquete de usuario
+ */
 package usuario.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,6 +19,11 @@ import usuario.*;
 import venta.productos.*;
 import wallapop.ArticuloSegundaMano;
 
+/**
+ * Clase con los tests de los métodos de la clase clienteRegistrado
+ * 
+ * @author Claudia Saiz
+ */
 class ClienteRegistradoTest {
 
 	// helpers

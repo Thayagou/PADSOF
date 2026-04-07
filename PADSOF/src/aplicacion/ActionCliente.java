@@ -18,6 +18,12 @@ import wallapop.*;
 public class ActionCliente {
 	
 	/**
+     * Constructor privado para evitar instanciación.
+     */
+    private ActionCliente() {
+    }
+	
+	/**
 	 * Muestra el menú principal de un cliente desde el que puede realizar las diferentes funcionalidades
 	 * @param cliente Cliente que ha iniciado sesión
 	 */
