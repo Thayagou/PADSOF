@@ -68,8 +68,8 @@ public class Almacen implements Serializable {
 	 * @param numPaginas Numero de páginas del cómic
 	 * @param editorial Editorial del cómic
 	 * @param categorias Categorías a las que pertenece el producto
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public void anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -87,8 +87,8 @@ public class Almacen implements Serializable {
 	 * @param rangoEdad Rango de edad del juego
 	 * @param tipo Tipo de juego
 	 * @param categorias Categorías a las que pertenece el producto
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public void anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -106,8 +106,8 @@ public class Almacen implements Serializable {
 	 * @param marca Marca de la figura
 	 * @param material Material de la figura
 	 * @param categorias Categorías a las que pertenece el producto
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public void anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -123,8 +123,8 @@ public class Almacen implements Serializable {
 	 * @param image Imagen del producto
 	 * @param productos Productos contenidos en el pack
 	 * @param categorias Categorías a las que pertenece el producto
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public void anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -135,7 +135,7 @@ public class Almacen implements Serializable {
 	 * Devuelve las unidades en stock de un producto concreto
 	 * @param producto Producto del que se devuelve las unidades
 	 * @return int, unidades en stock del producto, -1 en caso de error
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public int getUnidades(Producto producto) throws InvalidArgumentException {
 		if(producto == null) throw new InvalidArgumentException("El producto no puede ser null");
@@ -158,7 +158,7 @@ public class Almacen implements Serializable {
 	 * Método para obtener el stock de un producto
 	 * @param producto Producto del que se quiere el stock
 	 * @return Stock del producto
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public Stock getStock(Producto producto) throws InvalidArgumentException {
 		if(producto == null) throw new InvalidArgumentException("El producto no puede ser null");
@@ -169,7 +169,7 @@ public class Almacen implements Serializable {
 	 * Método para obtener el stock de un producto con su nombre
 	 * @param nombre Nombre del producto
 	 * @return Stock del producto con ese nombre
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public Stock getStock(String nombre) throws InvalidArgumentException {
 		if(!inventario.containsKey(nombre)) throw new InvalidArgumentException("El producto no se encuantra en la tienda");
@@ -188,7 +188,7 @@ public class Almacen implements Serializable {
 	 * Eliminar un producto del inventario
 	 * @param producto Producto que se quiere eliminar
 	 * @return true si se elimina correctamente
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean eliminarProducto(Producto producto) throws InvalidArgumentException {
 		if(producto == null) throw new InvalidArgumentException("El producto a eliminar no puede ser null");
@@ -207,8 +207,8 @@ public class Almacen implements Serializable {
 	 * @param precio Precio del producto
 	 * @param imagen Imagen del producto
 	 * @param categorias Nuevas categorias del producto
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public void modificarProducto(Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, CaracteristicasProducto caracteristicas, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -247,7 +247,8 @@ public class Almacen implements Serializable {
 	 * Añade una lista de productos desde un fichero
 	 * @param fProductos, nombre del fichero con datos de productos a añadir
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
-	 * @throws DoubleDiscountException, InvalidArgumentException 
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException {
 		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío");
@@ -333,7 +334,7 @@ public class Almacen implements Serializable {
 	 * Método para obtener una categoría con su nombre
 	 * @param nombre Nombre de la categoría
 	 * @return Categoría con el nombre que se introduce
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public Categoria getCategoria(String nombre) throws InvalidArgumentException {
 		if(!categorias.containsKey(nombre)) throw new InvalidArgumentException("La categoria no se encuentra en la tienda");
@@ -393,7 +394,7 @@ public class Almacen implements Serializable {
 	 * Crea y añade una categoría al almacén
 	 * @param nombre Nombre de la categoría
 	 * @return true si se pudo añadir, false si ya existe una categoria con ese nombre
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean anadirCategoria(String nombre) throws InvalidArgumentException {
 		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
@@ -407,7 +408,7 @@ public class Almacen implements Serializable {
 	 * Elimina una categoría del almacén
 	 * @param nombre Nombre de la categoría
 	 * @return true en caso de que se elimine correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean eliminarCategoria(Categoria categoria) throws InvalidArgumentException {
 		if(categoria == null) throw new InvalidArgumentException("La categoría a eliminar no puede ser null");
@@ -422,8 +423,8 @@ public class Almacen implements Serializable {
 	 * @param producto Producto al que se quiere añadir
 	 * @param categoria Categoría que se quiere añadir
 	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public boolean anadirProductoACategoria(Producto producto, Categoria categoria)
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -437,7 +438,7 @@ public class Almacen implements Serializable {
 	 * @param producto Producto que se quiere quitar
 	 * @param categoria Categoría de la que se quiere quitar
 	 * @return true en caso de que se quite correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean quitarProductoDeCategoria(Producto producto, Categoria categoria) throws InvalidArgumentException {
 		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
@@ -451,7 +452,7 @@ public class Almacen implements Serializable {
 	 * @param categoria Categoría que se quiere cambiar
 	 * @param nuevoNombre Nuevo nombre para la categoría
 	 * @return true en caso de que se modifique correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean modificarCategoria(Categoria categoria, String nuevoNombre) throws InvalidArgumentException {
 		if(categoria == null || nuevoNombre == null) throw new InvalidArgumentException("La categoría y el nombre no pueden ser null");
@@ -475,8 +476,8 @@ public class Almacen implements Serializable {
 	 * @param condicion Tipo de condición para el descuento
 	 * @param precio Precio que se descuenta
 	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public boolean anadirDescuentoDinero(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -498,8 +499,8 @@ public class Almacen implements Serializable {
 	 * @param condicion Tipo de condición para el descuento
 	 * @param porcentaje Porcentaje que se descuenta
 	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public boolean anadirDescuentoPorcentaje(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -521,8 +522,8 @@ public class Almacen implements Serializable {
 	 * @param condicion Tipo de condición para el descuento
 	 * @param regalo Regalo que se da
 	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
-	 * @throws DoubleDiscountException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
 	public boolean anadirDescuentoRegalo(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
 			throws InvalidArgumentException, DoubleDiscountException {
@@ -548,7 +549,7 @@ public class Almacen implements Serializable {
 	 * Añade un artículo de segunda mano ya creado al almacén
 	 * @param articulo, Artículo que se añade
 	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) throws InvalidArgumentException {
 		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null");
@@ -559,7 +560,7 @@ public class Almacen implements Serializable {
 	 * Elimina un artículo de segunda mano del almacén
 	 * @param articulo, Artículo que se elimina
 	 * @return true en caso de que se añada correctamente, false en caso contrario
-	 * @throws InvalidArgumentException
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) throws InvalidArgumentException {
 		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null");
@@ -581,8 +582,9 @@ public class Almacen implements Serializable {
 	 * @param categorias Categorías a las que deben pertenecer los productos
 	 * @param precioMin Precio mínimo de los productos
 	 * @param precioMax Precio máximo de los productos
+	 * @param estrellasMin Mínimo número de estrellas que debe tener
 	 * @return Producto[], un array de productos que cumplen las condiciones
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public Producto[] getProductosPorFiltros(ClienteRegistrado cliente,Categoria[] categorias, double precioMin, double precioMax, double estrellasMin)
 			throws InvalidArgumentException {
@@ -598,8 +600,9 @@ public class Almacen implements Serializable {
 	 * @param categorias Categorías a las que deben pertenecer los productos
 	 * @param precioMin Precio mínimo de los productos
 	 * @param precioMax Precio máximo de los productos
+	 * @param estrellasMin Mínimo número de estrellas que debe tener
 	 * @return Producto[], un array de productos que cumplen las condiciones
-	 * @throws InvalidArgumentException 
+	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin)
 			throws InvalidArgumentException {

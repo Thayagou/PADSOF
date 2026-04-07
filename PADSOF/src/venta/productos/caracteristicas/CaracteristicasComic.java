@@ -8,6 +8,9 @@ import exceptions.DoubleDiscountException;
 import exceptions.InvalidArgumentException;
 import venta.productos.*;
 
+/**
+ * Esta clase representa las caracteristicas de un comic
+ */
 public class CaracteristicasComic implements CaracteristicasProducto {
 	public final LocalDate fechaPublicacion;
 	public final String autor;

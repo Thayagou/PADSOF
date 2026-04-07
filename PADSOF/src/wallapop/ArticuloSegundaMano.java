@@ -143,7 +143,7 @@ public class ArticuloSegundaMano implements Serializable {
 
 	/**
 	 * Setter de la valoración
-	 * @param valoracion
+	 * @param valoracion Valoracion dada al producto
 	 */
 	public void anadirValoracion(Valoracion valoracion) {
 		if (this.valoracion != null) return;
