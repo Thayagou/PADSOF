@@ -69,8 +69,8 @@ public class ClienteRegistrado extends Usuario implements Serializable {
 	 * Setter de la instancia de las estadísticas del usuario
 	 * @param estadistcas Estadísticas asociadas al usuario
 	 */
-	public void setEstadisticas(StatsUsuario estadistcas) {
-		this.estadisticas = estadistcas;
+	public void setEstadisticas(StatsUsuario estadisticas) {
+		this.estadisticas = estadisticas;
 	}
 	
 	/**

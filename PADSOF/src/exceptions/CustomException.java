@@ -35,6 +35,6 @@ public abstract class CustomException extends Exception {
 	 */
 	@Override
 	public String getMessage() {
-		return  "Error al " + metodo + ": " + super.getMessage();
+		return  "Error en " + metodo + ": " + super.getMessage();
 	}
 }

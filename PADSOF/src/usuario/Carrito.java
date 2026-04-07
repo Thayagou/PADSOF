@@ -1,3 +1,6 @@
+/**
+ * Este paquete recoje las subclases de usuario y otras clases relacionadas
+ */
 package usuario;
 
 import java.util.*;
@@ -8,6 +11,9 @@ import venta.productos.*;
 import exceptions.*;
 import sistema.Sistema;
 
+/**
+ * Clase que representa un carrito de compra de un cliente
+ */
 public class Carrito implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private LocalDateTime fechaCaducidad;
@@ -26,6 +32,7 @@ public class Carrito implements Serializable {
 	 * @return Array con la lista de stocks del carrito
 	 */
 	public StockExterno[] getItems() {
+		vaciarSiCaducado();
 		return items.values().toArray(new StockExterno[0]);
 	}
 	
@@ -34,6 +41,7 @@ public class Carrito implements Serializable {
 	 * @return Array con los regalos del carrito
 	 */
 	public StockExterno[] getRegalos() {
+		vaciarSiCaducado();
 		return regalos.values().toArray(new StockExterno[0]);
 	}
 	
@@ -42,6 +50,7 @@ public class Carrito implements Serializable {
 	 * @return Array con todo el contenido del carrito
 	 */
 	public StockExterno[] getContenido() {
+		vaciarSiCaducado();
 		StockExterno[] items = getItems();
 		StockExterno[] regalos = getRegalos();
 		StockExterno[] merge = new StockExterno[items.length + regalos.length];
