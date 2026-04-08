@@ -91,7 +91,7 @@ public class ActionCliente {
 	 * @throws InvalidUserInputException
 	 */
 	static void actionBuscarPorFiltros(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
-		Producto[] productos = Main.actionBuscarPorFiltros();
+		Producto[] productos = actionBuscarPorFiltrosAlmacen(cliente);
 		if(productos.length < 1) throw new InvalidArgumentException("No hay productos en la tienda en este momento", "buscar por filtros");
 		char dec = Main.getUserInputChar("¿Desea añadir al carrito alguno de estos productos? (Pulsar 's' si lo desea)");
 		if(dec != 's') return;
@@ -102,6 +102,33 @@ public class ActionCliente {
 		} catch(ProductoNoDisponibleException e){
 			Main.showMessage(String.format("El producto '%s' no tiene stock disponible", e.getProducto().getNombre()));
 		}
+	}
+	
+	/**
+	 * Permite realizar una búsqueda por filtros sin opción de ver más información
+	 * @param cliente Cliente registrado que hace la búsqueda
+	 * @return Array de productos que coinciden con la búsqueda
+	 * @throws InvalidArgumentException
+	 * @throws InvalidUserInputException
+	 */
+	static Producto[] actionBuscarPorFiltrosAlmacen(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		for(Categoria cat : Main.tienda.getAlmacen().getCategorias()) {
+			Main.getAction("Incluir categoria " + cat.getNombre() + "? s/n");
+			if(Main.action.equals("s")) {
+				categorias.add(cat);
+			}
+		}
+		double precioMin = Main.getUserInputDouble("Precio minimo: ");
+		double precioMax = Main.getUserInputDouble("Precio maximo: ");
+		double estrellasMin = Main.getUserInputDouble("Estrellas minimas: ");
+		
+		Producto[] productos = Main.tienda.getAlmacen().getProductosPorFiltros(cliente, categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
+		int i = 1;
+		for(Producto p : productos) {
+			Main.showMessage(i++ + ") " + p);
+		}
+		return productos;
 	}
 	
 	/**
@@ -350,6 +377,8 @@ public class ActionCliente {
 	 */
 	static void actionVerCuenta(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Main.showMessage("Nombre de usuario: " + cliente.getNombre());
+		Main.showMessage(cliente.stringEstadisticas());
+		
 		
 		String tipo = Main.getUserInputString("Desea cambiar su contraseña? (s: si | n: no): ");
 		if (tipo.equals("s")) {

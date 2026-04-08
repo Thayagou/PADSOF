@@ -698,8 +698,12 @@ public class Almacen implements Serializable {
 					valoracionPrevista += r.getPuntuacion()*similaridadEntreClientes.get(r.getUsuario());
 					numValoraciones++;
 				}
-				valoracionPrevista /= numValoraciones;	
-				valoracionPrevista *= pondValoraciones;
+				if (numValoraciones == 0) {
+					valoracionPrevista = p.getPuntuacionMedia();
+				} else {
+					valoracionPrevista /= numValoraciones;	
+					valoracionPrevista *= pondValoraciones;
+				}
 				
 			} else {
 				valoracionPrevista = p.getPuntuacionMedia();
