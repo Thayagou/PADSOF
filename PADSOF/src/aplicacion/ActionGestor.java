@@ -58,6 +58,12 @@ public class ActionGestor {
 				
 				case "cs":
 					return;
+					
+				case "e":
+					return;
+					
+				default:
+					throw new InvalidArgumentException("Introduzca un comando válido", "menu gestor");
 			}
 
 		} catch (CustomException e) {
@@ -106,6 +112,9 @@ public class ActionGestor {
 				if (index < 1 || index > productos.length) throw new InvalidArgumentException("Índice de producto inválido", "añadir descuento");
 				p = productos[index-1];
 				break;
+				
+			default:
+				throw new InvalidArgumentException("Introduzca un comando válido", "añadir descuento");
 		}
 		
 		double valorMin;
@@ -222,6 +231,8 @@ public class ActionGestor {
             case "tco":
             	Main.tienda.gestionarParametroDeSistema(gestor, ParametroSistema.DURACION_CARRITO, duracion);
             	break;
+    		default:
+    			throw new InvalidArgumentException("Introduzca un parámetro válido", "configurar sistema");
         }
 	    
 	}
@@ -303,6 +314,8 @@ public class ActionGestor {
 		case "ge":
 			actionGestionarEmpleadosExistentes(gestor);
 			break;
+		default:
+			throw new InvalidArgumentException("Introduzca un comando válido", "gestionar empleados");
 		}
 	}
 
@@ -348,6 +361,8 @@ public class ActionGestor {
 			case "gp":
 				actionGestionarPermisos(empleados[index-1]);
 				break;
+			default:
+				throw new InvalidArgumentException("Introduzca un comando válido", "gestionar empleados existentes");
 			}
 	}
 
@@ -375,6 +390,8 @@ public class ActionGestor {
 				empleado.quitarPermiso(p);
 			}
 			break;
+		default:
+			throw new InvalidArgumentException("Introduzca un comando válido", "gestionar permisos");
 		}
 	}
 	 

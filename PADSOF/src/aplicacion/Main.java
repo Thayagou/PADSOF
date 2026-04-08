@@ -243,7 +243,8 @@ public class Main {
 		}
 		
 		showMessage("Cargando tienda...");
-		tienda = Tienda.cargarTienda(filename);
+		Tienda carga = Tienda.cargarTienda(filename);
+		if(carga != null) tienda = carga;
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
 				
 		try {

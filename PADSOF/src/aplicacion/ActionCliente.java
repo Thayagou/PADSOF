@@ -64,8 +64,15 @@ public class ActionCliente {
 				case "n":
 					actionGestionarNotificaciones(cliente);
 					break;
+					
 				case "cs":
 					return;
+					
+				case "e":
+					return;
+					
+				default:
+					throw new InvalidArgumentException("Introduzca un comando válido", "menu cliente");
 					
 				}
 			} catch (CustomException e) {

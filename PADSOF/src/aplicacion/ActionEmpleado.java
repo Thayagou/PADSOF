@@ -53,6 +53,10 @@ public class ActionEmpleado {
 				
 				case "cs":
 					return;
+					
+				case "e":
+					return;
+					
 				default:
 					throw new InvalidArgumentException("Introduzca un comando válido", "menu empleado");
 				}
@@ -175,6 +179,12 @@ public class ActionEmpleado {
 		case "p":
 			actionCrearPack(usuario);
 			break;
+			
+		case "e":
+			return;
+			
+		default:
+			throw new InvalidArgumentException("Introduzca un comando válido", "gestionar productos");
 			
 		}
 	}
