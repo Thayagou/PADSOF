@@ -282,7 +282,7 @@ public class Almacen implements Serializable {
 		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío", "añadir productos de fichero");
 		String linea;
 		
-		try (BufferedReader br = new BufferedReader(new FileReader(fProductos))) {
+		try (BufferedReader br = new BufferedReader(new FileReader("resources/" + fProductos))) {
 			while((linea = br.readLine()) != null) {
 				String partes[] = linea.split(";");
 				String nombre = partes[1];

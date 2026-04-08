@@ -119,7 +119,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @return Tienda cargada
 	 */
 	public static Tienda cargarTienda(String filename) {
-	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("resources/"+filename))) {
 	        Tienda t = (Tienda) ois.readObject();
 	        Sistema.asignarInstancia(ois);
 	        AsignadorId.asignarInstancia(ois);
@@ -136,7 +136,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @param filename Nombre del fichero donde se guarda la tienda
 	 */
 	public void guardarTienda(String filename) {
-	    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+	    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("resources/"+filename))) {
 	        oos.writeObject(this);
 	        oos.writeObject(Sistema.getInstancia());
 	        oos.writeObject(AsignadorId.getInstancia());
