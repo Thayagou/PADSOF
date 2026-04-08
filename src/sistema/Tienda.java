@@ -119,6 +119,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @return Tienda cargada
 	 */
 	public static Tienda cargarTienda(String filename) {
+		if(filename == null) return null;
 	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("resources/"+filename))) {
 	        Tienda t = (Tienda) ois.readObject();
 	        Sistema.asignarInstancia(ois);

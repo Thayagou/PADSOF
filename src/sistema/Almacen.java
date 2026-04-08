@@ -446,6 +446,7 @@ public class Almacen implements Serializable {
 	public boolean eliminarCategoria(Usuario usuario, Categoria categoria) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "eliminar categoría", Permiso.PRODUCTOS, usuario);
 		if(categoria == null) throw new InvalidArgumentException("La categoría a eliminar no puede ser null", "eliminar categoría");
+		if (categorias.containsKey(categoria.getNombre()) == false) throw new InvalidArgumentException("La categoría a eliminar no pertenece a la tienda", "eliminar categoría");
 		
 		categoria.eliminar();
 		categorias.remove(categoria.getNombre());

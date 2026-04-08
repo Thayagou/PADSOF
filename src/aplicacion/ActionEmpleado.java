@@ -378,10 +378,21 @@ public class ActionEmpleado {
 		for(Categoria c : categorias) {
 			Main.showMessage(i++ + ") " + c + "\n");
 		}
-		int num = Main.getUserInputInt("Introduzca el número del producto que desea modificar: ");
+		int num = Main.getUserInputInt("Introduzca el número de la categoría que desea modificar: ");
 		if(num < 1 || num > categorias.length) throw new InvalidArgumentException("Número de categoria inválido", "modificar categoría");
-		String nuevo = Main.getUserInputString("Introduzca el nuevo nombre de la categoría: ");
-		Main.tienda.getAlmacen().modificarCategoria(usuario, categorias[num-1], nuevo);
+		
+		Main.getAction("Introducir acción a realizar (el: Elimianr categoría | m: modificar nombre)");
+		
+		switch(Main.action) {
+		case "el":
+			Main.tienda.getAlmacen().eliminarCategoria(usuario, categorias[num-1]);
+			break;
+		case "m":
+			String nuevo = Main.getUserInputString("Introduzca el nuevo nombre de la categoría: ");
+			Main.tienda.getAlmacen().modificarCategoria(usuario, categorias[num-1], nuevo);
+			break;
+		}
+		
 	}
 	
 	/**

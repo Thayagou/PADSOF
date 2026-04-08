@@ -194,6 +194,7 @@ public class ActionGestor {
 		Main.showMessage("  Búsqueda:               " + Sistema.getInstancia().getPonderacionBusqueda());
 		Main.showMessage("  Duración carrito:       " + Sistema.getInstancia().getTiempoCaducaCarrito());
 		Main.showMessage("  Duración ofertas:       " + Sistema.getInstancia().getTiempoCaducaOferta());
+		Main.showMessage("  Precio valoracion:      " + Sistema.getInstancia().getPrecioValoracion());
 		Main.showMessage("===================================================");
 		
 		String parametroString = Main.getUserInputString("Introducir el parámetro a modificar (c: categoría | uc: unidades compradas | pp: precio pagado | vp: valoraciones producto | pr: producto recomendado | b: búsqueda | tcc: tiempo caducidad carrito | tco: tiempo caducidad ofertas | pv: precio valoracion): ");

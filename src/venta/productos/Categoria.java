@@ -64,6 +64,9 @@ public class Categoria implements Serializable, Descontable {
 	 * Método para eliminar la categoría
 	 */
 	public void eliminar() {
+		for(Producto p : productos) {
+			p.quitarCategorias(this);
+		}
 		this.eliminada = true;
 	}
 	
