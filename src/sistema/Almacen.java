@@ -58,7 +58,7 @@ public class Almacen implements Serializable {
 	public void anadirProducto(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("", descripcion, null, usuario);
-		if(inventario.containsKey(nombre)) throw new InvalidArgumentException("Ya existe un producto con el mismo nombre en el almacén", "añadir producto");
+		if(inventario.containsKey(nombre)) throw new InvalidArgumentException("Este producto ya existe", "añadir producto");
 		Producto p = caracteristicas.crearProducto(nombre, descripcion, precio, image, categorias);
 		this.inventario.put(nombre, new Stock(p, uds));
 		observador.guardarProducto(p);
