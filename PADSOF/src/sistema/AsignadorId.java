@@ -1,5 +1,7 @@
 package sistema;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 /**
@@ -17,6 +19,16 @@ public class AsignadorId implements Serializable {
      */
     private AsignadorId() {
         this.contadorIds = 0;
+    }
+    
+    /**
+     * Restaura la instancia del archivo de guardado de la tienda
+     * @param ois
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public static void asignarInstancia(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+    	AsignadorId.instancia = (AsignadorId) ois.readObject();
     }
     
     /**

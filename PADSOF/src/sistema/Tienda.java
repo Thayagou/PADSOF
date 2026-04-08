@@ -124,7 +124,12 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 */
 	public static Tienda cargarTienda(String filename) {
 	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
-	        return (Tienda) ois.readObject();
+	        Tienda t = (Tienda) ois.readObject();
+	        Sistema.asignarInstancia(ois);
+	        AsignadorId.asignarInstancia(ois);
+	        Reloj.asignarInstancia(ois);
+	        return t;
+
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return null;
@@ -138,6 +143,9 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	public void guardarTienda(String filename) {
 	    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
 	        oos.writeObject(this);
+	        oos.writeObject(Sistema.getInstancia());
+	        oos.writeObject(AsignadorId.getInstancia());
+	        oos.writeObject(Reloj.getInstancia());
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }

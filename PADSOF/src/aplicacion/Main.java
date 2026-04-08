@@ -242,6 +242,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		showMessage("Cargando tienda...");
 		tienda = Tienda.cargarTienda(filename);
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
 				

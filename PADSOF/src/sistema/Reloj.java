@@ -1,5 +1,7 @@
 package sistema;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
@@ -23,6 +25,27 @@ public class Reloj {
 	static private boolean fijo = false;
 	/** Boolean que representa si el reloj está sincronizado con el tiempo real */
 	static private boolean tiempoReal = true;
+	
+	/**
+	 * Devuelve la instancia del sistema
+	 * @return La instancia del sistema
+	 */
+	public static Clock getInstancia() {
+		if (Reloj.clock == null)
+			Reloj.clock = Clock.systemDefaultZone();
+
+		return Reloj.clock;
+	}
+	
+	/**
+     * Restaura la instancia del archivo de guardado de la tienda
+     * @param ois
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public static void asignarInstancia(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+    	Reloj.clock = (Clock) ois.readObject();
+    }
 	
 	/**
 	 * Equivalente a LocalDateTime.now para nuestro reloj interno
