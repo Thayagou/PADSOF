@@ -73,7 +73,6 @@ class CarritoTest {
 		carrito = cliente.getCarrito();
 	}
 
-	/// constructor
 
 	@Test 
 	void testConstructorCarritoVacio() {
@@ -114,8 +113,6 @@ class CarritoTest {
 		assertEquals(2, carrito.getItems().length);
 	}
 
-	/// quitarProducto
-
 	@Test
 	void testQuitarProductoInexistente() throws Exception {
 		Comic c = crearComic("Superman", 10.0);
@@ -145,8 +142,6 @@ class CarritoTest {
 		assertAll(() -> assertEquals(1, items.length), () -> assertEquals(1, items[0].getUdsEnStock()));
 	}
 
-	/// vaciarCarrito
-
 	@Test
 	void testVaciarCarrito() throws Exception {
 		carrito.anadirProducto(crearComic("Superman", 10.0));
@@ -160,8 +155,6 @@ class CarritoTest {
 	void testVaciarCarritoYaVacio() {
 		assertDoesNotThrow(carrito::vaciarCarrito);
 	}
-
-	/// getContenido
 
 	@Test
 	void testGetContenidoVacio() {

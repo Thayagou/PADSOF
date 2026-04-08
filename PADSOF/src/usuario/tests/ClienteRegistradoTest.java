@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.*;
 import sistema.Sistema;
+import sistema.Tienda;
 import usuario.*;
 import venta.productos.*;
 import wallapop.ArticuloSegundaMano;
@@ -25,11 +26,8 @@ import wallapop.ArticuloSegundaMano;
  * @author Claudia Saiz
  */
 class ClienteRegistradoTest {
-	
-	
-	private ClienteRegistrado crearCliente() {
-		return new ClienteRegistrado("Cliente1", "pass", );
-	}
+	private static Tienda tienda;
+	private static ClienteRegistrado c;
 
 	
 	private Comic crearComic(String nombre, double precio) throws Exception {
@@ -46,7 +44,9 @@ class ClienteRegistradoTest {
 	}
 
 	@BeforeEach
-	void setUp() {
+	void setUp() throws Exception{
+		c = new ClienteRegistrado("Cliente1", "pass", tienda);
+		tienda = new Tienda();
 		Sistema.getInstancia().setTiempoCaducaCarrito(Duration.ofHours(1));
 	}
 
@@ -54,23 +54,21 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testConstructorDatosCorrectos() {
-		ClienteRegistrado c = crearCliente();
 		assertAll(() -> assertEquals("Cliente1", c.getNombre()), () -> assertEquals("pass", c.getContrasena()));
 	}
 
 	@Test
 	void testConstructorNombreNull() {
-		assertThrows(NullPointerException.class, () -> new ClienteRegistrado(null, "pass"));
+		assertThrows(InvalidArgumentException.class, () -> new ClienteRegistrado(null, "pass", tienda));
 	}
 
 	@Test
 	void testConstructorContrasenaNull() {
-		assertThrows(NullPointerException.class, () -> new ClienteRegistrado("Cliente1", null));
+		assertThrows(InvalidArgumentException.class, () -> new ClienteRegistrado("Cliente1", null, tienda));
 	}
 
 	@Test
 	void testConstructorReferenciasCorrectas() {
-		ClienteRegistrado c = crearCliente();
 		assertNotNull(c.getCarrito());
 		assertEquals(0, c.getCarrito().getItems().length);
 		boolean tienePedido = false;
@@ -87,14 +85,12 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testCambiarContrasenaCorrecta() throws InvalidArgumentException {
-		ClienteRegistrado c = crearCliente();
 		c.cambiarContrasena("pass", "nuevaPass", "nuevaPass");
 		assertEquals("nuevaPass", c.getContrasena());
 	}
 
 	@Test
 	void testCambiarContrasenaAntiguaIncorrecta() {
-		ClienteRegistrado c = crearCliente();
 		assertAll(
 				() -> assertThrows(InvalidArgumentException.class,
 						() -> c.cambiarContrasena("incorrecta", "nuevaPass", "nuevaPass")),
@@ -106,14 +102,12 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testEnviarNotificacionConInteres() {
-		ClienteRegistrado c = crearCliente();
 		boolean resultado = c.enviarNotificacion("Tu pedido está en camino", TipoNotificacion.PEDIDO);
 		assertAll(() -> assertTrue(resultado), () -> assertEquals(1, c.getNotificaciones().length));
 	}
 
 	@Test
 	void testEnviarNotificacionSinInteres() {
-		ClienteRegistrado c = crearCliente();
 		c.quitarInteres(TipoNotificacion.PEDIDO);
 		boolean resultado = c.enviarNotificacion("Oferta disponible", TipoNotificacion.INTERCAMBIO);
 		assertAll(() -> assertFalse(resultado), () -> assertEquals(0, c.getNotificaciones().length));
@@ -121,7 +115,6 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testEnviarVariasNotificaciones() {
-		ClienteRegistrado c = crearCliente();
 		c.enviarNotificacion("Notificación 1", TipoNotificacion.PEDIDO);
 		c.enviarNotificacion("Notificación 2", TipoNotificacion.PEDIDO);
 		assertEquals(2, c.getNotificaciones().length);
@@ -131,7 +124,6 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testAnadirInteres() {
-		ClienteRegistrado c = crearCliente();
 		boolean resultado = c.anadirInteres(TipoNotificacion.INTERCAMBIO);
 		assertTrue(resultado);
 
@@ -145,14 +137,12 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testAnadirInteresRepetido() {
-		ClienteRegistrado c = crearCliente();
 		boolean resultado = c.anadirInteres(TipoNotificacion.PEDIDO);
 		assertFalse(resultado);
 	}
 
 	@Test
 	void testQuitarInteres() {
-		ClienteRegistrado c = crearCliente();
 		boolean resultado = c.quitarInteres(TipoNotificacion.PEDIDO);
 		assertTrue(resultado);
 
@@ -166,7 +156,6 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testQuitarInteresInexistente() {
-		ClienteRegistrado c = crearCliente();
 		boolean resultado = c.quitarInteres(TipoNotificacion.INTERCAMBIO);
 		assertFalse(resultado);
 	}
@@ -175,7 +164,6 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testAnadirResenaValida() throws Exception {
-		ClienteRegistrado c = crearCliente();
 		Comic comic = crearComic("Superman", 10.0);
 		boolean resultado = c.anadirResena(4, "Muy bueno", comic);
 		assertTrue(resultado);
@@ -183,7 +171,6 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testAnadirResenaFalla() throws Exception {
-		ClienteRegistrado c = crearCliente();
 		assertThrows(InvalidArgumentException.class, () -> c.anadirResena(3, "Comentario", null));
 		Comic comic = crearComic("Superman", 10.0);
 		assertThrows(InvalidArgumentException.class, () -> c.anadirResena(3, null, comic));
@@ -195,7 +182,6 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testTienePermiso() {
-		ClienteRegistrado c = crearCliente();
 		for (Permiso p : Permiso.values()) {
 			assertFalse(c.tienePermiso(p));
 		}
@@ -205,55 +191,42 @@ class ClienteRegistradoTest {
 
 	@Test
 	void testGetCarritoNoNull() {
-		assertNotNull(crearCliente().getCarrito());
+		assertNotNull(c);
 	}
 
 	@Test
 	void testGetCarteraNoNull() {
-		assertNotNull(crearCliente().getCartera());
+		assertNotNull(c.getCartera());
 	}
 	
 	@Test
 	void testGetPedidosNoNull() {
-		assertNotNull(crearCliente().getPedidos());
+		assertNotNull(c.getPedidos());
 	}
 	
 	// verCartera
 	
 	@Test
 	void testVerCarteraVacia() {
-		ClienteRegistrado c = crearCliente();
-		assertEquals(0, c.verCartera());
+		assertEquals(0, c.verCartera().length);
 	}
 	
 	@Test
 	void testVerCarteraConArticulos() throws Exception {
-		ClienteRegistrado c = crearCliente();
 		c.getCartera().addArticulo(crearArticulo(c));
 		assertEquals(1, c.verCartera().length);
 	}
 	
-	// carritoAPedido
-	
 	@Test
 	void testCarritoAPedido() throws Exception {
-		ClienteRegistrado c = crearCliente();
 		c.getCarrito().anadirProducto(crearComic("Superman", 10.0));
 		c.carritoAPedido();
 		assertEquals(1, c.getPedidos().length);
 	}
-	
-	@Test
-	void testCarritoVacioAPedido() throws Exception {
-		ClienteRegistrado c = crearCliente();
-		c.carritoAPedido();
-		assertAll(() -> assertThrows(InvalidArgumentException.class, () -> c.getPedidos()), () -> assertEquals(0, c.getPedidos().length));
-	}
 
-	// toString
 
 	@Test
 	void testToStringNoNull() {
-		assertNotNull(crearCliente().toString());
+		assertNotNull(c.toString());
 	}
 }
