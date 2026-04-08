@@ -104,6 +104,9 @@ public class StatsUsuario implements Serializable {
 	 */
 	public double getCompatibilidad(Map<Categoria, Double> vectorExt, double normaExt) {
 		double prodEscalar = 0; 
+		
+		// Producto escalar con vector nulo es 0
+		if (normaExt == 0 || norma == 0) return 0;
 
 		for (Categoria c: intereses.keySet()) {
 			if (vectorExt.containsKey(c) == false) continue;
