@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InvalidArgumentException;
+import sistema.GestorCaducidad;
 import sistema.Reloj;
 import sistema.Sistema;
 import sistema.Tienda;
@@ -18,7 +19,10 @@ import wallapop.EstadoFisicoArticulo;
 import wallapop.EstadoIntercambio;
 import wallapop.Intercambio;
 import wallapop.Valoracion;
+
+import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Clase con los tests de los métodos de la clase Intercambio
@@ -82,6 +86,36 @@ class IntercambioTest {
 		assertNull(intercambio.getEmpleado());
 		assertNull(intercambio.getFechaConfirmacion());
 	}
+	
+	@Test
+	void unicidadId() throws Exception {
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio2 = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[1] },
+				new ArticuloSegundaMano[] { artsReceptor[1] });
+		
+		assertNotEquals(intercambio.getId(), intercambio2.getId());
+	}
+	
+	@Test
+	void caducidadIntercambios() throws Exception {
+		Sistema.getInstancia().setTiempoCaducaOferta(Duration.ofSeconds(2));
+		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.SECONDS);
+		
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
+		Intercambio intercambio2 = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[1] },
+				new ArticuloSegundaMano[] { artsReceptor[1] });
+		
+		Thread.sleep(4000);
+		
+		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.SECONDS);
+		
+		assertEquals(EstadoIntercambio.CADUCADO, intercambio.getEstado());
+		assertEquals(EstadoIntercambio.CADUCADO, intercambio2.getEstado());
+	}
+	
+	
 
 	@Test
 	void testConstructorVariosArticulos() throws Exception {
@@ -235,7 +269,9 @@ class IntercambioTest {
 		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
 				new ArticuloSegundaMano[] { artsReceptor[0] });
 
-		assertTrue(intercambio.caducarIntercambio());
+		intercambio.caducar();
+		
+		assertTrue(artsEmisor[0].isDisponible());
 		assertEquals(EstadoIntercambio.CADUCADO, intercambio.getEstado());
 		assertNotNull(intercambio.getFechaRespuesta());
 	}
@@ -245,7 +281,7 @@ class IntercambioTest {
 		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
 				new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertFalse(artsEmisor[0].isDisponible());
-		intercambio.caducarIntercambio();
+		intercambio.caducar();
 		assertTrue(artsEmisor[0].isDisponible());
 	}
 
@@ -253,8 +289,8 @@ class IntercambioTest {
 	void testCaducarIntercambioNoOfertadoLanzaExcepcion() throws Exception {
 		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
 				new ArticuloSegundaMano[] { artsReceptor[0] });
-		intercambio.caducarIntercambio();
-		assertThrows(InvalidArgumentException.class, () -> intercambio.caducarIntercambio());
+		intercambio.caducar();
+		assertThrows(InvalidArgumentException.class, () -> intercambio.caducar());
 	}
 
 	// ─── validarIntercambio

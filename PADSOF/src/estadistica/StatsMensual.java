@@ -84,8 +84,8 @@ public class StatsMensual implements Serializable, Comparable<StatsMensual> {
 	@Override
 	public String toString() {
 		return "Estadisticas mensual del " + mes + 
-				"Unidades: " + unidades + 
-				"Recaudacion=" + recaudacion;
+				"\nUnidades: " + unidades + 
+				"\nRecaudacion=" + recaudacion;
 	}
 
 	/**

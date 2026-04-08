@@ -3,6 +3,9 @@ package sistema;
 import java.util.*;
 import java.util.concurrent.*;
 
+import aplicacion.Main;
+import exceptions.CustomException;
+
 /**
  * Esta clase representa el gestionador de los objetos caducables
  */
@@ -64,7 +67,11 @@ public class GestorCaducidad {
 	private synchronized void comprobar() {
 		while (!cola.isEmpty() && cola.peek().isCaducado()) {
 			Caducable c = cola.poll();
-			c.caducar();
+			try {	
+				c.caducar();
+			} catch (CustomException e) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 }

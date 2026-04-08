@@ -6,14 +6,18 @@ import java.util.*;
 
 import exceptions.InvalidArgumentException;
 import sistema.AsignadorId;
+import sistema.Caducable;
+import sistema.GestorCaducidad;
 import sistema.Reloj;
 import sistema.Sistema;
+import usuario.ClienteRegistrado;
 import usuario.Empleado;
+import usuario.TipoNotificacion;
 
 /**
  * Clase que representa un intercambio ofertado de un cliente a otro que contiene productos solicitados y ofertados
  */
-public class Intercambio implements Serializable {
+public class Intercambio implements Serializable, Caducable {
 	private static final long serialVersionUID = 1L;
 	/** Identificador único del intercambio en la tienda */
 	private final long id;
@@ -51,7 +55,7 @@ public class Intercambio implements Serializable {
 		for (ArticuloSegundaMano art: ofrecidos) {
 			if (!emisor.equals(art.getDueno())) {
 				throw new InvalidArgumentException("Los artículos ofrecidos deben ser del mismo dueno", "crear intercambio");
-			}
+			} 
 		}
 
 		receptor = solicitados[0].getDueno();
@@ -72,6 +76,8 @@ public class Intercambio implements Serializable {
 		
 		emisor.addIntercambio(this);
 		receptor.addIntercambio(this);
+		
+		GestorCaducidad.getInstancia().registrar(this);
 	}
 	
 	/**
@@ -81,6 +87,8 @@ public class Intercambio implements Serializable {
 	 */
 	public boolean aceptarIntercambio () throws InvalidArgumentException {
 		if (estado.equals(EstadoIntercambio.OFERTADO) == false) throw new InvalidArgumentException("Este intercambio no esta en estado ofertado", "aceptar intercambio");
+		
+		GestorCaducidad.getInstancia().desregistrar(this);
 		
 		estado = EstadoIntercambio.ACEPTADO;
 		fechaRespuesta = Reloj.now();
@@ -97,6 +105,8 @@ public class Intercambio implements Serializable {
 	public boolean rechazarIntercambio () throws InvalidArgumentException {
 		if (estado.equals(EstadoIntercambio.OFERTADO) == false) throw new InvalidArgumentException("Este intercambio no esta en estado ofertado", "rechazar intercambio");
 		
+		GestorCaducidad.getInstancia().desregistrar(this);
+		
 		this.liberarOfertado();
 		estado = EstadoIntercambio.RECHAZADO;
 
@@ -112,6 +122,8 @@ public class Intercambio implements Serializable {
 	public boolean cancelarIntercambio() throws InvalidArgumentException {
 		if (estado.equals(EstadoIntercambio.OFERTADO) == false) throw new InvalidArgumentException("Este intercambio no esta en estado ofertado", "cancelar intercambio");
 		
+		GestorCaducidad.getInstancia().desregistrar(this);
+		
 		this.liberarOfertado();
 		estado = EstadoIntercambio.CANCELADO;
 		
@@ -119,19 +131,25 @@ public class Intercambio implements Serializable {
 		return true;
 	}
 	
+	@Override
 	/**
 	 * Se rechaza el intercambio solamente si se encontraba en estado OFERTADO y se liberan los artículos ofrecidos
 	 * @return true en caso de que se caduque correctamente
 	 * @throws InvalidArgumentException Se lanza en caso de que el intercambio no se encuentre en estado OFERTADO
 	 */
-	public boolean caducarIntercambio() throws InvalidArgumentException {
+	public void caducar() throws InvalidArgumentException {
 		if (estado.equals(EstadoIntercambio.OFERTADO) == false) throw new InvalidArgumentException("Este intercambio no esta en estado ofertado", "caducar intercambio");
+		
+		ClienteRegistrado clienteEmisor = emisor.getDueno(),
+				clienteReceptor = receptor.getDueno();
+		
+		clienteEmisor.enviarNotificacion("Su oferta de intercambio enviada con Id: " + this.id + " se ha caducado por falta de respuesta. Sus artículos se han disponibilizado", TipoNotificacion.CADUCIDAD);
+		clienteReceptor.enviarNotificacion("La oferta de intercabio recibida con Id: " + this.id + " se ha caducado por falta de respuesta", TipoNotificacion.CADUCIDAD);
 		
 		this.liberarOfertado();
 		estado = EstadoIntercambio.CADUCADO;
 
 		fechaRespuesta = Reloj.now();
-		return true;
 	}
 	
 	/**
@@ -216,14 +234,6 @@ public class Intercambio implements Serializable {
 	}
 
 	/**
-	 * Getter de la fecha en la que se caduca la oferta de intercambio
-	 * @return dicha fecha
-	 */
-	public LocalDateTime getFechaCaducaOferta() {
-		return fechaCaducaOferta;
-	}
-
-	/**
 	 * Getter del estado del intercambio
 	 * @return el estado actual
 	 */
@@ -282,6 +292,16 @@ public class Intercambio implements Serializable {
 				((estado == EstadoIntercambio.OFERTADO) ? ("Fecha de caducidad de la oferta:" + fechaCaducaOferta):"") +
 				((estado == EstadoIntercambio.CONFIRMADO)? ("Empleado: "+ empleado+ "\nFecha de confirmacion: "+ fechaConfirmacion) : "");
 				
+	}
+
+	
+	@Override
+	/**
+	 * Getter de la fecha de caducidad de la oferta de intercambio. Sobreescrito de Caducable
+	 * @return la fecha de caducidad
+	 */
+	public LocalDateTime getFechaCaducidad() {
+		return fechaCaducaOferta;
 	}
 
 }

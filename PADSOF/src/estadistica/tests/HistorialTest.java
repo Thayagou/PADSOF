@@ -8,15 +8,18 @@ import org.junit.jupiter.api.Test;
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidPermitException;
 import exceptions.ArticuloSinValoracionException;
+import exceptions.DoubleDiscountException;
 import estadistica.Historial;
 import estadistica.StatsMensual;
 import estadistica.StatsUsuario;
 import sistema.Tienda;
 import sistema.Reloj;
+import sistema.Sistema;
 import usuario.ClienteRegistrado;
 import usuario.Empleado;
 import usuario.Permiso;
-import venta.productos.Categoria;
+import venta.productos.*;
+import venta.pedidos.EstadoPedido;
 import venta.pedidos.Pedido;
 import wallapop.ArticuloSegundaMano;
 import wallapop.Cartera;
@@ -25,8 +28,10 @@ import wallapop.EstadoIntercambio;
 import wallapop.Intercambio;
 import wallapop.Valoracion;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
+import java.util.Map.Entry;
 
 class HistorialTest {
 
@@ -53,7 +58,8 @@ class HistorialTest {
 		carteraEmisor = emisor.getCartera();
 		carteraReceptor = receptor.getCartera();
 
-		empleadoConPermiso = new Empleado("EmpleadoPermiso", "pass", new Permiso[] {Permiso.INTERCAMBIOS, Permiso.PEDIDOS});
+		empleadoConPermiso = new Empleado("EmpleadoPermiso", "pass",
+				new Permiso[] { Permiso.INTERCAMBIOS, Permiso.PEDIDOS });
 
 		empleadoSinPermiso = new Empleado("EmpleadoSinPermiso", "pass");
 
@@ -76,25 +82,67 @@ class HistorialTest {
 		}
 	}
 
+	private Comic crearComic(String nombre, double precio) throws InvalidArgumentException, DoubleDiscountException {
+		List<Categoria> categorias = new ArrayList<>();
+		categorias.add(new Categoria("aventuras"));
+		Comic p = new Comic(nombre, "Descripción de " + nombre, precio, null, LocalDate.of(2020, 1, 1), "Autor Test", 100,
+				"Editorial Test", categorias.toArray(new Categoria[0]));
+		historial.guardarProducto(p);
+		
+		return p;
+	}
 
 	@Test
 	void testGuardarUsuario() {
 		historial.guardarUsuario(emisor);
 		List<StatsUsuario> activos = historial.getUsuariosMasActivos();
 
-		assertEquals(emisor, activos.get(0));
+		assertEquals(emisor, activos.get(0).getCliente());
+	}
+
+	@Test
+	void testGuardarPedido() throws Exception {
+		assertEquals(0, historial.getPedidosPendientes().length);
+
+		Pedido pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(crearComic("Batman", 30.0), 3),
+				new StockExterno(crearComic("Superman", 50.0), 2) });
+		assertTrue(historial.guardarPedido(pedido));
+		assertEquals(pedido, historial.getPedidosPendientes()[0]);
+
+		StatsUsuario stats = null;
+		for (StatsUsuario sUser : historial.getUsuariosMasActivos()) {
+			if (sUser.getCliente().equals(emisor)) {
+				stats = sUser;
+				break;
+			}
+		}
+
+		assertEquals(190.0, stats.getGastoTotal());
+		assertEquals(5, stats.getUdsCompradas());
+	}
+	
+	@Test
+	void testAvanzarEstadoPedido() throws Exception {
+		Pedido pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(crearComic("Batman", 30.0), 3),
+				new StockExterno(crearComic("Superman", 50.0), 2) });
+		assertTrue(historial.guardarPedido(pedido));
+		assertEquals(pedido, historial.getPedidosPendientes()[0]);
+
+		assertEquals(EstadoPedido.PAGADO, pedido.getEstado());
+		historial.avanzarEstadoPedido(empleadoConPermiso, pedido);
+		assertEquals(EstadoPedido.EN_PREPARACION, pedido.getEstado());
 	}
 
 	@Test
 	void testGuardarIntercambio() throws Exception {
 		assertEquals(0, historial.getIntercambiosPendientes().length);
-		Intercambio intercambio = new Intercambio(
-				new ArticuloSegundaMano[]{artsEmisor[0]},
-				new ArticuloSegundaMano[]{artsReceptor[0]});
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		assertTrue(historial.guardarIntercambio(intercambio));
+		carteraReceptor.aceptarIntercambio(intercambio);
 		assertEquals(intercambio, historial.getIntercambiosPendientes()[0]);
 	}
-	
+
 	@Test
 	void testGuardarValoracion() throws Exception {
 		assertEquals(0, historial.getValoracionesPendientes().length);
@@ -106,33 +154,34 @@ class HistorialTest {
 
 	@Test
 	void testGuardarConNullLanzaExcepcion() {
+		assertThrows(InvalidArgumentException.class, () -> historial.guardarPedido(null));
 		assertThrows(InvalidArgumentException.class, () -> historial.guardarIntercambio(null));
 		assertThrows(InvalidArgumentException.class, () -> historial.guardarValoracion(null));
 	}
 
 	@Test
 	void testGuardarValoracionGastoCliente() throws Exception {
+		assertEquals(0, historial.getValoracionesPendientes().length);
 		historial.guardarUsuario(emisor);
 		ArticuloSegundaMano art = new ArticuloSegundaMano("Nuevo", "Desc", carteraEmisor, "Algo", cat1);
 		carteraEmisor.addArticulo(art);
 		Valoracion v = new Valoracion(art);
 		historial.guardarValoracion(v);
 
-		StatsUsuario stats = historial.getUsuariosMasActivos().stream()
-				.filter(s -> s.getCliente().equals(emisor)).findFirst().orElse(null);
+		StatsUsuario stats = null;
+		for (StatsUsuario sUser : historial.getUsuariosMasActivos()) {
+			if (sUser.getCliente().equals(emisor)) {
+				stats = sUser;
+				break;
+			}
+		}
+
 		assertNotNull(stats);
-		assertTrue(stats.getGastoTotal() > 0);
-	}
-
-	// ─── getValoracionesPendientes ────────────────────────────────────────────────
-
-	@Test
-	void testGetValoracionesPendientesVacio() {
-		assertEquals(0, historial.getValoracionesPendientes().length);
+		assertEquals(stats.getGastoTotal(), Sistema.getInstancia().getPrecioValoracion());
 	}
 
 	@Test
-	void testGetValoracionesPendientesConUna() throws Exception {
+	void testGetValoracionesPendientes() throws Exception {
 		ArticuloSegundaMano art = new ArticuloSegundaMano("Nuevo", "Desc", carteraEmisor, "Algo", cat1);
 		carteraEmisor.addArticulo(art);
 		Valoracion v = new Valoracion(art); // pendiente — no valorada
@@ -143,16 +192,17 @@ class HistorialTest {
 	}
 
 	@Test
-	void testGetValoracionesPendientesNoIncluyeValoradas() throws Exception {
-		// artsEmisor[0] ya fue valorado en setUp → no debe aparecer como pendiente
-		Valoracion vValorada = artsEmisor[0].getValoracion();
-		historial.guardarValoracion(vValorada);
+	void testGetValoracionesPendientesFalse() throws Exception {
+		ArticuloSegundaMano art = new ArticuloSegundaMano("Nuevo", "Desc", carteraEmisor, "Algo", cat1);
+		carteraEmisor.addArticulo(art);
+		Valoracion v = new Valoracion(art); // pendiente — no valorada
+		historial.guardarValoracion(v);
+
+		historial.valorarArticulo(empleadoConPermiso, art, 15, EstadoFisicoArticulo.MUY_BUENO);
 
 		List<Valoracion> pendientes = List.of(historial.getValoracionesPendientes());
-		assertFalse(pendientes.contains(vValorada));
+		assertFalse(pendientes.contains(v));
 	}
-
-	// ─── getIntercambiosPendientes ────────────────────────────────────────────────
 
 	@Test
 	void testGetIntercambiosPendientesVacio() {
@@ -160,33 +210,28 @@ class HistorialTest {
 	}
 
 	@Test
-	void testGetIntercambiosPendientesSoloAceptados() throws Exception {
-		Intercambio i1 = new Intercambio(
-				new ArticuloSegundaMano[]{artsEmisor[0]},
-				new ArticuloSegundaMano[]{artsReceptor[0]});
+	void testGetIntercambiosPendientes() throws Exception {
+		Intercambio i1 = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		historial.guardarIntercambio(i1);
-		carteraReceptor.aceptarIntercambio(i1); // ahora está ACEPTADO
+		carteraReceptor.aceptarIntercambio(i1);
 
-		Intercambio i2 = new Intercambio(
-				new ArticuloSegundaMano[]{artsEmisor[1]},
-				new ArticuloSegundaMano[]{artsReceptor[1]});
-		historial.guardarIntercambio(i2); // sigue OFERTADO
+		Intercambio i2 = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[1] },
+				new ArticuloSegundaMano[] { artsReceptor[1] });
+		historial.guardarIntercambio(i2);
 
 		List<Intercambio> pendientes = List.of(historial.getIntercambiosPendientes());
 		assertTrue(pendientes.contains(i1));
 		assertFalse(pendientes.contains(i2));
 	}
 
-	// ─── validarIntercambio ───────────────────────────────────────────────────────
-
 	@Test
 	void testValidarIntercambio() throws Exception {
-		Intercambio intercambio = new Intercambio(
-				new ArticuloSegundaMano[]{artsEmisor[0]},
-				new ArticuloSegundaMano[]{artsReceptor[0]});
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		historial.guardarIntercambio(intercambio);
 		carteraReceptor.aceptarIntercambio(intercambio);
-
+		assertEquals(EstadoIntercambio.ACEPTADO, intercambio.getEstado());
 		assertTrue(historial.validarIntercambio(empleadoConPermiso, intercambio));
 		assertEquals(EstadoIntercambio.CONFIRMADO, intercambio.getEstado());
 	}
@@ -194,57 +239,36 @@ class HistorialTest {
 	@Test
 	void testValidarIntercambioActualizaEstadisticas() throws Exception {
 		historial.guardarUsuario(emisor);
-		Intercambio intercambio = new Intercambio(
-				new ArticuloSegundaMano[]{artsEmisor[0]},
-				new ArticuloSegundaMano[]{artsReceptor[0]});
+		historial.guardarUsuario(receptor);
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		historial.guardarIntercambio(intercambio);
 		carteraReceptor.aceptarIntercambio(intercambio);
 		historial.validarIntercambio(empleadoConPermiso, intercambio);
 
-		StatsUsuario stats = historial.getUsuariosMasActivos().stream()
-				.filter(s -> s.getCliente().equals(emisor)).findFirst().orElse(null);
+		StatsUsuario stats = null;
+		for (StatsUsuario sUser : historial.getUsuariosMasActivos()) {
+			if (sUser.getCliente().equals(emisor)) {
+				stats = sUser;
+				break;
+			}
+		}
+
 		assertNotNull(stats);
 		assertTrue(stats.getUdsIntercambiadas() > 0);
 	}
 
 	@Test
-	void testValidarIntercambioSinPermisoLanzaExcepcion() throws Exception {
-		Intercambio intercambio = new Intercambio(
-				new ArticuloSegundaMano[]{artsEmisor[0]},
-				new ArticuloSegundaMano[]{artsReceptor[0]});
+	void testValidarIntercambioMalLanzaExcepcion() throws Exception {
+		Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[0] },
+				new ArticuloSegundaMano[] { artsReceptor[0] });
 		historial.guardarIntercambio(intercambio);
 		carteraReceptor.aceptarIntercambio(intercambio);
 
-		assertThrows(InvalidPermitException.class, () ->
-				historial.validarIntercambio(empleadoSinPermiso, intercambio));
+		assertThrows(InvalidPermitException.class, () -> historial.validarIntercambio(empleadoSinPermiso, intercambio));
+		assertThrows(InvalidArgumentException.class, () -> historial.validarIntercambio(empleadoConPermiso, null));
+		assertThrows(InvalidArgumentException.class, () -> historial.validarIntercambio(null, intercambio));
 	}
-
-	@Test
-	void testValidarIntercambioNullLanzaExcepcion() {
-		assertThrows(InvalidArgumentException.class, () ->
-				historial.validarIntercambio(empleadoConPermiso, null));
-	}
-
-	@Test
-	void testValidarIntercambioEmpleadoNullLanzaExcepcion() throws Exception {
-		Intercambio intercambio = new Intercambio(
-				new ArticuloSegundaMano[]{artsEmisor[0]},
-				new ArticuloSegundaMano[]{artsReceptor[0]});
-		assertThrows(InvalidArgumentException.class, () ->
-				historial.validarIntercambio(null, intercambio));
-	}
-
-	@Test
-	void testValidarIntercambioNoAceptadoDevuelveFalse() throws Exception {
-		Intercambio intercambio = new Intercambio(
-				new ArticuloSegundaMano[]{artsEmisor[0]},
-				new ArticuloSegundaMano[]{artsReceptor[0]});
-		historial.guardarIntercambio(intercambio); // sigue OFERTADO
-
-		assertFalse(historial.validarIntercambio(empleadoConPermiso, intercambio));
-	}
-
-	// ─── valorarArticulo ──────────────────────────────────────────────────────────
 
 	@Test
 	void testValorarArticulo() throws Exception {
@@ -252,104 +276,160 @@ class HistorialTest {
 		carteraEmisor.addArticulo(art);
 		art.anadirValoracion(new Valoracion(art));
 
-		assertTrue(historial.valorarArticulo(empleadoConPermiso, art, 50.0, EstadoFisicoArticulo.BUENO));
-		assertEquals(EstadoFisicoArticulo.BUENO, art.getValoracion().getEstadoFisico());
+		assertTrue(historial.valorarArticulo(empleadoConPermiso, art, 50.0, EstadoFisicoArticulo.MUY_BUENO));
+		assertEquals(EstadoFisicoArticulo.MUY_BUENO, art.getValoracion().getEstadoFisico());
 	}
 
 	@Test
 	void testValorarArticuloSinValoracionLanzaExcepcion() throws Exception {
-		ArticuloSegundaMano art = new ArticuloSegundaMano("SinVal", "Desc", carteraEmisor, "Algo", cat1);
+		ArticuloSegundaMano art = new ArticuloSegundaMano("Sin valorar", "Desc", carteraEmisor, "Algo", cat1);
 		carteraEmisor.addArticulo(art);
-		// sin valoracion asignada
-		assertThrows(ArticuloSinValoracionException.class, () ->
-				historial.valorarArticulo(empleadoConPermiso, art, 50.0, EstadoFisicoArticulo.BUENO));
+
+		assertThrows(ArticuloSinValoracionException.class,
+				() -> historial.valorarArticulo(empleadoConPermiso, art, 50.0, EstadoFisicoArticulo.MUY_BUENO));
 	}
 
 	@Test
-	void testValorarArticuloSinPermisoLanzaExcepcion() throws Exception {
+	void testValorarArticuloMalLanzaExcepcion() throws Exception {
 		ArticuloSegundaMano art = new ArticuloSegundaMano("Nuevo", "Desc", carteraEmisor, "Algo", cat1);
 		carteraEmisor.addArticulo(art);
+
+		assertThrows(ArticuloSinValoracionException.class,
+				() -> historial.valorarArticulo(empleadoConPermiso, art, 50.0, EstadoFisicoArticulo.MUY_BUENO));
+
 		art.anadirValoracion(new Valoracion(art));
 
-		assertThrows(InvalidPermitException.class, () ->
-				historial.valorarArticulo(empleadoSinPermiso, art, 50.0, EstadoFisicoArticulo.BUENO));
+		assertThrows(InvalidPermitException.class,
+				() -> historial.valorarArticulo(empleadoSinPermiso, art, 50.0, EstadoFisicoArticulo.MUY_BUENO));
+		assertThrows(InvalidArgumentException.class,
+				() -> historial.valorarArticulo(empleadoConPermiso, art, -1.0, EstadoFisicoArticulo.MUY_BUENO));
+		assertThrows(InvalidArgumentException.class,
+				() -> historial.valorarArticulo(empleadoConPermiso, art, 1.0, null));
 	}
 
 	@Test
-	void testValorarArticuloPrecioNegativoLanzaExcepcion() throws Exception {
-		ArticuloSegundaMano art = new ArticuloSegundaMano("Nuevo", "Desc", carteraEmisor, "Algo", cat1);
-		carteraEmisor.addArticulo(art);
-		art.anadirValoracion(new Valoracion(art));
-
-		assertThrows(InvalidArgumentException.class, () ->
-				historial.valorarArticulo(empleadoConPermiso, art, -1.0, EstadoFisicoArticulo.BUENO));
-	}
-
-	@Test
-	void testValorarArticuloNullLanzaExcepcion() {
-		assertThrows(InvalidArgumentException.class, () ->
-				historial.valorarArticulo(empleadoConPermiso, null, 50.0, EstadoFisicoArticulo.BUENO));
-	}
-
-	// ─── getVentasEntreMeses / getVentasEntreMesesAcumulado ───────────────────────
-
-	@Test
-	void testGetVentasEntreMesesVacio() {
-		YearMonth inicio = Reloj.mesNow().minusMonths(1);
-		YearMonth fin = Reloj.mesNow();
-		List<StatsMensual> ventas = historial.getVentasEntreMeses(inicio, fin);
-		assertTrue(ventas.isEmpty());
-	}
-
-	@Test
-	void testGetVentasEntreMesesAcumuladoVacio() throws Exception {
-		YearMonth inicio = Reloj.mesNow().minusMonths(1);
+	void testGetVentasEntreMeses() throws Exception {
+		YearMonth inicio = Reloj.mesNow();
 		YearMonth fin = Reloj.mesNow();
 		StatsMensual acumulado = historial.getVentasEntreMesesAcumulado(inicio, fin);
 		assertEquals(0, acumulado.getUnidades());
 		assertEquals(0.0, acumulado.getRecaudacion());
-	}
 
-	// ─── getIntercambiosEntreMeses ────────────────────────────────────────────────
+		Pedido pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(crearComic("Batman", 30.0), 3),
+				new StockExterno(crearComic("Superman", 50.0), 2) });
+		assertTrue(historial.guardarPedido(pedido));
+	}
 
 	@Test
-	void testGetIntercambiosEntreMesesVacio() {
-		YearMonth inicio = Reloj.mesNow().minusMonths(1);
+	void testGetVentasEntreMeses2() throws Exception {
+		YearMonth inicio = Reloj.mesNow();
+		Pedido pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(crearComic("Batman", 30.0), 3),
+				new StockExterno(crearComic("Superman", 50.0), 2) });
+		assertTrue(historial.guardarPedido(pedido));
+
+		Reloj.avanzarMes();
+		pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(crearComic("Batman", 30.0), 3),
+				new StockExterno(crearComic("Superman", 50.0), 2) });
+		assertTrue(historial.guardarPedido(pedido));
+
+		Reloj.avanzarMes();
+		pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(crearComic("Batman", 30.0), 3),
+				new StockExterno(crearComic("Superman", 50.0), 2) });
+		assertTrue(historial.guardarPedido(pedido));
+
 		YearMonth fin = Reloj.mesNow();
-		List<StatsMensual> intercambios = historial.getIntercambiosEntreMeses(inicio, fin);
-		assertTrue(intercambios.isEmpty());
+
+		List<StatsMensual> list = historial.getVentasEntreMeses(inicio, fin);
+
+		for (StatsMensual st : list) {
+			assertEquals(5, st.getUnidades());
+			assertEquals(190, st.getRecaudacion());
+		}
+
+		StatsMensual acumulado = historial.getVentasEntreMesesAcumulado(inicio, fin);
+		assertEquals(15, acumulado.getUnidades());
+		assertEquals(570, acumulado.getRecaudacion());
 	}
 
-	// ─── getProductosMayorRecaudacion ─────────────────────────────────────────────
+	@Test
+	void testGetIntercambiosEntreMesesVacio() throws Exception {
+		YearMonth inicio = Reloj.mesNow();
+		for (int i = 0; i < 3; i++) {
+			Intercambio intercambio = new Intercambio(new ArticuloSegundaMano[] { artsEmisor[i] },
+					new ArticuloSegundaMano[] { artsReceptor[i] });
+			historial.guardarIntercambio(intercambio);
+			carteraReceptor.aceptarIntercambio(intercambio);
+			assertEquals(EstadoIntercambio.ACEPTADO, intercambio.getEstado());
+			assertTrue(historial.validarIntercambio(empleadoConPermiso, intercambio));
+			assertEquals(EstadoIntercambio.CONFIRMADO, intercambio.getEstado());
+			Reloj.avanzarMes();
+		}
+
+		YearMonth fin = Reloj.mesNow();
+
+		List<StatsMensual> list = historial.getIntercambiosEntreMeses(inicio, fin);
+		assertEquals(3, list.size());
+
+		for (StatsMensual st : list) {
+			assertEquals(2, st.getUnidades());
+		}
+	}
 
 	@Test
 	void testGetProductosMayorRecaudacionMesesInvalidosLanzaExcepcion() {
 		YearMonth inicio = Reloj.mesNow();
-		YearMonth fin = Reloj.mesNow().minusMonths(1); // fin antes que inicio
-		assertThrows(InvalidArgumentException.class, () ->
-				historial.getProductosMayorRecaudacion(inicio, fin));
+		YearMonth fin = Reloj.mesNow().minusMonths(1);
+		assertThrows(InvalidArgumentException.class, () -> historial.getProductosMayorRecaudacion(inicio, fin));
 	}
-
+	
 	@Test
-	void testGetProductosMayorRecaudacionNullLanzaExcepcion() {
-		assertThrows(InvalidArgumentException.class, () ->
-				historial.getProductosMayorRecaudacion(null, Reloj.mesNow()));
-		assertThrows(InvalidArgumentException.class, () ->
-				historial.getProductosMayorRecaudacion(Reloj.mesNow(), null));
-	}
+	void testGetProductosMayorRecaudacion() throws Exception {
+		Comic batman = crearComic("Batman", 30.0), superman = crearComic("Superman", 50.0), ironman = crearComic("IronMan", 1000);
+		YearMonth inicio = Reloj.mesNow();
+		Pedido pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(batman, 3),
+				new StockExterno(superman, 2)});
+		assertTrue(historial.guardarPedido(pedido));
 
-	@Test
-	void testGetProductosMayorRecaudacionVacio() throws Exception {
-		YearMonth inicio = Reloj.mesNow().minusMonths(1);
+		Reloj.avanzarMes();
+		pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(batman, 3),
+				new StockExterno(superman, 2) });
+		assertTrue(historial.guardarPedido(pedido));
+
+		Reloj.avanzarMes();
+		pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(batman, 3),
+				new StockExterno(superman, 2), new StockExterno(ironman, 1)  });
+		assertTrue(historial.guardarPedido(pedido));
+
 		YearMonth fin = Reloj.mesNow();
-		List<Map.Entry<?, StatsMensual>> lista = historial.getProductosMayorRecaudacion(inicio, fin);
-		assertTrue(lista.isEmpty());
+		
+		List<Entry<Producto, StatsMensual>> list = historial.getProductosMayorRecaudacion(inicio, fin);
+		
+		assertEquals(ironman, list.get(0).getKey());
+		assertEquals(1000, list.get(0).getValue().getRecaudacion());
+		assertEquals(1, list.get(0).getValue().getUnidades());
+		assertEquals(superman, list.get(1).getKey());
+		assertEquals(300, list.get(1).getValue().getRecaudacion());
+		assertEquals(6, list.get(1).getValue().getUnidades());
+		assertEquals(batman, list.get(2).getKey());
+		assertEquals(270, list.get(2).getValue().getRecaudacion());
+		assertEquals(9, list.get(2).getValue().getUnidades());		
 	}
 
-	// ─── getUsuariosMasActivos ────────────────────────────────────────────────────
+	@Test
+	void testGetProductosMayorRecaudacionMalLanzaExcepcion() {
+		assertThrows(InvalidArgumentException.class,
+				() -> historial.getProductosMayorRecaudacion(null, Reloj.mesNow()));
+		assertThrows(InvalidArgumentException.class,
+				() -> historial.getProductosMayorRecaudacion(Reloj.mesNow(), null));
+		assertThrows(InvalidArgumentException.class,
+				() -> historial.getProductosMayorRecaudacion(Reloj.mesNow(), Reloj.mesNow().minusMonths(2)));
+	}
+
+	// ─── getUsuariosMasActivos
+	// ────────────────────────────────────────────────────
 
 	@Test
-	void testGetUsuariosMasActivosVacio() {
+	void testGetUsuariosMasActivos() {
 		assertTrue(historial.getUsuariosMasActivos().isEmpty());
 	}
 
@@ -358,17 +438,31 @@ class HistorialTest {
 		historial.guardarUsuario(emisor);
 		historial.guardarUsuario(receptor);
 
-		ArticuloSegundaMano art = new ArticuloSegundaMano("Art", "Desc", carteraEmisor, "Algo", cat1);
-		carteraEmisor.addArticulo(art);
-		Valoracion v = new Valoracion(art);
-		historial.guardarValoracion(v); // aumenta gasto del emisor
+		Comic batman = crearComic("Batman", 30.0), superman = crearComic("Superman", 50.0), ironman = crearComic("IronMan", 1000);
+		
+		Pedido pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(batman, 3),
+				new StockExterno(superman, 2)});
+		assertTrue(historial.guardarPedido(pedido));
 
+		Reloj.avanzarMes();
+		pedido = new Pedido(emisor, new StockExterno[] { new StockExterno(batman, 3),
+				new StockExterno(superman, 2) });
+		assertTrue(historial.guardarPedido(pedido));
+
+		Reloj.avanzarMes();
+		pedido = new Pedido(receptor, new StockExterno[] { new StockExterno(batman, 3),
+				new StockExterno(superman, 2), new StockExterno(ironman, 1)  });
+		assertTrue(historial.guardarPedido(pedido));
 		List<StatsUsuario> activos = historial.getUsuariosMasActivos();
-		// el de menor gasto primero (orden ascendente)
-		assertTrue(activos.get(0).getGastoTotal() <= activos.get(activos.size() - 1).getGastoTotal());
+
+		assertEquals(activos.get(0).getCliente(), receptor);
+		assertEquals(1190.0, activos.get(0).getGastoTotal());
+		assertEquals(activos.get(1).getCliente(), emisor);
+		assertEquals(380.0, activos.get(1).getGastoTotal());
 	}
 
-	// ─── toString ─────────────────────────────────────────────────────────────────
+	// ─── toString
+	// ─────────────────────────────────────────────────────────────────
 
 	@Test
 	void testToStringNoNull() {

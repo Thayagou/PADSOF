@@ -94,9 +94,6 @@ public class StatsUsuario implements Serializable {
 			intereses.merge(c, vector.get(c), (a,b)->a+b);
 		}
 		
-		System.out.println("inteseses: "+intereses);
-		System.out.println(this);
-		
 		norma = Math.sqrt(intereses.values().stream().mapToDouble(a->a*a).sum());
 	}
 	

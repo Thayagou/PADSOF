@@ -2,6 +2,8 @@ package sistema;
 
 import java.time.*;
 
+import exceptions.CustomException;
+
 /**
  * Interfaz Caducable para los objetos que caducan en la tienda
  */
@@ -15,8 +17,9 @@ public interface Caducable extends Comparable<Caducable> {
 
 	/**
 	 * Método que define la acción que realiza un objeto al caducarse
+	 * @throws Lanza una excepción en caso de algún error
 	 */
-	void caducar();
+	void caducar() throws CustomException;
 
 	/**
 	 * Método para comprobar si un caducable está caducado

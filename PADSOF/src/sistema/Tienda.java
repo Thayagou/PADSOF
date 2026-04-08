@@ -500,7 +500,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		carrito.vaciarCarrito();
 		
 		getHistorial().guardarPedido(pedido);
-		System.out.println(cliente);
+
 		long codigoPedido = pedido.getId();
 		
 		cliente.enviarNotificacion("Tu pedido con código "+codigoPedido+" ya está pagado! Se te notificará cuando esté listo para recoger.", TipoNotificacion.PEDIDO);

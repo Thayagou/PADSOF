@@ -42,6 +42,7 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 	 */
 	public ClienteRegistrado(String nombre, String contrasena, CarritoCaducadoObserver tienda) throws InvalidArgumentException {
 		super(nombre, contrasena);
+		if (tienda == null) throw new InvalidArgumentException("Null arguments for creating new user", "crear cliente");
 		this.carrito = new Carrito(this, tienda);
 		this.cartera = new Cartera(this);
 		this.notificaciones = new LinkedList<>();

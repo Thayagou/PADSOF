@@ -99,8 +99,7 @@ public class Historial implements Serializable, ObservadorProducto {
 		if (ventasMensuales.get(month) == null) ventasMensuales.put(month, new StatsMensual());
 		StatsMensual statVenta = ventasMensuales.get(month);
 		statVenta.incrementar(udsVendidas, precio);
-			
-		System.out.println(cliente);
+
 		pedidos.add(pedido);
 		
 		return true;
@@ -203,7 +202,7 @@ public class Historial implements Serializable, ObservadorProducto {
 			lista.add(Map.entry(stats.getProducto(), s));
 		}
 		
-		Collections.sort(lista, (a,b)->Double.compare(a.getValue().getRecaudacion(), b.getValue().getRecaudacion()));
+		Collections.sort(lista, (a,b)->Double.compare(b.getValue().getRecaudacion(), a.getValue().getRecaudacion()));
 				
 		return lista;
 	}
@@ -303,6 +302,10 @@ public class Historial implements Serializable, ObservadorProducto {
 		int nSolicitados = intercambio.getSolicitados().length;
 		statReceptor.actualizarUltimoIntercambio(nSolicitados);
 		
+		if (wallapopMensuales.containsKey(Reloj.mesNow()) == false) wallapopMensuales.put(Reloj.mesNow(), new StatsMensual(Reloj.mesNow()));
+		StatsMensual statsWallapop = wallapopMensuales.get(Reloj.mesNow());
+		statsWallapop.incrementar(nSolicitados + nOfrecidos, 0);
+		
 		intercambio.validarIntercambio(empleado);
 		
 		return true;
@@ -315,7 +318,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	public List<StatsUsuario> getUsuariosMasActivos() {
 		List<StatsUsuario> clientes = new ArrayList<>(statsClientes.values());
 		
-		Collections.sort(clientes, (a,b)->Double.compare(a.getGastoTotal(), b.getGastoTotal()));
+		Collections.sort(clientes, (a,b)->Double.compare(b.getGastoTotal(), a.getGastoTotal()));
 		
 		return clientes;		
 	}
