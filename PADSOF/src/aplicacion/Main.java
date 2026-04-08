@@ -3,7 +3,6 @@
  */
 package aplicacion;
 
-import java.io.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -230,31 +229,6 @@ public class Main {
 			sc.nextLine();
 		}
 	}
-	
-	/**
-	 * Carga los datos de la tienda desde un fichero
-	 */
-	static void cargarTienda() {
-		try {
-	        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
-	        tienda = (Tienda) ois.readObject();
-	        ois.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
-	
-	/**
-	 * Guarda los datos de la tienda en un fichero
-	 */
-	static void guardarTienda() {
-		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))){
-			oos.writeObject(tienda);
-			oos.reset();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Programa principal que ejecuta la tienda
@@ -262,8 +236,14 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		Usuario usuario;
+		try {
+			tienda = new Tienda();
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
 		
-		cargarTienda();
+		showMessage("Cargando tienda...");
+		tienda = Tienda.cargarTienda(filename);
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
 				
 		try {
@@ -289,7 +269,7 @@ public class Main {
 		showMessage("Saliendo de la tienda...");
 		
 		GestorCaducidad.getInstancia().detener();
-		guardarTienda();
+		tienda.guardarTienda(filename);
 		
 		showMessage("Datos guardados con éxito!");
 		

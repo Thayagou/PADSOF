@@ -1,5 +1,7 @@
 package sistema;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.time.*;
 import java.util.*;
@@ -38,7 +40,6 @@ public class Sistema implements Serializable {
 	/** Conjunto de parámetros del sistema activos */
 	private Set<ParametroSistema> parametros = new HashSet<>();
 
-
 	/**
 	 * Constructor de la clase
 	 * @param tiempoCarrito       Tiempo de caducidad de un carrito
@@ -56,6 +57,16 @@ public class Sistema implements Serializable {
 			this.parametros.add(p);
 		}
 	}
+	
+	/**
+     * Restaura la instancia del archivo de guardado de la tienda
+     * @param ois
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public static void asignarInstancia(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+    	Sistema.instancia = (Sistema) ois.readObject();
+    }
 
 	/**
 	 * Devuelve la instancia del sistema

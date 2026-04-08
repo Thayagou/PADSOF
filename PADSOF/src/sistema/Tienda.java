@@ -1,5 +1,9 @@
 package sistema;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.*;
@@ -111,6 +115,40 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 */
 	public ClienteRegistrado[] getClientes() {
 		return clientes.values().toArray(new ClienteRegistrado[0]);
+	}
+	
+	/**
+	 * Carga los datos de la tienda desde un fichero
+	 * @param filename Nombre del fichero donde se guarda la tienda
+	 * @return Tienda cargada
+	 */
+	public static Tienda cargarTienda(String filename) {
+	    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+	        Tienda t = (Tienda) ois.readObject();
+	        Sistema.asignarInstancia(ois);
+	        AsignadorId.asignarInstancia(ois);
+	        Reloj.asignarInstancia(ois);
+	        return t;
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+	
+	/**
+	 * Guarda los datos de la tienda en un fichero
+	 * @param filename Nombre del fichero donde se guarda la tienda
+	 */
+	public void guardarTienda(String filename) {
+	    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+	        oos.writeObject(this);
+	        oos.writeObject(Sistema.getInstancia());
+	        oos.writeObject(AsignadorId.getInstancia());
+	        oos.writeObject(Reloj.getInstancia());
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	/**
