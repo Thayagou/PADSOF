@@ -1,10 +1,6 @@
 package sistema;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.time.Duration;
 import java.util.*;
 
@@ -26,9 +22,9 @@ import exceptions.*;
  */
 public class Tienda implements Serializable, CarritoCaducadoObserver {
 	private static final long serialVersionUID = 1L;
-	/** historial de la tienda*/
+	/** Historial de la tienda*/
 	private Historial historial = new Historial();
-	/**almacen de la tienda*/
+	/**Almacen de la tienda*/
 	private Almacen almacen;
 	/**Mapa de clientes por nombre*/
 	private Map<String, ClienteRegistrado> clientes = new HashMap<>();

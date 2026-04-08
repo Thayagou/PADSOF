@@ -327,20 +327,3 @@ public class Historial implements Serializable, ObservadorProducto {
 				+ ventasMensuales + ", wallapopMensuales=" + wallapopMensuales + "]";
 	}	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
