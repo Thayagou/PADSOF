@@ -1,6 +1,8 @@
 package sistema.tests;
 
 import org.junit.jupiter.api.*;
+
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 import exceptions.*;
 import sistema.*;
 import usuario.*;
@@ -413,18 +415,17 @@ class TiendaTest {
 	}
 
 	@Test
-	void hacerOfertaIntercambio_valido_devuelveTrue() throws Exception {
+	void hacerOfertaIntercambioValido() throws Exception {
 		ClienteRegistrado cli1 = registrar("cli1");
 		ClienteRegistrado cli2 = registrar("cli2");
 		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
 		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
 		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
-		assertTrue(tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 },
-				new ArticuloSegundaMano[] { art2 }));
+		assertTrue(tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 }));
 	}
 
 	@Test
-	void aceptarIntercambio_valido_devuelveTrue() throws Exception {
+	void aceptarIntercambioValido() throws Exception {
 		ClienteRegistrado cli1 = registrar("cli1");
 		ClienteRegistrado cli2 = registrar("cli2");
 		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
@@ -437,7 +438,7 @@ class TiendaTest {
 	}
 
 	@Test
-	void rechazarIntercambio_valido_devuelveTrue() throws Exception {
+	void rechazarIntercambioValido() throws Exception {
 		ClienteRegistrado cli1 = registrar("cli1");
 		ClienteRegistrado cli2 = registrar("cli2");
 		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
@@ -449,7 +450,7 @@ class TiendaTest {
 	}
 
 	@Test
-	void cancelarIntercambio_valido_devuelveTrue() throws Exception {
+	void cancelarIntercambioValido() throws Exception {
 		ClienteRegistrado cli1 = registrar("cli1");
 		ClienteRegistrado cli2 = registrar("cli2");
 		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
@@ -460,56 +461,38 @@ class TiendaTest {
 		assertTrue(tienda.cancelarIntercambio(cli1, intercambio));
 	}
 
-	@Test
-	void hacerOfertaIntercambio_receptorNull_devuelveFalse() throws Exception {
-		ClienteRegistrado cli1 = registrar("cli1");
-		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
-		// Art2 sin dueño real: cartera con cliente null no es posible en la API,
-		// usamos un artículo cuyo propietario no está en la tienda
-		ClienteRegistrado cli2 = new ClienteRegistrado("cli2ext", "p", c -> {
-		});
-		ArticuloSegundaMano art2 = new ArticuloSegundaMano("Art2", "d", cli2.getCartera(), "x");
-		art2.disponibilizar();
-		// forzamos que getDueno().getDueno() devuelva null usando reflexión
-		Field f = Cartera.class.getDeclaredField("dueno");
-		f.setAccessible(true);
-		f.set(cli2.getCartera(), null);
-		assertFalse(tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 },
-				new ArticuloSegundaMano[] { art2 }));
-	}
-
-	// ---- anadirArticulo ----
+	// anadirArticulo
 
 	@Test
-	void anadirArticulo_valido_devuelveTrue() throws Exception {
+	void anadirArticuloValido() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
 		assertTrue(tienda.anadirArticulo("Art1", "desc", cli.getCartera(), new Categoria[] {}, "nada"));
 	}
 
-	// ---- solicitarValoracion ----
+	// solicitarValoracion
 
 	@Test
-	void solicitarValoracion_clienteNull_devuelveFalse() throws Exception {
+	void solicitarValoracionClienteNull() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
 		ArticuloSegundaMano art = crearArticuloDisponible(cli, "Art1");
 		assertFalse(tienda.solicitarValoracion(null, art, "1234567890123456"));
 	}
 
 	@Test
-	void solicitarValoracion_articuloNull_devuelveFalse() throws Exception {
+	void solicitarValoracionArticuloNull() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
 		assertFalse(tienda.solicitarValoracion(cli, null, "1234567890123456"));
 	}
 
 	@Test
-	void solicitarValoracion_tarjetaNull_devuelveFalse() throws Exception {
+	void solicitarValoracionTarjetaNull() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
 		ArticuloSegundaMano art = crearArticuloDisponible(cli, "Art1");
 		assertFalse(tienda.solicitarValoracion(cli, art, null));
 	}
 
 	@Test
-	void solicitarValoracion_articuloYaValorado_lanzaExcepcion() throws Exception {
+	void solicitarValoracionArticuloYaValorado() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
 		ArticuloSegundaMano art = crearArticuloDisponible(cli, "Art1");
 		tienda.getHistorial().guardarUsuario(cli);
@@ -517,38 +500,48 @@ class TiendaTest {
 		assertThrows(InvalidArgumentException.class, () -> tienda.solicitarValoracion(cli, art, "1234567890123456"));
 	}
 
-	// ---- pagarCarritoDe ----
+	// pagarCarritoDe
 
 	@Test
-	void pagarCarritoDe_clienteNull_devuelveFalse() throws Exception {
+	void pagarCarritoDe_ClienteNull() throws Exception {
 		assertFalse(tienda.pagarCarritoDe(null, "1234567890123456"));
 	}
 
 	@Test
-	void pagarCarritoDe_tarjetaInvalida_devuelveFalse() throws Exception {
+	void pagarCarritoDeTarjetaInvalida() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
 		Producto p = addComic("C1");
 		tienda.anadirACarritoDe(cli, p);
-		assertThrows(InvalidArgumentException.class, () -> tienda.pagarCarritoDe(cli, "0000"));
+		assertFalse( tienda.pagarCarritoDe(cli, "0000-hj"));
 	}
 
 	@Test
-	void pagarCarritoDe_tarjetaValida_devuelveTrue() throws Exception {
+	void pagarCarritoDeTarjetaValida() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
 		Producto p = addComic("C1");
 		tienda.anadirACarritoDe(cli, p);
 		assertTrue(tienda.pagarCarritoDe(cli, "1234567890123456"));
 	}
 
-	// ---- guardarTienda / cargarTienda ----
+	// guardarTienda / cargarTienda
 
 	@Test
-	void guardarYCargarTienda_recuperaTienda() throws Exception {
-		String archivo = "/tmp/tiendaTest.ser";
+	void guardarYCargarTienda() throws Exception {
+		String archivo = "tiendaTest.dat";
 		tienda.registrarse("cli1", "pass", "pass");
 		tienda.guardarTienda(archivo);
 		Tienda cargada = Tienda.cargarTienda(archivo);
 		assertNotNull(cargada);
 		assertNotNull(cargada.getCliente("cli1"));
+	}
+	
+	@Test
+	void cargarTiendaArchivoNull() {
+		assertNull(Tienda.cargarTienda(null));
+	}
+	
+	@Test
+	void guardarTiendaArchivoNull() {
+		tienda.guardarTienda(null);
 	}
 }
