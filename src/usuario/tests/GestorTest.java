@@ -122,18 +122,6 @@ class GestorTest {
 		assertEquals(nuevo, Sistema.getInstancia().getTiempoCaducaOferta());
 	}
 
-	// modificarPrecioValoracion
-	@Test
-	void modificarPrecioValoracionPrecioPositivo() {
-		assertTrue(gestor.modificarPrecioValoracion(15.0));
-		assertEquals(15.0, Sistema.getInstancia().getPrecioValoracion());
-	}
-
-	@Test
-	void modificarPrecioValoracionPrecioNegativo() {
-		assertFalse(gestor.modificarPrecioValoracion(-1.0));
-	}
-
 	// establecerParametros
 	@Test
 	void establecerParametrosActivarParametroNoPresente() {

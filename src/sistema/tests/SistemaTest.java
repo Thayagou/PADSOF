@@ -88,20 +88,20 @@ class SistemaTest {
 	}
 
 	@Test
-	void testSetPrecioValoracionValido() {
-		assertTrue(sistema.setPrecioValoracion(50.0));
+	void testSetPrecioValoracionValido() throws Exception {
+		sistema.setPrecioValoracion(gestor, 50.0);
 		assertEquals(50.0, sistema.getPrecioValoracion());
 	}
 
 	@Test
-	void testSetPrecioValoracionNegativo() {
-		assertFalse(sistema.setPrecioValoracion(-1.0));
+	void testSetPrecioValoracionNegativo() throws Exception {
+		sistema.setPrecioValoracion(gestor, -1.0);
 		assertEquals(20.0, sistema.getPrecioValoracion());
 	}
 
 	@Test
-	void testSetPrecioValoracionCero() {
-		assertTrue(sistema.setPrecioValoracion(0.0));
+	void testSetPrecioValoracionCero() throws Exception {
+		sistema.setPrecioValoracion(gestor, 0.0);
 		assertEquals(0.0, sistema.getPrecioValoracion());
 	}
 

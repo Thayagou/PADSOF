@@ -82,15 +82,7 @@ public class Gestor extends Usuario implements Serializable {
 	public boolean modificarTiempoCaducidadOferta(Duration tiempo) {
 		return Sistema.getInstancia().setTiempoCaducaOferta(tiempo);
 	}
-	
-	/**
-	 * Modifica el precio de una valoración
-	 * @param precio Nuevo precio de una valoración
-	 * @return true si se modifico correctamente, false en caso contrario
-	 */
-	public boolean modificarPrecioValoracion(double precio) {
-		return Sistema.getInstancia().setPrecioValoracion(precio);
-	}
+
 	
 	/**
 	 * Modifica los parametros del sistema de recomendacion
