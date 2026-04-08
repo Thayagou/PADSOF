@@ -99,8 +99,6 @@ public class Historial implements Serializable, ObservadorProducto {
 		if (ventasMensuales.get(month) == null) ventasMensuales.put(month, new StatsMensual());
 		StatsMensual statVenta = ventasMensuales.get(month);
 		statVenta.incrementar(udsVendidas, precio);
-			
-		System.out.println(cliente);
 		pedidos.add(pedido);
 		
 		return true;
@@ -134,7 +132,7 @@ public class Historial implements Serializable, ObservadorProducto {
 		
 		YearMonth month = Reloj.mesNow();
 		if (wallapopMensuales.get(month) == null) wallapopMensuales.put(month, new StatsMensual());
-		StatsMensual statWallapop = ventasMensuales.get(month);
+		StatsMensual statWallapop = wallapopMensuales.get(month);
 		statWallapop.incrementar(0, precio);
 		
 		valoraciones.add(valoracion);

@@ -6,11 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="PADSOF/src"/>
-	<classpathentry kind="lib" path="//wsl.localhost/Ubuntu-24.04/home/claudsze/Claudia-Linux/Padsof/PADSOF-030426/PADSOF/PADSOF/src/sistema/sistemaPago/TeleChargeAndPaySystem8.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="PADSOF/src/sistema/sistemaPago/TeleChargeAndPaySystem8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

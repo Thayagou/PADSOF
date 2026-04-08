@@ -127,7 +127,6 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	        return t;
 
 	    } catch (Exception e) {
-	        e.printStackTrace();
 	        return null;
 	    }
 	}
@@ -143,7 +142,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	        oos.writeObject(AsignadorId.getInstancia());
 	        oos.writeObject(Reloj.getInstancia());
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	        return;
 	    }
 	}
 	
@@ -388,7 +387,6 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		try {
 			TeleChargeAndPaySystem.charge(numTarjeta, "Pago de valoración de artículo de segunda mano.", Sistema.getInstancia().getPrecioValoracion());
 		} catch (OrderRejectedException e) {
-			e.printStackTrace();
 			return false;
 		} 
 		
@@ -489,7 +487,6 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		try {
 			TeleChargeAndPaySystem.charge(numTarjeta, "Compra en tienda de comics.", precio);
 		} catch (OrderRejectedException e) {
-			e.printStackTrace();
 			for(StockExterno st : carrito.getRegalos()) {
 				getAlmacen().getStock(st.getProducto()).incrementarStock(st.getUdsEnStock());
 			}
@@ -500,7 +497,6 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		carrito.vaciarCarrito();
 		
 		getHistorial().guardarPedido(pedido);
-		System.out.println(cliente);
 		long codigoPedido = pedido.getId();
 		
 		cliente.enviarNotificacion("Tu pedido con código "+codigoPedido+" ya está pagado! Se te notificará cuando esté listo para recoger.", TipoNotificacion.PEDIDO);

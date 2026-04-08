@@ -2,10 +2,11 @@ package sistema.tests;
 
 import org.junit.jupiter.api.*;
 
-import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 import exceptions.*;
 import sistema.*;
 import usuario.*;
+import venta.descuentos.CondicionDescuento;
+import venta.descuentos.DescuentoRegalo;
 import venta.productos.*;
 import wallapop.*;
 import java.lang.reflect.Field;
@@ -423,17 +424,48 @@ class TiendaTest {
 		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
 		assertTrue(tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 }));
 	}
+	
+	@Test
+	void hacerOfertaIntercambioInvalidandoIntercambios() throws Exception {
+		ClienteRegistrado cli1 = registrar("cli1");
+		ClienteRegistrado cli2 = registrar("cli2");
+		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
+		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
+		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
+		tienda.hacerOfertaIntercambio(cli2, new ArticuloSegundaMano[] { art2 }, new ArticuloSegundaMano[] { art1 });
+		
+		assertTrue(tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 }));
+	}
 
 	@Test
 	void aceptarIntercambioValido() throws Exception {
 		ClienteRegistrado cli1 = registrar("cli1");
 		ClienteRegistrado cli2 = registrar("cli2");
+		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.INTERCAMBIOS);
 		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
 		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
 		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
 		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
 		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 });
 		Intercambio intercambio = cli2.getCartera().getIntercambiosPendientes()[0];
+		assertTrue(tienda.aceptarIntercambio(cli2, intercambio));
+	}
+	
+	@Test
+	void aceptarIntercambioInvalidandoIntercambios() throws Exception {
+		ClienteRegistrado cli1 = registrar("cli1");
+		ClienteRegistrado cli2 = registrar("cli2");
+		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.INTERCAMBIOS);
+		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
+		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
+		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
+		ArticuloSegundaMano art2 = crearArticuloDisponible(cli1, "Art2");
+		ArticuloSegundaMano art3 = crearArticuloDisponible(cli2, "Art3");
+		
+		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art3 });
+		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1, art2 }, new ArticuloSegundaMano[] { art3 });
+		Intercambio intercambio = cli2.getCartera().getIntercambiosPendientes()[0];
+		
 		assertTrue(tienda.aceptarIntercambio(cli2, intercambio));
 	}
 
@@ -470,6 +502,22 @@ class TiendaTest {
 	}
 
 	// solicitarValoracion
+	
+	@Test
+	void solicitarValoracionValido() throws Exception {
+		ClienteRegistrado cli = registrar("cli1");
+		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.INTERCAMBIOS);
+		ArticuloSegundaMano art = crearArticuloDisponible(cli, "Art1");
+		assertTrue(tienda.solicitarValoracion(cli, art, "1234567890123456"));
+	}
+	
+	@Test
+	void solicitarValoracionTarjetaInválida() throws Exception {
+		ClienteRegistrado cli = registrar("cli1");
+		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.INTERCAMBIOS);
+		ArticuloSegundaMano art = crearArticuloDisponible(cli, "Art1");
+		assertFalse(tienda.solicitarValoracion(cli, art, "abc123"));
+	}
 
 	@Test
 	void solicitarValoracionClienteNull() throws Exception {
@@ -507,19 +555,39 @@ class TiendaTest {
 		assertFalse(tienda.pagarCarritoDe(null, "1234567890123456"));
 	}
 
+	/**
+	 * Crea un descuento de tipo regalo
+	 * @throws InvalidArgumentException
+	 */
+	private DescuentoRegalo crearDescuentoRegalo(double precioMin, Producto regalo) throws InvalidArgumentException {
+		return new DescuentoRegalo(precioMin, Reloj.now().minusDays(2), Reloj.now().plusDays(2), CondicionDescuento.VOLUMEN, regalo);
+	}
+	
 	@Test
 	void pagarCarritoDeTarjetaInvalida() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
-		Producto p = addComic("C1");
-		tienda.anadirACarritoDe(cli, p);
-		assertFalse( tienda.pagarCarritoDe(cli, "0000-hj"));
+		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.PEDIDOS);
+		Producto c1 = addComic("C1");
+		Producto c2 = addComic("C2");
+		tienda.anadirACarritoDe(cli, c1);
+		tienda.anadirACarritoDe(cli, c2);
+		c1.anadirDescuento(crearDescuentoRegalo(9.0, c1));
+		c2.anadirDescuento(crearDescuentoRegalo(12.0, c1));
+		
+		assertFalse(tienda.pagarCarritoDe(cli, "abc123"));
 	}
-
+	
 	@Test
 	void pagarCarritoDeTarjetaValida() throws Exception {
 		ClienteRegistrado cli = registrar("cli1");
-		Producto p = addComic("C1");
-		tienda.anadirACarritoDe(cli, p);
+		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.PEDIDOS);
+		Producto c1 = addComic("C1");
+		Producto c2 = addComic("C2");
+		tienda.anadirACarritoDe(cli, c1);
+		tienda.anadirACarritoDe(cli, c2);
+		c1.anadirDescuento(crearDescuentoRegalo(9.0, c1));
+		c2.anadirDescuento(crearDescuentoRegalo(12.0, c1));
+		
 		assertTrue(tienda.pagarCarritoDe(cli, "1234567890123456"));
 	}
 

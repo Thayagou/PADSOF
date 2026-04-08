@@ -81,7 +81,7 @@ public class StatsProducto implements Serializable {
 				clave = new StatsMensual(inicio);
 		
 		int indexIni = Collections.binarySearch(estadisticas, clave);
-		clave.setMes(fin);
+		clave.setMes(fin.plusMonths(1));
 		int indexFin = Collections.binarySearch(estadisticas, clave);
 		
 		if (indexIni < 0) indexIni = -indexIni - 1;
