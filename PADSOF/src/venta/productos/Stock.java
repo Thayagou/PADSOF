@@ -27,8 +27,8 @@ public class Stock implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos del nuevo Stock son inválidos
 	 */
 	public Stock(Producto p, int uds) throws InvalidArgumentException {
-		if(p == null) throw new InvalidArgumentException("El producto no puede ser null");
-		if(uds < 0) throw new InvalidArgumentException("El número de unidades no puede ser negativo");
+		if(p == null) throw new InvalidArgumentException("El producto no puede ser null", "crear stock");
+		if(uds < 0) throw new InvalidArgumentException("El número de unidades no puede ser negativo", "crear stock");
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.producto = p;
 		this.udsEnStock = uds;
@@ -56,7 +56,7 @@ public class Stock implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public void setUdsEnStock(int udsEnStock) throws InvalidArgumentException {
-		if(udsEnStock < 0) throw new InvalidArgumentException("No se pueden establecer unidades negativas");
+		if(udsEnStock < 0) throw new InvalidArgumentException("No se pueden establecer unidades negativas", "modificar unidades en stock");
 		this.udsEnStock = udsEnStock;
 	}
 	
@@ -74,7 +74,7 @@ public class Stock implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public void reducirStock(int unidades) throws InvalidArgumentException {
-		if(unidades < 0) throw new InvalidArgumentException("No se pueden reducir unidades negativas");
+		if(unidades < 0) throw new InvalidArgumentException("No se pueden reducir unidades negativas", "reducir stock");
 		if((udsEnStock -= unidades) < 0)
 			udsEnStock = 0;
 	}
@@ -92,7 +92,7 @@ public class Stock implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public void incrementarStock(int unidades) throws InvalidArgumentException {
-		if(unidades < 0) throw new InvalidArgumentException("No se pueden incrementar unidades negativas");
+		if(unidades < 0) throw new InvalidArgumentException("No se pueden incrementar unidades negativas", "incrementar stock");
 		this.udsEnStock += unidades;
 	}
 

@@ -113,7 +113,7 @@ public class Carrito implements Serializable, Caducable {
 	 * @throws InvalidArgumentException si se pasa un producto null
 	 */
 	private void anadirRegalo(Producto p) throws InvalidArgumentException {
-		if(p == null) throw new InvalidArgumentException("No se puede añadir un regalo null");
+		if(p == null) throw new InvalidArgumentException("No se puede añadir un regalo null", "añadir reglado a carrito");
 		
 		if(!regalos.containsKey(p)) {
 			regalos.put(p,  new StockExterno(p, 1, 0));
@@ -129,7 +129,7 @@ public class Carrito implements Serializable, Caducable {
 	 * @throws InvalidArgumentException si se pasa un producto null
 	 */
 	public void anadirProducto(Producto p) throws InvalidArgumentException {
-		if(p == null) throw new InvalidArgumentException("No se puede añadir un producto null");
+		if(p == null) throw new InvalidArgumentException("No se puede añadir un producto null", "añadir producto a carrito");
 		
 		if(!items.containsKey(p)) {
 			items.put(p,  new StockExterno(p, 1));

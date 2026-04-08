@@ -3,7 +3,6 @@ package sistema;
 import java.util.*;
 import java.util.concurrent.*;
 
-import aplicacion.Main;
 import exceptions.CustomException;
 
 /**

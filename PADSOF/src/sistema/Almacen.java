@@ -154,7 +154,7 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public int getUnidades(Producto producto) throws InvalidArgumentException {
-		if(producto == null) throw new InvalidArgumentException("El producto no puede ser null");
+		if(producto == null) throw new InvalidArgumentException("El producto no puede ser null", "get unidades de producto");
 		
 		Stock s = inventario.get(producto.getNombre());
 		if(s == null)

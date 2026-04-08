@@ -38,8 +38,8 @@ public class Juego extends Producto implements Serializable {
 			throws InvalidArgumentException, DoubleDiscountException {
 		super(nombre, desc, precio, imagen, categorias);
 		
-		if(rango == null || tipo == null) throw new InvalidArgumentException("No se pueden dejar características vacías");
-		if(numJug < 0) throw new InvalidArgumentException("El número de jugadores no puede ser negativo");
+		if(rango == null || tipo == null) throw new InvalidArgumentException("No se pueden dejar características vacías", "crear juego");
+		if(numJug < 0) throw new InvalidArgumentException("El número de jugadores no puede ser negativo", "crear juego");
 		
 		this.numJugadores = numJug;
 		this.rangoEdad = rango;
@@ -48,10 +48,10 @@ public class Juego extends Producto implements Serializable {
 	
 	@Override
 	public void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException {
-		if(!(c instanceof CaracteristicasJuego)) throw new InvalidArgumentException("Se esperaba CaracteristicasJuego");
+		if(!(c instanceof CaracteristicasJuego)) throw new InvalidArgumentException("Se esperaba CaracteristicasJuego", "modificar características juego");
 		CaracteristicasJuego a = (CaracteristicasJuego)c;
 		if(a.numJugadores < 0 || a.rangoEdad == null || a.tipo == null)
-			throw new InvalidArgumentException("Atributos inválidos del juego");
+			throw new InvalidArgumentException("Atributos inválidos del juego", "modificar características juego");
 		this.numJugadores = a.numJugadores;
 		this.rangoEdad = a.rangoEdad;
 		this.tipo = a.tipo;

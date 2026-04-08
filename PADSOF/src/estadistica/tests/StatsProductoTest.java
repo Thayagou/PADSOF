@@ -9,17 +9,14 @@ import estadistica.StatsMensual;
 import estadistica.StatsProducto;
 import exceptions.InvalidArgumentException;
 import sistema.Reloj;
-import sistema.Tienda;
 import venta.productos.Categoria;
 import venta.productos.Juego;
 import venta.productos.Producto;
 import venta.productos.TipoJuego;
 
-import java.time.YearMonth;
 import java.util.Map;
 
 class StatsProductoTest {
-	private static Tienda tienda;
 	private static Producto producto;
 	private static Producto productoCats;
 	private static StatsProducto stats;
@@ -29,7 +26,6 @@ class StatsProductoTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		tienda = new Tienda();
 		cat1 = new Categoria("Juegos");
 		cat2 = new Categoria("Libros");
 		producto = new Juego("Monopoly", "Juego de dinero", 10.0, null, 6, "6+", TipoJuego.TABLERO);

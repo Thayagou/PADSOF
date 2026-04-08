@@ -37,7 +37,7 @@ public class Figura extends Producto implements Serializable {
 			throws InvalidArgumentException, DoubleDiscountException {
 		super(nombre, desc, precio, imagen, categorias);
 		
-		if(dim == null || marca == null || material == null) throw new InvalidArgumentException("No se pueden dejar características vacías");
+		if(dim == null || marca == null || material == null) throw new InvalidArgumentException("No se pueden dejar características vacías", "crear figura");
 		
 		this.dimensiones = dim;
 		this.marca = marca;
@@ -46,10 +46,10 @@ public class Figura extends Producto implements Serializable {
 	
 	@Override
 	public void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException {
-		if(!(c instanceof CaracteristicasFigura)) throw new InvalidArgumentException("Se esperaba CaracteristicasFigura");
+		if(!(c instanceof CaracteristicasFigura)) throw new InvalidArgumentException("Se esperaba CaracteristicasFigura", "modificar carecterísticas figura");
 		CaracteristicasFigura a = (CaracteristicasFigura)c;
 		if(a.dimensiones == null || a.marca == null || a.material == null)
-			throw new InvalidArgumentException("Atributos de figura inválidos");
+			throw new InvalidArgumentException("Atributos de figura inválidos", "modificar carecterísticas figura");
 		this.dimensiones = a.dimensiones;
 		this.marca = a.marca;
 		this.material = a.material;

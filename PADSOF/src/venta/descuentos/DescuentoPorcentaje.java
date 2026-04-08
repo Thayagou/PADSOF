@@ -26,7 +26,7 @@ public class DescuentoPorcentaje extends Descuento implements Serializable {
 	public DescuentoPorcentaje(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) throws InvalidArgumentException {
 		super(valorMin, inicio, fin, condicion);
 		
-		if(porcentaje < 0 || porcentaje > 100) throw new InvalidArgumentException("El porcentaje debe ser un valor entre 0 y 100");
+		if(porcentaje < 0 || porcentaje > 100) throw new InvalidArgumentException("El porcentaje debe ser un valor entre 0 y 100", "crear un descuento de tipo porcentaje");
 		this.porcentaje = porcentaje;
 	}
 	
@@ -37,7 +37,7 @@ public class DescuentoPorcentaje extends Descuento implements Serializable {
 	 */
 	@Override
 	public double getPrecioDescontado(int numUds, double volumen, double precio) throws InvalidArgumentException {
-		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
+		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento", "calcular el precio descontado");
 		
 		if(this.cumpleCondiciones(numUds, volumen)) {
 			return precio-(precio*(porcentaje/100));

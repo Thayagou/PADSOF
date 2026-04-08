@@ -205,8 +205,8 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public boolean anadirResena(int estrellas, String comentario, Producto producto) throws InvalidArgumentException {
-		if(comentario == null || producto == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
-		if(estrellas < 0 || estrellas > 5) throw new InvalidArgumentException("La puntuacion debe ser un valor entre 0 y 5");
+		if(comentario == null || producto == null) throw new InvalidArgumentException("No se pueden pasar argumentos null", "añadir reseña a producto");
+		if(estrellas < 0 || estrellas > 5) throw new InvalidArgumentException("La puntuacion debe ser un valor entre 0 y 5", "añadir reseña a producto");
 		
 		producto.anadirResena(new Resena(estrellas, comentario, this));
 		return true;

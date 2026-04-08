@@ -5,14 +5,6 @@ package exceptions;
  */
 public class InvalidArgumentException extends CustomException {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Constructor de la excepción InvalidArgumentException
-	 * @param message Mensaje principal de la excepción
-	 */
-	public InvalidArgumentException(String message) {
-		super(message);
-	}
 	
 	/**
 	 * Constructor de la excepción InvalidArgumentException

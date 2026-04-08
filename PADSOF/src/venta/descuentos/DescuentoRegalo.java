@@ -28,7 +28,7 @@ public class DescuentoRegalo extends Descuento implements Serializable {
 	public DescuentoRegalo(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) throws InvalidArgumentException {
 		super(valorMin, inicio, fin, condicion);
 		
-		if(regalo == null) throw new InvalidArgumentException("El regalo no puede ser null");
+		if(regalo == null) throw new InvalidArgumentException("El regalo no puede ser null", "crear descuento de tipo regalo");
 		this.regalo = regalo;
 	}
 
@@ -40,7 +40,7 @@ public class DescuentoRegalo extends Descuento implements Serializable {
 	 */
 	@Override
 	public Producto getRegalo(int numUds, double volumen) throws InvalidArgumentException {
-		if(numUds < 0 || volumen < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
+		if(numUds < 0 || volumen < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento", "calcular regalos añadidos por descuento");
 		
 		if(this.cumpleCondiciones(numUds, volumen)) {
 			return regalo;

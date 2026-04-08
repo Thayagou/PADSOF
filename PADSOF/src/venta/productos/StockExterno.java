@@ -22,7 +22,7 @@ public class StockExterno extends Stock implements Serializable {
 	 */
 	public StockExterno(Producto p, int uds, double precio) throws InvalidArgumentException {
 		super(p, uds);
-		if(precio < 0) throw new InvalidArgumentException("No se puede establecer un precio negativo");
+		if(precio < 0) throw new InvalidArgumentException("No se puede establecer un precio negativo", "crear stock externo");
 		this.precioUnitarioFinal = precio;
 	}
 	
@@ -51,7 +51,7 @@ public class StockExterno extends Stock implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos del método son inválidos
 	 */
 	public void setPrecioUnitarioFinal(double precioFinal) throws InvalidArgumentException{
-		if(precioFinal < 0) throw new InvalidArgumentException("No se puede establecer un precio negativo");
+		if(precioFinal < 0) throw new InvalidArgumentException("No se puede establecer un precio negativo", "modificar precio final de venta");
 		this.precioUnitarioFinal = precioFinal;
 	}
 	

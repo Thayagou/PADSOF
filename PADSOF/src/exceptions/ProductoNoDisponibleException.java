@@ -13,10 +13,11 @@ public class ProductoNoDisponibleException extends CustomException {
 	/**
 	 * Creador de la excepción
 	 * @param message Mensaje de error
+	 * @param metodo Metodo en el que se lanza la excepción
 	 * @param p Producto que se intentó adquirir
 	 */
-	public ProductoNoDisponibleException(String message, Producto p) {
-		super(message);
+	public ProductoNoDisponibleException(String message, String metodo, Producto p) {
+		super(message, metodo);
 		this.producto = p;
 	}
 	

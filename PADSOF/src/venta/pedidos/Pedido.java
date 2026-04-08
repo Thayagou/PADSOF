@@ -49,9 +49,9 @@ public class Pedido implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos no son válidos
 	 */
 	public Pedido(ClienteRegistrado cliente, StockExterno...stocks) throws InvalidArgumentException {
-		if(cliente == null || stocks == null) throw new InvalidArgumentException("Argumento null en el pedido");
+		if(cliente == null || stocks == null) throw new InvalidArgumentException("Argumento null en el pedido", "crear un nuevo pedido");
 		for(StockExterno st : stocks) {
-			if(st == null) throw new InvalidArgumentException("StockExterno null entre los items del pedido");
+			if(st == null) throw new InvalidArgumentException("StockExterno null entre los items del pedido", "crear un nuevo pedido");
 		}
 		
 		this.id = AsignadorId.getInstancia().siguienteId();
@@ -153,7 +153,7 @@ public class Pedido implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos no son válidos
 	 */
 	public void nextEstadoPedido(Empleado emp) throws InvalidArgumentException {
-		if(emp == null) throw new InvalidArgumentException("El empleado no puede ser null");
+		if(emp == null) throw new InvalidArgumentException("El empleado no puede ser null", "avanzzar el estado del pedido");
 		
 		if(estado.ordinal() == EstadoPedido.values().length - 1) return;
 		

@@ -30,9 +30,9 @@ public class Resena implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos de la función son inválidos
 	 */
 	public Resena(double puntuacion, String comentario, ClienteRegistrado usuario) throws InvalidArgumentException {
-		if(comentario == null || usuario == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(comentario == null || usuario == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos", "crear reseña");
 		if(puntuacion < 0 || puntuacion > 5) {
-			throw new InvalidArgumentException("Reseña con puntuacion inválida");
+			throw new InvalidArgumentException("Reseña con puntuacion inválida", "crear reseña");
 		}
 		this.puntuacion = puntuacion;
 		this.comentario = comentario;

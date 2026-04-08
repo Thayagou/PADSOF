@@ -37,8 +37,8 @@ public abstract class Descuento implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public Descuento(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion) throws InvalidArgumentException {
-		if(inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos en el descuento");
-		if(valorMin < 0) throw new InvalidArgumentException("El valor mínimo del descuento no puede ser negativo");
+		if(inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos en el descuento", "crear descuento");
+		if(valorMin < 0) throw new InvalidArgumentException("El valor mínimo del descuento no puede ser negativo", "crear descuento");
 		
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.valorMin = valorMin;
@@ -57,7 +57,7 @@ public abstract class Descuento implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public double getPrecioDescontado(int numUds, double volumen, double precio) throws InvalidArgumentException {
-		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
+		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento", "calcular precio descontado");
 		return precio;
 	}
 	
@@ -69,7 +69,7 @@ public abstract class Descuento implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public Producto getRegalo(int numUds, double volumen) throws InvalidArgumentException {
-		if(numUds < 0 || volumen < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
+		if(numUds < 0 || volumen < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento", "calcular regalos");
 		return null;
 	}
 	

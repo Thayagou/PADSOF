@@ -422,9 +422,9 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws ProductoNoDisponibleException Se lanza si el producto que se quiere añadir no está disponible
 	 */
 	public void anadirACarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException, ProductoNoDisponibleException {
-		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
+		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos", "añadir producto a carrito");
 		Stock st = almacen.getStock(producto);
-		if(!st.disponible()) throw new ProductoNoDisponibleException("No queda stock del producto solicitado", producto);
+		if(!st.disponible()) throw new ProductoNoDisponibleException("No queda stock del producto solicitado", "añadir producto a carrito", producto);
 		
 		cliente.getCarrito().anadirProducto(producto);
 		st.reducirStock();

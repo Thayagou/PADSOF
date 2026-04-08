@@ -26,7 +26,7 @@ public class DescuentoDinero extends Descuento implements Serializable{
 	public DescuentoDinero(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double dinero) throws InvalidArgumentException {
 		super(valorMin, inicio, fin, condicion);
 		
-		if(dinero < 0) throw new InvalidArgumentException("El dinero descontado no puede ser negativo");
+		if(dinero < 0) throw new InvalidArgumentException("El dinero descontado no puede ser negativo", "crear descuento de tipo dinero");
 		this.dinero = dinero;
 	}
 	
@@ -38,7 +38,7 @@ public class DescuentoDinero extends Descuento implements Serializable{
 	 */
 	@Override
 	public double getPrecioDescontado(int numUds, double volumen, double precio) throws InvalidArgumentException {
-		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento");
+		if(numUds < 0 || volumen < 0 || precio < 0) throw new InvalidArgumentException("No se pueden pasar valores negativos al descuento", "calcular el precio descontado");
 		
 		if(this.cumpleCondiciones(numUds, volumen)) {
 			if((precio - dinero/numUds) < 0) return 0;

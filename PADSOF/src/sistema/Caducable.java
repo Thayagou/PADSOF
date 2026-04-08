@@ -17,7 +17,7 @@ public interface Caducable extends Comparable<Caducable> {
 
 	/**
 	 * Método que define la acción que realiza un objeto al caducarse
-	 * @throws Lanza una excepción en caso de algún error
+	 * @throws CustomException Lanza una excepción en caso de algún error
 	 */
 	void caducar() throws CustomException;
 

@@ -42,8 +42,8 @@ public class Comic extends Producto implements Serializable {
 			throws InvalidArgumentException, DoubleDiscountException {
 		super(nombre, desc, precio, imagen, categorias);
 		
-		if(fecha == null || autor == null || editorial == null) throw new InvalidArgumentException("No se pueden dejar características vacías");
-		if(pags < 0) throw new InvalidArgumentException("El número de páginas no puede ser negativo");
+		if(fecha == null || autor == null || editorial == null) throw new InvalidArgumentException("No se pueden dejar características vacías", "crear comic");
+		if(pags < 0) throw new InvalidArgumentException("El número de páginas no puede ser negativo", "crear comic");
 		
 		this.fechaPublicacion = fecha;
 		this.autor = autor;
@@ -53,11 +53,11 @@ public class Comic extends Producto implements Serializable {
 	
 	@Override
 	public void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException {
-		if(!(c instanceof CaracteristicasComic)) throw new InvalidArgumentException("Se esperaban CaracteristicasComic");
+		if(!(c instanceof CaracteristicasComic)) throw new InvalidArgumentException("Se esperaban CaracteristicasComic", "modificar características comic");
 		CaracteristicasComic carac = (CaracteristicasComic)c;
 		
 		if(carac.fechaPublicacion == null || carac.autor == null || carac.numPaginas < 0 || carac.editorial == null)
-			throw new InvalidArgumentException("Características con atributos inválidos");
+			throw new InvalidArgumentException("Características con atributos inválidos", "modificar características comic");
 		
 		this.fechaPublicacion = carac.fechaPublicacion;
 		this.autor = carac.autor;

@@ -15,9 +15,6 @@ import usuario.Carrito;
 import usuario.ClienteRegistrado;
 import venta.descuentos.*;
 import venta.productos.*;
-import wallapop.ArticuloSegundaMano;
-import wallapop.EstadoIntercambio;
-import wallapop.Intercambio;
 
 import java.time.*;
 import java.util.*;

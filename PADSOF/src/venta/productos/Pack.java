@@ -33,13 +33,13 @@ public class Pack extends Producto implements Serializable {
 			throws DoubleDiscountException, InvalidArgumentException{
 		super(nombre, desc, precio, imagen, categorias);
 		
-		if(stocks == null) throw new InvalidArgumentException("El array de stocks no puede ser null");
+		if(stocks == null) throw new InvalidArgumentException("El array de stocks no puede ser null", "crear pack");
 		for(Stock st : stocks) {
-			if(st == null) throw new InvalidArgumentException("No puede haber un stock null entre los stocks del pack");
+			if(st == null) throw new InvalidArgumentException("No puede haber un stock null entre los stocks del pack", "crear pack");
 		}
 		
 		if((stocks.length == 1 && stocks[0].getUdsEnStock() < 2) || stocks.length == 0){
-			throw new InvalidArgumentException("No se puede crear un pack con menos de dos productos");
+			throw new InvalidArgumentException("No se puede crear un pack con menos de dos productos", "crear pack");
 		}
 		for(Stock s : stocks) productos.add(s);
 	}
@@ -65,11 +65,11 @@ public class Pack extends Producto implements Serializable {
 	
 	@Override
 	public void setCaracteristicas(CaracteristicasProducto c) throws InvalidArgumentException {
-		if(!(c instanceof CaracteristicasPack)) throw new InvalidArgumentException("Se esperaba CaracteristicasPack");
+		if(!(c instanceof CaracteristicasPack)) throw new InvalidArgumentException("Se esperaba CaracteristicasPack", "modificar características pack");
 		CaracteristicasPack a = (CaracteristicasPack)c;
-		if(a.stocks == null) throw new InvalidArgumentException("Array de stocks vacío");
+		if(a.stocks == null) throw new InvalidArgumentException("Array de stocks vacío", "modificar características pack");
 		if((a.stocks.length == 1 && a.stocks[0].getUdsEnStock() < 2) || a.stocks.length == 0)
-			throw new InvalidArgumentException("No se puede tener un pack con menos de dos productos");
+			throw new InvalidArgumentException("No se puede tener un pack con menos de dos productos", "modificar características pack");
 		this.setProductos(a.stocks);
 	}
 

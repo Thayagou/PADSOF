@@ -28,7 +28,7 @@ public class Categoria implements Serializable, Descontable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public Categoria(String nombre) throws InvalidArgumentException {
-		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
+		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío", "crear nueva categoría");
 		this.nombre = nombre;
 		this.eliminada = false;
 		this.descuento = null;
@@ -48,7 +48,7 @@ public class Categoria implements Serializable, Descontable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public void setNombre(String nombre) throws InvalidArgumentException {
-		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
+		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío", "set nombre categoría");
 		this.nombre = nombre;
 	}
 
@@ -90,7 +90,7 @@ public class Categoria implements Serializable, Descontable {
 	 * @throws DoubleDiscountException Se lanza si uno de los productos ya tiene descuento
 	 */
 	public boolean anadirDescuento(Descuento descuento) throws InvalidArgumentException, DoubleDiscountException {
-		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null");
+		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null", "añadir descuento a categoría");
 		if(this.tieneDescuento()) throw new DoubleDiscountException("La categoría ya tiene un descuento", "añadir descuento a categoría", getNombre());
 		
 		for(Producto p : productos) {
@@ -143,7 +143,7 @@ public class Categoria implements Serializable, Descontable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	void anadirProducto(Producto p) throws InvalidArgumentException {
-		if(p == null) throw new InvalidArgumentException("El producto no puede ser null");
+		if(p == null) throw new InvalidArgumentException("El producto no puede ser null", "añadir producto a categoría");
 		productos.add(p);
 	}
 	
@@ -153,7 +153,7 @@ public class Categoria implements Serializable, Descontable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	void quitarProducto(Producto p) throws InvalidArgumentException {
-		if(p == null) throw new InvalidArgumentException("No se puede quitar un producto null");
+		if(p == null) throw new InvalidArgumentException("No se puede quitar un producto null", "quitar producto de categoría");
 		productos.remove(p);
 	}
 

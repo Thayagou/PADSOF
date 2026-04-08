@@ -7,15 +7,6 @@ public abstract class CustomException extends Exception {
 	private static final long serialVersionUID = 1L;
 	/** Método en el que se lanza la excepción*/
 	private String metodo;
-
-	/**
-	 * Constructor de la excepción CustomException
-	 * @param message Mensaje asignado a la excepción
-	 */
-	public CustomException(String message) {
-		super(message);
-		this.metodo = "AÑADIR METODO";
-	}
 	
 	/**
 	 * Constructor padre de las excepciones
