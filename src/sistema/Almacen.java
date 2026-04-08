@@ -681,7 +681,6 @@ public class Almacen implements Serializable {
 		double valoracionPrevista, compatibilidadPrevista, valorAsociado;
 		int numValoraciones;
 		int nElements = Sistema.getInstancia().getNumProductosRecomendados();
-		boolean usarValoraciones = parametros.contains(ParametroSistema.VALORACIONES_PRODUCTO);
 		
 		
 		for (Stock st: inventario.values()) {
@@ -690,7 +689,7 @@ public class Almacen implements Serializable {
 			if (p.isEliminado()) continue;
 
 			// En vez de considerar únicamente la puntuación, hace una media ponderada de la puntuación teniendo en cuenta los usuarios más similares a este mismo
-			if (usarValoraciones && cliente.getNormaVectorRecomendaciones() != 0) {
+			if ((pondValoraciones > 0) && (cliente.getNormaVectorRecomendaciones() != 0)) {
 				valoracionPrevista = 0;
 				numValoraciones = 0;
 				
@@ -700,6 +699,7 @@ public class Almacen implements Serializable {
 					numValoraciones++;
 				}
 				valoracionPrevista /= numValoraciones;	
+				valoracionPrevista *= pondValoraciones;
 				
 			} else {
 				valoracionPrevista = p.getPuntuacionMedia();
@@ -707,7 +707,7 @@ public class Almacen implements Serializable {
 			
 			
 			compatibilidadPrevista = cliente.getCompatibilidad(p.getVectorRecomendacion(), p.getNormaVector());
-			valorAsociado = compatibilidadPrevista * pondProdRecomendado + valoracionPrevista* pondValoraciones;
+			valorAsociado = compatibilidadPrevista * pondProdRecomendado + valoracionPrevista;
 			
 			recomendacion.put(p, valorAsociado);
 			
