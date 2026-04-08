@@ -59,14 +59,14 @@ public class Sistema implements Serializable {
 	}
 	
 	/**
-     * Restaura la instancia del archivo de guardado de la tienda
-     * @param ois
-     * @throws ClassNotFoundException
-     * @throws IOException
-     */
-    public static void asignarInstancia(ObjectInputStream ois) throws ClassNotFoundException, IOException {
-    	Sistema.instancia = (Sistema) ois.readObject();
-    }
+	 * Restaura la instancia singleton de Sistema desde el stream
+	 * @param ois Stream de entrada con la instancia serializada
+	 * @throws ClassNotFoundException si la clase no se encuentra
+	 * @throws IOException si ocurre un error de lectura
+	 */
+	public static void asignarInstancia(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+		Sistema.instancia = (Sistema) ois.readObject();
+	}
 
 	/**
 	 * Devuelve la instancia del sistema

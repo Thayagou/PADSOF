@@ -27,8 +27,8 @@ public class Reloj {
 	static private boolean tiempoReal = true;
 	
 	/**
-	 * Devuelve la instancia del sistema
-	 * @return La instancia del sistema
+	 * Devuelve la instancia del reloj
+	 * @return La instancia del reloj
 	 */
 	public static Clock getInstancia() {
 		if (Reloj.clock == null)
@@ -38,11 +38,11 @@ public class Reloj {
 	}
 	
 	/**
-     * Restaura la instancia del archivo de guardado de la tienda
-     * @param ois
-     * @throws ClassNotFoundException
-     * @throws IOException
-     */
+	 * Restaura la instancia singleton de Reloj desde el stream
+	 * @param ois Stream de entrada con la instancia serializada
+	 * @throws ClassNotFoundException si la clase no se encuentra
+	 * @throws IOException si ocurre un error de lectura
+	 */
     public static void asignarInstancia(ObjectInputStream ois) throws ClassNotFoundException, IOException {
     	Reloj.clock = (Clock) ois.readObject();
     }
