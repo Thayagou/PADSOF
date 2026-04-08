@@ -11,8 +11,8 @@ import venta.productos.caracteristicas.*;
 import estadistica.ObservadorProducto;
 import exceptions.*;
 import usuario.ClienteRegistrado;
-import usuario.Empleado;
 import usuario.Permiso;
+import usuario.Usuario;
 import venta.descuentos.*;
 import venta.productos.*;
 import wallapop.*;
@@ -43,7 +43,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Método para añadir un nuevo producto al almacén
-	 * @param empleado Empleado que trata de añadir el Producto a la tienda
+	 * @param usuario Usuario que trata de añadir el Producto a la tienda
 	 * @param uds Número de unidades del producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripción del producto
@@ -53,11 +53,11 @@ public class Almacen implements Serializable {
 	 * @param categorias Array de categorías del producto
 	 * @throws InvalidArgumentException Si alguno de los argumentos es inválido
 	 * @throws DoubleDiscountException Si las categorías son incompatibles entre sí o con el producto por descuentos
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirProducto(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
+	public void anadirProducto(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
-		if (empleado.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("", descripcion, null, empleado);
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("", descripcion, null, usuario);
 		if(inventario.containsKey(nombre)) throw new InvalidArgumentException("Ya existe un producto con el mismo nombre en el almacén");
 		Producto p = caracteristicas.crearProducto(nombre, descripcion, precio, image, categorias);
 		this.inventario.put(nombre, new Stock(p, uds));
@@ -66,7 +66,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Crea y añade un nuevo cómic al inventario
-	 * @param empleado Empleado que trata de añadir el comic a la tienda
+	 * @param usuario Usuario que trata de añadir el comic a la tienda
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripción del producto
@@ -79,15 +79,16 @@ public class Almacen implements Serializable {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
+	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirComic(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
-			throws InvalidArgumentException, DoubleDiscountException {
-		anadirProducto(empleado, uds, nombre, descripcion, precio, image, new CaracteristicasComic(fecha, autor, numPaginas, editorial), categorias);
+	public void anadirComic(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
+			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+		anadirProducto(usuario, uds, nombre, descripcion, precio, image, new CaracteristicasComic(fecha, autor, numPaginas, editorial), categorias);
 	}
 	
 	/**
 	 * Crea y añade un nuevo juego al inventario
-	 * @param empleado Empleado que trata de añadir el juego a la tienda
+	 * @param usuario Usuario que trata de añadir el juego a la tienda
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripción del producto
@@ -99,15 +100,16 @@ public class Almacen implements Serializable {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
+	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirJuego(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
-			throws InvalidArgumentException, DoubleDiscountException {
-		anadirProducto(empleado, uds, nombre, descripcion, precio, image, new CaracteristicasJuego(numJugadores, rangoEdad, tipo), categorias);
+	public void anadirJuego(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
+			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+		anadirProducto(usuario, uds, nombre, descripcion, precio, image, new CaracteristicasJuego(numJugadores, rangoEdad, tipo), categorias);
 	}
 	
 	/**
 	 * Crea y añade una nueva figura al inventario
-	 * @param empleado Empleado que trata de añadir la figura a la tienda
+	 * @param usuario Usuario que trata de añadir la figura a la tienda
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripcion del producto
@@ -119,10 +121,11 @@ public class Almacen implements Serializable {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
+	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirFigura(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
-			throws InvalidArgumentException, DoubleDiscountException {
-		anadirProducto(empleado, uds, nombre, descripcion, precio, image, new CaracteristicasFigura(dimensiones, marca, material), categorias);
+	public void anadirFigura(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
+			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+		anadirProducto(usuario, uds, nombre, descripcion, precio, image, new CaracteristicasFigura(dimensiones, marca, material), categorias);
 	}
 	
 	/**
@@ -136,10 +139,11 @@ public class Almacen implements Serializable {
 	 * @param categorias Categorías a las que pertenece el producto
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
+	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirPack(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
-			throws InvalidArgumentException, DoubleDiscountException {
-		anadirProducto(empleado, uds, nombre, descripcion, precio, image, new CaracteristicasPack(productos), categorias);
+	public void anadirPack(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
+			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+		anadirProducto(usuario, uds, nombre, descripcion, precio, image, new CaracteristicasPack(productos), categorias);
 	}
 	
 	/**
@@ -200,8 +204,10 @@ public class Almacen implements Serializable {
 	 * @param producto Producto que se quiere eliminar
 	 * @return true si se elimina correctamente
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public boolean eliminarProducto(Producto producto) throws InvalidArgumentException {
+	public boolean eliminarProducto(Usuario usuario, Producto producto) throws InvalidArgumentException, InvalidPermitException {
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "eliminar producto", Permiso.PRODUCTOS, usuario);
 		if(producto == null) throw new InvalidArgumentException("El producto a eliminar no puede ser null");
 		
 		producto.eliminar();
@@ -211,6 +217,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Método para modificar los datos de un producto
+	 * @param usuario Usuario que desea modificar un producto
 	 * @param producto Producto a modificar
 	 * @param udsStock Nuevas unidades en stock del producto
 	 * @param nombre Nombre del producto
@@ -221,11 +228,11 @@ public class Almacen implements Serializable {
 	 * @param categorias Nuevas categorias del producto
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
-	 * @throws InvalidPermitException Se lanza en caso de que el empleado no tenga los permisos adecuados
+	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void modificarProducto(Empleado empleado, Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, CaracteristicasProducto caracteristicas, Categoria...categorias) 
+	public void modificarProducto(Usuario usuario, Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, CaracteristicasProducto caracteristicas, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
-		if (empleado.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", Permiso.PRODUCTOS, empleado);
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "modificar producto", Permiso.PRODUCTOS, usuario);
 		
 		if(producto == null || nombre == null || desc == null || caracteristicas == null || categorias == null)
 			throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
@@ -260,14 +267,15 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Añade una lista de productos desde un fichero
+	 * @param usuario Usuario que desea añadir los productos
 	 * @param fProductos, nombre del fichero con datos de productos a añadir
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException Se lanza en caso de que el empleado no tenga los permisos adecuados
+	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public boolean anadirProductosDeFichero(Empleado empleado, String fProductos) throws DoubleDiscountException, InvalidArgumentException, InvalidPermitException {
-		if (empleado.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", Permiso.PRODUCTOS, empleado);
+	public boolean anadirProductosDeFichero(Usuario usuario, String fProductos) throws DoubleDiscountException, InvalidArgumentException, InvalidPermitException {
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "añadir productos de fichero", Permiso.PRODUCTOS, usuario);
 		
 		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío");
 		String linea;
@@ -305,7 +313,7 @@ public class Almacen implements Serializable {
 							String fecha[] = partes[9].split(",");
 							LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 							
-							this.anadirComic(empleado, uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+							this.anadirComic(usuario, uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
 						} catch (IllegalArgumentException | DateTimeException e) {
 	                        throw new InvalidArgumentException("Datos de cómic inválidos: " + e.getMessage(), "cargar fichero de productos");
 	                    }
@@ -317,7 +325,7 @@ public class Almacen implements Serializable {
 							String rangoEdad = partes[11];
 							TipoJuego tipoJuego = TipoJuego.valueOf(partes[12]);
 							
-							this.anadirJuego(empleado, uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+							this.anadirJuego(usuario, uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
 						} catch(IllegalArgumentException e) {
 							throw new InvalidArgumentException("Datos de juego inválidos: " + e.getMessage(), "cargar fichero de productos");
 						}
@@ -329,7 +337,7 @@ public class Almacen implements Serializable {
 							String material = partes[14];
 							String dimensiones = partes[15];
 							
-							this.anadirFigura(empleado, uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+							this.anadirFigura(usuario, uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
 						} catch (IllegalArgumentException e) {
 							throw new InvalidArgumentException("Datos de figura inválidos: " + e.getMessage(), "cargar fichero de productos");
 						}
@@ -413,8 +421,10 @@ public class Almacen implements Serializable {
 	 * @param nombre Nombre de la categoría
 	 * @return true si se pudo añadir, false si ya existe una categoria con ese nombre
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws InvalidPermitException 
 	 */
-	public boolean anadirCategoria(String nombre) throws InvalidArgumentException {
+	public boolean anadirCategoria(Usuario usuario, String nombre) throws InvalidArgumentException, InvalidPermitException {
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "añadir categoría", Permiso.PRODUCTOS, usuario);
 		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
 		if(categorias.containsKey(nombre)) return false;
 		
@@ -427,8 +437,10 @@ public class Almacen implements Serializable {
 	 * @param categoria Categoria que se borra
 	 * @return true en caso de que se elimine correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws InvalidPermitException 
 	 */
-	public boolean eliminarCategoria(Categoria categoria) throws InvalidArgumentException {
+	public boolean eliminarCategoria(Usuario usuario, Categoria categoria) throws InvalidArgumentException, InvalidPermitException {
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "eliminar categoría", Permiso.PRODUCTOS, usuario);
 		if(categoria == null) throw new InvalidArgumentException("La categoría a eliminar no puede ser null");
 		
 		categoria.eliminar();
@@ -443,9 +455,11 @@ public class Almacen implements Serializable {
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
+	 * @throws InvalidPermitException 
 	 */
-	public boolean anadirProductoACategoria(Producto producto, Categoria categoria)
-			throws InvalidArgumentException, DoubleDiscountException {
+	public boolean anadirProductoACategoria(Usuario usuario, Producto producto, Categoria categoria)
+			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "añadir producto a categoría", Permiso.PRODUCTOS, usuario);
 		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
 		
 		return producto.anadirCategorias(categoria);
@@ -457,8 +471,10 @@ public class Almacen implements Serializable {
 	 * @param categoria Categoría de la que se quiere quitar
 	 * @return true en caso de que se quite correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws InvalidPermitException 
 	 */
-	public boolean quitarProductoDeCategoria(Producto producto, Categoria categoria) throws InvalidArgumentException {
+	public boolean quitarProductoDeCategoria(Usuario usuario, Producto producto, Categoria categoria) throws InvalidArgumentException, InvalidPermitException {
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "quitar producto de categoría", Permiso.PRODUCTOS, usuario);
 		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
 		
 		producto.quitarCategorias(categoria);
@@ -471,8 +487,10 @@ public class Almacen implements Serializable {
 	 * @param nuevoNombre Nuevo nombre para la categoría
 	 * @return true en caso de que se modifique correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws InvalidPermitException 
 	 */
-	public boolean modificarCategoria(Categoria categoria, String nuevoNombre) throws InvalidArgumentException {
+	public boolean modificarCategoria(Usuario usuario, Categoria categoria, String nuevoNombre) throws InvalidArgumentException, InvalidPermitException {
+		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "modificar categoría", Permiso.PRODUCTOS, usuario);
 		if(categoria == null || nuevoNombre == null) throw new InvalidArgumentException("La categoría y el nombre no pueden ser null");
 		
 		if((!categorias.containsKey(categoria.getNombre())) || categorias.containsKey(nuevoNombre)) {

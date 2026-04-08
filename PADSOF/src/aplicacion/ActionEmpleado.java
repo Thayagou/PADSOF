@@ -149,31 +149,31 @@ public class ActionEmpleado {
 		
 		switch(Main.action) {
 		case "a":
-			actionAnadirProducto();
+			actionAnadirProducto(usuario);
 			break;
 			
 		case "c":
-			actionCargarFicheroProductos();
+			actionCargarFicheroProductos(usuario);
 			break;
 			
 		case "mp":
-			actionModificarProducto();
+			actionModificarProducto(usuario);
 			break;
 			
 		case "bp":
-			actionBorrarProducto();
+			actionBorrarProducto(usuario);
 			break;
 			
 		case "cc":
-			actionCrearCategoria();
+			actionCrearCategoria(usuario);
 			break;
 			
 		case "mc":
-			actionModificarCategoria();
+			actionModificarCategoria(usuario);
 			break;
 			
 		case "p":
-			actionCrearPack();
+			actionCrearPack(usuario);
 			break;
 			
 		}
@@ -184,8 +184,9 @@ public class ActionEmpleado {
 	  * @throws InvalidArgumentException
 	  * @throws DoubleDiscountException
 	 * @throws InvalidUserInputException 
+	 * @throws InvalidPermitException 
 	  */
-	static void actionAnadirProducto() throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException {
+	static void actionAnadirProducto(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException, InvalidPermitException {
 		char tipo = Main.getUserInputChar("Tipo de producto (c: comic | j: juego | f: figura): ");
 		String nombre = Main.getUserInputLine("Nombre: ");
 		String desc = Main.getUserInputLine("Descripción: ");
@@ -200,14 +201,14 @@ public class ActionEmpleado {
 			}
 		}
 		switch(tipo) {
-		case 'c':
+		case 'c': 
 			int numPags = Main.getUserInputInt("Número de páginas: ");
 			String autor = Main.getUserInputLine("Autor: ");
 			String editorial = Main.getUserInputLine("Editorial: ");
 			String fecha[] = Main.getUserInputString("Fecha(YYYY/MM/DD): ").split("/");
 			LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 			
-			Main.tienda.getAlmacen().anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+			Main.tienda.getAlmacen().anadirComic(usuario, uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
 			break;
 		case 'j':
 			int numJugs = Main.getUserInputInt("Número de jugadores: ");
@@ -220,14 +221,14 @@ public class ActionEmpleado {
 			int num = Main.getUserInputInt("Introduzca el número del tipo de juego: ");
 			if(num < 1 || num > TipoJuego.values().length) throw new InvalidArgumentException("Número de tipo de juego inválido", "añadir producto");
 			
-			Main.tienda.getAlmacen().anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, TipoJuego.values()[num-1], categorias.toArray(new Categoria[0]));
+			Main.tienda.getAlmacen().anadirJuego(usuario, uds, nombre, desc, precio, null, numJugs, rangoEdad, TipoJuego.values()[num-1], categorias.toArray(new Categoria[0]));
 			break;
 		case 'f':
 			String marca = Main.getUserInputString("Marca: ");
 			String material = Main.getUserInputString("Material: ");
 			String dimensiones = Main.getUserInputString("Dimensiones: ");
 			
-			Main.tienda.getAlmacen().anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+			Main.tienda.getAlmacen().anadirFigura(usuario, uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
 			break;
 		default:
 			throw new InvalidArgumentException("Debe introducir un tipo válido de producto", "añadir producto");
@@ -239,10 +240,11 @@ public class ActionEmpleado {
 	 * @throws DoubleDiscountException
 	 * @throws InvalidArgumentException
 	 * @throws InvalidUserInputException 
+	 * @throws InvalidPermitException 
 	 */
-	static void actionCargarFicheroProductos() throws DoubleDiscountException, InvalidArgumentException, InvalidUserInputException {
+	static void actionCargarFicheroProductos(Usuario usuario) throws DoubleDiscountException, InvalidArgumentException, InvalidUserInputException, InvalidPermitException {
 		String fichero = Main.getUserInputString("Nombre del archivo: ");
-		Main.tienda.getAlmacen().anadirProductosDeFichero(fichero);
+		Main.tienda.getAlmacen().anadirProductosDeFichero(usuario, fichero);
 	}
 	
 	/**
@@ -250,8 +252,9 @@ public class ActionEmpleado {
 	 * @throws InvalidArgumentException
 	 * @throws DoubleDiscountException
 	 * @throws InvalidUserInputException
+	 * @throws InvalidPermitException 
 	 */
-	static void actionModificarProducto() throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException {
+	static void actionModificarProducto(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException, InvalidPermitException {
 		String nombre = Main.getUserInputLine("Introduzca el nombre del producto que quiere modificar: " );
 		Producto[] productos = Main.tienda.getAlmacen().getProductosCoincidentes(nombre);
 		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "modificar producto");
@@ -315,15 +318,16 @@ public class ActionEmpleado {
 			carargs = new CaracteristicasPack(prods.toArray(new Stock[0]));
 		} else throw new IllegalArgumentException("Error con el tipo de producto");
 		
-		Main.tienda.getAlmacen().modificarProducto(producto, uds, nombrePr, desc, precio, null, carargs, categorias.toArray(new Categoria[0]));
+		Main.tienda.getAlmacen().modificarProducto(usuario, producto, uds, nombrePr, desc, precio, null, carargs, categorias.toArray(new Categoria[0]));
 	}
 	
 	/**
 	 * Borra un producto de la tienda
 	 * @throws InvalidArgumentException
 	 * @throws InvalidUserInputException
+	 * @throws InvalidPermitException 
 	 */
-	static void actionBorrarProducto() throws InvalidArgumentException, InvalidUserInputException {
+	static void actionBorrarProducto(Usuario usuario) throws InvalidArgumentException, InvalidUserInputException, InvalidPermitException {
 		String nombre = Main.getUserInputString("Introduzca el nombre del producto que quiere borrar: ");
 		Producto[] productos = Main.tienda.getAlmacen().getProductosCoincidentes(nombre);
 		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "borrar producto");
@@ -334,25 +338,27 @@ public class ActionEmpleado {
 		}
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea borrar: ");
 		if(num < 1 || num > productos.length) throw new InvalidArgumentException("Número de producto inválido", "borrar producto");
-		Main.tienda.getAlmacen().eliminarProducto(productos[num-1]);
+		Main.tienda.getAlmacen().eliminarProducto(usuario, productos[num-1]);
 	}
 	
 	/**
 	 * Crea una nueva categoría
 	 * @throws InvalidArgumentException
 	 * @throws InvalidUserInputException
+	 * @throws InvalidPermitException 
 	 */
-	static void actionCrearCategoria() throws InvalidArgumentException, InvalidUserInputException {
+	static void actionCrearCategoria(Usuario usuario) throws InvalidArgumentException, InvalidUserInputException, InvalidPermitException {
 		String nuevo = Main.getUserInputString("Introduzca el nombre de la nueva categoría: ");
-		Main.tienda.getAlmacen().anadirCategoria(nuevo);
+		Main.tienda.getAlmacen().anadirCategoria(usuario, nuevo);
 	}
 	
 	/**
 	 * Modifica el nombre de una categoría
 	 * @throws InvalidArgumentException
 	 * @throws InvalidUserInputException
+	 * @throws InvalidPermitException 
 	 */
-	static void actionModificarCategoria() throws InvalidArgumentException, InvalidUserInputException {
+	static void actionModificarCategoria(Usuario usuario) throws InvalidArgumentException, InvalidUserInputException, InvalidPermitException {
 		String nombre = Main.getUserInputLine("Introduzca el nombre de la categoría que desea modificar: ");
 		Categoria[] categorias = Main.tienda.getAlmacen().getCategoriasCoincidentes(nombre);
 		
@@ -365,7 +371,7 @@ public class ActionEmpleado {
 		int num = Main.getUserInputInt("Introduzca el número del producto que desea modificar: ");
 		if(num < 1 || num > categorias.length) throw new InvalidArgumentException("Número de categoria inválido", "modificar categoría");
 		String nuevo = Main.getUserInputString("Introduzca el nuevo nombre de la categoría: ");
-		Main.tienda.getAlmacen().modificarCategoria(categorias[num-1], nuevo);
+		Main.tienda.getAlmacen().modificarCategoria(usuario, categorias[num-1], nuevo);
 	}
 	
 	/**
@@ -373,8 +379,9 @@ public class ActionEmpleado {
 	 * @throws InvalidArgumentException
 	 * @throws DoubleDiscountException
 	 * @throws InvalidUserInputException
+	 * @throws InvalidPermitException 
 	 */
-	static void actionCrearPack() throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException {
+	static void actionCrearPack(Usuario usuario) throws InvalidArgumentException, DoubleDiscountException, InvalidUserInputException, InvalidPermitException {
 		List<Stock> productos = new ArrayList<>();
 		for(Stock s : Main.tienda.getAlmacen().getInventario()) {
 			char inc = Main.getUserInputChar("Incluir producto " + s.getProducto().getNombre() + "? s/n");
@@ -394,6 +401,6 @@ public class ActionEmpleado {
 			}
 		}
 		
-		Main.tienda.getAlmacen().anadirPack(uds, nombre, desc, precio, null, productos.toArray(new Stock[0]), categorias.toArray(new Categoria[0]));
+		Main.tienda.getAlmacen().anadirPack(usuario, uds, nombre, desc, precio, null, productos.toArray(new Stock[0]), categorias.toArray(new Categoria[0]));
 	}
 }

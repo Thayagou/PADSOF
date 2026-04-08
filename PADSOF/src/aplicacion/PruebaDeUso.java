@@ -41,18 +41,19 @@ public class PruebaDeUso {
 		tienda.darDeAltaEmpleado("Empleado1", "123", Permiso.PRODUCTOS);
 		tienda.darDeAltaEmpleado("Empleado2", "pass", Permiso.PEDIDOS);
 		tienda.darDeAltaEmpleado("Empleado3", "pass", Permiso.INTERCAMBIOS);
+		Empleado e1 = tienda.getEmpleado("Empleado1");
 		
-		tienda.getAlmacen().anadirCategoria("Infantil");
+		tienda.getAlmacen().anadirCategoria(e1, "Infantil");
 		Categoria cInfantil = tienda.getAlmacen().getCategoria("Infantil");
-		tienda.getAlmacen().anadirCategoria("Aventuras");
+		tienda.getAlmacen().anadirCategoria(e1, "Aventuras");
 		Categoria cAventura = tienda.getAlmacen().getCategoria("Aventuras");
 		
-		tienda.getAlmacen().anadirComic(5, "El increíble Hulk", "Comic 199 de hulk", 17.50, imagen, Reloj.localDateNow(), "Stan Lee", 50, "MarvelComics", cAventura);
+		tienda.getAlmacen().anadirComic(e1, 5, "El increíble Hulk", "Comic 199 de hulk", 17.50, imagen, Reloj.localDateNow(), "Stan Lee", 50, "MarvelComics", cAventura);
 		Stock stComic = tienda.getAlmacen().getStock("El increíble Hulk");
-		tienda.getAlmacen().anadirFigura(3, "Hulk Action Figure", "Figura de accion de Hulk", 29.50, imagen, "19x20 cm", "Lego", "Hierro", cInfantil);
+		tienda.getAlmacen().anadirFigura(e1, 3, "Hulk Action Figure", "Figura de accion de Hulk", 29.50, imagen, "19x20 cm", "Lego", "Hierro", cInfantil);
 		Stock stFigura = tienda.getAlmacen().getStock("Hulk Action Figure");
 		Stock[] stocksDelPack = {stComic, stFigura};
-		tienda.getAlmacen().anadirPack(1, "Hulk Pack", "Comic y figura de Hulk", 38.75, imagen, stocksDelPack, cAventura, cInfantil);
+		tienda.getAlmacen().anadirPack(e1, 1, "Hulk Pack", "Comic y figura de Hulk", 38.75, imagen, stocksDelPack, cAventura, cInfantil);
 		Stock stPack = tienda.getAlmacen().getStock("Hulk Pack");
 		
 		
