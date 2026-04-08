@@ -56,6 +56,7 @@ public class ActionCliente {
 					
 				case "p":
 					actionVerPedidos(cliente);
+					break;
 					
 				case "a":
 					actionVerCuenta(cliente);
@@ -183,7 +184,7 @@ public class ActionCliente {
 	static void actionVerCartera(ClienteRegistrado cliente) throws InvalidArgumentException, InvalidUserInputException {
 		Main.showMessage("Su cartera: ");
 		ArticuloSegundaMano[] articulos = cliente.getCartera().getArticulos();
-		if(articulos.length < 1) throw new InvalidArgumentException("No tienes artículos ahora mismo en la cartera", "ver cartera");
+		
 		int i = 1, num;
 		for(ArticuloSegundaMano a : articulos) {
 			Main.showMessage(i++ + ") " + a);
@@ -192,6 +193,7 @@ public class ActionCliente {
 		Main.getAction("p: pedir valoración de un artículo | i: ver intercambios pendientes | a: añadir artículo de segunda mano | v: volver");
 		switch(Main.action) {
 		case "p":
+			if(articulos.length < 1) throw new InvalidArgumentException("No tienes artículos ahora mismo en la cartera", "ver cartera");
 			num = Main.getUserInputInt("Introduzca el número del artículo que desea pedir una valoración: ");
 			if (num < 1 || num > articulos.length) throw new InvalidArgumentException("Número de artículo inválido", "pedir valoración");
 			String numTarjeta = Main.getUserInputString("Introduzca su tarjeta de crédito para realizar el pago de la valoración(16 dígitos): ");
