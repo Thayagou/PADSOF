@@ -2,6 +2,8 @@ package sistema.tests;
 
 import org.junit.jupiter.api.*;
 
+import java.util.*;
+
 import estadistica.Historial;
 import venta.descuentos.*;
 import venta.productos.*;
@@ -23,12 +25,14 @@ class AlmacenTest {
 	private static Empleado empleado;
 	private Almacen almacen;
 	private Categoria cat;
+	private Tienda tienda;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		empleado = new Empleado("empleado", "pass", Permiso.values());
 		resetSingletons();
-		almacen = new Almacen(p -> {});
+		tienda = new Tienda();
+		almacen = tienda.getAlmacen();
 		cat = new Categoria("aventuras");
 		almacen.anadirCategoria(empleado, "aventuras");
 	}
@@ -433,7 +437,7 @@ class AlmacenTest {
 		LocalDateTime inicio = Reloj.now().minusHours(1);
 		LocalDateTime fin = Reloj.now().plusDays(1);
 		almacen.anadirDescuentoDinero(p, 0, inicio, fin, CondicionDescuento.SIN_CONDICION, 2.0);
-		assertFalse(almacen.anadirDescuentoDinero(p, 0, inicio, fin, CondicionDescuento.SIN_CONDICION, 1.0));
+		assertThrows(DoubleDiscountException.class, () -> almacen.anadirDescuentoDinero(p, 0, inicio, fin, CondicionDescuento.SIN_CONDICION, 1.0));
 	}
 
 	@Test
@@ -554,7 +558,7 @@ class AlmacenTest {
 
 	@Test
 	void anadirArticuloSegundaManoValido() throws Exception {
-		ClienteRegistrado cliente = new ClienteRegistrado("cli", "pass", c -> {});
+		ClienteRegistrado cliente = new ClienteRegistrado("cli", "pass", tienda);
 		Cartera cartera = cliente.getCartera();
 		ArticuloSegundaMano art = new ArticuloSegundaMano("Art1", "desc", cartera, "nada");
 		assertTrue(almacen.anadirArticuloSegundaMano(art));
@@ -567,7 +571,7 @@ class AlmacenTest {
 
 	@Test
 	void eliminarArticuloSegundaManoExistente() throws Exception {
-		ClienteRegistrado cliente = new ClienteRegistrado("cli", "pass", c -> {});
+		ClienteRegistrado cliente = new ClienteRegistrado("cli", "pass", tienda);
 		Cartera cartera = cliente.getCartera();
 		ArticuloSegundaMano art = new ArticuloSegundaMano("Art1", "desc", cartera, "nada");
 		almacen.anadirArticuloSegundaMano(art);
@@ -581,8 +585,8 @@ class AlmacenTest {
 
 	@Test
 	void getArticulosParaCliente() throws Exception {
-		ClienteRegistrado cli1 = new ClienteRegistrado("cli1", "pass", c -> {});
-		ClienteRegistrado cli2 = new ClienteRegistrado("cli2", "pass", c -> {});
+		ClienteRegistrado cli1 = new ClienteRegistrado("cli1", "pass", tienda);
+		ClienteRegistrado cli2 = new ClienteRegistrado("cli2", "pass", tienda);
 		ArticuloSegundaMano art1 = new ArticuloSegundaMano("Art1", "d", cli1.getCartera(), "x");
 		ArticuloSegundaMano art2 = new ArticuloSegundaMano("Art2", "d", cli2.getCartera(), "x");
 		art1.disponibilizar();
@@ -598,7 +602,7 @@ class AlmacenTest {
 
 	@Test
 	void getProductosPorFiltrosConCliente() throws Exception {
-		ClienteRegistrado cli1 = new ClienteRegistrado("cli1", "pass", c -> {});
+		ClienteRegistrado cli1 = new ClienteRegistrado("cli1", "pass", tienda);
 		Historial historial = new Historial();
 		historial.guardarUsuario(cli1);
 		almacen.anadirComic(empleado, 1, "C1", "d", 10.0, null, LocalDate.now(), "A", 10, "E", cat);
@@ -669,15 +673,16 @@ class AlmacenTest {
 	
 	// getListaRecomendacion
 	
-	/*@Test
-	void getListaRecomendacionValida() throws Exception {
+	@Test
+	void getListaRecomendacion() throws Exception {
 		almacen.anadirComic(empleado, 1, "C1", "d", 10.0, null, LocalDate.now(), "A", 10, "E", cat);
 		Producto c1 = almacen.getStock("C1").getProducto();
 		almacen.anadirCategoria(empleado, "Cat2");
 		Categoria cat2 = almacen.getCategoria("Cat2");
 		almacen.anadirComic(empleado, 1, "C2", "d", 5.0, null, LocalDate.now(), "A", 10, "E", cat2);
 		Producto c2 = almacen.getStock("C2").getProducto();
-		ClienteRegistrado cli1 = new ClienteRegistrado("cli1", "pass", c -> {});
+
+		ClienteRegistrado cli1 = new ClienteRegistrado("cli1", "pass", tienda);
 		
 		Historial historial = new Historial();
 		historial.guardarUsuario(cli1);
@@ -686,7 +691,14 @@ class AlmacenTest {
 		
 		Categoria[] cats = { cat2 };
 		almacen.getProductosPorFiltros(cli1, cats, 0, 20, 0);
+
 		Producto[] resultado = almacen.getListaRecomendacion(cli1);
+		for (Producto p: resultado) {
+			if (p == null) break;;
+			System.out.println("Vector cliente: " + cli1.getVectorRecomendacion() + " Norma: " + cli1.getNormaVectorRecomendaciones());
+			System.out.println("Vector prod: " + p.getVectorRecomendacion() + " Norma: " + p.getNormaVector());
+			System.out.println(p + " \nProd escalar: " + cli1.getCompatibilidad(p.getVectorRecomendacion(), p.getNormaVector()));
+		}
 		assertEquals("C2", resultado[0].getNombre());
-	}*/
+	}
 }

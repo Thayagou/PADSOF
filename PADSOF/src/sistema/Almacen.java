@@ -673,7 +673,7 @@ public class Almacen implements Serializable {
 	public Producto[] getListaRecomendacion(ClienteRegistrado cliente) {
 		Map<Producto, Double> recomendacion = new HashMap<>();
 		Map<ClienteRegistrado, Double> similaridadEntreClientes = new HashMap<>(); // Usamos este map para evitar recalcular el grado de similaridad entre usuarios
-		PriorityQueue<Producto> pq = new PriorityQueue<>(Comparator.comparingDouble(p->recomendacion.get(p)));
+		PriorityQueue<Producto> pq = new PriorityQueue<>(Comparator.comparingDouble(p-> recomendacion.get(p)));
 		Set<ParametroSistema> parametros = Sistema.getInstancia().getParametros();
 		Producto p;
 		double pondValoraciones = Sistema.getInstancia().getPonderacionValoracionesProducto();
@@ -715,7 +715,12 @@ public class Almacen implements Serializable {
 			if (pq.size() > nElements) pq.poll();
 		}
 		
-		return pq.toArray(new Producto[0]);
+		Producto[] lista = new Producto[pq.size()];
+		for (int i = pq.size() - 1; i >= 0; i--) {
+			lista[i] = pq.poll();
+		}
+		
+		return lista;
 		
 	}
 }

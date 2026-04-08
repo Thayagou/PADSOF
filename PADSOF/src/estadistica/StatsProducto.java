@@ -36,7 +36,11 @@ public class StatsProducto implements Serializable {
 			recomendacion.put(c, valor);
 		}
 		
+		norma = Math.sqrt(recomendacion.values().stream().mapToDouble(a->a*a).sum());
+		
 		producto.setStatsProducto(this);
+		
+		
 	}
 
 	/**
@@ -48,6 +52,8 @@ public class StatsProducto implements Serializable {
 		for (Categoria c: producto.getCategorias()) {
 			recomendacion.putIfAbsent(c, valor);
 		}
+		
+		norma = Math.sqrt(recomendacion.values().stream().mapToDouble(a->a*a).sum());
 	}
 	
 	/**
