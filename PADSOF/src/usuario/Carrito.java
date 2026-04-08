@@ -36,8 +36,11 @@ public class Carrito implements Serializable, Caducable {
 	public Carrito(CarritoCaducadoObserver cliente, CarritoCaducadoObserver tienda) {
 		this.cliente = cliente;
 		this.tienda = tienda;
+		fechaCaducidad = LocalDateTime.MAX;
+		/*
 		calcularFechaCaducidad();
 		GestorCaducidad.getInstancia().registrar(this);
+		*/
 	}
 	
 	/**
