@@ -236,8 +236,18 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 	}
 	
 	@Override
+	/**
+	 * Obtiene si un cliente tiene permiso de tienda, siempre false
+	 */
 	public boolean tienePermiso(Permiso p) {
 		return false;
+	}
+	
+	/**
+	 * Obtiene un String con las estadísticas
+	 */
+	public String stringEstadisticas() {
+		return "Estadisticas: " + estadisticas;
 	}
 	
 	@Override
