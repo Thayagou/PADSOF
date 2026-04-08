@@ -49,6 +49,8 @@ public class StatsProducto implements Serializable {
 	public void actualizarVector() {
 		double valor = Sistema.getInstancia().getPonderacionCategoria();
 		
+		recomendacion.clear();
+		
 		for (Categoria c: producto.getCategorias()) {
 			recomendacion.putIfAbsent(c, valor);
 		}
