@@ -14,6 +14,6 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectClasses({ AlmacenTest.class, AsignadorIdTest.class, GestorCaducidadTest.class, RelojTest.class,
 		SistemaTest.class, TiendaTest.class })
-public class AllSistemaTest {
+class AllSistemaTest {
 
 }

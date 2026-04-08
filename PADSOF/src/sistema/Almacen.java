@@ -130,6 +130,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Crea y añade un nuevo pack al inventario
+	 * @param usuario Usuario añade el pack a la tienda
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripcion del producto
@@ -201,6 +202,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Eliminar un producto del inventario
+	 * @param usuario Usuario que elimina el producto de la tienda
 	 * @param producto Producto que se quiere eliminar
 	 * @return true si se elimina correctamente
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
@@ -418,10 +420,11 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Crea y añade una categoría al almacén
+	 * @param usuario Usuario que añade una categoría a la tienda
 	 * @param nombre Nombre de la categoría
 	 * @return true si se pudo añadir, false si ya existe una categoria con ese nombre
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean anadirCategoria(Usuario usuario, String nombre) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "añadir categoría", Permiso.PRODUCTOS, usuario);
@@ -434,10 +437,11 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Elimina una categoría del almacén
+	 * @param usuario Usuario que elimina una categoria de la tienda
 	 * @param categoria Categoria que se borra
 	 * @return true en caso de que se elimine correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean eliminarCategoria(Usuario usuario, Categoria categoria) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "eliminar categoría", Permiso.PRODUCTOS, usuario);
@@ -450,12 +454,13 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Añade un producto a una categoría
+	 * @param usuario Usuario que añade un producto a una categoria
 	 * @param producto Producto al que se quiere añadir
 	 * @param categoria Categoría que se quiere añadir
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean anadirProductoACategoria(Usuario usuario, Producto producto, Categoria categoria)
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
@@ -467,11 +472,12 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Quita un producto de una categoría
+	 * @param usuario Usuario que quita un producto de una categoria
 	 * @param producto Producto que se quiere quitar
 	 * @param categoria Categoría de la que se quiere quitar
 	 * @return true en caso de que se quite correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean quitarProductoDeCategoria(Usuario usuario, Producto producto, Categoria categoria) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "quitar producto de categoría", Permiso.PRODUCTOS, usuario);
@@ -483,11 +489,12 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Modifica el nombre de una categoría
+	 * @param usuario Usuario que modifica una categoria
 	 * @param categoria Categoría que se quiere cambiar
 	 * @param nuevoNombre Nuevo nombre para la categoría
 	 * @return true en caso de que se modifique correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean modificarCategoria(Usuario usuario, Categoria categoria, String nuevoNombre) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "modificar categoría", Permiso.PRODUCTOS, usuario);
