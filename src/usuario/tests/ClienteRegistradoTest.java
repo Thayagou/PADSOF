@@ -32,7 +32,7 @@ class ClienteRegistradoTest {
 	private static Duration durOrig = Sistema.getInstancia().getTiempoCaducaCarrito();
 
 	@AfterAll
-	void end() {
+	static void end() {
 		Sistema.getInstancia().setTiempoCaducaCarrito(durOrig);
 	}
 	
@@ -51,6 +51,7 @@ class ClienteRegistradoTest {
 
 	@BeforeEach
 	void setUp() throws Exception{
+		tienda = new Tienda();
 		c = new ClienteRegistrado("Cliente1", "pass", tienda);
 		tienda = new Tienda();
 		Sistema.getInstancia().setTiempoCaducaCarrito(Duration.ofHours(1));

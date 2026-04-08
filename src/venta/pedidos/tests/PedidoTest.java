@@ -17,7 +17,7 @@ import sistema.Tienda;
  * 
  * @author Juan Ibáñez
  */
-class PedidoTest {
+public class PedidoTest {
 
 	private ClienteRegistrado cliente;
 	private Empleado empleado;

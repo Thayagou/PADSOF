@@ -16,7 +16,7 @@ import org.junit.platform.suite.api.Suite;
  * 
  * @author Claudia Saiz
  */
-class AllUsuarioTests {
+public class AllUsuarioTests {
 	/**
 	 * Constructor privado para evitar instanciación.
 	 */

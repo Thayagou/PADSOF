@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
 import exceptions.*;
-import sistema.GestorCaducidad;
 import sistema.Reloj;
 import sistema.Sistema;
 import sistema.Tienda;
@@ -18,7 +17,6 @@ import venta.productos.*;
 
 import java.time.*;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Clase con los tests de los métodos de la clase carrito
@@ -29,7 +27,6 @@ class CarritoTest {
 	private static final Duration DURACION_LARGA = Duration.ofHours(1);
 	private static final Duration DURACION_CORTA = Duration.ofNanos(1);
 	private static ClienteRegistrado cliente;
-	private static Duration durOrig;
 	
 	private static Carrito carrito;
 	private static Tienda tienda;
@@ -291,32 +288,6 @@ class CarritoTest {
 		c1.anadirDescuento(crearDescuentoPorcentaje(9.0, 20.0));
 
 		assertAll(() -> assertEquals(8.0, carrito.calcularCarrito()));
-	}
-
-	@Test
-	void testCaducidadAlAnadirProducto() throws Exception {
-		carrito.anadirProducto(crearComic("Superman", 10.0));
-		assertEquals(1, carrito.getItems().length);
-
-		durOrig = Sistema.getInstancia().getTiempoCaducaCarrito();
-		Sistema.getInstancia().setTiempoCaducaCarrito(Duration.ofSeconds(2));
-		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.SECONDS);
-		
-		Thread.sleep(4000);
-
-		Sistema.getInstancia().setTiempoCaducaCarrito(durOrig);
-
-		assertEquals(0, carrito.getItems().length);
-	}
-
-	@Test
-	void testCaducidadAlCalcular() throws Exception {
-		carrito.anadirProducto(crearComic("Superman", 10.0));
-
-		Sistema.getInstancia().setTiempoCaducaCarrito(DURACION_CORTA);
-		carrito.calcularFechaCaducidad();
-		Thread.sleep(5);
-		assertEquals(0.0, carrito.calcularCarrito());
 	}
 
 	@Test

@@ -13,6 +13,6 @@ import org.junit.platform.suite.api.Suite;
  */
 @SelectClasses({ DescuentoTest.class, DescuentoSubTest.class })
 @Suite
-class AllDescuentosTest {
+public class AllDescuentosTest {
 	
 }

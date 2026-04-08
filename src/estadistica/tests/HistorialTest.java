@@ -274,7 +274,7 @@ class HistorialTest {
 	void testValorarArticulo() throws Exception {
 		ArticuloSegundaMano art = new ArticuloSegundaMano("Nuevo", "Desc", carteraEmisor, "Algo", cat1);
 		carteraEmisor.addArticulo(art);
-		art.anadirValoracion(new Valoracion(art));
+		new Valoracion(art);
 
 		assertTrue(historial.valorarArticulo(empleadoConPermiso, art, 50.0, EstadoFisicoArticulo.MUY_BUENO));
 		assertEquals(EstadoFisicoArticulo.MUY_BUENO, art.getValoracion().getEstadoFisico());
@@ -297,7 +297,7 @@ class HistorialTest {
 		assertThrows(ArticuloSinValoracionException.class,
 				() -> historial.valorarArticulo(empleadoConPermiso, art, 50.0, EstadoFisicoArticulo.MUY_BUENO));
 
-		art.anadirValoracion(new Valoracion(art));
+		new Valoracion(art);
 
 		assertThrows(InvalidPermitException.class,
 				() -> historial.valorarArticulo(empleadoSinPermiso, art, 50.0, EstadoFisicoArticulo.MUY_BUENO));
