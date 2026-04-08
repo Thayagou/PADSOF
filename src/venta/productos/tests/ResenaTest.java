@@ -7,7 +7,9 @@ import org.junit.jupiter.api.*;
 import usuario.*;
 import venta.productos.*;
 import exceptions.*;
+import sistema.CarritoCaducadoObserver;
 import sistema.Reloj;
+import sistema.Tienda;
 
 /**
  * Clase con los tests de la clase Resena
@@ -21,7 +23,8 @@ class ResenaTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		usuario = new ClienteRegistrado("Cliente1", "pass", null);
+		CarritoCaducadoObserver tienda = new Tienda();
+		usuario = new ClienteRegistrado("Cliente1", "pass", tienda);
 		resena = new Resena(4.0, "Muy bueno", usuario);
 	}
 

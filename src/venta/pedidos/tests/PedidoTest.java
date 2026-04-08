@@ -8,7 +8,9 @@ import usuario.*;
 import venta.pedidos.*;
 import venta.productos.*;
 import exceptions.*;
+import sistema.CarritoCaducadoObserver;
 import sistema.Reloj;
+import sistema.Tienda;
 
 /**
  * Clase con los tests de los métodos de la clase Pedido
@@ -27,7 +29,8 @@ class PedidoTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		cliente = new ClienteRegistrado("Cliente1", "pass", null);
+		CarritoCaducadoObserver tienda = new Tienda();
+		cliente = new ClienteRegistrado("Cliente1", "pass", tienda);
 		empleado = new Empleado("Empleado1", "pass");
 		producto1 = new Juego("Monopoly", "Juego de mesa", 25.0, null, 6, "8+", TipoJuego.TABLERO);
 		producto2 = new Figura("Batman", "Figura de Batman", 12.0, null, "20x12 cm", "DC", "Plastico");

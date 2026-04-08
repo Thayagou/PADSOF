@@ -12,6 +12,9 @@ import usuario.*;
 import org.junit.jupiter.api.*;
 
 import exceptions.*;
+import sistema.Tienda;
+
+import sistema.CarritoCaducadoObserver;
 
 /**
  * Clase con los tests de los métodos de la clase Producto
@@ -209,8 +212,9 @@ class ProductoTest {
 
 	@Test
 	void testAnadirResenaYPuntuacionMedia() throws Exception {
-		ClienteRegistrado u1 = new ClienteRegistrado("Cliente1", "pass", null);
-		ClienteRegistrado u2 = new ClienteRegistrado("Cliente2", "pass", null);
+		CarritoCaducadoObserver tienda = new Tienda();
+		ClienteRegistrado u1 = new ClienteRegistrado("Cliente1", "pass", tienda);
+		ClienteRegistrado u2 = new ClienteRegistrado("Cliente2", "pass", tienda);
 		producto.anadirResena(new Resena(4.0, "Muy bueno", u1));
 		producto.anadirResena(new Resena(2.0, "Regular", u2));
 		assertEquals(3.0, producto.getPuntuacionMedia());
@@ -223,7 +227,8 @@ class ProductoTest {
 
 	@Test
 	void testGetResenas() throws Exception {
-		ClienteRegistrado u = new ClienteRegistrado("Cliente", "pass", null);
+		CarritoCaducadoObserver tienda = new Tienda();
+		ClienteRegistrado u = new ClienteRegistrado("Cliente", "pass", tienda);
 		producto.anadirResena(new Resena(5.0, "Genial", u));
 		assertEquals(1, producto.getResenas().length);
 	}
