@@ -2,8 +2,6 @@ package sistema.tests;
 
 import org.junit.jupiter.api.*;
 
-import java.util.*;
-
 import estadistica.Historial;
 import venta.descuentos.*;
 import venta.productos.*;
