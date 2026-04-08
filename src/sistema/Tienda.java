@@ -252,6 +252,8 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	        	break;
 	        case BUSQUEDA:
 	        	Sistema.getInstancia().setPonderacionBusqueda(gestor, valor);
+	        case PRECIO_VALORACION:
+	        	Sistema.getInstancia().setPrecioValoracion(gestor, valor);
 	        	break;
 	        default:
 	        	throw new InvalidArgumentException("Parámetro de recomendación inválido", "gestionar parámetros del sistema");

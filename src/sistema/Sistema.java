@@ -126,13 +126,10 @@ public class Sistema implements Serializable {
 	/**
 	 * Cambia el precio de solicitar una valoración
 	 * @param precioValoracion Nuevo precio de solicitar una valoración
-	 * @return true si se cambia correctamente
 	 */
-	public boolean setPrecioValoracion(double precioValoracion) {
-		if (precioValoracion < 0)
-			return false;
+	public void setPrecioValoracion(Gestor gestor, double precioValoracion) throws InvalidArgumentException {
+		if(gestor == null || precioValoracion < 0) throw new InvalidArgumentException("Argumentos inválidos", "setPrecioValoracion");
 		this.precioValoracion = precioValoracion;
-		return true;
 	}
 
 	/**
