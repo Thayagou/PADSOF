@@ -693,12 +693,12 @@ class AlmacenTest {
 		almacen.getProductosPorFiltros(cli1, cats, 0, 20, 0);
 
 		Producto[] resultado = almacen.getListaRecomendacion(cli1);
-		for (Producto p: resultado) {
+		/*for (Producto p: resultado) {
 			if (p == null) break;;
 			System.out.println("Vector cliente: " + cli1.getVectorRecomendacion() + " Norma: " + cli1.getNormaVectorRecomendaciones());
 			System.out.println("Vector prod: " + p.getVectorRecomendacion() + " Norma: " + p.getNormaVector());
 			System.out.println(p + " \nProd escalar: " + cli1.getCompatibilidad(p.getVectorRecomendacion(), p.getNormaVector()));
-		}
+		}*/
 		assertEquals("C2", resultado[0].getNombre());
 	}
 }
