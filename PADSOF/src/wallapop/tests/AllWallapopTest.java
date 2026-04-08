@@ -1,10 +1,5 @@
 package wallapop.tests;
 
-/**
- * Clase que ejecuta todos los tests del paquete wallapop
- * 
- * @author Tiago Oselka
- */
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
@@ -17,10 +12,14 @@ import org.junit.platform.suite.api.Suite;
 	IntercambioTest.class})
 
 @Suite
+/**
+ * Clase que ejecuta todos los tests del paquete wallapop
+ * 
+ * @author Tiago Oselka
+ */
 public class AllWallapopTest {
 	/**
 	 * Constructor privado para evitar instanciación.
 	 */
-	private AllWallapopTest() {
-	}
+	private AllWallapopTest() { }
 }
