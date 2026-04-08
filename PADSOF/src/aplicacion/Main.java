@@ -333,7 +333,6 @@ public class Main {
 		
 		Producto[] productos = tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), precioMin, precioMax, estrellasMin);
 		int i = 1;
-		showMessage(productos.length + "");
 		for(Producto p : productos) {
 			showMessage(i++ + ") " + p);
 		}

@@ -156,7 +156,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws NotValidUserException Se lanza si ya existe el usuario o la contraseña es incorrecta
 	 */
 	public ClienteRegistrado registrarse(String nombre, String contrasena, String confirmarContrasena) throws InvalidArgumentException, NotValidUserException {
-		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
+		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos", "registrarse");
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Ya existe un usuario con ese nombre", "registrarse", nombre);
 		if(!contrasena.equals(confirmarContrasena)) throw new NotValidUserException("Ha fallado la comprobación de contraseña", "registrarse", nombre);
 		
@@ -438,7 +438,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public boolean quitarDeCarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException {
-		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
+		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos", "quitar producto de carrito");
 		
 		cliente.getCarrito().quitarProducto(producto);
 		almacen.getStock(producto).incrementarStock();
