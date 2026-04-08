@@ -95,8 +95,7 @@ class SistemaTest {
 
 	@Test
 	void testSetPrecioValoracionNegativo() throws Exception {
-		sistema.setPrecioValoracion(gestor, -1.0);
-		assertEquals(20.0, sistema.getPrecioValoracion());
+		assertThrows(InvalidArgumentException.class, () -> sistema.setPrecioValoracion(gestor, -1.0));
 	}
 
 	@Test
