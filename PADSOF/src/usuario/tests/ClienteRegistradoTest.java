@@ -25,32 +25,24 @@ import wallapop.ArticuloSegundaMano;
  * @author Claudia Saiz
  */
 class ClienteRegistradoTest {
-
-	// helpers
-
-	/**
-	 * Crear un usuario de tipo cliente
-	 */
+	
+	
 	private ClienteRegistrado crearCliente() {
-		return new ClienteRegistrado("Cliente1", "pass");
+		return new ClienteRegistrado("Cliente1", "pass", );
 	}
 
-	/**
-	 * Crea un producto tipo Comic
-	 */
+	
 	private Comic crearComic(String nombre, double precio) throws Exception {
 		List<Categoria> categorias = new ArrayList<>();
 		categorias.add(new Categoria("aventuras"));
 		return new Comic(nombre, "Descripción de " + nombre, precio, null, LocalDate.of(2020, 1, 1), "Autor Test", 100, "Editorial Test", categorias.toArray(new Categoria[0]));
 	}
 	
-	/**
-	 * Crea un articulo
-	 */
+	
 	private ArticuloSegundaMano crearArticulo(ClienteRegistrado c) throws Exception {
 		List<Categoria> categorias = new ArrayList<>();
 		categorias.add(new Categoria("aventuras"));
-		return new ArticuloSegundaMano("Articulo", "Descripción", c.getCartera(), null, "Interesado en: ");
+		return new ArticuloSegundaMano("Articulo", "Descripción", c.getCartera(), "Otros articulos", categorias.toArray(new Categoria[0]));
 	}
 
 	@BeforeEach

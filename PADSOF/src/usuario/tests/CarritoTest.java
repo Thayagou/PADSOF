@@ -7,8 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
 import exceptions.*;
+import sistema.Reloj;
 import sistema.Sistema;
+import sistema.Tienda;
 import usuario.Carrito;
+import usuario.ClienteRegistrado;
 import venta.descuentos.*;
 import venta.productos.*;
 
@@ -23,8 +26,10 @@ import java.util.*;
 class CarritoTest {
 	private static final Duration DURACION_LARGA = Duration.ofHours(1);
 	private static final Duration DURACION_CORTA = Duration.ofNanos(1);
-
-	// helpers
+	private static ClienteRegistrado cliente;
+	
+	private static Carrito carrito;
+	private static Tienda tienda;
 
 	/**
 	 * Crea un producto tipo Comic
@@ -40,7 +45,7 @@ class CarritoTest {
 	 * @throws InvalidArgumentException
 	 */
 	private DescuentoRegalo crearDescuentoRegalo(double precioMin, Producto regalo) throws InvalidArgumentException {
-		return new DescuentoRegalo(precioMin, LocalDateTime.now().minusDays(2), LocalDateTime.now().plusDays(2), CondicionDescuento.VOLUMEN, regalo);
+		return new DescuentoRegalo(precioMin, Reloj.now().minusDays(2), Reloj.now().plusDays(2), CondicionDescuento.VOLUMEN, regalo);
 	}
 
 	/**
@@ -48,7 +53,7 @@ class CarritoTest {
 	 * @throws InvalidArgumentException
 	 */
 	private DescuentoDinero crearDescuentoDinero(double precioMin, double dinero) throws InvalidArgumentException {
-		return new DescuentoDinero(precioMin, LocalDateTime.now().minusDays(2), LocalDateTime.now().plusDays(2), CondicionDescuento.VOLUMEN, dinero);
+		return new DescuentoDinero(precioMin, Reloj.now().minusDays(2), Reloj.now().plusDays(2), CondicionDescuento.VOLUMEN, dinero);
 	}
 
 	/**
@@ -57,21 +62,21 @@ class CarritoTest {
 	 */
 	private DescuentoPorcentaje crearDescuentoPorcentaje(double precioMin, double porcentaje)
 			throws InvalidArgumentException {
-		return new DescuentoPorcentaje(precioMin, LocalDateTime.now().minusDays(2), LocalDateTime.now().plusDays(2), CondicionDescuento.VOLUMEN, porcentaje);
+		return new DescuentoPorcentaje(precioMin, Reloj.now().minusDays(2), Reloj.now().plusDays(2), CondicionDescuento.VOLUMEN, porcentaje);
 	}
 
 	@BeforeEach
-	void setUp() {
-		// Garantizar que el carrito NO caduca
+	void setUp() throws Exception {
+		tienda = new Tienda();
 		Sistema.getInstancia().setTiempoCaducaCarrito(DURACION_LARGA);
+		cliente = new ClienteRegistrado("cliente", "123", tienda);
+		carrito = cliente.getCarrito();
 	}
 
 	/// constructor
 
-	@Test
+	@Test 
 	void testConstructorCarritoVacio() {
-		Carrito carrito = new Carrito();
-
 		assertAll(() -> assertEquals(0, carrito.getItems().length), () -> assertEquals(0, carrito.getRegalos().length),
 				() -> assertEquals(0, carrito.getContenido().length));
 	}
@@ -80,13 +85,11 @@ class CarritoTest {
 
 	@Test
 	void testAnadirProductoNull() {
-		Carrito carrito = new Carrito();
 		assertThrows(InvalidArgumentException.class, () -> carrito.anadirProducto(null));
 	}
 
 	@Test
-	void testAnadirProductoNuevo() throws Exception {
-		Carrito carrito = new Carrito();
+	void testAnadirProductoNuevo() throws Exception {		
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 
 		assertEquals(1, carrito.getItems().length);
@@ -94,7 +97,6 @@ class CarritoTest {
 
 	@Test
 	void testAnadirMismoProducto() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c = crearComic("Superman", 10.0);
 
 		carrito.anadirProducto(c);
@@ -105,8 +107,7 @@ class CarritoTest {
 	}
 
 	@Test
-	void testAnadirProductosDiferentes() throws Exception {
-		Carrito carrito = new Carrito();
+	void testAnadirProductosDiferentes() throws Exception {		
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 		carrito.anadirProducto(crearComic("Batman", 15.0));
 
@@ -117,7 +118,6 @@ class CarritoTest {
 
 	@Test
 	void testQuitarProductoInexistente() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c = crearComic("Superman", 10.0);
 
 		assertDoesNotThrow(() -> carrito.quitarProducto(c));
@@ -125,7 +125,6 @@ class CarritoTest {
 
 	@Test
 	void testQuitarUnicoProducto() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c = crearComic("Superman", 10.0);
 
 		carrito.anadirProducto(c);
@@ -136,7 +135,6 @@ class CarritoTest {
 
 	@Test
 	void testQuitarUnaVezProducto() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c = crearComic("Superman", 10.0);
 
 		carrito.anadirProducto(c);
@@ -151,7 +149,6 @@ class CarritoTest {
 
 	@Test
 	void testVaciarCarrito() throws Exception {
-		Carrito carrito = new Carrito();
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 
 		carrito.vaciarCarrito();
@@ -161,7 +158,6 @@ class CarritoTest {
 
 	@Test
 	void testVaciarCarritoYaVacio() {
-		Carrito carrito = new Carrito();
 		assertDoesNotThrow(carrito::vaciarCarrito);
 	}
 
@@ -169,13 +165,11 @@ class CarritoTest {
 
 	@Test
 	void testGetContenidoVacio() {
-		Carrito carrito = new Carrito();
 		assertEquals(0, carrito.getContenido().length);
 	}
 
 	@Test
 	void testGetContenidoLongitud() throws Exception {
-		Carrito carrito = new Carrito();
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 
 		int esperado = carrito.getItems().length + carrito.getRegalos().length;
@@ -184,7 +178,6 @@ class CarritoTest {
 
 	@Test
 	void testGetContenidoNoNull() throws Exception {
-		Carrito carrito = new Carrito();
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 		carrito.anadirProducto(crearComic("Batman", 15.0));
 
@@ -197,13 +190,11 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoVacio() {
-		Carrito carrito = new Carrito();
 		assertEquals(0.0, carrito.calcularCarrito());
 	}
 
 	@Test
 	void testCalcularCarritoUnProducto() throws Exception {
-		Carrito carrito = new Carrito();
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 
 		assertEquals(10.0, carrito.calcularCarrito());
@@ -211,7 +202,6 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoVariosProductos() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c1 = crearComic("Superman", 10.0);
 		Comic c2 = crearComic("Batman", 15.0);
 
@@ -225,7 +215,6 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoIgual() throws Exception {
-		Carrito carrito = new Carrito();
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 
 		double primera = carrito.calcularCarrito();
@@ -236,14 +225,13 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoActualizaAlAnadir() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c = crearComic("Superman", 10.0);
 
 		carrito.anadirProducto(c);
-		double precio1 = carrito.calcularCarrito(); // 10 €
+		double precio1 = carrito.calcularCarrito(); 
 
 		carrito.anadirProducto(c);
-		double precio2 = carrito.calcularCarrito(); // 20 €
+		double precio2 = carrito.calcularCarrito();
 
 		assertEquals(10.0, precio1);
 		assertEquals(20.0, precio2);
@@ -251,15 +239,14 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoActualizaAlQuitar() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c = crearComic("Superman", 10.0);
 
 		carrito.anadirProducto(c);
 		carrito.anadirProducto(c);
-		double precio1 = carrito.calcularCarrito(); // 20 €
+		double precio1 = carrito.calcularCarrito();
 
 		carrito.quitarProducto(c);
-		double precio2 = carrito.calcularCarrito(); // 10 €
+		double precio2 = carrito.calcularCarrito();
 
 		assertEquals(20.0, precio1);
 		assertEquals(10.0, precio2);
@@ -269,7 +256,6 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoConDescuentoRegalo() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c1 = crearComic("Superman", 10.0);
 		carrito.anadirProducto(c1);
 		c1.anadirDescuento(crearDescuentoRegalo(9.0, c1));
@@ -281,7 +267,6 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoDobleDescuentoRegalo() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c1 = crearComic("Superman", 10.0);
 		Comic c2 = crearComic("Batman", 15.0);
 		carrito.anadirProducto(c1);
@@ -296,7 +281,6 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoDescuentoDinero() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c1 = crearComic("Superman", 10.0);
 		carrito.anadirProducto(c1);
 		c1.anadirDescuento(crearDescuentoDinero(9.0, 5));
@@ -306,7 +290,6 @@ class CarritoTest {
 
 	@Test
 	void testCalcularCarritoDescuentoPorcentaje() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c1 = crearComic("Superman", 10.0);
 		carrito.anadirProducto(c1);
 		c1.anadirDescuento(crearDescuentoPorcentaje(9.0, 20.0));
@@ -314,24 +297,19 @@ class CarritoTest {
 		assertAll(() -> assertEquals(8.0, carrito.calcularCarrito()));
 	}
 
-	/// Caducidad del carrito
-
 	@Test
 	void testCaducidadAlAnadirProducto() throws Exception {
-		Carrito carrito = new Carrito();
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 		assertEquals(1, carrito.getItems().length);
 
 		// Caduca el producto
-		Sistema.getInstancia().setTiempoCaducaCarrito(DURACION_CORTA);
-		carrito.calcularFechaCaducidad();
+		carrito.caducar();
 		Thread.sleep(5);
 		assertEquals(0, carrito.getItems().length);
 	}
 
 	@Test
 	void testCaducidadAlCalcular() throws Exception {
-		Carrito carrito = new Carrito();
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 
 		Sistema.getInstancia().setTiempoCaducaCarrito(DURACION_CORTA);
@@ -342,7 +320,6 @@ class CarritoTest {
 
 	@Test
 	void testRenovarCaducidadConservaItems() throws Exception {
-		Carrito carrito = new Carrito();
 		carrito.anadirProducto(crearComic("Superman", 10.0));
 
 		Sistema.getInstancia().setTiempoCaducaCarrito(DURACION_CORTA);
@@ -358,7 +335,6 @@ class CarritoTest {
 
 	@Test
 	void testToStringNoNull() throws Exception {
-		Carrito carrito = new Carrito();
 		Comic c1 = crearComic("Superman", 10.0);
 		carrito.anadirProducto(c1);
 		c1.anadirDescuento(crearDescuentoRegalo(9.0, c1));
@@ -369,7 +345,6 @@ class CarritoTest {
 
 	@Test
 	void testToStringCarritoVacio() {
-		Carrito carrito = new Carrito();
 		String resultado = carrito.toString();
 		assertNotNull(resultado);
 	}

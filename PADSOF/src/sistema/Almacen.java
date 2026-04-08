@@ -11,6 +11,8 @@ import venta.productos.caracteristicas.*;
 import estadistica.ObservadorProducto;
 import exceptions.*;
 import usuario.ClienteRegistrado;
+import usuario.Empleado;
+import usuario.Permiso;
 import venta.descuentos.*;
 import venta.productos.*;
 import wallapop.*;
@@ -41,6 +43,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Método para añadir un nuevo producto al almacén
+	 * @param empleado Empleado que trata de añadir el Producto a la tienda
 	 * @param uds Número de unidades del producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripción del producto
@@ -50,9 +53,11 @@ public class Almacen implements Serializable {
 	 * @param categorias Array de categorías del producto
 	 * @throws InvalidArgumentException Si alguno de los argumentos es inválido
 	 * @throws DoubleDiscountException Si las categorías son incompatibles entre sí o con el producto por descuentos
+	 * @throws InvalidPermitException 
 	 */
-	public void anadirProducto(int uds, String nombre, String descripcion, double precio, ImageIcon image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
-			throws InvalidArgumentException, DoubleDiscountException {
+	public void anadirProducto(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
+			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+		if (empleado.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("", descripcion, null, empleado);
 		if(inventario.containsKey(nombre)) throw new InvalidArgumentException("Ya existe un producto con el mismo nombre en el almacén");
 		Producto p = caracteristicas.crearProducto(nombre, descripcion, precio, image, categorias);
 		this.inventario.put(nombre, new Stock(p, uds));
@@ -61,6 +66,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Crea y añade un nuevo cómic al inventario
+	 * @param empleado Empleado que trata de añadir el comic a la tienda
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripción del producto
@@ -74,13 +80,14 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
-	public void anadirComic(int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
+	public void anadirComic(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		anadirProducto(uds, nombre, descripcion, precio, image, new CaracteristicasComic(fecha, autor, numPaginas, editorial), categorias);
+		anadirProducto(empleado, uds, nombre, descripcion, precio, image, new CaracteristicasComic(fecha, autor, numPaginas, editorial), categorias);
 	}
 	
 	/**
 	 * Crea y añade un nuevo juego al inventario
+	 * @param empleado Empleado que trata de añadir el juego a la tienda
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripción del producto
@@ -93,13 +100,14 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
-	public void anadirJuego(int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
+	public void anadirJuego(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		anadirProducto(uds, nombre, descripcion, precio, image, new CaracteristicasJuego(numJugadores, rangoEdad, tipo), categorias);
+		anadirProducto(empleado, uds, nombre, descripcion, precio, image, new CaracteristicasJuego(numJugadores, rangoEdad, tipo), categorias);
 	}
 	
 	/**
 	 * Crea y añade una nueva figura al inventario
+	 * @param empleado Empleado que trata de añadir la figura a la tienda
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripcion del producto
@@ -112,9 +120,9 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
-	public void anadirFigura(int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
+	public void anadirFigura(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		anadirProducto(uds, nombre, descripcion, precio, image, new CaracteristicasFigura(dimensiones, marca, material), categorias);
+		anadirProducto(empleado, uds, nombre, descripcion, precio, image, new CaracteristicasFigura(dimensiones, marca, material), categorias);
 	}
 	
 	/**
@@ -129,9 +137,9 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 */
-	public void anadirPack(int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
+	public void anadirPack(Empleado empleado, int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		anadirProducto(uds, nombre, descripcion, precio, image, new CaracteristicasPack(productos), categorias);
+		anadirProducto(empleado, uds, nombre, descripcion, precio, image, new CaracteristicasPack(productos), categorias);
 	}
 	
 	/**
@@ -213,9 +221,12 @@ public class Almacen implements Serializable {
 	 * @param categorias Nuevas categorias del producto
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
+	 * @throws InvalidPermitException Se lanza en caso de que el empleado no tenga los permisos adecuados
 	 */
-	public void modificarProducto(Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, CaracteristicasProducto caracteristicas, Categoria...categorias) 
-			throws InvalidArgumentException, DoubleDiscountException {
+	public void modificarProducto(Empleado empleado, Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, CaracteristicasProducto caracteristicas, Categoria...categorias) 
+			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
+		if (empleado.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", Permiso.PRODUCTOS, empleado);
+		
 		if(producto == null || nombre == null || desc == null || caracteristicas == null || categorias == null)
 			throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
 		if(udsStock < 0) throw new InvalidArgumentException("Las unidades en stock no pueden ser negativas");
@@ -253,8 +264,11 @@ public class Almacen implements Serializable {
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
+	 * @throws InvalidPermitException Se lanza en caso de que el empleado no tenga los permisos adecuados
 	 */
-	public boolean anadirProductosDeFichero(String fProductos) throws DoubleDiscountException, InvalidArgumentException {
+	public boolean anadirProductosDeFichero(Empleado empleado, String fProductos) throws DoubleDiscountException, InvalidArgumentException, InvalidPermitException {
+		if (empleado.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "gestionar pedidos", Permiso.PRODUCTOS, empleado);
+		
 		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío");
 		String linea;
 		
@@ -291,7 +305,7 @@ public class Almacen implements Serializable {
 							String fecha[] = partes[9].split(",");
 							LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 							
-							this.anadirComic(uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+							this.anadirComic(empleado, uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
 						} catch (IllegalArgumentException | DateTimeException e) {
 	                        throw new InvalidArgumentException("Datos de cómic inválidos: " + e.getMessage(), "cargar fichero de productos");
 	                    }
@@ -303,7 +317,7 @@ public class Almacen implements Serializable {
 							String rangoEdad = partes[11];
 							TipoJuego tipoJuego = TipoJuego.valueOf(partes[12]);
 							
-							this.anadirJuego(uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+							this.anadirJuego(empleado, uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
 						} catch(IllegalArgumentException e) {
 							throw new InvalidArgumentException("Datos de juego inválidos: " + e.getMessage(), "cargar fichero de productos");
 						}
@@ -315,7 +329,7 @@ public class Almacen implements Serializable {
 							String material = partes[14];
 							String dimensiones = partes[15];
 							
-							this.anadirFigura(uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+							this.anadirFigura(empleado, uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
 						} catch (IllegalArgumentException e) {
 							throw new InvalidArgumentException("Datos de figura inválidos: " + e.getMessage(), "cargar fichero de productos");
 						}
