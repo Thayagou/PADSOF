@@ -338,7 +338,7 @@ public class ActionEmpleado {
 	 * @throws InvalidPermitException 
 	 */
 	static void actionBorrarProducto(Usuario usuario) throws InvalidArgumentException, InvalidUserInputException, InvalidPermitException {
-		String nombre = Main.getUserInputString("Introduzca el nombre del producto que quiere borrar: ");
+		String nombre = Main.getUserInputLine("Introduzca el nombre del producto que quiere borrar: ");
 		Producto[] productos = Main.tienda.getAlmacen().getProductosCoincidentes(nombre);
 		if(productos.length < 1) throw new InvalidArgumentException("No se han encontrado productos con ese nombre", "borrar producto");
 		
