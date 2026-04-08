@@ -134,7 +134,7 @@ public class Historial implements Serializable, ObservadorProducto {
 		
 		YearMonth month = Reloj.mesNow();
 		if (wallapopMensuales.get(month) == null) wallapopMensuales.put(month, new StatsMensual());
-		StatsMensual statWallapop = ventasMensuales.get(month);
+		StatsMensual statWallapop = wallapopMensuales.get(month);
 		statWallapop.incrementar(0, precio);
 		
 		valoraciones.add(valoracion);
