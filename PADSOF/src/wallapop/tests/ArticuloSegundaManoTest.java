@@ -13,10 +13,7 @@ import venta.productos.Categoria;
 
 import usuario.ClienteRegistrado;
 import usuario.Empleado;
-import wallapop.ArticuloSegundaMano;
-import wallapop.Cartera;
-import wallapop.EstadoFisicoArticulo;
-import wallapop.Valoracion;
+import wallapop.*;
 
 /**
  * Clase con los tests de los métodos de la clase ArticuloSegundaMano
@@ -36,8 +33,7 @@ class ArticuloSegundaManoTest {
 		cartera = cliente.getCartera();
 		cat1 = new Categoria("Juego de mesa");
 		cat2 = new Categoria("Cartas");
-		articulo = new ArticuloSegundaMano("Catan", "Juego de mesa muy divertido", cartera, "Juegos de cartas", cat1,
-				cat2);
+		articulo = new ArticuloSegundaMano("Catan", "Juego de mesa muy divertido", cartera, "Juegos de cartas", cat1, cat2);
 	}
 
 	// ─── Constructor ────────────────────────────────────────────────────────────
@@ -120,14 +116,12 @@ class ArticuloSegundaManoTest {
 	@Test
 	void testAnadirValoracion() throws Exception {
 		Valoracion v = new Valoracion(articulo);
-		articulo.anadirValoracion(v);
 		assertEquals(v, articulo.getValoracion());
 	}
 
 	@Test
 	void testValorarArticulo() throws Exception {
 		Valoracion v = new Valoracion(articulo);
-		articulo.anadirValoracion(v);
 		Empleado e = new Empleado("Empleado", "pass");
 		v.valorar(e, 20, EstadoFisicoArticulo.MUY_BUENO);
 
@@ -139,9 +133,7 @@ class ArticuloSegundaManoTest {
 	@Test
 	void testAnadirValoracionConValoracion() throws Exception {
 		Valoracion v1 = new Valoracion(articulo);
-		Valoracion v2 = new Valoracion(articulo);
-		articulo.anadirValoracion(v1);
-		articulo.anadirValoracion(v2);
+		assertThrows(InvalidArgumentException.class, () -> new Valoracion(articulo));
 		assertEquals(v1, articulo.getValoracion());
 	}
 
@@ -157,8 +149,7 @@ class ArticuloSegundaManoTest {
 
 	@Test
 	void testToStringConValoracion() throws Exception {
-		Valoracion v = new Valoracion(articulo);
-		articulo.anadirValoracion(v);
+		new Valoracion(articulo);
 		assertFalse(articulo.toString().contains("Pendiente de solicitud"));
 	}
 }

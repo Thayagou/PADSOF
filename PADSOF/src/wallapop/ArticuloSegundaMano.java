@@ -55,7 +55,7 @@ public class ArticuloSegundaMano implements Serializable {
 		
 		this.interesadoEn = interesadoEn;
 		this.disponible = false;
-	}	
+	}
 
 	/**
 	 * Getter del nombre del artículo
@@ -149,7 +149,7 @@ public class ArticuloSegundaMano implements Serializable {
 	 * @throws InvalidArgumentException Se lanza en caso de que algún argumento sea inválido
 	 */
 	public void anadirValoracion(Valoracion valoracion) throws InvalidArgumentException {
-		//if (this.valoracion != null) throw new InvalidArgumentException("El artículo ya ha sido valorado", "añadir valoración a artículo");
+		if (this.valoracion != null) throw new InvalidArgumentException("El artículo ya ha sido valorado", "añadir valoración a artículo");
 		if (valoracion == null) throw new InvalidArgumentException("La valoración introducida es inválida", "añadir valoración a artículo");
 		this.valoracion = valoracion;
 	}
@@ -164,10 +164,10 @@ public class ArticuloSegundaMano implements Serializable {
 	
 	@Override
 	public String toString() {
-		return nombre + " con Id" + id +
+		return nombre + " con Id " + id +
 				"\nDescripcion: " + descripcion + 
 				"\nPropietario: " + dueno.getDueno().getNombre() +
-				"\nCategorias:" + categorias + 
+				"\nCategorias: " + categorias + 
 				"\nInteresado en: " + interesadoEn +
 				"\nDisponible: " + disponible + 
 				"\nValoracion: \n" + (valoracion == null ? "Pendiente de solicitud" : valoracion.toStringSinArticulo());

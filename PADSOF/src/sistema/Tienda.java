@@ -391,7 +391,6 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		} 
 		
 		Valoracion valoracion = new Valoracion(articulo);
-		articulo.anadirValoracion(valoracion);
 		historial.guardarValoracion(valoracion);
 		for(Empleado e : this.getEmpleados()) {
 			e.enviarNotificacion("Se ha hecho una nueva solicitud de valoración de un artículo de segunda mano", TipoNotificacion.VALORACION);
