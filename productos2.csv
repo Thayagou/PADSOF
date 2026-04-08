@@ -1,8 +1,18 @@
-TIPO(C/J/F);NOMBRE;DESCRIPCION;PRECIO;UNIDADES;CATEGORIAS;PAGINAS;AUTOR;EDITORIAL;AÑO,MES,DÍA;JUGADORES;EDAD;ESTILO(Cartas/Dados/Tablero/Miniatura);MARCA;MATERIAL;DIMENSION;
-0			1		2			3		4		5			6		7		8		9			10		11		12									13		14		15
 C;Dragon Ball, Vol. 1;Aventuras de Goku, un guerrero saiyajin experto en artes marciales que en sus viajes pone a prueba y mejora sus habilidades de pelea, enfrentando oponentes y protegiendo a la Tierra de otros seres que quieren conquistarla y exterminar a la humanidad.;13.00;250;manga,aventuras;192;Akira Toriyama;Viz Media;2008,10,2;;;;;;
 J;Risk;Risk es el conocido juego de conquista donde cada jugador comanda ejercitos y compite por el control global.;44.80;25;estrategia,accion,militar,multijugador;;;;;2;>10 años;Tablero;;;
 F;Funko Star Wars Pop! Maul;Con su sable laser de doble hoja, este antiguo lord Sith sera una poderosa incorporacion a tu coleccion Star Wars.;13.00;20;funko,cine;;;;;;;;Funko Europe;Vinilo;10.9cm alto
 J;Monopoly;El clasico juego de mesa competitivo donde conviertes decisiones inteligentes en ventaja economica, compras propiedades clave, construyes tu imperio y presionas estrategicamente a tus rivales hasta que solo quede uno en pie.;33.5;30;estrategia,familiar,multijugador;;;;;2 a 6;>8 años;Tablero;;;
 F;Mazinger Z;Figura de accion articulada del legendario Mazinger-Z.;128.40;2;anime,robot,ciencia-ficcion;;;;;;;;Kaiyodo;PVC;30cm alto
 C;Oishimbo: A la carte 1. Cocina japonesa;El manga que desvela todos los secretos de la gastronomia japonesa.;12.00;5;cocina,costumbrismo,japon;272;Tetsu Kariya/Akira Hanasaki;Norma editorial;2015,11,15;;;;;;
+C;One Piece Vol. 1;Las aventuras de Luffy, un joven pirata que busca el tesoro One Piece para convertirse en el Rey de los Piratas.;9.95;300;manga,aventuras;208;Eiichiro Oda;Planeta Comic;2012,5,10;;;;;;
+J;Catan;Juego de estrategia donde los jugadores colonizan una isla recolectando recursos y construyendo asentamientos.;35.00;40;estrategia,economia,multijugador;;;;;3 a 4;>10 años;Tablero;;;
+F;Batman Figura Coleccionable;Figura detallada de Batman basada en los comics clasicos de DC.;25.50;15;superheroes,dc,coleccion;;;;;;;;DC Collectibles;PVC;18cm alto
+C;Naruto Vol. 1;Naruto Uzumaki es un ninja joven que sueña con convertirse en Hokage.;8.50;200;manga,accion;192;Masashi Kishimoto;Panini;2011,3,20;;;;;;
+J;Uno;Juego de cartas rapido y divertido para toda la familia.;12.00;100;cartas,familiar,multijugador;;;;;2 a 10;>6 años;Cartas;;;
+F;Figura Iron Man;Figura articulada de Iron Man con gran nivel de detalle.;45.99;10;marvel,superheroes;;;;;;;;Hasbro;Plastico;20cm alto
+C;Attack on Titan Vol. 1;La humanidad lucha por sobrevivir contra gigantes devoradores de humanos.;10.00;150;manga,accion,drama;200;Hajime Isayama;Norma Editorial;2013,7,1;;;;;;
+J;Dobble;Juego de observacion y reflejos donde debes encontrar simbolos coincidentes.;15.00;60;cartas,rapidez,familiar;;;;;2 a 8;>6 años;Cartas;;;
+F;Figura Goku Super Saiyan;Figura de Goku en su transformacion Super Saiyan.;30.00;25;anime,dragonball;;;;;;;;Banpresto;PVC;25cm alto
+C;Death Note Vol. 1;Un estudiante encuentra un cuaderno que le permite matar a cualquiera cuyo nombre escriba.;9.00;180;manga,suspense;200;Tsugumi Ohba/Takeshi Obata;Ivrea;2010,9,15;;;;;;
+J;Carcassonne;Juego de colocacion de losetas para construir ciudades y caminos medievales.;28.00;35;estrategia,medieval;;;;;2 a 5;>7 años;Tablero;;;
+F;Figura Spider-Man;Figura del heroe Spider-Man con traje clasico.;22.00;18;marvel,superheroes;;;;;;;;Hasbro;Plastico;15cm alto

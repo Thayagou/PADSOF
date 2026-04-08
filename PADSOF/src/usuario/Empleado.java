@@ -141,6 +141,6 @@ public class Empleado extends Usuario implements Serializable {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "\nPermisos: " + permisos;
+		return super.toString() + "\nPermisos: " + permisos + "\nNotificaciones: " + notificaciones;
 	}
 }

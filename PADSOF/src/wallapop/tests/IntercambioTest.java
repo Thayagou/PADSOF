@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.InvalidArgumentException;
 import sistema.GestorCaducidad;
-import sistema.Reloj;
 import sistema.Sistema;
 import sistema.Tienda;
 import usuario.ClienteRegistrado;
@@ -99,6 +98,7 @@ class IntercambioTest {
 	
 	@Test
 	void caducidadIntercambios() throws Exception {
+		Duration dur = Sistema.getInstancia().getTiempoCaducaOferta();
 		Sistema.getInstancia().setTiempoCaducaOferta(Duration.ofSeconds(2));
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.SECONDS);
 		
@@ -108,8 +108,8 @@ class IntercambioTest {
 				new ArticuloSegundaMano[] { artsReceptor[1] });
 		
 		Thread.sleep(4000);
-		
-		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.SECONDS);
+
+		Sistema.getInstancia().setTiempoCaducaOferta(dur);
 		
 		assertEquals(EstadoIntercambio.CADUCADO, intercambio.getEstado());
 		assertEquals(EstadoIntercambio.CADUCADO, intercambio2.getEstado());

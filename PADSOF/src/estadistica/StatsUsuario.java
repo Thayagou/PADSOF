@@ -89,11 +89,10 @@ public class StatsUsuario implements Serializable {
 		
 		totalGastado += precio;
 		this.udsCompradas += udsCompradas;
-		
 		for (Categoria c : vector.keySet()) {			
 			intereses.merge(c, vector.get(c), (a,b)->a+b);
 		}
-		
+
 		norma = Math.sqrt(intereses.values().stream().mapToDouble(a->a*a).sum());
 	}
 	

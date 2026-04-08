@@ -58,7 +58,7 @@ public class Almacen implements Serializable {
 	public void anadirProducto(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("", descripcion, null, usuario);
-		if(inventario.containsKey(nombre)) throw new InvalidArgumentException("Ya existe un producto con el mismo nombre en el almacén");
+		if(inventario.containsKey(nombre)) throw new InvalidArgumentException("Ya existe un producto con el mismo nombre en el almacén", "añadir producto");
 		Producto p = caracteristicas.crearProducto(nombre, descripcion, precio, image, categorias);
 		this.inventario.put(nombre, new Stock(p, uds));
 		observador.guardarProducto(p);
@@ -130,6 +130,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Crea y añade un nuevo pack al inventario
+	 * @param usuario Usuario añade el pack a la tienda
 	 * @param uds Unidades de producto
 	 * @param nombre Nombre del producto
 	 * @param descripcion Descripcion del producto
@@ -176,7 +177,7 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public Stock getStock(Producto producto) throws InvalidArgumentException {
-		if(producto == null) throw new InvalidArgumentException("El producto no puede ser null");
+		if(producto == null) throw new InvalidArgumentException("El producto no puede ser null", "get stock");
 		return inventario.get(producto.getNombre());
 	}
 	
@@ -187,7 +188,7 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public Stock getStock(String nombre) throws InvalidArgumentException {
-		if(!inventario.containsKey(nombre)) throw new InvalidArgumentException("El producto no se encuantra en la tienda");
+		if(!inventario.containsKey(nombre)) throw new InvalidArgumentException("El producto no se encuantra en la tienda", "get stock");
 		return inventario.get(nombre);
 	}
 	
@@ -201,6 +202,7 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Eliminar un producto del inventario
+	 * @param usuario Usuario que elimina el producto de la tienda
 	 * @param producto Producto que se quiere eliminar
 	 * @return true si se elimina correctamente
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
@@ -208,7 +210,7 @@ public class Almacen implements Serializable {
 	 */
 	public boolean eliminarProducto(Usuario usuario, Producto producto) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "eliminar producto", Permiso.PRODUCTOS, usuario);
-		if(producto == null) throw new InvalidArgumentException("El producto a eliminar no puede ser null");
+		if(producto == null) throw new InvalidArgumentException("El producto a eliminar no puede ser null", "eliminar producto");
 		
 		producto.eliminar();
 		inventario.remove(producto.getNombre());
@@ -235,13 +237,13 @@ public class Almacen implements Serializable {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "modificar producto", Permiso.PRODUCTOS, usuario);
 		
 		if(producto == null || nombre == null || desc == null || caracteristicas == null || categorias == null)
-			throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
-		if(udsStock < 0) throw new InvalidArgumentException("Las unidades en stock no pueden ser negativas");
-		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo");
+			throw new InvalidArgumentException("No se pueden dejar atributos vacíos", "modificar producto");
+		if(udsStock < 0) throw new InvalidArgumentException("Las unidades en stock no pueden ser negativas", "modificar producto");
+		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo", "modificar producto");
 		
 		
 		if(!this.inventario.containsKey(producto.getNombre()))
-			throw new InvalidArgumentException("El producto no existe en el almacén");
+			throw new InvalidArgumentException("El producto no existe en el almacén", "modificar producto");
 		
 		Categoria[] categoriasViejas = producto.getCategorias();
 		producto.setCategorias(categorias);	/*Se puede lanzar una excepción aquí si las categorias son incompatibles*/
@@ -261,7 +263,7 @@ public class Almacen implements Serializable {
 			producto.setImagen(imagen);
 		} catch(InvalidArgumentException e) {
 			producto.setCategorias(categoriasViejas);
-			throw new InvalidArgumentException("Algo falló al intentar modificar el producto por argumentos inválidos");
+			throw new InvalidArgumentException("Algo falló al intentar modificar el producto por argumentos inválidos", "modificar producto");
 		}
 	}
 	
@@ -277,7 +279,7 @@ public class Almacen implements Serializable {
 	public boolean anadirProductosDeFichero(Usuario usuario, String fProductos) throws DoubleDiscountException, InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "añadir productos de fichero", Permiso.PRODUCTOS, usuario);
 		
-		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío");
+		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío", "añadir productos de fichero");
 		String linea;
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(fProductos))) {
@@ -363,7 +365,7 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public Categoria getCategoria(String nombre) throws InvalidArgumentException {
-		if(!categorias.containsKey(nombre)) throw new InvalidArgumentException("La categoria no se encuentra en la tienda");
+		if(!categorias.containsKey(nombre)) throw new InvalidArgumentException("La categoria no se encuentra en la tienda", "get categoria");
 		return categorias.get(nombre);
 	}
 	
@@ -418,14 +420,15 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Crea y añade una categoría al almacén
+	 * @param usuario Usuario que añade una categoría a la tienda
 	 * @param nombre Nombre de la categoría
 	 * @return true si se pudo añadir, false si ya existe una categoria con ese nombre
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean anadirCategoria(Usuario usuario, String nombre) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "añadir categoría", Permiso.PRODUCTOS, usuario);
-		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío");
+		if(nombre == null) throw new InvalidArgumentException("El nombre de la categoría no puede estar vacío", "añadir categoría");
 		if(categorias.containsKey(nombre)) return false;
 		
 		this.categorias.put(nombre, new Categoria(nombre));
@@ -434,14 +437,15 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Elimina una categoría del almacén
+	 * @param usuario Usuario que elimina una categoria de la tienda
 	 * @param categoria Categoria que se borra
 	 * @return true en caso de que se elimine correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean eliminarCategoria(Usuario usuario, Categoria categoria) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "eliminar categoría", Permiso.PRODUCTOS, usuario);
-		if(categoria == null) throw new InvalidArgumentException("La categoría a eliminar no puede ser null");
+		if(categoria == null) throw new InvalidArgumentException("La categoría a eliminar no puede ser null", "eliminar categoría");
 		
 		categoria.eliminar();
 		categorias.remove(categoria.getNombre());
@@ -450,32 +454,34 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Añade un producto a una categoría
+	 * @param usuario Usuario que añade un producto a una categoria
 	 * @param producto Producto al que se quiere añadir
 	 * @param categoria Categoría que se quiere añadir
 	 * @return true en caso de que se añada correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean anadirProductoACategoria(Usuario usuario, Producto producto, Categoria categoria)
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "añadir producto a categoría", Permiso.PRODUCTOS, usuario);
-		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
+		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null", "añadir producto a categoria");
 		
 		return producto.anadirCategorias(categoria);
 	}
 	
 	/**
 	 * Quita un producto de una categoría
+	 * @param usuario Usuario que quita un producto de una categoria
 	 * @param producto Producto que se quiere quitar
 	 * @param categoria Categoría de la que se quiere quitar
 	 * @return true en caso de que se quite correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean quitarProductoDeCategoria(Usuario usuario, Producto producto, Categoria categoria) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "quitar producto de categoría", Permiso.PRODUCTOS, usuario);
-		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null");
+		if(producto == null || categoria == null) throw new InvalidArgumentException("No se pueden pasar argumentos null", "quitar producto de categoría");
 		
 		producto.quitarCategorias(categoria);
 		return true;
@@ -483,15 +489,16 @@ public class Almacen implements Serializable {
 	
 	/**
 	 * Modifica el nombre de una categoría
+	 * @param usuario Usuario que modifica una categoria
 	 * @param categoria Categoría que se quiere cambiar
 	 * @param nuevoNombre Nuevo nombre para la categoría
 	 * @return true en caso de que se modifique correctamente, false en caso contrario
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
-	 * @throws InvalidPermitException 
+	 * @throws InvalidPermitException Se lanza si no se posee el permiso para realizar la acción
 	 */
 	public boolean modificarCategoria(Usuario usuario, Categoria categoria, String nuevoNombre) throws InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "modificar categoría", Permiso.PRODUCTOS, usuario);
-		if(categoria == null || nuevoNombre == null) throw new InvalidArgumentException("La categoría y el nombre no pueden ser null");
+		if(categoria == null || nuevoNombre == null) throw new InvalidArgumentException("La categoría y el nombre no pueden ser null", "modificar categoría");
 		
 		if((!categorias.containsKey(categoria.getNombre())) || categorias.containsKey(nuevoNombre)) {
 			return false;
@@ -517,7 +524,7 @@ public class Almacen implements Serializable {
 	 */
 	public boolean anadirDescuentoDinero(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double precio) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos", "añadir descuento dinero");
 		
 		Descuento descuento = new DescuentoDinero(valorMin, inicio, fin, condicion, precio);
 		if(!desc.anadirDescuento(descuento))
@@ -540,7 +547,7 @@ public class Almacen implements Serializable {
 	 */
 	public boolean anadirDescuentoPorcentaje(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, double porcentaje) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos", "añadir descuento porcentaje");
 		
 		Descuento descuento = new DescuentoPorcentaje(valorMin, inicio, fin, condicion, porcentaje);
 		if(!desc.anadirDescuento(descuento))
@@ -563,7 +570,7 @@ public class Almacen implements Serializable {
 	 */
 	public boolean anadirDescuentoRegalo(Descontable desc, double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion, Producto regalo) 
 			throws InvalidArgumentException, DoubleDiscountException {
-		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos");
+		if(desc == null || inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos", "añadir descuento regalo");
 		
 		Descuento descuento = new DescuentoRegalo(valorMin, inicio, fin, condicion, regalo);
 		if(!desc.anadirDescuento(descuento))
@@ -588,7 +595,7 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean anadirArticuloSegundaMano(ArticuloSegundaMano articulo) throws InvalidArgumentException {
-		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null");
+		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null", "añadir artículo");
 		return articulos.add(articulo);
 	}
 	
@@ -599,7 +606,7 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 */
 	public boolean eliminarArticuloSegundaMano(ArticuloSegundaMano articulo) throws InvalidArgumentException {
-		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null");
+		if(articulo == null) throw new InvalidArgumentException("El articulo no puede ser null", "eliminar artículo");
 		return articulos.remove(articulo);
 	}
 	
@@ -624,7 +631,7 @@ public class Almacen implements Serializable {
 	 */
 	public Producto[] getProductosPorFiltros(ClienteRegistrado cliente,Categoria[] categorias, double precioMin, double precioMax, double estrellasMin)
 			throws InvalidArgumentException {
-		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
+		if(categorias == null || precioMin < 0 || precioMax < 0 || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros", "búsqueda por filtros");
 		
 		cliente.actualizarVectorInteresesPorBusqueda(categorias);
 		
@@ -642,7 +649,7 @@ public class Almacen implements Serializable {
 	 */
 	public Producto[] getProductosPorFiltros(Categoria[] categorias, double precioMin, double precioMax, double estrellasMin)
 			throws InvalidArgumentException {
-		if(categorias == null || precioMin < 0 || precioMax < precioMin || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros");
+		if(categorias == null || precioMin < 0 || precioMax < precioMin || estrellasMin < 0 || estrellasMin > 5) throw new InvalidArgumentException("Parametros incorrectos para busqueda por filtros", "búsqueda por filtros");
 		
 		Set<Producto> productos = new HashSet<>();
 		for(Categoria c : categorias) {

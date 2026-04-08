@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,12 @@ import wallapop.ArticuloSegundaMano;
 class ClienteRegistradoTest {
 	private static Tienda tienda;
 	private static ClienteRegistrado c;
+	private static Duration durOrig = Sistema.getInstancia().getTiempoCaducaCarrito();
 
+	@AfterAll
+	void end() {
+		Sistema.getInstancia().setTiempoCaducaCarrito(durOrig);
+	}
 	
 	private Comic crearComic(String nombre, double precio) throws Exception {
 		List<Categoria> categorias = new ArrayList<>();

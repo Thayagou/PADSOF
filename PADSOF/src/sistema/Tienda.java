@@ -127,7 +127,6 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	        return t;
 
 	    } catch (Exception e) {
-	        e.printStackTrace();
 	        return null;
 	    }
 	}
@@ -143,7 +142,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	        oos.writeObject(AsignadorId.getInstancia());
 	        oos.writeObject(Reloj.getInstancia());
 	    } catch (Exception e) {
-	        e.printStackTrace();
+	        return;
 	    }
 	}
 	
@@ -157,7 +156,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws NotValidUserException Se lanza si ya existe el usuario o la contraseña es incorrecta
 	 */
 	public ClienteRegistrado registrarse(String nombre, String contrasena, String confirmarContrasena) throws InvalidArgumentException, NotValidUserException {
-		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
+		if(nombre == null || contrasena == null || confirmarContrasena == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos", "registrarse");
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Ya existe un usuario con ese nombre", "registrarse", nombre);
 		if(!contrasena.equals(confirmarContrasena)) throw new NotValidUserException("Ha fallado la comprobación de contraseña", "registrarse", nombre);
 		
@@ -388,12 +387,10 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		try {
 			TeleChargeAndPaySystem.charge(numTarjeta, "Pago de valoración de artículo de segunda mano.", Sistema.getInstancia().getPrecioValoracion());
 		} catch (OrderRejectedException e) {
-			e.printStackTrace();
 			return false;
 		} 
 		
 		Valoracion valoracion = new Valoracion(articulo);
-		articulo.anadirValoracion(valoracion);
 		historial.guardarValoracion(valoracion);
 		for(Empleado e : this.getEmpleados()) {
 			e.enviarNotificacion("Se ha hecho una nueva solicitud de valoración de un artículo de segunda mano", TipoNotificacion.VALORACION);
@@ -441,7 +438,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 */
 	public boolean quitarDeCarritoDe(ClienteRegistrado cliente, Producto producto) throws InvalidArgumentException {
-		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos");
+		if(cliente == null || producto == null || almacen.getStock(producto) == null) throw new InvalidArgumentException("No se pueden dejar argumentos vacíos", "quitar producto de carrito");
 		
 		cliente.getCarrito().quitarProducto(producto);
 		almacen.getStock(producto).incrementarStock();
@@ -489,7 +486,6 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		try {
 			TeleChargeAndPaySystem.charge(numTarjeta, "Compra en tienda de comics.", precio);
 		} catch (OrderRejectedException e) {
-			e.printStackTrace();
 			for(StockExterno st : carrito.getRegalos()) {
 				getAlmacen().getStock(st.getProducto()).incrementarStock(st.getUdsEnStock());
 			}
