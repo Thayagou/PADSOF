@@ -674,7 +674,6 @@ public class Almacen implements Serializable {
 		Map<Producto, Double> recomendacion = new HashMap<>();
 		Map<ClienteRegistrado, Double> similaridadEntreClientes = new HashMap<>(); // Usamos este map para evitar recalcular el grado de similaridad entre usuarios
 		PriorityQueue<Producto> pq = new PriorityQueue<>(Comparator.comparingDouble(p-> recomendacion.get(p)));
-		Set<ParametroSistema> parametros = Sistema.getInstancia().getParametros();
 		Producto p;
 		double pondValoraciones = Sistema.getInstancia().getPonderacionValoracionesProducto();
 		double pondProdRecomendado = Sistema.getInstancia().getPonderacionProductoRecomendado();
