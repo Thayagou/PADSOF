@@ -2,54 +2,47 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
-import sistema.*;
-import usuario.*;
-import exceptions.*;
-
-public class VentanaLogin extends JFrame {
+public class VentanaLogin extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private JTextField usuarioField;
+	private JPasswordField passField;
+	private JButton botonEntrar;
 
-	public VentanaLogin(Tienda tienda) {
+	public VentanaLogin() {
 
-		setTitle("Login");
-		setSize(300, 200);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		JLabel title = new JLabel("Login");
 
-		JTextField usuarioField = new JTextField(15);
-		JPasswordField passField = new JPasswordField(15);
-		JButton boton = new JButton("Entrar");
+		usuarioField = new JTextField(15);
+		passField = new JPasswordField(15);
+		botonEntrar = new JButton("Entrar");
 
 		JPanel panel = new JPanel(new GridLayout(3, 2));
+		panel.add(title);
 		panel.add(new JLabel("Usuario:"));
 		panel.add(usuarioField);
 		panel.add(new JLabel("Contraseña:"));
 		panel.add(passField);
-		panel.add(boton);
-
-		boton.addActionListener(e -> {
-			String nombre = usuarioField.getText();
-			String pass = new String(passField.getPassword());
-
-			try {
-				Usuario usuario = tienda.iniciarSesion(nombre, pass);
-				
-				if (usuario instanceof Gestor) {
-			        new VentanaInicioGestor(tienda);
-			    } else if (usuario instanceof Empleado) {
-			    	new VentanaInicioEmpleado(tienda);
-			    } else if (usuario instanceof ClienteRegistrado) {
-			    	new VentanaInicioCliente(tienda);
-			    }
-				dispose();
-			} catch (CustomException ex) {
-				new VentanaMensaje(ex.getMessage());
-			}
-		});
+		panel.add(botonEntrar);
 
 		add(panel);
 		setVisible(true);
+	}
+	
+	//Asignar controlador a los botones
+	public void setControlador(ActionListener c) {
+		usuarioField.addActionListener(c);
+		passField.addActionListener(c);
+		botonEntrar.addActionListener(c);
+	}
+	
+	public String getNombreUsuario() {
+		return usuarioField.getText();
+	}
+	
+	public char[] getPassword() {
+		return passField.getPassword();
 	}
 }

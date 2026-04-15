@@ -38,9 +38,9 @@ public class ControlInicioSinRegistrar implements ActionListener {
 	}
 
 	private void showLogin() {
-		VentanaLogin login = new VentanaLogin(tienda);
-		login.setVisible(true);
-		frame.setVisible(false);
+		//login = new ControlLogin(tienda);
+		//login.setVisible(true);
+		//frame.setVisible(false);
 	}
 
 	private void showRegistrarse() {
