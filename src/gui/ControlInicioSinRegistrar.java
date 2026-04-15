@@ -26,6 +26,7 @@ public class ControlInicioSinRegistrar implements ActionListener {
 		this.frame.setVisible(true);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Iniciar sesión"))
 			this.showLogin();

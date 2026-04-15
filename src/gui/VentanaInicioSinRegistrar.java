@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.*;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
 public class VentanaInicioSinRegistrar extends JPanel {
@@ -12,6 +13,9 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	private JButton botonBuscar;
 
 	public VentanaInicioSinRegistrar() {
+		
+		//Poner el layout
+		this.setLayout(new GridLayout(0, 2));
 
 		//Crear componentes
 		JLabel title = new JLabel("Tienda mega friki (just for onion smelling fat twatts...)");
