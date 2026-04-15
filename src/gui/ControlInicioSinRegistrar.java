@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import sistema.*;
 
@@ -38,9 +39,9 @@ public class ControlInicioSinRegistrar implements ActionListener {
 	}
 
 	private void showLogin() {
-		//login = new ControlLogin(tienda);
-		//login.setVisible(true);
-		//frame.setVisible(false);
+		SwingUtilities.invokeLater(() -> {
+		    new ControlLogin(tienda);
+		});
 	}
 
 	private void showRegistrarse() {
