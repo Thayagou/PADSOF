@@ -2,7 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 
-import sistema.Tienda;
+import modelo.sistema.Tienda;
 
 public class TiendaFrame extends JFrame {
 	

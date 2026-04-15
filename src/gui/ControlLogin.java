@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-import exceptions.CustomException;
-import sistema.Tienda;
-import usuario.*;
+import modelo.exceptions.CustomException;
+import modelo.sistema.Tienda;
+import modelo.usuario.*;
 
 public class ControlLogin implements ActionListener {
 

@@ -2,9 +2,10 @@ package gui;
 
 import javax.swing.*;
 
-import exceptions.*;
-import sistema.Tienda;
-import venta.productos.*;
+import modelo.exceptions.*;
+import modelo.sistema.Tienda;
+import modelo.venta.productos.*;
+
 import java.awt.*;
 
 public class VentanaResultados extends JFrame {

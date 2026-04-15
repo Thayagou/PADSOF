@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import sistema.*;
+import modelo.sistema.*;
 
 public class ControlInicioSinRegistrar implements ActionListener {
 

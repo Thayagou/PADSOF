@@ -2,8 +2,7 @@ package gui;
 
 import javax.swing.*;
 
-import sistema.Tienda;
-//import java.awt.*;
+import modelo.sistema.Tienda;
 
 public class VentanaInicioCliente extends JFrame {
 

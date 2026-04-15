@@ -2,7 +2,7 @@ package gui;
 
 import javax.swing.*;
 
-import sistema.Tienda;
+import modelo.sistema.Tienda;
 
 //import java.awt.*;
 

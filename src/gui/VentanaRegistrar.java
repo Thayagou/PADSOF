@@ -2,9 +2,9 @@ package gui;
 
 import javax.swing.*;
 
-import exceptions.*;
-import sistema.Tienda;
-import usuario.*;
+import modelo.exceptions.*;
+import modelo.sistema.Tienda;
+import modelo.usuario.*;
 
 import java.awt.*;
 
