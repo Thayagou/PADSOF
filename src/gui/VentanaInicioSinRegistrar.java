@@ -23,9 +23,27 @@ public class VentanaInicioSinRegistrar extends JFrame {
 			new VentanaLogin(tienda);
 			dispose();
 		});
+		
+		JButton buttonRegistrar = new JButton("Registrarse");
+		
+		buttonRegistrar.addActionListener(e -> {
+			new VentanaRegistrar(tienda);
+			dispose();
+		});
+		
+		JButton buttonBuscar = new JButton("Buscar");
+		
+		buttonBuscar.addActionListener(e -> {
+			new VentanaBusqueda(tienda);
+			dispose();
+		});
+		
+		
 
 		setLayout(new GridBagLayout());
 		add(botonLogin);
+		add(buttonRegistrar);
+		add(buttonBuscar);
 
 		setVisible(true);
 	}
