@@ -2,6 +2,8 @@ package aplicacion;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.SwingUtilities;
+
 import exceptions.*;
 import sistema.*;
 import gui.*;
@@ -22,9 +24,8 @@ public class GuiExe {
 			tienda = carga;
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
 		
-		javax.swing.SwingUtilities.invokeLater(() -> {
-	        new VentanaInicioSinRegistrar(tienda);
-	    });
-		
+		SwingUtilities.invokeLater(() -> {
+		    new ControlInicioSinRegistrar(tienda);
+		});
 	}
 }
