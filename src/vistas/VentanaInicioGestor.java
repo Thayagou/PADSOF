@@ -1,15 +1,17 @@
-package gui;
+package vistas;
 
 import javax.swing.*;
 
 import modelo.sistema.Tienda;
 
-public class VentanaInicioEmpleado extends JFrame {
+//import java.awt.*;
+
+public class VentanaInicioGestor extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public VentanaInicioEmpleado(Tienda tienda) {
-		setTitle("EMPLEADO");
+	public VentanaInicioGestor(Tienda tienda) {
+		setTitle("GESTOR");
 		setSize(300, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);

@@ -1,4 +1,4 @@
-package gui;
+package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
+import vistas.*;
 
 public class ControlLogin implements ActionListener {
 

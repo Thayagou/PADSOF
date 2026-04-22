@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingUtilities;
 
-import gui.*;
+import controladores.ControlInicioSinRegistrar;
 import modelo.exceptions.*;
 import modelo.sistema.*;
 

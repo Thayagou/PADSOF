@@ -1,4 +1,4 @@
-package gui;
+package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import modelo.sistema.*;
+import vistas.*;
 
 public class ControlInicioSinRegistrar implements ActionListener {
 
