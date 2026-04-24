@@ -13,16 +13,14 @@ public class ControlInicioSinRegistrar implements ActionListener {
 
 	private Tienda tienda;
 	private VentanaInicioSinRegistrar vista;
-	private JFrame frame;
+	private TiendaFrame frame;
 
-	public ControlInicioSinRegistrar(Tienda tienda) {
+	public ControlInicioSinRegistrar(Tienda tienda, TiendaFrame frame) {
 		this.tienda = tienda;
 		this.vista = new VentanaInicioSinRegistrar();
 		this.vista.setControlador(this);
 
-		//this.frame = new JFrame("Tienda");
-		this.frame = new TiendaFrame();
-		this.frame.setSize(400, 300);
+		this.frame = frame;
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setLocationRelativeTo(null);
 		this.frame.add(vista);
@@ -40,8 +38,9 @@ public class ControlInicioSinRegistrar implements ActionListener {
 	}
 
 	private void showLogin() {
+		this.frame.remove(vista);
 		SwingUtilities.invokeLater(() -> {
-		    new ControlLogin(tienda);
+		    new ControlLogin(tienda, frame);
 		});
 	}
 

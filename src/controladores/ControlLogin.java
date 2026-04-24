@@ -14,15 +14,14 @@ public class ControlLogin implements ActionListener {
 
 	private Tienda tienda;
 	private VentanaLogin vista;
-	private JFrame frame;
+	private TiendaFrame frame;
 
-	public ControlLogin(Tienda tienda) {
+	public ControlLogin(Tienda tienda, TiendaFrame frame) {
 		this.tienda = tienda;
 		this.vista = new VentanaLogin();
 		this.vista.setControlador(this);
 
-		this.frame = new JFrame("Tienda");
-		this.frame.setSize(400, 300);
+		this.frame = frame;
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setLocationRelativeTo(null);
 		this.frame.add(vista);
