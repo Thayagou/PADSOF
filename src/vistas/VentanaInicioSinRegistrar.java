@@ -20,13 +20,13 @@ public class VentanaInicioSinRegistrar extends JPanel {
 
 		//Crear componentes
 		JLabel title = new JLabel("Tienda mega friki (just for onion smelling fat twatts...)");
-		title.setFont(new Font("Arial", Font.BOLD, frame.getTitleFontSize()));
+		title.setFont(frame.getTitleFont());
 		botonLogin = new JButton("Iniciar sesión");
-		botonLogin.setFont(new Font("Arial", Font.BOLD, frame.getTitle3FontSize()));
+		botonLogin.setFont(frame.getTitle3Font());
 		botonRegistrar = new JButton("Registrarse");
-		botonRegistrar.setFont(new Font("Arial", Font.BOLD, frame.getTitle3FontSize()));
+		botonRegistrar.setFont(frame.getTitle3Font());
 		botonBuscar = new JButton("Buscar");
-		botonBuscar.setFont(new Font("Arial", Font.BOLD, frame.getTitle3FontSize()));
+		botonBuscar.setFont(frame.getTitle3Font());
 		
 		//Añadir al panel
 		this.add(title);

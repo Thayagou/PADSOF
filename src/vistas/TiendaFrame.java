@@ -1,5 +1,6 @@
 package vistas;
 
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 
@@ -27,10 +28,10 @@ public class TiendaFrame extends JFrame {
 		this.height = screen.height;
 	}
 	
-	public int getTitleFontSize() { return (int) (height * TITLE_SIZE);}
-	public int getSubtitleFontSize() { return (int) (height * SUBTITLE_SIZE);}
-	public int getTitle3FontSize() { return (int) (height * TITLE3_SIZE);}
-	public int getTextFontSize() { return (int) (height * TEXT_SIZE);}
+	public Font getTitleFont() { return new Font("Arial", Font.BOLD, (int) (height * TITLE_SIZE));}
+	public Font getSubtitleFont() { return new Font("Arial", Font.BOLD, (int) (height * SUBTITLE_SIZE));}
+	public Font getTitle3Font() { return new Font("Arial", Font.BOLD, (int) (height * TITLE3_SIZE));}
+	public Font getTextFont() { return new Font("Arial", Font.BOLD, (int) (height * TEXT_SIZE));}
 	
 	public int toolBarDistFromTop() { return (int) (height * TOOLBAR_HEIGHT); }
 }
