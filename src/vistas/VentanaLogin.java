@@ -1,8 +1,10 @@
 package vistas;
 
 import javax.swing.*;
+
+import controladores.ControlLogin;
+
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 public class VentanaLogin extends JPanel {
 
@@ -32,9 +34,7 @@ public class VentanaLogin extends JPanel {
 	}
 	
 	//Asignar controlador a los botones
-	public void setControlador(ActionListener c) {
-		usuarioField.addActionListener(c);
-		passField.addActionListener(c);
+	public void setControlador(ControlLogin c) {
 		botonEntrar.addActionListener(c);
 	}
 	

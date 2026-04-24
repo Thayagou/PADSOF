@@ -45,14 +45,16 @@ public class ControlInicioSinRegistrar implements ActionListener {
 	}
 
 	private void showRegistrarse() {
-		VentanaRegistrar registro = new VentanaRegistrar(tienda);
-		registro.setVisible(true);
-		frame.setVisible(false);
+		this.frame.remove(vista);
+		SwingUtilities.invokeLater(() -> {
+		    new ControlRegistrarse(tienda, frame);
+		});
 	}
 
 	private void showBuscar() {
-		VentanaBusqueda registro = new VentanaBusqueda(tienda);
-		registro.setVisible(true);
-		frame.setVisible(false);
+		this.frame.remove(vista);
+		SwingUtilities.invokeLater(() -> {
+		    new ControlBuscar(tienda, frame);
+		});
 	}
 }

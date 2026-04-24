@@ -2,9 +2,7 @@ package vistas;
 
 import javax.swing.*;
 
-import modelo.exceptions.*;
-import modelo.sistema.Tienda;
-import modelo.venta.productos.*;
+import controladores.ControlBuscar;
 
 import java.awt.*;
 import java.util.*;
@@ -12,33 +10,36 @@ import java.util.*;
 public class VentanaBusqueda extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private JSpinner estrellas;
+	private JTextField precioMin;
+	private JTextField precioMax;
+	private JButton botonBuscar;
+	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
 
-	public VentanaBusqueda(Tienda tienda) {
-		setTitle("Realizar Búsqueda");
-		setSize(300, 300);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+	public VentanaBusqueda(String[] categorias) {
+		JLabel title = new JLabel("Realizar búsqueda");
 
-		JSpinner estrellas = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 5.0, 0.5));
-		JTextField precioMin = new JTextField(15);
-		JTextField precioMax = new JTextField(15);
+		estrellas = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 5.0, 0.5));
+		precioMin = new JTextField(15);
+		precioMax = new JTextField(15);
 
 		// Lista de categorias a seleccionar
+
 		JPanel panelCategorias = new JPanel();
 		panelCategorias.setLayout(new BoxLayout(panelCategorias, BoxLayout.Y_AXIS));
-		java.util.List<JCheckBox> checkboxes = new ArrayList<>();
-		java.util.Map<JCheckBox, Categoria> mapa = new HashMap<>();
-		for (Categoria cat : tienda.getAlmacen().getCategorias()) {
-			JCheckBox cb = new JCheckBox(cat.getNombre());
+		Map<JCheckBox, String> mapa = new HashMap<>();
+		for (String cat : categorias) {
+			JCheckBox cb = new JCheckBox(cat);
 			checkboxes.add(cb);
 			mapa.put(cb, cat);
 			panelCategorias.add(cb);
 		}
 		JScrollPane scroll = new JScrollPane(panelCategorias);
 
-		JButton boton = new JButton("Buscar");
+		botonBuscar = new JButton("Buscar");
 
 		JPanel panel = new JPanel(new GridLayout(3, 2));
+		panel.add(title);
 		panel.add(new JLabel("Estrellas minimas:"));
 		panel.add(estrellas);
 		panel.add(new JLabel("Precio minimo:"));
@@ -46,36 +47,36 @@ public class VentanaBusqueda extends JFrame {
 		panel.add(new JLabel("Precio maximo:"));
 		panel.add(precioMax);
 
-		boton.addActionListener(e -> {
-			try {
-				double eMin = (double) estrellas.getValue();
-				double pMin = Double.parseDouble(precioMin.getText());
-				double pMax = Double.parseDouble(precioMax.getText());
-				java.util.List<Categoria> selected = new ArrayList<Categoria>();
-
-				for (JCheckBox cb : checkboxes) {
-					if (cb.isSelected()) {
-						selected.add(mapa.get(cb));
-					}
-				}
-
-				Producto[] productos = tienda.getAlmacen().getProductosPorFiltros(selected.toArray(new Categoria[0]),
-						pMin, pMax, eMin);
-
-				new VentanaResultados(tienda, productos);
-				// dispose();
-			} catch (InvalidArgumentException ex) {
-				new VentanaMensaje(ex.getMessage());
-			} catch (NumberFormatException ex) {
-				new VentanaMensaje("Introduce valores numéricos válidos");
-			}
-
-		});
-
 		setLayout(new BorderLayout());
 		add(panel, BorderLayout.NORTH);
 		add(scroll, BorderLayout.CENTER);
-		add(boton, BorderLayout.SOUTH);
+		add(botonBuscar, BorderLayout.SOUTH);
 		setVisible(true);
+	}
+
+	// Asignar controlador a los botones
+	public void setControlador(ControlBuscar c) {
+		botonBuscar.addActionListener(c);
+	}
+
+	public double getEstrellas() {
+		return (double)estrellas.getValue();
+	}
+
+	public double getPrecioMin() {
+		return Double.parseDouble(precioMin.getText());
+	}
+	
+	public double getPrecioMax() {
+		return Double.parseDouble(precioMax.getText());
+	}
+	
+	public Boolean[] getCategorias() {
+		java.util.List<Boolean> selected = new LinkedList<>();
+		for (JCheckBox cb : checkboxes) {
+			selected.add(cb.isSelected());
+		}
+		
+		return selected.toArray(new Boolean[0]);
 	}
 }

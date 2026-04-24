@@ -2,8 +2,9 @@ package vistas;
 
 import javax.swing.*;
 
+import controladores.ControlInicioSinRegistrar;
+
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 
 public class VentanaInicioSinRegistrar extends JPanel {
 
@@ -32,7 +33,7 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	}
 	
 	//Asignar controlador a los botones
-	public void setControlador(ActionListener c) {
+	public void setControlador(ControlInicioSinRegistrar c) {
 		botonLogin.addActionListener(c);
 		botonRegistrar.addActionListener(c);
 		botonBuscar.addActionListener(c);
