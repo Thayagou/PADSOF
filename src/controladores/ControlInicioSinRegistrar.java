@@ -17,12 +17,10 @@ public class ControlInicioSinRegistrar implements ActionListener {
 
 	public ControlInicioSinRegistrar(Tienda tienda, TiendaFrame frame) {
 		this.tienda = tienda;
-		this.vista = new VentanaInicioSinRegistrar();
+		this.vista = new VentanaInicioSinRegistrar(frame);
 		this.vista.setControlador(this);
 
 		this.frame = frame;
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setLocationRelativeTo(null);
 		this.frame.add(vista);
 		this.frame.setVisible(true);
 	}
