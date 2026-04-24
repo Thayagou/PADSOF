@@ -2,6 +2,7 @@ package vistas;
 
 import javax.swing.*;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
@@ -12,16 +13,20 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	private JButton botonRegistrar;
 	private JButton botonBuscar;
 
-	public VentanaInicioSinRegistrar() {
+	public VentanaInicioSinRegistrar(TiendaFrame frame) {
 		
 		//Poner el layout
 		this.setLayout(new GridLayout(0, 2));
 
 		//Crear componentes
 		JLabel title = new JLabel("Tienda mega friki (just for onion smelling fat twatts...)");
+		title.setFont(new Font("Arial", Font.BOLD, frame.getTitleFontSize()));
 		botonLogin = new JButton("Iniciar sesión");
+		botonLogin.setFont(new Font("Arial", Font.BOLD, frame.getTitle3FontSize()));
 		botonRegistrar = new JButton("Registrarse");
+		botonRegistrar.setFont(new Font("Arial", Font.BOLD, frame.getTitle3FontSize()));
 		botonBuscar = new JButton("Buscar");
+		botonBuscar.setFont(new Font("Arial", Font.BOLD, frame.getTitle3FontSize()));
 		
 		//Añadir al panel
 		this.add(title);
