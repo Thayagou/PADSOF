@@ -7,7 +7,7 @@ import controladores.ControlBuscar;
 import java.awt.*;
 import java.util.*;
 
-public class VentanaBusqueda extends JFrame {
+public class VentanaBusqueda extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JSpinner estrellas;
@@ -17,41 +17,70 @@ public class VentanaBusqueda extends JFrame {
 	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
 
 	public VentanaBusqueda(String[] categorias) {
-		JLabel title = new JLabel("Realizar búsqueda");
+
+		JLabel title = new JLabel("Realizar búsqueda", JLabel.CENTER);
+		title.setFont(title.getFont().deriveFont(Font.BOLD, 18f));
 
 		estrellas = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 5.0, 0.5));
-		precioMin = new JTextField(15);
-		precioMax = new JTextField(15);
+		estrellas.setPreferredSize(new Dimension(80, 30));
+		precioMin = new JTextField(10);
+		precioMax = new JTextField(10);
 
-		// Lista de categorias a seleccionar
+		JPanel panelForm = new JPanel(new GridBagLayout());
+		panelForm.setBorder(BorderFactory.createTitledBorder("Filtros"));
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.anchor = GridBagConstraints.WEST;
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		panelForm.add(new JLabel("Estrellas mínimas:"), gbc);
+
+		gbc.gridx = 1;
+		panelForm.add(estrellas, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panelForm.add(new JLabel("Precio mínimo:"), gbc);
+
+		gbc.gridx = 1;
+		panelForm.add(precioMin, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panelForm.add(new JLabel("Precio máximo:"), gbc);
+
+		gbc.gridx = 1;
+		panelForm.add(precioMax, gbc);
 
 		JPanel panelCategorias = new JPanel();
 		panelCategorias.setLayout(new BoxLayout(panelCategorias, BoxLayout.Y_AXIS));
-		Map<JCheckBox, String> mapa = new HashMap<>();
+		panelCategorias.setBorder(BorderFactory.createTitledBorder("Categorías"));
+
 		for (String cat : categorias) {
 			JCheckBox cb = new JCheckBox(cat);
 			checkboxes.add(cb);
-			mapa.put(cb, cat);
 			panelCategorias.add(cb);
 		}
+
 		JScrollPane scroll = new JScrollPane(panelCategorias);
+		scroll.setPreferredSize(new Dimension(200, 250));
+
+		JPanel centro = new JPanel(new BorderLayout(10, 10));
+		centro.add(panelForm, BorderLayout.WEST);
+		centro.add(scroll, BorderLayout.CENTER);
 
 		botonBuscar = new JButton("Buscar");
+		JPanel panelBoton = new JPanel();
+		panelBoton.add(botonBuscar);
 
-		JPanel panel = new JPanel(new GridLayout(3, 2));
-		panel.add(title);
-		panel.add(new JLabel("Estrellas minimas:"));
-		panel.add(estrellas);
-		panel.add(new JLabel("Precio minimo:"));
-		panel.add(precioMin);
-		panel.add(new JLabel("Precio maximo:"));
-		panel.add(precioMax);
+		this.setLayout(new BorderLayout(10, 10));
+		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-		setLayout(new BorderLayout());
-		add(panel, BorderLayout.NORTH);
-		add(scroll, BorderLayout.CENTER);
-		add(botonBuscar, BorderLayout.SOUTH);
-		setVisible(true);
+		this.add(title, BorderLayout.NORTH);
+		this.add(centro, BorderLayout.CENTER);
+		this.add(panelBoton, BorderLayout.SOUTH);
 	}
 
 	// Asignar controlador a los botones
@@ -60,23 +89,21 @@ public class VentanaBusqueda extends JFrame {
 	}
 
 	public double getEstrellas() {
-		return (double)estrellas.getValue();
+		return (double) estrellas.getValue();
 	}
 
 	public double getPrecioMin() {
 		return Double.parseDouble(precioMin.getText());
 	}
-	
+
 	public double getPrecioMax() {
 		return Double.parseDouble(precioMax.getText());
 	}
-	
-	public Boolean[] getCategorias() {
-		java.util.List<Boolean> selected = new LinkedList<>();
-		for (JCheckBox cb : checkboxes) {
-			selected.add(cb.isSelected());
-		}
-		
-		return selected.toArray(new Boolean[0]);
+
+	public String[] getCategoriasSeleccionadas() {
+	    return checkboxes.stream()
+	            .filter(JCheckBox::isSelected)
+	            .map(JCheckBox::getText)
+	            .toArray(String[]::new);
 	}
 }

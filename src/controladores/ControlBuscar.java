@@ -4,9 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
-import javax.swing.*;
-
 import modelo.exceptions.CustomException;
+import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
@@ -23,8 +22,6 @@ public class ControlBuscar implements ActionListener {
 		this.vista.setControlador(this);
 
 		this.frame = frame;
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setLocationRelativeTo(null);
 		this.frame.add(vista);
 		this.frame.setVisible(true);
 	}
@@ -39,14 +36,18 @@ public class ControlBuscar implements ActionListener {
 		double eMin = vista.getEstrellas();
 		double pMin = vista.getPrecioMin();
 		double pMax = vista.getPrecioMax();
-		Boolean[] selected = vista.getCategorias();
+		String[] selected = vista.getCategoriasSeleccionadas();
 		List<Categoria> categorias = new LinkedList<>();
-		//for(Categoria c : tienda.getAlmacen().getCategorias()) {
-			//if(selected)
-		//}
+		for(String cat : selected) {
+			try {
+				categorias.add(tienda.getAlmacen().getCategoria(cat));
+			} catch (InvalidArgumentException e) {
+				System.out.println(e);
+			}
+		}
 
-		/*try {
-			Producto[] productos = tienda.getAlmacen().getProductosPorFiltros(selected.toArray(new Categoria[0]), pMin, pMax, eMin);
+		try {
+			Producto[] productos = tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), pMin, pMax, eMin);
 			// AÑADIR AL CARD_LAYOUT
 			// LUEGO MANDAMOS A VENTANA QUE DEJE COMPRAR??
 			new VentanaResultados(tienda, productos);
@@ -54,7 +55,7 @@ public class ControlBuscar implements ActionListener {
 			new VentanaMensaje(ex.getMessage());
 		} catch (NumberFormatException ex) {
 			new VentanaMensaje("Introduce valores numéricos válidos");
-		}*/
+		}
 	}
 
 }
