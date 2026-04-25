@@ -7,7 +7,7 @@ import controladores.ControlBuscar;
 import java.awt.*;
 import java.util.*;
 
-public class VentanaBusqueda extends JPanel {
+public class VentanaBusqueda extends FondoGradiente {
 
 	private static final long serialVersionUID = 1L;
 	private JSpinner estrellas;
@@ -17,6 +17,7 @@ public class VentanaBusqueda extends JPanel {
 	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
 
 	public VentanaBusqueda(String[] categorias) {
+		super();
 
 		JLabel title = new JLabel("Realizar búsqueda", JLabel.CENTER);
 		title.setFont(title.getFont().deriveFont(Font.BOLD, 18f));
@@ -67,20 +68,40 @@ public class VentanaBusqueda extends JPanel {
 		JScrollPane scroll = new JScrollPane(panelCategorias);
 		scroll.setPreferredSize(new Dimension(200, 250));
 
-		JPanel centro = new JPanel(new BorderLayout(10, 10));
-		centro.add(panelForm, BorderLayout.WEST);
-		centro.add(scroll, BorderLayout.CENTER);
-
 		botonBuscar = new JButton("Buscar");
 		JPanel panelBoton = new JPanel();
 		panelBoton.add(botonBuscar);
 
-		this.setLayout(new BorderLayout(10, 10));
-		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		//Contenido de esta ventana
+		JPanel contenido = new JPanel(new BorderLayout(10, 10));
+	    contenido.setOpaque(false);
+	    contenido.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+	    
+		JPanel panelNorte = new JPanel(new BorderLayout());
+		panelNorte.setOpaque(false);
+		panelNorte.add(title, BorderLayout.CENTER);
+		
+		JPanel panelCentro = new JPanel(new BorderLayout(10, 10));
+		panelCentro.add(panelForm, BorderLayout.WEST);
+		panelCentro.add(scroll, BorderLayout.CENTER);
+		
+		contenido.add(panelNorte, BorderLayout.NORTH);
+		contenido.add(panelCentro, BorderLayout.CENTER);
+		contenido.add(panelBoton, BorderLayout.SOUTH);
+		
+		this.add(contenido, BorderLayout.CENTER);
 
-		this.add(title, BorderLayout.NORTH);
-		this.add(centro, BorderLayout.CENTER);
-		this.add(panelBoton, BorderLayout.SOUTH);
+		//Hacer opacas algunas partes para que se vea el fondo
+		panelForm.setOpaque(true);
+		panelForm.setBackground(Color.WHITE);
+		panelCategorias.setOpaque(true);
+		panelCategorias.setBackground(Color.WHITE);
+		scroll.setOpaque(true);
+		scroll.getViewport().setOpaque(true);
+		scroll.getViewport().setBackground(Color.WHITE);
+		scroll.setBackground(Color.WHITE);
+		panelCentro.setOpaque(false);
+		panelBoton.setOpaque(false);
 	}
 
 	// Asignar controlador a los botones
@@ -101,9 +122,6 @@ public class VentanaBusqueda extends JPanel {
 	}
 
 	public String[] getCategoriasSeleccionadas() {
-	    return checkboxes.stream()
-	            .filter(JCheckBox::isSelected)
-	            .map(JCheckBox::getText)
-	            .toArray(String[]::new);
+		return checkboxes.stream().filter(JCheckBox::isSelected).map(JCheckBox::getText).toArray(String[]::new);
 	}
 }
