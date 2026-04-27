@@ -6,8 +6,8 @@ import java.awt.*;
 public class FondoGradiente extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private Color colorInicio = new Color(80, 0, 200);
-	private Color colorFin = new Color(160, 0, 180);
+	private Color colorInicio = ColorPalette.BG_PURPLE.getColor();
+	private Color colorFin = ColorPalette.BG_BLUE.getColor();
 	private Color colorBorde = Color.WHITE;
 	private int grosorBorde = 2;
 	private int radio = 20;
@@ -32,7 +32,7 @@ public class FondoGradiente extends JPanel {
 
 		// Gradiente
 		GradientPaint gp;
-		gp = new GradientPaint(0, 0, colorInicio, 0, h, colorFin);
+		gp = new GradientPaint(0, 0, colorInicio, w, h, colorFin);
 		g2.setPaint(gp);
 		g2.fillRoundRect(0, 0, w, h, radio, radio);
 
