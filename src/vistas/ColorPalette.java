@@ -6,7 +6,7 @@ public enum ColorPalette {
 	
 	WHITE(255, 255, 255),
 	PURPLE(140, 82, 255),
-	LIGT_PURPLE(167, 0, 255),
+	LIGHT_PURPLE(167, 0, 255),
 	BG_PURPLE(169, 31, 187),
 	BLUE(94, 23, 235),
 	DARK_BLUE(83, 31, 187),
@@ -22,7 +22,7 @@ public enum ColorPalette {
 
 	private final Color color;
 
-	ColorPalette(int r, int g, int b) {
+	private ColorPalette(int r, int g, int b) {
 		this.color = new Color(r, g, b);
 	}
 

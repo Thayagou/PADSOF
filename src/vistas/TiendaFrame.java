@@ -13,9 +13,9 @@ public class TiendaFrame extends JFrame {
 	private int height;
 	private int width;
 	
-	private static double TITLE_SIZE = 0.1;
-	private static double SUBTITLE_SIZE = 0.06;
-	private static double TITLE3_SIZE = 0.04;
+	private static double TITLE_SIZE = 0.05;
+	private static double SUBTITLE_SIZE = 0.04;
+	private static double TITLE3_SIZE = 0.03;
 	private static double TEXT_SIZE = 0.02;
 	public static double TOOL_BAR_HEIGHT = 0.1;
 	

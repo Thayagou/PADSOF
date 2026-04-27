@@ -1,6 +1,7 @@
 package vistas;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import controladores.ControlBuscar;
 
@@ -15,20 +16,27 @@ public class VentanaBusqueda extends FondoGradiente {
 	private JTextField precioMax;
 	private JButton botonBuscar;
 	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
+	private static double PREFERRED_FILTER_SIZE = 0.3;
 
 	public VentanaBusqueda(String[] categorias) {
 		super();
-
+		TiendaFrame t = TiendaFrame.getInstance();
 		JLabel title = new JLabel("Realizar búsqueda", JLabel.CENTER);
-		title.setFont(title.getFont().deriveFont(Font.BOLD, 18f));
+		title.setFont(t.getTitle3Font());
 
 		estrellas = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 5.0, 0.5));
 		estrellas.setPreferredSize(new Dimension(80, 30));
+		estrellas.setFont(t.getTextFont());
 		precioMin = new JTextField(10);
+		precioMin.setFont(t.getTextFont());
 		precioMax = new JTextField(10);
+		precioMax.setFont(t.getTextFont());
 
 		JPanel panelForm = new JPanel(new GridBagLayout());
-		panelForm.setBorder(BorderFactory.createTitledBorder("Filtros"));
+		TitledBorder tb = BorderFactory.createTitledBorder("Filtros");
+		tb.setTitleFont(t.getTitle3Font());
+		panelForm.setBorder(tb);
+		panelForm.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_FILTER_SIZE), 0));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
@@ -36,31 +44,41 @@ public class VentanaBusqueda extends FondoGradiente {
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		panelForm.add(new JLabel("Estrellas mínimas:"), gbc);
+		
+		JLabel minEstrellas = new JLabel("Estrellas mínimas:");
+		minEstrellas.setFont(t.getTextFont());
+		panelForm.add(minEstrellas, gbc);
 
 		gbc.gridx = 1;
 		panelForm.add(estrellas, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy++;
-		panelForm.add(new JLabel("Precio mínimo:"), gbc);
+		JLabel minPrecio = new JLabel("Precio mínimo:");
+		minPrecio.setFont(t.getTextFont());
+		panelForm.add(minPrecio, gbc);
 
 		gbc.gridx = 1;
 		panelForm.add(precioMin, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy++;
-		panelForm.add(new JLabel("Precio máximo:"), gbc);
+		JLabel precioMaximo = new JLabel("Precio máximo:");
+		precioMaximo.setFont(t.getTextFont());
+		panelForm.add(precioMaximo, gbc);
 
 		gbc.gridx = 1;
 		panelForm.add(precioMax, gbc);
 
 		JPanel panelCategorias = new JPanel();
 		panelCategorias.setLayout(new BoxLayout(panelCategorias, BoxLayout.Y_AXIS));
-		panelCategorias.setBorder(BorderFactory.createTitledBorder("Categorías"));
+		TitledBorder tbCategorias = BorderFactory.createTitledBorder("Categorías");
+		tbCategorias.setTitleFont(t.getTitle3Font());
+		panelCategorias.setBorder(tbCategorias);
 
 		for (String cat : categorias) {
 			JCheckBox cb = new JCheckBox(cat);
+			cb.setFont(t.getTextFont());;
 			checkboxes.add(cb);
 			panelCategorias.add(cb);
 		}
