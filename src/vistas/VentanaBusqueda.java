@@ -8,7 +8,7 @@ import controladores.ControlBuscar;
 import java.awt.*;
 import java.util.*;
 
-public class VentanaBusqueda extends FondoGradiente {
+public class VentanaBusqueda extends FondoEmpleado {
 
 	private static final long serialVersionUID = 1L;
 	private JSpinner estrellas;

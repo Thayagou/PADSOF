@@ -17,9 +17,12 @@ public class TiendaFrame extends JFrame {
 	private static double SUBTITLE_SIZE = 0.04;
 	private static double TITLE3_SIZE = 0.03;
 	private static double TEXT_SIZE = 0.02;
-	public static double TOOL_BAR_HEIGHT = 0.1;
 	
-	private static double TOOLBAR_HEIGHT = 0.1;
+	protected static double TOOLBAR_HEIGHT = 0.1;
+	
+	private static double OPTION_BAR_WIDTH = 0.15;
+	private static double BTN_HEIGHT = 0.05;
+	
 	public TiendaFrame() {
 		setTitle("Android's Dungeon");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -48,4 +51,6 @@ public class TiendaFrame extends JFrame {
 	public int getPixelsHeight(double percentage) { return (int)(height * percentage); }
 	
 	public int toolBarDistFromTop() { return (int) (height * TOOLBAR_HEIGHT); }
+	public int optionBarDistFromLeft() { return (int) (width * OPTION_BAR_WIDTH); }
+	public int btnHeight() { return (int) (height * BTN_HEIGHT); }
 }
