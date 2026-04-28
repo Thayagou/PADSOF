@@ -2,19 +2,21 @@ package vistas.noRegistrado;
 
 import javax.swing.*;
 
+import controladores.ControlBarraNoRegistrado;
 import controladores.ControlLogin;
 import vistas.ButtonFactory;
 
 import java.awt.*;
 
-public class VentanaLogin extends JPanel {
+public class VentanaLogin extends FondoNoRegistrado {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField usuarioField;
 	private JPasswordField passField;
 	private JButton botonEntrar;
 
-	public VentanaLogin() {
+	public VentanaLogin(ControlBarraNoRegistrado ctrlBarra) {
+		super();
 
 		JLabel title = new JLabel("Login");
 		ButtonFactory factory = new ButtonFactory();
@@ -23,16 +25,19 @@ public class VentanaLogin extends JPanel {
 		passField = new JPasswordField(15);
 		botonEntrar = factory.newButton("Entrar");
 
-		JPanel panel = new JPanel(new GridLayout(3, 2));
-		panel.add(title);
-		panel.add(new JLabel("Usuario:"));
-		panel.add(usuarioField);
-		panel.add(new JLabel("Contraseña:"));
-		panel.add(passField);
-		panel.add(botonEntrar);
+		JPanel contenido = new JPanel(new GridLayout(3, 2));
+		contenido.add(title);
+		contenido.add(new JLabel("Usuario:"));
+		contenido.add(usuarioField);
+		contenido.add(new JLabel("Contraseña:"));
+		contenido.add(passField);
+		contenido.add(botonEntrar);
 
-		add(panel);
+		add(contenido, BorderLayout.CENTER);
 		setVisible(true);
+		
+		initBarra(ctrlBarra);
+		
 	}
 	
 	//Asignar controlador a los botones

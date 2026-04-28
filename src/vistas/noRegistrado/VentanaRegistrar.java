@@ -2,11 +2,12 @@ package vistas.noRegistrado;
 
 import javax.swing.*;
 
+import controladores.ControlBarraNoRegistrado;
 import controladores.ControlRegistrarse;
 
 import java.awt.*;
 
-public class VentanaRegistrar extends JPanel {
+public class VentanaRegistrar extends FondoNoRegistrado {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField usuarioField;
@@ -14,7 +15,9 @@ public class VentanaRegistrar extends JPanel {
 	private JPasswordField confirmationField;
 	private JButton botonRegistrar;
 
-	public VentanaRegistrar() {
+	public VentanaRegistrar(ControlBarraNoRegistrado ctrlBarra) {
+		super();
+		
 		JLabel title = new JLabel("Registrarse");
 
 		usuarioField = new JTextField(15);
@@ -34,6 +37,8 @@ public class VentanaRegistrar extends JPanel {
 
 		add(panel);
 		setVisible(true);
+		
+		initBarra(ctrlBarra);
 	}
 
 	// Asignar controlador a los botones

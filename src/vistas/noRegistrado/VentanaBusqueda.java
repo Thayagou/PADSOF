@@ -3,10 +3,10 @@ package vistas.noRegistrado;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import controladores.ControlBarraNoRegistrado;
 import controladores.ControlBuscar;
 import vistas.Fonts;
 import vistas.TiendaFrame;
-import vistas.empleado.FondoEmpleado;
 
 import java.awt.*;
 import java.util.*;
@@ -21,8 +21,9 @@ public class VentanaBusqueda extends FondoNoRegistrado {
 	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
 	private static double PREFERRED_FILTER_SIZE = 0.3;
 
-	public VentanaBusqueda(String[] categorias) {
+	public VentanaBusqueda(String[] categorias, ControlBarraNoRegistrado ctrlBarra) {
 		super();
+		
 		TiendaFrame t = TiendaFrame.getInstance();
 		int height = t.getHeight();
 		int width = t.getWidth();
@@ -125,6 +126,8 @@ public class VentanaBusqueda extends FondoNoRegistrado {
 		scroll.setBackground(Color.WHITE);
 		panelCentro.setOpaque(false);
 		panelBoton.setOpaque(false);
+		
+		initBarra(ctrlBarra);
 	}
 
 	// Asignar controlador a los botones

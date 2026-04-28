@@ -14,11 +14,9 @@ public class VentanaInicioSinRegistrar extends FondoNoRegistrado {
 	public VentanaInicioSinRegistrar(ControlBarraNoRegistrado ctrlBarra) {
 		super();
 
-		//Crear componentes
 		JLabel title = new JLabel("Tienda mega friki (just for onion smelling fat twatts...)");
 		title.setFont(TiendaFrame.getInstance().getTitleFont());
 		
-		//Contenido de esta ventana
 		JPanel contenido = new JPanel(new BorderLayout(10, 10));
 		contenido.setOpaque(false);
 	    contenido.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -27,6 +25,5 @@ public class VentanaInicioSinRegistrar extends FondoNoRegistrado {
 		add(contenido, BorderLayout.CENTER);
 		
 		initBarra(ctrlBarra);
-		
 	}
 }
