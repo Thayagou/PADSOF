@@ -42,7 +42,6 @@ public class VentanaBusqueda extends FondoNoRegistrado {
 		tb.setTitleFont(t.getTitle3Font());
 		panelForm.setBorder(tb);
 		panelForm.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_FILTER_SIZE), 0));
-		panelForm.setMinimumSize(new Dimension(0,0));
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);

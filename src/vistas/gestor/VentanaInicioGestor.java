@@ -71,9 +71,9 @@ public class VentanaInicioGestor extends FondoGradiente {
 		center.add(top);
 		center.add(bottom);
 		
-		center.setOpaque(true);
-		top.setOpaque(true);
-		bottom.setOpaque(true);
+		center.setOpaque(false);
+		top.setOpaque(false);
+		bottom.setOpaque(false);
 		center.setBackground(Color.WHITE);
 		top.setBackground(Color.WHITE);
 		bottom.setBackground(Color.WHITE);
