@@ -4,11 +4,8 @@ import javax.swing.*;
 
 import controladores.noRegistrado.ControlBarraNoRegistrado;
 import controladores.noRegistrado.ControlLogin;
-import vistas.ButtonFactory;
-import vistas.ColorPalette;
-import vistas.Fonts;
-import vistas.RoundedPanel;
-import vistas.TiendaFrame;
+
+import vistas.*;
 
 import java.awt.*;
 
