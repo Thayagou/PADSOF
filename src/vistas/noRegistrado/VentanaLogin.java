@@ -5,6 +5,10 @@ import javax.swing.*;
 import controladores.ControlBarraNoRegistrado;
 import controladores.ControlLogin;
 import vistas.ButtonFactory;
+import vistas.ColorPalette;
+import vistas.Fonts;
+import vistas.RoundedPanel;
+import vistas.TiendaFrame;
 
 import java.awt.*;
 
@@ -18,29 +22,55 @@ public class VentanaLogin extends FondoNoRegistrado {
 	public VentanaLogin(ControlBarraNoRegistrado ctrlBarra) {
 		super();
 
-		JLabel title = new JLabel("Login");
-		ButtonFactory factory = new ButtonFactory();
+		TiendaFrame t = TiendaFrame.getInstance();
+		
+	    usuarioField = new JTextField(15);
+	    usuarioField.setFont(Fonts.TEXT.getFont());
+	    passField = new JPasswordField(15);
+	    passField.setFont(Fonts.TEXT.getFont());
+	    botonEntrar = new ButtonFactory().newButton("Log In");
 
-		usuarioField = new JTextField(15);
-		passField = new JPasswordField(15);
-		botonEntrar = factory.newButton("Entrar");
+	    JPanel card = new RoundedPanel(20);
+	    card.setBackground(ColorPalette.WHITE.getColor());
+	    card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
 
-		JPanel contenido = new JPanel(new GridLayout(3, 2));
-		contenido.add(title);
-		contenido.add(new JLabel("Usuario:"));
-		contenido.add(usuarioField);
-		contenido.add(new JLabel("Contraseña:"));
-		contenido.add(passField);
-		contenido.add(botonEntrar);
+	    JLabel title = new JLabel("Iniciar sesión", JLabel.CENTER);
+	    title.setFont(t.getTitle3Font());
+	    title.setForeground(ColorPalette.WHITE.getColor());
+	    title.setOpaque(true);
+	    title.setBackground(ColorPalette.BG_BLUE.getColor());
+	    title.setBorder(BorderFactory.createEmptyBorder(12, 16, 12, 16));
+	    title.setAlignmentX(CENTER_ALIGNMENT);
 
-		add(contenido, BorderLayout.CENTER);
-		setVisible(true);
+	    botonEntrar.setAlignmentX(CENTER_ALIGNMENT);
+
+	    card.add(title);
+	    card.add(Box.createVerticalStrut(12));
+	    card.add(labeledField("Nombre de Usuario:", usuarioField, card));
+	    card.add(labeledField("Contraseña:", passField, card));
+	    card.add(Box.createVerticalStrut(12));
+	    card.add(botonEntrar);
+	    card.add(Box.createVerticalStrut(16));
+
+	    JPanel wrapper = new JPanel(new GridBagLayout());
+	    wrapper.setOpaque(false);
+	    wrapper.add(card);
+	    add(wrapper, BorderLayout.CENTER);
 		
 		initBarra(ctrlBarra);
 		
 	}
 	
-	//Asignar controlador a los botones
+	private JPanel labeledField(String texto, JComponent campo, JPanel card) {
+	    JPanel fila = new JPanel();
+	    fila.setLayout(new BoxLayout(fila, BoxLayout.Y_AXIS));
+	    fila.setOpaque(false);
+	    fila.setBorder(BorderFactory.createEmptyBorder(4, 24, 4, 24));
+	    fila.add(new JLabel(texto));
+	    fila.add(campo);
+	    return fila;
+	}
+	
 	public void setControlador(ControlLogin c) {
 		botonEntrar.addActionListener(c);
 	}

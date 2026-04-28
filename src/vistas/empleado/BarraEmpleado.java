@@ -46,7 +46,7 @@ public class BarraEmpleado extends JPanel {
     	return btn;
     }
     
-    public void setControlador(ControlEmpleado c) {
+    public void setControlador(ControlBarraEmpleado c) {
 		gestionarProductos.addActionListener(c);
 		gestionarPedidos.addActionListener(c);
 		valorarObjetos.addActionListener(c);

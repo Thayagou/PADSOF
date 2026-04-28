@@ -1,22 +1,21 @@
-package controladores;
+package controladores.gestor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import modelo.sistema.Tienda;
 import vistas.TiendaFrame;
-import vistas.gestor.VentanaConsultarEstadisticas;
-import vistas.gestor.VentanaInicioGestor;
+import vistas.gestor.VentanaGestionarProductosYCategorias;
 
-public class ControlConsultarEstadisticas implements ActionListener{
+public class ControlGestionarProductosYCategorias implements ActionListener{
 	private Tienda tienda;
 	private TiendaFrame frame;
-	private VentanaConsultarEstadisticas vista;
+	private VentanaGestionarProductosYCategorias vista;
 	
-	public ControlConsultarEstadisticas(Tienda tienda) {
+	public ControlGestionarProductosYCategorias(Tienda tienda) {
 		this.tienda = tienda;
 		this.frame = TiendaFrame.getInstance();
-		this.vista = new VentanaConsultarEstadisticas(tienda);
+		this.vista = new VentanaGestionarProductosYCategorias(tienda);
 	}
 	
 	@Override
