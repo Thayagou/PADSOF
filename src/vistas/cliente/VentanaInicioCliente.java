@@ -1,4 +1,4 @@
-package vistas;
+package vistas.cliente;
 
 import javax.swing.*;
 

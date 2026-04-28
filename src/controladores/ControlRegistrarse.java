@@ -9,6 +9,10 @@ import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
 import vistas.*;
+import vistas.cliente.VentanaInicioCliente;
+import vistas.empleado.VentanaInicioEmpleado;
+import vistas.gestor.VentanaInicioGestor;
+import vistas.noRegistrado.VentanaRegistrar;
 
 public class ControlRegistrarse implements ActionListener {
 

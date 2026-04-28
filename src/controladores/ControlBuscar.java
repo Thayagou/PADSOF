@@ -10,6 +10,7 @@ import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.*;
+import vistas.noRegistrado.VentanaBusqueda;
 
 public class ControlBuscar extends ControlEmpleado {
 	private Tienda tienda;

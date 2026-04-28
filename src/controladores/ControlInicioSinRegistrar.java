@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 
 import modelo.sistema.*;
 import vistas.*;
+import vistas.noRegistrado.VentanaInicioSinRegistrar;
 
 public class ControlInicioSinRegistrar implements ActionListener {
 

@@ -1,9 +1,11 @@
-package vistas;
+package vistas.noRegistrado;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import controladores.ControlBuscar;
+import vistas.TiendaFrame;
+import vistas.empleado.FondoEmpleado;
 
 import java.awt.*;
 import java.util.*;

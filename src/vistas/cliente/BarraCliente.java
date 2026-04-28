@@ -1,13 +1,14 @@
-package vistas;
+package vistas.cliente;
 
 import java.awt.*;
-
 import javax.swing.*;
 
-public class BarraGestor extends JPanel{
+import vistas.*;
+
+public class BarraCliente extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	public BarraGestor() {
+	public BarraCliente() {
 
 		TiendaFrame frame = TiendaFrame.getInstance();
 		int distFromLeft = frame.optionBarDistFromLeft();
@@ -47,4 +48,5 @@ public class BarraGestor extends JPanel{
 		add(btn);
 		add(Box.createVerticalStrut(8));
 	}
+
 }

@@ -1,7 +1,6 @@
-package vistas;
+package vistas.gestor;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -11,6 +10,7 @@ import javax.swing.border.TitledBorder;
 
 import controladores.ControlInicioGestor;
 import modelo.sistema.Tienda;
+import vistas.*;
 
 //import java.awt.*;
 

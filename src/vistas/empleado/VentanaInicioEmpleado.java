@@ -1,4 +1,4 @@
-package vistas;
+package vistas.empleado;
 
 import javax.swing.*;
 

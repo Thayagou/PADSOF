@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 
 import modelo.sistema.Tienda;
 import vistas.TiendaFrame;
-import vistas.VentanaInicioGestor;
+import vistas.gestor.VentanaInicioGestor;
 
 public class ControlInicioGestor implements ActionListener{
 	private Tienda tienda;

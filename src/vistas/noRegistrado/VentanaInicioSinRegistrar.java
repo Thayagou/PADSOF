@@ -1,8 +1,10 @@
-package vistas;
+package vistas.noRegistrado;
 
 import javax.swing.*;
 
 import controladores.ControlInicioSinRegistrar;
+import vistas.TiendaFrame;
+
 import java.awt.GridLayout;
 
 public class VentanaInicioSinRegistrar extends JPanel {

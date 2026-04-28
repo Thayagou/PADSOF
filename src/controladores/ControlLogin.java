@@ -10,6 +10,9 @@ import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
 import vistas.*;
+import vistas.cliente.VentanaInicioCliente;
+import vistas.empleado.VentanaInicioEmpleado;
+import vistas.noRegistrado.VentanaLogin;
 
 public class ControlLogin implements ActionListener {
 

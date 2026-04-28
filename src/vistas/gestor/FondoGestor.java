@@ -1,6 +1,8 @@
-package vistas;
+package vistas.gestor;
 
 import java.awt.BorderLayout;
+
+import vistas.FondoGradiente;
 
 public class FondoGestor extends FondoGradiente{
 	private static final long serialVersionUID = 1L;

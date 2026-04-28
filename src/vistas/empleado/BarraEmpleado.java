@@ -1,9 +1,10 @@
-package vistas;
+package vistas.empleado;
 
 import java.awt.*;
 import javax.swing.*;
 
 import controladores.ControlEmpleado;
+import vistas.*;
 
 public class BarraEmpleado extends JPanel {
     private static final long serialVersionUID = 1L;
