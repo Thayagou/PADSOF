@@ -19,22 +19,31 @@ public class BarraEmpleado extends JPanel {
         int distFromLeft = frame.optionBarDistFromLeft();
         int btnHeigth = frame.btnHeight();
 
-        setBackground(ColorPalette.BLUE.getColor());
+        setBackground(ColorPalette.CARD_LIGHT.getColor());
         setPreferredSize(new Dimension(distFromLeft, 0));
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));;
 
         /* Imagen del boton de notificaciones */
-		ButtonFactory factory = new ButtonFactory();
+		ButtonFactory f = new ButtonFactory();
 		
-        gestionarProductos = factory.newButton("Gestionar productos y categorías", btnHeigth, distFromLeft);
-        gestionarPedidos = factory.newButton("Gestionar pedidos", btnHeigth, distFromLeft);
-        valorarObjetos = factory.newButton("Valorar objetos de segunda mano", btnHeigth, distFromLeft);
-        gestionarIntercambios = factory.newButton("Gestionar inntercambios", btnHeigth, distFromLeft);
+        gestionarProductos = addBtn(f, "Gestionar productos y categorías", btnHeigth, distFromLeft);
+        gestionarPedidos = addBtn(f, "Gestionar pedidos", btnHeigth, distFromLeft);
+        valorarObjetos = addBtn(f, "Valorar objetos de segunda mano", btnHeigth, distFromLeft);
+        gestionarIntercambios = addBtn(f, "Gestionar intercambios", btnHeigth, distFromLeft);
+        
         add(gestionarProductos);
         add(gestionarPedidos);
         add(valorarObjetos);
         add(gestionarIntercambios);
+    }
+    
+    private JButton addBtn(ButtonFactory f, String text, int heigth, int width) {
+    	JButton btn = f.newButton(text, heigth, width);
+    	btn.setBackground(ColorPalette.CARD_LIGHT.getColor());
+    	f.addMouseMecanics(btn, ColorPalette.CARD_LIGHT, ColorPalette.CARD_DARK);
+    	btn.setBorderPainted(false);
+    	
+    	return btn;
     }
     
     public void setControlador(ControlEmpleado c) {

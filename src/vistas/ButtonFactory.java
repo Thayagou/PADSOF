@@ -40,7 +40,6 @@ public class ButtonFactory {
 		Dimension size = new Dimension(width, height);
 		button.setPreferredSize(size);
 		setDefault(button);
-		addMouseMecanics(button);
 
 		return button;
 	}
@@ -70,14 +69,14 @@ public class ButtonFactory {
 		return button;
 	}
 
-	private void addMouseMecanics(JButton btn) {
+	public void addMouseMecanics(JButton btn, ColorPalette defaultC, ColorPalette pressedC) {
 		btn.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent e) {
-				btn.setBackground(ColorPalette.DARK_BLUE.getColor());
+				btn.setBackground(pressedC.getColor());
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent e) {
-				btn.setBackground(ColorPalette.BLUE.getColor());
+				btn.setBackground(defaultC.getColor());
 			}
 		});
 
