@@ -7,21 +7,22 @@ public class BarraTareas extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	private static double TOOL_BAR_ACCOUNT_WIDTH = 0.1;
-	private static int SPACE_BETWEEN = 10;
+	private static double SPACE_BETWEEN = 0.01;
 	
-	private ImageIcon getImageIcon(String route, int height, int width) {
+	/*private ImageIcon getImageIcon(String route, int height, int width) {
 		ImageIcon iconoOriginal = new ImageIcon(route);
 		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(height, width, Image.SCALE_SMOOTH);
 		return new ImageIcon(imagenEscalada);
-	}
+	}*/
 	
 	public BarraTareas() {
 		TiendaFrame t = TiendaFrame.getInstance();
-		int alturaBotones = t.getPixelsHeight(TiendaFrame.TOOL_BAR_HEIGHT) - 2*SPACE_BETWEEN;
+		int spaceBetween = t.getPixelsHeight(SPACE_BETWEEN);
+		int alturaBotones = t.getPixelsHeight(TiendaFrame.TOOL_BAR_HEIGHT) - 2*spaceBetween;
 		int notisW = alturaBotones;
 		int carrW = alturaBotones;
 		int cuentaW = t.getPixelsHeight(TOOL_BAR_ACCOUNT_WIDTH);
-		int buscarW = t.getWidth() - 5*SPACE_BETWEEN - notisW - carrW - cuentaW;
+		int buscarW = t.getWidth() - 5*spaceBetween - notisW - carrW - cuentaW;
 		
 		setBackground(ColorPalette.BLUE.getColor());
         setPreferredSize(new Dimension(0, t.getPixelsHeight(TiendaFrame.TOOL_BAR_HEIGHT)));
@@ -29,8 +30,8 @@ public class BarraTareas extends JPanel{
 		/* Imagen del boton de notificaciones */
 		ButtonFactory factory = new ButtonFactory();
 		
-		JButton notificaciones = //factory.newIconButton("notificaciones.png", alturaBotones, notisW);
-		new JButton(getImageIcon("resources/gui/notificaciones.png", alturaBotones, notisW));
+		JButton notificaciones = factory.newIconButton("notificaciones.png", alturaBotones, notisW);
+		//new JButton(getImageIcon("resources/gui/notificaciones.png", alturaBotones, notisW));
 		JButton buscar = factory.newButton("Buscar...", alturaBotones, buscarW);
 		//new JButton("Buscar...");
 		JButton carrito = factory.newIconButton("carrito.png", alturaBotones, carrW);
@@ -63,16 +64,16 @@ public class BarraTareas extends JPanel{
 		this.add(cuenta);
 		
 		/* Ajustar la posicion de los botones */
-		layout.putConstraint(SpringLayout.WEST, notificaciones, SPACE_BETWEEN, SpringLayout.WEST, this);
-		layout.putConstraint(SpringLayout.NORTH, notificaciones, SPACE_BETWEEN, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, notificaciones, spaceBetween, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, notificaciones, spaceBetween, SpringLayout.NORTH, this);
 		
-		layout.putConstraint(SpringLayout.WEST, buscar, SPACE_BETWEEN, SpringLayout.EAST, notificaciones);
+		layout.putConstraint(SpringLayout.WEST, buscar, spaceBetween, SpringLayout.EAST, notificaciones);
 		layout.putConstraint(SpringLayout.NORTH, buscar, 0,	SpringLayout.NORTH, notificaciones);
 		
-		layout.putConstraint(SpringLayout.WEST, carrito, SPACE_BETWEEN, SpringLayout.EAST, buscar);
+		layout.putConstraint(SpringLayout.WEST, carrito, spaceBetween, SpringLayout.EAST, buscar);
 		layout.putConstraint(SpringLayout.NORTH, carrito, 0,	SpringLayout.NORTH, buscar);
 		
-		layout.putConstraint(SpringLayout.WEST, cuenta, SPACE_BETWEEN, SpringLayout.EAST, carrito);
+		layout.putConstraint(SpringLayout.WEST, cuenta, spaceBetween, SpringLayout.EAST, carrito);
 		layout.putConstraint(SpringLayout.NORTH, cuenta, 0,	SpringLayout.NORTH, carrito);
 	}
 	

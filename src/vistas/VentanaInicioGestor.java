@@ -17,7 +17,7 @@ import modelo.sistema.Tienda;
 public class VentanaInicioGestor extends FondoGradiente {
 
 	private static final long serialVersionUID = 1L;
-
+	private static double GAP = 0.01;
 	private JButton descuentos;
 	private JButton sistema;
 	private JButton estadisticas;
@@ -32,21 +32,20 @@ public class VentanaInicioGestor extends FondoGradiente {
 		TitledBorder centerTitle = BorderFactory.createTitledBorder("Opciones");
 		centerTitle.setTitleFont(t.getTitle3Font());
 		center.setBorder(centerTitle);
-		int totalHeight = t.getPixelsHeight(1);
+		int totalHeight = t.getHeight();
 		int buttonHeight = (int) ((totalHeight - barra.getHeight())/2 * 0.8);
 		Dimension buttomDimension = new Dimension(0, buttonHeight);
 		JPanel top = new JPanel(new GridLayout(1, 3, 16, 30));
-		descuentos = new JButton("Añadir descuento");
-		sistema = new JButton("Configurar sistema");
-		estadisticas = new JButton("Consultar estadísticas");
 		
-		descuentos.setFont(t.getSubtitleFont());
-		sistema.setFont(t.getSubtitleFont());
-		estadisticas.setFont(t.getSubtitleFont());
+		ButtonFactory factory = new ButtonFactory();
+		descuentos = factory.newIconButton("Añadir descuento", totalHeight, 0, "descuento.png");
+		descuentos.setFont(Fonts.SUBTITLE.getFont());
 		
-		descuentos.setPreferredSize(buttomDimension);
-		sistema.setPreferredSize(buttomDimension);
-		estadisticas.setPreferredSize(buttomDimension);
+		sistema = factory.newIconButton("Configurar sistema", totalHeight, 0, "sistema.png");
+		sistema.setFont(Fonts.SUBTITLE.getFont());
+		
+		estadisticas = factory.newIconButton("Consultar estadísticas", totalHeight, 0, "estadistica.png");
+		estadisticas.setFont(Fonts.SUBTITLE.getFont());
 		
 		top.add(descuentos);
 		top.add(sistema);

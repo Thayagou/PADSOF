@@ -2,6 +2,8 @@ package vistas;
 
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -13,30 +15,27 @@ public class ButtonFactory {
 		
 	}
 	
-	public String getHTMLLabel(String label) {
-		String finalLabel = "<html><center>";
-		finalLabel = finalLabel.concat(label);
-		finalLabel = finalLabel.concat("</center></html>");
-		
-		return finalLabel;
+	private String getHTMLLabel(String label) {
+		return "<html><center>" + label + "</center></html>";
 	}
 	
-	public ImageIcon getImageIcon(String imageName, int height, int width) {
-		String path = IMAGE_PATH;
-		path = path.concat(imageName);
-		System.out.println(path);
-		ImageIcon iconoOriginal = new ImageIcon(path);
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(height, width, Image.SCALE_SMOOTH);
+	private ImageIcon loadImageIcon(String imageName) {
+		//ImageIcon iconoOriginal = new ImageIcon(IMAGE_PATH + imageName);
+		//Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(height, width, Image.SCALE_SMOOTH);
 		
-		
-		return new ImageIcon(imagenEscalada);
+		return new ImageIcon(IMAGE_PATH + imageName);
+		//return new ImageIcon(imagenEscalada);
 	}
 	
-	private void setDefaultText(JButton button) {
-		button.setVerticalTextPosition(SwingConstants.CENTER);
+	
+	
+	private void setDefault(JButton button) {
+		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
-		
-		button.setFont(TiendaFrame.getInstance().getTextFont());
+	}
+	
+	private void iconoDinamico(JButton button, ImageIcon original, double percIcono) {
+		button.addComponentListener(new ButtonAdapter(button, percIcono, original));
 	}
 	
 	public JButton newButton(String label, int height, int width) {
@@ -44,15 +43,18 @@ public class ButtonFactory {
 		JButton button = new JButton(finalLabel);
 		Dimension size = new Dimension(width, height);
 		button.setPreferredSize(size);
-		setDefaultText(button);
+		setDefault(button);
 		
 		return button;
 	}
 	
 	public JButton newIconButton(String imageName, int height, int width) {
-		JButton button = new JButton(getImageIcon(imageName, height, width));
+		ImageIcon icon = loadImageIcon(imageName);
+		JButton button = new JButton(icon);
 		
-		setDefaultText(button);
+		//iconoDinamico(button, icon, 0.6);
+	
+		setDefault(button);
 		
 		Dimension size = new Dimension(width, height);
 		button.setPreferredSize(size);
@@ -61,11 +63,13 @@ public class ButtonFactory {
 	}
 	
 	public JButton newIconButton(String label, int height, int width, String imageName) {
-		JButton button = this.newIconButton(imageName, height, width);
+		ImageIcon icon = loadImageIcon(imageName);
+		JButton button = new JButton(icon);
+		//JButton button = this.newIconButton(imageName, height, width);
 		button.setText(getHTMLLabel(label));
-		button.setIcon(getImageIcon(imageName, height, width));
+		setDefault(button);
+		iconoDinamico(button, icon, 0.6);
 		
-		setDefaultText(button);
 		
 		return button;
 	}
