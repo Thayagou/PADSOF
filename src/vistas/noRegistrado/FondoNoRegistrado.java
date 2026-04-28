@@ -2,7 +2,7 @@ package vistas.noRegistrado;
 
 import java.awt.BorderLayout;
 
-import controladores.ControlBarraNoRegistrado;
+import controladores.noRegistrado.ControlBarraNoRegistrado;
 import vistas.FondoGradiente;
 
 public class FondoNoRegistrado extends FondoGradiente {

@@ -6,7 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import controladores.ControlBarraNoRegistrado;
+import controladores.noRegistrado.ControlBarraNoRegistrado;
 import vistas.ButtonFactory;
 import vistas.ColorPalette;
 import vistas.TiendaFrame;

@@ -2,13 +2,9 @@ package vistas.noRegistrado;
 
 import javax.swing.*;
 
-import controladores.ControlBarraNoRegistrado;
-import controladores.ControlLogin;
-import vistas.ButtonFactory;
-import vistas.ColorPalette;
-import vistas.Fonts;
-import vistas.RoundedPanel;
-import vistas.TiendaFrame;
+import controladores.noRegistrado.ControlBarraNoRegistrado;
+import controladores.noRegistrado.ControlLogin;
+import vistas.*;
 
 import java.awt.*;
 
