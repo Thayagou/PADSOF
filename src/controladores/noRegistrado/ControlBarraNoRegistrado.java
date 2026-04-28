@@ -1,4 +1,4 @@
-package controladores;
+package controladores.noRegistrado;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
