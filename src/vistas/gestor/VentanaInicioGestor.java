@@ -14,7 +14,7 @@ import vistas.*;
 
 //import java.awt.*;
 
-public class VentanaInicioGestor extends FondoGradiente {
+public class VentanaInicioGestor extends FondoGestor {
 
 	private static final long serialVersionUID = 1L;
 	private static double GAP = 0.01;
