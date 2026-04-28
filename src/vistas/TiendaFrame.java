@@ -49,6 +49,8 @@ public class TiendaFrame extends JFrame {
 		if(vistaActual != null) remove(vistaActual);
 		vistaActual = vista;
 		add(vista);
+		revalidate();
+	    repaint();
 	}
 	
 	public JPanel getVistaActual() {

@@ -17,7 +17,6 @@ public class ControlBarraNoRegistrado implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("llega aqui\n");
 		switch (e.getActionCommand()) {
 		case "Iniciar Sesión" -> showLogin();
 		case "Registrarse" -> showRegistrarse();
@@ -26,7 +25,6 @@ public class ControlBarraNoRegistrado implements ActionListener {
 	}
 
 	private void showLogin() {
-		System.out.println("al menos llega aqui\n");
 		SwingUtilities.invokeLater(() -> {
 			new ControlLogin(tienda);
 		});
