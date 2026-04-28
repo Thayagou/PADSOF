@@ -38,13 +38,13 @@ public class VentanaInicioGestor extends FondoGradiente {
 		JPanel top = new JPanel(new GridLayout(1, 3, 16, 30));
 		
 		ButtonFactory factory = new ButtonFactory();
-		descuentos = factory.newIconButton("Añadir descuento", totalHeight, 0, "descuento.png");
+		descuentos = factory.newIconButton("Añadir descuento", buttonHeight, 0, "descuento.png");
 		descuentos.setFont(Fonts.SUBTITLE.getFont());
 		
-		sistema = factory.newIconButton("Configurar sistema", totalHeight, 0, "sistema.png");
+		sistema = factory.newIconButton("Configurar sistema", buttonHeight, 0, "sistema.png");
 		sistema.setFont(Fonts.SUBTITLE.getFont());
 		
-		estadisticas = factory.newIconButton("Consultar estadísticas", totalHeight, 0, "estadistica.png");
+		estadisticas = factory.newIconButton("Consultar estadísticas", buttonHeight, 0, "estadistica.png");
 		estadisticas.setFont(Fonts.SUBTITLE.getFont());
 		
 		top.add(descuentos);
@@ -55,7 +55,8 @@ public class VentanaInicioGestor extends FondoGradiente {
 		JPanel bottom = new JPanel(new GridLayout(1, 2, 16, 30));
 		bottom.setBorder(BorderFactory.createEmptyBorder(0, 80, 0, 80)); // margen lateral
 		
-		prodYCats = new JButton("Gestionar productos y categorias");
+		prodYCats = factory.newIconButton("Gestionar productos y categorías", buttonHeight, 0, "productosYCategorias.png");
+				//new JButton("Gestionar productos y categorias");
 		empleados = new JButton("Gestionar empleados");
 		
 		prodYCats.setFont(t.getSubtitleFont());

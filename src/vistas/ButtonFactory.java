@@ -5,6 +5,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import controladores.ButtonAdapter;
+
 public class ButtonFactory {
 	private static String IMAGE_PATH = "resources/gui/";
 
@@ -33,10 +35,16 @@ public class ButtonFactory {
 	private void iconoDinamico(JButton button, ImageIcon original, double percIcono) {
 		button.addComponentListener(new ButtonAdapter(button, percIcono, original));
 	}
+	
+	public JButton newButton(String label) {
+		JButton button = new JButton(getHTMLLabel(label));
+		button.setActionCommand(label);
+		
+		return button;
+	}
 
 	public JButton newButton(String label, int height, int width) {
-		String finalLabel = getHTMLLabel(label);
-		JButton button = new JButton(finalLabel);
+		JButton button = newButton(label);
 		Dimension size = new Dimension(width, height);
 		button.setPreferredSize(size);
 		setDefault(button);
@@ -59,8 +67,10 @@ public class ButtonFactory {
 	}
 
 	public JButton newIconButton(String label, int height, int width, String imageName) {
+		
 		ImageIcon icon = loadImageIcon(imageName);
-		JButton button = new JButton(icon);
+		JButton button = newButton(label);
+		button.setIcon(icon);
 		// JButton button = this.newIconButton(imageName, height, width);
 		button.setText(getHTMLLabel(label));
 		setDefault(button);

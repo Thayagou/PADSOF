@@ -3,6 +3,7 @@ package vistas.noRegistrado;
 import javax.swing.*;
 
 import controladores.ControlLogin;
+import vistas.ButtonFactory;
 
 import java.awt.*;
 
@@ -16,10 +17,11 @@ public class VentanaLogin extends JPanel {
 	public VentanaLogin() {
 
 		JLabel title = new JLabel("Login");
+		ButtonFactory factory = new ButtonFactory();
 
 		usuarioField = new JTextField(15);
 		passField = new JPasswordField(15);
-		botonEntrar = new JButton("Entrar");
+		botonEntrar = factory.newButton("Entrar");
 
 		JPanel panel = new JPanel(new GridLayout(3, 2));
 		panel.add(title);
