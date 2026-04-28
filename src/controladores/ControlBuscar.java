@@ -16,9 +16,9 @@ public class ControlBuscar implements ActionListener {
 	private Tienda tienda;
 	private VentanaBusqueda vista;
 
-	public ControlBuscar(Tienda tienda) {
+	public ControlBuscar(Tienda tienda, ControlBarraNoRegistrado ctrlBarra) {
 		this.tienda = tienda;
-		this.vista = new VentanaBusqueda(Arrays.stream(tienda.getAlmacen().getCategorias()).map(Categoria::getNombre).toArray(String[]::new));
+		this.vista = new VentanaBusqueda(Arrays.stream(tienda.getAlmacen().getCategorias()).map(Categoria::getNombre).toArray(String[]::new), ctrlBarra);
 		this.vista.setControlador(this);
 		TiendaFrame.getInstance().setVistaActual(vista);
 	}

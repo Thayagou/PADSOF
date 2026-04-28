@@ -26,19 +26,19 @@ public class ControlBarraNoRegistrado implements ActionListener {
 
 	private void showLogin() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlLogin(tienda);
+			new ControlLogin(tienda, this);
 		});
 	}
 
 	private void showRegistrarse() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlRegistrarse(tienda);
+			new ControlRegistrarse(tienda, this);
 		});
 	}
 
 	private void showBuscar() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlBuscar(tienda);
+			new ControlBuscar(tienda, this);
 		});
 	}
 }

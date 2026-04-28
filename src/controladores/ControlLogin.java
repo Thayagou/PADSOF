@@ -18,9 +18,9 @@ public class ControlLogin implements ActionListener {
 	private Tienda tienda;
 	private VentanaLogin vista;
 
-	public ControlLogin(Tienda tienda) {
+	public ControlLogin(Tienda tienda, ControlBarraNoRegistrado ctrlBarra) {
 		this.tienda = tienda;
-		this.vista = new VentanaLogin();
+		this.vista = new VentanaLogin(ctrlBarra);
 		this.vista.setControlador(this);
 		TiendaFrame.getInstance().setVistaActual(vista);
 	}
@@ -51,7 +51,6 @@ public class ControlLogin implements ActionListener {
 	}
 
 	private void inicioGestor() {
-		this.frame.remove(vista);
 		SwingUtilities.invokeLater(()->
 			new ControlInicioGestor(tienda)
 		);
