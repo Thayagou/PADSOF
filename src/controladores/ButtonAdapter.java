@@ -1,4 +1,4 @@
-package vistas;
+package controladores;
 
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
@@ -39,8 +39,7 @@ public class ButtonAdapter extends ComponentAdapter{
 		int iconSize = (int) Math.min(h * percIcono, w * percIcono);
 		button.setIcon(scaleIcon(original, iconSize, iconSize));
 		
-		float fontSize = fontRatio * h ;	
-		System.out.println("Res:" + fontSize);
+		float fontSize = fontRatio * h ;
 		button.setFont(button.getFont().deriveFont(fontSize));
 	}
 }

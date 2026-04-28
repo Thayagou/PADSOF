@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import modelo.sistema.Tienda;
 import vistas.TiendaFrame;
@@ -29,8 +30,59 @@ public class ControlInicioGestor implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		switch(e.getActionCommand()) {
+		case "Añadir descuento":
+			this.anadirDescuento();
+			break;
+		case "Configurar sistema":
+			this.configurarSistema();
+			break;
+		case "Consultar estadísticas":
+			this.consultarEstadisticas();
+			break;
+		case "Gestionar productos y categorías":
+			this.gestionarProdsYCats();
+			break;
+		case "Gestionar empleados":
+			this.gestionarEmpleados();
+			break;		
+		}
 		
+	}
+	
+	private void anadirDescuento() {
+		this.frame.remove(vista);
+		SwingUtilities.invokeLater(()->
+			new ControlAnadirDescuento(tienda)
+		);
+	}
+	
+	private void configurarSistema() {
+		this.frame.remove(vista);
+		SwingUtilities.invokeLater(()->
+			new ControlConfigurarSistema(tienda)
+		);
+	}
+	
+	private void gestionarProdsYCats() {
+		this.frame.remove(vista);
+		SwingUtilities.invokeLater(()->
+			new ControlGestionarProductosYCategorias(tienda)
+		);
+	}
+	
+	private void gestionarEmpleados() {
+		this.frame.remove(vista);
+		SwingUtilities.invokeLater(()->
+			new ControlGestionarEmpleados(tienda)
+		);
+	}
+	
+	private void consultarEstadisticas() {
+		this.frame.remove(vista);
+		SwingUtilities.invokeLater(()->
+			new ControlConsultarEstadisticas(tienda)
+		);
 	}
 
 }

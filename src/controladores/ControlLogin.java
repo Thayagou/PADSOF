@@ -46,8 +46,7 @@ public class ControlLogin implements ActionListener {
 			Usuario usuario = tienda.iniciarSesion(nombre, pass);
 			
 			if (usuario instanceof Gestor) {
-				SwingUtilities.invokeLater(()->
-				new ControlInicioGestor(tienda));
+				this.inicioGestor();
 		    } else if (usuario instanceof Empleado) {
 		    	new VentanaInicioEmpleado(tienda);
 		    } else if (usuario instanceof ClienteRegistrado) {
@@ -56,5 +55,13 @@ public class ControlLogin implements ActionListener {
 		} catch (CustomException ex) {
 			new VentanaMensaje(ex.getMessage());
 		}
+	}
+
+	private void inicioGestor() {
+		this.frame.remove(vista);
+		SwingUtilities.invokeLater(()->
+			new ControlInicioGestor(tienda)
+		);
+		
 	}
 }

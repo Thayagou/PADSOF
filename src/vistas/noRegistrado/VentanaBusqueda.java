@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import controladores.ControlBuscar;
+import vistas.Fonts;
 import vistas.TiendaFrame;
 import vistas.empleado.FondoEmpleado;
 
@@ -23,23 +24,26 @@ public class VentanaBusqueda extends FondoEmpleado {
 	public VentanaBusqueda(String[] categorias) {
 		super();
 		TiendaFrame t = TiendaFrame.getInstance();
+		int height = t.getHeight();
+		int width = t.getWidth();
 		JLabel title = new JLabel("Realizar búsqueda", JLabel.CENTER);
 		title.setFont(t.getTitle3Font());
 
 		estrellas = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 5.0, 0.5));
-		estrellas.setPreferredSize(new Dimension(80, 30));
+		estrellas.setPreferredSize(new Dimension((int)(0.08*width), (int)(0.03 * height)));
 		estrellas.setFont(t.getTextFont());
 		precioMin = new JTextField(10);
-		precioMin.setFont(t.getTextFont());
+		precioMin.setFont(Fonts.TEXT.getFont());
 		precioMax = new JTextField(10);
-		precioMax.setFont(t.getTextFont());
+		precioMax.setFont(Fonts.TEXT.getFont());
 
 		JPanel panelForm = new JPanel(new GridBagLayout());
 		TitledBorder tb = BorderFactory.createTitledBorder("Filtros");
 		tb.setTitleFont(t.getTitle3Font());
 		panelForm.setBorder(tb);
 		panelForm.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_FILTER_SIZE), 0));
-
+		panelForm.setMinimumSize(new Dimension(0,0));
+		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5, 5, 5, 5);
 		gbc.anchor = GridBagConstraints.WEST;
