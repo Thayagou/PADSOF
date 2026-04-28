@@ -27,12 +27,16 @@ public class BarraTareas extends JPanel{
         setPreferredSize(new Dimension(0, t.getPixelsHeight(TiendaFrame.TOOL_BAR_HEIGHT)));
 		
 		/* Imagen del boton de notificaciones */
+		ButtonFactory factory = new ButtonFactory();
 		
-		
-		JButton notificaciones = new JButton(getImageIcon("resources/gui/notificaciones.png", alturaBotones, notisW));
-		JButton buscar = new JButton("Buscar...");
-		JButton carrito = new JButton(getImageIcon("resources/gui/carrito.png", alturaBotones, carrW));
-		JButton cuenta = new JButton("Cuenta");
+		JButton notificaciones = //factory.newIconButton("notificaciones.png", alturaBotones, notisW);
+		new JButton(getImageIcon("resources/gui/notificaciones.png", alturaBotones, notisW));
+		JButton buscar = factory.newButton("Buscar...", alturaBotones, buscarW);
+		//new JButton("Buscar...");
+		JButton carrito = factory.newIconButton("carrito.png", alturaBotones, carrW);
+		//new JButton(getImageIcon("resources/gui/carrito.png", alturaBotones, carrW));
+		JButton cuenta = factory.newButton("Cuenta", alturaBotones, cuentaW);
+		//new JButton("Cuenta");
 		SpringLayout layout = new SpringLayout();
 		
 		
@@ -42,13 +46,13 @@ public class BarraTareas extends JPanel{
 		notificaciones.setPreferredSize(new Dimension(notisW, alturaBotones));
 		notificaciones.setBackground(ColorPalette.BLUE.getColor());
 		
-		buscar.setPreferredSize(new Dimension(buscarW, alturaBotones));
+		//buscar.setPreferredSize(new Dimension(buscarW, alturaBotones));
 		buscar.setBackground(ColorPalette.WHITE.getColor());
 		
-		carrito.setPreferredSize(new Dimension(carrW, alturaBotones));
+		//carrito.setPreferredSize(new Dimension(carrW, alturaBotones));
 		carrito.setBackground(ColorPalette.BLUE.getColor());
 		
-		cuenta.setPreferredSize(new Dimension(cuentaW, alturaBotones));
+		//cuenta.setPreferredSize(new Dimension(cuentaW, alturaBotones));
 		cuenta.setBackground(ColorPalette.BLUE.getColor());
 		
 		this.setLayout(layout);

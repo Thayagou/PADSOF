@@ -12,7 +12,7 @@ public class FondoGradiente extends JPanel {
 	private int grosorBorde = 2;
 	private int radio = 20;
 	
-	private BarraTareas barra = new BarraTareas();
+	protected BarraTareas barra = new BarraTareas();
 
 	public FondoGradiente() {
 		setOpaque(false);
@@ -23,7 +23,6 @@ public class FondoGradiente extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		Graphics2D g2 = (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 

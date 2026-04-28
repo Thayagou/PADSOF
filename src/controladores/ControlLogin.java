@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
@@ -42,7 +43,8 @@ public class ControlLogin implements ActionListener {
 			Usuario usuario = tienda.iniciarSesion(nombre, pass);
 			
 			if (usuario instanceof Gestor) {
-		        new VentanaInicioGestor(tienda);
+				SwingUtilities.invokeLater(()->
+				new ControlInicioGestor(tienda));
 		    } else if (usuario instanceof Empleado) {
 		    	new VentanaInicioEmpleado(tienda);
 		    } else if (usuario instanceof ClienteRegistrado) {
