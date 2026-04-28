@@ -2,8 +2,8 @@ package vistas.noRegistrado;
 
 import javax.swing.*;
 
-import controladores.ControlBarraNoRegistrado;
-import controladores.ControlRegistrarse;
+import controladores.noRegistrado.ControlBarraNoRegistrado;
+import controladores.noRegistrado.ControlRegistrarse;
 
 import java.awt.*;
 

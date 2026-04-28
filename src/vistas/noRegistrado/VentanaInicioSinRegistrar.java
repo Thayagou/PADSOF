@@ -2,7 +2,7 @@ package vistas.noRegistrado;
 
 import javax.swing.*;
 
-import controladores.ControlBarraNoRegistrado;
+import controladores.noRegistrado.ControlBarraNoRegistrado;
 import vistas.TiendaFrame;
 
 import java.awt.BorderLayout;

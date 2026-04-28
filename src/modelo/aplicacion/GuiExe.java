@@ -4,8 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingUtilities;
 
-import controladores.ControlInicioGestor;
-import controladores.ControlInicioSinRegistrar;
+import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.exceptions.*;
 import modelo.sistema.*;
 

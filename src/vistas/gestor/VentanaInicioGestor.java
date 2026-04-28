@@ -8,7 +8,7 @@ import java.awt.GridLayout;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import controladores.ControlInicioGestor;
+import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
 import vistas.*;
 

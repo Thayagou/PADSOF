@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
+import controladores.gestor.ControlInicioGestor;
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
