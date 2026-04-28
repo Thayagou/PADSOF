@@ -12,19 +12,15 @@ import modelo.venta.productos.Producto;
 import vistas.*;
 import vistas.noRegistrado.VentanaBusqueda;
 
-public class ControlBuscar extends ControlEmpleado {
+public class ControlBuscar implements ActionListener {
 	private Tienda tienda;
 	private VentanaBusqueda vista;
-	private TiendaFrame frame;
 
-	public ControlBuscar(Tienda tienda, TiendaFrame frame) {
+	public ControlBuscar(Tienda tienda) {
 		this.tienda = tienda;
 		this.vista = new VentanaBusqueda(Arrays.stream(tienda.getAlmacen().getCategorias()).map(Categoria::getNombre).toArray(String[]::new));
 		this.vista.setControlador(this);
-
-		this.frame = frame;
-		this.frame.add(vista);
-		this.frame.setVisible(true);
+		TiendaFrame.getInstance().setVistaActual(vista);
 	}
 	
 	@Override

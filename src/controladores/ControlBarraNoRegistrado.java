@@ -1,0 +1,46 @@
+package controladores;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.SwingUtilities;
+
+import modelo.sistema.Tienda;
+
+public class ControlBarraNoRegistrado implements ActionListener {
+
+	private Tienda tienda;
+
+	public ControlBarraNoRegistrado(Tienda tienda) {
+		this.tienda = tienda;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println("llega aqui\n");
+		switch (e.getActionCommand()) {
+		case "Iniciar Sesión" -> showLogin();
+		case "Registrarse" -> showRegistrarse();
+		case "Buscar productos" -> showBuscar();
+		}
+	}
+
+	private void showLogin() {
+		System.out.println("al menos llega aqui\n");
+		SwingUtilities.invokeLater(() -> {
+			new ControlLogin(tienda);
+		});
+	}
+
+	private void showRegistrarse() {
+		SwingUtilities.invokeLater(() -> {
+			new ControlRegistrarse(tienda);
+		});
+	}
+
+	private void showBuscar() {
+		SwingUtilities.invokeLater(() -> {
+			new ControlBuscar(tienda);
+		});
+	}
+}

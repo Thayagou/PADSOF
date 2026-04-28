@@ -7,11 +7,9 @@ import javax.swing.SwingUtilities;
 import controladores.ControlInicioSinRegistrar;
 import modelo.exceptions.*;
 import modelo.sistema.*;
-import vistas.TiendaFrame;
 
 public class GuiExe {
 	private static Tienda tienda;
-	private static TiendaFrame frame = new TiendaFrame();
 	private static String filename = "tienda.dat";
 
 	public static void main(String[] args) {
@@ -27,7 +25,7 @@ public class GuiExe {
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
 		
 		SwingUtilities.invokeLater(() -> {
-		    new ControlInicioSinRegistrar(tienda, frame);
+		    new ControlInicioSinRegistrar(tienda);
 		});
 	}
 }

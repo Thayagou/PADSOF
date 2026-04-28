@@ -3,7 +3,6 @@ package controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import modelo.exceptions.CustomException;
@@ -18,18 +17,12 @@ public class ControlLogin implements ActionListener {
 
 	private Tienda tienda;
 	private VentanaLogin vista;
-	private TiendaFrame frame;
 
-	public ControlLogin(Tienda tienda, TiendaFrame frame) {
+	public ControlLogin(Tienda tienda) {
 		this.tienda = tienda;
 		this.vista = new VentanaLogin();
 		this.vista.setControlador(this);
-
-		this.frame = frame;
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setLocationRelativeTo(null);
-		this.frame.add(vista);
-		this.frame.setVisible(true);
+		TiendaFrame.getInstance().setVistaActual(vista);
 	}
 	
 	@Override

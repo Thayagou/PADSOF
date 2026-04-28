@@ -2,45 +2,31 @@ package vistas.noRegistrado;
 
 import javax.swing.*;
 
-import controladores.ControlInicioSinRegistrar;
+import controladores.ControlBarraNoRegistrado;
 import vistas.TiendaFrame;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
 
-public class VentanaInicioSinRegistrar extends JPanel {
+public class VentanaInicioSinRegistrar extends FondoNoRegistrado {
 
 	private static final long serialVersionUID = 1L;
-	private JButton botonLogin;
-	private JButton botonRegistrar;
-	private JButton botonBuscar;
 
-	public VentanaInicioSinRegistrar(TiendaFrame frame) {
-		
-		//Poner el layout
-		this.setLayout(new GridLayout(0, 2));
+	public VentanaInicioSinRegistrar(ControlBarraNoRegistrado ctrlBarra) {
+		super();
 
 		//Crear componentes
 		JLabel title = new JLabel("Tienda mega friki (just for onion smelling fat twatts...)");
-		title.setFont(frame.getTitleFont());
-		botonLogin = new JButton("Iniciar sesión");
-		botonLogin.setFont(frame.getSubtitleFont());
-		botonRegistrar = new JButton("Registrarse");
-		botonRegistrar.setFont(frame.getTextFont());
-		botonBuscar = new JButton("Buscar");
-		botonBuscar.setFont(frame.getTitle3Font());
+		title.setFont(TiendaFrame.getInstance().getTitleFont());
 		
-		//Añadir al panel
-		this.add(title);
-		this.add(botonLogin);
-		this.add(botonRegistrar);
-		this.add(botonBuscar);
+		//Contenido de esta ventana
+		JPanel contenido = new JPanel(new BorderLayout(10, 10));
+		contenido.setOpaque(false);
+	    contenido.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		contenido.add(title, BorderLayout.NORTH);
 		
-	}
-	
-	//Asignar controlador a los botones
-	public void setControlador(ControlInicioSinRegistrar c) {
-		botonLogin.addActionListener(c);
-		botonRegistrar.addActionListener(c);
-		botonBuscar.addActionListener(c);
+		add(contenido, BorderLayout.CENTER);
+		
+		initBarra(ctrlBarra);
+		
 	}
 }

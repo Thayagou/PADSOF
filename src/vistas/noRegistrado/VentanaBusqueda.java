@@ -10,7 +10,7 @@ import vistas.empleado.FondoEmpleado;
 import java.awt.*;
 import java.util.*;
 
-public class VentanaBusqueda extends FondoEmpleado {
+public class VentanaBusqueda extends FondoNoRegistrado {
 
 	private static final long serialVersionUID = 1L;
 	private JSpinner estrellas;

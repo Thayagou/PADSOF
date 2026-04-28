@@ -3,8 +3,6 @@ package controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
@@ -18,18 +16,12 @@ public class ControlRegistrarse implements ActionListener {
 
 	private Tienda tienda;
 	private VentanaRegistrar vista;
-	private TiendaFrame frame;
 
-	public ControlRegistrarse(Tienda tienda, TiendaFrame frame) {
+	public ControlRegistrarse(Tienda tienda) {
 		this.tienda = tienda;
 		this.vista = new VentanaRegistrar();
 		this.vista.setControlador(this);
-
-		this.frame = frame;
-		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setLocationRelativeTo(null);
-		this.frame.add(vista);
-		this.frame.setVisible(true);
+		TiendaFrame.getInstance().setVistaActual(vista);
 	}
 
 	@Override

@@ -5,11 +5,13 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 public class TiendaFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static TiendaFrame instance;
+	private JPanel vistaActual;
 	private int height;
 	private int width;
 	
@@ -39,7 +41,18 @@ public class TiendaFrame extends JFrame {
 	
 	public static TiendaFrame getInstance() {
 		if(instance == null) instance = new TiendaFrame();
+		instance.setVisible(true);
 		return instance; 
+	}
+	
+	public void setVistaActual(JPanel vista) {
+		if(vistaActual != null) remove(vistaActual);
+		vistaActual = vista;
+		add(vista);
+	}
+	
+	public JPanel getVistaActual() {
+		return vistaActual;
 	}
 	
 	public Font getTitleFont() { return new Font("Arial", Font.BOLD, (int) (height * TITLE_SIZE));}
