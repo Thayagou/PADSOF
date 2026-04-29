@@ -16,7 +16,7 @@ public class ControlAnadirDescuento implements ActionListener{
 	public ControlAnadirDescuento(Tienda tienda) {
 		this.tienda = tienda;
 		this.frame = TiendaFrame.getInstance();
-		VentanaAnadirDescuento vista = new VentanaAnadirDescuento(tienda);
+		VentanaAnadirDescuento vista = new VentanaAnadirDescuento();
 		
 		frame.setVistaActual(vista);
     }

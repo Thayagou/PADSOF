@@ -2,20 +2,16 @@ package controladores.gestor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import controladores.cliente.ControlBarraTareasCliente;
 import controladores.noRegistrado.ControlBarraNoRegistrado;
 import modelo.sistema.Tienda;
 import vistas.BarraLateral;
-import vistas.BarraTareasCliente;
 import vistas.TiendaFrame;
+import vistas.cliente.BarraTareasCliente;
 import vistas.gestor.BarraGestor;
 import vistas.gestor.VentanaInicioGestor;
-import vistas.noRegistrado.BarraNoRegistrado;
 
 public class ControlInicioGestor implements ActionListener{
 	private Tienda tienda;

@@ -16,6 +16,8 @@ public class ControlGestionarProductosYCategorias implements ActionListener{
 		this.tienda = tienda;
 		this.frame = TiendaFrame.getInstance();
 		this.vista = new VentanaGestionarProductosYCategorias(tienda);
+		
+		frame.setVistaActual(vista);
 	}
 	
 	@Override

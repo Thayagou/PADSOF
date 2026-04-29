@@ -1,6 +1,7 @@
 package vistas;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -12,7 +13,7 @@ import javax.swing.JPanel;
 public class TiendaFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static TiendaFrame instance;
-	private JPanel vistaActual;
+	private Component vistaActual;
 	private BarraLateral barraLateral;
 	private BarraTareas barraTareas;
 	private FondoGradiente fondo;
@@ -68,7 +69,7 @@ public class TiendaFrame extends JFrame {
 	    repaint();
 	}
 	
-	public void setVistaActual(JPanel vista) {
+	public void setVistaActual(Component vista) {
 		if(vistaActual != null) fondo.remove(vistaActual);
 		vistaActual = vista;
 		fondo.add(vista, BorderLayout.CENTER);
@@ -76,7 +77,7 @@ public class TiendaFrame extends JFrame {
 	    repaint();
 	}
 	
-	public JPanel getVistaActual() {
+	public Component getVistaActual() {
 		return vistaActual;
 	}
 	

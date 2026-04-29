@@ -16,6 +16,8 @@ public class ControlGestionarEmpleados  implements ActionListener{
 		this.tienda = tienda;
 		this.frame = TiendaFrame.getInstance();
 		this.vista = new VentanaGestionarEmpleados(tienda);
+		
+		frame.setVistaActual(vista);
 	}
 	
 	@Override

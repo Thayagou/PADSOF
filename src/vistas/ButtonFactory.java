@@ -1,9 +1,16 @@
 package vistas;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 
 import controladores.ButtonAdapter;
@@ -15,8 +22,12 @@ public class ButtonFactory {
 
 	}
 
-	private String getHTMLLabel(String label) {
+	private String getHTMLCenteredLabel(String label) {
 		return "<html><center>" + label + "</center></html>";
+	}
+	
+	private String getHTMLLabel(String label) {
+		return "<html>" + label + "</html>";
 	}
 
 	private ImageIcon loadImageIcon(String imageName) {
@@ -39,14 +50,14 @@ public class ButtonFactory {
 	}
 	
 	public JButton newButton(String label) {
-		JButton button = new JButton(getHTMLLabel(label));
+		JButton button = new JButton(getHTMLCenteredLabel(label));
 		button.setActionCommand(label);
 		
 		return button;
 	}
 	
 	public JButton newRoundedButton(String label, int height, int width, double radius) {
-		JButton button = new RoundedButton(getHTMLLabel(label), radius);
+		JButton button = new RoundedButton(getHTMLCenteredLabel(label), radius);
 		
 		button.setActionCommand(label);
 		button.setPreferredSize(new Dimension(width, height));
@@ -58,7 +69,7 @@ public class ButtonFactory {
 	
 	public JButton newRoundedIconButton(String label, int height, int width, int radius, String imageName) {
 		ImageIcon icon = loadImageIcon(imageName);
-		JButton button = new RoundedButton(getHTMLLabel(label), radius);
+		JButton button = new RoundedButton(getHTMLCenteredLabel(label), radius);
 
 		button.setIcon(icon);
 		button.setPreferredSize(new Dimension(width, height));
@@ -99,7 +110,7 @@ public class ButtonFactory {
 		JButton button = newButton(label);
 		button.setIcon(icon);
 		// JButton button = this.newIconButton(imageName, height, width);
-		button.setText(getHTMLLabel(label));
+		button.setText(getHTMLCenteredLabel(label));
 		setDefault(button);
 		iconoDinamico(button, icon, 0.6);
 
@@ -117,6 +128,55 @@ public class ButtonFactory {
 			}
 		});
 
+	}
+	
+	public JLabel newLabel(String text, Fonts font) {
+		JLabel label = new JLabel(getHTMLCenteredLabel(text));
+		label.setFont(font.getFont());
+		label.setHorizontalTextPosition(SwingConstants.LEFT);
+		
+		return label;
+	}
+	
+	public JTextField newTextField(String text, Fonts font) {
+		JTextField field = new JTextField(text);
+		field.setForeground(ColorPalette.GREY.getColor());
+		
+		field.addFocusListener(new FocusAdapter() {
+	        @Override
+	        public void focusGained(FocusEvent e) {
+	            if (field.getText().equals(text)) {
+	                field.setText("");
+	                field.setForeground(ColorPalette.BLACK.getColor());
+	            }
+	        }
+
+	        @Override
+	        public void focusLost(FocusEvent e) {
+	            if (field.getText().isEmpty()) {
+	                field.setText(text);
+	                field.setForeground(ColorPalette.GREY.getColor());
+	            }
+	        }
+	    });
+		
+		return field;
+	}
+	
+	public JSpinner spinnerFecha(Fonts font) {
+	    SpinnerDateModel modelo = new SpinnerDateModel();
+	    JSpinner spinner = new JSpinner(modelo);
+	    JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");
+	    spinner.setEditor(editor);
+	    spinner.setFont(font.getFont());
+	    return spinner;
+	}
+	
+	public <T> JComboBox<T> newComboBox(Fonts font, T...elementos) {
+		JComboBox<T> comboBox = new JComboBox<T>(elementos);
+		comboBox.setFont(font.getFont());
+		
+		return comboBox;
 	}
 
 }

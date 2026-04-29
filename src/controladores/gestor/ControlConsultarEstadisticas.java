@@ -17,6 +17,8 @@ public class ControlConsultarEstadisticas implements ActionListener{
 		this.tienda = tienda;
 		this.frame = TiendaFrame.getInstance();
 		this.vista = new VentanaConsultarEstadisticas(tienda);
+		
+		frame.setVistaActual(vista);
 	}
 	
 	@Override

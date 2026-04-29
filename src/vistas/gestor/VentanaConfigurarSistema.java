@@ -1,12 +1,17 @@
 package vistas.gestor;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+
 import modelo.sistema.Tienda;
 import vistas.FondoGradiente;
 
-public class VentanaConfigurarSistema extends FondoGradiente{
+public class VentanaConfigurarSistema extends JPanel{
 	
 	public VentanaConfigurarSistema(Tienda tienda) {
-		super();
+		setOpaque(false);
+		setLayout(new BorderLayout());
 	}
 
 }

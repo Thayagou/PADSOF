@@ -16,6 +16,7 @@ public class ControlConfigurarSistema implements ActionListener{
 		this.tienda = tienda;
 		this.frame = TiendaFrame.getInstance();
 		this.vista = new VentanaConfigurarSistema(tienda);
+		frame.setVistaActual(vista);
 	}
 	
 	@Override
