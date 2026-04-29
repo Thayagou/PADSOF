@@ -4,16 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import modelo.sistema.Tienda;
+import modelo.usuario.Empleado;
 import vistas.common.TiendaFrame;
 import vistas.empleado.VentanaGestPedidos;
 
 public class ControlGestPedidos implements ActionListener{
 
-	private Tienda tienda;
+	private final Tienda tienda;
+	private final Empleado empleado;
 	private VentanaGestPedidos vista;
 
-	public ControlGestPedidos(Tienda tienda) {
+	public ControlGestPedidos(Tienda tienda, Empleado empleado) {
 		this.tienda = tienda;
+		this.empleado = empleado;
 		this.vista = new VentanaGestPedidos();
 		this.vista.setControlador(this);
 		TiendaFrame.getInstance().setVistaActual(vista);

@@ -9,7 +9,6 @@ import controladores.gestor.ControlInicioGestor;
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
-import vistas.*;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 import vistas.noRegistrado.VentanaLoginRegistro;
@@ -75,7 +74,7 @@ public class ControlLoginRegistro {
         if (usuario instanceof Gestor) {
             SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda));
         } else if (usuario instanceof Empleado) {
-        	SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda));
+        	SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda, (Empleado)usuario));
         } else if (usuario instanceof ClienteRegistrado) {
             new vistas.cliente.VentanaInicioCliente(tienda);
         }

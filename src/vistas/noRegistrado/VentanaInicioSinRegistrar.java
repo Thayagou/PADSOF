@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import modelo.venta.productos.Producto;
-import vistas.*;
 import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;

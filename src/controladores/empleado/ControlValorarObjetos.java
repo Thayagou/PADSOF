@@ -4,15 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import modelo.sistema.Tienda;
+import modelo.usuario.Empleado;
 import vistas.common.TiendaFrame;
 import vistas.empleado.VentanaValorarObjetos;
 
 public class ControlValorarObjetos implements ActionListener{
-	private Tienda tienda;
+	private final Tienda tienda;
+	private final Empleado empleado;
 	private VentanaValorarObjetos vista;
 
-	public ControlValorarObjetos(Tienda tienda) {
+	public ControlValorarObjetos(Tienda tienda, Empleado empleado) {
 		this.tienda = tienda;
+		this.empleado = empleado;
 		this.vista = new VentanaValorarObjetos();
 		this.vista.setControlador(this);
 		TiendaFrame.getInstance().setVistaActual(vista);
