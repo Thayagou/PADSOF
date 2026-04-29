@@ -1,22 +1,22 @@
-package controladores.noRegistrado;
+package controladores.empleado;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.SwingUtilities;
+
 import controladores.ControlBarraTareas;
+import controladores.noRegistrado.ControlBuscar;
+import controladores.noRegistrado.ControlLogin;
 import modelo.sistema.Tienda;
 
-/**
- * Controlador de la barra de tareas superior cuando no hay sesión iniciada.
- * Gestiona "Buscar productos" e "Iniciar sesión".
- */
-public class ControlBarraTareasNoRegistrado implements ControlBarraTareas {
+public class ControlBarraTareasEmpleado implements ControlBarraTareas {
 
 	private final Tienda tienda;
-
-	public ControlBarraTareasNoRegistrado(Tienda tienda) {
+	
+	public ControlBarraTareasEmpleado(Tienda tienda) {
 		this.tienda = tienda;
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -24,5 +24,7 @@ public class ControlBarraTareasNoRegistrado implements ControlBarraTareas {
 			SwingUtilities.invokeLater(() -> new ControlBuscar(tienda));
 		case "Iniciar sesión" -> SwingUtilities.invokeLater(() -> new ControlLogin(tienda));
 		}
+		
 	}
+
 }

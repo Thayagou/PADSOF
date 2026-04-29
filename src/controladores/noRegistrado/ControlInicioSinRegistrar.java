@@ -5,11 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.cliente.ControlBarraTareasCliente;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
 import vistas.*;
-import vistas.cliente.BarraTareasCliente;
 import vistas.noRegistrado.BarraNoRegistrado;
 import vistas.noRegistrado.BarraTareasNoRegistrado;
 import vistas.noRegistrado.VentanaInicioSinRegistrar;

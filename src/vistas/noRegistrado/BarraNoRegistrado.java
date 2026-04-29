@@ -4,10 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import controladores.ControlBarraLateral;
-import controladores.noRegistrado.ControlBarraNoRegistrado;
 import vistas.BarraLateral;
 import vistas.ButtonFactory;
 import vistas.ColorPalette;

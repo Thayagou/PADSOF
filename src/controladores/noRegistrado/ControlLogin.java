@@ -5,13 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
+import controladores.empleado.ControlInicioEmpleado;
 import controladores.gestor.ControlInicioGestor;
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
 import vistas.*;
 import vistas.cliente.VentanaInicioCliente;
-import vistas.empleado.VentanaInicioEmpleado;
 import vistas.noRegistrado.VentanaLogin;
 
 public class ControlLogin implements ActionListener {
@@ -38,12 +38,11 @@ public class ControlLogin implements ActionListener {
 
 		try {
 			Usuario usuario = tienda.iniciarSesion(nombre, pass);
-			System.out.println(nombre + " " + pass);
 			
 			if (usuario instanceof Gestor) {
 				this.inicioGestor();
 		    } else if (usuario instanceof Empleado) {
-		    	new VentanaInicioEmpleado(tienda);
+		    	this.inicioEmpleado();
 		    } else if (usuario instanceof ClienteRegistrado) {
 		    	new VentanaInicioCliente(tienda);
 		    }
@@ -53,10 +52,14 @@ public class ControlLogin implements ActionListener {
 	}
 
 	private void inicioGestor() {
-		
 		SwingUtilities.invokeLater(()->
 			new ControlInicioGestor(tienda)
 		);
-		
+	}
+	
+	private void inicioEmpleado() {
+		SwingUtilities.invokeLater(()->
+			new ControlInicioEmpleado(tienda)
+		);
 	}
 }

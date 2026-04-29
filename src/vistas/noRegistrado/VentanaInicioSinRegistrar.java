@@ -14,7 +14,6 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel listaPanel;
-	private ActionListener clickListener;
 
 	public VentanaInicioSinRegistrar(Producto[] populares) {
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -53,7 +52,6 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	 * "Ver producto:<nombreProducto>"
 	 */
 	public void setClickListener(ActionListener l) {
-		this.clickListener = l;
 		for (Component c : listaPanel.getComponents()) {
 			if (c instanceof PanelProducto pp)
 				pp.addClickListener(l);
