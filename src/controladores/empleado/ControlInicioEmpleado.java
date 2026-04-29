@@ -7,11 +7,11 @@ import vistas.empleado.*;
 
 public class ControlInicioEmpleado {
 
-	private Tienda tienda;
+	//private Tienda tienda;
 	private VentanaInicioEmpleado vista;
 
 	public ControlInicioEmpleado(Tienda tienda) {
-		this.tienda = tienda;
+		//this.tienda = tienda;
 		TiendaFrame tiendaFrame = TiendaFrame.getInstance();
 		
 		// Barra lateral

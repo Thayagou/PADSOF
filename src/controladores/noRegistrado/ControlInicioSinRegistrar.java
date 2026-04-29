@@ -26,6 +26,9 @@ public class ControlInicioSinRegistrar implements ActionListener {
 		barraTareas.setControlador(ctrlBarraTareas);
 		tiendaFrame.setBarraTareas(barraTareas);
 
+		//Barra lateral vacía
+		tiendaFrame.removeBarraLateral();
+		
 		// Obtener productos populares del modelo y construir la vista
 		Producto[] populares = tienda.getAlmacen().getProductosCoincidentes("");
 		this.vista = new VentanaInicioSinRegistrar(populares);

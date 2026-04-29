@@ -10,7 +10,7 @@ import vistas.TiendaFrame;
 import java.awt.*;
 import java.util.*;
 
-public class VentanaBusqueda extends JPanel/*vistas.noRegistrado.FondoNoRegistrado*/ {
+public class VentanaBusqueda extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JSpinner estrellas;
@@ -21,7 +21,6 @@ public class VentanaBusqueda extends JPanel/*vistas.noRegistrado.FondoNoRegistra
 	private static double PREFERRED_FILTER_SIZE = 0.3;
 
 	public VentanaBusqueda(String[] categorias) {
-		//super();
 		setOpaque(false);
 		setLayout(new BorderLayout());
 		

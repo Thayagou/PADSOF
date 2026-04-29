@@ -27,21 +27,25 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 
 	private void showGProductos() {
 		SwingUtilities.invokeLater(() -> {
+			new ControlGestProductos(tienda);
 		});
 	}
 
 	private void showGPedidos() {
 		SwingUtilities.invokeLater(() -> {
+			new ControlGestPedidos(tienda);
 		});
 	}
 
 	private void showValorar() {
 		SwingUtilities.invokeLater(() -> {
+			new ControlValorarObjetos(tienda);
 		});
 	}
 	
 	private void showGIntercambios() {
 		SwingUtilities.invokeLater(() -> {
+			new ControlGestIntercambios(tienda);
 		});
 	}
 

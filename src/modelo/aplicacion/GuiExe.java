@@ -28,4 +28,8 @@ public class GuiExe {
 		    new ControlInicioSinRegistrar(tienda);
 		});
 	}
+	
+	public static void guardarTienda() {
+		tienda.guardarTienda(filename);
+	}
 }

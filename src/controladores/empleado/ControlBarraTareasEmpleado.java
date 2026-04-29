@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraTareas;
-import controladores.noRegistrado.ControlBuscar;
-import controladores.noRegistrado.ControlLoginRegistro;
+import controladores.noRegistrado.ControlInicioSinRegistrar;
+import controladores.empleado.ControlInicioEmpleado;
 import modelo.sistema.Tienda;
 
 public class ControlBarraTareasEmpleado implements ControlBarraTareas {
@@ -20,9 +20,8 @@ public class ControlBarraTareasEmpleado implements ControlBarraTareas {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Buscar productos" ->
-			SwingUtilities.invokeLater(() -> new ControlBuscar(tienda));
-		case "Iniciar sesión" -> SwingUtilities.invokeLater(() -> new ControlLoginRegistro(tienda));
+		case "Cerrar sesión" -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+		case "Home" -> SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda));
 		}
 		
 	}
