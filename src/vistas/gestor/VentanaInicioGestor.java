@@ -11,6 +11,8 @@ import javax.swing.border.TitledBorder;
 import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
 import vistas.*;
+import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.Fonts;
 
 //import java.awt.*;
 

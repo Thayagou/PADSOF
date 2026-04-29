@@ -1,4 +1,4 @@
-package vistas;
+package vistas.herramientas;
 
 public class PanelSizes {
 	public static double TITLE_SIZE = 0.05;

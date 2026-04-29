@@ -1,4 +1,4 @@
-package vistas;
+package vistas.herramientas;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -9,6 +9,8 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import vistas.TiendaFrame;
 
 public class PanelFactory {
 	private double DF_GAP = 0.05;

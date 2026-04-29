@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import controladores.ControlBarraLateral;
 import vistas.*;
+import vistas.herramientas.ColorPalette;
 
 public class BarraGestor extends BarraLateral{
 	private static final long serialVersionUID = 1L;

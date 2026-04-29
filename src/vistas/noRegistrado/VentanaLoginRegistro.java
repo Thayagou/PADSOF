@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import vistas.*;
+import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
+import vistas.herramientas.RoundedPanel;
 
 /**
  * Pantalla de autenticación: dos RoundedPanel lado a lado, igual que la maqueta

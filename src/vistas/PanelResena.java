@@ -3,6 +3,8 @@ package vistas;
 import java.awt.*;
 import javax.swing.*;
 import modelo.venta.productos.Resena;
+import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
 
 public class PanelResena extends JPanel {
 	private static final long serialVersionUID = 1L;

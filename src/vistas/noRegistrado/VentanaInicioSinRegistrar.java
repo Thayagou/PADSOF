@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import modelo.venta.productos.Producto;
 import vistas.*;
+import vistas.herramientas.ColorPalette;
 
 /**
  * Pantalla de inicio para usuarios no registrados. Muestra una lista de

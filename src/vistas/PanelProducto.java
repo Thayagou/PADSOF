@@ -3,6 +3,7 @@ package vistas;
 import java.awt.*;
 import javax.swing.*;
 import modelo.venta.productos.Producto;
+import vistas.herramientas.*;
 
 /**
  * Fila de producto para las listas de resultados / productos populares.

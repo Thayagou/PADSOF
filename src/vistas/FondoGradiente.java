@@ -1,6 +1,9 @@
 package vistas;
 
 import javax.swing.*;
+
+import vistas.herramientas.ColorPalette;
+
 import java.awt.*;
 
 public class FondoGradiente extends JPanel {

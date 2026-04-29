@@ -7,10 +7,10 @@ import javax.swing.SpringLayout;
 
 import controladores.ControlBarraTareas;
 import vistas.BarraTareas;
-import vistas.ButtonFactory;
-import vistas.ColorPalette;
-import vistas.PanelSizes;
 import vistas.TiendaFrame;
+import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
+import vistas.herramientas.PanelSizes;
 
 public class BarraTareasEmpleado extends BarraTareas {
 	private static final long serialVersionUID = 1L;

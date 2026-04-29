@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import modelo.aplicacion.GuiExe;
+import vistas.herramientas.PanelSizes;
 
 
 public class TiendaFrame extends JFrame {

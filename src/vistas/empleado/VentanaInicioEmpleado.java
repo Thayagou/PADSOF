@@ -5,8 +5,8 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 import modelo.sistema.Tienda;
-import vistas.ColorPalette;
 import vistas.TiendaFrame;
+import vistas.herramientas.ColorPalette;
 
 public class VentanaInicioEmpleado extends JPanel {
 	private static final long serialVersionUID = 1L;

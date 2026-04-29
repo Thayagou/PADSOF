@@ -4,6 +4,9 @@ import java.awt.*;
 import javax.swing.*;
 import controladores.ControlBarraTareas;
 import vistas.*;
+import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
+import vistas.herramientas.PanelSizes;
 
 public class BarraTareasNoRegistrado extends BarraTareas {
 	private static final long serialVersionUID = 1L;

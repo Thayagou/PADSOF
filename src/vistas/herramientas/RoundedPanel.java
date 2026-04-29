@@ -1,4 +1,4 @@
-package vistas;
+package vistas.herramientas;
 
 import java.awt.*;
 import javax.swing.JPanel;

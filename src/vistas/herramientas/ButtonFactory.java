@@ -1,4 +1,4 @@
-package vistas;
+package vistas.herramientas;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.FocusAdapter;

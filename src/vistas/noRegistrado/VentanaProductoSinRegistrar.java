@@ -5,6 +5,7 @@ import javax.swing.*;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Resena;
 import vistas.*;
+import vistas.herramientas.ColorPalette;
 
 /**
  * Vista detallada de un producto (maqueta 5).

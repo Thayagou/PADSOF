@@ -2,8 +2,8 @@ package vistas.gestor;
 
 import javax.swing.*;
 
-import vistas.ButtonFactory;
-import vistas.Fonts;
+import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.Fonts;
 
 import java.awt.*;
 

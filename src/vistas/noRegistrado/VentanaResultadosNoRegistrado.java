@@ -7,6 +7,7 @@ import java.util.Comparator;
 import javax.swing.*;
 import modelo.venta.productos.Producto;
 import vistas.*;
+import vistas.herramientas.ColorPalette;
 
 /**
  * Muestra los resultados de una búsqueda en forma de lista scrolleable. Incluye
