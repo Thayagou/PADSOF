@@ -1,6 +1,8 @@
 package vistas.noRegistrado;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import controladores.noRegistrado.ControlLogin;
 import controladores.noRegistrado.ControlRegistrarse;
@@ -133,11 +135,11 @@ public class VentanaLoginRegistro extends JPanel {
 	// ──────────────────────────────────────────────
 	// Asignar controladores
 	// ──────────────────────────────────────────────
-	public void setControladorLogin(ControlLogin c) {
+	public void setControladorLogin(ActionListener c) {
 		botonLogin.addActionListener(c);
 	}
 
-	public void setControladorRegistro(ControlRegistrarse c) {
+	public void setControladorRegistro(ActionListener c) {
 		botonRegistrar.addActionListener(c);
 	}
 

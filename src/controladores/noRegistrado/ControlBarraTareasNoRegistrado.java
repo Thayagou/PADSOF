@@ -21,9 +21,9 @@ public class ControlBarraTareasNoRegistrado implements ControlBarraTareas {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Buscar productos" ->
-			SwingUtilities.invokeLater(() -> new ControlBuscar(tienda));
+		case "Buscar productos" -> SwingUtilities.invokeLater(() -> new ControlBuscar(tienda));
 		case "Iniciar sesión" -> SwingUtilities.invokeLater(() -> new ControlLoginRegistro(tienda));
+		case "Home" -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
 		}
 	}
 }

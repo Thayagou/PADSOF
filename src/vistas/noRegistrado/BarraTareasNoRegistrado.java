@@ -14,6 +14,7 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 
 	private JButton btnBuscar;
 	private JButton btnIniciarSesion;
+	private JButton btnHome;
 
 	public BarraTareasNoRegistrado() {
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -23,11 +24,18 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		int btnH = h - 2 * spaceBetween;
 		int searchW = t.getPixelsWidth(BTN_SEARCH_W);
 		int accountW = t.getPixelsWidth(BTN_ACCOUNT_W);
+		int homeW = btnH;
 
 		setBackground(ColorPalette.BLUE.getColor());
 		setPreferredSize(new Dimension(0, h));
 
 		ButtonFactory f = new ButtonFactory();
+		
+		btnHome = f.newIconButton("homeButton.png", btnH, homeW);
+		btnHome.setBackground(ColorPalette.BLUE.getColor());
+		btnHome.setForeground(ColorPalette.WHITE.getColor());
+		btnHome.setActionCommand("Home");
+		f.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 
 		btnBuscar = f.newRoundedButton("Buscar", btnH, searchW, 1);
 		btnBuscar.setBackground(ColorPalette.WHITE.getColor());
@@ -35,7 +43,7 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		btnBuscar.setActionCommand("Buscar productos");
 		f.addMouseMecanics(btnBuscar, ColorPalette.WHITE, ColorPalette.LIGHT_PURPLE);
 
-		btnIniciarSesion = f.newButton("Iniciar sesión", btnH, accountW);
+		btnIniciarSesion = f.newRoundedButton("Iniciar sesión / Registrarse", btnH, accountW, 0.25);
 		btnIniciarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
 		btnIniciarSesion.setForeground(ColorPalette.WHITE.getColor());
 		btnIniciarSesion.setActionCommand("Iniciar sesión");
@@ -44,15 +52,19 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
 
+		add(btnHome);
 		add(btnBuscar);
 		add(btnIniciarSesion);
 
 		// Posición: [space] [campoBusqueda expandido] [space] [btnBuscar] [space]
 		// [btnIniciarSesion] [space]
-		layout.putConstraint(SpringLayout.WEST, btnBuscar, spaceBetween, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.WEST, btnHome, spaceBetween, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, btnHome, spaceBetween, SpringLayout.NORTH, this);
+		
+		layout.putConstraint(SpringLayout.WEST, btnBuscar, spaceBetween, SpringLayout.EAST, btnHome);
 		layout.putConstraint(SpringLayout.NORTH, btnBuscar, spaceBetween, SpringLayout.NORTH, this);
 
-		layout.putConstraint(SpringLayout.WEST, btnIniciarSesion, spaceBetween, SpringLayout.EAST, btnBuscar);
+		layout.putConstraint(SpringLayout.EAST, btnIniciarSesion, -spaceBetween, SpringLayout.EAST, this);
 		layout.putConstraint(SpringLayout.NORTH, btnIniciarSesion, spaceBetween, SpringLayout.NORTH, this);
 	}
 
@@ -60,5 +72,6 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 	public void setControlador(ControlBarraTareas c) {
 		btnBuscar.addActionListener(c);
 		btnIniciarSesion.addActionListener(c);
+		btnHome.addActionListener(c);
 	}
 }
