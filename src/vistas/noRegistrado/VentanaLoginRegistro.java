@@ -7,6 +7,7 @@ import javax.swing.*;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
+import vistas.herramientas.Fonts;
 import vistas.herramientas.RoundedPanel;
 
 // TODO: Auto-generated Javadoc
@@ -73,9 +74,9 @@ public class VentanaLoginRegistro extends JPanel {
 	// ──────────────────────────────────────────────
 	private JPanel buildPanelLogin(TiendaFrame t) {
 		loginUsuarioField = new JTextField(15);
-		loginUsuarioField.setFont(t.getTextFont());
+		loginUsuarioField.setFont(Fonts.TEXT.getFont());
 		loginPassField = new JPasswordField(15);
-		loginPassField.setFont(t.getTextFont());
+		loginPassField.setFont(Fonts.TEXT.getFont());
 		botonLogin = new ButtonFactory().newButton("Log In");
 		botonLogin.setBackground(ColorPalette.PURPLE.getColor());
 		botonLogin.setForeground(ColorPalette.WHITE.getColor());
@@ -99,11 +100,11 @@ public class VentanaLoginRegistro extends JPanel {
 	// ──────────────────────────────────────────────
 	private JPanel buildPanelRegistro(TiendaFrame t) {
 		regUsuarioField = new JTextField(15);
-		regUsuarioField.setFont(t.getTextFont());
+		regUsuarioField.setFont(Fonts.TEXT.getFont());
 		regPassField = new JPasswordField(15);
-		regPassField.setFont(t.getTextFont());
+		regPassField.setFont(Fonts.TEXT.getFont());
 		regConfirmField = new JPasswordField(15);
-		regConfirmField.setFont(t.getTextFont());
+		regConfirmField.setFont(Fonts.TEXT.getFont());
 		botonRegistrar = new ButtonFactory().newButton("Sign In");
 		botonRegistrar.setBackground(ColorPalette.PURPLE.getColor());
 		botonRegistrar.setForeground(ColorPalette.WHITE.getColor());
@@ -137,7 +138,7 @@ public class VentanaLoginRegistro extends JPanel {
 
 		// — Cabecera de color —
 		JLabel header = new JLabel(titulo, JLabel.CENTER);
-		header.setFont(t.getTitle3Font());
+		header.setFont(Fonts.TITLE3.getFont());
 		header.setForeground(ColorPalette.WHITE.getColor());
 		header.setOpaque(true);
 		header.setBackground(ColorPalette.BG_BLUE.getColor());
@@ -151,7 +152,7 @@ public class VentanaLoginRegistro extends JPanel {
 
 		for (int i = 0; i < labels.length; i++) {
 			JLabel lbl = new JLabel(labels[i]);
-			lbl.setFont(t.getTextFont());
+			lbl.setFont(Fonts.TEXT.getFont());
 			lbl.setAlignmentX(LEFT_ALIGNMENT);
 			fields[i].setAlignmentX(LEFT_ALIGNMENT);
 			fields[i].setMaximumSize(new Dimension(Integer.MAX_VALUE, fields[i].getPreferredSize().height));

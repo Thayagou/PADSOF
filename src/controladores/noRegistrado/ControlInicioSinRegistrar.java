@@ -1,16 +1,14 @@
 package controladores.noRegistrado;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
 import modelo.sistema.Tienda;
-import modelo.venta.productos.Producto;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
-import vistas.noRegistrado.BarraTareasNoRegistrado;
-import vistas.noRegistrado.VentanaInicioSinRegistrar;
+import modelo.venta.productos.*;
+import vistas.common.*;
+import vistas.noRegistrado.*;
 
 public class ControlInicioSinRegistrar implements ActionListener {
 
@@ -34,6 +32,13 @@ public class ControlInicioSinRegistrar implements ActionListener {
 		Producto[] populares = tienda.getAlmacen().getProductosCoincidentes("");
 		this.vista = new VentanaInicioSinRegistrar(populares);
 		this.vista.setClickListener(this);
+		for(Producto p : populares) {
+			ArrayList<String> categorias = new ArrayList<>();
+			for(Categoria c : p.getCategorias()) {
+				categorias.add(c.getNombre());
+			}
+			vista.anadirProductoRecomendado(p.getNombre(), p.getDescripcion(), p.getPuntuacionMedia(), p.getPrecio(), categorias.toArray(new String[0]));
+		}
 		tiendaFrame.setVistaActual(vista);
 	}
 

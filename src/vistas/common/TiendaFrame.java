@@ -103,11 +103,6 @@ public class TiendaFrame extends JFrame {
 		return vistaActual;
 	}
 	
-	public Font getTitleFont() { return new Font("Arial", Font.BOLD, (int) (height * PanelSizes.TITLE_SIZE));}
-	public Font getSubtitleFont() { return new Font("Arial", Font.BOLD, (int) (height * PanelSizes.SUBTITLE_SIZE));}
-	public Font getTitle3Font() { return new Font("Arial", Font.BOLD, (int) (height * PanelSizes.TITLE3_SIZE));}
-	public Font getTextFont() { return new Font("Arial", Font.BOLD, (int) (height * PanelSizes.TEXT_SIZE));}
-	
 	public int getPixelsWidth(double percentage) { return (int)(width * percentage); }
 	public int getPixelsHeight(double percentage) { return (int)(height * percentage); }
 	

@@ -2,13 +2,10 @@ package vistas.noRegistrado;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 import javax.swing.*;
-import modelo.venta.productos.Producto;
-import vistas.common.PanelProducto;
-import vistas.common.TiendaFrame;
-import vistas.herramientas.ColorPalette;
+import vistas.common.*;
+import vistas.herramientas.*;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,7 +18,7 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/** Campo productos. */
-	private Producto[] productos;
+	private ArrayList<PanelProducto> productos = new ArrayList<>();
 	
 	/** Campo listaPanel. */
 	private JPanel listaPanel;
@@ -41,11 +38,7 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 	 *
 	 * @param productos parámetro productos
 	 */
-	public VentanaResultadosNoRegistrado(Producto[] productos) {
-		this.productos = productos;
-
-		TiendaFrame t = TiendaFrame.getInstance();
-
+	public VentanaResultadosNoRegistrado() {
 		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
 
@@ -54,11 +47,11 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 		cabecera.setBackground(ColorPalette.BG_BLUE.getColor());
 
 		JLabel lblResultados = new JLabel("Resultados de búsqueda");
-		lblResultados.setFont(t.getTitle3Font());
+		lblResultados.setFont(Fonts.TITLE3.getFont());
 		lblResultados.setForeground(ColorPalette.WHITE.getColor());
 
 		ordenCombo = new JComboBox<>(ORDENES);
-		ordenCombo.setFont(t.getTextFont());
+		ordenCombo.setFont(Fonts.TEXT.getFont());
 		ordenCombo.addActionListener(e -> refrescarLista());
 
 		cabecera.add(lblResultados);
@@ -80,27 +73,30 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 
 		refrescarLista();
 	}
+	
+	public void anadirProducto(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
+		productos.add(new PanelProducto(nombre, descripcion, puntuacionMedia, precio, categorias));
+		refrescarLista();
+	}
 
 	/**
 	 * refrescarLista.
 	 */
 	private void refrescarLista() {
-		Producto[] ordenados = Arrays.copyOf(productos, productos.length);
+		PanelProducto[] ordenados = Arrays.copyOf(productos.toArray(new PanelProducto[0]), productos.size());
 		switch (ordenCombo.getSelectedIndex()) {
-		case 0 -> Arrays.sort(ordenados, Comparator.comparingDouble(Producto::getPuntuacionMedia).reversed());
-		case 1 -> Arrays.sort(ordenados, Comparator.comparingDouble(Producto::getPuntuacionMedia));
-		case 2 -> Arrays.sort(ordenados, Comparator.comparingDouble(Producto::getPrecio));
-		case 3 -> Arrays.sort(ordenados, Comparator.comparingDouble(Producto::getPrecio).reversed());
-		case 4 -> Arrays.sort(ordenados, Comparator.comparing(Producto::getNombre));
-		case 5 -> Arrays.sort(ordenados, Comparator.comparing(Producto::getNombre).reversed());
+		case 0 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPuntuacionMedia).reversed());
+		case 1 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPuntuacionMedia));
+		case 2 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPrecio));
+		case 3 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPrecio).reversed());
+		case 4 -> Arrays.sort(ordenados, Comparator.comparing(PanelProducto::getNombre));
+		case 5 -> Arrays.sort(ordenados, Comparator.comparing(PanelProducto::getNombre).reversed());
 		}
 
 		listaPanel.removeAll();
-		for (Producto p : ordenados) {
-			PanelProducto fila = new PanelProducto(p);
-			if (clickListener != null)
-				fila.addClickListener(clickListener);
-			listaPanel.add(fila);
+		for (PanelProducto p : ordenados) {
+			if (clickListener != null) p.addClickListener(clickListener);
+			listaPanel.add(p);
 		}
 		listaPanel.revalidate();
 		listaPanel.repaint();

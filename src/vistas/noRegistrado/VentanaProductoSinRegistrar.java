@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import vistas.common.*;
 import vistas.herramientas.ColorPalette;
+import vistas.herramientas.Fonts;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -50,7 +51,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
         leftWrapper.setBackground(ColorPalette.BG_BLUE.getColor());
 
         JLabel lblValoraciones = new JLabel("  Valoraciones");
-        lblValoraciones.setFont(t.getTitle3Font());
+        lblValoraciones.setFont(Fonts.TITLE3.getFont());
         lblValoraciones.setForeground(ColorPalette.WHITE.getColor());
         lblValoraciones.setOpaque(true);
         lblValoraciones.setBackground(ColorPalette.BG_BLUE.getColor());
@@ -80,7 +81,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
 
         // Nombre
         JLabel nombreLabel = new JLabel(nombre);
-        nombreLabel.setFont(t.getSubtitleFont());
+        nombreLabel.setFont(Fonts.SUBTITLE.getFont());
         nombreLabel.setForeground(Color.BLACK);
         nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
         rightPanel.add(nombreLabel);
@@ -88,7 +89,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
         // Categorías
         for(String c : categorias) {
             JLabel catLabel = new JLabel(c);
-            catLabel.setFont(t.getTextFont());
+            catLabel.setFont(Fonts.TEXT.getFont());
             catLabel.setForeground(ColorPalette.PURPLE.getColor());
             catLabel.setAlignmentX(LEFT_ALIGNMENT);
             rightPanel.add(Box.createVerticalStrut(4));
@@ -103,7 +104,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
         foto.setPreferredSize(new Dimension(0, fotoH));
         foto.setAlignmentX(LEFT_ALIGNMENT);
         JLabel fotoLbl = new JLabel("FOTO");
-        fotoLbl.setFont(t.getTitle3Font());
+        fotoLbl.setFont(Fonts.TITLE3.getFont());
         fotoLbl.setForeground(ColorPalette.DARK_GREY.getColor());
         foto.add(fotoLbl);
         rightPanel.add(Box.createVerticalStrut(10));
@@ -111,7 +112,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
 
         // Precio
         JLabel precioLabel = new JLabel(String.format("Precio: %.2f €", precio));
-        precioLabel.setFont(t.getTitle3Font());
+        precioLabel.setFont(Fonts.TITLE3.getFont());
         precioLabel.setForeground(Color.BLACK);
         precioLabel.setAlignmentX(LEFT_ALIGNMENT);
         rightPanel.add(Box.createVerticalStrut(10));
@@ -119,7 +120,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
 
         // Descripción
         JTextArea desc = new JTextArea(descripcion);
-        desc.setFont(t.getTextFont());
+        desc.setFont(Fonts.TEXT.getFont());
         desc.setLineWrap(true);
         desc.setWrapStyleWord(true);
         desc.setEditable(false);
@@ -158,7 +159,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
         int llenas = (int) Math.round(val);
         for (int i = 1; i <= 5; i++) {
             JLabel s = new JLabel("★");
-            s.setFont(t.getTitle3Font());
+            s.setFont(Fonts.TITLE3.getFont());
             s.setForeground(i <= llenas
                     ? ColorPalette.YELLOW.getColor()
                     : ColorPalette.LIGHT_GREY.getColor());

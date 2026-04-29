@@ -8,7 +8,9 @@ public enum Fonts {
 	TITLE("Arial", Font.BOLD, 0.05),
 	SUBTITLE("Arial", Font.BOLD, 0.04),
 	TITLE3("Arial", Font.BOLD, 0.03),
-	TEXT("Arial", Font.BOLD, 0.02);
+	BOLD("Arial", Font.BOLD, 0.02),
+	SMALL("Arial", Font.PLAIN, 0.015),
+	TEXT("Arial", Font.PLAIN, 0.02);
 	
 	private Font font;
 	
