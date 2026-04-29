@@ -25,7 +25,7 @@ public class ControlBuscar implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Entrar"))
+		if (e.getActionCommand().equals("Buscar") || e.getActionCommand().equals("Entrar")) 
 			this.intentarBusqueda();
 	}
 	
@@ -35,7 +35,7 @@ public class ControlBuscar implements ActionListener {
 		double pMax = vista.getPrecioMax();
 		String[] selected = vista.getCategoriasSeleccionadas();
 		List<Categoria> categorias = new LinkedList<>();
-		for(String cat : selected) {
+		for (String cat : selected) {
 			try {
 				categorias.add(tienda.getAlmacen().getCategoria(cat));
 			} catch (InvalidArgumentException e) {
@@ -44,15 +44,14 @@ public class ControlBuscar implements ActionListener {
 		}
 
 		try {
-			Producto[] productos = tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]), pMin, pMax, eMin);
-			// AÑADIR AL CARD_LAYOUT
-			// LUEGO MANDAMOS A VENTANA QUE DEJE COMPRAR??
-			new VentanaResultados(tienda, productos);
+			Producto[] productos = tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]),
+					pMin, pMax, eMin);
+			// Navegar a la vista de resultados con su controlador
+			new ControlResultadosNoRegistrado(tienda, productos);
 		} catch (CustomException ex) {
 			new VentanaMensaje(ex.getMessage());
 		} catch (NumberFormatException ex) {
 			new VentanaMensaje("Introduce valores numéricos válidos");
 		}
 	}
-
 }

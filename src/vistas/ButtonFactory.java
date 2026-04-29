@@ -1,4 +1,5 @@
 package vistas;
+import java.awt.Cursor;
 import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
@@ -28,6 +29,7 @@ public class ButtonFactory {
 	}
 
 	private void setDefault(JButton button) {
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 	}
@@ -40,6 +42,31 @@ public class ButtonFactory {
 		JButton button = new JButton(getHTMLLabel(label));
 		button.setActionCommand(label);
 		
+		return button;
+	}
+	
+	public JButton newRoundedButton(String label, int height, int width, double radius) {
+		JButton button = new RoundedButton(getHTMLLabel(label), radius);
+		
+		button.setActionCommand(label);
+		button.setPreferredSize(new Dimension(width, height));
+
+		setDefault(button);
+
+		return button;
+	}
+	
+	public JButton newRoundedIconButton(String label, int height, int width, int radius, String imageName) {
+		ImageIcon icon = loadImageIcon(imageName);
+		JButton button = new RoundedButton(getHTMLLabel(label), radius);
+
+		button.setIcon(icon);
+		button.setPreferredSize(new Dimension(width, height));
+		button.setActionCommand(label);
+
+		setDefault(button);
+		iconoDinamico(button, icon, 0.6);
+
 		return button;
 	}
 

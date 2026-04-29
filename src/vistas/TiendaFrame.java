@@ -19,16 +19,6 @@ public class TiendaFrame extends JFrame {
 	private int height;
 	private int width;
 	
-	private static double TITLE_SIZE = 0.05;
-	private static double SUBTITLE_SIZE = 0.04;
-	private static double TITLE3_SIZE = 0.03;
-	private static double TEXT_SIZE = 0.02;
-	
-	protected static double TOOLBAR_HEIGHT = 0.1;
-	
-	private static double OPTION_BAR_WIDTH = 0.15;
-	private static double BTN_HEIGHT = 0.05;
-	
 	public TiendaFrame() {
 		setTitle("Android's Dungeon");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -90,15 +80,15 @@ public class TiendaFrame extends JFrame {
 		return vistaActual;
 	}
 	
-	public Font getTitleFont() { return new Font("Arial", Font.BOLD, (int) (height * TITLE_SIZE));}
-	public Font getSubtitleFont() { return new Font("Arial", Font.BOLD, (int) (height * SUBTITLE_SIZE));}
-	public Font getTitle3Font() { return new Font("Arial", Font.BOLD, (int) (height * TITLE3_SIZE));}
-	public Font getTextFont() { return new Font("Arial", Font.BOLD, (int) (height * TEXT_SIZE));}
+	public Font getTitleFont() { return new Font("Arial", Font.BOLD, (int) (height * PanelSizes.TITLE_SIZE));}
+	public Font getSubtitleFont() { return new Font("Arial", Font.BOLD, (int) (height * PanelSizes.SUBTITLE_SIZE));}
+	public Font getTitle3Font() { return new Font("Arial", Font.BOLD, (int) (height * PanelSizes.TITLE3_SIZE));}
+	public Font getTextFont() { return new Font("Arial", Font.BOLD, (int) (height * PanelSizes.TEXT_SIZE));}
 	
 	public int getPixelsWidth(double percentage) { return (int)(width * percentage); }
 	public int getPixelsHeight(double percentage) { return (int)(height * percentage); }
 	
-	public int toolBarDistFromTop() { return (int) (height * TOOLBAR_HEIGHT); }
-	public int optionBarDistFromLeft() { return (int) (width * OPTION_BAR_WIDTH); }
-	public int btnHeight() { return (int) (height * BTN_HEIGHT); }
+	public int toolBarDistFromTop() { return (int) (height * PanelSizes.TOOLBAR_HEIGHT); }
+	public int optionBarDistFromLeft() { return (int) (width * PanelSizes.OPTION_BAR_WIDTH); }
+	public int btnHeight() { return (int) (height * PanelSizes.BTN_HEIGHT); }
 }

@@ -1,29 +1,62 @@
 package vistas.noRegistrado;
 
+import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
+import modelo.venta.productos.Producto;
+import vistas.*;
 
-import vistas.Fonts;
-import vistas.TiendaFrame;
-
-import java.awt.BorderLayout;
-
+/**
+ * Pantalla de inicio para usuarios no registrados. Muestra una lista de
+ * "Productos populares" (los mejor valorados).
+ */
 public class VentanaInicioSinRegistrar extends JPanel {
-
 	private static final long serialVersionUID = 1L;
-	private static double GAP_PERC = 0.01;
 
-	public VentanaInicioSinRegistrar() {
-		super();
+	private JPanel listaPanel;
+	private ActionListener clickListener;
 
-		JLabel title = new JLabel("Tienda mega friki (just for onion smelling fat twatts...)");
-		title.setFont(Fonts.TITLE.getFont());
-		int vertGap = TiendaFrame.getInstance().getPixelsHeight(GAP_PERC);
-		int horGap = TiendaFrame.getInstance().getPixelsWidth(GAP_PERC);
-		setLayout(new BorderLayout(horGap, vertGap));
+	public VentanaInicioSinRegistrar(Producto[] populares) {
+		TiendaFrame t = TiendaFrame.getInstance();
+
 		setOpaque(false);
-		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		add(title, BorderLayout.NORTH);
-		
-		
+		setLayout(new BorderLayout());
+
+		// ── Cabecera ──────────────────────────────────────────────
+		JLabel cabecera = new JLabel("  Productos populares");
+		cabecera.setFont(t.getTitle3Font());
+		cabecera.setForeground(ColorPalette.WHITE.getColor());
+		cabecera.setOpaque(true);
+		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());
+		cabecera.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+		// ── Lista ─────────────────────────────────────────────────
+		listaPanel = new JPanel();
+		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
+		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
+
+		for (Producto p : populares) {
+			listaPanel.add(new PanelProducto(p));
+		}
+
+		JScrollPane scroll = new JScrollPane(listaPanel);
+		scroll.setBorder(BorderFactory.createEmptyBorder());
+		scroll.getVerticalScrollBar().setUnitIncrement(16);
+		scroll.getViewport().setBackground(ColorPalette.CARD_LIGHT.getColor());
+
+		add(cabecera, BorderLayout.NORTH);
+		add(scroll, BorderLayout.CENTER);
+	}
+
+	/**
+	 * Listener disparado al hacer clic en un producto de la lista. ActionCommand:
+	 * "Ver producto:<nombreProducto>"
+	 */
+	public void setClickListener(ActionListener l) {
+		this.clickListener = l;
+		for (Component c : listaPanel.getComponents()) {
+			if (c instanceof PanelProducto pp)
+				pp.addClickListener(l);
+		}
 	}
 }
