@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 import controladores.ControlBarraTareas;
 import modelo.sistema.Tienda;
-import vistas.noRegistrado.BarraTareasNoRegistrado;
 
 /**
  * Controlador de la barra de tareas superior cuando no hay sesión iniciada.

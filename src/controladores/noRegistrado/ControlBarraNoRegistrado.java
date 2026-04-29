@@ -1,12 +1,10 @@
 package controladores.noRegistrado;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
-import controladores.ControlBarraTareas;
 import modelo.sistema.Tienda;
 
 public class ControlBarraNoRegistrado implements ControlBarraLateral {

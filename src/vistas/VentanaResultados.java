@@ -2,11 +2,8 @@ package vistas;
 
 import javax.swing.*;
 
-import modelo.exceptions.*;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.*;
-
-import java.awt.*;
 
 public class VentanaResultados extends JFrame {
 
