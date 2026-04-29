@@ -25,7 +25,10 @@ public class VentanaInicioGestor extends JPanel {
 	private JButton empleados;
 	
 	public VentanaInicioGestor(Tienda tienda) {
-		super();
+		int vertGap = TiendaFrame.getInstance().getPixelsHeight(GAP);
+		int horGap = TiendaFrame.getInstance().getPixelsWidth(GAP);
+		setLayout(new BorderLayout(horGap, vertGap));
+		setOpaque(false);
 		TiendaFrame t = TiendaFrame.getInstance();
 		
 		JPanel center = new JPanel(new GridLayout(2, 1, 0, 16));
