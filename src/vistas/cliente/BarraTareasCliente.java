@@ -1,8 +1,8 @@
-package vistas;
+package vistas.cliente;
 
 import java.awt.*;
 import javax.swing.*;
-
+import vistas.*;
 import controladores.ControlBarraTareas;
 
 public class BarraTareasCliente extends BarraTareas{
@@ -24,14 +24,14 @@ public class BarraTareasCliente extends BarraTareas{
 	public BarraTareasCliente() {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int spaceBetween = t.getPixelsHeight(SPACE_BETWEEN);
-		int alturaBotones = t.getPixelsHeight(TiendaFrame.TOOLBAR_HEIGHT) - 2*spaceBetween;
+		int alturaBotones = t.getPixelsHeight(PanelSizes.TOOLBAR_HEIGHT) - 2*spaceBetween;
 		int notisW = alturaBotones;
 		int carrW = alturaBotones;
 		int cuentaW = t.getPixelsHeight(TOOL_BAR_ACCOUNT_WIDTH);
 		int buscarW = t.getWidth() - 5*spaceBetween - notisW - carrW - cuentaW;
 		
 		setBackground(ColorPalette.BLUE.getColor());
-        setPreferredSize(new Dimension(0, t.getPixelsHeight(TiendaFrame.TOOLBAR_HEIGHT)));
+        setPreferredSize(new Dimension(0, t.getPixelsHeight(PanelSizes.TOOLBAR_HEIGHT)));
 		
 		/* Imagen del boton de notificaciones */
 		ButtonFactory factory = new ButtonFactory();

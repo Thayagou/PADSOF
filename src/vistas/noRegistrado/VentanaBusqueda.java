@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import controladores.noRegistrado.ControlBuscar;
+import vistas.ColorPalette;
 import vistas.Fonts;
 import vistas.TiendaFrame;
 import java.awt.*;
@@ -27,8 +28,12 @@ public class VentanaBusqueda extends JPanel/*vistas.noRegistrado.FondoNoRegistra
 		TiendaFrame t = TiendaFrame.getInstance();
 		int height = t.getHeight();
 		int width = t.getWidth();
-		JLabel title = new JLabel("Realizar búsqueda", JLabel.CENTER);
-		title.setFont(t.getTitle3Font());
+		JLabel cabecera = new JLabel("Realizar búsqueda", JLabel.CENTER);
+		cabecera.setFont(t.getTitle3Font());
+		cabecera.setForeground(ColorPalette.WHITE.getColor());
+		cabecera.setOpaque(true);
+		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());
+		cabecera.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
 		estrellas = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 5.0, 0.5));
 		estrellas.setPreferredSize(new Dimension((int)(0.08*width), (int)(0.03 * height)));
@@ -103,7 +108,7 @@ public class VentanaBusqueda extends JPanel/*vistas.noRegistrado.FondoNoRegistra
 	    
 		JPanel panelNorte = new JPanel(new BorderLayout());
 		panelNorte.setOpaque(false);
-		panelNorte.add(title, BorderLayout.CENTER);
+		panelNorte.add(cabecera, BorderLayout.CENTER);
 		
 		JPanel panelCentro = new JPanel(new BorderLayout(10, 10));
 		panelCentro.add(panelForm, BorderLayout.WEST);
