@@ -3,7 +3,6 @@ package vistas.noRegistrado;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-import controladores.noRegistrado.ControlBarraNoRegistrado;
 import controladores.noRegistrado.ControlBuscar;
 import vistas.Fonts;
 import vistas.TiendaFrame;

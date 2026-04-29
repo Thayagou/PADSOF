@@ -25,7 +25,7 @@ public class ControlInicioGestor implements ActionListener{
 		this.frame = TiendaFrame.getInstance();
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setLocationRelativeTo(null);
-		this.frame.add(vista);
+		this.frame.setVistaActual(vista);
 		this.frame.setVisible(true);
 	}
 	@Override

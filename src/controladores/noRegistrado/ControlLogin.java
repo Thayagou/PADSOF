@@ -28,7 +28,7 @@ public class ControlLogin implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Entrar"))
+		if (e.getActionCommand().equals("Log In"))
 			this.intentarLogin();
 	}
 	
@@ -38,6 +38,7 @@ public class ControlLogin implements ActionListener {
 
 		try {
 			Usuario usuario = tienda.iniciarSesion(nombre, pass);
+			System.out.println(nombre + " " + pass);
 			
 			if (usuario instanceof Gestor) {
 				this.inicioGestor();
@@ -52,6 +53,7 @@ public class ControlLogin implements ActionListener {
 	}
 
 	private void inicioGestor() {
+		
 		SwingUtilities.invokeLater(()->
 			new ControlInicioGestor(tienda)
 		);
