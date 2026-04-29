@@ -20,7 +20,7 @@ public class ButtonFactory {
 		return "<html><center>" + label + "</center></html>";
 	}
 	
-	private ImageIcon loadImageIconScaled(String imageName, int h, int w) {
+	public ImageIcon loadImageIconScaled(String imageName, int h, int w) {
 		ImageIcon original = new ImageIcon(IMAGE_PATH + imageName);
 	    Image img = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
 	    return new ImageIcon(img);

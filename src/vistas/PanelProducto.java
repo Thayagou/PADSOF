@@ -46,40 +46,52 @@ public class PanelProducto extends JPanel {
 		fotoLabel.setFont(t.getTextFont());
 		foto.add(fotoLabel);
 
-		// — Info: estrellas + nombre + descripción + precio + categorías —
-		JPanel info = new JPanel();
-		info.setOpaque(false);
-		info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
-
-		info.add(buildEstrellas(t, producto.getPuntuacionMedia()));
-
-		JLabel nombre = new JLabel(producto.getNombre());
-		nombre.setFont(t.getTitle3Font());
-		nombre.setForeground(ColorPalette.DARK_GREY.getColor().darker());
-		info.add(nombre);
-
-		String desc = producto.getDescripcion();
-		if (desc != null && desc.length() > MAX_DESC)
-			desc = desc.substring(0, MAX_DESC) + "...";
-		JLabel descripcion = new JLabel("<html>" + desc + "</html>");
-		descripcion.setFont(t.getTextFont());
-		descripcion.setForeground(ColorPalette.DARK_GREY.getColor());
-		info.add(descripcion);
-
-		JLabel precio = new JLabel(String.format("%.2f €", producto.getPrecio()));
-		precio.setFont(t.getTitle3Font());
-		precio.setForeground(Color.BLACK);
-		info.add(precio);
-
-		// Categorías como links morados
-		String cats = String.join(", ",
-				java.util.Arrays.stream(producto.getCategorias()).map(c -> c.getNombre()).toArray(String[]::new));
-		if (!cats.isEmpty()) {
-			JLabel categoriasLabel = new JLabel(cats);
-			categoriasLabel.setFont(t.getTextFont());
-			categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
-			info.add(categoriasLabel);
-		}
+		/* Info: estrellas + nombre + descripción + precio + categorías */
+			JPanel info = new JPanel();
+			info.setOpaque(false);
+			info.setLayout(new GridLayout(3, 1));
+			
+			/*Primera fila: estrellas + nombre */
+			JPanel firstRow = new JPanel();
+			firstRow.setOpaque(false);
+			firstRow.setLayout(new BorderLayout(10, 0));
+			firstRow.add(buildEstrellas(t, producto.getPuntuacionMedia()), BorderLayout.WEST);
+	
+			JLabel nombre = new JLabel(producto.getNombre());
+			nombre.setFont(t.getTextFont());
+			nombre.setForeground(ColorPalette.DARK_GREY.getColor().darker());
+			firstRow.add(nombre, BorderLayout.CENTER);
+	
+			info.add(firstRow);
+			
+			/*Segunda fila: descripcion*/
+			String desc = producto.getDescripcion();
+			if (desc != null && desc.length() > MAX_DESC)
+				desc = desc.substring(0, MAX_DESC) + "...";
+			JLabel descripcion = new JLabel("<html>" + desc + "</html>");
+			descripcion.setFont(t.getTextFont());
+			descripcion.setForeground(ColorPalette.DARK_GREY.getColor());
+			info.add(descripcion);
+			
+			/*Tercera fila: categorias + precio*/
+			JPanel thirdRow = new JPanel();
+			thirdRow.setLayout(new BorderLayout(10, 0));
+			thirdRow.setOpaque(false);
+			
+			String cats = String.join(", ", java.util.Arrays.stream(producto.getCategorias()).map(c -> c.getNombre()).toArray(String[]::new));
+			if (!cats.isEmpty()) {
+				JLabel categoriasLabel = new JLabel(cats);
+				categoriasLabel.setFont(t.getTextFont());
+				categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
+				thirdRow.add(categoriasLabel, BorderLayout.WEST);
+			}
+			
+			JLabel precio = new JLabel(String.format("%.2f €", producto.getPrecio()));
+			precio.setFont(t.getTextFont());
+			precio.setForeground(Color.BLACK);
+			thirdRow.add(precio, BorderLayout.CENTER);
+			
+			info.add(thirdRow);
 
 		add(foto, BorderLayout.WEST);
 		add(info, BorderLayout.CENTER);
@@ -131,7 +143,7 @@ public class PanelProducto extends JPanel {
 		int llenas = (int) Math.round(valoracion);
 		for (int i = 1; i <= 5; i++) {
 			JLabel star = new JLabel("★");
-			star.setFont(t.getTitle3Font());
+			star.setFont(t.getTextFont());
 			star.setForeground(i <= llenas ? ColorPalette.YELLOW.getColor() : ColorPalette.LIGHT_GREY.getColor());
 			p.add(star);
 		}
