@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 
 import controladores.cliente.ControlBarraTareasCliente;
-import controladores.noRegistrado.ControlBarraNoRegistrado;
 import modelo.sistema.Tienda;
 import vistas.BarraLateral;
 import vistas.TiendaFrame;

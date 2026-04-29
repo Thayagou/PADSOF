@@ -1,19 +1,30 @@
 package vistas.empleado;
 
+import java.awt.BorderLayout;
+
 import javax.swing.*;
 
 import modelo.sistema.Tienda;
+import vistas.ColorPalette;
+import vistas.TiendaFrame;
 
-public class VentanaInicioEmpleado extends JFrame {
-
+public class VentanaInicioEmpleado extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public VentanaInicioEmpleado(Tienda tienda) {
-		setTitle("EMPLEADO");
-		setSize(300, 200);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		TiendaFrame t = TiendaFrame.getInstance();
+
+		setOpaque(false);
+		setLayout(new BorderLayout());
+
+		// ── Cabecera ──────────────────────────────────────────────
+		JLabel cabecera = new JLabel("  Menú de empleado   Seleccione una tarea para continuar");
+		cabecera.setFont(t.getTitle3Font());
+		cabecera.setForeground(ColorPalette.WHITE.getColor());
+		cabecera.setOpaque(true);
+		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());
+		cabecera.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		
-		setVisible(true);
+		add(cabecera, BorderLayout.NORTH);
 	}
 }

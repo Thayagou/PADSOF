@@ -3,13 +3,13 @@ package controladores.noRegistrado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
+
+import controladores.empleado.ControlInicioEmpleado;
 import controladores.gestor.ControlInicioGestor;
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
 import vistas.*;
-import vistas.cliente.VentanaInicioCliente;
-import vistas.empleado.VentanaInicioEmpleado;
 import vistas.noRegistrado.VentanaLoginRegistro;
 
 /**
@@ -73,7 +73,7 @@ public class ControlLoginRegistro {
         if (usuario instanceof Gestor) {
             SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda));
         } else if (usuario instanceof Empleado) {
-            new vistas.empleado.VentanaInicioEmpleado(tienda);
+        	SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda));
         } else if (usuario instanceof ClienteRegistrado) {
             new vistas.cliente.VentanaInicioCliente(tienda);
         }

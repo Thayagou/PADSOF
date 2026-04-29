@@ -3,6 +3,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,15 +29,17 @@ public class ButtonFactory {
 	
 	private String getHTMLLabel(String label) {
 		return "<html>" + label + "</html>";
+	}	
+
+	public ImageIcon loadImageIconScaled(String imageName, int h, int w) {
+		ImageIcon original = new ImageIcon(IMAGE_PATH + imageName);
+		if (h <= 0 || w <= 0) return original;
+	    Image img = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+	    return new ImageIcon(img);
 	}
 
 	private ImageIcon loadImageIcon(String imageName) {
-		// ImageIcon iconoOriginal = new ImageIcon(IMAGE_PATH + imageName);
-		// Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(height,
-		// width, Image.SCALE_SMOOTH);
-
 		return new ImageIcon(IMAGE_PATH + imageName);
-		// return new ImageIcon(imagenEscalada);
 	}
 
 	private void setDefault(JButton button) {
@@ -56,8 +59,8 @@ public class ButtonFactory {
 		return button;
 	}
 	
-	public JButton newRoundedButton(String label, int height, int width, double radius) {
-		JButton button = new RoundedButton(getHTMLCenteredLabel(label), radius);
+	public JButton newRoundedButton(String label, int height, int width, double roundness) {
+		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
 		
 		button.setActionCommand(label);
 		button.setPreferredSize(new Dimension(width, height));
@@ -67,9 +70,9 @@ public class ButtonFactory {
 		return button;
 	}
 	
-	public JButton newRoundedIconButton(String label, int height, int width, int radius, String imageName) {
-		ImageIcon icon = loadImageIcon(imageName);
-		JButton button = new RoundedButton(getHTMLCenteredLabel(label), radius);
+	public JButton newRoundedIconButton(String label, int height, int width, double roundness, String imageName) {
+		ImageIcon icon = loadImageIconScaled(imageName, height, width);
+		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
 
 		button.setIcon(icon);
 		button.setPreferredSize(new Dimension(width, height));
@@ -91,7 +94,7 @@ public class ButtonFactory {
 	}
 
 	public JButton newIconButton(String imageName, int height, int width) {
-		ImageIcon icon = loadImageIcon(imageName);
+		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = new JButton(icon);
 
 		// iconoDinamico(button, icon, 0.6);
@@ -106,7 +109,7 @@ public class ButtonFactory {
 
 	public JButton newIconButton(String label, int height, int width, String imageName) {
 		
-		ImageIcon icon = loadImageIcon(imageName);
+		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = newButton(label);
 		button.setIcon(icon);
 		// JButton button = this.newIconButton(imageName, height, width);

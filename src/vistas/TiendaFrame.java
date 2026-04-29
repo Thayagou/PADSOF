@@ -5,9 +5,13 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import modelo.aplicacion.GuiExe;
 
 
 public class TiendaFrame extends JFrame {
@@ -20,7 +24,7 @@ public class TiendaFrame extends JFrame {
 	private int height;
 	private int width;
 	
-	public TiendaFrame() {
+	private TiendaFrame() {
 		setTitle("Android's Dungeon");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		//setExtendedState(MAXIMIZED_BOTH);
@@ -39,7 +43,19 @@ public class TiendaFrame extends JFrame {
 	}
 	
 	public static TiendaFrame getInstance() {
-		if(instance == null) instance = new TiendaFrame();
+		if(instance == null) {
+			instance = new TiendaFrame();
+			instance.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+			instance.addWindowListener(new WindowAdapter() {
+			    @Override
+			    public void windowClosing(WindowEvent e) {
+			        GuiExe.guardarTienda();
+			        instance.dispose();
+			        System.exit(0);
+			    }
+			});
+		}
 		instance.setVisible(true);
 		return instance; 
 	}
@@ -56,6 +72,12 @@ public class TiendaFrame extends JFrame {
 		if (this.barraLateral != null) fondo.remove(this.barraLateral);
 		fondo.add(barraLateral, BorderLayout.WEST);
 		this.barraLateral = barraLateral;
+		revalidate();
+	    repaint();
+	}
+	
+	public void removeBarraLateral() {
+		if (this.barraLateral != null) fondo.remove(this.barraLateral);
 		revalidate();
 	    repaint();
 	}

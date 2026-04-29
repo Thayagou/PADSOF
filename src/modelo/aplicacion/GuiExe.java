@@ -29,4 +29,8 @@ public class GuiExe {
 		    new ControlInicioGestor(tienda);
 		});
 	}
+	
+	public static void guardarTienda() {
+		tienda.guardarTienda(filename);
+	}
 }

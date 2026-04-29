@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 import controladores.ControlBarraTareas;
 import modelo.sistema.Tienda;
-import vistas.noRegistrado.BarraTareasNoRegistrado;
 
 /**
  * Controlador de la barra de tareas superior cuando no hay sesión iniciada.
@@ -21,9 +20,9 @@ public class ControlBarraTareasNoRegistrado implements ControlBarraTareas {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Buscar productos" ->
-			SwingUtilities.invokeLater(() -> new ControlBuscar(tienda));
+		case "Buscar productos" -> SwingUtilities.invokeLater(() -> new ControlBuscar(tienda));
 		case "Iniciar sesión" -> SwingUtilities.invokeLater(() -> new ControlLoginRegistro(tienda));
+		case "Home" -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
 		}
 	}
 }
