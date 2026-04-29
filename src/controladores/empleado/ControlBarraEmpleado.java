@@ -6,13 +6,16 @@ import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
 import modelo.sistema.Tienda;
+import modelo.usuario.Empleado;
 
 public class ControlBarraEmpleado implements ControlBarraLateral {
 
-	private Tienda tienda;
+	private final Tienda tienda;
+	private final Empleado empleado;
 
-	public ControlBarraEmpleado(Tienda tienda) {
+	public ControlBarraEmpleado(Tienda tienda, Empleado empleado) {
 		this.tienda = tienda;
+		this.empleado = empleado;
 	}
 	
 	@Override
@@ -27,19 +30,19 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 
 	private void showGProductos() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlGestProductos(tienda);
+			new ControlGestProductos(tienda, empleado);
 		});
 	}
 
 	private void showGPedidos() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlGestPedidos(tienda);
+			new ControlGestPedidos(tienda, empleado);
 		});
 	}
 
 	private void showValorar() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlValorarObjetos(tienda);
+			new ControlValorarObjetos(tienda, empleado);
 		});
 	}
 	

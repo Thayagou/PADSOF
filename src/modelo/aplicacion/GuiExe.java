@@ -1,10 +1,7 @@
 package modelo.aplicacion;
 
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.SwingUtilities;
-
-import controladores.gestor.ControlInicioGestor;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.exceptions.*;
 import modelo.sistema.*;

@@ -6,6 +6,7 @@ import controladores.ControlBarraTareas;
 import vistas.common.*;
 import vistas.herramientas.*;
 
+
 // TODO: Auto-generated Javadoc
 /**
  * Define la barra de tareas de los usuarios no registrados

@@ -7,7 +7,6 @@ import javax.swing.SwingUtilities;
 
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
-import vistas.*;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 import vistas.noRegistrado.BarraTareasNoRegistrado;
