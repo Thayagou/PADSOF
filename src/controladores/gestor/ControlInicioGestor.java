@@ -4,13 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 
-import controladores.cliente.ControlBarraTareasCliente;
+import controladores.ControlBarraTareas;
+import controladores.empleado.ControlBarraEmpleado;
+import controladores.noRegistrado.ControlBarraTareasNoRegistrado;
 import modelo.sistema.Tienda;
 import vistas.BarraLateral;
 import vistas.TiendaFrame;
-import vistas.cliente.BarraTareasCliente;
-import vistas.gestor.BarraGestor;
+import vistas.empleado.BarraEmpleado;
 import vistas.gestor.VentanaInicioGestor;
+import vistas.noRegistrado.BarraTareasNoRegistrado;
 
 public class ControlInicioGestor implements ActionListener{
 	private Tienda tienda;
@@ -27,13 +29,13 @@ public class ControlInicioGestor implements ActionListener{
 		this.frame.setVistaActual(vista);
 		this.frame.setVisible(true);
 		
-		ControlBarraNoRegistrado ctrlBarraLateral = new ControlBarraNoRegistrado(tienda);
-        BarraLateral barraLatera = new BarraGestor();
+		ControlBarraEmpleado ctrlBarraLateral = new ControlBarraEmpleado(tienda);
+        BarraLateral barraLatera = new BarraEmpleado();
         barraLatera.setControlador(ctrlBarraLateral);
         frame.setBarraLateral(barraLatera);
         
-        ControlBarraTareasCliente ctrlBarraTareas = new ControlBarraTareasCliente();
-        BarraTareasCliente barraTareas = new BarraTareasCliente();
+        ControlBarraTareas ctrlBarraTareas = new ControlBarraTareasNoRegistrado(tienda);
+        BarraTareasNoRegistrado barraTareas = new BarraTareasNoRegistrado();
         barraTareas.setControlador(ctrlBarraTareas);
         frame.setBarraTareas(barraTareas);
 		

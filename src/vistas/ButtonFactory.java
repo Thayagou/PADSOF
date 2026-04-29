@@ -44,6 +44,7 @@ public class ButtonFactory {
 
 	private void setDefault(JButton button) {
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		button.setFont(Fonts.TEXT.getFont());
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 	}
