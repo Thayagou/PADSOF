@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import controladores.noRegistrado.ControlLogin;
-import controladores.noRegistrado.ControlRegistrarse;
 import vistas.*;
 
 /**

@@ -8,7 +8,6 @@ import javax.swing.SwingUtilities;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
 import vistas.*;
-import vistas.noRegistrado.BarraNoRegistrado;
 import vistas.noRegistrado.BarraTareasNoRegistrado;
 import vistas.noRegistrado.VentanaInicioSinRegistrar;
 
@@ -20,12 +19,6 @@ public class ControlInicioSinRegistrar implements ActionListener {
 	public ControlInicioSinRegistrar(Tienda tienda) {
 		this.tienda = tienda;
 		TiendaFrame tiendaFrame = TiendaFrame.getInstance();
-
-		// Barra lateral
-		ControlBarraNoRegistrado ctrlBarraLateral = new ControlBarraNoRegistrado(tienda);
-		BarraLateral barraLateral = new BarraNoRegistrado();
-		barraLateral.setControlador(ctrlBarraLateral);
-		tiendaFrame.setBarraLateral(barraLateral);
 
 		// Barra de tareas superior
 		ControlBarraTareasNoRegistrado ctrlBarraTareas = new ControlBarraTareasNoRegistrado(tienda);

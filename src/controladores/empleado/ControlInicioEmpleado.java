@@ -26,6 +26,7 @@ public class ControlInicioEmpleado {
 		barraTareas.setControlador(ctrlBarraTareas);
 		tiendaFrame.setBarraTareas(barraTareas);
 		
-		tiendaFrame.setVistaActual(new VentanaInicioEmpleado(tienda));
+		this.vista = new VentanaInicioEmpleado(tienda);
+		tiendaFrame.setVistaActual(this.vista);
 	}
 }
