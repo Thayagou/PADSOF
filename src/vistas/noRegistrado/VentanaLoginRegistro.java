@@ -10,24 +10,42 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.RoundedPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Pantalla de autenticación: dos RoundedPanel lado a lado, igual que la maqueta
  * — izquierda Login, derecha Registro.
  */
 public class VentanaLoginRegistro extends JPanel {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Campo loginUsuarioField. */
 	// ── Login ──
 	private JTextField loginUsuarioField;
+	
+	/** Campo loginPassField. */
 	private JPasswordField loginPassField;
+	
+	/** Campo botonLogin. */
 	private JButton botonLogin;
 
+	/** Campo regUsuarioField. */
 	// ── Registro ──
 	private JTextField regUsuarioField;
+	
+	/** Campo regPassField. */
 	private JPasswordField regPassField;
+	
+	/** Campo regConfirmField. */
 	private JPasswordField regConfirmField;
+	
+	/** Campo botonRegistrar. */
 	private JButton botonRegistrar;
 
+	/**
+	 * Instancia un nuevo Objeto VentanaLoginRegistro.
+	 */
 	public VentanaLoginRegistro() {
 		setOpaque(false);
 		setLayout(new GridBagLayout());
@@ -47,6 +65,12 @@ public class VentanaLoginRegistro extends JPanel {
 
 	// ──────────────────────────────────────────────
 	// Panel izquierdo — Iniciar sesión
+	/**
+	 * buildPanelLogin.
+	 *
+	 * @param t parámetro t
+	 * @return valor de tipo JPanel
+	 */
 	// ──────────────────────────────────────────────
 	private JPanel buildPanelLogin(TiendaFrame t) {
 		loginUsuarioField = new JTextField(15);
@@ -67,6 +91,12 @@ public class VentanaLoginRegistro extends JPanel {
 
 	// ──────────────────────────────────────────────
 	// Panel derecho — Registrar nuevo usuario
+	/**
+	 * buildPanelRegistro.
+	 *
+	 * @param t parámetro t
+	 * @return valor de tipo JPanel
+	 */
 	// ──────────────────────────────────────────────
 	private JPanel buildPanelRegistro(TiendaFrame t) {
 		regUsuarioField = new JTextField(15);
@@ -90,6 +120,16 @@ public class VentanaLoginRegistro extends JPanel {
 
 	// ──────────────────────────────────────────────
 	// Constructor genérico de tarjeta redondeada
+	/**
+	 * buildCard.
+	 *
+	 * @param t parámetro t
+	 * @param titulo parámetro titulo
+	 * @param labels parámetro labels
+	 * @param fields parámetro fields
+	 * @param boton parámetro boton
+	 * @return valor de tipo JPanel
+	 */
 	// ──────────────────────────────────────────────
 	private JPanel buildCard(TiendaFrame t, String titulo, String[] labels, JComponent[] fields, JButton boton) {
 		RoundedPanel card = new RoundedPanel(20);
@@ -136,34 +176,69 @@ public class VentanaLoginRegistro extends JPanel {
 
 	// ──────────────────────────────────────────────
 	// Asignar controladores
+	/**
+	 * Establece ControladorLogin.
+	 *
+	 * @param c nuevo valor
+	 */
 	// ──────────────────────────────────────────────
 	public void setControladorLogin(ActionListener c) {
 		botonLogin.addActionListener(c);
 	}
 
+	/**
+	 * Establece ControladorRegistro.
+	 *
+	 * @param c nuevo valor
+	 */
 	public void setControladorRegistro(ActionListener c) {
 		botonRegistrar.addActionListener(c);
 	}
 
 	// ──────────────────────────────────────────────
 	// Getters para los controladores
+	/**
+	 * Obtiene LoginUsuario.
+	 *
+	 * @return valor de LoginUsuario
+	 */
 	// ──────────────────────────────────────────────
 	public String getLoginUsuario() {
 		return loginUsuarioField.getText();
 	}
 
+	/**
+	 * Obtiene LoginPassword.
+	 *
+	 * @return valor de LoginPassword
+	 */
 	public char[] getLoginPassword() {
 		return loginPassField.getPassword();
 	}
 
+	/**
+	 * Obtiene RegUsuario.
+	 *
+	 * @return valor de RegUsuario
+	 */
 	public String getRegUsuario() {
 		return regUsuarioField.getText();
 	}
 
+	/**
+	 * Obtiene RegPassword.
+	 *
+	 * @return valor de RegPassword
+	 */
 	public char[] getRegPassword() {
 		return regPassField.getPassword();
 	}
 
+	/**
+	 * Obtiene RegConfirmacion.
+	 *
+	 * @return valor de RegConfirmacion
+	 */
 	public char[] getRegConfirmacion() {
 		return regConfirmField.getPassword();
 	}

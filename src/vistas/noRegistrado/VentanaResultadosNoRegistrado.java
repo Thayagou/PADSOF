@@ -11,22 +11,37 @@ import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 
+// TODO: Auto-generated Javadoc
 /**
  * Muestra los resultados de una búsqueda en forma de lista scrolleable. Incluye
  * combo de ordenación (igual que maqueta 4).
  */
 public class VentanaResultadosNoRegistrado extends JPanel {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Campo productos. */
 	private Producto[] productos;
+	
+	/** Campo listaPanel. */
 	private JPanel listaPanel;
+	
+	/** Campo ordenCombo. */
 	private JComboBox<String> ordenCombo;
 
+	/** Campo clickListener. */
 	private ActionListener clickListener; // para navegar al detalle
 
+	/** Constante ORDENES. */
 	private static final String[] ORDENES = { "Mejor valorados", "Peor valorados", "Precio: menor a mayor",
 			"Precio: mayor a menor", "Nombre A-Z", "Nombre Z-A" };
 
+	/**
+	 * Instancia un nuevo Objeto VentanaResultadosNoRegistrado.
+	 *
+	 * @param productos parámetro productos
+	 */
 	public VentanaResultadosNoRegistrado(Producto[] productos) {
 		this.productos = productos;
 
@@ -67,6 +82,9 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 		refrescarLista();
 	}
 
+	/**
+	 * refrescarLista.
+	 */
 	private void refrescarLista() {
 		Producto[] ordenados = Arrays.copyOf(productos, productos.length);
 		switch (ordenCombo.getSelectedIndex()) {
@@ -92,6 +110,8 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 	/**
 	 * Listener que se llama al hacer clic en una fila de producto. El ActionCommand
 	 * tiene la forma "Ver producto:<nombreProducto>".
+	 *
+	 * @param l nuevo valor
 	 */
 	public void setClickListener(ActionListener l) {
 		this.clickListener = l;

@@ -9,15 +9,24 @@ import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 
+// TODO: Auto-generated Javadoc
 /**
  * Pantalla de inicio para usuarios no registrados. Muestra una lista de
  * "Productos populares" (los mejor valorados).
  */
 public class VentanaInicioSinRegistrar extends JPanel {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Campo listaPanel. */
 	private JPanel listaPanel;
 
+	/**
+	 * Instancia un nuevo Objeto VentanaInicioSinRegistrar.
+	 *
+	 * @param populares parámetro populares
+	 */
 	public VentanaInicioSinRegistrar(Producto[] populares) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -53,6 +62,8 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	/**
 	 * Listener disparado al hacer clic en un producto de la lista. ActionCommand:
 	 * "Ver producto:<nombreProducto>"
+	 *
+	 * @param l nuevo valor
 	 */
 	public void setClickListener(ActionListener l) {
 		for (Component c : listaPanel.getComponents()) {

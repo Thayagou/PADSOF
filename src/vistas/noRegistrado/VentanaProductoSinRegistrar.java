@@ -2,25 +2,39 @@ package vistas.noRegistrado;
 
 import java.awt.*;
 import javax.swing.*;
-import modelo.venta.productos.Producto;
-import modelo.venta.productos.Resena;
-import vistas.*;
-import vistas.common.PanelResena;
-import vistas.common.TiendaFrame;
+import vistas.common.*;
 import vistas.herramientas.ColorPalette;
 
+// TODO: Auto-generated Javadoc
 /**
  * Vista detallada de un producto (maqueta 5).
  * Layout: izquierda = panel de valoraciones/reseñas (scrolleable),
  *         derecha = foto grande + nombre + categorías + precio + descripción.
  */
 public class VentanaProductoSinRegistrar extends JPanel {
+    
+    /** Constante serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** Constante REVIEWS_W_PERC. */
     private static final double REVIEWS_W_PERC = 0.33;
+    
+    /** Constante FOTO_H_PERC. */
     private static final double FOTO_H_PERC    = 0.35;
+    
+    /** Campo resenasPanel. */
+    private JPanel resenasPanel = new JPanel();
 
-    public VentanaProductoSinRegistrar(Producto producto) {
+    /**
+     * Instancia un nuevo Objeto VentanaProductoSinRegistrar.
+     *
+     * @param nombre parámetro nombre
+     * @param descripcion parámetro descripcion
+     * @param puntuacionMedia parámetro puntuacionMedia
+     * @param precio parámetro precio
+     * @param categorias parámetro categorias
+     */
+    public VentanaProductoSinRegistrar(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
         TiendaFrame t = TiendaFrame.getInstance();
 
         setOpaque(false);
@@ -43,23 +57,8 @@ public class VentanaProductoSinRegistrar extends JPanel {
         lblValoraciones.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
         leftWrapper.add(lblValoraciones, BorderLayout.NORTH);
 
-        JPanel resenasPanel = new JPanel();
         resenasPanel.setLayout(new BoxLayout(resenasPanel, BoxLayout.Y_AXIS));
         resenasPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
-
-		// Poblar reseñas usando PanelResena
-		Resena[] resenas = producto.getResenas();
-		if (resenas != null && resenas.length > 0) {
-			for (Resena r : resenas) {
-				resenasPanel.add(new PanelResena(r));
-			}
-		} else {
-			JLabel sinResenas = new JLabel("Aún no hay valoraciones");
-			sinResenas.setFont(t.getTextFont());
-			sinResenas.setForeground(ColorPalette.DARK_GREY.getColor());
-			sinResenas.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 16));
-			resenasPanel.add(sinResenas);
-		}
 
         JScrollPane scrollResenas = new JScrollPane(resenasPanel);
         scrollResenas.setBorder(BorderFactory.createEmptyBorder());
@@ -76,23 +75,19 @@ public class VentanaProductoSinRegistrar extends JPanel {
         rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 24, 20, 24));
 
         // Estrellas
-        rightPanel.add(buildEstrellas(t, producto.getPuntuacionMedia()));
+        rightPanel.add(buildEstrellas(t, puntuacionMedia));
         rightPanel.add(Box.createVerticalStrut(6));
 
         // Nombre
-        JLabel nombre = new JLabel(producto.getNombre());
-        nombre.setFont(t.getSubtitleFont());
-        nombre.setForeground(Color.BLACK);
-        nombre.setAlignmentX(LEFT_ALIGNMENT);
-        rightPanel.add(nombre);
+        JLabel nombreLabel = new JLabel(nombre);
+        nombreLabel.setFont(t.getSubtitleFont());
+        nombreLabel.setForeground(Color.BLACK);
+        nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
+        rightPanel.add(nombreLabel);
 
         // Categorías
-        String cats = String.join(", ",
-                java.util.Arrays.stream(producto.getCategorias())
-                        .map(c -> c.getNombre())
-                        .toArray(String[]::new));
-        if (!cats.isEmpty()) {
-            JLabel catLabel = new JLabel(cats);
+        for(String c : categorias) {
+            JLabel catLabel = new JLabel(c);
             catLabel.setFont(t.getTextFont());
             catLabel.setForeground(ColorPalette.PURPLE.getColor());
             catLabel.setAlignmentX(LEFT_ALIGNMENT);
@@ -115,15 +110,15 @@ public class VentanaProductoSinRegistrar extends JPanel {
         rightPanel.add(foto);
 
         // Precio
-        JLabel precio = new JLabel(String.format("Precio: %.2f €", producto.getPrecio()));
-        precio.setFont(t.getTitle3Font());
-        precio.setForeground(Color.BLACK);
-        precio.setAlignmentX(LEFT_ALIGNMENT);
+        JLabel precioLabel = new JLabel(String.format("Precio: %.2f €", precio));
+        precioLabel.setFont(t.getTitle3Font());
+        precioLabel.setForeground(Color.BLACK);
+        precioLabel.setAlignmentX(LEFT_ALIGNMENT);
         rightPanel.add(Box.createVerticalStrut(10));
-        rightPanel.add(precio);
+        rightPanel.add(precioLabel);
 
         // Descripción
-        JTextArea desc = new JTextArea(producto.getDescripcion());
+        JTextArea desc = new JTextArea(descripcion);
         desc.setFont(t.getTextFont());
         desc.setLineWrap(true);
         desc.setWrapStyleWord(true);
@@ -137,7 +132,25 @@ public class VentanaProductoSinRegistrar extends JPanel {
         add(leftWrapper, BorderLayout.WEST);
         add(rightPanel,  BorderLayout.CENTER);
     }
+    
+    /**
+     * anadirPanelResena.
+     *
+     * @param puntuacion parámetro puntuacion
+     * @param comentario parámetro comentario
+     * @param usr parámetro usr
+     */
+    public void anadirPanelResena(double puntuacion, String comentario, String usr) {
+    	resenasPanel.add(new PanelResena(puntuacion, comentario, usr));
+    }
 
+    /**
+     * buildEstrellas.
+     *
+     * @param t parámetro t
+     * @param val parámetro val
+     * @return valor de tipo JPanel
+     */
     // ── Fila de estrellas ─────────────────────────────────────────────────
     private JPanel buildEstrellas(TiendaFrame t, double val) {
         JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));

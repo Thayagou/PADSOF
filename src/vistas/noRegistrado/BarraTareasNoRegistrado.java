@@ -3,24 +3,39 @@ package vistas.noRegistrado;
 import java.awt.*;
 import javax.swing.*;
 import controladores.ControlBarraTareas;
-import vistas.*;
-import vistas.common.BarraTareas;
-import vistas.common.TiendaFrame;
-import vistas.herramientas.ButtonFactory;
-import vistas.herramientas.ColorPalette;
-import vistas.herramientas.PanelSizes;
+import vistas.common.*;
+import vistas.herramientas.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Define la barra de tareas de los usuarios no registrados
+ */
 public class BarraTareasNoRegistrado extends BarraTareas {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante SPACE_BETWEEN. */
 	private static final double SPACE_BETWEEN = 0.01;
+	
+	/** Constante BTN_ACCOUNT_W. */
 	private static final double BTN_ACCOUNT_W = 0.13;
+	
+	/** Constante BTN_SEARCH_W. */
 	private static final double BTN_SEARCH_W = 0.35;
 
+	/** Campo btnBuscar. */
 	private JButton btnBuscar;
+	
+	/** Campo btnIniciarSesion. */
 	private JButton btnIniciarSesion;
+	
+	/** Campo btnHome. */
 	private JButton btnHome;
 
+	/**
+	 * Instancia un nuevo Objeto BarraTareasNoRegistrado.
+	 */
 	public BarraTareasNoRegistrado() {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -97,6 +112,11 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 //		layout.putConstraint(SpringLayout.NORTH, btnIniciarSesion, spaceBetween, SpringLayout.NORTH, this);
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	@Override
 	public void setControlador(ControlBarraTareas c) {
 		btnBuscar.addActionListener(c);

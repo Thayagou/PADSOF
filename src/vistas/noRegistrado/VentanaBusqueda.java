@@ -11,16 +11,38 @@ import vistas.herramientas.Fonts;
 import java.awt.*;
 import java.util.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Tipo: Class VentanaBusqueda.
+ */
 public class VentanaBusqueda extends JPanel {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Campo estrellas. */
 	private JSpinner estrellas;
+	
+	/** Campo precioMin. */
 	private JTextField precioMin;
+	
+	/** Campo precioMax. */
 	private JTextField precioMax;
+	
+	/** Campo botonBuscar. */
 	private JButton botonBuscar;
+	
+	/** Campo checkboxes. */
 	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
+	
+	/** Campo PREFERRED_FILTER_SIZE. */
 	private static double PREFERRED_FILTER_SIZE = 0.3;
 
+	/**
+	 * Instancia un nuevo Objeto VentanaBusqueda.
+	 *
+	 * @param categorias parámetro categorias
+	 */
 	public VentanaBusqueda(String[] categorias) {
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -133,23 +155,48 @@ public class VentanaBusqueda extends JPanel {
 		panelBoton.setOpaque(false);
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	// Asignar controlador a los botones
 	public void setControlador(ControlBuscar c) {
 		botonBuscar.addActionListener(c);
 	}
 
+	/**
+	 * Obtiene Estrellas.
+	 *
+	 * @return valor de Estrellas
+	 */
 	public double getEstrellas() {
 		return (double) estrellas.getValue();
 	}
 
+	/**
+	 * Obtiene PrecioMin.
+	 *
+	 * @return valor de PrecioMin
+	 */
 	public double getPrecioMin() {
 		return Double.parseDouble(precioMin.getText());
 	}
 
+	/**
+	 * Obtiene PrecioMax.
+	 *
+	 * @return valor de PrecioMax
+	 */
 	public double getPrecioMax() {
 		return Double.parseDouble(precioMax.getText());
 	}
 
+	/**
+	 * Obtiene CategoriasSeleccionadas.
+	 *
+	 * @return valor de CategoriasSeleccionadas
+	 */
 	public String[] getCategoriasSeleccionadas() {
 		return checkboxes.stream().filter(JCheckBox::isSelected).map(JCheckBox::getText).toArray(String[]::new);
 	}

@@ -2,22 +2,16 @@ package vistas.common;
 
 import java.awt.*;
 import javax.swing.*;
-import modelo.venta.productos.Resena;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
 public class PanelResena extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	private static final int AVATAR_SIZE = 40;
-
 	private Color gradStart = ColorPalette.CARD_LIGHT.getColor();
 	private Color gradEnd = ColorPalette.CARD_DARK.getColor();
 
-	private final Resena resena;
-
-	public PanelResena(Resena resena) {
-		this.resena = resena;
+	public PanelResena(double puntuacion, String comentario, String usr) {
 		setOpaque(false);
 
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -33,24 +27,24 @@ public class PanelResena extends JPanel {
 		JPanel avatar = buildAvatar();
 		header.add(avatar);
 
-		JLabel usuario = new JLabel(resena.getUsuario().getNombre());
+		JLabel usuario = new JLabel(usr);
 		usuario.setFont(t.getTextFont());
 		usuario.setForeground(ColorPalette.DARK_GREY.getColor());
 		header.add(usuario);
 
-		header.add(buildEstrellas(t, resena.getPuntuacion()));
+		header.add(buildEstrellas(t, puntuacion));
 
 		// ── Comentario ────────────────────────────────────────────────
-		JTextArea comentario = new JTextArea(resena.getComentario());
-		comentario.setFont(t.getTextFont());
-		comentario.setLineWrap(true);
-		comentario.setWrapStyleWord(true);
-		comentario.setEditable(false);
-		comentario.setOpaque(false);
-		comentario.setForeground(ColorPalette.DARK_GREY.getColor());
+		JTextArea comentTxt = new JTextArea(comentario);
+		comentTxt.setFont(t.getTextFont());
+		comentTxt.setLineWrap(true);
+		comentTxt.setWrapStyleWord(true);
+		comentTxt.setEditable(false);
+		comentTxt.setOpaque(false);
+		comentTxt.setForeground(ColorPalette.DARK_GREY.getColor());
 
 		add(header, BorderLayout.NORTH);
-		add(comentario, BorderLayout.CENTER);
+		add(comentTxt, BorderLayout.CENTER);
 
 		// ── Hover effect ──────────────────────────────────────────────
 		addMouseListener(new java.awt.event.MouseAdapter() {
