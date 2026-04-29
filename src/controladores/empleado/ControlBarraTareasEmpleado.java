@@ -6,7 +6,7 @@ import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraTareas;
 import controladores.noRegistrado.ControlBuscar;
-import controladores.noRegistrado.ControlLogin;
+import controladores.noRegistrado.ControlLoginRegistro;
 import modelo.sistema.Tienda;
 
 public class ControlBarraTareasEmpleado implements ControlBarraTareas {
@@ -22,7 +22,7 @@ public class ControlBarraTareasEmpleado implements ControlBarraTareas {
 		switch (e.getActionCommand()) {
 		case "Buscar productos" ->
 			SwingUtilities.invokeLater(() -> new ControlBuscar(tienda));
-		case "Iniciar sesión" -> SwingUtilities.invokeLater(() -> new ControlLogin(tienda));
+		case "Iniciar sesión" -> SwingUtilities.invokeLater(() -> new ControlLoginRegistro(tienda));
 		}
 		
 	}
