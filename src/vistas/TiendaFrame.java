@@ -1,5 +1,6 @@
 package vistas;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -12,6 +13,9 @@ public class TiendaFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static TiendaFrame instance;
 	private JPanel vistaActual;
+	private BarraLateral barraLateral;
+	private BarraTareas barraTareas;
+	private FondoGradiente fondo;
 	private int height;
 	private int width;
 	
@@ -37,6 +41,10 @@ public class TiendaFrame extends JFrame {
 		this.height = screen.height;
 		
 		setSize(width, height);
+		
+		fondo = new FondoGradiente();
+		fondo.setVisible(true);
+		add(fondo);
 	}
 	
 	public static TiendaFrame getInstance() {
@@ -45,10 +53,35 @@ public class TiendaFrame extends JFrame {
 		return instance; 
 	}
 	
+	public void setBarraTareas(BarraTareas barraTareas) {
+		if (this.barraTareas != null) fondo.remove(this.barraTareas);
+		fondo.add(barraTareas, BorderLayout.NORTH);
+		this.barraTareas = barraTareas;
+		revalidate();
+	    repaint();
+	}
+	
+	public void setBarraLateral(BarraLateral barraLateral) {
+		if (this.barraLateral != null) fondo.remove(this.barraLateral);
+		fondo.add(barraLateral, BorderLayout.WEST);
+		this.barraLateral = barraLateral;
+		revalidate();
+	    repaint();
+	}
+	
+	public void setFondo(FondoGradiente fondo) {
+		if (this.fondo != null) remove(this.fondo);
+		fondo.add(barraLateral, BorderLayout.WEST);
+		fondo.add(barraTareas, BorderLayout.NORTH);
+		fondo.add(vistaActual, BorderLayout.CENTER);
+		revalidate();
+	    repaint();
+	}
+	
 	public void setVistaActual(JPanel vista) {
-		if(vistaActual != null) remove(vistaActual);
+		if(vistaActual != null) fondo.remove(vistaActual);
 		vistaActual = vista;
-		add(vista);
+		fondo.add(vista, BorderLayout.CENTER);
 		revalidate();
 	    repaint();
 	}

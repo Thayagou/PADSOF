@@ -5,9 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
+import controladores.ControlBarraLateral;
+import controladores.ControlBarraTareas;
 import modelo.sistema.Tienda;
 
-public class ControlBarraNoRegistrado implements ActionListener {
+public class ControlBarraNoRegistrado implements ControlBarraLateral {
 
 	private Tienda tienda;
 
@@ -26,19 +28,19 @@ public class ControlBarraNoRegistrado implements ActionListener {
 
 	private void showLogin() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlLogin(tienda, this);
+			new ControlLogin(tienda);
 		});
 	}
 
 	private void showRegistrarse() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlRegistrarse(tienda, this);
+			new ControlRegistrarse(tienda);
 		});
 	}
 
 	private void showBuscar() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlBuscar(tienda, this);
+			new ControlBuscar(tienda);
 		});
 	}
 }

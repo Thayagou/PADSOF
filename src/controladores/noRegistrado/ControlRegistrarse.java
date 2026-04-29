@@ -17,9 +17,9 @@ public class ControlRegistrarse implements ActionListener {
 	private Tienda tienda;
 	private VentanaRegistrar vista;
 
-	public ControlRegistrarse(Tienda tienda, ControlBarraNoRegistrado ctrlBarra) {
+	public ControlRegistrarse(Tienda tienda) {
 		this.tienda = tienda;
-		this.vista = new VentanaRegistrar(ctrlBarra);
+		this.vista = new VentanaRegistrar();
 		this.vista.setControlador(this);
 		TiendaFrame.getInstance().setVistaActual(vista);
 	}

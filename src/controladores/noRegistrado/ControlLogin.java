@@ -19,9 +19,9 @@ public class ControlLogin implements ActionListener {
 	private Tienda tienda;
 	private VentanaLogin vista;
 
-	public ControlLogin(Tienda tienda, ControlBarraNoRegistrado ctrlBarra) {
+	public ControlLogin(Tienda tienda) {
 		this.tienda = tienda;
-		this.vista = new VentanaLogin(ctrlBarra);
+		this.vista = new VentanaLogin();
 		this.vista.setControlador(this);
 		TiendaFrame.getInstance().setVistaActual(vista);
 	}

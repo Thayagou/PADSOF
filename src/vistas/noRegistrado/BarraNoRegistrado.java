@@ -6,12 +6,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controladores.ControlBarraLateral;
 import controladores.noRegistrado.ControlBarraNoRegistrado;
+import vistas.BarraLateral;
 import vistas.ButtonFactory;
 import vistas.ColorPalette;
 import vistas.TiendaFrame;
 
-public class BarraNoRegistrado extends JPanel{
+public class BarraNoRegistrado extends BarraLateral{
 	private static final long serialVersionUID = 1L;
 
 	private JButton iniciarSesion;
@@ -46,7 +48,8 @@ public class BarraNoRegistrado extends JPanel{
 		return btn;
 	}
 
-	public void setControlador(ControlBarraNoRegistrado c) {
+	@Override
+	public void setControlador(ControlBarraLateral c) {
 		iniciarSesion.addActionListener(c);
 		registrarse.addActionListener(c);
 		busqueda.addActionListener(c);

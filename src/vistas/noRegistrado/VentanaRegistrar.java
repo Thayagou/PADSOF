@@ -7,7 +7,7 @@ import controladores.noRegistrado.ControlRegistrarse;
 
 import java.awt.*;
 
-public class VentanaRegistrar extends FondoNoRegistrado {
+public class VentanaRegistrar extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField usuarioField;
@@ -15,8 +15,9 @@ public class VentanaRegistrar extends FondoNoRegistrado {
 	private JPasswordField confirmationField;
 	private JButton botonRegistrar;
 
-	public VentanaRegistrar(ControlBarraNoRegistrado ctrlBarra) {
-		super();
+	public VentanaRegistrar() {
+		setOpaque(false);
+		setLayout(new BorderLayout());
 		
 		JLabel title = new JLabel("Registrarse");
 
@@ -37,8 +38,6 @@ public class VentanaRegistrar extends FondoNoRegistrado {
 
 		add(panel);
 		setVisible(true);
-		
-		initBarra(ctrlBarra);
 	}
 
 	// Asignar controlador a los botones

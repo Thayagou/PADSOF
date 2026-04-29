@@ -3,10 +3,10 @@ package vistas.empleado;
 import java.awt.*;
 import javax.swing.*;
 
-import controladores.ControlEmpleado;
+import controladores.ControlBarraLateral;
 import vistas.*;
 
-public class BarraEmpleado extends JPanel {
+public class BarraEmpleado extends BarraLateral {
     private static final long serialVersionUID = 1L;
     
     private JButton gestionarProductos;
@@ -45,8 +45,9 @@ public class BarraEmpleado extends JPanel {
     	
     	return btn;
     }
-    
-    public void setControlador(ControlBarraEmpleado c) {
+
+	@Override
+	public void setControlador(ControlBarraLateral c) {
 		gestionarProductos.addActionListener(c);
 		gestionarPedidos.addActionListener(c);
 		valorarObjetos.addActionListener(c);

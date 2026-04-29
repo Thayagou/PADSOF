@@ -7,11 +7,10 @@ import controladores.noRegistrado.ControlBarraNoRegistrado;
 import controladores.noRegistrado.ControlBuscar;
 import vistas.Fonts;
 import vistas.TiendaFrame;
-
 import java.awt.*;
 import java.util.*;
 
-public class VentanaBusqueda extends FondoNoRegistrado {
+public class VentanaBusqueda extends JPanel/*vistas.noRegistrado.FondoNoRegistrado*/ {
 
 	private static final long serialVersionUID = 1L;
 	private JSpinner estrellas;
@@ -21,8 +20,10 @@ public class VentanaBusqueda extends FondoNoRegistrado {
 	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
 	private static double PREFERRED_FILTER_SIZE = 0.3;
 
-	public VentanaBusqueda(String[] categorias, ControlBarraNoRegistrado ctrlBarra) {
-		super();
+	public VentanaBusqueda(String[] categorias) {
+		//super();
+		setOpaque(false);
+		setLayout(new BorderLayout());
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		int height = t.getHeight();
@@ -126,8 +127,6 @@ public class VentanaBusqueda extends FondoNoRegistrado {
 		scroll.setBackground(Color.WHITE);
 		panelCentro.setOpaque(false);
 		panelBoton.setOpaque(false);
-		
-		initBarra(ctrlBarra);
 	}
 
 	// Asignar controlador a los botones

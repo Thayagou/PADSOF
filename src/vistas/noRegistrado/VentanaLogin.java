@@ -9,15 +9,16 @@ import vistas.*;
 
 import java.awt.*;
 
-public class VentanaLogin extends FondoNoRegistrado {
+public class VentanaLogin extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	private JTextField usuarioField;
 	private JPasswordField passField;
 	private JButton botonEntrar;
 
-	public VentanaLogin(ControlBarraNoRegistrado ctrlBarra) {
-		super();
+	public VentanaLogin() {
+		setOpaque(false);
+		setLayout(new BorderLayout());
 
 		TiendaFrame t = TiendaFrame.getInstance();
 		
@@ -53,8 +54,6 @@ public class VentanaLogin extends FondoNoRegistrado {
 	    wrapper.setOpaque(false);
 	    wrapper.add(card);
 	    add(wrapper, BorderLayout.CENTER);
-		
-		initBarra(ctrlBarra);
 		
 	}
 	

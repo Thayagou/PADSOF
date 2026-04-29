@@ -3,9 +3,10 @@ package vistas.cliente;
 import java.awt.*;
 import javax.swing.*;
 
+import controladores.ControlBarraLateral;
 import vistas.*;
 
-public class BarraCliente extends JPanel {
+public class BarraCliente extends BarraLateral {
 	private static final long serialVersionUID = 1L;
 
 	public BarraCliente() {
@@ -47,6 +48,11 @@ public class BarraCliente extends JPanel {
 
 		add(btn);
 		add(Box.createVerticalStrut(8));
+	}
+
+	@Override
+	public void setControlador(ControlBarraLateral c) {
+				
 	}
 
 }

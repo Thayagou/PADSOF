@@ -14,7 +14,7 @@ import vistas.*;
 
 //import java.awt.*;
 
-public class VentanaInicioGestor extends FondoGestor {
+public class VentanaInicioGestor extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private static double GAP = 0.01;
@@ -33,7 +33,8 @@ public class VentanaInicioGestor extends FondoGestor {
 		centerTitle.setTitleFont(t.getTitle3Font());
 		center.setBorder(centerTitle);
 		int totalHeight = t.getHeight();
-		int buttonHeight = (int) ((totalHeight - barra.getHeight())/2 * 0.8);
+		
+		int buttonHeight = (int) ((totalHeight - t.toolBarDistFromTop())/2 * 0.8);
 		Dimension buttomDimension = new Dimension(0, buttonHeight);
 		JPanel top = new JPanel(new GridLayout(1, 3, 16, 30));
 		

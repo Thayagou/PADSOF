@@ -2,9 +2,11 @@ package vistas.gestor;
 
 import java.awt.*;
 import javax.swing.*;
+
+import controladores.ControlBarraLateral;
 import vistas.*;
 
-public class BarraGestor extends JPanel{
+public class BarraGestor extends BarraLateral{
 	private static final long serialVersionUID = 1L;
 
 	public BarraGestor() {
@@ -20,7 +22,7 @@ public class BarraGestor extends JPanel{
 		agregarBoton("Gestionar productos y categorías");
 		agregarBoton("Gestionar pedidos");
 		agregarBoton("Valorar objetos de segunda mano");
-		agregarBoton("Gestionar inntercambios");
+		agregarBoton("Gestionar intercambios");
 	}
 
 	private void agregarBoton(String texto) {
@@ -46,5 +48,11 @@ public class BarraGestor extends JPanel{
 
 		add(btn);
 		add(Box.createVerticalStrut(8));
+	}
+
+	@Override
+	public void setControlador(ControlBarraLateral c) {
+		
+		
 	}
 }

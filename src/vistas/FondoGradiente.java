@@ -12,12 +12,9 @@ public class FondoGradiente extends JPanel {
 	private int grosorBorde = 2;
 	private int radio = 20;
 	
-	protected BarraTareas barra = new BarraTareas();
-
 	public FondoGradiente() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
-	    add(barra, BorderLayout.NORTH);
 	}
 
 	@Override
