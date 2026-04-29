@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import vistas.TiendaFrame;
+import vistas.common.TiendaFrame;
 
 public class PanelFactory {
 	private double DF_GAP = 0.05;

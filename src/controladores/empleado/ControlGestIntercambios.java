@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import modelo.sistema.Tienda;
-import vistas.TiendaFrame;
+import vistas.common.TiendaFrame;
 import vistas.empleado.VentanaGestIntercambios;
 
 public class ControlGestIntercambios implements ActionListener{

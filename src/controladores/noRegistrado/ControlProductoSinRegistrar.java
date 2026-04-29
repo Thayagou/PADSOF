@@ -7,7 +7,7 @@ import javax.swing.SwingUtilities;
 
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
-import vistas.TiendaFrame;
+import vistas.common.TiendaFrame;
 import vistas.noRegistrado.VentanaProductoSinRegistrar;
 
 public class ControlProductoSinRegistrar implements ActionListener {

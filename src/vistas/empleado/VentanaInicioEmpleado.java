@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 import modelo.sistema.Tienda;
-import vistas.TiendaFrame;
+import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 
 public class VentanaInicioEmpleado extends JPanel {

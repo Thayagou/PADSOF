@@ -1,4 +1,4 @@
-package vistas;
+package vistas.common;
 
 import javax.swing.JPanel;
 

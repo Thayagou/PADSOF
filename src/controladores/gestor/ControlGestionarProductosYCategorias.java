@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import modelo.sistema.Tienda;
-import vistas.TiendaFrame;
+import vistas.common.TiendaFrame;
 import vistas.gestor.VentanaGestionarProductosYCategorias;
 
 public class ControlGestionarProductosYCategorias implements ActionListener{

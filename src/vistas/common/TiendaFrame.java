@@ -1,4 +1,4 @@
-package vistas;
+package vistas.common;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

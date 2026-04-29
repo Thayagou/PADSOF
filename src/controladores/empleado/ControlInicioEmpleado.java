@@ -1,8 +1,8 @@
 package controladores.empleado;
 
 import modelo.sistema.Tienda;
-import vistas.BarraLateral;
-import vistas.TiendaFrame;
+import vistas.common.BarraLateral;
+import vistas.common.TiendaFrame;
 import vistas.empleado.*;
 
 public class ControlInicioEmpleado {

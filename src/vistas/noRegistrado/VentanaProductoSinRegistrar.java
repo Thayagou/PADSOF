@@ -5,6 +5,8 @@ import javax.swing.*;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Resena;
 import vistas.*;
+import vistas.common.PanelResena;
+import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 
 /**

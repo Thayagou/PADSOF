@@ -4,6 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 import controladores.ControlBarraTareas;
 import vistas.*;
+import vistas.common.BarraTareas;
+import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelSizes;

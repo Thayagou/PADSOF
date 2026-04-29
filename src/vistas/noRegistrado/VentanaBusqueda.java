@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import controladores.noRegistrado.ControlBuscar;
-import vistas.TiendaFrame;
+import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 

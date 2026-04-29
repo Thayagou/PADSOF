@@ -10,6 +10,8 @@ import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
 import vistas.*;
+import vistas.common.TiendaFrame;
+import vistas.common.VentanaMensaje;
 import vistas.noRegistrado.VentanaLoginRegistro;
 
 /**

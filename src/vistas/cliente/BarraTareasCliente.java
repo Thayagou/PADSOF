@@ -3,6 +3,8 @@ package vistas.cliente;
 import java.awt.*;
 import javax.swing.*;
 import vistas.*;
+import vistas.common.BarraTareas;
+import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelSizes;

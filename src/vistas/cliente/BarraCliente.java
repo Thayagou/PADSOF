@@ -5,6 +5,8 @@ import javax.swing.*;
 
 import controladores.ControlBarraLateral;
 import vistas.*;
+import vistas.common.BarraLateral;
+import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 
 public class BarraCliente extends BarraLateral {

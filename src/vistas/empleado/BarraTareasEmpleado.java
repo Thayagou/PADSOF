@@ -6,8 +6,8 @@ import javax.swing.JButton;
 import javax.swing.SpringLayout;
 
 import controladores.ControlBarraTareas;
-import vistas.BarraTareas;
-import vistas.TiendaFrame;
+import vistas.common.BarraTareas;
+import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelSizes;

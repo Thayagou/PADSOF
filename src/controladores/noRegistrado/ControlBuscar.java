@@ -10,6 +10,8 @@ import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.*;
+import vistas.common.TiendaFrame;
+import vistas.common.VentanaMensaje;
 import vistas.noRegistrado.VentanaBusqueda;
 
 public class ControlBuscar implements ActionListener {

@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import modelo.sistema.Tienda;
-import vistas.TiendaFrame;
+import vistas.common.TiendaFrame;
 import vistas.gestor.VentanaAnadirDescuento;
 
 public class ControlAnadirDescuento implements ActionListener{
