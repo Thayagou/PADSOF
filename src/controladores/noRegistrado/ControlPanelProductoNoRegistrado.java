@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
+import vistas.common.PanelDisplay;
 import vistas.common.PanelProducto;
 import vistas.common.VentanaMensaje;
 import vistas.noRegistrado.VentanaInicioSinRegistrar;
@@ -16,7 +17,7 @@ import vistas.noRegistrado.VentanaInicioSinRegistrar;
 public class ControlPanelProductoNoRegistrado implements ActionListener {
 	private Producto producto;
 	private Tienda tienda;
-	private PanelProducto panel;
+	private PanelDisplay panel;
 	
 	public ControlPanelProductoNoRegistrado(Tienda tienda, Producto producto, VentanaInicioSinRegistrar vista) {
 		this.producto = producto;

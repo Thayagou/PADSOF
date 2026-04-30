@@ -22,6 +22,7 @@ public enum ColorPalette {
 	GREY(166, 166, 166),
 	LIGHT_GREY(205,205,205),
 	RED(255, 87, 87),
+	LIGHT_RED(255, 160, 160),
 	GREEN(0, 191, 99);
 
 	private final Color color;

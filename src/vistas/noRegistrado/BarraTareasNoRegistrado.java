@@ -54,20 +54,17 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		 * ################     CREACION DE LOS BOTONES         ####################
 		 * =======================================================================*/
 		btnHome = f.newIconButton("homeButton.png", btnH, homeW);
-		btnHome.setBackground(ColorPalette.BLUE.getColor());
-		btnHome.setForeground(ColorPalette.WHITE.getColor());
+		f.paintButton(btnHome, ColorPalette.BLUE, ColorPalette.WHITE);
 		btnHome.setActionCommand("Home");
 		f.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 
 		btnBuscar = f.newRoundedButton("Buscar", btnH, searchW, 1);
-		btnBuscar.setBackground(ColorPalette.WHITE.getColor());
-		btnBuscar.setForeground(ColorPalette.BLACK.getColor());
+		f.paintButton(btnBuscar, ColorPalette.WHITE, ColorPalette.BLACK);
 		btnBuscar.setActionCommand("Buscar productos");
 		f.addMouseMecanics(btnBuscar, ColorPalette.WHITE, ColorPalette.HOVER_BLUE);
 
 		btnIniciarSesion = f.newRoundedButton("Iniciar sesión / Registrarse", btnH, accountW, 0.25);
-		btnIniciarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
-		btnIniciarSesion.setForeground(ColorPalette.WHITE.getColor());
+		f.paintButton(btnIniciarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		btnIniciarSesion.setActionCommand("Iniciar sesión");
 		f.addMouseMecanics(btnIniciarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		
