@@ -6,8 +6,6 @@ import controladores.ControlBarraTareas;
 import vistas.common.*;
 import vistas.herramientas.*;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * Define la barra de tareas de los usuarios no registrados
  */
@@ -51,7 +49,10 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		setPreferredSize(new Dimension(0, h));
 
 		ButtonFactory f = new ButtonFactory();
-
+		
+		/**=========================================================================
+		 * ################     CREACION DE LOS BOTONES         ####################
+		 * =======================================================================*/
 		btnHome = f.newIconButton("homeButton.png", btnH, homeW);
 		btnHome.setBackground(ColorPalette.BLUE.getColor());
 		btnHome.setForeground(ColorPalette.WHITE.getColor());
@@ -69,7 +70,10 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		btnIniciarSesion.setForeground(ColorPalette.WHITE.getColor());
 		btnIniciarSesion.setActionCommand("Iniciar sesión");
 		f.addMouseMecanics(btnIniciarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
-
+		
+		/**=========================================================================
+		 * ################     LAYOUT DE LA BARRA DE TAREAS   ####################
+		 * =======================================================================*/
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		add(Box.createHorizontalStrut(spaceBetween));

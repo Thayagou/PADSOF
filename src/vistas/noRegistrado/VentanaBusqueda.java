@@ -11,7 +11,6 @@ import vistas.herramientas.Fonts;
 import java.awt.*;
 import java.util.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * Tipo: Class VentanaBusqueda.
  */
@@ -50,7 +49,8 @@ public class VentanaBusqueda extends JPanel {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int height = t.getHeight();
 		int width = t.getWidth();
-		JLabel cabecera = new JLabel("Realizar búsqueda", JLabel.CENTER);
+		// ── Cabecera ──────────────────────────────────────────────
+		JLabel cabecera = new JLabel("  Productos populares");
 		cabecera.setFont(Fonts.TITLE3.getFont());
 		cabecera.setForeground(ColorPalette.WHITE.getColor());
 		cabecera.setOpaque(true);

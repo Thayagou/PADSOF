@@ -41,7 +41,7 @@ public class PanelProducto extends JPanel {
 		setLayout(new BorderLayout(10, 0));
 		setBackground(ColorPalette.CARD_LIGHT.getColor());
 		setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createMatteBorder(0, 0, 1, 0, ColorPalette.CARD_DARK.getColor()),
+				BorderFactory.createMatteBorder(0, 0, 1, 0, ColorPalette.BLACK.getColor()),
 				BorderFactory.createEmptyBorder(8, 8, 8, 8)));
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, fotoH + 16));
 

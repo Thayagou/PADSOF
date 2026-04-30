@@ -6,10 +6,8 @@ import javax.swing.*;
 import modelo.venta.productos.Producto;
 import vistas.common.PanelProducto;
 import vistas.empleado.PanelProductoGestionarProducto;
-import vistas.herramientas.ColorPalette;
-import vistas.herramientas.Fonts;
+import vistas.herramientas.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * Pantalla de inicio para usuarios no registrados. Muestra una lista de
  * "Productos populares" (los mejor valorados).
@@ -31,25 +29,16 @@ public class VentanaInicioSinRegistrar extends JPanel {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 
-		// ── Cabecera ──────────────────────────────────────────────
-		JLabel cabecera = new JLabel("  Productos populares");
-		cabecera.setFont(Fonts.TITLE3.getFont());
-		cabecera.setForeground(ColorPalette.WHITE.getColor());
-		cabecera.setOpaque(true);
-		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());
-		cabecera.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-
-		// ── Lista ─────────────────────────────────────────────────
 		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
 		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
 
-		JScrollPane scroll = new JScrollPane(listaPanel);
-		scroll.setBorder(BorderFactory.createEmptyBorder());
-		scroll.getVerticalScrollBar().setUnitIncrement(16);
-		scroll.getViewport().setBackground(ColorPalette.CARD_LIGHT.getColor());
+		JScrollPane scroll = PanelFactory.getScroll(listaPanel);
+		
+		JPanel contenido = new JPanel();
+		contenido.setLayout(new BorderLayout());
+		contenido.add(BorderLayout.CENTER, scroll);
 
-		add(cabecera, BorderLayout.NORTH);
-		add(scroll, BorderLayout.CENTER);
+		this.add(PanelFactory.getVentanaConCabecera("      Productos populares", contenido));
 		
 		refreshList();
 	}
