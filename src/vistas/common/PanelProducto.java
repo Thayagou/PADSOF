@@ -27,7 +27,7 @@ public class PanelProducto extends PanelDisplay {
 	//private final JButton clickArea; // botón invisible que ocupa todo el panel
 
 	public PanelProducto(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		super(1.01*FOTO_H_PERC, FOTO_H_PERC, FOTO_W_PERC, "Ver producto:");
+		super(1.01*FOTO_H_PERC, FOTO_H_PERC, FOTO_W_PERC, "producto.png", "Ver producto:");
 		this.puntuacionMedia = puntuacionMedia;
 		this.descripcion = descripcion;
 		this.nombre = nombre;

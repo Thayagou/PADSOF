@@ -25,7 +25,7 @@ public class PanelDisplay extends JPanel{
 	private ColorPalette gradStart = ColorPalette.CARD_LIGHT;
 	private ColorPalette gradEnd = ColorPalette.CARD_DARK;
 	
-	public PanelDisplay(double maxHPerc, double fotoHPerc, double fotoWPerc, String actionName) {
+	public PanelDisplay(double maxHPerc, double fotoHPerc, double fotoWPerc, String imageName, String actionName) {
 		setOpaque(false);
 
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -47,7 +47,7 @@ public class PanelDisplay extends JPanel{
 		foto.setBackground(ColorPalette.CARD_DARK.getColor());
 		foto.setPreferredSize(new Dimension(fotoW, fotoH));
 		//JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
-		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled("producto.png", fotoH, fotoW));
+		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled(imageName, fotoH, fotoW));
 		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		fotoLabel.setFont(Fonts.BOLD.getFont());
 		foto.add(fotoLabel);
