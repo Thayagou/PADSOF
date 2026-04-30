@@ -38,6 +38,7 @@ public class PanelProducto extends JPanel {
 		int fotoW = t.getPixelsWidth(FOTO_W_PERC);
 		int fotoH = t.getPixelsHeight(FOTO_H_PERC);
 
+		ButtonFactory factory = new ButtonFactory();
 		setLayout(new BorderLayout(10, 0));
 		setBackground(ColorPalette.CARD_LIGHT.getColor());
 		setBorder(BorderFactory.createCompoundBorder(
@@ -49,7 +50,8 @@ public class PanelProducto extends JPanel {
 		JPanel foto = new JPanel();
 		foto.setBackground(ColorPalette.CARD_DARK.getColor());
 		foto.setPreferredSize(new Dimension(fotoW, fotoH));
-		JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
+		//JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
+		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled("producto.png", fotoH, fotoW));
 		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		fotoLabel.setFont(Fonts.BOLD.getFont());
 		foto.add(fotoLabel);
