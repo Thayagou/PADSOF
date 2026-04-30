@@ -47,7 +47,8 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	
 	public PanelDisplay anadirProductoRecomendado(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
 		PanelDisplay p = //new PanelDisplay(1.01*0.1, 0.1, 0.09, "Ver producto:");
-				new PanelProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
+				//new PanelProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
+				new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
 		listaPanel.add(p);
 		refreshList();
 		

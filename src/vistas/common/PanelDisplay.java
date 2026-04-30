@@ -21,17 +21,18 @@ import vistas.herramientas.Fonts;
 public class PanelDisplay extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private final JButton clickArea; // botón invisible que ocupa todo el panel
-
+	protected int maxHeight;
+	protected int maxCompHeight;
 	private ColorPalette gradStart = ColorPalette.CARD_LIGHT;
 	private ColorPalette gradEnd = ColorPalette.CARD_DARK;
 	
-	public PanelDisplay(double maxHPerc, double fotoHPerc, double fotoWPerc, String imageName, String actionName) {
+	public PanelDisplay(double maxHPerc, double compHPerc, double fotoWPerc, String imageName, String actionName) {
 		setOpaque(false);
 
 		TiendaFrame t = TiendaFrame.getInstance();
 		int fotoW = t.getPixelsWidth(fotoWPerc);
-		int fotoH = t.getPixelsHeight(fotoHPerc);
-		int maxHeight = t.getPixelsHeight(maxHPerc);
+		maxCompHeight = t.getPixelsHeight(compHPerc);
+		maxHeight = t.getPixelsHeight(maxHPerc);
 		
 
 		setLayout(new BorderLayout(10, 0));
@@ -45,9 +46,9 @@ public class PanelDisplay extends JPanel{
 		// — Foto placeholder —
 		JPanel foto = new JPanel();
 		foto.setBackground(ColorPalette.CARD_DARK.getColor());
-		foto.setPreferredSize(new Dimension(fotoW, fotoH));
+		foto.setPreferredSize(new Dimension(fotoW, maxCompHeight));
 		//JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
-		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled(imageName, fotoH, fotoW));
+		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled(imageName, maxCompHeight, fotoW));
 		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		fotoLabel.setFont(Fonts.BOLD.getFont());
 		foto.add(fotoLabel);

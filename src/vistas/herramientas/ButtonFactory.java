@@ -48,6 +48,11 @@ public class ButtonFactory {
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 	}
+	
+	public void paintButton(JButton button, ColorPalette background, ColorPalette foreground) {
+		button.setBackground(background.getColor());
+		button.setForeground(foreground.getColor());
+	}
 
 	private void iconoDinamico(JButton button, ImageIcon original, double percIcono) {
 		button.addComponentListener(new ButtonAdapter(button, percIcono, original));
@@ -62,7 +67,7 @@ public class ButtonFactory {
 	
 	public JButton newRoundedButton(String label, int height, int width, double roundness) {
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
-		
+		System.out.println(height + " " + width);
 		button.setActionCommand(label);
 		button.setPreferredSize(new Dimension(width, height));
 
