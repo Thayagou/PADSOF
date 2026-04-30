@@ -95,7 +95,7 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 
 		listaPanel.removeAll();
 		for (PanelProducto p : ordenados) {
-			if (clickListener != null) p.addClickListener(clickListener);
+			if (clickListener != null) p.setControlador(clickListener);
 			listaPanel.add(p);
 		}
 		listaPanel.revalidate();
@@ -113,7 +113,7 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 		// Reasignar a los paneles ya creados
 		for (Component c : listaPanel.getComponents()) {
 			if (c instanceof PanelProducto pp)
-				pp.addClickListener(l);
+				pp.setControlador(l);
 		}
 	}
 }

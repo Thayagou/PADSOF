@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import modelo.venta.productos.Producto;
 import vistas.common.PanelProducto;
+import vistas.empleado.PanelProductoGestionarProducto;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
@@ -17,8 +18,6 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
-	private ActionListener clickListener;
 
 	/** Campo listaPanel. */
 	private JPanel listaPanel = new JPanel();
@@ -55,11 +54,12 @@ public class VentanaInicioSinRegistrar extends JPanel {
 		refreshList();
 	}
 	
-	public void anadirProductoRecomendado(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		PanelProducto p = new PanelProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
-		p.addClickListener(clickListener);
+	public PanelProducto anadirProductoRecomendado(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
+		PanelProducto p = new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
 		listaPanel.add(p);
 		refreshList();
+		
+		return p;
 	}
 	
 	private void refreshList() {
@@ -74,10 +74,9 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	 * @param l nuevo valor
 	 */
 	public void setClickListener(ActionListener l) {
-		clickListener = l;
 		for (Component c : listaPanel.getComponents()) {
 			if (c instanceof PanelProducto pp)
-				pp.addClickListener(l);
+				pp.setControlador(l);
 		}
 	}
 }

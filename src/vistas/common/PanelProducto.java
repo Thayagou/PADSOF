@@ -109,7 +109,7 @@ public class PanelProducto extends JPanel {
 		clickArea.setOpaque(false);
 		clickArea.setContentAreaFilled(false);
 		clickArea.setBorderPainted(false);
-		clickArea.setActionCommand("Ver producto:" + nombre);
+		clickArea.setActionCommand("Ver producto:");
 		clickArea.setPreferredSize(new Dimension(0, 0));
 
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -136,7 +136,7 @@ public class PanelProducto extends JPanel {
 	}
 	
 	/** Añade un listener que se dispara al hacer clic en la fila. */
-	public void addClickListener(java.awt.event.ActionListener l) {
+	public void setControlador(java.awt.event.ActionListener l) {
 		clickArea.addActionListener(l);
 	}
 

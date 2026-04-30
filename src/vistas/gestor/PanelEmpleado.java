@@ -62,7 +62,7 @@ public class PanelEmpleado extends JPanel {
 	public void setClickListener(ActionListener l) {
 		for (Component c : listaPanel.getComponents()) {
 			if (c instanceof PanelProducto pp)
-				pp.addClickListener(l);
+				pp.setControlador(l);
 		}
 	}
 }

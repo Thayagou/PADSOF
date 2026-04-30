@@ -31,20 +31,16 @@ public class ControlInicioSinRegistrar implements ActionListener {
 		// Obtener productos populares del modelo y construir la vista
 		Producto[] populares = tienda.getAlmacen().getProductosCoincidentes("");
 		this.vista = new VentanaInicioSinRegistrar(populares);
-		this.vista.setClickListener(this);
+		//this.vista.setClickListener(this);
 		for(Producto p : populares) {
-			ArrayList<String> categorias = new ArrayList<>();
-			for(Categoria c : p.getCategorias()) {
-				categorias.add(c.getNombre());
-			}
-			vista.anadirProductoRecomendado(p.getNombre(), p.getDescripcion(), p.getPuntuacionMedia(), p.getPrecio(), categorias.toArray(new String[0]));
+			new ControlPanelProductoNoRegistrado(tienda, p, vista);
 		}
 		tiendaFrame.setVistaActual(vista);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String cmd = e.getActionCommand();
+		/*String cmd = e.getActionCommand();
 		if (cmd != null && cmd.startsWith("Ver producto:")) {
 			String nombreProducto = cmd.substring("Ver producto:".length());
 			SwingUtilities.invokeLater(() -> {
@@ -55,6 +51,6 @@ public class ControlInicioSinRegistrar implements ActionListener {
 					new VentanaMensaje("Producto no encontrado: " + nombreProducto);
 				}
 			});
-		}
+		}*/
 	}
 }
