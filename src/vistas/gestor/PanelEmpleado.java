@@ -22,14 +22,16 @@ public class PanelEmpleado extends JPanel {
 	private Color gradEnd = ColorPalette.CARD_DARK.getColor();
 	
 	private String nombre;
+	private String fotoDePerfil;
 	private boolean deAlta;
 	private List<String> permisos;
 
 	private final JButton clickArea; // botón invisible que ocupa todo el panel
 
-	public PanelEmpleado(String nombre, boolean deAlta, String...permisos) {
+	public PanelEmpleado(String nombre, String fotoDePerfil, boolean deAlta, String...permisos) {
 		this.nombre = nombre;
 		this.deAlta = deAlta;
+		this.fotoDePerfil = fotoDePerfil;
 		this.permisos = List.of(permisos);
 		
 		setOpaque(false);
@@ -53,53 +55,52 @@ public class PanelEmpleado extends JPanel {
 		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		fotoLabel.setFont(Fonts.BOLD.getFont());
 		foto.add(fotoLabel);
+		
+		ButtonFactory factory = new ButtonFactory();
 
 		/* Info: estrellas + nombre + descripción + precio + categorías */
 			JPanel info = new JPanel();
 			info.setOpaque(false);
-			info.setLayout(new GridLayout(3, 1));
+			info.setLayout(new GridLayout(2, 1));
 			
 			/*Primera fila: estrellas + nombre */
 			JPanel firstRow = new JPanel();
 			firstRow.setOpaque(false);
-			firstRow.setLayout(new BorderLayout(10, 0));
-			firstRow.add(buildEstrellas(t, puntuacionMedia), BorderLayout.WEST);
+			/*firstRow.setLayout(new BorderLayout(10, 0));
+			firstRow.add(buildEstrellas(t, puntuacionMedia), BorderLayout.WEST);*/
 	
 			JLabel nombreLabel = new JLabel(nombre);
 			nombreLabel.setFont(Fonts.BOLD.getFont());
 			nombreLabel.setForeground(ColorPalette.DARK_GREY.getColor().darker());
-			firstRow.add(nombreLabel, BorderLayout.CENTER);
+			firstRow.add(nombreLabel);
 	
 			info.add(firstRow);
 			
-			/*Segunda fila: descripcion*/
-			if (descripcion != null && descripcion.length() > MAX_DESC)
-				descripcion = descripcion.substring(0, MAX_DESC) + "...";
-			JLabel descripcionLabel = new JLabel("<html>" + descripcion + "</html>");
-			descripcionLabel.setFont(Fonts.SMALL.getFont());
-			descripcionLabel.setForeground(ColorPalette.DARK_GREY.getColor());
-			info.add(descripcionLabel);
+			/*Segunda fila: permisos*/
+			JPanel permisosRow = new JPanel();
+			permisosRow.setLayout(new BorderLayout(10, 0));
+			permisosRow.setOpaque(false);
 			
-			/*Tercera fila: categorias + precio*/
-			JPanel thirdRow = new JPanel();
-			thirdRow.setLayout(new BorderLayout(10, 0));
-			thirdRow.setOpaque(false);
+			String permisosString = String.join(", ", this.permisos);
 			
-			String cats = String.join(", ", categorias);
+			if (!permisosString.isBlank()) permisosString = "Sin permisos";
+			JLabel permisosLabel = new JLabel(permisosString);
+			permisosLabel.setFont(Fonts.TEXT.getFont());
+			permisosLabel.setForeground(ColorPalette.PURPLE.getColor());
+			permisosRow.add(permisosLabel, BorderLayout.WEST);
 			
-			if (!cats.isEmpty()) {
-				JLabel categoriasLabel = new JLabel(cats);
-				categoriasLabel.setFont(Fonts.TEXT.getFont());
-				categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
-				thirdRow.add(categoriasLabel, BorderLayout.WEST);
-			}
+			/*Tercera fila: de alta*/
+			JPanel deAltaRow = new JPanel();
+			deAltaRow.setLayout(new BorderLayout(10, 0));
+			deAltaRow.setOpaque(false);
 			
-			JLabel precioLabel = new JLabel(String.format("%.2f €", precio));
-			precioLabel.setFont(Fonts.BOLD.getFont());
-			precioLabel.setForeground(Color.BLACK);
-			thirdRow.add(precioLabel, BorderLayout.CENTER);
+			JLabel estado = new JLabel(deAlta ? "Empleado de alta" : "Empleado de baja");
+			estado.setFont(Fonts.BOLD.getFont());
 			
-			info.add(thirdRow);
+			if (this.deAlta)estado.setForeground(ColorPalette.GREEN.getColor());
+			else estado.setForeground(ColorPalette.RED.getColor());
+			deAltaRow.add(estado, BorderLayout.WEST);
+			info.add(deAltaRow);
 
 		add(foto, BorderLayout.WEST);
 		add(info, BorderLayout.CENTER);
@@ -172,21 +173,5 @@ public class PanelEmpleado extends JPanel {
 		g2.dispose();
 
 		super.paintComponent(g); // importante: pinta hijos después
-	}
-	
-	public double getPuntuacionMedia() {
-		return puntuacionMedia;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public double getPrecio() {
-		return precio;
 	}
 }

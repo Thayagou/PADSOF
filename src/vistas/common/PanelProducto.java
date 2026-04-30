@@ -9,11 +9,11 @@ import vistas.herramientas.*;
  * Muestra: foto, estrellas, nombre, descripción truncada, precio y categorías.
  * Al hacer clic sobre la fila se puede asignar un ActionListener externo.
  */
-public class PanelProducto extends JPanel {
+public class PanelProducto extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
 
 	private static final double FOTO_W_PERC = 0.09;
-	private static final double FOTO_H_PERC = 0.10;
+	private static final double FOTO_H_PERC = 0.15;
 	private static final int MAX_DESC = 120;
 	
 	private Color gradStart = ColorPalette.CARD_LIGHT.getColor();
@@ -24,21 +24,21 @@ public class PanelProducto extends JPanel {
 	private double puntuacionMedia;
 	private double precio;
 
-	private final JButton clickArea; // botón invisible que ocupa todo el panel
+	//private final JButton clickArea; // botón invisible que ocupa todo el panel
 
 	public PanelProducto(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
+		super(1.01*FOTO_H_PERC, FOTO_H_PERC, FOTO_W_PERC, "Ver producto:");
 		this.puntuacionMedia = puntuacionMedia;
 		this.descripcion = descripcion;
 		this.nombre = nombre;
 		this.precio = precio;
 		
-		setOpaque(false);
+		//setOpaque(false);
 
 		TiendaFrame t = TiendaFrame.getInstance();
-		int fotoW = t.getPixelsWidth(FOTO_W_PERC);
+		/*int fotoW = t.getPixelsWidth(FOTO_W_PERC);
 		int fotoH = t.getPixelsHeight(FOTO_H_PERC);
 
-		ButtonFactory factory = new ButtonFactory();
 		setLayout(new BorderLayout(10, 0));
 		setBackground(ColorPalette.CARD_LIGHT.getColor());
 		setBorder(BorderFactory.createCompoundBorder(
@@ -47,6 +47,7 @@ public class PanelProducto extends JPanel {
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, fotoH + 16));
 
 		// — Foto placeholder —
+		ButtonFactory factory = new ButtonFactory();
 		JPanel foto = new JPanel();
 		foto.setBackground(ColorPalette.CARD_DARK.getColor());
 		foto.setPreferredSize(new Dimension(fotoW, fotoH));
@@ -54,7 +55,7 @@ public class PanelProducto extends JPanel {
 		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled("producto.png", fotoH, fotoW));
 		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		fotoLabel.setFont(Fonts.BOLD.getFont());
-		foto.add(fotoLabel);
+		foto.add(fotoLabel);*/
 
 		/* Info: estrellas + nombre + descripción + precio + categorías */
 			JPanel info = new JPanel();
@@ -103,11 +104,11 @@ public class PanelProducto extends JPanel {
 			
 			info.add(thirdRow);
 
-		add(foto, BorderLayout.WEST);
+		//add(foto, BorderLayout.WEST);
 		add(info, BorderLayout.CENTER);
 
 		// Botón invisible para detectar clic en toda la fila
-		clickArea = new JButton();
+		/*clickArea = new JButton();
 		clickArea.setOpaque(false);
 		clickArea.setContentAreaFilled(false);
 		clickArea.setBorderPainted(false);
@@ -134,13 +135,13 @@ public class PanelProducto extends JPanel {
 			public void mouseClicked(java.awt.event.MouseEvent e) {
 				clickArea.doClick();
 			}
-		});
+		});*/
 	}
 	
 	/** Añade un listener que se dispara al hacer clic en la fila. */
-	public void setControlador(java.awt.event.ActionListener l) {
+	/*public void setControlador(java.awt.event.ActionListener l) {
 		clickArea.addActionListener(l);
-	}
+	}*/
 
 	// ── Estrellas ──────────────────────────────────────────────────────────
 	private JPanel buildEstrellas(TiendaFrame t, double valoracion) {
@@ -156,7 +157,7 @@ public class PanelProducto extends JPanel {
 		return p;
 	}
 
-	@Override
+	/*@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g.create();
 
@@ -174,7 +175,7 @@ public class PanelProducto extends JPanel {
 		g2.dispose();
 
 		super.paintComponent(g); // importante: pinta hijos después
-	}
+	}*/
 	
 	public double getPuntuacionMedia() {
 		return puntuacionMedia;

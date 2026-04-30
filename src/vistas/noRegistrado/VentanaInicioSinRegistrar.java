@@ -3,7 +3,9 @@ package vistas.noRegistrado;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+
 import modelo.venta.productos.Producto;
+import vistas.common.PanelDisplay;
 import vistas.common.PanelProducto;
 import vistas.empleado.PanelProductoGestionarProducto;
 import vistas.herramientas.*;
@@ -43,8 +45,9 @@ public class VentanaInicioSinRegistrar extends JPanel {
 		refreshList();
 	}
 	
-	public PanelProducto anadirProductoRecomendado(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		PanelProducto p = new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
+	public PanelDisplay anadirProductoRecomendado(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
+		PanelDisplay p = //new PanelDisplay(1.01*0.1, 0.1, 0.09, "Ver producto:");
+				new PanelProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
 		listaPanel.add(p);
 		refreshList();
 		
