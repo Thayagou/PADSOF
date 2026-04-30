@@ -151,4 +151,23 @@ public class PanelFactory {
 
 		return scroll;
 	}
+	
+	/**
+	 * Añade un espacio arriba y abajo del panel
+	 *
+	 * @param panel Panel al que añadir espaciado
+	 * @param space Espacio en píxeles que se añade arriba y abajo
+	 * @return Panel con el Panel que se pasó con dos espacios arriba y abajo
+	 */
+	public static JPanel wrapVertical(JPanel panel, int space) {
+	    JPanel wrapper = new JPanel();
+	    wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
+	    wrapper.setOpaque(false);
+
+	    wrapper.add(Box.createVerticalStrut(space));
+	    wrapper.add(panel);
+	    wrapper.add(Box.createVerticalStrut(space));
+
+	    return wrapper;
+	}
 }
