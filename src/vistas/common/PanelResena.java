@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
+import vistas.herramientas.Fonts;
 
 public class PanelResena extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +29,7 @@ public class PanelResena extends JPanel {
 		header.add(avatar);
 
 		JLabel usuario = new JLabel(usr);
-		usuario.setFont(t.getTextFont());
+		usuario.setFont(Fonts.BOLD.getFont());
 		usuario.setForeground(ColorPalette.DARK_GREY.getColor());
 		header.add(usuario);
 
@@ -36,7 +37,7 @@ public class PanelResena extends JPanel {
 
 		// ── Comentario ────────────────────────────────────────────────
 		JTextArea comentTxt = new JTextArea(comentario);
-		comentTxt.setFont(t.getTextFont());
+		comentTxt.setFont(Fonts.SMALL.getFont());
 		comentTxt.setLineWrap(true);
 		comentTxt.setWrapStyleWord(true);
 		comentTxt.setEditable(false);
@@ -105,7 +106,7 @@ public class PanelResena extends JPanel {
 		int llenas = (int) Math.round(valoracion);
 		for (int i = 1; i <= 5; i++) {
 			JLabel star = new JLabel("★");
-			star.setFont(t.getTextFont());
+			star.setFont(Fonts.BOLD.getFont());
 			star.setForeground(i <= llenas ? ColorPalette.YELLOW.getColor() : ColorPalette.LIGHT_GREY.getColor());
 			p.add(star);
 		}

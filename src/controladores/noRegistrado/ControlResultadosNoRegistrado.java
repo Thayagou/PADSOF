@@ -2,10 +2,12 @@ package controladores.noRegistrado;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
 import modelo.sistema.Tienda;
+import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.common.TiendaFrame;
 import vistas.noRegistrado.VentanaResultadosNoRegistrado;
@@ -17,8 +19,17 @@ public class ControlResultadosNoRegistrado implements ActionListener {
 
 	public ControlResultadosNoRegistrado(Tienda tienda, Producto[] productos) {
 		this.tienda = tienda;
-		this.vista = new VentanaResultadosNoRegistrado(productos);
+		this.vista = new VentanaResultadosNoRegistrado();
 		this.vista.setClickListener(this);
+		
+		for(Producto p : productos) {
+			ArrayList<String> categorias = new ArrayList<>();
+			for(Categoria c : p.getCategorias()) {
+				categorias.add(c.getNombre());
+			}
+			vista.anadirProducto(p.getNombre(), p.getDescripcion(), p.getPuntuacionMedia(), p.getPrecio(), categorias.toArray(new String[0]));
+		}
+		
 		TiendaFrame.getInstance().setVistaActual(vista);
 	}
 

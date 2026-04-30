@@ -51,7 +51,7 @@ public class VentanaBusqueda extends JPanel {
 		int height = t.getHeight();
 		int width = t.getWidth();
 		JLabel cabecera = new JLabel("Realizar búsqueda", JLabel.CENTER);
-		cabecera.setFont(t.getTitle3Font());
+		cabecera.setFont(Fonts.TITLE3.getFont());
 		cabecera.setForeground(ColorPalette.WHITE.getColor());
 		cabecera.setOpaque(true);
 		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());
@@ -59,7 +59,7 @@ public class VentanaBusqueda extends JPanel {
 
 		estrellas = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 5.0, 0.5));
 		estrellas.setPreferredSize(new Dimension((int)(0.08*width), (int)(0.03 * height)));
-		estrellas.setFont(t.getTextFont());
+		estrellas.setFont(Fonts.BOLD.getFont());
 		precioMin = new JTextField(10);
 		precioMin.setFont(Fonts.TEXT.getFont());
 		precioMax = new JTextField(10);
@@ -67,7 +67,7 @@ public class VentanaBusqueda extends JPanel {
 
 		JPanel panelForm = new JPanel(new GridBagLayout());
 		TitledBorder tb = BorderFactory.createTitledBorder("Filtros");
-		tb.setTitleFont(t.getTitle3Font());
+		tb.setTitleFont(Fonts.TITLE3.getFont());
 		panelForm.setBorder(tb);
 		panelForm.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_FILTER_SIZE), 0));
 		
@@ -79,7 +79,7 @@ public class VentanaBusqueda extends JPanel {
 		gbc.gridy = 0;
 		
 		JLabel minEstrellas = new JLabel("Estrellas mínimas:");
-		minEstrellas.setFont(t.getTextFont());
+		minEstrellas.setFont(Fonts.TEXT.getFont());
 		panelForm.add(minEstrellas, gbc);
 
 		gbc.gridx = 1;
@@ -88,7 +88,7 @@ public class VentanaBusqueda extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy++;
 		JLabel minPrecio = new JLabel("Precio mínimo:");
-		minPrecio.setFont(t.getTextFont());
+		minPrecio.setFont(Fonts.TEXT.getFont());
 		panelForm.add(minPrecio, gbc);
 
 		gbc.gridx = 1;
@@ -97,7 +97,7 @@ public class VentanaBusqueda extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy++;
 		JLabel precioMaximo = new JLabel("Precio máximo:");
-		precioMaximo.setFont(t.getTextFont());
+		precioMaximo.setFont(Fonts.TEXT.getFont());
 		panelForm.add(precioMaximo, gbc);
 
 		gbc.gridx = 1;
@@ -106,12 +106,12 @@ public class VentanaBusqueda extends JPanel {
 		JPanel panelCategorias = new JPanel();
 		panelCategorias.setLayout(new BoxLayout(panelCategorias, BoxLayout.Y_AXIS));
 		TitledBorder tbCategorias = BorderFactory.createTitledBorder("Categorías");
-		tbCategorias.setTitleFont(t.getTitle3Font());
+		tbCategorias.setTitleFont(Fonts.TITLE3.getFont());
 		panelCategorias.setBorder(tbCategorias);
 
 		for (String cat : categorias) {
 			JCheckBox cb = new JCheckBox(cat);
-			cb.setFont(t.getTextFont());;
+			cb.setFont(Fonts.TEXT.getFont());;
 			checkboxes.add(cb);
 			panelCategorias.add(cb);
 		}

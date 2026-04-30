@@ -20,7 +20,7 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 	private static final double SPACE_BETWEEN = 0.01;
 	
 	/** Constante BTN_ACCOUNT_W. */
-	private static final double BTN_ACCOUNT_W = 0.13;
+	private static final double BTN_ACCOUNT_W = 0.15;
 	
 	/** Constante BTN_SEARCH_W. */
 	private static final double BTN_SEARCH_W = 0.35;
@@ -92,25 +92,6 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 
 		add(btnIniciarSesion);
 		add(Box.createHorizontalStrut(spaceBetween));
-
-//		SpringLayout layout = new SpringLayout();
-//		setLayout(layout);
-//
-//		add(btnHome);
-//		add(btnBuscar);
-//		add(btnIniciarSesion);
-//
-//		// Posición: [space] [campoBusqueda expandido] [space] [btnBuscar] [space]
-//		// [btnIniciarSesion] [space]
-//		layout.putConstraint(SpringLayout.WEST, btnHome, spaceBetween, SpringLayout.WEST, this);
-//		layout.putConstraint(SpringLayout.NORTH, btnHome, spaceBetween, SpringLayout.NORTH, this);
-//		
-//		layout.putConstraint(SpringLayout.WEST, btnBuscar, spaceBetween, SpringLayout.EAST, btnHome);
-//		layout.putConstraint(SpringLayout.NORTH, btnBuscar, spaceBetween, SpringLayout.NORTH, this);
-//		layout.putConstraint(SpringLayout.EAST, btnBuscar, -spaceBetween, SpringLayout.WEST, btnIniciarSesion);
-//
-//		layout.putConstraint(SpringLayout.EAST, btnIniciarSesion, -spaceBetween, SpringLayout.EAST, this);
-//		layout.putConstraint(SpringLayout.NORTH, btnIniciarSesion, spaceBetween, SpringLayout.NORTH, this);
 	}
 
 	/**
