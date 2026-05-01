@@ -12,19 +12,19 @@ import vistas.herramientas.*;
  * Muestra los resultados de una búsqueda en forma de lista scrolleable. Incluye
  * combo de ordenación (igual que maqueta 4).
  */
-public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConDisplay<PanelDisplay>{
+public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConDisplay<PanelProducto>{
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** Campo productos. */
-	private ArrayList<PanelDisplay> productos = new ArrayList<>();
+	private ArrayList<PanelProducto> productos = new ArrayList<>();
 	
 	/** Campo listaPanel. */
 	private JPanel listaPanel;
 	
 	/** Campo ordenCombo. */
-	private JComboBox<String> ordenCombo;
+	private PanelMultiopcion panelOpciones;
 
 	/** Campo clickListener. */
 	private ActionListener clickListener; // para navegar al detalle
@@ -42,34 +42,18 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
 
-		// ── Cabecera ──────────────────────────────────────────────
-		JPanel cabecera = new JPanel(new FlowLayout(FlowLayout.LEFT, 12, 6));
-		cabecera.setBackground(ColorPalette.BG_BLUE.getColor());
-
-		JLabel lblResultados = new JLabel("Resultados de búsqueda");
-		lblResultados.setFont(Fonts.TITLE3.getFont());
-		lblResultados.setForeground(ColorPalette.WHITE.getColor());
-
-		ordenCombo = new JComboBox<>(ORDENES);
-		ordenCombo.setFont(Fonts.TEXT.getFont());
-		ordenCombo.addActionListener(e -> refrescarLista());
-
-		cabecera.add(lblResultados);
-		cabecera.add(ordenCombo);
-
 		// ── Lista ─────────────────────────────────────────────────
 		listaPanel = new JPanel();
 		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
 		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
+		
+		JScrollPane scroll = PanelFactory.getScroll(listaPanel);
+		JPanel contenido = new JPanel(new BorderLayout());
+		contenido.add(scroll);
 
-		JScrollPane scroll = new JScrollPane(listaPanel);
-		scroll.setBorder(BorderFactory.createEmptyBorder());
-		scroll.getVerticalScrollBar().setUnitIncrement(16);
-		scroll.setBackground(ColorPalette.CARD_LIGHT.getColor());
-		scroll.getViewport().setBackground(ColorPalette.CARD_LIGHT.getColor());
-
-		add(cabecera, BorderLayout.NORTH);
-		add(scroll, BorderLayout.CENTER);
+		panelOpciones = new PanelMultiopcion("Resultados de búsqueda", contenido, ORDENES);
+		
+		add(panelOpciones);
 
 		refrescarLista();
 	}
@@ -84,7 +68,7 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	 */
 	private void refrescarLista() {
 		PanelProducto[] ordenados = Arrays.copyOf(productos.toArray(new PanelProducto[0]), productos.size());
-		switch (ordenCombo.getSelectedIndex()) {
+		switch (panelOpciones.getOpcionSeleccionada()) {
 		case 0 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPuntuacionMedia).reversed());
 		case 1 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPuntuacionMedia));
 		case 2 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPrecio));
@@ -118,7 +102,7 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	}
 
 	@Override
-	public PanelDisplay anadirDisplay(PanelDisplay panelDisplay) {
+	public PanelProducto anadirDisplay(PanelProducto panelDisplay) {
 		productos.add(panelDisplay);
 		refrescarLista();
 		return panelDisplay;
