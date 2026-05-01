@@ -5,9 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import modelo.venta.productos.Producto;
-import vistas.common.PanelCategoriaSeleccion;
 import vistas.common.PanelDisplay;
-import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.*;
 
@@ -28,7 +26,7 @@ public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDispl
 	 *
 	 * @param populares parámetro populares
 	 */
-	public VentanaInicioSinRegistrar(Producto[] populares) {
+	public VentanaInicioSinRegistrar() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 

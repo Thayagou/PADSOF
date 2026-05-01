@@ -32,6 +32,7 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 				new PanelProducto(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
 		vista.anadirDisplay(panel);
+		System.out.println("Anade panel" + producto.getNombre());
 		//panel = vista.anadirProductoRecomendado(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 		
 		panel.setControlador(this);
