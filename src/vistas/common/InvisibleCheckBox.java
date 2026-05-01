@@ -7,11 +7,15 @@ import vistas.herramientas.Fonts;
 
 public class InvisibleCheckBox extends JCheckBox{
 	private static final long serialVersionUID = 1L;
+	private String labelSelected;
+	private String labelUnselected;
 	private ColorPalette selected;
 	private ColorPalette unselected;
 	
-	public InvisibleCheckBox(String label, ColorPalette selected, ColorPalette unselected) {
-		super(label);
+	public InvisibleCheckBox(String labelSelected, String labelUnselected, ColorPalette selected, ColorPalette unselected) {
+		super(labelUnselected);
+		this.labelSelected = labelSelected;
+		this.labelUnselected = labelUnselected;
 		this.selected = selected;
 		this.unselected = unselected;
 		setOpaque(false);
@@ -30,8 +34,12 @@ public class InvisibleCheckBox extends JCheckBox{
     
     public void toggleSelection() {
 	    this.setSelected(!this.isSelected());
-	    this.setForeground(this.isSelected() 
+	    boolean isSelected = this.isSelected();
+	    this.setForeground( isSelected
 	        ? selected.getColor() 
 	        : unselected.getColor());
+	    this.setText(isSelected
+	    		? labelSelected 
+	    		: labelUnselected);
 	}
 }

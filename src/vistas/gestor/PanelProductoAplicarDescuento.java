@@ -1,25 +1,30 @@
 package vistas.gestor;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JCheckBox;
 
+import vistas.common.InvisibleCheckBox;
 import vistas.common.PanelProducto;
+import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
 public class PanelProductoAplicarDescuento extends PanelProducto{
-	private boolean seleccionada;
-	private JCheckBox checkBox;
+	private static final long serialVersionUID = 1L;
+	private InvisibleCheckBox checkBox;
 	
 	public PanelProductoAplicarDescuento(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		super(nombre, descripcion, puntuacionMedia, precio, categorias);
+		super(nombre, descripcion, puntuacionMedia, precio, "Incluir", categorias);
 		
+		// CheckBox como display (no interactivo por sí solo)
+		checkBox = ButtonFactory.newInvisibleCheckBox("Descontado", "Descontar", ColorPalette.BLACK, ColorPalette.GREY);
 		
+		this.add(checkBox, BorderLayout.EAST);
+		setControlador(p->checkBox.toggleSelection());
 	}
-	private void toggleSeleccion() {
-	    seleccionada = !seleccionada;
-	    checkBox.setSelected(seleccionada);
-	    checkBox.setForeground(seleccionada 
-	        ? ColorPalette.BLACK.getColor() 
-	        : ColorPalette.GREY.getColor());
+	
+	public boolean isSeleccionado() {
+		return checkBox.isSelected();
 	}
 }
 

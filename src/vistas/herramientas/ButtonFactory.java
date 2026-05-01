@@ -1,4 +1,5 @@
 package vistas.herramientas;
+
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import controladores.ButtonAdapter;
@@ -28,16 +30,17 @@ public class ButtonFactory {
 	private String getHTMLCenteredLabel(String label) {
 		return "<html><center>" + label + "</center></html>";
 	}
-	
+
 	private String getHTMLLabel(String label) {
 		return "<html>" + label + "</html>";
-	}	
+	}
 
 	public ImageIcon loadImageIconScaled(String imageName, int h, int w) {
 		ImageIcon original = new ImageIcon(IMAGE_PATH + imageName);
-		if (h <= 0 || w <= 0) return original;
-	    Image img = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-	    return new ImageIcon(img);
+		if (h <= 0 || w <= 0)
+			return original;
+		Image img = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+		return new ImageIcon(img);
 	}
 
 	private ImageIcon loadImageIcon(String imageName) {
@@ -50,7 +53,7 @@ public class ButtonFactory {
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 	}
-	
+
 	public void paintButton(JButton button, ColorPalette background, ColorPalette foreground) {
 		button.setBackground(background.getColor());
 		button.setForeground(foreground.getColor());
@@ -59,17 +62,17 @@ public class ButtonFactory {
 	private void iconoDinamico(JButton button, ImageIcon original, double percIcono) {
 		button.addComponentListener(new ButtonAdapter(button, percIcono, original));
 	}
-	
+
 	public JButton newButton(String label) {
 		JButton button = new JButton(getHTMLCenteredLabel(label));
 		button.setActionCommand(label);
-		
+
 		return button;
 	}
-	
+
 	public JButton newRoundedButton(String label, int height, int width, double roundness) {
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
-		
+
 		button.setActionCommand(label);
 		button.setPreferredSize(new Dimension(width, height));
 
@@ -77,7 +80,7 @@ public class ButtonFactory {
 
 		return button;
 	}
-	
+
 	public JButton newRoundedIconButton(String label, int height, int width, double roundness, String imageName) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
@@ -116,7 +119,7 @@ public class ButtonFactory {
 	}
 
 	public JButton newIconButton(String label, int height, int width, String imageName) {
-		
+
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = newButton(label);
 		button.setIcon(icon);
@@ -140,67 +143,84 @@ public class ButtonFactory {
 		});
 
 	}
-	
+
 	public JLabel newLabel(String text, Fonts font) {
 		JLabel label = new JLabel(getHTMLCenteredLabel(text));
 		label.setFont(font.getFont());
 		label.setHorizontalTextPosition(SwingConstants.LEFT);
-		
+
 		return label;
 	}
 	
+	public JLabel newLeftAlignedLabel(String text, Fonts font) {
+		JLabel label = new JLabel(getHTMLLabel(text));
+		label.setFont(font.getFont());
+		label.setHorizontalTextPosition(SwingConstants.LEFT);
+
+		return label;
+	}
+
 	public JTextField newTextField(String text, Fonts font) {
 		JTextField field = new JTextField(text);
 		field.setForeground(ColorPalette.GREY.getColor());
-		
-		field.addFocusListener(new FocusAdapter() {
-	        @Override
-	        public void focusGained(FocusEvent e) {
-	            if (field.getText().equals(text)) {
-	                field.setText("");
-	                field.setForeground(ColorPalette.BLACK.getColor());
-	            }
-	        }
 
-	        @Override
-	        public void focusLost(FocusEvent e) {
-	            if (field.getText().isEmpty()) {
-	                field.setText(text);
-	                field.setForeground(ColorPalette.GREY.getColor());
-	            }
-	        }
-	    });
-		
+		field.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (field.getText().equals(text)) {
+					field.setText("");
+					field.setForeground(ColorPalette.BLACK.getColor());
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (field.getText().isEmpty()) {
+					field.setText(text);
+					field.setForeground(ColorPalette.GREY.getColor());
+				}
+			}
+		});
+
 		return field;
 	}
-	
+
 	public JSpinner spinnerFecha(Fonts font) {
-	    SpinnerDateModel modelo = new SpinnerDateModel();
-	    JSpinner spinner = new JSpinner(modelo);
-	    JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");
-	    spinner.setEditor(editor);
-	    spinner.setFont(font.getFont());
-	    return spinner;
+		SpinnerDateModel modelo = new SpinnerDateModel();
+		JSpinner spinner = new JSpinner(modelo);
+		JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");
+		spinner.setEditor(editor);
+		spinner.setFont(font.getFont());
+		return spinner;
 	}
-	
-	public <T> JComboBox<T> newComboBox(Fonts font, T...elementos) {
+
+	public <T> JComboBox<T> newComboBox(Fonts font, T... elementos) {
 		JComboBox<T> comboBox = new JComboBox<T>(elementos);
 		comboBox.setFont(font.getFont());
-		
+
 		return comboBox;
 	}
-	
+
 	/**
-	 * Crea una check box que no se controla a sí misma, sino que depende de toggleSelection
+	 * Crea una check box que no se controla a sí misma, sino que depende de
+	 * toggleSelection
+	 * 
 	 * @param label
 	 * @param selected
 	 * @param unselected
 	 * @return
 	 */
-	public static InvisibleCheckBox newInvisibleCheckBox(String label, ColorPalette selected, ColorPalette unselected) {
-		return new InvisibleCheckBox(label, selected, unselected);
+	public static InvisibleCheckBox newInvisibleCheckBox(String labelSelected, String labelUnselected,
+			ColorPalette selected, ColorPalette unselected) {
+		return new InvisibleCheckBox(labelSelected, labelUnselected, selected, unselected);
 	}
-	
-	
+
+	public static JSpinner spinnerEntero(Fonts font, int height, int width) {
+		SpinnerNumberModel model = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
+		JSpinner spinner = new JSpinner(model);
+		spinner.setPreferredSize(new Dimension(width, height));
+		spinner.setFont(font.getFont());
+		return spinner;
+	}
 
 }

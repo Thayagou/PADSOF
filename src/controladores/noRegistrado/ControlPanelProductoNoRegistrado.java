@@ -15,7 +15,11 @@ import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
 import vistas.empleado.PanelCategoriaGestionarCategoria;
+import vistas.empleado.PanelProductoAnadirAPack;
+import vistas.empleado.PanelProductoGestionarProducto;
 import vistas.gestor.PanelEmpleado;
+import vistas.gestor.PanelProductoAplicarDescuento;
+import vistas.gestor.PanelProductoEstadisticas;
 
 public class ControlPanelProductoNoRegistrado implements ActionListener {
 	private Producto producto;
@@ -30,12 +34,15 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 		for(Categoria c : producto.getCategorias()) {
 			categorias.add(c.getNombre());
 		}
-		panel =  new PanelCategoriaGestionarCategoria(producto.getNombre());
+		panel =  //new PanelCategoriaGestionarCategoria(producto.getNombre());
 				//new PanelEmpleado(producto.getNombre(), ((int) producto.getPrecio()) % 2 == 1 ? true : false, "Pedidos", "Productos");
 				//new PanelCategoriaSeleccion(producto.getNombre());
 				//new PanelDisplay(1.01*0.1, 0.1, 0.09, "producto.png", "Ver producto:");
 				//new PanelProducto(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
-				//new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
+				//new PanelProductoGestionarProducto(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+				//new PanelProductoAplicarDescuento(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+				//new PanelProductoAnadirAPack(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+				new PanelProductoEstadisticas(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), 10f, 25, 15f, categorias.toArray(new String[0]));
 		vista.anadirDisplay(panel);
 		
 		//panel = vista.anadirProductoRecomendado(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
