@@ -3,7 +3,7 @@ package vistas.herramientas;
 import javax.swing.*;
 import java.awt.*;
 
-class RoundedButton extends JButton {
+public class RoundedButton extends JButton {
 	private static final long serialVersionUID = 1L;
 	private double roundness;
 

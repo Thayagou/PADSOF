@@ -36,6 +36,7 @@ public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDispl
 		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
 
 		JScrollPane scroll = PanelFactory.getScroll(listaPanel);
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
 		
 		JPanel contenido = new JPanel();
 		contenido.setLayout(new BorderLayout());

@@ -1,12 +1,10 @@
 package vistas.noRegistrado;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import controladores.noRegistrado.ControlBuscar;
 import vistas.common.TiendaFrame;
-import vistas.herramientas.ColorPalette;
-import vistas.herramientas.Fonts;
+import vistas.herramientas.*;
 
 import java.awt.*;
 import java.util.*;
@@ -18,24 +16,27 @@ public class VentanaBusqueda extends JPanel {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** Campo estrellas. */
 	private JSpinner estrellas;
-	
+
 	/** Campo precioMin. */
 	private JTextField precioMin;
-	
+
 	/** Campo precioMax. */
 	private JTextField precioMax;
-	
+
 	/** Campo botonBuscar. */
 	private JButton botonBuscar;
-	
+
 	/** Campo checkboxes. */
 	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
-	
+
 	/** Campo PREFERRED_FILTER_SIZE. */
-	private static double PREFERRED_FILTER_SIZE = 0.3;
+	private static double PREFERRED_FILTER_SIZE = 0.35;
+	private static double PREFERRED_CATEG_SIZE = 0.35;
+	private static double PANELS_HEIGHT = 0.5;
+	private static double SPACING = 0.03;
 
 	/**
 	 * Instancia un nuevo Objeto VentanaBusqueda.
@@ -43,116 +44,131 @@ public class VentanaBusqueda extends JPanel {
 	 * @param categorias parámetro categorias
 	 */
 	public VentanaBusqueda(String[] categorias) {
+		final double MIN_STARS = 0.0;
+		final double MAX_STARS = 5.0;
+		final double STEP_STARS = 0.5;
+		final double INIT_STARS = 0.0;
+		
+		final String DEFAULT_MIN_PRICE = "0.0";
+		final String DEFAULT_MAX_PRICE = "999999.0";
+		
+		final double SPINNER_WIDTH_FACTOR = 0.08;
+		final double SPINNER_HEIGHT_FACTOR = 0.03;
+		
+		final double BUTTON_HEIGHT_FACTOR = 0.05;
+		final double BUTTON_WIDTH_FACTOR = 0.1;
+		final int BUTTON_ROUND_RADIUS = 1;
+		
+		final double CHECKBOX_PADDING_V = 0.01;
+		final double CHECKBOX_PADDING_H = 0.02;
+		
+		final double GBC_WEIGHTX = 0.5; // peso para GridBagConstraints
+
 		setOpaque(false);
 		setLayout(new BorderLayout());
-		
+
 		TiendaFrame t = TiendaFrame.getInstance();
+		ButtonFactory b = new ButtonFactory();
 		int height = t.getHeight();
 		int width = t.getWidth();
-		// ── Cabecera ──────────────────────────────────────────────
-		JLabel cabecera = new JLabel("  Productos populares");
-		cabecera.setFont(Fonts.TITLE3.getFont());
-		cabecera.setForeground(ColorPalette.WHITE.getColor());
-		cabecera.setOpaque(true);
-		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());
-		cabecera.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+		int spaceBetween = t.getPixelsWidth(SPACING);
 
-		estrellas = new JSpinner(new SpinnerNumberModel(0.0, 0.0, 5.0, 0.5));
-		estrellas.setPreferredSize(new Dimension((int)(0.08*width), (int)(0.03 * height)));
+		estrellas = new JSpinner(new SpinnerNumberModel(INIT_STARS, MIN_STARS, MAX_STARS, STEP_STARS));
+		estrellas.setPreferredSize(
+				new Dimension((int) (SPINNER_WIDTH_FACTOR * width), (int) (SPINNER_HEIGHT_FACTOR * height)));
 		estrellas.setFont(Fonts.BOLD.getFont());
-		precioMin = new JTextField(10);
-		precioMin.setFont(Fonts.TEXT.getFont());
-		precioMax = new JTextField(10);
-		precioMax.setFont(Fonts.TEXT.getFont());
+		precioMin = b.newTextField(DEFAULT_MIN_PRICE, Fonts.TEXT);
+		precioMax = b.newTextField(DEFAULT_MAX_PRICE, Fonts.TEXT);
 
-		JPanel panelForm = new JPanel(new GridBagLayout());
-		TitledBorder tb = BorderFactory.createTitledBorder("Filtros");
-		tb.setTitleFont(Fonts.TITLE3.getFont());
-		panelForm.setBorder(tb);
-		panelForm.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_FILTER_SIZE), 0));
-		
+		JPanel contenidoFiltros = new JPanel();
+		contenidoFiltros.setOpaque(true);
+		contenidoFiltros.setBackground(ColorPalette.WHITE.getColor());
+		contenidoFiltros.setLayout(new GridBagLayout());
+		contenidoFiltros.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_FILTER_SIZE), t.getPixelsHeight(PANELS_HEIGHT)));
+
 		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.insets = new Insets(spaceBetween, spaceBetween, spaceBetween, spaceBetween);
 		gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		
-		JLabel minEstrellas = new JLabel("Estrellas mínimas:");
-		minEstrellas.setFont(Fonts.TEXT.getFont());
-		panelForm.add(minEstrellas, gbc);
-
+		gbc.weightx = GBC_WEIGHTX;
+		contenidoFiltros.add(b.newLabel("Estrellas mínimas:", Fonts.TEXT), gbc);
 		gbc.gridx = 1;
-		panelForm.add(estrellas, gbc);
+		gbc.weightx = GBC_WEIGHTX;
+		contenidoFiltros.add(estrellas, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy++;
-		JLabel minPrecio = new JLabel("Precio mínimo:");
-		minPrecio.setFont(Fonts.TEXT.getFont());
-		panelForm.add(minPrecio, gbc);
-
+		gbc.weightx = GBC_WEIGHTX;
+		contenidoFiltros.add(b.newLabel("Precio mínimo:", Fonts.TEXT), gbc);
 		gbc.gridx = 1;
-		panelForm.add(precioMin, gbc);
+		gbc.weightx = GBC_WEIGHTX;
+		contenidoFiltros.add(precioMin, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy++;
-		JLabel precioMaximo = new JLabel("Precio máximo:");
-		precioMaximo.setFont(Fonts.TEXT.getFont());
-		panelForm.add(precioMaximo, gbc);
-
+		gbc.weightx = GBC_WEIGHTX;
+		contenidoFiltros.add(b.newLabel("Precio máximo:", Fonts.TEXT), gbc);
 		gbc.gridx = 1;
-		panelForm.add(precioMax, gbc);
+		gbc.weightx = GBC_WEIGHTX;
+		contenidoFiltros.add(precioMax, gbc);
 
-		JPanel panelCategorias = new JPanel();
-		panelCategorias.setLayout(new BoxLayout(panelCategorias, BoxLayout.Y_AXIS));
-		TitledBorder tbCategorias = BorderFactory.createTitledBorder("Categorías");
-		tbCategorias.setTitleFont(Fonts.TITLE3.getFont());
-		panelCategorias.setBorder(tbCategorias);
+		JPanel filtros = PanelFactory.getVentanaConCabecera("Filtros", contenidoFiltros);
+
+		JPanel contenidoCategorias = new JPanel();
+		contenidoCategorias.setLayout(new BoxLayout(contenidoCategorias, BoxLayout.Y_AXIS));
+		contenidoCategorias.setOpaque(true);
+		contenidoCategorias.setBackground(ColorPalette.WHITE.getColor());
+		contenidoCategorias.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_CATEG_SIZE), 0));
 
 		for (String cat : categorias) {
 			JCheckBox cb = new JCheckBox(cat);
-			cb.setFont(Fonts.TEXT.getFont());;
+			cb.setFont(Fonts.TEXT.getFont());
+			cb.setOpaque(false);
+			cb.setBorder(BorderFactory.createEmptyBorder(t.getPixelsHeight(CHECKBOX_PADDING_V), t.getPixelsHeight(CHECKBOX_PADDING_H),
+					t.getPixelsHeight(CHECKBOX_PADDING_V), t.getPixelsHeight(CHECKBOX_PADDING_H)));
 			checkboxes.add(cb);
-			panelCategorias.add(cb);
+			contenidoCategorias.add(cb);
 		}
 
-		JScrollPane scroll = new JScrollPane(panelCategorias);
-		scroll.setPreferredSize(new Dimension(200, 250));
+		JPanel scroll = new JPanel();
+		scroll.setLayout(new BorderLayout());
+		scroll.add(BorderLayout.CENTER, PanelFactory.getScroll(contenidoCategorias));
 
-		botonBuscar = new JButton("Buscar");
-		JPanel panelBoton = new JPanel();
+		JPanel panelCategorias = PanelFactory.getVentanaConCabecera("Categorías", scroll);
+
+		botonBuscar = b.newRoundedButton("Buscar", t.getPixelsHeight(BUTTON_HEIGHT_FACTOR),
+				t.getPixelsWidth(BUTTON_WIDTH_FACTOR), BUTTON_ROUND_RADIUS);
+		botonBuscar.setBackground(ColorPalette.PURPLE.getColor());
+		botonBuscar.setForeground(ColorPalette.WHITE.getColor());
+		b.addMouseMecanics(botonBuscar, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
+
+		JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panelBoton.setOpaque(false);
 		panelBoton.add(botonBuscar);
 
-		//Contenido de esta ventana
-		JPanel contenido = new JPanel(new BorderLayout(10, 10));
-	    contenido.setOpaque(false);
-	    contenido.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-	    
-		JPanel panelNorte = new JPanel(new BorderLayout());
-		panelNorte.setOpaque(false);
-		panelNorte.add(cabecera, BorderLayout.CENTER);
-		
-		JPanel panelCentro = new JPanel(new BorderLayout(10, 10));
-		panelCentro.add(panelForm, BorderLayout.WEST);
-		panelCentro.add(scroll, BorderLayout.CENTER);
-		
-		contenido.add(panelNorte, BorderLayout.NORTH);
-		contenido.add(panelCentro, BorderLayout.CENTER);
-		contenido.add(panelBoton, BorderLayout.SOUTH);
-		
-		this.add(contenido, BorderLayout.CENTER);
+		JPanel contenido = new JPanel(new BorderLayout(0, spaceBetween));
+		JPanel formulario = new JPanel();
+		formulario.setLayout(new BoxLayout(formulario, BoxLayout.X_AXIS));
+		formulario.add(Box.createHorizontalStrut(spaceBetween));
+		formulario.add(filtros);
+		formulario.add(Box.createHorizontalStrut(spaceBetween));
+		formulario.add(panelCategorias);
+		formulario.add(Box.createHorizontalStrut(spaceBetween));
+		formulario.setOpaque(false);
 
-		//Hacer opacas algunas partes para que se vea el fondo
-		panelForm.setOpaque(true);
-		panelForm.setBackground(Color.WHITE);
-		panelCategorias.setOpaque(true);
-		panelCategorias.setBackground(Color.WHITE);
-		scroll.setOpaque(true);
-		scroll.getViewport().setOpaque(true);
-		scroll.getViewport().setBackground(Color.WHITE);
-		scroll.setBackground(Color.WHITE);
-		panelCentro.setOpaque(false);
-		panelBoton.setOpaque(false);
+		contenido.setOpaque(false);
+		contenido.setBorder(BorderFactory.createEmptyBorder(spaceBetween, spaceBetween, spaceBetween, spaceBetween));
+
+		contenido.add(BorderLayout.NORTH, formulario);
+		contenido.add(BorderLayout.SOUTH, panelBoton);
+		contenido.setOpaque(false);
+		
+		JPanel ventana = PanelFactory.getVentanaConCabecera("      Buscar Productos", contenido);
+		ventana.setOpaque(false);
+		this.add(ventana);
 	}
 
 	/**
