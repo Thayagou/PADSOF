@@ -7,6 +7,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
@@ -15,6 +16,7 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 
 import controladores.ButtonAdapter;
+import vistas.common.InvisibleCheckBox;
 
 public class ButtonFactory {
 	private static String IMAGE_PATH = "resources/gui/";
@@ -187,5 +189,18 @@ public class ButtonFactory {
 		
 		return comboBox;
 	}
+	
+	/**
+	 * Crea una check box que no se controla a sí misma, sino que depende de toggleSelection
+	 * @param label
+	 * @param selected
+	 * @param unselected
+	 * @return
+	 */
+	public static InvisibleCheckBox newInvisibleCheckBox(String label, ColorPalette selected, ColorPalette unselected) {
+		return new InvisibleCheckBox(label, selected, unselected);
+	}
+	
+	
 
 }

@@ -91,11 +91,6 @@ public class PanelProducto extends PanelDisplay {
 		//add(foto, BorderLayout.WEST);
 		add(info, BorderLayout.CENTER);
 	}
-	
-	/** Añade un listener que se dispara al hacer clic en la fila. */
-	/*public void setControlador(java.awt.event.ActionListener l) {
-		clickArea.addActionListener(l);
-	}*/
 
 	// ── Estrellas ──────────────────────────────────────────────────────────
 	private JPanel buildEstrellas(TiendaFrame t, double valoracion) {
@@ -110,26 +105,6 @@ public class PanelProducto extends PanelDisplay {
 		}
 		return p;
 	}
-
-	/*@Override
-	protected void paintComponent(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g.create();
-
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		int w = getWidth();
-		int h = getHeight();
-
-		// Gradiente (puedes ajustar colores)
-		GradientPaint gp = new GradientPaint(0, 0, gradStart, 0, h, gradEnd);
-
-		g2.setPaint(gp);
-		g2.fillRect(0, 0, w, h);
-
-		g2.dispose();
-
-		super.paintComponent(g); // importante: pinta hijos después
-	}*/
 	
 	public double getPuntuacionMedia() {
 		return puntuacionMedia;

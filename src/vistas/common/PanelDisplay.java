@@ -20,6 +20,9 @@ import vistas.herramientas.Fonts;
 
 public class PanelDisplay extends JPanel{
 	private static final long serialVersionUID = 1L;
+
+	protected static final double BOTON_PERC_H = 0.3;
+	protected static final double BOTON_PERC_W = 0.2;
 	protected final JButton clickArea; // botón invisible que ocupa todo el panel
 	protected int maxHeight;
 	protected int maxCompHeight;

@@ -14,6 +14,8 @@ import vistas.common.PanelDisplay;
 import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
+import vistas.empleado.PanelCategoriaGestionarCategoria;
+import vistas.gestor.PanelEmpleado;
 
 public class ControlPanelProductoNoRegistrado implements ActionListener {
 	private Producto producto;
@@ -28,7 +30,9 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 		for(Categoria c : producto.getCategorias()) {
 			categorias.add(c.getNombre());
 		}
-		panel = new PanelCategoriaSeleccion(producto.getNombre());
+		panel =  new PanelCategoriaGestionarCategoria(producto.getNombre());
+				//new PanelEmpleado(producto.getNombre(), ((int) producto.getPrecio()) % 2 == 1 ? true : false, "Pedidos", "Productos");
+				//new PanelCategoriaSeleccion(producto.getNombre());
 				//new PanelDisplay(1.01*0.1, 0.1, 0.09, "producto.png", "Ver producto:");
 				//new PanelProducto(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
