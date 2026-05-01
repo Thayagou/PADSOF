@@ -16,7 +16,7 @@ import vistas.herramientas.ColorPalette;
 
 public class PanelProductoGestionarProducto extends PanelProducto{
 	private static final long serialVersionUID = 1L;
-	
+	private static double SPACE_BETWEEN = 0.10;
 	private static double BOTON_PERC = 1;
 	
 	public PanelProductoGestionarProducto(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
@@ -36,8 +36,8 @@ public class PanelProductoGestionarProducto extends PanelProducto{
 		
 		JButton borrarButton = f.newRoundedButton("Borrar", (int)(maxCompHeight * BOTON_PERC), maxCompHeight, 0.5f);
 		//f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(borrarButton, ColorPalette.LIGHT_RED, ColorPalette.WHITE);
-		f.addMouseMecanics(borrarButton, ColorPalette.LIGHT_RED, ColorPalette.RED);
+		f.paintButton(borrarButton, ColorPalette.RED, ColorPalette.WHITE);
+		f.addMouseMecanics(borrarButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
 		//modButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		
 		eastPanel.add(modButton);

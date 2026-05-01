@@ -12,13 +12,13 @@ import vistas.herramientas.*;
  * Muestra los resultados de una búsqueda en forma de lista scrolleable. Incluye
  * combo de ordenación (igual que maqueta 4).
  */
-public class VentanaResultadosNoRegistrado extends JPanel {
+public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConDisplay<PanelDisplay>{
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** Campo productos. */
-	private ArrayList<PanelProducto> productos = new ArrayList<>();
+	private ArrayList<PanelDisplay> productos = new ArrayList<>();
 	
 	/** Campo listaPanel. */
 	private JPanel listaPanel;
@@ -115,5 +115,12 @@ public class VentanaResultadosNoRegistrado extends JPanel {
 			if (c instanceof PanelProducto pp)
 				pp.setControlador(l);
 		}
+	}
+
+	@Override
+	public PanelDisplay anadirDisplay(PanelDisplay panelDisplay) {
+		productos.add(panelDisplay);
+		refrescarLista();
+		return panelDisplay;
 	}
 }

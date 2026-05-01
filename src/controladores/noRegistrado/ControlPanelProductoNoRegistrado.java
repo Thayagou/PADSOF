@@ -11,15 +11,15 @@ import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.common.PanelDisplay;
 import vistas.common.PanelProducto;
+import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
-import vistas.noRegistrado.VentanaInicioSinRegistrar;
 
 public class ControlPanelProductoNoRegistrado implements ActionListener {
 	private Producto producto;
 	private Tienda tienda;
 	private PanelDisplay panel;
 	
-	public ControlPanelProductoNoRegistrado(Tienda tienda, Producto producto, VentanaInicioSinRegistrar vista) {
+	public ControlPanelProductoNoRegistrado(Tienda tienda, Producto producto, VentanaConDisplay<? super PanelDisplay> vista) {
 		this.producto = producto;
 		this.tienda = tienda;
 		
@@ -27,7 +27,13 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 		for(Categoria c : producto.getCategorias()) {
 			categorias.add(c.getNombre());
 		}
-		panel = vista.anadirProductoRecomendado(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+		panel = //new PanelCategoriaSeleccion(producto.getNombre());
+				//new PanelDisplay(1.01*0.1, 0.1, 0.09, "producto.png", "Ver producto:");
+				new PanelProducto(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+				//new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
+		vista.anadirDisplay(panel);
+		//panel = vista.anadirProductoRecomendado(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+		
 		panel.setControlador(this);
 	}
 	

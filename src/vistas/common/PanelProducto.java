@@ -13,7 +13,8 @@ public class PanelProducto extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
 
 	private static final double FOTO_W_PERC = 0.09;
-	private static final double FOTO_H_PERC = 0.15;
+	private static final double FOTO_H_PERC = 0.99;
+	private static final double MAX_HEIGHT = 0.16;
 	private static final int MAX_DESC = 120;
 	
 	private Color gradStart = ColorPalette.CARD_LIGHT.getColor();
@@ -27,7 +28,9 @@ public class PanelProducto extends PanelDisplay {
 	//private final JButton clickArea; // botón invisible que ocupa todo el panel
 
 	public PanelProducto(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		super(1.01*FOTO_H_PERC, FOTO_H_PERC, FOTO_W_PERC, "producto.png", "Ver producto:");
+		super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT, FOTO_W_PERC, "producto.png", "Ver producto:");
+		//super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT, "Ver producto:");
+		
 		this.puntuacionMedia = puntuacionMedia;
 		this.descripcion = descripcion;
 		this.nombre = nombre;
@@ -36,27 +39,6 @@ public class PanelProducto extends PanelDisplay {
 		//setOpaque(false);
 
 		TiendaFrame t = TiendaFrame.getInstance();
-		/*int fotoW = t.getPixelsWidth(FOTO_W_PERC);
-		int fotoH = t.getPixelsHeight(FOTO_H_PERC);
-
-		setLayout(new BorderLayout(10, 0));
-		setBackground(ColorPalette.CARD_LIGHT.getColor());
-		setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createMatteBorder(0, 0, 1, 0, ColorPalette.BLACK.getColor()),
-				BorderFactory.createEmptyBorder(8, 8, 8, 8)));
-		setMaximumSize(new Dimension(Integer.MAX_VALUE, fotoH + 16));
-
-		// — Foto placeholder —
-		ButtonFactory factory = new ButtonFactory();
-		JPanel foto = new JPanel();
-		foto.setBackground(ColorPalette.CARD_DARK.getColor());
-		foto.setPreferredSize(new Dimension(fotoW, fotoH));
-		//JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
-		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled("producto.png", fotoH, fotoW));
-		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
-		fotoLabel.setFont(Fonts.BOLD.getFont());
-		foto.add(fotoLabel);*/
-
 		/* Info: estrellas + nombre + descripción + precio + categorías */
 			JPanel info = new JPanel();
 			info.setOpaque(false);
@@ -66,20 +48,22 @@ public class PanelProducto extends PanelDisplay {
 			JPanel firstRow = new JPanel();
 			firstRow.setOpaque(false);
 			firstRow.setLayout(new BorderLayout(10, 0));
-			firstRow.add(buildEstrellas(t, puntuacionMedia), BorderLayout.WEST);
+			firstRow.add(buildEstrellas(t, puntuacionMedia), BorderLayout.CENTER);
 	
 			JLabel nombreLabel = new JLabel(nombre);
 			nombreLabel.setFont(Fonts.BOLD.getFont());
 			nombreLabel.setForeground(ColorPalette.DARK_GREY.getColor().darker());
-			firstRow.add(nombreLabel, BorderLayout.CENTER);
+			firstRow.add(nombreLabel, BorderLayout.WEST);
 	
 			info.add(firstRow);
 			
 			/*Segunda fila: descripcion*/
 			if (descripcion != null && descripcion.length() > MAX_DESC)
 				descripcion = descripcion.substring(0, MAX_DESC) + "...";
-			JLabel descripcionLabel = new JLabel("<html>" + descripcion + "</html>");
-			descripcionLabel.setFont(Fonts.SMALL.getFont());
+			ButtonFactory f = new ButtonFactory();
+			JLabel descripcionLabel = f.newLabel(descripcion, Fonts.SMALL);
+					//new JLabel("<html>" + descripcion + "</html>");
+			//descripcionLabel.setFont(Fonts.SMALL.getFont());
 			descripcionLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 			info.add(descripcionLabel);
 			
@@ -106,36 +90,6 @@ public class PanelProducto extends PanelDisplay {
 
 		//add(foto, BorderLayout.WEST);
 		add(info, BorderLayout.CENTER);
-
-		// Botón invisible para detectar clic en toda la fila
-		/*clickArea = new JButton();
-		clickArea.setOpaque(false);
-		clickArea.setContentAreaFilled(false);
-		clickArea.setBorderPainted(false);
-		clickArea.setActionCommand("Ver producto:");
-		clickArea.setPreferredSize(new Dimension(0, 0));
-
-		setCursor(new Cursor(Cursor.HAND_CURSOR));
-		addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent e) {
-			    gradStart = ColorPalette.CARD_LIGHT_HOVER.getColor();
-			    gradEnd = ColorPalette.CARD_DARK_HOVER.getColor();
-			    repaint();
-			}
-
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent e) {
-			    gradStart = ColorPalette.CARD_LIGHT.getColor();
-			    gradEnd = ColorPalette.CARD_DARK.getColor();
-			    repaint();
-			}
-
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				clickArea.doClick();
-			}
-		});*/
 	}
 	
 	/** Añade un listener que se dispara al hacer clic en la fila. */

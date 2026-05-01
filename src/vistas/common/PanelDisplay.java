@@ -20,17 +20,23 @@ import vistas.herramientas.Fonts;
 
 public class PanelDisplay extends JPanel{
 	private static final long serialVersionUID = 1L;
-	private final JButton clickArea; // botón invisible que ocupa todo el panel
+	protected final JButton clickArea; // botón invisible que ocupa todo el panel
 	protected int maxHeight;
 	protected int maxCompHeight;
 	private ColorPalette gradStart = ColorPalette.CARD_LIGHT;
 	private ColorPalette gradEnd = ColorPalette.CARD_DARK;
 	
 	public PanelDisplay(double maxHPerc, double compHPerc, double fotoWPerc, String imageName, String actionName) {
+		this(maxHPerc, compHPerc, actionName);
+		
+		anadirFoto(imageName, fotoWPerc);
+	}
+	
+	public PanelDisplay(double maxHPerc, double compHPerc, String actionName) {
 		setOpaque(false);
 
+	
 		TiendaFrame t = TiendaFrame.getInstance();
-		int fotoW = t.getPixelsWidth(fotoWPerc);
 		maxCompHeight = t.getPixelsHeight(compHPerc);
 		maxHeight = t.getPixelsHeight(maxHPerc);
 		
@@ -42,18 +48,7 @@ public class PanelDisplay extends JPanel{
 				BorderFactory.createEmptyBorder(8, 8, 8, 8)));
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, maxHeight));
 		
-		ButtonFactory factory = new ButtonFactory();
-		// — Foto placeholder —
-		JPanel foto = new JPanel();
-		foto.setBackground(ColorPalette.CARD_DARK.getColor());
-		foto.setPreferredSize(new Dimension(fotoW, maxCompHeight));
-		//JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
-		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled(imageName, maxCompHeight, fotoW));
-		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
-		fotoLabel.setFont(Fonts.BOLD.getFont());
-		foto.add(fotoLabel);
-			
-		add(foto, BorderLayout.WEST);
+		
 		
 		// Botón invisible para detectar clic en toda la fila
 		clickArea = new JButton();
@@ -110,5 +105,21 @@ public class PanelDisplay extends JPanel{
 		clickArea.addActionListener(l);
 	}
 	
+	public void anadirFoto(String imageName, double fotoWPerc) {
+		ButtonFactory factory = new ButtonFactory();
+		TiendaFrame t = TiendaFrame.getInstance();
+		int fotoW = t.getPixelsWidth(fotoWPerc);
+		// — Foto placeholder —
+		JPanel foto = new JPanel();
+		foto.setBackground(ColorPalette.CARD_DARK.getColor());
+		foto.setPreferredSize(new Dimension(fotoW, maxCompHeight));
+		//JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
+		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled(imageName, maxCompHeight, fotoW));
+		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
+		fotoLabel.setFont(Fonts.BOLD.getFont());
+		foto.add(fotoLabel);
+			
+		add(foto, BorderLayout.WEST);
+	}
 	
 }

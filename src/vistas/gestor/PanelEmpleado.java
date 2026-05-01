@@ -5,13 +5,14 @@ import java.util.List;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import modelo.venta.productos.Producto;
+import vistas.common.PanelDisplay;
 import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-public class PanelEmpleado extends JPanel {
+public class PanelEmpleado extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
 
 	private static final double FOTO_W_PERC = 0.09;
@@ -29,6 +30,7 @@ public class PanelEmpleado extends JPanel {
 	private final JButton clickArea; // botón invisible que ocupa todo el panel
 
 	public PanelEmpleado(String nombre, String fotoDePerfil, boolean deAlta, String...permisos) {
+		
 		this.nombre = nombre;
 		this.deAlta = deAlta;
 		this.fotoDePerfil = fotoDePerfil;

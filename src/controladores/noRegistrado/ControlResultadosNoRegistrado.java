@@ -2,12 +2,10 @@ package controladores.noRegistrado;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
 import modelo.sistema.Tienda;
-import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.common.TiendaFrame;
 import vistas.noRegistrado.VentanaResultadosNoRegistrado;
@@ -20,14 +18,15 @@ public class ControlResultadosNoRegistrado implements ActionListener {
 	public ControlResultadosNoRegistrado(Tienda tienda, Producto[] productos) {
 		this.tienda = tienda;
 		this.vista = new VentanaResultadosNoRegistrado();
-		this.vista.setClickListener(this);
 		
 		for(Producto p : productos) {
-			ArrayList<String> categorias = new ArrayList<>();
+			new ControlPanelProductoNoRegistrado(tienda, p, vista);
+			/*ArrayList<String> categorias = new ArrayList<>();
 			for(Categoria c : p.getCategorias()) {
 				categorias.add(c.getNombre());
 			}
-			vista.anadirProducto(p.getNombre(), p.getDescripcion(), p.getPuntuacionMedia(), p.getPrecio(), categorias.toArray(new String[0]));
+			
+			vista.anadirProducto(p.getNombre(), p.getDescripcion(), p.getPuntuacionMedia(), p.getPrecio(), categorias.toArray(new String[0]));*/
 		}
 		
 		TiendaFrame.getInstance().setVistaActual(vista);
@@ -35,13 +34,14 @@ public class ControlResultadosNoRegistrado implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String cmd = e.getActionCommand();
+		/*String cmd = e.getActionCommand();
 		if (cmd != null && cmd.startsWith("Ver producto:")) {
 			String nombreProducto = cmd.substring("Ver producto:".length());
 			this.mostrarProducto(nombreProducto);
-		}
+		}*/
 	}
 
+	/*
 	private void mostrarProducto(String nombreProducto) {
 		SwingUtilities.invokeLater(() -> {
 			try {
@@ -51,5 +51,5 @@ public class ControlResultadosNoRegistrado implements ActionListener {
 				new vistas.common.VentanaMensaje("Producto no encontrado: " + nombreProducto);
 			}
 		});
-	}
+	}*/
 }

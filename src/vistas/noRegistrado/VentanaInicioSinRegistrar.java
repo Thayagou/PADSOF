@@ -5,16 +5,17 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import modelo.venta.productos.Producto;
+import vistas.common.PanelCategoriaSeleccion;
 import vistas.common.PanelDisplay;
 import vistas.common.PanelProducto;
-import vistas.empleado.PanelProductoGestionarProducto;
+import vistas.common.VentanaConDisplay;
 import vistas.herramientas.*;
 
 /**
  * Pantalla de inicio para usuarios no registrados. Muestra una lista de
  * "Productos populares" (los mejor valorados).
  */
-public class VentanaInicioSinRegistrar extends JPanel {
+public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDisplay<PanelDisplay>{
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -45,16 +46,6 @@ public class VentanaInicioSinRegistrar extends JPanel {
 		refreshList();
 	}
 	
-	public PanelDisplay anadirProductoRecomendado(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		PanelDisplay p = //new PanelDisplay(1.01*0.1, 0.1, 0.09, "Ver producto:");
-				//new PanelProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
-				new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
-		listaPanel.add(p);
-		refreshList();
-		
-		return p;
-	}
-	
 	private void refreshList() {
 		listaPanel.revalidate();
 		listaPanel.repaint();
@@ -66,10 +57,18 @@ public class VentanaInicioSinRegistrar extends JPanel {
 	 *
 	 * @param l nuevo valor
 	 */
-	public void setClickListener(ActionListener l) {
-		for (Component c : listaPanel.getComponents()) {
+	public void setControlador(ActionListener l) {
+		/*for (Component c : listaPanel.getComponents()) {
 			if (c instanceof PanelProducto pp)
 				pp.setControlador(l);
-		}
+		}*/
+	}
+
+	@Override
+	public PanelDisplay anadirDisplay(PanelDisplay panelDisplay) {
+		listaPanel.add(panelDisplay);
+		refreshList();
+		
+		return panelDisplay;
 	}
 }

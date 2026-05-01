@@ -67,7 +67,7 @@ public class ButtonFactory {
 	
 	public JButton newRoundedButton(String label, int height, int width, double roundness) {
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
-		System.out.println(height + " " + width);
+		
 		button.setActionCommand(label);
 		button.setPreferredSize(new Dimension(width, height));
 
