@@ -21,7 +21,7 @@ public class PanelCategoriaSeleccion extends PanelCategoria {
 		super(nombreCategoria, "Incluir"); // ajusta porcentajes a tu diseño
 
 		// CheckBox como display (no interactivo por sí solo)
-		checkBox = ButtonFactory.newInvisibleCheckBox(nombreCategoria, ColorPalette.BLACK, ColorPalette.GREY) ;
+		checkBox = ButtonFactory.newInvisibleCheckBox("Incluído", "Incluir", ColorPalette.BLACK, ColorPalette.GREY);
 		
 		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		centerPanel.setOpaque(false);
