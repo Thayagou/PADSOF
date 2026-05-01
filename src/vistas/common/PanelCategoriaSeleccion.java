@@ -8,21 +8,16 @@ import javax.swing.JLabel;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-public class PanelCategoriaSeleccion extends PanelDisplay {
+public class PanelCategoriaSeleccion extends PanelCategoria {
 
 	private static final long serialVersionUID = 1L;
 	private boolean seleccionada;
 	private JCheckBox checkBox;
 
 	public PanelCategoriaSeleccion(String nombreCategoria) {
-		super(0.08, 0.06, "Incluir"); // ajusta porcentajes a tu diseño
+		super(nombreCategoria, "Incluir"); // ajusta porcentajes a tu diseño
 
 		seleccionada = false;
-		
-		JLabel nombreLabel = new JLabel(nombreCategoria);
-		nombreLabel.setFont(Fonts.BOLD.getFont());
-		nombreLabel.setForeground(ColorPalette.DARK_GREY.getColor().darker());
-		add(nombreLabel, BorderLayout.WEST);
 		// CheckBox como display (no interactivo por sí solo)
 		checkBox = new JCheckBox("Incluida") {
 		    @Override
@@ -35,10 +30,9 @@ public class PanelCategoriaSeleccion extends PanelDisplay {
 		checkBox.setSelected(false);
 		checkBox.setFocusable(false);
 		checkBox.setFont(Fonts.BOLD.getFont());
-		checkBox.setForeground(ColorPalette.BLACK.getColor());
+		checkBox.setForeground(ColorPalette.GREY.getColor());
 
-		// Que el checkbox no capture el click (lo gestiona el mouseListener del padre)
-		checkBox.setEnabled(false);
+		checkBox.setEnabled(true);
 		
 
 		this.add(checkBox, BorderLayout.CENTER);
@@ -47,9 +41,17 @@ public class PanelCategoriaSeleccion extends PanelDisplay {
 		setControlador(p->toggleSeleccion());
 	}
 
-	private void toggleSeleccion() {
+	/*private void toggleSeleccion() {
 		seleccionada = !seleccionada;
 		checkBox.setSelected(seleccionada);
+	}*/
+	
+	private void toggleSeleccion() {
+	    seleccionada = !seleccionada;
+	    checkBox.setSelected(seleccionada);
+	    checkBox.setForeground(seleccionada 
+	        ? ColorPalette.BLACK.getColor() 
+	        : ColorPalette.GREY.getColor());
 	}
 
 	public boolean isSeleccionada() {

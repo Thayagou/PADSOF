@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
+import vistas.common.PanelCategoriaSeleccion;
 import vistas.common.PanelDisplay;
 import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
@@ -27,12 +28,12 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 		for(Categoria c : producto.getCategorias()) {
 			categorias.add(c.getNombre());
 		}
-		panel = //new PanelCategoriaSeleccion(producto.getNombre());
+		panel = new PanelCategoriaSeleccion(producto.getNombre());
 				//new PanelDisplay(1.01*0.1, 0.1, 0.09, "producto.png", "Ver producto:");
-				new PanelProducto(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+				//new PanelProducto(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProductoGestionarProducto(nombre, descripcion, puntuacionMedia, precio, categorias);
 		vista.anadirDisplay(panel);
-		System.out.println("Anade panel" + producto.getNombre());
+		
 		//panel = vista.anadirProductoRecomendado(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 		
 		panel.setControlador(this);
