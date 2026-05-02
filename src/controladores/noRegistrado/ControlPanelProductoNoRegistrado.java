@@ -12,8 +12,6 @@ import modelo.venta.productos.Producto;
 import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
-import vistas.gestor.PanelProductoAplicarDescuento;
-
 public class ControlPanelProductoNoRegistrado implements ActionListener {
 	private Producto producto;
 	private Tienda tienda;
@@ -38,11 +36,11 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 				//new PanelEmpleado(producto.getNombre(), ((int) producto.getPrecio()) % 2 == 1 ? true : false, "Pedidos", "Productos");
 				//new PanelCategoriaSeleccion(producto.getNombre());
 				//new PanelDisplay(1.01*0.1, 0.1, 0.09, "producto.png", "Ver producto:");
-				//new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", categorias.toArray(new String[0]));
+				new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", categorias.toArray(new String[0]));
 				//new PanelProductoGestionarProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", categorias.toArray(new String[0]));
 				//new PanelClienteEstadisticas("Juan de Lara", DF_PRODUCT_IMAGE, 20.75f, 3, 15);
-				new PanelProductoAplicarDescuento(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+				//new PanelProductoAplicarDescuento(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProductoAnadirAPack(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProductoEstadisticas(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), 10f, 25, 15f, categorias.toArray(new String[0]));
 				//new PanelArticulo("Juan de Lara", "producto.png", producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", producto.getPrecio(), "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));

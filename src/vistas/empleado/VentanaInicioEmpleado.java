@@ -17,7 +17,7 @@ public class VentanaInicioEmpleado extends JPanel {
 
 		// ── Cabecera ──────────────────────────────────────────────
 		JLabel cabecera = new JLabel("  Menú de empleado   Seleccione una tarea para continuar");
-		cabecera.setFont(Fonts.TEXT.getFont());
+		cabecera.setFont(Fonts.TITLE3.getFont());
 		cabecera.setForeground(ColorPalette.WHITE.getColor());
 		cabecera.setOpaque(true);
 		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());

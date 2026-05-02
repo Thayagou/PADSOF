@@ -39,15 +39,6 @@ public class BarraEmpleado extends BarraLateral {
         add(valorarObjetos);
         add(gestionarIntercambios);
     }
-    
-    private JButton addBtn(ButtonFactory f, String text, int heigth, int width) {
-    	JButton btn = f.newButton(text, heigth, width);
-    	btn.setBackground(ColorPalette.CARD_LIGHT.getColor());
-    	f.addMouseMecanics(btn, ColorPalette.CARD_LIGHT, ColorPalette.CARD_DARK);
-    	btn.setBorderPainted(false);
-    	
-    	return btn;
-    }
 
 	@Override
 	public void setControlador(ControlBarraLateral c) {
