@@ -98,6 +98,10 @@ public class ButtonFactory {
 
 		button.setActionCommand(label);
 		button.setPreferredSize(new Dimension(width, height));
+		button.setBackground(ColorPalette.PURPLE.getColor());
+		button.setForeground(ColorPalette.WHITE.getColor());
+		
+		addMouseMecanics(button, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
 		setDefault(button);
 

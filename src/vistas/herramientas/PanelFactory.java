@@ -68,6 +68,39 @@ public class PanelFactory {
 
 		return ventana;
 	}
+	
+	public static JPanel buildAvatar() {
+		TiendaFrame t = TiendaFrame.getInstance();
+		int size = t.getPixelsHeight(0.04);
+
+		ButtonFactory f = new ButtonFactory();
+		ImageIcon icon = f.loadImageIconScaled("pfp.png", size, size);
+
+		return new JPanel() {
+			private static final long serialVersionUID = 1L;
+
+			{
+				setOpaque(false);
+				setPreferredSize(new Dimension(size, size));
+				setMinimumSize(new Dimension(size, size));
+				setMaximumSize(new Dimension(size, size));
+			}
+
+			@Override
+			protected void paintComponent(Graphics g) {
+				Graphics2D g2 = (Graphics2D) g.create();
+
+				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+				Shape clip = new java.awt.geom.Ellipse2D.Float(0, 0, getWidth(), getHeight());
+				g2.setClip(clip);
+
+				g2.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), null);
+
+				g2.dispose();
+			}
+		};
+	}
 
 	/**
 	 * Devuelve un scroll con el contenido de una lista
@@ -167,6 +200,25 @@ public class PanelFactory {
 	    wrapper.add(Box.createVerticalStrut(space));
 	    wrapper.add(panel);
 	    wrapper.add(Box.createVerticalStrut(space));
+
+	    return wrapper;
+	}
+	
+	/**
+	 * Añade un espacio a la izquierda y derecha del panel
+	 *
+	 * @param panel Panel al que añadir espaciado
+	 * @param space Espacio en píxeles que se añade arriba y abajo
+	 * @return Panel con el Panel que se pasó con dos espacios arriba y abajo
+	 */
+	public static JPanel wrapHorizontal(JPanel panel, int space) {
+	    JPanel wrapper = new JPanel();
+	    wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
+	    wrapper.setOpaque(false);
+
+	    wrapper.add(Box.createHorizontalStrut(space));
+	    wrapper.add(panel);
+	    wrapper.add(Box.createHorizontalStrut(space));
 
 	    return wrapper;
 	}

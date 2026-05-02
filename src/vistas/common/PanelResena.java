@@ -2,9 +2,7 @@ package vistas.common;
 
 import java.awt.*;
 import javax.swing.*;
-import vistas.herramientas.ButtonFactory;
-import vistas.herramientas.ColorPalette;
-import vistas.herramientas.Fonts;
+import vistas.herramientas.*;
 
 public class PanelResena extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +23,7 @@ public class PanelResena extends JPanel {
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
 		header.setOpaque(false);
 
-		JPanel avatar = buildAvatar();
+		JPanel avatar = PanelFactory.buildAvatar();
 		header.add(avatar);
 
 		JLabel usuario = new JLabel(usr);
@@ -63,39 +61,6 @@ public class PanelResena extends JPanel {
 				repaint();
 			}
 		});
-	}
-
-	private JPanel buildAvatar() {
-		TiendaFrame t = TiendaFrame.getInstance();
-		int size = t.getPixelsHeight(0.04);
-
-		ButtonFactory f = new ButtonFactory();
-		ImageIcon icon = f.loadImageIconScaled("pfp.png", size, size);
-
-		return new JPanel() {
-			private static final long serialVersionUID = 1L;
-
-			{
-				setOpaque(false);
-				setPreferredSize(new Dimension(size, size));
-				setMinimumSize(new Dimension(size, size));
-				setMaximumSize(new Dimension(size, size));
-			}
-
-			@Override
-			protected void paintComponent(Graphics g) {
-				Graphics2D g2 = (Graphics2D) g.create();
-
-				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-				Shape clip = new java.awt.geom.Ellipse2D.Float(0, 0, getWidth(), getHeight());
-				g2.setClip(clip);
-
-				g2.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), null);
-
-				g2.dispose();
-			}
-		};
 	}
 
 	// ── Estrellas ────────────────────────────────────────────────────
