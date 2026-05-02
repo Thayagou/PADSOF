@@ -4,22 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.Box;
-import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
-import vistas.herramientas.Fonts;
 
-public class PanelCategoriaSeleccion extends PanelCategoria {
-
+public class PanelArticuloSeleccion extends PanelArticulo {
 	private static final long serialVersionUID = 1L;
 	private InvisibleCheckBox checkBox;
 
-	public PanelCategoriaSeleccion(String nombreCategoria) {
-		super(nombreCategoria, "Incluir"); // ajusta porcentajes a tu diseño
+	public PanelArticuloSeleccion (String nombre, String descripcion, String interesadoEn, double estimacion, String estado, String actionName, String...categorias) {
+		super(nombre, descripcion, interesadoEn, estimacion, estado, actionName, categorias);
 
-		// CheckBox como display (no interactivo por sí solo)
 		checkBox = ButtonFactory.newInvisibleCheckBox("Incluído", "Incluir", ColorPalette.BLACK, ColorPalette.GREY);
 		
 		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -29,17 +25,9 @@ public class PanelCategoriaSeleccion extends PanelCategoria {
 		centerPanel.add(checkBox);
 		
 
-		this.add(centerPanel, BorderLayout.CENTER);
+		this.add(checkBox, BorderLayout.EAST);
 
 		// Cuando se hace click en la fila, alternar estado
 		setControlador(p->checkBox.toggleSelection());
-	}
-
-	public boolean isSeleccionada() {
-		return checkBox.isSelected();
-	}
-
-	public String getCategoria() {
-		return clickArea.getActionCommand();
 	}
 }
