@@ -23,6 +23,7 @@ public class PanelDisplay extends JPanel{
 
 	protected static final double BOTON_PERC_H = 0.3;
 	protected static final double BOTON_PERC_W = 0.2;
+	protected static double HOR_GAP = 0.01;
 	protected final JButton clickArea; // botón invisible que ocupa todo el panel
 	protected int maxHeight;
 	protected int maxCompHeight;
