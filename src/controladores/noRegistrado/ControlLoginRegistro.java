@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 
+import controladores.cliente.ControlInicioCliente;
 import controladores.empleado.ControlInicioEmpleado;
 import controladores.gestor.ControlInicioGestor;
 import modelo.exceptions.CustomException;
@@ -76,7 +77,7 @@ public class ControlLoginRegistro {
         } else if (usuario instanceof Empleado) {
         	SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda, (Empleado)usuario));
         } else if (usuario instanceof ClienteRegistrado) {
-            new vistas.cliente.VentanaInicioCliente(tienda);
+            SwingUtilities.invokeLater(() -> new ControlInicioCliente(tienda, (ClienteRegistrado)usuario));
         }
     }
 }

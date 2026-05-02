@@ -4,10 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-import modelo.venta.productos.Producto;
-import vistas.common.PanelDisplay;
-import vistas.common.PanelProducto;
-import vistas.common.VentanaConDisplay;
+import vistas.common.*;
 import vistas.herramientas.*;
 
 /**

@@ -12,9 +12,11 @@ import controladores.ControlBarraTareas;
 public class BarraTareasCliente extends BarraTareas{
 	private static final long serialVersionUID = 1L;
 	
-	private static double TOOL_BAR_ACCOUNT_WIDTH = 0.1;
+	private static double BTN_SEARCH_W = 0.2;
+	private static double BTN_ACCOUNT_W = 0.1;
 	private static double SPACE_BETWEEN = 0.01;
 	
+	private JButton home;
 	private JButton notificaciones;
 	private JButton buscar;
 	private JButton carrito;
@@ -25,70 +27,92 @@ public class BarraTareasCliente extends BarraTareas{
 		return new ImageIcon(imagenEscalada);
 	}*/
 	
-	public BarraTareasCliente() {
+	public BarraTareasCliente(String cliente) {
 		TiendaFrame t = TiendaFrame.getInstance();
+
+		int h = t.getPixelsHeight(PanelSizes.TOOLBAR_HEIGHT);
 		int spaceBetween = t.getPixelsHeight(SPACE_BETWEEN);
-		int alturaBotones = t.getPixelsHeight(PanelSizes.TOOLBAR_HEIGHT) - 2*spaceBetween;
-		int notisW = alturaBotones;
-		int carrW = alturaBotones;
-		int cuentaW = t.getPixelsHeight(TOOL_BAR_ACCOUNT_WIDTH);
-		int buscarW = t.getWidth() - 5*spaceBetween - notisW - carrW - cuentaW;
-		
+		int btnH = h - 2 * spaceBetween;
+		int searchW = t.getPixelsWidth(BTN_SEARCH_W);
+		int accountW = t.getPixelsWidth(BTN_ACCOUNT_W);
+		int homeW = btnH;
+		int notisW = btnH;
+		int carW = btnH;
+
 		setBackground(ColorPalette.BLUE.getColor());
-        setPreferredSize(new Dimension(0, t.getPixelsHeight(PanelSizes.TOOLBAR_HEIGHT)));
+		setPreferredSize(new Dimension(0, h));
+
+		ButtonFactory f = new ButtonFactory();
 		
-		/* Imagen del boton de notificaciones */
-		ButtonFactory factory = new ButtonFactory();
+		/**=========================================================================
+		 * ################     CREACION DE LOS BOTONES         ####################
+		 * =======================================================================*/
+		home = f.newIconButton("homeButton.png", btnH, homeW);
+		f.paintButton(home, ColorPalette.BLUE, ColorPalette.WHITE);
+		home.setActionCommand("Home");
+		f.addMouseMecanics(home, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 		
-		notificaciones = factory.newIconButton("notificaciones.png", alturaBotones, notisW);
-		//new JButton(getImageIcon("resources/gui/notificaciones.png", alturaBotones, notisW));
-		buscar = factory.newButton("Buscar...", alturaBotones, buscarW);
-		//new JButton("Buscar...");
-		carrito = factory.newIconButton("carrito.png", alturaBotones, carrW);
-		//new JButton(getImageIcon("resources/gui/carrito.png", alturaBotones, carrW));
-		cuenta = factory.newButton("Cuenta", alturaBotones, cuentaW);
-		//new JButton("Cuenta");
-		SpringLayout layout = new SpringLayout();
+		notificaciones = f.newIconButton("notificaciones.png", btnH, notisW);
+		f.paintButton(notificaciones, ColorPalette.BLUE, ColorPalette.WHITE);
+		notificaciones.setActionCommand("Notificaciones");
+		f.addMouseMecanics(notificaciones, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+
+		buscar = f.newRoundedButton("Buscar", btnH, searchW, 1);
+		f.paintButton(buscar, ColorPalette.WHITE, ColorPalette.BLACK);
+		buscar.setActionCommand("Buscar productos");
+		f.addMouseMecanics(buscar, ColorPalette.WHITE, ColorPalette.HOVER_BLUE);
 		
+		carrito = f.newIconButton("carrito.png", btnH, carW);
+		f.paintButton(carrito, ColorPalette.BLUE, ColorPalette.WHITE);
+		carrito.setActionCommand("Carrito");
+		f.addMouseMecanics(carrito, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+
+		cuenta = f.newRoundedButton(cliente, btnH, accountW, 0.25);
+		f.paintButton(cuenta, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		cuenta.setActionCommand("Cuenta");
+		f.addMouseMecanics(cuenta, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		
+		/**=========================================================================
+		 * ################     LAYOUT DE LA BARRA DE TAREAS   ####################
+		 * =======================================================================*/
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
+		add(Box.createHorizontalStrut(spaceBetween));
+		home.setMaximumSize(new Dimension(homeW, btnH));
+		home.setPreferredSize(new Dimension(homeW, btnH));
+		home.setMinimumSize(new Dimension(homeW, btnH));
+		add(home);
+		add(Box.createHorizontalStrut(spaceBetween));
 		
-        /* Ajustar tamaño y color de los botones */
+		notificaciones.setMaximumSize(new Dimension(notisW, btnH));
+		notificaciones.setPreferredSize(new Dimension(notisW, btnH));
+		notificaciones.setMinimumSize(new Dimension(notisW, btnH));
+		add(notificaciones);
+		add(Box.createHorizontalStrut(spaceBetween));
+
+		buscar.setMaximumSize(new Dimension(searchW, btnH));
+		buscar.setPreferredSize(new Dimension(searchW, btnH));
+		buscar.setMinimumSize(new Dimension(100, btnH));
+		add(buscar);
+		add(Box.createHorizontalGlue());
+		add(Box.createHorizontalStrut(spaceBetween));
 		
-		notificaciones.setPreferredSize(new Dimension(notisW, alturaBotones));
-		notificaciones.setBackground(ColorPalette.BLUE.getColor());
-		
-		//buscar.setPreferredSize(new Dimension(buscarW, alturaBotones));
-		buscar.setBackground(ColorPalette.WHITE.getColor());
-		
-		//carrito.setPreferredSize(new Dimension(carrW, alturaBotones));
-		carrito.setBackground(ColorPalette.BLUE.getColor());
-		
-		//cuenta.setPreferredSize(new Dimension(cuentaW, alturaBotones));
-		cuenta.setBackground(ColorPalette.BLUE.getColor());
-		
-		this.setLayout(layout);
-		
-		this.add(notificaciones);
-		this.add(buscar);
-		this.add(carrito);
-		this.add(cuenta);
-		
-		/* Ajustar la posicion de los botones */
-		layout.putConstraint(SpringLayout.WEST, notificaciones, spaceBetween, SpringLayout.WEST, this);
-		layout.putConstraint(SpringLayout.NORTH, notificaciones, spaceBetween, SpringLayout.NORTH, this);
-		
-		layout.putConstraint(SpringLayout.WEST, buscar, spaceBetween, SpringLayout.EAST, notificaciones);
-		layout.putConstraint(SpringLayout.NORTH, buscar, 0,	SpringLayout.NORTH, notificaciones);
-		
-		layout.putConstraint(SpringLayout.WEST, carrito, spaceBetween, SpringLayout.EAST, buscar);
-		layout.putConstraint(SpringLayout.NORTH, carrito, 0,	SpringLayout.NORTH, buscar);
-		
-		layout.putConstraint(SpringLayout.WEST, cuenta, spaceBetween, SpringLayout.EAST, carrito);
-		layout.putConstraint(SpringLayout.NORTH, cuenta, 0,	SpringLayout.NORTH, carrito);
+		carrito.setMaximumSize(new Dimension(carW, btnH));
+		carrito.setPreferredSize(new Dimension(carW, btnH));
+		carrito.setMinimumSize(new Dimension(carW, btnH));
+		add(carrito);
+		add(Box.createHorizontalStrut(spaceBetween));
+				
+		cuenta.setMaximumSize(new Dimension(accountW, btnH));
+		cuenta.setPreferredSize(new Dimension(accountW, btnH));
+		cuenta.setMinimumSize(new Dimension(accountW, btnH));
+		add(cuenta);
+		add(Box.createHorizontalStrut(spaceBetween));
 	}
 
 	@Override
 	public void setControlador(ControlBarraTareas c) {
+		home.addActionListener(c);
 		notificaciones.addActionListener(c);
 		buscar.addActionListener(c);
 		carrito.addActionListener(c);
