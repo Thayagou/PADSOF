@@ -36,7 +36,7 @@ public class VentanaInicioGestor extends JPanel {
 		
 		JPanel center = new JPanel(new GridLayout(2, 1, 0, 16));
 		TitledBorder centerTitle = BorderFactory.createTitledBorder("Opciones");
-		centerTitle.setTitleFont(t.getTitle3Font());
+		centerTitle.setTitleFont(Fonts.TITLE3.getFont());
 		center.setBorder(centerTitle);
 		int totalHeight = t.getHeight();
 		
@@ -66,8 +66,8 @@ public class VentanaInicioGestor extends JPanel {
 				//new JButton("Gestionar productos y categorias");
 		empleados = new JButton("Gestionar empleados");
 		
-		prodYCats.setFont(t.getSubtitleFont());
-		empleados.setFont(t.getSubtitleFont());
+		prodYCats.setFont(Fonts.SUBTITLE.getFont());
+		empleados.setFont(Fonts.SUBTITLE.getFont());
 		
 		prodYCats.setPreferredSize(buttomDimension);
 		empleados.setPreferredSize(buttomDimension);

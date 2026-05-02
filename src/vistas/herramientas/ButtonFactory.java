@@ -66,7 +66,7 @@ public class ButtonFactory {
 		return original;
 	}
 
-	private ImageIcon loadImageIcon(String imageName) {
+	public ImageIcon loadImageIcon(String imageName) {
 		return new ImageIcon(IMAGE_PATH + imageName);
 	}
 

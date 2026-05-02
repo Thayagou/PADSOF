@@ -9,31 +9,26 @@ import javax.swing.SwingUtilities;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.cliente.PanelArticuloEnCartera;
-import vistas.common.PanelArticulo;
-import vistas.common.PanelArticuloSeleccion;
-import vistas.common.PanelCategoriaSeleccion;
 import vistas.common.PanelDisplay;
+import vistas.common.PanelIntercambio;
+import vistas.common.PanelIntercambioConBoton;
+import vistas.common.PanelPedido;
 import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
-import vistas.empleado.PanelArticuloPendienteValoracion;
-import vistas.empleado.PanelCategoriaGestionarCategoria;
-import vistas.empleado.PanelProductoAnadirAPack;
+import vistas.empleado.PanelPedidoGestionarPedido;
 import vistas.empleado.PanelProductoGestionarProducto;
 import vistas.gestor.PanelClienteEstadisticas;
-import vistas.gestor.PanelEmpleado;
 import vistas.gestor.PanelProductoAplicarDescuento;
-import vistas.gestor.PanelProductoEstadisticas;
 
-public class ControlPanelProductoNoRegistrado implements ActionListener {
+public class ControladorTest implements ActionListener {
 	private Producto producto;
 	private Tienda tienda;
-	private PanelProducto panel;
+	private PanelDisplay panel;
 	
 	private static final String DF_PRODUCT_IMAGE = "producto.png";
 	
-	public ControlPanelProductoNoRegistrado(Tienda tienda, Producto producto, VentanaConDisplay<? super PanelProducto> vista) {
+	public ControladorTest(Tienda tienda, Producto producto, VentanaConDisplay<? super PanelDisplay> vista) {
 		this.producto = producto;
 		this.tienda = tienda;
 		
@@ -54,15 +49,20 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 				//new PanelProductoGestionarProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", categorias.toArray(new String[0]));
 				//new PanelClienteEstadisticas("Juan de Lara", DF_PRODUCT_IMAGE, 20.75f, 3, 15);
-				new PanelProductoAplicarDescuento(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+				//new PanelProductoAplicarDescuento(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProductoAnadirAPack(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
 				//new PanelProductoEstadisticas(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), 10f, 25, 15f, categorias.toArray(new String[0]));
 				//new PanelArticulo("Juan de Lara", "producto.png", producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", producto.getPrecio(), "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));
 				//new PanelArticuloPendienteValoracion("Juan de Lara", "producto.png", producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", -1, "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));
 				//new PanelArticuloEnCartera("Juan de Lara", "producto.png", producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", -1, "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));
 				//new PanelArticuloSeleccion(producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", -1, "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));
-				
+				//new PanelIntercambio("Tiago", "producto.png", new String[]{"Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1"}, "Ver intercambio", "Claudia", "producto.png", new String[]{"Comic2"});
+				//new PanelIntercambioConBoton ("Tiago", "producto.png", new String[]{"Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1"}, "Ver intercambio", "Aceptar intercambio", "Claudia", "producto.png", new String[]{"Comic2"});
+				//new PanelPedido("Tiago", "producto.png", "Ver intercambio", new String[]{"Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1"});
+				//new PanelPedido("Ver intercambio", new String[]{"Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1"});
+				new PanelPedidoGestionarPedido("Tiago", "producto.png", "Ver intercambio", new String[]{"Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1", "Comic1"});
 		
+				
 		vista.anadirDisplay(panel);
 		
 		//panel = vista.anadirProductoRecomendado(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
