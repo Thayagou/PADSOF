@@ -72,12 +72,12 @@ public class ControlLoginRegistro {
     }
 
     private void redirigirSegunUsuario(Usuario usuario) {
-        if (usuario instanceof Gestor) {
-            SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda));
-        } else if (usuario instanceof Empleado) {
-        	SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda, (Empleado)usuario));
-        } else if (usuario instanceof ClienteRegistrado) {
-            SwingUtilities.invokeLater(() -> new ControlInicioCliente(tienda, (ClienteRegistrado)usuario));
+        if (usuario instanceof Gestor gestor) {
+            SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda, gestor));
+        } else if (usuario instanceof Empleado empleado) {
+        	SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda, empleado));
+        } else if (usuario instanceof ClienteRegistrado cliente) {
+            SwingUtilities.invokeLater(() -> new ControlInicioCliente(tienda, cliente));
         }
     }
 }

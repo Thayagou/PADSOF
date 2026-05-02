@@ -7,6 +7,7 @@ import javax.swing.*;
 import modelo.sistema.Tienda;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;
+import vistas.herramientas.Fonts;
 
 public class VentanaInicioEmpleado extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +20,7 @@ public class VentanaInicioEmpleado extends JPanel {
 
 		// ── Cabecera ──────────────────────────────────────────────
 		JLabel cabecera = new JLabel("  Menú de empleado   Seleccione una tarea para continuar");
-		cabecera.setFont(t.getTitle3Font());
+		cabecera.setFont(Fonts.TITLE3.getFont());
 		cabecera.setForeground(ColorPalette.WHITE.getColor());
 		cabecera.setOpaque(true);
 		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());

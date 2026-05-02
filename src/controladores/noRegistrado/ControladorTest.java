@@ -14,12 +14,12 @@ import vistas.common.PanelIntercambio;
 import vistas.common.PanelIntercambioConBoton;
 import vistas.common.PanelPedido;
 import vistas.common.PanelProducto;
+import vistas.common.PanelProductoSeleccion;
 import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
 import vistas.empleado.PanelPedidoGestionarPedido;
 import vistas.empleado.PanelProductoGestionarProducto;
 import vistas.gestor.PanelClienteEstadisticas;
-import vistas.gestor.PanelProductoAplicarDescuento;
 
 public class ControladorTest implements ActionListener {
 	private Producto producto;

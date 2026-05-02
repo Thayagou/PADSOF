@@ -6,55 +6,48 @@ import javax.swing.*;
 import controladores.ControlBarraLateral;
 import vistas.common.BarraLateral;
 import vistas.common.TiendaFrame;
+import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
-public class BarraGestor extends BarraLateral{
+public class BarraGestor extends BarraLateral {
 	private static final long serialVersionUID = 1L;
 
-	public BarraGestor() {
+	private JButton gestionarProductos;
+	private JButton anadirDescuento;
+	private JButton gestionarEmpleados;
+	private JButton configurarSistema;
+	private JButton consultarEstadisticas;
 
+	public BarraGestor() {
 		TiendaFrame frame = TiendaFrame.getInstance();
 		int distFromLeft = frame.optionBarDistFromLeft();
+		int btnHeigth = frame.btnHeight();
 
-		setBackground(ColorPalette.BLUE.getColor());
+		setBackground(ColorPalette.CARD_LIGHT.getColor());
 		setPreferredSize(new Dimension(distFromLeft, 0));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
 
-		agregarBoton("Gestionar productos y categorías");
-		agregarBoton("Gestionar pedidos");
-		agregarBoton("Valorar objetos de segunda mano");
-		agregarBoton("Gestionar intercambios");
-	}
+		ButtonFactory f = new ButtonFactory();
 
-	private void agregarBoton(String texto) {
-		JButton btn = new JButton(texto);
-		btn.setAlignmentX(Component.LEFT_ALIGNMENT);
-		btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
-		btn.setFont(btn.getFont().deriveFont(14f));
-		btn.setForeground(ColorPalette.WHITE.getColor());
-		btn.setBackground(ColorPalette.BLUE.getColor());
-		btn.setBorderPainted(false);
-		btn.setFocusPainted(false);
-		btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		gestionarProductos = addBtn(f, "Gestionar productos y categorías", btnHeigth, distFromLeft);
+		anadirDescuento = addBtn(f, "Añadir nuevo descuento", btnHeigth, distFromLeft);
+		gestionarEmpleados = addBtn(f, "Gestionar empleados", btnHeigth, distFromLeft);
+		configurarSistema = addBtn(f, "Configurar sistema", btnHeigth, distFromLeft);
+		consultarEstadisticas = addBtn(f, "Consultar estadísticas", btnHeigth, distFromLeft);
 
-		btn.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseEntered(java.awt.event.MouseEvent e) {
-				btn.setBackground(ColorPalette.DARK_BLUE.getColor());
-			}
-
-			public void mouseExited(java.awt.event.MouseEvent e) {
-				btn.setBackground(ColorPalette.BLUE.getColor());
-			}
-		});
-
-		add(btn);
-		add(Box.createVerticalStrut(8));
+		add(gestionarProductos);
+		add(anadirDescuento);
+		add(gestionarEmpleados);
+		add(configurarSistema);
+		add(consultarEstadisticas);
 	}
 
 	@Override
 	public void setControlador(ControlBarraLateral c) {
-		
-		
+		gestionarProductos.addActionListener(c);
+		anadirDescuento.addActionListener(c);
+		gestionarEmpleados.addActionListener(c);
+		configurarSistema.addActionListener(c);
+		consultarEstadisticas.addActionListener(c);
 	}
 }

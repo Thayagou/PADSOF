@@ -1,18 +1,15 @@
-package vistas.gestor;
+package vistas.common;
 
 import java.awt.BorderLayout;
 
-
-import vistas.common.InvisibleCheckBox;
-import vistas.common.PanelProducto;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
-public class PanelProductoAplicarDescuento extends PanelProducto{
+public class PanelProductoSeleccion extends PanelProducto{
 	private static final long serialVersionUID = 1L;
 	private InvisibleCheckBox checkBox;
 	
-	public PanelProductoAplicarDescuento(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
+	public PanelProductoSeleccion(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, "Incluir", categorias);
 		
 		// CheckBox como display (no interactivo por sí solo)
