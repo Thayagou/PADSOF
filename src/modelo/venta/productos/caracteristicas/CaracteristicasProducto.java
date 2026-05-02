@@ -1,7 +1,5 @@
 package modelo.venta.productos.caracteristicas;
 
-import javax.swing.ImageIcon;
-
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.venta.productos.*;
@@ -21,5 +19,5 @@ public interface CaracteristicasProducto {
 	 * @throws InvalidArgumentException Si alguno de los parámetros introducidos es inváildo
 	 * @throws DoubleDiscountException Si las categorías no son compatibles entre sí o con el producto por descuentos
 	 */
-	public abstract Producto crearProducto(String nombre, String descripcion, double precio, ImageIcon image, Categoria...categorias) throws InvalidArgumentException, DoubleDiscountException;
+	public abstract Producto crearProducto(String nombre, String descripcion, double precio, String image, Categoria...categorias) throws InvalidArgumentException, DoubleDiscountException;
 }

@@ -15,6 +15,8 @@ public class ControlProductoSinRegistrar implements ActionListener {
 
 	private Tienda tienda;
 	private VentanaProductoSinRegistrar vista;
+	
+	private static final String DF_PRODUCT_IMAGE = "producto.png";
 
 	public ControlProductoSinRegistrar(Tienda tienda, Producto producto) {
 		this.tienda = tienda;
@@ -22,8 +24,13 @@ public class ControlProductoSinRegistrar implements ActionListener {
 		for(Categoria c : producto.getCategorias()) {
 			categorias.add(c.getNombre());
 		}
+		
+		String imageRoute;
+		if(producto.getImagen() == null || producto.getImagen().isBlank()) imageRoute = DF_PRODUCT_IMAGE;
+		else imageRoute = producto.getImagen();
+		
 		this.vista = new VentanaProductoSinRegistrar(producto.getNombre(), 
-				producto.getDescripcion(), producto.getPuntuacionMedia(), 
+				producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), 
 				producto.getPrecio(), categorias.toArray(new String[0]));
 		for(Resena r : producto.getResenas()) {
 			vista.anadirPanelResena(r.getPuntuacion(), r.getComentario(), r.getUsuario().getNombre());

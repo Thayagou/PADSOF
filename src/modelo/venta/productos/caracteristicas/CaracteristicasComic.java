@@ -2,8 +2,6 @@ package modelo.venta.productos.caracteristicas;
 
 import java.time.*;
 
-import javax.swing.ImageIcon;
-
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.venta.productos.*;
@@ -36,7 +34,7 @@ public class CaracteristicasComic implements CaracteristicasProducto {
 	}
 
 	@Override
-	public Producto crearProducto(String nombre, String descripcion, double precio, ImageIcon image, Categoria...categorias) 
+	public Producto crearProducto(String nombre, String descripcion, double precio, String image, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
 		return new Comic(nombre, descripcion, precio, image, fechaPublicacion, autor, numPaginas, editorial, categorias);
 	}

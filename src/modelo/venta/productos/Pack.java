@@ -3,8 +3,6 @@ package modelo.venta.productos;
 import java.io.Serializable;
 import java.util.*;
 
-import javax.swing.ImageIcon;
-
 import modelo.exceptions.*;
 import modelo.venta.productos.caracteristicas.*;
 
@@ -29,7 +27,7 @@ public class Pack extends Producto implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 * @throws DoubleDiscountException Se lanza si se produce un conflicto entre descuentos
 	 */
-	public Pack(Stock[] stocks, String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias) 
+	public Pack(Stock[] stocks, String nombre, String desc, double precio, String imagen, Categoria...categorias) 
 			throws DoubleDiscountException, InvalidArgumentException{
 		super(nombre, desc, precio, imagen, categorias);
 		

@@ -6,6 +6,7 @@ import javax.swing.*;
 
 import modelo.venta.productos.Producto;
 import vistas.common.PanelDisplay;
+import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.*;
 
@@ -13,7 +14,7 @@ import vistas.herramientas.*;
  * Pantalla de inicio para usuarios no registrados. Muestra una lista de
  * "Productos populares" (los mejor valorados).
  */
-public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDisplay<PanelDisplay>{
+public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDisplay<PanelProducto>{
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -57,14 +58,14 @@ public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDispl
 	 * @param l nuevo valor
 	 */
 	public void setControlador(ActionListener l) {
-		/*for (Component c : listaPanel.getComponents()) {
+		for (Component c : listaPanel.getComponents()) {
 			if (c instanceof PanelProducto pp)
 				pp.setControlador(l);
-		}*/
+		}
 	}
 
 	@Override
-	public PanelDisplay anadirDisplay(PanelDisplay panelDisplay) {
+	public PanelProducto anadirDisplay(PanelProducto panelDisplay) {
 		listaPanel.add(panelDisplay);
 		refreshList();
 		
