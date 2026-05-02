@@ -2,8 +2,6 @@ package modelo.venta.productos;
 
 import java.io.Serializable;
 
-import javax.swing.ImageIcon;
-
 import modelo.exceptions.*;
 import modelo.venta.productos.caracteristicas.*;
 
@@ -34,7 +32,7 @@ public class Juego extends Producto implements Serializable {
 	 * @throws InvalidArgumentException Si alguno de los argumentos es inválido
 	 * @throws DoubleDiscountException Si hay algún conflicto de descuentos por las categorías del producto
 	 */
-	public Juego(String nombre, String desc, double precio, ImageIcon imagen, int numJug, String rango, TipoJuego tipo, Categoria...categorias) 
+	public Juego(String nombre, String desc, double precio, String imagen, int numJug, String rango, TipoJuego tipo, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
 		super(nombre, desc, precio, imagen, categorias);
 		

@@ -3,8 +3,6 @@ package modelo.venta.productos;
 import java.io.Serializable;
 import java.time.*;
 
-import javax.swing.ImageIcon;
-
 import modelo.exceptions.*;
 import modelo.venta.productos.caracteristicas.*;
 
@@ -38,7 +36,7 @@ public class Comic extends Producto implements Serializable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 * @throws DoubleDiscountException Se lanza si se produce un conflicto entre descuentos
 	 */
-	public Comic(String nombre, String desc, double precio, ImageIcon imagen, LocalDate fecha, String autor, int pags, String editorial, Categoria...categorias) 
+	public Comic(String nombre, String desc, double precio, String imagen, LocalDate fecha, String autor, int pags, String editorial, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
 		super(nombre, desc, precio, imagen, categorias);
 		

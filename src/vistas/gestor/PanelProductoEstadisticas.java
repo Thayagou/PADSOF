@@ -17,8 +17,8 @@ public class PanelProductoEstadisticas extends PanelProducto{
 	
 	private static final long serialVersionUID = 1L;
 
-	public PanelProductoEstadisticas(String nombre, String descripcion, double puntuacionMedia, double precio, double recaudacion, int udsVendidas, double porcentaje, String...categorias) {
-		super(nombre, descripcion, puntuacionMedia, precio, "Ver producto", categorias);
+	public PanelProductoEstadisticas(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, double recaudacion, int udsVendidas, double porcentaje, String...categorias) {
+		super(nombre, descripcion, imageName, puntuacionMedia, precio, "Ver producto", categorias);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		int hComps = (int)(maxCompHeight * BOTON_PERC_H);

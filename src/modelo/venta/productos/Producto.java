@@ -1,7 +1,6 @@
 package modelo.venta.productos;
 import java.io.Serializable;
 import java.util.*;
-import javax.swing.ImageIcon;
 
 import modelo.estadistica.*;
 import modelo.exceptions.*;
@@ -25,7 +24,7 @@ public abstract class Producto implements Serializable, Descontable {
 	/**Precio del producto*/
 	private double precio;
 	/**Imagen del producto*/
-	private ImageIcon imagen;
+	private String imagen;
 	/**Reseñas que se han hecho al producto*/
 	private List<Resena> resenas = new ArrayList<Resena>();
 	/**Categorías a las que pertenece el producto*/
@@ -47,7 +46,7 @@ public abstract class Producto implements Serializable, Descontable {
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos
 	 * @throws DoubleDiscountException Se lanza si hay conflixto de descuentos
 	 */
-	public Producto(String nombre, String desc, double precio, ImageIcon imagen, Categoria...categorias ) 
+	public Producto(String nombre, String desc, double precio, String imagen, Categoria...categorias ) 
 			throws InvalidArgumentException, DoubleDiscountException {
 		if(nombre == null || desc == null || categorias == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos", "crear producto");
 		if(precio < 0) throw new InvalidArgumentException("El precio del producto no puede ser negativo", "crear producto");
@@ -131,7 +130,7 @@ public abstract class Producto implements Serializable, Descontable {
 	 * Getter de la imagen del producto
 	 * @return Imagen del producto
 	 */
-	public ImageIcon getImagen() {
+	public String getImagen() {
 		return imagen;
 	}
 
@@ -139,7 +138,7 @@ public abstract class Producto implements Serializable, Descontable {
 	 * Setter de la imagen del producto
 	 * @param imagen Nueva imagen del producto
 	 */
-	public void setImagen(ImageIcon imagen) {
+	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
 	

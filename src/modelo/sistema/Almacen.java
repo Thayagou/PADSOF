@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
-import javax.swing.ImageIcon;
 
 import modelo.estadistica.ObservadorProducto;
 import modelo.exceptions.*;
@@ -56,7 +55,7 @@ public class Almacen implements Serializable {
 	 * @throws DoubleDiscountException Si las categorías son incompatibles entre sí o con el producto por descuentos
 	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirProducto(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
+	public void anadirProducto(Usuario usuario, int uds, String nombre, String descripcion, double precio, String image, CaracteristicasProducto caracteristicas, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("", descripcion, null, usuario);
 		if(inventario.containsKey(nombre)) throw new InvalidArgumentException("Este producto ya existe", "añadir producto");
@@ -82,7 +81,7 @@ public class Almacen implements Serializable {
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirComic(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
+	public void anadirComic(Usuario usuario, int uds, String nombre, String descripcion, double precio, String image, LocalDate fecha, String autor, int numPaginas, String editorial, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		anadirProducto(usuario, uds, nombre, descripcion, precio, image, new CaracteristicasComic(fecha, autor, numPaginas, editorial), categorias);
 	}
@@ -103,7 +102,7 @@ public class Almacen implements Serializable {
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirJuego(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
+	public void anadirJuego(Usuario usuario, int uds, String nombre, String descripcion, double precio, String image, int numJugadores, String rangoEdad, TipoJuego tipo, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		anadirProducto(usuario, uds, nombre, descripcion, precio, image, new CaracteristicasJuego(numJugadores, rangoEdad, tipo), categorias);
 	}
@@ -124,7 +123,7 @@ public class Almacen implements Serializable {
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirFigura(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, String dimensiones, String marca, String material, Categoria...categorias) 
+	public void anadirFigura(Usuario usuario, int uds, String nombre, String descripcion, double precio, String image, String dimensiones, String marca, String material, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		anadirProducto(usuario, uds, nombre, descripcion, precio, image, new CaracteristicasFigura(dimensiones, marca, material), categorias);
 	}
@@ -143,7 +142,7 @@ public class Almacen implements Serializable {
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void anadirPack(Usuario usuario, int uds, String nombre, String descripcion, double precio, ImageIcon image, Stock[] productos, Categoria...categorias) 
+	public void anadirPack(Usuario usuario, int uds, String nombre, String descripcion, double precio, String image, Stock[] productos, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		anadirProducto(usuario, uds, nombre, descripcion, precio, image, new CaracteristicasPack(productos), categorias);
 	}
@@ -233,7 +232,7 @@ public class Almacen implements Serializable {
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public void modificarProducto(Usuario usuario, Producto producto, int udsStock, String nombre, String desc, double precio, ImageIcon imagen, CaracteristicasProducto caracteristicas, Categoria...categorias) 
+	public void modificarProducto(Usuario usuario, Producto producto, int udsStock, String nombre, String desc, double precio, String imagen, CaracteristicasProducto caracteristicas, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "modificar producto", Permiso.PRODUCTOS, usuario);
 		

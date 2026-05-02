@@ -1,7 +1,5 @@
 package modelo.venta.productos.caracteristicas;
 
-import javax.swing.ImageIcon;
-
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.venta.productos.*;
@@ -33,7 +31,7 @@ public class CaracteristicasPack implements CaracteristicasProducto {
 	 * @throws DoubleDiscountException Se lanza cuando hay conflicto de descuentos
 	 */
 	@Override
-	public Producto crearProducto(String nombre, String descripcion, double precio, ImageIcon image, Categoria...categorias) 
+	public Producto crearProducto(String nombre, String descripcion, double precio, String image, Categoria...categorias) 
 			throws InvalidArgumentException, DoubleDiscountException {
 		return new Pack(stocks, nombre, descripcion, precio, image, categorias);
 	}

@@ -18,8 +18,8 @@ public class PanelProductoAnadirAPack extends PanelProducto{
 	private static final long serialVersionUID = 1L;
 	private JSpinner numUds;
 	
-	public PanelProductoAnadirAPack (String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		super(nombre, descripcion, puntuacionMedia, precio, "", categorias);
+	public PanelProductoAnadirAPack (String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
+		super(nombre, descripcion, imageName, puntuacionMedia, precio, "", categorias);
 
 		ButtonFactory f = new ButtonFactory();
 		

@@ -42,7 +42,7 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
 
-		// ── Lista ─────────────────────────────────────────────────
+		// Lista 
 		listaPanel = new JPanel();
 		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
 		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
@@ -52,14 +52,15 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 		contenido.add(scroll);
 
 		panelOpciones = new PanelMultiopcion("Resultados de búsqueda", contenido, ORDENES);
+		panelOpciones.setControlador(e -> refrescarLista());
 		
 		add(panelOpciones);
 
 		refrescarLista();
 	}
 	
-	public void anadirProducto(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		productos.add(new PanelProducto(nombre, descripcion, puntuacionMedia, precio, "Ver producto",categorias));
+	public void anadirProducto(String nombre, String descripcion, String image, double puntuacionMedia, double precio, String...categorias) {
+		productos.add(new PanelProducto(nombre, descripcion, image, puntuacionMedia, precio, "Ver producto",categorias));
 		refrescarLista();
 	}
 

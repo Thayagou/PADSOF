@@ -19,8 +19,8 @@ import vistas.herramientas.ColorPalette;
 public class PanelProductoGestionarProducto extends PanelProducto{
 	private static final long serialVersionUID = 1L;
 	
-	public PanelProductoGestionarProducto(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		super(nombre, descripcion, puntuacionMedia, precio, "", categorias);
+	public PanelProductoGestionarProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
+		super(nombre, descripcion, imageName, puntuacionMedia, precio, "", categorias);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		JPanel eastPanel = new JPanel();

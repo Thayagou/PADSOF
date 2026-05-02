@@ -201,6 +201,7 @@ public class ActionEmpleado {
 		char tipo = Main.getUserInputChar("Tipo de producto (c: comic | j: juego | f: figura): ");
 		String nombre = Main.getUserInputLine("Nombre: ");
 		String desc = Main.getUserInputLine("Descripción: ");
+		String image = Main.getUserInputLine("Imagen: ");
 		double precio = Main.getUserInputDouble("Precio: ");
 		int uds = Main.getUserInputInt("Unidades: ");
 		
@@ -219,7 +220,7 @@ public class ActionEmpleado {
 			String fecha[] = Main.getUserInputString("Fecha(YYYY/MM/DD): ").split("/");
 			LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 			
-			Main.tienda.getAlmacen().anadirComic(usuario, uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+			Main.tienda.getAlmacen().anadirComic(usuario, uds, nombre, desc, precio, image, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
 			break;
 		case 'j':
 			int numJugs = Main.getUserInputInt("Número de jugadores: ");
@@ -232,14 +233,14 @@ public class ActionEmpleado {
 			int num = Main.getUserInputInt("Introduzca el número del tipo de juego: ");
 			if(num < 1 || num > TipoJuego.values().length) throw new InvalidArgumentException("Número de tipo de juego inválido", "añadir producto");
 			
-			Main.tienda.getAlmacen().anadirJuego(usuario, uds, nombre, desc, precio, null, numJugs, rangoEdad, TipoJuego.values()[num-1], categorias.toArray(new Categoria[0]));
+			Main.tienda.getAlmacen().anadirJuego(usuario, uds, nombre, desc, precio, image, numJugs, rangoEdad, TipoJuego.values()[num-1], categorias.toArray(new Categoria[0]));
 			break;
 		case 'f':
 			String marca = Main.getUserInputString("Marca: ");
 			String material = Main.getUserInputString("Material: ");
 			String dimensiones = Main.getUserInputString("Dimensiones: ");
 			
-			Main.tienda.getAlmacen().anadirFigura(usuario, uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+			Main.tienda.getAlmacen().anadirFigura(usuario, uds, nombre, desc, precio, image, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
 			break;
 		default:
 			throw new InvalidArgumentException("Debe introducir un tipo válido de producto", "añadir producto");
@@ -280,6 +281,7 @@ public class ActionEmpleado {
 		
 		String nombrePr = Main.getUserInputLine("Nombre: ");
 		String desc = Main.getUserInputLine("Descripción: ");
+		String image = Main.getUserInputLine("Imagen: ");
 		double precio = Main.getUserInputDouble("Precio: ");
 		int uds = Main.getUserInputInt("Unidades: ");
 		List<Categoria> categorias = new ArrayList<Categoria>();
@@ -329,7 +331,7 @@ public class ActionEmpleado {
 			carargs = new CaracteristicasPack(prods.toArray(new Stock[0]));
 		} else throw new IllegalArgumentException("Error con el tipo de producto");
 		
-		Main.tienda.getAlmacen().modificarProducto(usuario, producto, uds, nombrePr, desc, precio, null, carargs, categorias.toArray(new Categoria[0]));
+		Main.tienda.getAlmacen().modificarProducto(usuario, producto, uds, nombrePr, desc, precio, image, carargs, categorias.toArray(new Categoria[0]));
 	}
 	
 	/**
