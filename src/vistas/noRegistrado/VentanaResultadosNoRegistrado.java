@@ -59,7 +59,7 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	}
 	
 	public void anadirProducto(String nombre, String descripcion, double puntuacionMedia, double precio, String...categorias) {
-		productos.add(new PanelProducto(nombre, descripcion, puntuacionMedia, precio, categorias));
+		productos.add(new PanelProducto(nombre, descripcion, puntuacionMedia, precio, "Ver producto",categorias));
 		refrescarLista();
 	}
 

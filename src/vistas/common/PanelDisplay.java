@@ -44,7 +44,7 @@ public class PanelDisplay extends JPanel{
 		maxHeight = t.getPixelsHeight(maxHPerc);
 		
 
-		setLayout(new BorderLayout(10, 0));
+		setLayout(new BorderLayout(30, 0));
 		setBackground(ColorPalette.CARD_LIGHT.getColor());
 		setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createMatteBorder(0, 0, 1, 0, ColorPalette.BLACK.getColor()),

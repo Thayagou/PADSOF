@@ -36,11 +36,34 @@ public class ButtonFactory {
 	}
 
 	public ImageIcon loadImageIconScaled(String imageName, int h, int w) {
-		ImageIcon original = new ImageIcon(IMAGE_PATH + imageName);
+		ImageIcon original = loadImageIcon(imageName);
 		if (h <= 0 || w <= 0)
 			return original;
 		Image img = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
 		return new ImageIcon(img);
+	}
+	
+	public ImageIcon loadImageInBounds(String imageName, int maxH, int maxW) {
+		ImageIcon original = loadImageIcon(imageName);
+		if (maxH <= 0 || maxW <= 0) return original;
+		
+		int imgW = original.getIconWidth();
+	    int imgH = original.getIconHeight();
+
+	    // Solo escalar si supera los límites
+	    if (imgH > maxH || imgW > maxW || (imgH < maxH && imgW < maxW)) {
+	        double scaleH = (double) maxH / imgH;
+	        double scaleW = (double) maxW / imgW;
+	        double scale = Math.min(scaleH, scaleW); // mantener proporción
+
+	        int newW = (int)(imgW * scale);
+	        int newH = (int)(imgH * scale);
+
+	        Image scaled = original.getImage().getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+	        original = new ImageIcon(scaled);
+	    }
+	    
+		return original;
 	}
 
 	private ImageIcon loadImageIcon(String imageName) {
