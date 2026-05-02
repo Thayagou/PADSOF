@@ -3,8 +3,6 @@ package controladores.noRegistrado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.SwingUtilities;
-
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
 import vistas.common.TiendaFrame;

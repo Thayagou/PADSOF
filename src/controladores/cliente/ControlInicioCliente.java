@@ -15,7 +15,6 @@ import vistas.cliente.*;
 
 public class ControlInicioCliente implements ActionListener {
 
-	@SuppressWarnings("unused")
 	private Tienda tienda;
 	private VentanaInicioCliente vista;
 
