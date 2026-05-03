@@ -75,6 +75,10 @@ public class ButtonFactory {
 		button.setFont(Fonts.TEXT.getFont());
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		
+		paintButton(button, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		
+		addMouseMecanics(button, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 	}
 
 	public void paintButton(JButton button, ColorPalette background, ColorPalette foreground) {
@@ -98,10 +102,6 @@ public class ButtonFactory {
 
 		button.setActionCommand(label);
 		button.setPreferredSize(new Dimension(width, height));
-		button.setBackground(ColorPalette.PURPLE.getColor());
-		button.setForeground(ColorPalette.WHITE.getColor());
-		
-		addMouseMecanics(button, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
 		setDefault(button);
 

@@ -45,7 +45,7 @@ public class VentanaInicioCliente extends JPanel implements VentanaConDisplay<Pa
 		contenido.setLayout(new BorderLayout());
 		contenido.add(BorderLayout.CENTER, scroll);
 
-		this.add(BorderLayout.CENTER, PanelFactory.getVentanaConCabecera("      Productos populares", contenido));
+		this.add(BorderLayout.CENTER, PanelFactory.getVentanaConCabecera("      Productos recomendados", contenido));
 
 		/* Botones de la derecha */
 		JPanel rightPanel = new JPanel();
