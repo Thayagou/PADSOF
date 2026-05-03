@@ -9,23 +9,9 @@ import javax.swing.SwingUtilities;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.cliente.PanelArticuloEnCartera;
-import vistas.common.PanelArticulo;
-import vistas.common.PanelArticuloSeleccion;
-import vistas.common.PanelCategoriaSeleccion;
-import vistas.common.PanelDisplay;
 import vistas.common.PanelProducto;
-import vistas.common.PanelProductoSeleccion;
 import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
-import vistas.empleado.PanelArticuloPendienteValoracion;
-import vistas.empleado.PanelCategoriaGestionarCategoria;
-import vistas.empleado.PanelProductoAnadirAPack;
-import vistas.empleado.PanelProductoGestionarProducto;
-import vistas.gestor.PanelClienteEstadisticas;
-import vistas.gestor.PanelEmpleado;
-import vistas.gestor.PanelProductoEstadisticas;
-
 public class ControlPanelProductoNoRegistrado implements ActionListener {
 	private Producto producto;
 	private Tienda tienda;

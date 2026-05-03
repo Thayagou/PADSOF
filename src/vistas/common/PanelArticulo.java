@@ -52,7 +52,6 @@ public class PanelArticulo extends PanelDisplay {
 		verCartera.setFont(Fonts.BOLD.getFont());
 		// f.addMouseMecanics(verCartera, null, null);
 		verCartera.setMaximumSize(new Dimension(maxCompHeight, TiendaFrame.getInstance().getPixelsWidth(BOTON_PERC_W)));
-		TiendaFrame t = TiendaFrame.getInstance();
 		// JButton iconoUsuario = f.newIconButton(nombreUsuario, maxCompHeight,
 		// maxCompHeight/2, fotoDePerfil);
 		// iconoUsuario.setMaximumSize(new Dimension(t.getPixelsWidth(BOTON_PERC_W),

@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 
 import modelo.sistema.Tienda;
-import vistas.common.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
@@ -13,8 +12,6 @@ public class VentanaInicioEmpleado extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public VentanaInicioEmpleado(Tienda tienda) {
-		TiendaFrame t = TiendaFrame.getInstance();
-
 		setOpaque(false);
 		setLayout(new BorderLayout());
 
