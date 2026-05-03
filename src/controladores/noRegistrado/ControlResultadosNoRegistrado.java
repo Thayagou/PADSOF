@@ -3,6 +3,8 @@ package controladores.noRegistrado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.SwingUtilities;
+
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
 import vistas.common.TiendaFrame;
@@ -32,14 +34,13 @@ public class ControlResultadosNoRegistrado implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*String cmd = e.getActionCommand();
+		String cmd = e.getActionCommand();
 		if (cmd != null && cmd.startsWith("Ver producto:")) {
 			String nombreProducto = cmd.substring("Ver producto:".length());
 			this.mostrarProducto(nombreProducto);
-		}*/
+		}
 	}
 
-	/*
 	private void mostrarProducto(String nombreProducto) {
 		SwingUtilities.invokeLater(() -> {
 			try {
@@ -49,5 +50,5 @@ public class ControlResultadosNoRegistrado implements ActionListener {
 				new vistas.common.VentanaMensaje("Producto no encontrado: " + nombreProducto);
 			}
 		});
-	}*/
+	}
 }

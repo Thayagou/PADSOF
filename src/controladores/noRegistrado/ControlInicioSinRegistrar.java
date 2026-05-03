@@ -1,7 +1,6 @@
 package controladores.noRegistrado;
 
 import java.awt.event.*;
-import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
@@ -33,18 +32,15 @@ public class ControlInicioSinRegistrar implements ActionListener {
 		Producto[] populares = tienda.getAlmacen().getProductosCoincidentes("");
 
 		this.vista = new VentanaInicioSinRegistrar();
-		//this.vista = new TestVentanaInicio();
-		//this.vista.setClickListener(this);
 		for(Producto p : populares) {
 			new ControlPanelProductoNoRegistrado(tienda, p, vista);
-			//new ControladorTest(tienda, p, vista);
 		}
 		tiendaFrame.setVistaActual(vista);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*String cmd = e.getActionCommand();
+		String cmd = e.getActionCommand();
 		if (cmd != null && cmd.startsWith("Ver producto:")) {
 			String nombreProducto = cmd.substring("Ver producto:".length());
 			SwingUtilities.invokeLater(() -> {
@@ -55,6 +51,6 @@ public class ControlInicioSinRegistrar implements ActionListener {
 					new VentanaMensaje("Producto no encontrado: " + nombreProducto);
 				}
 			});
-		}*/
+		}
 	}
 }

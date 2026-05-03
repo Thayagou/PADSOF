@@ -38,6 +38,8 @@ public class BarraEmpleado extends BarraLateral {
         add(gestionarPedidos);
         add(valorarObjetos);
         add(gestionarIntercambios);
+        
+        
     }
 
 	@Override
