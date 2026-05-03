@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraTareas;
 import controladores.empleado.ControlBarraEmpleado;
+import controladores.empleado.ControlGestionarCategorias;
 import controladores.noRegistrado.ControlBarraTareasNoRegistrado;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
@@ -84,7 +85,7 @@ public class ControlInicioGestor implements ActionListener{
 	private void gestionarProdsYCats() {
 		this.frame.remove(vista);
 		SwingUtilities.invokeLater(()->
-			new ControlGestionarProductosYCategorias(tienda, gestor)
+			new ControlGestionarCategorias(tienda, gestor)
 		);
 	}
 	

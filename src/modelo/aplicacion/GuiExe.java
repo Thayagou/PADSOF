@@ -25,8 +25,8 @@ public class GuiExe {
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
 		
 		SwingUtilities.invokeLater(() -> {
-			new ControlInicioGestor(tienda, tienda.getGestor());
-		    //new ControlInicioSinRegistrar(tienda);
+			//new ControlInicioGestor(tienda, tienda.getGestor());
+		    new ControlInicioSinRegistrar(tienda);
 		});
 	}
 	

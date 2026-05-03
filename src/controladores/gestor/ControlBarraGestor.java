@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
+import controladores.empleado.ControlGestionarCategorias;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 
@@ -53,7 +54,7 @@ public class ControlBarraGestor implements ControlBarraLateral{
 	
 	private void gestionarProdsYCats() {
 		SwingUtilities.invokeLater(()->
-			new ControlGestionarProductosYCategorias(tienda, gestor)
+			new ControlGestionarCategorias(tienda, gestor)
 		);
 	}
 	

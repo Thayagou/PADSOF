@@ -16,6 +16,8 @@ import vistas.herramientas.ColorPalette;
 public class PanelCategoriaGestionarCategoria extends PanelCategoria{
 	
 	private static final long serialVersionUID = 1L;
+	public static final String MODIFICAR_ACTION = "Modificar";
+	public static final String BORRAR_ACTION = "Borrar";
 
 	public PanelCategoriaGestionarCategoria(String nombreCategoria) {
 		super(nombreCategoria, "");
