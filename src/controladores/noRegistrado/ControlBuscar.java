@@ -14,8 +14,8 @@ import vistas.common.VentanaMensaje;
 import vistas.noRegistrado.VentanaBusqueda;
 
 public class ControlBuscar implements ActionListener {
-	private Tienda tienda;
-	private VentanaBusqueda vista;
+	protected Tienda tienda;
+	protected VentanaBusqueda vista;
 
 	public ControlBuscar(Tienda tienda) {
 		this.tienda = tienda;
@@ -30,7 +30,7 @@ public class ControlBuscar implements ActionListener {
 			this.intentarBusqueda();
 	}
 	
-	private void intentarBusqueda() {
+	protected void intentarBusqueda() {
 		double eMin = vista.getEstrellas();
 		double pMin = vista.getPrecioMin();
 		double pMax = vista.getPrecioMax();

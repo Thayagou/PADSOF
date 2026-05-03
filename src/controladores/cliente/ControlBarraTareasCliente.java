@@ -22,10 +22,10 @@ public class ControlBarraTareasCliente implements ControlBarraTareas{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Buscar productos" -> SwingUtilities.invokeLater(() -> new ControlBuscar(tienda));
+		case "Buscar productos" -> SwingUtilities.invokeLater(() -> new ControlBuscarCliente(tienda, cliente));
 		case "Home" -> SwingUtilities.invokeLater(() -> new ControlInicioCliente(tienda, cliente));
 		case "Cuenta" -> SwingUtilities.invokeLater(() -> new ControlManejoCuenta(tienda));
-		case "Carrito" -> SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda));
+		case "Carrito" -> SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente));
 		}
 	}
 }
