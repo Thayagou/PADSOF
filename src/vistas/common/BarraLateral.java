@@ -1,7 +1,11 @@
 package vistas.common;
 
+import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import controladores.ControlBarraLateral;
 import vistas.herramientas.ButtonFactory;
@@ -14,7 +18,10 @@ public abstract class BarraLateral extends JPanel{
 	public abstract void setControlador(ControlBarraLateral c);
 	
 	public JButton addBtn(ButtonFactory f, String text, int heigth, int width) {
-    	JButton btn = f.newButton(text, heigth, width);
+    	JButton btn = f.newButtonLeft(text, heigth, width);
+    	btn.setMaximumSize(new Dimension(width, heigth));
+    	btn.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    	btn.setHorizontalAlignment(SwingConstants.LEFT);
     	btn.setFont(Fonts.TEXT.getFont());
     	btn.setForeground(ColorPalette.DARK_GREY.getColor());
     	btn.setBackground(ColorPalette.CARD_LIGHT.getColor());

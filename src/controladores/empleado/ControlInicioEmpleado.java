@@ -13,8 +13,8 @@ public class ControlInicioEmpleado {
 		TiendaFrame tiendaFrame = TiendaFrame.getInstance();
 		
 		// Barra lateral
-		ControlBarraEmpleado ctrlBarraLateral = new ControlBarraEmpleado(tienda, empleado);
-		BarraLateral barraLateral = new BarraEmpleado();
+		BarraEmpleado barraLateral = new BarraEmpleado();
+		ControlBarraEmpleado ctrlBarraLateral = new ControlBarraEmpleado(tienda, empleado, barraLateral);
 		barraLateral.setControlador(ctrlBarraLateral);
 		tiendaFrame.setBarraLateral(barraLateral);
 

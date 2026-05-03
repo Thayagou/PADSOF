@@ -7,15 +7,18 @@ import javax.swing.SwingUtilities;
 import controladores.ControlBarraLateral;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
+import vistas.empleado.BarraEmpleado;
 
 public class ControlBarraEmpleado implements ControlBarraLateral {
 
 	private final Tienda tienda;
 	private final Empleado empleado;
+	private final BarraEmpleado barra;
 
-	public ControlBarraEmpleado(Tienda tienda, Empleado empleado) {
+	public ControlBarraEmpleado(Tienda tienda, Empleado empleado, BarraEmpleado barra) {
 		this.tienda = tienda;
 		this.empleado = empleado;
+		this.barra = barra;
 	}
 	
 	@Override
@@ -29,24 +32,25 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	}
 
 	private void showGProductos() {
-		SwingUtilities.invokeLater(() -> {
-			new ControlGestProductos(tienda, empleado);
-		});
+		barra.setVisibleGestProductos();
 	}
 
 	private void showGPedidos() {
+		barra.setInvisibleGestProductos();
 		SwingUtilities.invokeLater(() -> {
 			new ControlGestPedidos(tienda, empleado);
 		});
 	}
 
 	private void showValorar() {
+		barra.setInvisibleGestProductos();
 		SwingUtilities.invokeLater(() -> {
 			new ControlValorarObjetos(tienda, empleado);
 		});
 	}
 	
 	private void showGIntercambios() {
+		barra.setInvisibleGestProductos();
 		SwingUtilities.invokeLater(() -> {
 			new ControlGestIntercambios(tienda);
 		});
