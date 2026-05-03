@@ -22,15 +22,8 @@ public class PanelCategoriaSeleccion extends PanelCategoria {
 
 		// CheckBox como display (no interactivo por sí solo)
 		checkBox = ButtonFactory.newInvisibleCheckBox("Incluído", "Incluir", ColorPalette.BLACK, ColorPalette.GREY);
-		
-		JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		centerPanel.setOpaque(false);
-		int gap = TiendaFrame.getInstance().getPixelsWidth(HOR_GAP);
-		centerPanel.add(Box.createHorizontalStrut(gap));
-		centerPanel.add(checkBox);
-		
 
-		this.add(centerPanel, BorderLayout.CENTER);
+		this.add(checkBox, BorderLayout.EAST);
 
 		// Cuando se hace click en la fila, alternar estado
 	}

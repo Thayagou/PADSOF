@@ -12,6 +12,7 @@ import modelo.venta.productos.Producto;
 import vistas.common.PanelMultiopcion;
 import vistas.common.TiendaFrame;
 import vistas.gestor.VentanaAnadirDescuento;
+import vistas.gestor.VentanaInicioGestor;
 
 public class ControlAnadirDescuento implements ActionListener{
 	private Tienda tienda;
@@ -65,13 +66,24 @@ public class ControlAnadirDescuento implements ActionListener{
 		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
 	}
 	
+	private void computarDescuento() {
+
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case PanelMultiopcion.CAMBIO_OPCION_ACTION:
 			cambiarTipoDescontado();
 			break;
+		case VentanaAnadirDescuento.CANCELAR_ACTION:
+			new ControlInicioGestor(tienda, gestor);
+			break;
+		case VentanaAnadirDescuento.CONFIRMAR_ACTION:
+			computarDescuento();
+			break;
 		}
+		
 		
 	}
 
