@@ -2,30 +2,41 @@ package vistas.gestor;
 
 import javax.swing.*;
 
+import vistas.common.PanelDisplay;
+import vistas.common.PanelMultiopcion;
+import vistas.common.VentanaConDisplay;
 import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
+import vistas.herramientas.PanelFactory;
 
 import java.awt.*;
 
-public class VentanaAnadirDescuento extends JSplitPane {
+public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisplay<PanelDisplay>{
 	private JTextField valorMinimo;
 	private JComboBox<String> tipoComp;
 	private JTextField valorCompensacion;
 	private JButton regalo;
 	private JSpinner inicio;
 	private JSpinner fin;
+	public static String TIPO_PRODUCTO = "Productos";
+	public static String TIPO_CATEGORIA = "Categorias";
+	private static String[] TIPOS_DESCONTADOS = {TIPO_PRODUCTO, TIPO_CATEGORIA};
+	
+	private JPanel listaDescontados = new JPanel();
+	private PanelMultiopcion panelOpciones;
 	
 
     private static final long serialVersionUID = 1L;
 
 	public VentanaAnadirDescuento() {
         
-        setLeftComponent(buildLeft());
+        setLeftComponent(crearPanelParametros());
         
-        setRightComponent(buildRight());
+        setRightComponent(crearPanelDescontados());
     }
 
-    private JPanel buildLeft() {
+    private JPanel crearPanelParametros() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createTitledBorder("Configuración del descuento"));
@@ -86,111 +97,25 @@ public class VentanaAnadirDescuento extends JSplitPane {
         return panel;
     }
 
-    // -------------------------------------------------------
-    // Panel derecho: selector + lista de productos con scroll
-    // -------------------------------------------------------
-    private JPanel buildRight() {
-        JPanel panel = new JPanel(new BorderLayout(0, 8));
+    private JPanel crearPanelDescontados() {
+		listaDescontados.setLayout(new BoxLayout(listaDescontados, BoxLayout.Y_AXIS));
+		listaDescontados.setBackground(ColorPalette.CARD_LIGHT.getColor());
+		//listaEmpleados.setOpaque(false);
 
-        // -- Barra superior --
-        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 16, 8));
-        topBar.setBackground(new Color(130, 0, 200));
-
-        JLabel selLabel = new JLabel("Selección:");
-        selLabel.setForeground(Color.WHITE);
-        JComboBox<String> seleccion = new JComboBox<>(new String[]{"Por productos", "Por categorías"});
-
-        JLabel todosLabel = new JLabel("Aplicar a todos los productos:");
-        todosLabel.setForeground(Color.WHITE);
-        JCheckBox todos = new JCheckBox();
-        todos.setOpaque(false);
-
-        topBar.add(selLabel);
-        topBar.add(seleccion);
-        topBar.add(Box.createHorizontalStrut(40));
-        topBar.add(todosLabel);
-        topBar.add(todos);
-
-        panel.add(topBar, BorderLayout.NORTH);
-
-        // -- Lista de productos con scroll --
-        JPanel listaProductos = new JPanel();
-        listaProductos.setLayout(new BoxLayout(listaProductos, BoxLayout.Y_AXIS));
-
-        for (int i = 1; i <= 6; i++) {
-            listaProductos.add(buildProductRow("NombreProducto" + i, i == 2));
-            listaProductos.add(new JSeparator());
-        }
-
-        JScrollPane scroll = new JScrollPane(listaProductos);
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scroll.getVerticalScrollBar().setUnitIncrement(16);
-        panel.add(scroll, BorderLayout.CENTER);
-
-        return panel;
+		JScrollPane scroll = PanelFactory.getScroll(listaDescontados);
+		scroll.getVerticalScrollBar().setUnitIncrement(10);
+		
+		JPanel contenido = new JPanel();
+		contenido.setLayout(new BorderLayout());
+		contenido.add(BorderLayout.CENTER, scroll);
+		
+		panelOpciones = new PanelMultiopcion("      Elementos a descontar", contenido, TIPOS_DESCONTADOS);
+		
+		return panelOpciones;
     }
-
-    // -------------------------------------------------------
-    // Fila de producto individual
-    // -------------------------------------------------------
-    private JPanel buildProductRow(String nombre, boolean checked) {
-        JPanel row = new JPanel(new BorderLayout(8, 0));
-        row.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 130));
-
-        // Foto
-        JLabel foto = new JLabel("FOTO", SwingConstants.CENTER);
-        foto.setPreferredSize(new Dimension(100, 110));
-        foto.setOpaque(true);
-        foto.setBackground(new Color(160, 160, 140));
-        foto.setForeground(Color.WHITE);
-        row.add(foto, BorderLayout.WEST);
-
-        // Info central
-        JPanel info = new JPanel(new BorderLayout(0, 4));
-        info.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
-
-        JLabel nombreLabel = new JLabel(nombre);
-        nombreLabel.setFont(nombreLabel.getFont().deriveFont(Font.BOLD, 14f));
-
-        JLabel desc = new JLabel("<html>Descripción, descripción, descripción, descripción, " +
-            "descripción, descripción, descripción, descripción, descripción.</html>");
-        desc.setForeground(Color.DARK_GRAY);
-
-        JPanel bottomInfo = new JPanel(new BorderLayout());
-        JLabel cats = new JLabel("<html><font color='#7722CC'>Categoría1, Categoría2</font></html>");
-        JLabel precio = new JLabel("Precio: 100€");
-        precio.setFont(precio.getFont().deriveFont(Font.BOLD));
-        bottomInfo.add(cats, BorderLayout.WEST);
-        bottomInfo.add(precio, BorderLayout.EAST);
-
-        info.add(nombreLabel, BorderLayout.NORTH);
-        info.add(desc, BorderLayout.CENTER);
-        info.add(bottomInfo, BorderLayout.SOUTH);
-        row.add(info, BorderLayout.CENTER);
-
-        // Checkbox aplicar descuento
-        JPanel checkPanel = new JPanel(new BorderLayout(0, 4));
-        checkPanel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-        JLabel checkLabel = new JLabel("<html>Aplicar<br>descuento:</html>", SwingConstants.CENTER);
-        JCheckBox check = new JCheckBox();
-        check.setSelected(checked);
-        check.setHorizontalAlignment(SwingConstants.CENTER);
-        checkPanel.add(checkLabel, BorderLayout.CENTER);
-        checkPanel.add(check, BorderLayout.EAST);
-        row.add(checkPanel, BorderLayout.EAST);
-
-        return row;
-    }
-
-    // -------------------------------------------------------
-    // Helpers
-    // -------------------------------------------------------
-    private JTextField textField(String placeholder) {
-        JTextField field = new JTextField(placeholder);
-        field.setForeground(Color.GRAY);
-        field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        return field;
+    
+    public String getOpcionSeleccionada() {
+    	return TIPOS_DESCONTADOS[panelOpciones.getOpcionSeleccionada()];
     }
 
     private JButton roundButton(String text, Color color) {
@@ -214,4 +139,10 @@ public class VentanaAnadirDescuento extends JSplitPane {
         btn.setPreferredSize(new Dimension(120, 36));
         return btn;
     }
+
+	@Override
+	public <K extends PanelDisplay> PanelDisplay anadirDisplay(K panelDisplay) {
+		listaDescontados.add(panelDisplay);
+		return panelDisplay;
+	}
 }

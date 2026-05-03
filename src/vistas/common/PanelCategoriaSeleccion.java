@@ -14,10 +14,11 @@ import vistas.herramientas.Fonts;
 public class PanelCategoriaSeleccion extends PanelCategoria {
 
 	private static final long serialVersionUID = 1L;
+	public static final String INCLUIR_ACTION= "Incluir";
 	private InvisibleCheckBox checkBox;
 
 	public PanelCategoriaSeleccion(String nombreCategoria) {
-		super(nombreCategoria, "Incluir"); // ajusta porcentajes a tu diseño
+		super(nombreCategoria, INCLUIR_ACTION); // ajusta porcentajes a tu diseño
 
 		// CheckBox como display (no interactivo por sí solo)
 		checkBox = ButtonFactory.newInvisibleCheckBox("Incluído", "Incluir", ColorPalette.BLACK, ColorPalette.GREY);
@@ -32,11 +33,14 @@ public class PanelCategoriaSeleccion extends PanelCategoria {
 		this.add(centerPanel, BorderLayout.CENTER);
 
 		// Cuando se hace click en la fila, alternar estado
-		setControlador(p->checkBox.toggleSelection());
 	}
 
 	public boolean isSeleccionada() {
 		return checkBox.isSelected();
+	}
+	
+	public void toggleCheckBox() {
+		checkBox.toggleSelection();
 	}
 
 	public String getCategoria() {
