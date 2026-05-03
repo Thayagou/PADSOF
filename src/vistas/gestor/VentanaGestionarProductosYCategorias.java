@@ -50,7 +50,7 @@ public class VentanaGestionarProductosYCategorias extends JPanel implements Vent
 
 	@Override
 	public <K extends PanelDisplay> PanelDisplay anadirDisplay(K panelDisplay) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return panelDisplay;
 	}
 }

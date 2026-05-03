@@ -19,7 +19,7 @@ import vistas.herramientas.PanelFactory;
 public class VentanaGestionarEmpleados extends JPanel implements VentanaConDisplay<PanelEmpleado>{
 	private static final long serialVersionUID = 1L;
 	public static final String NUEVO_EMPLEADO_ACTION = "Dar de alta nuevo empleado";
-	private static double GAP_PERC = 0.2;
+	private static double GAP_PERC = 0.05;
 	private JPanel listaEmpleados = new JPanel();
 
 	public VentanaGestionarEmpleados(Tienda tienda) {
@@ -31,7 +31,7 @@ public class VentanaGestionarEmpleados extends JPanel implements VentanaConDispl
 		panelDarDeAlta.setLayout(new BoxLayout(panelDarDeAlta, BoxLayout.Y_AXIS));
 		
 		
-		JButton nuevoEmpleadoButton = f.newRoundedButton(NUEVO_EMPLEADO_ACTION, 300, 300, 0.5f);
+		JButton nuevoEmpleadoButton = f.newRoundedButton(NUEVO_EMPLEADO_ACTION, 700, 300, 0.5f);
 		f.paintButton(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		f.addMouseMecanics(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		panelDarDeAlta.add(Box.createVerticalStrut(TiendaFrame.getInstance().getPixelsHeight(GAP_PERC)));
