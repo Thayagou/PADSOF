@@ -27,13 +27,14 @@ public class ControlPanelValorarObjetos implements ActionListener {
 		}
 		PanelArticuloPendienteValoracion panel = new PanelArticuloPendienteValoracion(
 				articulo.getPropietario().getNombre(), "pfp.png", articulo.getNombre(), articulo.getDescripcion(),
-				articulo.getInteresadoEn(), 0.0, "Muy bueno", "Valorar objeto", categorias.toArray(new String[0]));
+				articulo.getInteresadoEn(), -1, "Muy bueno", "Valorar artículo", categorias.toArray(new String[0]));
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("llega aqui");
 		switch (e.getActionCommand()) {
 		case "Valorar artículo":
 			try {
