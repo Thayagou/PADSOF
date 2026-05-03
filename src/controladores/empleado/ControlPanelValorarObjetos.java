@@ -25,6 +25,7 @@ public class ControlPanelValorarObjetos implements ActionListener {
 		for (Categoria c : articulo.getCategorias()) {
 			categorias.add(c.getNombre());
 		}
+		
 		PanelArticuloPendienteValoracion panel = new PanelArticuloPendienteValoracion(
 				articulo.getNombre(), articulo.getDescripcion(),
 				articulo.getInteresadoEn(), -1, "Muy bueno", "Valorar artículo", categorias.toArray(new String[0]));

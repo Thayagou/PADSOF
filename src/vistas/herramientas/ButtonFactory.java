@@ -8,7 +8,6 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
@@ -32,7 +31,7 @@ public class ButtonFactory {
 	}
 
 	private String getHTMLLabel(String label) {
-		return "<html>" + label + "</html>";
+		return "<html><div style='text-align:left;'>" + label + "</div></html>";
 	}
 
 	public ImageIcon loadImageIconScaled(String imageName, int h, int w) {
@@ -130,6 +129,16 @@ public class ButtonFactory {
 
 		return button;
 	}
+	
+	public JButton newButtonLeft(String label, int height, int width) {
+		JButton button = new JButton(getHTMLLabel(label));
+		button.setActionCommand(label);
+		Dimension size = new Dimension(width, height);
+		button.setPreferredSize(size);
+		setDefault(button);
+
+		return button;
+	}
 
 	public JButton newIconButton(String imageName, int height, int width) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
@@ -221,7 +230,7 @@ public class ButtonFactory {
 		return spinner;
 	}
 
-	public <T> JComboBox<T> newComboBox(Fonts font, T... elementos) {
+	public <T> JComboBox<T> newComboBox(Fonts font, @SuppressWarnings("unchecked") T... elementos) {
 		JComboBox<T> comboBox = new JComboBox<T>(elementos);
 		comboBox.setFont(font.getFont());
 
