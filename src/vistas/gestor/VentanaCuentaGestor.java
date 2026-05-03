@@ -1,4 +1,4 @@
-package vistas.empleado;
+package vistas.gestor;
 
 import java.awt.event.ActionListener;
 
@@ -6,14 +6,15 @@ import javax.swing.JPanel;
 
 import controladores.empleado.ControlCuentaEmpleado;
 
-public class VentanaCuentaEmpleado extends JPanel{
+public class VentanaCuentaGestor extends JPanel{
 	private static final long serialVersionUID = 1L;
 
-	public VentanaCuentaEmpleado() {
+	public VentanaCuentaGestor() {
 		
 	}
 	
 	public void setControlador(ActionListener l) {
 		
 	}
+
 }

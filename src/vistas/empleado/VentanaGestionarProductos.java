@@ -10,13 +10,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import vistas.common.PanelCategoria;
+import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaGestionarProductos extends JSplitPane implements VentanaConDisplay<PanelCategoria> {
+public class VentanaGestionarProductos extends JSplitPane implements VentanaConDisplay<PanelProducto> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String NUEVA_CATEGORIA_ACTION = "Añadir nuevo producto";
@@ -42,7 +43,7 @@ public class VentanaGestionarProductos extends JSplitPane implements VentanaConD
 		panelNuevaCategoria.add(Box.createVerticalStrut(TiendaFrame.getInstance().getPixelsHeight(GAP_PERC)));
 		panelNuevaCategoria.add(nuevoEmpleadoButton);
 		
-		JPanel cabeceraNuevaCategoría = PanelFactory.getVentanaConCabecera("Nueva categoría  ", panelNuevaCategoria);
+		JPanel cabeceraNuevaCategoría = PanelFactory.getVentanaConCabecera("Nuevo producto  ", panelNuevaCategoria);
 
 		return cabeceraNuevaCategoría;
 
@@ -68,7 +69,7 @@ public class VentanaGestionarProductos extends JSplitPane implements VentanaConD
 	
 	
 	@Override
-	public <K extends PanelCategoria> PanelCategoria anadirDisplay(K panelDisplay) {
+	public <K extends PanelProducto> PanelProducto anadirDisplay(K panelDisplay) {
 		listaProductos.add(panelDisplay);
 		listaProductos.revalidate();
 		listaProductos.repaint();

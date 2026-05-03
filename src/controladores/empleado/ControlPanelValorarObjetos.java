@@ -26,7 +26,7 @@ public class ControlPanelValorarObjetos implements ActionListener {
 			categorias.add(c.getNombre());
 		}
 		PanelArticuloPendienteValoracion panel = new PanelArticuloPendienteValoracion(
-				articulo.getPropietario().getNombre(), "pfp.png", articulo.getNombre(), articulo.getDescripcion(),
+				articulo.getNombre(), articulo.getDescripcion(),
 				articulo.getInteresadoEn(), -1, "Muy bueno", "Valorar artículo", categorias.toArray(new String[0]));
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);

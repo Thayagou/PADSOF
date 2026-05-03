@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import controladores.ControlBarraTareas;
 import controladores.empleado.ControlBarraEmpleado;
 import controladores.empleado.ControlGestionarCategorias;
+import controladores.empleado.ControlGestionarProductos;
 import controladores.noRegistrado.ControlBarraTareasNoRegistrado;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
@@ -14,6 +15,7 @@ import vistas.common.BarraLateral;
 import vistas.common.TiendaFrame;
 import vistas.empleado.BarraEmpleado;
 import vistas.gestor.BarraGestor;
+import vistas.gestor.BarraTareasGestor;
 import vistas.gestor.VentanaInicioGestor;
 import vistas.noRegistrado.BarraTareasNoRegistrado;
 
@@ -39,8 +41,8 @@ public class ControlInicioGestor implements ActionListener{
         barraLatera.setControlador(ctrlBarraLateral);
         frame.setBarraLateral(barraLatera);
         
-        ControlBarraTareas ctrlBarraTareas = new ControlBarraTareasNoRegistrado(tienda);
-        BarraTareasNoRegistrado barraTareas = new BarraTareasNoRegistrado();
+        ControlBarraTareas ctrlBarraTareas = new ControlBarraTareasGestor(tienda, gestor);
+        BarraTareasGestor barraTareas = new BarraTareasGestor();
         barraTareas.setControlador(ctrlBarraTareas);
         frame.setBarraTareas(barraTareas);
 		
@@ -85,7 +87,8 @@ public class ControlInicioGestor implements ActionListener{
 	private void gestionarProdsYCats() {
 		this.frame.remove(vista);
 		SwingUtilities.invokeLater(()->
-			new ControlGestionarCategorias(tienda, gestor)
+			new ControlGestionarProductos(tienda, gestor)
+			//new ControlGestionarCategorias(tienda, gestor)
 		);
 	}
 	

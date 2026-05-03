@@ -18,6 +18,8 @@ import vistas.herramientas.ColorPalette;
 
 public class PanelProductoGestionarProducto extends PanelProducto{
 	private static final long serialVersionUID = 1L;
+	public static final String MODIFICAR_ACTION = "Modificar";
+	public static final String BORRAR_ACTION = "Borrar";
 	
 	public PanelProductoGestionarProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, "", categorias);
