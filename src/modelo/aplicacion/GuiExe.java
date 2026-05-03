@@ -2,6 +2,8 @@ package modelo.aplicacion;
 
 import java.util.concurrent.TimeUnit;
 import javax.swing.SwingUtilities;
+
+import controladores.gestor.ControlInicioGestor;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.exceptions.*;
 import modelo.sistema.*;
@@ -23,7 +25,8 @@ public class GuiExe {
 		GestorCaducidad.getInstancia().iniciar(1, TimeUnit.MINUTES);
 		
 		SwingUtilities.invokeLater(() -> {
-		    new ControlInicioSinRegistrar(tienda);
+			new ControlInicioGestor(tienda, tienda.getGestor());
+		    //new ControlInicioSinRegistrar(tienda);
 		});
 	}
 	

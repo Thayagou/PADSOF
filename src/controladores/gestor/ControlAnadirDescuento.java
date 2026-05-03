@@ -7,27 +7,83 @@ import javax.swing.*;
 
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
+import modelo.venta.productos.Categoria;
+import modelo.venta.productos.Producto;
+import vistas.common.PanelMultiopcion;
 import vistas.common.TiendaFrame;
 import vistas.gestor.VentanaAnadirDescuento;
+import vistas.gestor.VentanaInicioGestor;
 
 public class ControlAnadirDescuento implements ActionListener{
 	private Tienda tienda;
 	private Gestor gestor;
-	private TiendaFrame frame;
+	private VentanaAnadirDescuento vista;
+	private String tipoActual;
 	
 	public ControlAnadirDescuento(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
-		this.frame = TiendaFrame.getInstance();
-		VentanaAnadirDescuento vista = new VentanaAnadirDescuento();
+		vista = new VentanaAnadirDescuento();
+		tipoActual = vista.getOpcionSeleccionada();
+		vista.setControlador(this);
 		
-		frame.setVistaActual(vista);
+		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
+		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
+		
+		TiendaFrame.getInstance().setVistaActual(vista);
+		
     }
+	
+	public void anadirProductos() {
+		Producto[] catalogo = tienda.getAlmacen().getProductosCoincidentes("");
+	
+		vista.vaciarDescontados();
+		
+		for (Producto p: catalogo) {
+			new ControlPanelProductoSeleccion(tienda, p, vista);
+		}
+	}
+	
+	public void anadirCategorias() {
+		Categoria[] categorias = tienda.getAlmacen().getCategorias();
+	
+		vista.vaciarDescontados();
+		
+		for (Categoria c: categorias) {
+			new ControlPanelCategoriaSeleccion(tienda, c, vista);
+		}
+		
+		vista.revalidate();
+		vista.repaint();
+	}
+	
+	private void cambiarTipoDescontado() {
+		String tipoNuevo = vista.getOpcionSeleccionada();
+		if (tipoNuevo.equals(tipoActual)) return;
+		
+		tipoActual = tipoNuevo;
+		
+		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
+		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
+	}
+	
+	private void computarDescuento() {
+
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		
+		case PanelMultiopcion.CAMBIO_OPCION_ACTION:
+			cambiarTipoDescontado();
+			break;
+		case VentanaAnadirDescuento.CANCELAR_ACTION:
+			new ControlInicioGestor(tienda, gestor);
+			break;
+		case VentanaAnadirDescuento.CONFIRMAR_ACTION:
+			computarDescuento();
+			break;
 		}
+		
 		
 	}
 

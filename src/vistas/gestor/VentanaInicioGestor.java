@@ -64,7 +64,8 @@ public class VentanaInicioGestor extends JPanel {
 		
 		prodYCats = factory.newIconButton("Gestionar productos y categorías", buttonHeight, 0, "productosYCategorias.png");
 				//new JButton("Gestionar productos y categorias");
-		empleados = new JButton("Gestionar empleados");
+		empleados = factory.newIconButton("Gestionar empleados", buttonHeight, 0, "productosYCategorias.png");
+		
 		
 		prodYCats.setFont(Fonts.SUBTITLE.getFont());
 		empleados.setFont(Fonts.SUBTITLE.getFont());
