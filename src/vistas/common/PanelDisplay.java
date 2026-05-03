@@ -126,4 +126,9 @@ public class PanelDisplay extends JPanel{
 		add(foto, BorderLayout.WEST);
 	}
 	
+	public void refreshDisplay() {
+		revalidate();
+		repaint();
+	}
+	
 }

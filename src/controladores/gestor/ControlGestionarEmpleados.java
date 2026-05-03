@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import modelo.sistema.Tienda;
+import modelo.usuario.Empleado;
 import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
 import vistas.gestor.VentanaGestionarEmpleados;
@@ -21,12 +22,17 @@ public class ControlGestionarEmpleados  implements ActionListener{
 		this.vista = new VentanaGestionarEmpleados(tienda);
 		
 		frame.setVistaActual(vista);
+		
+		for (Empleado e: tienda.getTodosEmpleados()) {
+			new ControlPanelEmpleadoGestionar(tienda, e, vista);
+		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		
+		case VentanaGestionarEmpleados.NUEVO_EMPLEADO_ACTION:
+			
 		}
 		
 	}

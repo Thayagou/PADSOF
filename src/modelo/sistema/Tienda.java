@@ -97,6 +97,14 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	}
 	
 	/**
+	 * Devuelve todos los empleados de la tienda
+	 * @return array de los empleados de las tiendas
+	 */
+	public Empleado[] getTodosEmpleados() {
+		return empleados.values().toArray(Empleado[]::new);
+	}
+	
+	/**
 	 * Método para obtener un cliente con su nombre
 	 * @param nombre Nombre del cliente
 	 * @return Cliente obtenido con ese nombre

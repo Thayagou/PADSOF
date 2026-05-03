@@ -33,9 +33,9 @@ public class ControlInicioGestor implements ActionListener{
 		this.frame.setVistaActual(vista);
 		this.frame.setVisible(true);
 		
-		//ControlBarraEmpleado ctrlBarraLateral = new ControlBarraEmpleado(tienda);
+		ControlBarraGestor ctrlBarraLateral = new ControlBarraGestor(tienda, gestor);
         BarraLateral barraLatera = new BarraGestor();
-        //barraLatera.setControlador(ctrlBarraLateral);
+        barraLatera.setControlador(ctrlBarraLateral);
         frame.setBarraLateral(barraLatera);
         
         ControlBarraTareas ctrlBarraTareas = new ControlBarraTareasNoRegistrado(tienda);
