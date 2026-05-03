@@ -32,10 +32,10 @@ public class ControlInicioCliente implements ActionListener {
 		tiendaFrame.removeBarraLateral();
 		
 		// Obtener productos populares del modelo y construir la vista
-		Producto[] populares = tienda.getAlmacen().getProductosCoincidentes("");
+		Producto[] populares = tienda.getAlmacen().getListaRecomendacion(cliente);
 		this.vista = new VentanaInicioCliente();
 		for(Producto p : populares) {
-			new ControlPanelProductoNoRegistrado(tienda, p, vista);
+			new ControlPanelProductoCliente(tienda, cliente, p, vista);
 		}
 		vista.setControlador(this);
 		tiendaFrame.setVistaActual(vista);

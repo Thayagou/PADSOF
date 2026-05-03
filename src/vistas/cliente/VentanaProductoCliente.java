@@ -1,24 +1,24 @@
-package vistas.noRegistrado;
+package vistas.cliente;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
 import vistas.common.*;
 import vistas.herramientas.*;
 
-// TODO: Auto-generated Javadoc
-/**
- * Vista detallada de un producto (maqueta 5). Layout: izquierda = panel de
- * valoraciones/reseñas (scrolleable), derecha = foto grande + nombre +
- * categorías + precio + descripción.
- */
-public class VentanaProductoSinRegistrar extends JPanel {
+public class VentanaProductoCliente extends JPanel {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** Constante REVIEWS_W_PERC. */
 	private static final double REVIEWS_W_PERC = 0.33;
+	
+	private static final double COMPRAR_BTN_WIDTH = 0.1;
+
+	private JButton comprar;
 
 	/** Campo resenasPanel. */
 	private JPanel resenasPanel = new JPanel();
@@ -32,7 +32,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
 	 * @param precio          parámetro precio
 	 * @param categorias      parámetro categorias
 	 */
-	public VentanaProductoSinRegistrar(String nombre, String descripcion, String image, double puntuacionMedia, double precio,
+	public VentanaProductoCliente(String nombre, String descripcion, String image, double puntuacionMedia, double precio,
 			String... categorias) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -55,6 +55,10 @@ public class VentanaProductoSinRegistrar extends JPanel {
 		/* Panel derecho - Detalle del producto */
 		JPanel rightPanel = new PanelInfoProducto(nombre, descripcion, image, puntuacionMedia, precio, categorias);
 		
+		comprar = new ButtonFactory().newRoundedButton("Añadir al carrito", reviewsW, t.getPixelsWidth(COMPRAR_BTN_WIDTH), 1);
+		comprar.setActionCommand("comprar");
+		rightPanel.add(comprar);
+
 		add(resenas, BorderLayout.WEST);
 		add(rightPanel, BorderLayout.CENTER);
 	}
@@ -68,5 +72,9 @@ public class VentanaProductoSinRegistrar extends JPanel {
 	 */
 	public void anadirPanelResena(double puntuacion, String comentario, String usr) {
 		resenasPanel.add(new PanelResena(puntuacion, comentario, usr));
+	}
+	
+	public void setControlador(ActionListener c) {
+		comprar.addActionListener(c);
 	}
 }
