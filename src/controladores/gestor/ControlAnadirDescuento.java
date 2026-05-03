@@ -9,6 +9,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
+import vistas.common.PanelMultiopcion;
 import vistas.common.TiendaFrame;
 import vistas.gestor.VentanaAnadirDescuento;
 
@@ -16,12 +17,16 @@ public class ControlAnadirDescuento implements ActionListener{
 	private Tienda tienda;
 	private Gestor gestor;
 	private VentanaAnadirDescuento vista;
+	private String tipoActual;
 	
 	public ControlAnadirDescuento(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		vista = new VentanaAnadirDescuento();
+		tipoActual = vista.getOpcionSeleccionada();
+		vista.setControlador(this);
 		
-		anadirCategorias();
+		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
+		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
 		
 		TiendaFrame.getInstance().setVistaActual(vista);
 		
@@ -30,23 +35,42 @@ public class ControlAnadirDescuento implements ActionListener{
 	public void anadirProductos() {
 		Producto[] catalogo = tienda.getAlmacen().getProductosCoincidentes("");
 	
+		vista.vaciarDescontados();
+		
 		for (Producto p: catalogo) {
-			new ControlPanelProductoSeleccion();
+			new ControlPanelProductoSeleccion(tienda, p, vista);
 		}
 	}
 	
 	public void anadirCategorias() {
 		Categoria[] categorias = tienda.getAlmacen().getCategorias();
 	
+		vista.vaciarDescontados();
+		
 		for (Categoria c: categorias) {
 			new ControlPanelCategoriaSeleccion(tienda, c, vista);
 		}
+		
+		vista.revalidate();
+		vista.repaint();
+	}
+	
+	private void cambiarTipoDescontado() {
+		String tipoNuevo = vista.getOpcionSeleccionada();
+		if (tipoNuevo.equals(tipoActual)) return;
+		
+		tipoActual = tipoNuevo;
+		
+		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
+		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		
+		case PanelMultiopcion.CAMBIO_OPCION_ACTION:
+			cambiarTipoDescontado();
+			break;
 		}
 		
 	}

@@ -11,18 +11,25 @@ import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisplay<PanelDisplay>{
+	public static final String TIPO_PRODUCTO = "Productos";
+	public static final String TIPO_CATEGORIA = "Categorias";
+	public static final String CANCELAR_ACTION = "Cancelar";
+	public static final String CONFIRMAR_ACTION = "Confirmar";
+	
+	private static String[] TIPOS_DESCONTADOS = {TIPO_PRODUCTO, TIPO_CATEGORIA};
+	
 	private JTextField valorMinimo;
 	private JComboBox<String> tipoComp;
 	private JTextField valorCompensacion;
 	private JButton regalo;
 	private JSpinner inicio;
 	private JSpinner fin;
-	public static String TIPO_PRODUCTO = "Productos";
-	public static String TIPO_CATEGORIA = "Categorias";
-	private static String[] TIPOS_DESCONTADOS = {TIPO_PRODUCTO, TIPO_CATEGORIA};
 	
+	private JButton confirmar;
+	private JButton cancelar;
 	private JPanel listaDescontados = new JPanel();
 	private PanelMultiopcion panelOpciones;
 	
@@ -90,8 +97,12 @@ public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisp
 
         // -- Botones --
         JPanel botones = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 8));
-        botones.add(roundButton("Cancelar", new Color(160, 0, 200)));
-        botones.add(roundButton("Confirmar", new Color(160, 0, 200)));
+        
+        confirmar = factory.newRoundedButton(CONFIRMAR_ACTION, 36, 400, 0.5f);
+        cancelar = factory.newRoundedButton(CANCELAR_ACTION, 36, 400, 0.5f);
+        
+        botones.add(cancelar);
+        botones.add(confirmar);
         panel.add(botones);
 
         return panel;
@@ -117,32 +128,19 @@ public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisp
     public String getOpcionSeleccionada() {
     	return TIPOS_DESCONTADOS[panelOpciones.getOpcionSeleccionada()];
     }
-
-    private JButton roundButton(String text, Color color) {
-        JButton btn = new JButton(text) {
-            @Override protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), getHeight(), getHeight());
-                g2.dispose();
-                super.paintComponent(g);
-            }
-        };
-        btn.setBackground(color);
-        btn.setForeground(Color.WHITE);
-        btn.setFont(btn.getFont().deriveFont(Font.BOLD, 14f));
-        btn.setFocusPainted(false);
-        btn.setBorderPainted(false);
-        btn.setContentAreaFilled(false);
-        btn.setOpaque(false);
-        btn.setPreferredSize(new Dimension(120, 36));
-        return btn;
+    
+    public void vaciarDescontados() {
+    	listaDescontados.removeAll();
     }
 
 	@Override
 	public <K extends PanelDisplay> PanelDisplay anadirDisplay(K panelDisplay) {
 		listaDescontados.add(panelDisplay);
 		return panelDisplay;
+	}
+	
+	
+	public void setControlador(ActionListener l) {
+		panelOpciones.setControlador(l);
 	}
 }

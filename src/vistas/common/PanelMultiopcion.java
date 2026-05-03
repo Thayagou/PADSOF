@@ -21,6 +21,7 @@ public class PanelMultiopcion extends JPanel {
 	private static final double HEADER_GAP_V_MACRO = 6.0 / 1080.0; /* Espacio vertical interno de la cabecera */
 	private static final double HEADER_PAD_MACRO = 8.0 / 1080.0; /* Padding vertical de la cabecera */
 
+	public static final String CAMBIO_OPCION_ACTION = "Cambiar opcion";
 	/* ── Estado interno ── */
 	private final JComboBox<String> selector;
 
@@ -45,6 +46,7 @@ public class PanelMultiopcion extends JPanel {
 		/* ── Selector ── */
 		selector = new JComboBox<>(opciones);
 		selector.setFont(Fonts.TEXT.getFont());
+		selector.setActionCommand(CAMBIO_OPCION_ACTION);
 
 		/* ── Cabecera ── */
 		JPanel cabecera = new JPanel(new FlowLayout(FlowLayout.LEFT, headerGapH, headerGapV));
