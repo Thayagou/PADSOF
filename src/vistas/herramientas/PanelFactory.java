@@ -45,6 +45,19 @@ public class PanelFactory {
 		return panel;
 	}
 
+	public static JPanel getColumnaDeBotones(JButton... botones) {
+		TiendaFrame t = TiendaFrame.getInstance();
+		double VERTICAL_GAP = 0.07;
+
+		JPanel btnPanel = new JPanel(new GridLayout(botones.length, 1, 0, t.getPixelsHeight(VERTICAL_GAP)));
+		btnPanel.setOpaque(false);
+
+		for (JButton btn : botones) {
+			btnPanel.add(btn);
+		}
+		return wrapVertical(btnPanel, t.getPixelsHeight(VERTICAL_GAP));
+	}
+
 	/**
 	 * Devuelve un panel con el contenido y una cabecera
 	 *
@@ -68,7 +81,7 @@ public class PanelFactory {
 
 		return ventana;
 	}
-	
+
 	public static JPanel buildAvatar() {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int size = t.getPixelsHeight(0.04);
@@ -184,7 +197,7 @@ public class PanelFactory {
 
 		return scroll;
 	}
-	
+
 	/**
 	 * Añade un espacio arriba y abajo del panel
 	 *
@@ -193,17 +206,17 @@ public class PanelFactory {
 	 * @return Panel con el Panel que se pasó con dos espacios arriba y abajo
 	 */
 	public static JPanel wrapVertical(JPanel panel, int space) {
-	    JPanel wrapper = new JPanel();
-	    wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
-	    wrapper.setOpaque(false);
+		JPanel wrapper = new JPanel();
+		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
+		wrapper.setOpaque(false);
 
-	    wrapper.add(Box.createVerticalStrut(space));
-	    wrapper.add(panel);
-	    wrapper.add(Box.createVerticalStrut(space));
+		wrapper.add(Box.createVerticalStrut(space));
+		wrapper.add(panel);
+		wrapper.add(Box.createVerticalStrut(space));
 
-	    return wrapper;
+		return wrapper;
 	}
-	
+
 	/**
 	 * Añade un espacio a la izquierda y derecha del panel
 	 *
@@ -212,14 +225,14 @@ public class PanelFactory {
 	 * @return Panel con el Panel que se pasó con dos espacios arriba y abajo
 	 */
 	public static JPanel wrapHorizontal(JPanel panel, int space) {
-	    JPanel wrapper = new JPanel();
-	    wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
-	    wrapper.setOpaque(false);
+		JPanel wrapper = new JPanel();
+		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
+		wrapper.setOpaque(false);
 
-	    wrapper.add(Box.createHorizontalStrut(space));
-	    wrapper.add(panel);
-	    wrapper.add(Box.createHorizontalStrut(space));
+		wrapper.add(Box.createHorizontalStrut(space));
+		wrapper.add(panel);
+		wrapper.add(Box.createHorizontalStrut(space));
 
-	    return wrapper;
+		return wrapper;
 	}
 }

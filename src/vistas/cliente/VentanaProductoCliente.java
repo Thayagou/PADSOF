@@ -15,8 +15,9 @@ public class VentanaProductoCliente extends JPanel {
 
 	/** Constante REVIEWS_W_PERC. */
 	private static final double REVIEWS_W_PERC = 0.33;
-	
-	private static final double COMPRAR_BTN_WIDTH = 0.1;
+
+	private static final double COMPRAR_BTN_WIDTH = 0.2;
+	private static final double COMPRAR_BTN_HEIGHT = 0.06;
 
 	private JButton comprar;
 
@@ -32,8 +33,8 @@ public class VentanaProductoCliente extends JPanel {
 	 * @param precio          parámetro precio
 	 * @param categorias      parámetro categorias
 	 */
-	public VentanaProductoCliente(String nombre, String descripcion, String image, double puntuacionMedia, double precio,
-			String... categorias) {
+	public VentanaProductoCliente(String nombre, String descripcion, String image, double puntuacionMedia,
+			double precio, String... categorias) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
 		resenasPanel.setLayout(new BoxLayout(resenasPanel, BoxLayout.Y_AXIS));
@@ -54,10 +55,16 @@ public class VentanaProductoCliente extends JPanel {
 
 		/* Panel derecho - Detalle del producto */
 		JPanel rightPanel = new PanelInfoProducto(nombre, descripcion, image, puntuacionMedia, precio, categorias);
-		
-		comprar = new ButtonFactory().newRoundedButton("Añadir al carrito", reviewsW, t.getPixelsWidth(COMPRAR_BTN_WIDTH), 1);
+
+		comprar = new ButtonFactory().newRoundedButton("Añadir al carrito", t.getPixelsHeight(COMPRAR_BTN_HEIGHT),
+				t.getPixelsWidth(COMPRAR_BTN_WIDTH), 1);
 		comprar.setActionCommand("comprar");
-		rightPanel.add(comprar);
+		comprar.setAlignmentX(CENTER_ALIGNMENT);
+
+		JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		wrapper.setOpaque(false);
+		wrapper.add(comprar);
+		rightPanel.add(wrapper);
 
 		add(resenas, BorderLayout.WEST);
 		add(rightPanel, BorderLayout.CENTER);
@@ -73,7 +80,7 @@ public class VentanaProductoCliente extends JPanel {
 	public void anadirPanelResena(double puntuacion, String comentario, String usr) {
 		resenasPanel.add(new PanelResena(puntuacion, comentario, usr));
 	}
-	
+
 	public void setControlador(ActionListener c) {
 		comprar.addActionListener(c);
 	}

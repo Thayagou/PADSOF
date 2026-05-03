@@ -14,18 +14,20 @@ import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
 
 public class ControlPanelProductoCliente implements ActionListener {
-	private Producto producto;
-	private Tienda tienda;
-	private PanelProducto panel;
-	private ClienteRegistrado cliente;
+	protected Producto producto;
+	protected Tienda tienda;
+	protected PanelProducto panel;
+	protected VentanaConDisplay<? super PanelProducto> vista;
+	protected ClienteRegistrado cliente;
 
-	private static final String DF_PRODUCT_IMAGE = "producto.png";
+	protected static final String DF_PRODUCT_IMAGE = "producto.png";
 
 	public ControlPanelProductoCliente(Tienda tienda, ClienteRegistrado cliente, Producto producto,
 			VentanaConDisplay<? super PanelProducto> vista) {
 		this.producto = producto;
 		this.tienda = tienda;
 		this.cliente = cliente;
+		this.vista = vista;
 
 		ArrayList<String> categorias = new ArrayList<>();
 		for (Categoria c : producto.getCategorias()) {

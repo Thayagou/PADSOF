@@ -18,19 +18,19 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	private static final long serialVersionUID = 1L;
 
 	/** Campo productos. */
-	private ArrayList<PanelProducto> productos = new ArrayList<>();
+	protected ArrayList<? super PanelProducto> productos = new ArrayList<>();
 	
 	/** Campo listaPanel. */
-	private JPanel listaPanel;
+	protected JPanel listaPanel;
 	
 	/** Campo ordenCombo. */
-	private PanelMultiopcion panelOpciones;
+	protected PanelMultiopcion panelOpciones;
 
 	/** Campo clickListener. */
-	private ActionListener clickListener; // para navegar al detalle
+	protected ActionListener clickListener; // para navegar al detalle
 
 	/** Constante ORDENES. */
-	private static final String[] ORDENES = { "Mejor valorados", "Peor valorados", "Precio: menor a mayor",
+	protected static final String[] ORDENES = { "Mejor valorados", "Peor valorados", "Precio: menor a mayor",
 			"Precio: mayor a menor", "Nombre A-Z", "Nombre Z-A" };
 
 	/**
@@ -67,7 +67,7 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	/**
 	 * refrescarLista.
 	 */
-	private void refrescarLista() {
+	protected void refrescarLista() {
 		PanelProducto[] ordenados = Arrays.copyOf(productos.toArray(new PanelProducto[0]), productos.size());
 		switch (panelOpciones.getOpcionSeleccionada()) {
 		case 0 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPuntuacionMedia).reversed());
@@ -103,7 +103,7 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	}
 
 	@Override
-	public PanelProducto anadirDisplay(PanelProducto panelDisplay) {
+	public <K extends PanelProducto> PanelProducto anadirDisplay(K panelDisplay) {
 		productos.add(panelDisplay);
 		refrescarLista();
 		return panelDisplay;
