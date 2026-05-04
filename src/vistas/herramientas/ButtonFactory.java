@@ -6,6 +6,16 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.Image;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.RenderingHints;
+ 
+import javax.swing.BorderFactory;
+import javax.swing.JToolTip;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -41,27 +51,28 @@ public class ButtonFactory {
 		Image img = original.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
 		return new ImageIcon(img);
 	}
-	
-	public ImageIcon loadImageInBounds(String imageName, int maxH, int maxW) {
+
+	public static ImageIcon loadImageInBounds(String imageName, int maxH, int maxW) {
 		ImageIcon original = loadImageIcon(imageName);
-		if (maxH <= 0 || maxW <= 0) return original;
-		
+		if (maxH <= 0 || maxW <= 0)
+			return original;
+
 		int imgW = original.getIconWidth();
-	    int imgH = original.getIconHeight();
+		int imgH = original.getIconHeight();
 
-	    // Solo escalar si supera los límites
-	    if (imgH > maxH || imgW > maxW || (imgH < maxH && imgW < maxW)) {
-	        double scaleH = (double) maxH / imgH;
-	        double scaleW = (double) maxW / imgW;
-	        double scale = Math.min(scaleH, scaleW); // mantener proporción
+		// Solo escalar si supera los límites
+		if (imgH > maxH || imgW > maxW || (imgH < maxH && imgW < maxW)) {
+			double scaleH = (double) maxH / imgH;
+			double scaleW = (double) maxW / imgW;
+			double scale = Math.min(scaleH, scaleW); // mantener proporción
 
-	        int newW = (int)(imgW * scale);
-	        int newH = (int)(imgH * scale);
+			int newW = (int) (imgW * scale);
+			int newH = (int) (imgH * scale);
 
-	        Image scaled = original.getImage().getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
-	        original = new ImageIcon(scaled);
-	    }
-	    
+			Image scaled = original.getImage().getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+			original = new ImageIcon(scaled);
+		}
+
 		return original;
 	}
 
@@ -74,9 +85,9 @@ public class ButtonFactory {
 		button.setFont(Fonts.TEXT.getFont());
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
-		
+
 		paintButton(button, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		
+
 		addMouseMecanics(button, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 	}
 
@@ -107,7 +118,8 @@ public class ButtonFactory {
 		return button;
 	}
 
-	public static JButton newRoundedIconButton(String label, int height, int width, double roundness, String imageName) {
+	public static JButton newRoundedIconButton(String label, int height, int width, double roundness,
+			String imageName) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
 
@@ -129,7 +141,7 @@ public class ButtonFactory {
 
 		return button;
 	}
-	
+
 	public static JButton newButtonLeft(String label, int height, int width) {
 		JButton button = new JButton(getHTMLLabel(label));
 		button.setActionCommand(label);
@@ -140,7 +152,7 @@ public class ButtonFactory {
 		return button;
 	}
 
-	public JButton newIconButton(String imageName, int height, int width) {
+	public static JButton newIconButton(String imageName, int height, int width) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = new JButton(icon);
 
@@ -154,7 +166,7 @@ public class ButtonFactory {
 		return button;
 	}
 
-	public JButton newIconButton(String label, int height, int width, String imageName) {
+	public static JButton newIconButton(String label, int height, int width, String imageName) {
 
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = newButton(label);
@@ -187,7 +199,7 @@ public class ButtonFactory {
 
 		return label;
 	}
-	
+
 	public static JLabel newLeftAlignedLabel(String text, Fonts font) {
 		JLabel label = new JLabel(getHTMLLabel(text));
 		label.setFont(font.getFont());
@@ -222,7 +234,7 @@ public class ButtonFactory {
 		return field;
 	}
 
-	public JSpinner spinnerFecha(Fonts font) {
+	public static JSpinner spinnerFecha(Fonts font) {
 		SpinnerDateModel modelo = new SpinnerDateModel();
 		JSpinner spinner = new JSpinner(modelo);
 		JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");
@@ -260,4 +272,110 @@ public class ButtonFactory {
 		return spinner;
 	}
 
+	/**
+     * Añade un tooltip visualmente personalizado al botón {@code btn} que
+     * aparece tras {@code nSecs} segundos de hover y desaparece al salir.
+     *
+     * El estilo (fondo, borde, fuente) se define aquí una sola vez y es
+     * independiente del UIManager global, por lo que puede diferir del
+     * tooltip por defecto de la aplicación.
+     *
+     * Uso:
+     *   ButtonFactory.addHoverInfo(miBoton, "Volver a la pantalla anterior", 1.0);
+     *
+     * @param btn   Botón al que se añade el tooltip.
+     * @param txt   Texto que mostrará el tooltip.
+     * @param nSecs Segundos de espera antes de que aparezca (puede ser decimal, ej. 0.5).
+     */
+    public static void addHoverInfo(JButton btn, String txt, double nSecs) {
+
+        // ── Construir el panel del tooltip ────────────────────────────────
+        // Usamos un JPanel personalizado en lugar de setToolTipText() para
+        // tener control total sobre el aspecto visual.
+        JToolTip tooltip = new JToolTip() {
+            private static final long serialVersionUID = 1L;
+
+            {
+                // Fondo y borde iguales al UIManager de TiendaFrame,
+                // pero definidos aquí para no depender del orden de inicialización.
+                setBackground(ColorPalette.CARD_LIGHT.getColor());
+                setForeground(ColorPalette.DARK_GREY.getColor());
+                setFont(Fonts.TEXT.getFont());
+                setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor(), 1),
+                        BorderFactory.createEmptyBorder(4, 8, 4, 8)
+                ));
+                setOpaque(true);
+            }
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                // Fondo redondeado para que combine con RoundedButton
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                        RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 8, 8);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        tooltip.setTipText(txt);
+
+        // ── Ventana ligera que contiene el tooltip ────────────────────────
+        // Popup en vez de JWindow para que no robe el foco y no aparezca
+        // en la barra de tareas del sistema operativo.
+        Popup[] popupHolder = { null }; // array para poder modificarlo desde el lambda
+
+        // ── Timer por botón ───────────────────────────────────────────────
+        int delayMs = (int)(nSecs * 1000);
+        javax.swing.Timer timer = new javax.swing.Timer(delayMs, null);
+        timer.setRepeats(false); // dispara una sola vez por hover
+
+        timer.addActionListener(ev -> {
+            // Calcular posición: justo debajo del botón
+            Point loc = btn.getLocationOnScreen();
+            int x = loc.x;
+            int y = loc.y + btn.getHeight() + 2;
+
+            // Ajustar tamaño del tooltip al texto
+            tooltip.setSize(tooltip.getPreferredSize());
+
+            PopupFactory factory = PopupFactory.getSharedInstance();
+            popupHolder[0] = factory.getPopup(btn, tooltip, x, y);
+            popupHolder[0].show();
+        });
+
+        // ── MouseListener ─────────────────────────────────────────────────
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+                timer.restart(); // reinicia el contador cada vez que se entra
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                timer.stop();
+                if (popupHolder[0] != null) {
+                    popupHolder[0].hide();
+                    popupHolder[0] = null;
+                }
+            }
+
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent e) {
+                // Ocultar también al hacer clic para no dejar el tooltip flotando
+                timer.stop();
+                if (popupHolder[0] != null) {
+                    popupHolder[0].hide();
+                    popupHolder[0] = null;
+                }
+            }
+        });
+
+        // Desactivar el tooltip nativo de Swing para este botón
+        // (evita que aparezcan dos tooltips a la vez si alguien llama también a setToolTipText)
+        btn.setToolTipText(null);
+    }
 }

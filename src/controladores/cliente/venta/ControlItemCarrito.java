@@ -12,7 +12,6 @@ import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.StockExterno;
 import vistas.common.*;
-import vistas.cliente.*;
 import vistas.cliente.venta.PanelItemCarrito;
 
 public class ControlItemCarrito implements ActionListener {

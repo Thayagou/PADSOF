@@ -3,6 +3,9 @@ package controladores.cliente.venta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
@@ -11,7 +14,7 @@ import vistas.cliente.venta.VentanaAnadirResena;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 
-public class ControlAnadirResena implements ActionListener {
+public class ControlAnadirResena implements ActionListener, ControladorPantalla {
 	
 	Tienda tienda;
 	ClienteRegistrado cliente;
@@ -26,7 +29,7 @@ public class ControlAnadirResena implements ActionListener {
 		this.vista = new VentanaAnadirResena();
 		vista.setControlador(this);
 		
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
@@ -35,12 +38,17 @@ public class ControlAnadirResena implements ActionListener {
 		case "enviar":
 			try{
 				producto.anadirResena(new Resena(vista.getValoracion(), vista.getComentario(), cliente));
-				new VentanaMensaje("Su reseña se ha añadido");
+				TiendaFrame.getInstance().volverAtras();
 			} catch(Exception ex) {
 				new VentanaMensaje(ex.getMessage());
 			}
 		}
 		
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }
 

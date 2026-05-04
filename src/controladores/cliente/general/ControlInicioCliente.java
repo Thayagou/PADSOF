@@ -3,22 +3,24 @@ package controladores.cliente.general;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.SwingUtilities;
+import javax.swing.JPanel;
 
+import controladores.ControladorPantalla;
 import controladores.cliente.venta.ControlPanelProductoCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
 import vistas.common.TiendaFrame;
-import vistas.cliente.*;
 import vistas.cliente.general.BarraLateralCliente;
 import vistas.cliente.general.BarraTareasCliente;
 import vistas.cliente.general.VentanaInicioCliente;
 
-public class ControlInicioCliente implements ActionListener {
+public class ControlInicioCliente implements ActionListener, ControladorPantalla {
 
+	@SuppressWarnings("unused")
 	private Tienda tienda;
-	private VentanaInicioCliente vista;
+	private final VentanaInicioCliente vista;
+	@SuppressWarnings("unused")
 	private ClienteRegistrado cliente;
 
 	public ControlInicioCliente(Tienda tienda, ClienteRegistrado cliente) {
@@ -46,7 +48,7 @@ public class ControlInicioCliente implements ActionListener {
 			new ControlPanelProductoCliente(tienda, cliente, p, vista);
 		}
 		vista.setControlador(this);
-		tiendaFrame.setVistaActual(vista);
+		tiendaFrame.resetearNavegacion(this);
 	}
 
 	@Override
@@ -54,5 +56,10 @@ public class ControlInicioCliente implements ActionListener {
 		switch(e.getActionCommand()) {
 
 		}
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

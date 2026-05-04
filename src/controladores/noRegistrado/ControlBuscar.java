@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.exceptions.CustomException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
@@ -13,7 +16,7 @@ import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 import vistas.noRegistrado.VentanaBusqueda;
 
-public class ControlBuscar implements ActionListener {
+public class ControlBuscar implements ActionListener, ControladorPantalla {
 	protected Tienda tienda;
 	protected VentanaBusqueda vista;
 
@@ -21,7 +24,7 @@ public class ControlBuscar implements ActionListener {
 		this.tienda = tienda;
 		this.vista = new VentanaBusqueda(Arrays.stream(tienda.getAlmacen().getCategorias()).map(Categoria::getNombre).toArray(String[]::new));
 		this.vista.setControlador(this);
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 	
 	@Override
@@ -54,5 +57,10 @@ public class ControlBuscar implements ActionListener {
 		} catch (NumberFormatException ex) {
 			new VentanaMensaje("Introduce valores numéricos válidos");
 		}
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

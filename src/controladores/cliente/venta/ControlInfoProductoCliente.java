@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
@@ -11,10 +14,9 @@ import modelo.venta.productos.Producto;
 import modelo.venta.productos.Resena;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
-import vistas.cliente.*;
 import vistas.cliente.venta.VentanaProductoCliente;
 
-public class ControlInfoProductoCliente implements ActionListener {
+public class ControlInfoProductoCliente implements ActionListener, ControladorPantalla {
 
 	private Tienda tienda;
 	private Producto producto;
@@ -47,7 +49,7 @@ public class ControlInfoProductoCliente implements ActionListener {
 			vista.anadirPanelResena(r.getPuntuacion(), r.getComentario(), r.getUsuario().getNombre());
 		}
 
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
@@ -60,5 +62,10 @@ public class ControlInfoProductoCliente implements ActionListener {
 				new VentanaMensaje(ex.getMessage());
 			}
 		}
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

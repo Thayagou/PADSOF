@@ -9,24 +9,20 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelSizes;
 import controladores.ControlBarraTareas;
 
-public class BarraTareasCliente extends BarraTareas{
+public class BarraTareasCliente extends BarraTareas {
 	private static final long serialVersionUID = 1L;
-	
+
 	private static double BTN_SEARCH_W = 0.2;
 	private static double BTN_ACCOUNT_W = 0.1;
 	private static double SPACE_BETWEEN = 0.01;
-	
+
+	private JButton volver;
 	private JButton home;
 	private JButton notificaciones;
 	private JButton buscar;
 	private JButton carrito;
 	private JButton cuenta;
-	/*private ImageIcon getImageIcon(String route, int height, int width) {
-		ImageIcon iconoOriginal = new ImageIcon(route);
-		Image imagenEscalada = iconoOriginal.getImage().getScaledInstance(height, width, Image.SCALE_SMOOTH);
-		return new ImageIcon(imagenEscalada);
-	}*/
-	
+
 	public BarraTareasCliente(String cliente) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -35,88 +31,97 @@ public class BarraTareasCliente extends BarraTareas{
 		int btnH = h - 2 * spaceBetween;
 		int searchW = t.getPixelsWidth(BTN_SEARCH_W);
 		int accountW = t.getPixelsWidth(BTN_ACCOUNT_W);
-		int homeW = btnH;
-		int notisW = btnH;
-		int carW = btnH;
+		int squareW = btnH; // tamaño cuadrado para iconos y volver
 
 		setBackground(ColorPalette.BLUE.getColor());
 		setPreferredSize(new Dimension(0, h));
 
-		ButtonFactory f = new ButtonFactory();
-		
-		/**=========================================================================
-		 * ################     CREACION DE LOS BOTONES         ####################
-		 * =======================================================================*/
-		home = f.newIconButton("homeButton.png", btnH, homeW);
-		f.paintButton(home, ColorPalette.BLUE, ColorPalette.WHITE);
+		volver = ButtonFactory.newIconButton("flechaAtras.png", btnH, squareW);
+		ButtonFactory.paintButton(volver, ColorPalette.BLUE, ColorPalette.WHITE);
+		volver.setActionCommand("Volver");
+		volver.setToolTipText("Volver atrás");
+		ButtonFactory.addMouseMecanics(volver, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(volver, "Volver atrás", 0);
+
+		home = ButtonFactory.newIconButton("homeButton.png", btnH, squareW);
+		ButtonFactory.paintButton(home, ColorPalette.BLUE, ColorPalette.WHITE);
 		home.setActionCommand("Home");
-		f.addMouseMecanics(home, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
-		
-		notificaciones = f.newIconButton("notificaciones.png", btnH, notisW);
-		f.paintButton(notificaciones, ColorPalette.BLUE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(home, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(home, "Ventana de Inicio", 0);
+
+		notificaciones = ButtonFactory.newIconButton("notificaciones.png", btnH, squareW);
+		ButtonFactory.paintButton(notificaciones, ColorPalette.BLUE, ColorPalette.WHITE);
 		notificaciones.setActionCommand("Notificaciones");
-		f.addMouseMecanics(notificaciones, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addMouseMecanics(notificaciones, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(notificaciones, "Notificaciones", 0);
 
-		buscar = f.newRoundedButton("Buscar", btnH, searchW, 1);
-		f.paintButton(buscar, ColorPalette.WHITE, ColorPalette.BLACK);
+		buscar = ButtonFactory.newRoundedButton("Buscar", btnH, searchW, 1);
+		ButtonFactory.paintButton(buscar, ColorPalette.WHITE, ColorPalette.BLACK);
 		buscar.setActionCommand("Buscar productos");
-		f.addMouseMecanics(buscar, ColorPalette.WHITE, ColorPalette.HOVER_BLUE);
-		
-		carrito = f.newIconButton("carrito.png", btnH, carW);
-		f.paintButton(carrito, ColorPalette.BLUE, ColorPalette.WHITE);
-		carrito.setActionCommand("Carrito");
-		f.addMouseMecanics(carrito, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addMouseMecanics(buscar, ColorPalette.WHITE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(buscar, "Buscar Productos", 0);
 
-		cuenta = f.newRoundedButton(cliente, btnH, accountW, 0.25);
-		f.paintButton(cuenta, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		carrito = ButtonFactory.newIconButton("carrito.png", btnH, squareW);
+		ButtonFactory.paintButton(carrito, ColorPalette.BLUE, ColorPalette.WHITE);
+		carrito.setActionCommand("Carrito");
+		ButtonFactory.addMouseMecanics(carrito, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(carrito, "Ver Carrito", 0);
+
+		cuenta = ButtonFactory.newRoundedButton(cliente, btnH, accountW, 0.25);
+		ButtonFactory.paintButton(cuenta, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		cuenta.setActionCommand("Cuenta");
-		f.addMouseMecanics(cuenta, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.addMouseMecanics(cuenta, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.addHoverInfo(cuenta, "Gestionar cuenta", 0);
+
 		
-		/**=========================================================================
-		 * ################     LAYOUT DE LA BARRA DE TAREAS   ####################
-		 * =======================================================================*/
+		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		add(Box.createHorizontalStrut(spaceBetween));
-		home.setMaximumSize(new Dimension(homeW, btnH));
-		home.setPreferredSize(new Dimension(homeW, btnH));
-		home.setMinimumSize(new Dimension(homeW, btnH));
+		fijarTamano(volver, squareW, btnH);
+		add(volver);
+		add(Box.createHorizontalStrut(spaceBetween));
+
+		fijarTamano(home, squareW, btnH);
 		add(home);
 		add(Box.createHorizontalStrut(spaceBetween));
-		
-		notificaciones.setMaximumSize(new Dimension(notisW, btnH));
-		notificaciones.setPreferredSize(new Dimension(notisW, btnH));
-		notificaciones.setMinimumSize(new Dimension(notisW, btnH));
+
+		fijarTamano(notificaciones, squareW, btnH);
 		add(notificaciones);
 		add(Box.createHorizontalStrut(spaceBetween));
 
+		// Buscar se expande
 		buscar.setMaximumSize(new Dimension(searchW, btnH));
 		buscar.setPreferredSize(new Dimension(searchW, btnH));
 		buscar.setMinimumSize(new Dimension(100, btnH));
 		add(buscar);
 		add(Box.createHorizontalGlue());
 		add(Box.createHorizontalStrut(spaceBetween));
-		
-		carrito.setMaximumSize(new Dimension(carW, btnH));
-		carrito.setPreferredSize(new Dimension(carW, btnH));
-		carrito.setMinimumSize(new Dimension(carW, btnH));
+
+		fijarTamano(carrito, squareW, btnH);
 		add(carrito);
 		add(Box.createHorizontalStrut(spaceBetween));
-				
-		cuenta.setMaximumSize(new Dimension(accountW, btnH));
-		cuenta.setPreferredSize(new Dimension(accountW, btnH));
-		cuenta.setMinimumSize(new Dimension(accountW, btnH));
+
+		fijarTamano(cuenta, accountW, btnH);
 		add(cuenta);
 		add(Box.createHorizontalStrut(spaceBetween));
 	}
 
+	/** Fija las tres dimensiones a la vez para evitar que BoxLayout las ignore. */
+	private static void fijarTamano(JButton btn, int w, int h) {
+		Dimension d = new Dimension(w, h);
+		btn.setMaximumSize(d);
+		btn.setPreferredSize(d);
+		btn.setMinimumSize(d);
+	}
+
 	@Override
 	public void setControlador(ControlBarraTareas c) {
+		volver.addActionListener(c); // [NUEVO]
 		home.addActionListener(c);
 		notificaciones.addActionListener(c);
 		buscar.addActionListener(c);
 		carrito.addActionListener(c);
-		cuenta.addActionListener(c);		
+		cuenta.addActionListener(c);
 	}
-	
 }

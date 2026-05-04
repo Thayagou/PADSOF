@@ -1,112 +1,248 @@
 package vistas.common;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+import controladores.ControladorPantalla;
 import modelo.aplicacion.GuiExe;
 import vistas.herramientas.PanelSizes;
-
 
 public class TiendaFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static TiendaFrame instance;
+
+	// Componentes originales
 	private Component vistaActual;
 	private BarraLateral barraLateral;
 	private BarraTareas barraTareas;
 	private FondoGradiente fondo;
 	private int height;
 	private int width;
-	
+
+	// ----- NUEVO: Sistema de navegación con pila -----
+	private final CardLayout cardLayout = new CardLayout();
+	private final JPanel contentPanel = new JPanel(cardLayout);
+	private final Deque<ControladorPantalla> pilaPantallas = new ArrayDeque<>();
+	private ControladorPantalla controladorActual = null;
+	// -------------------------------------------------
+
 	private TiendaFrame() {
 		setTitle("Android's Dungeon");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		//setExtendedState(MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
-		
-		Rectangle screen = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                .getMaximumWindowBounds();
+
+		Rectangle screen = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
 		this.width = screen.width;
 		this.height = screen.height;
-		
 		setSize(width, height);
-		
+
 		fondo = new FondoGradiente();
+		fondo.setLayout(new BorderLayout()); // Necesario para que funcione el CENTER
 		fondo.setVisible(true);
+
+		// El contentPanel se añade al centro del fondo
+		contentPanel.setOpaque(false);
+		fondo.add(contentPanel, BorderLayout.CENTER);
+
 		add(fondo);
 	}
-	
+
 	public static TiendaFrame getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new TiendaFrame();
 			instance.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
 			instance.addWindowListener(new WindowAdapter() {
-			    @Override
-			    public void windowClosing(WindowEvent e) {
-			        GuiExe.guardarTienda();
-			        instance.dispose();
-			        System.exit(0);
-			    }
+				@Override
+				public void windowClosing(WindowEvent e) {
+					GuiExe.guardarTienda();
+					instance.dispose();
+					System.exit(0);
+				}
 			});
 		}
 		instance.setVisible(true);
-		return instance; 
+		return instance;
 	}
-	
+
 	public void setBarraTareas(BarraTareas barraTareas) {
-		if (this.barraTareas != null) fondo.remove(this.barraTareas);
+		if (this.barraTareas != null)
+			fondo.remove(this.barraTareas);
 		fondo.add(barraTareas, BorderLayout.NORTH);
 		this.barraTareas = barraTareas;
 		revalidate();
-	    repaint();
+		repaint();
 	}
-	
+
 	public void setBarraLateral(BarraLateral barraLateral) {
-		if (this.barraLateral != null) fondo.remove(this.barraLateral);
+		if (this.barraLateral != null)
+			fondo.remove(this.barraLateral);
 		fondo.add(barraLateral, BorderLayout.WEST);
 		this.barraLateral = barraLateral;
 		revalidate();
-	    repaint();
+		repaint();
 	}
-	
+
 	public void removeBarraLateral() {
-		if (this.barraLateral != null) fondo.remove(this.barraLateral);
+		if (this.barraLateral != null)
+			fondo.remove(this.barraLateral);
 		revalidate();
-	    repaint();
+		repaint();
 	}
-	
-	public void setFondo(FondoGradiente fondo) {
-		if (this.fondo != null) remove(this.fondo);
-		fondo.add(barraLateral, BorderLayout.WEST);
-		fondo.add(barraTareas, BorderLayout.NORTH);
-		fondo.add(vistaActual, BorderLayout.CENTER);
-		add(fondo);
+
+	public void setFondo(FondoGradiente nuevoFondo) {
+		if (this.fondo != null)
+			remove(this.fondo);
+		nuevoFondo.add(barraLateral, BorderLayout.WEST);
+		nuevoFondo.add(barraTareas, BorderLayout.NORTH);
+		nuevoFondo.add(vistaActual, BorderLayout.CENTER);
+		add(nuevoFondo);
+		this.fondo = nuevoFondo;
 		revalidate();
-	    repaint();
+		repaint();
 	}
-	
+
+	/**
+	 * Establece la vista actual (compatible con código antiguo). Si se pasa un
+	 * JPanel que pertenece a un ControladorPantalla, se puede usar navegarA(). Por
+	 * simplicidad, aquí se añade directamente al contentPanel.
+	 */
+	@Deprecated
 	public void setVistaActual(Component vista) {
-		if(vistaActual != null) fondo.remove(vistaActual);
+		if (vistaActual != null) {
+			contentPanel.remove(vistaActual);
+		}
 		vistaActual = vista;
-		fondo.add(vista, BorderLayout.CENTER);
+		// Para compatibilidad, añadimos el componente al contentPanel con una clave
+		String clave = "legacy_" + System.identityHashCode(vista);
+		if (vista instanceof JPanel && ((JPanel) vista).getClientProperty("_navClave") == null) {
+			((JPanel) vista).putClientProperty("_navClave", clave);
+			contentPanel.add((JPanel) vista, clave);
+		} else if (vista instanceof JPanel) {
+			// ya añadido, no hacer nada
+		} else {
+			// No es JPanel, no podemos añadirlo al CardLayout (solo acepta JPanel)
+			// En ese caso, se añade directamente al fondo (comportamiento original)
+			fondo.add(vista, BorderLayout.CENTER);
+			revalidate();
+			repaint();
+			return;
+		}
+		cardLayout.show(contentPanel, clave);
 		revalidate();
-	    repaint();
+		repaint();
 	}
-	
+
 	public Component getVistaActual() {
 		return vistaActual;
 	}
-	
-	public int getPixelsWidth(double percentage) { return (int)(width * percentage); }
-	public int getPixelsHeight(double percentage) { return (int)(height * percentage); }
-	
-	public int toolBarDistFromTop() { return (int) (height * PanelSizes.TOOLBAR_HEIGHT); }
-	public int optionBarDistFromLeft() { return (int) (width * PanelSizes.OPTION_BAR_WIDTH); }
-	public int btnHeight() { return (int) (height * PanelSizes.BTN_HEIGHT); }
+
+	public int getPixelsWidth(double percentage) {
+		return (int) (width * percentage);
+	}
+
+	public int getPixelsHeight(double percentage) {
+		return (int) (height * percentage);
+	}
+
+	public int toolBarDistFromTop() {
+		return (int) (height * PanelSizes.TOOLBAR_HEIGHT);
+	}
+
+	public int optionBarDistFromLeft() {
+		return (int) (width * PanelSizes.OPTION_BAR_WIDTH);
+	}
+
+	public int btnHeight() {
+		return (int) (height * PanelSizes.BTN_HEIGHT);
+	}
+
+	/* ========== NUEVOS MÉTODOS PARA NAVEGACIÓN ========== */
+	/**
+	 * Navega a una nueva pantalla gestionada por un ControladorPantalla. La vista
+	 * del controlador debe ser un JPanel.
+	 */
+	public void navegarA(ControladorPantalla nuevoControlador) {
+		if (controladorActual != null) {
+			controladorActual.ocultar();
+			pilaPantallas.push(controladorActual);
+		}
+		JPanel vista = nuevoControlador.getVista();
+		String clave = claveUnica(nuevoControlador);
+		if (vista.getClientProperty("_navClave") == null) {
+			vista.putClientProperty("_navClave", clave);
+			contentPanel.add(vista, clave);
+		}
+		controladorActual = nuevoControlador;
+		cardLayout.show(contentPanel, clave);
+		controladorActual.mostrar();
+		// Actualizar vistaActual por si se usa el método antiguo
+		this.vistaActual = vista;
+		revalidate();
+		repaint();
+	}
+
+	/** Vuelve a la pantalla anterior, si existe. */
+	public void volverAtras() {
+		if (pilaPantallas.isEmpty()) {
+			return;
+		}
+		if (controladorActual != null) {
+			controladorActual.ocultar();
+		}
+		controladorActual = pilaPantallas.pop();
+		String clave = (String) controladorActual.getVista().getClientProperty("_navClave");
+		cardLayout.show(contentPanel, clave);
+		controladorActual.mostrar();
+		this.vistaActual = controladorActual.getVista();
+		revalidate();
+		repaint();
+	}
+
+	/**
+	 * Vacía la pila de pantallas anteriores y destruye todos los controladores
+	 * almacenados en ella. No afecta a la pantalla actual. Útil para liberar
+	 * memoria si se sabe que no se volverá atrás.
+	 */
+	public void vaciarPila() {
+		while (!pilaPantallas.isEmpty()) {
+			pilaPantallas.pop().destruir();
+		}
+	}
+
+	/**
+	 * Resetea por completo el historial de navegación y establece una nueva
+	 * pantalla raíz (por ejemplo, la pantalla de login o el catálogo tras cerrar
+	 * sesión).
+	 * 
+	 * @param nuevaRaiz Controlador de la pantalla que se mostrará como inicio. El
+	 *                  historial anterior se eliminará y no se podrá volver atrás.
+	 */
+	public void resetearNavegacion(ControladorPantalla nuevaRaiz) {
+		// Destruir el controlador actual si existe
+		if (controladorActual != null) {
+			controladorActual.ocultar();
+			controladorActual.destruir();
+			controladorActual = null;
+		}
+		// Vaciar y destruir todos los controladores apilados
+		while (!pilaPantallas.isEmpty()) {
+			pilaPantallas.pop().destruir();
+		}
+		// Navegar a la nueva raíz (no se apila porque no hay pantalla actual)
+		navegarA(nuevaRaiz);
+	}
+
+	private static String claveUnica(ControladorPantalla c) {
+		return c.getClass().getName() + "_" + System.identityHashCode(c);
+	}
 }

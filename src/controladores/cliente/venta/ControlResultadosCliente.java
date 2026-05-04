@@ -1,13 +1,20 @@
 package controladores.cliente.venta;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
 import vistas.noRegistrado.*;
 import vistas.common.*;
 
-public class ControlResultadosCliente {
+public class ControlResultadosCliente implements ActionListener, ControladorPantalla {
 	
+	@SuppressWarnings("unused")
 	private Tienda tienda;
 	private VentanaResultadosNoRegistrado vista;
 
@@ -19,6 +26,16 @@ public class ControlResultadosCliente {
 			new ControlPanelProductoCliente(tienda, cliente, p, vista);
 		}
 		
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		/* Sin acciones en esta ventana */
 	}
 }

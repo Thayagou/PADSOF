@@ -22,6 +22,9 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 	
 	/** Constante BTN_SEARCH_W. */
 	private static final double BTN_SEARCH_W = 0.35;
+	
+	/** Boton para volver atras */
+	private JButton volverAtras;
 
 	/** Campo btnBuscar. */
 	private JButton btnBuscar;
@@ -48,25 +51,32 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		setBackground(ColorPalette.BLUE.getColor());
 		setPreferredSize(new Dimension(0, h));
 
-		ButtonFactory f = new ButtonFactory();
-		
 		/**=========================================================================
 		 * ################     CREACION DE LOS BOTONES         ####################
 		 * =======================================================================*/
-		btnHome = f.newIconButton("homeButton.png", btnH, homeW);
-		f.paintButton(btnHome, ColorPalette.BLUE, ColorPalette.WHITE);
+		volverAtras = ButtonFactory.newIconButton("flechaAtras.png", btnH, homeW);
+		ButtonFactory.paintButton(volverAtras, ColorPalette.BLUE, ColorPalette.WHITE);
+		volverAtras.setActionCommand("Volver");
+		ButtonFactory.addMouseMecanics(volverAtras, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(volverAtras, "Volver atrás", 0);
+		
+		btnHome = ButtonFactory.newIconButton("homeButton.png", btnH, homeW);
+		ButtonFactory.paintButton(btnHome, ColorPalette.BLUE, ColorPalette.WHITE);
 		btnHome.setActionCommand("Home");
-		f.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(btnHome, "Ventana de Inicio", 0);
 
-		btnBuscar = f.newRoundedButton("Buscar", btnH, searchW, 1);
-		f.paintButton(btnBuscar, ColorPalette.WHITE, ColorPalette.BLACK);
+		btnBuscar = ButtonFactory.newRoundedButton("Buscar", btnH, searchW, 1);
+		ButtonFactory.paintButton(btnBuscar, ColorPalette.WHITE, ColorPalette.BLACK);
 		btnBuscar.setActionCommand("Buscar productos");
-		f.addMouseMecanics(btnBuscar, ColorPalette.WHITE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addMouseMecanics(btnBuscar, ColorPalette.WHITE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(btnBuscar, "Buscar Productos", 0);
 
-		btnIniciarSesion = f.newRoundedButton("Iniciar sesión / Registrarse", btnH, accountW, 0.25);
-		f.paintButton(btnIniciarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		btnIniciarSesion = ButtonFactory.newRoundedButton("Iniciar sesión / Registrarse", btnH, accountW, 0.25);
+		ButtonFactory.paintButton(btnIniciarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		btnIniciarSesion.setActionCommand("Iniciar sesión");
-		f.addMouseMecanics(btnIniciarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.addMouseMecanics(btnIniciarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.addHoverInfo(btnIniciarSesion, "Iniciar/Registrar", 0);
 		
 		/**=========================================================================
 		 * ################     LAYOUT DE LA BARRA DE TAREAS   ####################
@@ -74,6 +84,12 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		add(Box.createHorizontalStrut(spaceBetween));
+		volverAtras.setMaximumSize(new Dimension(homeW, btnH));
+		volverAtras.setPreferredSize(new Dimension(homeW, btnH));
+		volverAtras.setMinimumSize(new Dimension(homeW, btnH));
+		add(volverAtras);
+		add(Box.createHorizontalStrut(spaceBetween));
+		
 		btnHome.setMaximumSize(new Dimension(homeW, btnH));
 		btnHome.setPreferredSize(new Dimension(homeW, btnH));
 		btnHome.setMinimumSize(new Dimension(homeW, btnH));
@@ -105,5 +121,6 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		btnBuscar.addActionListener(c);
 		btnIniciarSesion.addActionListener(c);
 		btnHome.addActionListener(c);
+		volverAtras.addActionListener(c);
 	}
 }

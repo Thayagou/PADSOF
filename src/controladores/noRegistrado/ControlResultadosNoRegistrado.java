@@ -3,14 +3,16 @@ package controladores.noRegistrado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
 import vistas.common.TiendaFrame;
 import vistas.noRegistrado.VentanaResultadosNoRegistrado;
 
-public class ControlResultadosNoRegistrado implements ActionListener {
+public class ControlResultadosNoRegistrado implements ActionListener, ControladorPantalla {
 
 	private Tienda tienda;
 	private VentanaResultadosNoRegistrado vista;
@@ -29,7 +31,7 @@ public class ControlResultadosNoRegistrado implements ActionListener {
 			vista.anadirProducto(p.getNombre(), p.getDescripcion(), p.getPuntuacionMedia(), p.getPrecio(), categorias.toArray(new String[0]));*/
 		}
 		
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
@@ -50,5 +52,10 @@ public class ControlResultadosNoRegistrado implements ActionListener {
 				new vistas.common.VentanaMensaje("Producto no encontrado: " + nombreProducto);
 			}
 		});
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

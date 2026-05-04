@@ -68,7 +68,6 @@ public class VentanaBusqueda extends JPanel {
 		setLayout(new BorderLayout());
 
 		TiendaFrame t = TiendaFrame.getInstance();
-		ButtonFactory b = new ButtonFactory();
 		int height = t.getHeight();
 		int width = t.getWidth();
 		int spaceBetween = t.getPixelsWidth(SPACING);
@@ -77,8 +76,8 @@ public class VentanaBusqueda extends JPanel {
 		estrellas.setPreferredSize(
 				new Dimension((int) (SPINNER_WIDTH_FACTOR * width), (int) (SPINNER_HEIGHT_FACTOR * height)));
 		estrellas.setFont(Fonts.BOLD.getFont());
-		precioMin = b.newTextField(DEFAULT_MIN_PRICE, Fonts.TEXT);
-		precioMax = b.newTextField(DEFAULT_MAX_PRICE, Fonts.TEXT);
+		precioMin = ButtonFactory.newTextField(DEFAULT_MIN_PRICE, Fonts.TEXT);
+		precioMax = ButtonFactory.newTextField(DEFAULT_MAX_PRICE, Fonts.TEXT);
 
 		JPanel contenidoFiltros = new JPanel();
 		contenidoFiltros.setOpaque(true);
@@ -94,7 +93,7 @@ public class VentanaBusqueda extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = GBC_WEIGHTX;
-		contenidoFiltros.add(b.newLabel("Estrellas mínimas:", Fonts.TEXT), gbc);
+		contenidoFiltros.add(ButtonFactory.newLabel("Estrellas mínimas:", Fonts.TEXT), gbc);
 		gbc.gridx = 1;
 		gbc.weightx = GBC_WEIGHTX;
 		contenidoFiltros.add(estrellas, gbc);
@@ -102,7 +101,7 @@ public class VentanaBusqueda extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.weightx = GBC_WEIGHTX;
-		contenidoFiltros.add(b.newLabel("Precio mínimo:", Fonts.TEXT), gbc);
+		contenidoFiltros.add(ButtonFactory.newLabel("Precio mínimo:", Fonts.TEXT), gbc);
 		gbc.gridx = 1;
 		gbc.weightx = GBC_WEIGHTX;
 		contenidoFiltros.add(precioMin, gbc);
@@ -110,7 +109,7 @@ public class VentanaBusqueda extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy++;
 		gbc.weightx = GBC_WEIGHTX;
-		contenidoFiltros.add(b.newLabel("Precio máximo:", Fonts.TEXT), gbc);
+		contenidoFiltros.add(ButtonFactory.newLabel("Precio máximo:", Fonts.TEXT), gbc);
 		gbc.gridx = 1;
 		gbc.weightx = GBC_WEIGHTX;
 		contenidoFiltros.add(precioMax, gbc);
@@ -139,11 +138,11 @@ public class VentanaBusqueda extends JPanel {
 
 		JPanel panelCategorias = PanelFactory.getVentanaConCabecera("Categorías", scroll);
 
-		botonBuscar = b.newRoundedButton("Buscar", t.getPixelsHeight(BUTTON_HEIGHT_FACTOR),
+		botonBuscar = ButtonFactory.newRoundedButton("Buscar", t.getPixelsHeight(BUTTON_HEIGHT_FACTOR),
 				t.getPixelsWidth(BUTTON_WIDTH_FACTOR), BUTTON_ROUND_RADIUS);
 		botonBuscar.setBackground(ColorPalette.PURPLE.getColor());
 		botonBuscar.setForeground(ColorPalette.WHITE.getColor());
-		b.addMouseMecanics(botonBuscar, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
+		ButtonFactory.addMouseMecanics(botonBuscar, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
 
 		JPanel panelBoton = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panelBoton.setOpaque(false);

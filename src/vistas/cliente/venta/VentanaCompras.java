@@ -36,6 +36,11 @@ public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPed
 		pedidos.revalidate();
 		pedidos.repaint();
 	}
+	
+	public void limpiarPedidos() {
+        pedidos.removeAll();
+        refreshList();
+    }
 
 	@Override
 	public <K extends PanelPedido> PanelPedido anadirDisplay(K panelDisplay) {

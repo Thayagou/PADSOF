@@ -3,17 +3,18 @@ package controladores.cliente.general;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import controladores.ControladorPantalla;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
-import vistas.cliente.*;
 import vistas.cliente.general.VentanaCuentaCliente;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 
-public class ControlManejoCuenta implements ActionListener {
+public class ControlManejoCuenta implements ActionListener, ControladorPantalla {
 
 	private Tienda tienda;
 	private VentanaCuentaCliente vista;
@@ -27,7 +28,7 @@ public class ControlManejoCuenta implements ActionListener {
 		
 		vista.setControlador(this);
 		
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
@@ -43,5 +44,10 @@ public class ControlManejoCuenta implements ActionListener {
 		case "Cerrar Sesión":
 			SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
 		}
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

@@ -4,14 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.*;
 import vistas.common.*;
 import vistas.noRegistrado.VentanaProductoSinRegistrar;
 
-public class ControlProductoSinRegistrar implements ActionListener {
+public class ControlProductoSinRegistrar implements ActionListener, ControladorPantalla {
 
 	private Tienda tienda;
 	private VentanaProductoSinRegistrar vista;
@@ -36,7 +38,7 @@ public class ControlProductoSinRegistrar implements ActionListener {
 			vista.anadirPanelResena(r.getPuntuacion(), r.getComentario(), r.getUsuario().getNombre());
 		}
 		
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
@@ -53,5 +55,10 @@ public class ControlProductoSinRegistrar implements ActionListener {
 	private void volver() {
 		// Vuelve a la pantalla de inicio sin registrar
 		SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

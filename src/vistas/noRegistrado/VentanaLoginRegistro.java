@@ -57,35 +57,21 @@ public class VentanaLoginRegistro extends JPanel {
 		add(vista);
 	}
 
-	// ──────────────────────────────────────────────
-	// Asignar controladores
 	/**
-	 * Establece ControladorLogin.
+	 * Establece Controlador.
 	 *
 	 * @param c nuevo valor
 	 */
-	// ──────────────────────────────────────────────
-	public void setControladorLogin(ActionListener c) {
+	public void setControlador(ActionListener c) {
 		logInForum.setControlador(c);
-	}
-
-	/**
-	 * Establece ControladorRegistro.
-	 *
-	 * @param c nuevo valor
-	 */
-	public void setControladorRegistro(ActionListener c) {
 		signInForum.setControlador(c);
 	}
 
-	// ──────────────────────────────────────────────
-	// Getters para los controladores
 	/**
 	 * Obtiene LoginUsuario.
 	 *
 	 * @return valor de LoginUsuario
 	 */
-	// ──────────────────────────────────────────────
 	public String getLoginUsuario() {
 		return logInForum.getCampo(0);
 	}

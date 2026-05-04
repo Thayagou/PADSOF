@@ -2,8 +2,11 @@ package controladores.noRegistrado;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import controladores.ControladorPantalla;
 import controladores.cliente.general.ControlInicioCliente;
 import controladores.empleado.ControlInicioEmpleado;
 import controladores.gestor.ControlInicioGestor;
@@ -19,7 +22,7 @@ import vistas.noRegistrado.VentanaLoginRegistro;
  * Crea la vista, inyecta ambos controladores en sus botones respectivos
  * y la muestra como vista actual.
  */
-public class ControlLoginRegistro {
+public class ControlLoginRegistro implements ActionListener, ControladorPantalla {
 
     private final Tienda            tienda;
     private final VentanaLoginRegistro vista;
@@ -29,20 +32,9 @@ public class ControlLoginRegistro {
         this.vista  = new VentanaLoginRegistro();
 
         // Inyectar listener de login
-        vista.setControladorLogin(new ActionListener() {
-            @Override public void actionPerformed(ActionEvent e) {
-                intentarLogin();
-            }
-        });
+        vista.setControlador(this);
 
-        // Inyectar listener de registro
-        vista.setControladorRegistro(new ActionListener() {
-            @Override public void actionPerformed(ActionEvent e) {
-                intentarRegistro();
-            }
-        });
-
-        TiendaFrame.getInstance().setVistaActual(vista);
+        TiendaFrame.getInstance().navegarA(this);
     }
 
     // ──────────────────────────────────────────────────────────────────────
@@ -80,4 +72,21 @@ public class ControlLoginRegistro {
             SwingUtilities.invokeLater(() -> new ControlInicioCliente(tienda, cliente));
         }
     }
+
+	@Override
+	public JPanel getVista() {
+		return vista;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch(e.getActionCommand()) {
+		case "Log In":
+			intentarLogin();
+			break;
+		case "Crear cuenta":
+			intentarRegistro();
+			break;
+		}
+	}
 }

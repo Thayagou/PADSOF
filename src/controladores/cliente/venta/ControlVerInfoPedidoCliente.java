@@ -3,18 +3,21 @@ package controladores.cliente.venta;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.pedidos.Pedido;
-import modelo.venta.productos.Producto;
 import modelo.venta.productos.StockExterno;
 import vistas.cliente.venta.VentanaInfoPedidoCliente;
 import vistas.common.TiendaFrame;
 
-public class ControlVerInfoPedidoCliente implements ActionListener {
+public class ControlVerInfoPedidoCliente implements ActionListener, ControladorPantalla {
 
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
+	@SuppressWarnings("unused")
 	private Pedido pedido;
 	private VentanaInfoPedidoCliente vista;
 
@@ -31,7 +34,7 @@ public class ControlVerInfoPedidoCliente implements ActionListener {
 
 		vista.setControlador(this);
 
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
@@ -42,5 +45,10 @@ public class ControlVerInfoPedidoCliente implements ActionListener {
 			new ControlVerCompras(tienda, cliente);
 			break;
 		}
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

@@ -2,14 +2,16 @@ package controladores.noRegistrado;
 
 import java.awt.event.*;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.*;
 import vistas.common.*;
 import vistas.noRegistrado.*;
 
-public class ControlInicioSinRegistrar implements ActionListener {
+public class ControlInicioSinRegistrar implements ActionListener, ControladorPantalla {
 
 	private Tienda tienda;
 	private VentanaInicioSinRegistrar vista;
@@ -35,7 +37,7 @@ public class ControlInicioSinRegistrar implements ActionListener {
 		for(Producto p : populares) {
 			new ControlPanelProductoNoRegistrado(tienda, p, vista);
 		}
-		tiendaFrame.setVistaActual(vista);
+		tiendaFrame.resetearNavegacion(this);
 	}
 
 	@Override
@@ -52,5 +54,10 @@ public class ControlInicioSinRegistrar implements ActionListener {
 				}
 			});
 		}
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }
