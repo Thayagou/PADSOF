@@ -39,7 +39,7 @@ public class ControlValoracionIndividual implements ActionListener {
 
 		List<String> tiposEstado = new LinkedList<>();
 		for (EstadoFisicoArticulo e : EstadoFisicoArticulo.values()) {
-			tiposEstado.add(e.name());
+			if(!e.name().equals("PENDIENTE")) tiposEstado.add(e.name());
 		}
 
 		LocalDateTime fecha = articulo.getValoracion().getFechaSolicitud();
@@ -57,11 +57,11 @@ public class ControlValoracionIndividual implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "Valorar":
-			intentarValorar(tienda, empleado, articulo);
+			intentarValorar();
 		}
 	}
 		
-	private void intentarValorar(Tienda tienda, Empleado empleado, ArticuloSegundaMano articulo) {
+	private void intentarValorar() {
 		double estimacion = -1;
 		try {
 			estimacion = Double.parseDouble(vista.getEstimacion());

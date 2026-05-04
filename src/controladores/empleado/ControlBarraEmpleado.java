@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
 import controladores.empleado.gestionarIntercambios.ControlGestIntercambios;
+import controladores.empleado.gestionarPedidos.ControlGestPedidos;
 import controladores.empleado.valorarArticulos.ControlValorarObjetos;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;

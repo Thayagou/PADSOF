@@ -45,14 +45,13 @@ public class ControlPanelIntercambioConBoton implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("llega aqui");
 		switch (e.getActionCommand()) {
 		case ACTION_NAME:
-			intentarConfirmar(tienda, empleado, intercambio);
+			intentarConfirmar();
 		}
 	}
 	
-	private void intentarConfirmar(Tienda tienda, Empleado empleado, Intercambio intercambio) {
+	private void intentarConfirmar() {
 		try {
 			tienda.getHistorial().validarIntercambio(empleado, intercambio);
 		} catch (InvalidPermitException | InvalidArgumentException ex) {
@@ -60,7 +59,6 @@ public class ControlPanelIntercambioConBoton implements ActionListener {
 		}
 		
 		new VentanaMensaje("El intercambio se ha confirmado correctamente");
-		
 		SwingUtilities.invokeLater(() -> new ControlGestIntercambios(tienda, empleado));
 	}
 

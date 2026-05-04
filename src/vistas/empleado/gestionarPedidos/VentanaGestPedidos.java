@@ -1,4 +1,4 @@
-package vistas.empleado.gestionarIntercambios;
+package vistas.empleado.gestionarPedidos;
 
 import java.awt.BorderLayout;
 
@@ -6,15 +6,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import vistas.common.PanelIntercambioConBoton;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaGestIntercambios extends JPanel implements VentanaConDisplay<PanelIntercambioConBoton>{
+public class VentanaGestPedidos extends JPanel implements VentanaConDisplay<PanelPedidoGestionarPedido>{
 	private static final long serialVersionUID = 1L;
 	private JPanel listaPanel;
 
-	public VentanaGestIntercambios() {
+	public VentanaGestPedidos() {
 		setLayout(new BorderLayout());
 		setOpaque(false);
 		
@@ -31,14 +30,14 @@ public class VentanaGestIntercambios extends JPanel implements VentanaConDisplay
 		panelCentral.setOpaque(false);
 		panelCentral.add(BorderLayout.CENTER, scroll);
 
-		JPanel ventana = PanelFactory.getVentanaConCabecera("Intercambios pendientes de confirmar", panelCentral);
+		JPanel ventana = PanelFactory.getVentanaConCabecera("Pedidos pendientes de avanzar", panelCentral);
 		ventana.setOpaque(false);
 		
 		add(ventana, BorderLayout.CENTER);
 	}
 
 	@Override
-	public PanelIntercambioConBoton anadirDisplay(PanelIntercambioConBoton panelDisplay) {
+	public PanelPedidoGestionarPedido anadirDisplay(PanelPedidoGestionarPedido panelDisplay) {
 		listaPanel.add(panelDisplay);
 		listaPanel.revalidate();
 		listaPanel.repaint();
