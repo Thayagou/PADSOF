@@ -14,39 +14,48 @@ public class PanelFormulario extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/* ── Macros de layout (relativos a resolución base 1920×1080) ── */
-	private static final double CORNER_RADIUS_MACRO          = 50.0  / 1920.0;
-	
-	private static final double HEADER_PADDING_TOP_MACRO     = 12.0  / 1080.0;
-	private static final double HEADER_PADDING_LEFT_MACRO    = 16.0  / 1920.0;
-	private static final double HEADER_PADDING_BOTTOM_MACRO  = 12.0  / 1080.0;
-	private static final double HEADER_PADDING_RIGHT_MACRO   = 16.0  / 1920.0;
-	
-	private static final double BODY_PADDING_TOP_MACRO       = 16.0  / 1080.0;
-	private static final double BODY_PADDING_LEFT_MACRO      = 32.0  / 1920.0;
-	private static final double BODY_PADDING_BOTTOM_MACRO    = 8.0   / 1080.0;
-	private static final double BODY_PADDING_RIGHT_MACRO     = 32.0  / 1920.0;
-	
-	private static final double STRUT_LABEL_FIELD_MACRO      = 4.0   / 1080.0;
-	private static final double STRUT_BETWEEN_FIELDS_MACRO   = 12.0  / 1080.0;
-	private static final double STRUT_BEFORE_BUTTON_MACRO    = 4.0   / 1080.0;
-	private static final double STRUT_AFTER_BUTTON_MACRO     = 16.0  / 1080.0;
-	
-	private static final double BTN_HEIGHT_MACRO             = 50.0  / 1080.0;
-	private static final double BTN_WIDTH_MACRO              = 150.0 / 1920.0;
-	private static final double BTN_ROUNDNESS                = 1.0;
+	private static final double CORNER_RADIUS_MACRO = 50.0 / 1920.0;
+
+	private static final double HEADER_PADDING_TOP_MACRO = 12.0 / 1080.0;
+	private static final double HEADER_PADDING_LEFT_MACRO = 16.0 / 1920.0;
+	private static final double HEADER_PADDING_BOTTOM_MACRO = 12.0 / 1080.0;
+	private static final double HEADER_PADDING_RIGHT_MACRO = 16.0 / 1920.0;
+
+	private static final double BODY_PADDING_TOP_MACRO = 16.0 / 1080.0;
+	private static final double BODY_PADDING_LEFT_MACRO = 32.0 / 1920.0;
+	private static final double BODY_PADDING_BOTTOM_MACRO = 8.0 / 1080.0;
+	private static final double BODY_PADDING_RIGHT_MACRO = 32.0 / 1920.0;
+
+	private static final double STRUT_LABEL_FIELD_MACRO = 4.0 / 1080.0;
+	private static final double STRUT_BETWEEN_FIELDS_MACRO = 12.0 / 1080.0;
+	private static final double STRUT_BEFORE_BUTTON_MACRO = 4.0 / 1080.0;
+	private static final double STRUT_AFTER_BUTTON_MACRO = 16.0 / 1080.0;
+
+	private static final double BTN_HEIGHT_MACRO = 50.0 / 1080.0;
+	private static final double BTN_WIDTH_MACRO = 150.0 / 1920.0;
+	private static final double BTN_ROUNDNESS = 1.0;
 
 	/* ── Estado interno ── */
 	private final JTextField[] fields;
 	private final JButton boton;
 
+	private boolean arrayContainsValue(Integer[] array, int value) {
+		for (Integer i : array) {
+			if (i.equals(value))
+				return true;
+		}
+		return false;
+	}
+
 	/**
-	 * Construye el formulario.
+	 * Construye el formulario con campos visibles y ocultos
 	 *
 	 * @param titulo     Texto de la cabecera de la tarjeta.
-	 * @param labels     Etiquetas de cada campo de texto, en orden.
 	 * @param botonTexto Texto del botón de acción.
+	 * @param passIndexes Array con las posiciones de los campos ocultos, empezando desde 1
+	 * @param labels     Etiquetas de cada campo de texto, en orden.
 	 */
-	public PanelFormulario(String titulo, String botonTexto, String...labels) {
+	public PanelFormulario(String titulo, String botonTexto, Integer[] passIndexes, String... labels) {
 		setOpaque(false);
 		setLayout(new GridBagLayout()); /* Centra la tarjeta en el panel */
 
@@ -72,7 +81,11 @@ public class PanelFormulario extends JPanel {
 		/* ── Campos de texto ── */
 		fields = new JTextField[labels.length];
 		for (int i = 0; i < labels.length; i++) {
-			fields[i] = new JTextField(15);
+			if (arrayContainsValue(passIndexes, i + 1)) {
+				fields[i] = new JPasswordField(15);
+			} else {
+				fields[i] = new JTextField(15);
+			}
 			fields[i].setFont(Fonts.TEXT.getFont());
 			fields[i].setAlignmentX(CENTER_ALIGNMENT);
 		}
@@ -82,7 +95,7 @@ public class PanelFormulario extends JPanel {
 		boton.setActionCommand(botonTexto);
 		boton.setBackground(ColorPalette.PURPLE.getColor());
 		boton.setForeground(ColorPalette.WHITE.getColor());
-		//boton.setOpaque(true);
+		// boton.setOpaque(true);
 		boton.setBorderPainted(false);
 		ButtonFactory.addMouseMecanics(boton, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
 
@@ -127,6 +140,17 @@ public class PanelFormulario extends JPanel {
 		card.add(body, BorderLayout.CENTER);
 
 		add(card); /* GridBagLayout lo centra automáticamente */
+	}
+	
+	/**
+	 * Constructor con todos los campos visibles
+	 *
+	 * @param titulo Titulo que pondrá en la cabecera
+	 * @param botonTexto Texto del botón
+	 * @param labels Etiquetas de los campos
+	 */
+	public PanelFormulario(String titulo, String botonTexto, String... labels) {
+		this(titulo, botonTexto, new Integer[] {}, labels);
 	}
 
 	/**
