@@ -11,63 +11,36 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import vistas.common.PanelCategoria;
-import vistas.common.TiendaFrame;
+import vistas.common.PanelDisplay;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-public class PanelCategoriaGestionarCategoria extends PanelCategoria {
-
+public class PanelCrearCategoria extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
-	public static final String MODIFICAR_ACTION = "Modificar";
-	public static final String BORRAR_ACTION = "Borrar";
-	public static final String CONFIRMAR_ACTION = "Confirmar";
-	private JButton modButton;
-	private JButton borrarButton;
-	private JButton confirmarMod;
-
+	public final static String CREAR_ACTION = "Crear nueva categoría";
+	public final static String CONFIRMAR_ACTION = "Confirmar";
+	private JButton confirmarButton;
+	
 	private JTextField nombreCategoria;
 	private boolean expanded = false;
 	private JPanel expandedPanel;
 	private Dimension originalMaxSize;
 
-	public PanelCategoriaGestionarCategoria(String nombreCategoria) {
-		super(nombreCategoria, "");
-
-		JPanel eastPanel = new JPanel();
-		eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.X_AXIS));
-		eastPanel.setOpaque(false);
-		int maxWidth = TiendaFrame.getInstance().getPixelsWidth(BOTON_PERC_W);
-		eastPanel.setPreferredSize(new Dimension(maxWidth, (int) (maxCompHeight * BOTON_PERC_H)));
-
-		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H),
-				maxCompHeight, 0.75f);
-		ButtonFactory.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
-
-		borrarButton = ButtonFactory.newRoundedButton(BORRAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H),
-				maxCompHeight, 0.75f);
-		ButtonFactory.paintButton(borrarButton, ColorPalette.RED, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(borrarButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
+	public PanelCrearCategoria() {
+		super(0.08, 0.06, CREAR_ACTION);
 		
-		confirmarMod = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
-		ButtonFactory.paintButton(confirmarMod, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(confirmarMod, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		JLabel label = new JLabel(CREAR_ACTION);
+		label.setFont(Fonts.TITLE3.getFont());
+		add(label, BorderLayout.CENTER);
 		
-		int gapSize = (int) (maxCompHeight * (1 - 2 * BOTON_PERC_H) / 3);
-		eastPanel.add(Box.createHorizontalStrut(gapSize));
-		eastPanel.add(modButton);
-		eastPanel.add(Box.createHorizontalStrut(gapSize));
-		eastPanel.add(borrarButton);
-		eastPanel.add(Box.createHorizontalStrut(gapSize));
-
-		add(eastPanel, BorderLayout.EAST);
+		confirmarButton = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		ButtonFactory.paintButton(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		
 		super.getClickArea().addActionListener(e -> toggleExpand());
-		modButton.addActionListener(e -> toggleExpand());
 	}
-
+	
 	public void toggleExpand() {
 		if (expanded) {
 			collapsePanel();
@@ -94,7 +67,7 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 			expandedPanel.add(textField);
 			int gapSize = (int) (maxCompHeight * (1 - 2 * BOTON_PERC_H) / 3);
 			expandedPanel.add(Box.createHorizontalStrut(gapSize));
-			expandedPanel.add(confirmarMod);
+			expandedPanel.add(confirmarButton);
 
 			expandedPanel.setVisible(false);
 			add(expandedPanel, BorderLayout.SOUTH);
@@ -124,14 +97,12 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 	    revalidate();
 	    repaint();
 	}
-
+	
 	public void setControlador(ActionListener c) {
 		super.setControlador(c);
-		modButton.addActionListener(c);
-		borrarButton.addActionListener(c);
-		confirmarMod.addActionListener(c);
+		confirmarButton.addActionListener(c);
 	}
-
+	
 	public String getNombreCategoria() {
 		return nombreCategoria.getText();
 	}

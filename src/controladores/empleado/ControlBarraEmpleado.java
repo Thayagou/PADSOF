@@ -32,7 +32,7 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 		case "Añadir nuevo producto" -> showAnadirProducto();
 		case "Cargar fichero de productos" -> showCargarFichero();
 		case "Gestionar productos existentes" -> showProductosExistentes();
-		case "Gestionar categorías existentes" -> showCategoriasExistentes();
+		case "Gestionar categorías" -> showCategoriasExistentes();
 		case "Crear packs de productos" -> showCrearPacks();
 		case "Gestionar pedidos" -> showGPedidos();
 		case "Valorar objetos de segunda mano" -> showValorar();

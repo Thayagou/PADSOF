@@ -123,6 +123,10 @@ public class PanelDisplay extends JPanel{
 		if(clickArea != null) clickArea.addActionListener(l);
 	}
 	
+	public JButton getClickArea() {
+		return clickArea;
+	}
+	
 	public void anadirFoto(String imageName, double fotoWPerc) {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int fotoW = t.getPixelsWidth(fotoWPerc);

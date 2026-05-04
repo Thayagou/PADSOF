@@ -5,13 +5,11 @@ import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-
-import vistas.common.PanelCategoria;
+import vistas.common.PanelDisplay;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaGestionarCategorias extends JSplitPane implements VentanaConDisplay<PanelCategoria> {
+public class VentanaGestionarCategorias extends JPanel implements VentanaConDisplay<PanelDisplay> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -38,12 +36,14 @@ public class VentanaGestionarCategorias extends JSplitPane implements VentanaCon
 		ventana.setOpaque(false);
 		add(ventana, BorderLayout.CENTER);
 	}
-	
+
 	@Override
-	public PanelCategoria anadirDisplay(PanelCategoria panelDisplay) {
+	public <K extends PanelDisplay> PanelDisplay anadirDisplay(K panelDisplay) {
 		listaPanel.add(panelDisplay);
 		listaPanel.revalidate();
 		listaPanel.repaint();
 		return panelDisplay;
 	}
+	
+	
 }

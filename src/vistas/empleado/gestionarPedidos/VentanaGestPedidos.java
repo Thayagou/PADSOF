@@ -32,7 +32,6 @@ public class VentanaGestPedidos extends JPanel implements VentanaConDisplay<Pane
 
 		JPanel ventana = PanelFactory.getVentanaConCabecera("Pedidos pendientes de avanzar", panelCentral);
 		ventana.setOpaque(false);
-		
 		add(ventana, BorderLayout.CENTER);
 	}
 

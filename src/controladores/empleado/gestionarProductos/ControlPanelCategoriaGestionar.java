@@ -50,14 +50,14 @@ public class ControlPanelCategoriaGestionar implements ActionListener {
 		} catch (InvalidArgumentException | InvalidPermitException e) {
 			new VentanaMensaje(e.getMessage());
 		}
-		new VentanaMensaje("La categoría se ha borrado correctamente");
 		SwingUtilities.invokeLater(() -> new ControlGestionarCategorias(tienda, usuario));
+		new VentanaMensaje("La categoría se ha borrado correctamente");
 	}
 
 	private void intentarModificar() {
 		String nuevoNombre = panel.getNombreCategoria();
-		if(nuevoNombre.equals("Nombre")) {
-			new VentanaMensaje("Introduzca un nombre para la nueva categoría");
+		if(nuevoNombre.equals("Nombre") || nuevoNombre.length() < 1) {
+			new VentanaMensaje("Introduzca un nuevo nombre para la categoría");
 			return;
 		}
 		
@@ -66,8 +66,8 @@ public class ControlPanelCategoriaGestionar implements ActionListener {
 		} catch (InvalidArgumentException | InvalidPermitException e) {
 			new VentanaMensaje(e.getMessage());
 		}
-		new VentanaMensaje("La categoría se ha modificado correctamente");
 		SwingUtilities.invokeLater(() -> new ControlGestionarCategorias(tienda, usuario));
+		new VentanaMensaje("La categoría se ha modificado correctamente");
 	}
 	
 }
