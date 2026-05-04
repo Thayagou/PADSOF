@@ -18,9 +18,6 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 		this.tienda = tienda;
 		this.empleado = empleado;
 		this.vista = vista;
-		
-		
-		
 		String[] permisos = empleado.getPermisos().stream().map(p->p.name()).toArray(String[]::new);
 		
 		panel = new PanelEmpleado(empleado.getNombre(), empleado.estaDeAlta(), permisos);

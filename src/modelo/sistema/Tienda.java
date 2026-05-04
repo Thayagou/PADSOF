@@ -283,7 +283,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	    	Sistema.getInstancia().setTiempoCaducaCarrito(duracion);
 	    	break;
 	    case DURACION_OFERTA:
-	    	Sistema.getInstancia().setTiempoCaducaCarrito(duracion);
+	    	Sistema.getInstancia().setTiempoCaducaOferta(duracion);
 	    	break;
 	    default:
         	throw new InvalidArgumentException("Parámetro de recomendación inválido", "gestionar parámetros del sistema");
