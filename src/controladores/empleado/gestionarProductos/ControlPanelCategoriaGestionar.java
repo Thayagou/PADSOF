@@ -3,19 +3,27 @@ package controladores.empleado.gestionarProductos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.SwingUtilities;
+
+import modelo.exceptions.InvalidArgumentException;
+import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
+import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
 import vistas.common.PanelCategoria;
 import vistas.common.VentanaConDisplay;
-import vistas.empleado.PanelCategoriaGestionarCategoria;
+import vistas.common.VentanaMensaje;
+import vistas.empleado.gestionarProductos.PanelCategoriaGestionarCategoria;
 
 public class ControlPanelCategoriaGestionar implements ActionListener {
-	private Categoria categoria;
-	private Tienda tienda;
+	private final Categoria categoria;
+	private final Usuario usuario;
+	private final Tienda tienda;
 	private PanelCategoriaGestionarCategoria panel;
 	
-	public ControlPanelCategoriaGestionar(Tienda tienda, Categoria categoria, VentanaConDisplay<? super PanelCategoria> vista) {
+	public ControlPanelCategoriaGestionar(Tienda tienda, Usuario usuario, Categoria categoria, VentanaConDisplay<? super PanelCategoria> vista) {
 		this.tienda = tienda;
+		this.usuario = usuario;
 		this.categoria = categoria;
 		
 		panel = new PanelCategoriaGestionarCategoria(categoria.getNombre());
@@ -28,10 +36,38 @@ public class ControlPanelCategoriaGestionar implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case PanelCategoriaGestionarCategoria.BORRAR_ACTION:
+			intentarBorrar();
 			break;
-		case PanelCategoriaGestionarCategoria.MODIFICAR_ACTION:
+		case PanelCategoriaGestionarCategoria.CONFIRMAR_ACTION:
+			intentarModificar();
 			break;
 		}
 	}
+	
+	private void intentarBorrar() {
+		try {
+			tienda.getAlmacen().eliminarCategoria(usuario, categoria);
+		} catch (InvalidArgumentException | InvalidPermitException e) {
+			new VentanaMensaje(e.getMessage());
+		}
+		new VentanaMensaje("La categoría se ha borrado correctamente");
+		SwingUtilities.invokeLater(() -> new ControlGestionarCategorias(tienda, usuario));
+	}
 
+	private void intentarModificar() {
+		String nuevoNombre = panel.getNombreCategoria();
+		if(nuevoNombre.equals("Nombre")) {
+			new VentanaMensaje("Introduzca un nombre para la nueva categoría");
+			return;
+		}
+		
+		try {
+			tienda.getAlmacen().modificarCategoria(usuario, categoria, nuevoNombre);
+		} catch (InvalidArgumentException | InvalidPermitException e) {
+			new VentanaMensaje(e.getMessage());
+		}
+		new VentanaMensaje("La categoría se ha modificado correctamente");
+		SwingUtilities.invokeLater(() -> new ControlGestionarCategorias(tienda, usuario));
+	}
+	
 }

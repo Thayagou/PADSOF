@@ -20,6 +20,7 @@ public class BarraEmpleado extends BarraLateral {
 	private JButton anadirProducto;
 	private JButton cargarFichero;
 	private JButton gestionarExistentes;
+	private JButton anadirCategoria;
 	private JButton gestionarCategorias;
 	private JButton crearPacks;
 
@@ -38,7 +39,8 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto = addBtn(f, "Añadir nuevo producto", btnHeigth, distIndented);
 		cargarFichero = addBtn(f, "Cargar fichero de productos", btnHeigth, distIndented);
 		gestionarExistentes = addBtn(f, "Gestionar productos existentes", btnHeigth, distIndented);
-		gestionarCategorias = addBtn(f, "Gestionar categorías", btnHeigth, distIndented);
+		anadirCategoria = addBtn(f, "Añadir nueva categoría", btnHeigth, distIndented);
+		gestionarCategorias = addBtn(f, "Gestionar categorías existentes", btnHeigth, distIndented);
 		crearPacks = addBtn(f, "Crear packs de productos", btnHeigth, distIndented);
 		
 		gestionarPedidos = addBtn(f, "Gestionar pedidos", btnHeigth, distFromLeft);
@@ -49,6 +51,7 @@ public class BarraEmpleado extends BarraLateral {
 		add(anadirProducto);
 		add(cargarFichero);
 		add(gestionarExistentes);
+		add(anadirCategoria);
 		add(gestionarCategorias);
 		add(crearPacks);
 		
@@ -69,6 +72,7 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto.addActionListener(c);
 		cargarFichero.addActionListener(c);
 		gestionarExistentes.addActionListener(c);
+		anadirCategoria.addActionListener(c);
 		gestionarCategorias.addActionListener(c);
 		crearPacks.addActionListener(c);
 	}
@@ -77,6 +81,7 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto.setVisible(true);
 		cargarFichero.setVisible(true);
 		gestionarExistentes.setVisible(true);
+		anadirCategoria.setVisible(true);
 		gestionarCategorias.setVisible(true);
 		crearPacks.setVisible(true);
 	}
@@ -85,6 +90,7 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto.setVisible(false);
 		cargarFichero.setVisible(false);
 		gestionarExistentes.setVisible(false);
+		anadirCategoria.setVisible(false);
 		gestionarCategorias.setVisible(false);
 		crearPacks.setVisible(false);
 	}

@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import controladores.ControlBarraLateral;
 import controladores.empleado.gestionarIntercambios.ControlGestIntercambios;
 import controladores.empleado.gestionarPedidos.ControlGestPedidos;
+import controladores.empleado.gestionarProductos.ControlGestionarCategorias;
 import controladores.empleado.valorarArticulos.ControlValorarObjetos;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
@@ -28,6 +29,11 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "Gestionar productos y categorías" -> showGProductos();
+		case "Añadir nuevo producto" -> showAnadirProducto();
+		case "Cargar fichero de productos" -> showCargarFichero();
+		case "Gestionar productos existentes" -> showProductosExistentes();
+		case "Gestionar categorías existentes" -> showCategoriasExistentes();
+		case "Crear packs de productos" -> showCrearPacks();
 		case "Gestionar pedidos" -> showGPedidos();
 		case "Valorar objetos de segunda mano" -> showValorar();
 		case "Gestionar intercambios" -> showGIntercambios();
@@ -36,6 +42,28 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 
 	private void showGProductos() {
 		barra.setVisibleGestProductos();
+	}
+	
+	private void showAnadirProducto() {
+		
+	}
+	
+	private void showCargarFichero() {
+		
+	}
+	
+	private void showProductosExistentes() {
+		
+	}
+	
+	private void showCategoriasExistentes() {
+		SwingUtilities.invokeLater(() -> {
+			new ControlGestionarCategorias(tienda, empleado);
+		});
+	}
+	
+	private void showCrearPacks() {
+		
 	}
 
 	private void showGPedidos() {

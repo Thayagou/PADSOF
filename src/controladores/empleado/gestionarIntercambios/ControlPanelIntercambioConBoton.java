@@ -48,6 +48,7 @@ public class ControlPanelIntercambioConBoton implements ActionListener {
 		switch (e.getActionCommand()) {
 		case ACTION_NAME:
 			intentarConfirmar();
+			break;
 		}
 	}
 	
