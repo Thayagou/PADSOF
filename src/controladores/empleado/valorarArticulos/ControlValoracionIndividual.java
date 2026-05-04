@@ -1,4 +1,4 @@
-package controladores.empleado;
+package controladores.empleado.valorarArticulos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +19,12 @@ import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.EstadoFisicoArticulo;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
-import vistas.empleado.VentanaValoracionIndividual;
+import vistas.empleado.valorarArticulos.VentanaValoracionIndividual;
 
 public class ControlValoracionIndividual implements ActionListener {
 	private final Tienda tienda;
 	private final Empleado empleado;
 	private final ArticuloSegundaMano articulo;
-
 	private final VentanaValoracionIndividual vista;
 
 	public ControlValoracionIndividual(Tienda tienda, Empleado empleado, ArticuloSegundaMano articulo) {
@@ -40,7 +39,7 @@ public class ControlValoracionIndividual implements ActionListener {
 
 		List<String> tiposEstado = new LinkedList<>();
 		for (EstadoFisicoArticulo e : EstadoFisicoArticulo.values()) {
-			tiposEstado.add(e.name());
+			if(!e.name().equals("PENDIENTE")) tiposEstado.add(e.name());
 		}
 
 		LocalDateTime fecha = articulo.getValoracion().getFechaSolicitud();
@@ -58,11 +57,11 @@ public class ControlValoracionIndividual implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "Valorar":
-			intentarValorar(tienda, empleado, articulo);
+			intentarValorar();
 		}
 	}
 		
-	private void intentarValorar(Tienda tienda, Empleado empleado, ArticuloSegundaMano articulo) {
+	private void intentarValorar() {
 		double estimacion = -1;
 		try {
 			estimacion = Double.parseDouble(vista.getEstimacion());

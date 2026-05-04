@@ -146,7 +146,6 @@ public class PanelFactory {
 		JScrollPane scroll = new JScrollPane(lista);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.getVerticalScrollBar().setUnitIncrement(speed);
-		scroll.getViewport().setBackground(bg);
 
 		int borderPx = t.getPixelsWidth(borderW);
 

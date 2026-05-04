@@ -283,10 +283,28 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	    	Sistema.getInstancia().setTiempoCaducaCarrito(duracion);
 	    	break;
 	    case DURACION_OFERTA:
-	    	Sistema.getInstancia().setTiempoCaducaCarrito(duracion);
+	    	Sistema.getInstancia().setTiempoCaducaOferta(duracion);
 	    	break;
 	    default:
         	throw new InvalidArgumentException("Parámetro de recomendación inválido", "gestionar parámetros del sistema");
+	    }
+	}
+	
+	/**
+	 * Método que se utiliza para gestionar los parámetros del sistema
+	 * @param gestor Instancia del gestor de la tienda
+	 * @param parametro Parámetro de recomendación
+	 * @param valor Valor a establecer
+	 * @throws InvalidArgumentException Se lanza en caso de error en algún parámetro de entrada
+	 */
+	public void gestionarParametroDeSistema(Gestor gestor, ParametroSistema parametro, int valor) throws InvalidArgumentException {
+		if (gestor == null) throw new InvalidArgumentException("Gestor introducido es null", "gestionar parámetros del sistema");
+	    if (parametro == null || valor < 0)throw new InvalidArgumentException("Algún parámetro de recomendación inválido", "gestionar parámetros del sistema");
+	    switch (parametro) {
+	    case NUMERO_PRODUCTOS_RECOMENDADOS:
+	    	Sistema.getInstancia().setNumProdsRecomendados(gestor, valor);
+	    default:
+	    	gestionarParametroDeSistema(gestor, parametro, (double) valor);
 	    }
 	}
 	

@@ -116,7 +116,7 @@ public class PanelDisplay extends JPanel{
 
 		g2.dispose();
 
-		super.paintComponent(g); // importante: pinta hijos después
+		super.paintComponent(g);
 	}
 	
 	public void setControlador(ActionListener l) {
@@ -124,15 +124,13 @@ public class PanelDisplay extends JPanel{
 	}
 	
 	public void anadirFoto(String imageName, double fotoWPerc) {
-		ButtonFactory factory = new ButtonFactory();
 		TiendaFrame t = TiendaFrame.getInstance();
 		int fotoW = t.getPixelsWidth(fotoWPerc);
 		// — Foto placeholder —
 		JPanel foto = new JPanel();
 		foto.setBackground(ColorPalette.CARD_DARK.getColor());
 		foto.setPreferredSize(new Dimension(fotoW, maxCompHeight));
-		//JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
-		JLabel fotoLabel = new JLabel(factory.loadImageIconScaled(imageName, maxCompHeight, fotoW));
+		JLabel fotoLabel = new JLabel(ButtonFactory.loadImageIconScaled(imageName, maxCompHeight, fotoW));
 		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		fotoLabel.setFont(Fonts.BOLD.getFont());
 		foto.add(fotoLabel);

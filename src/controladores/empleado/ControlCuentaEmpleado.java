@@ -7,7 +7,6 @@ import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.common.TiendaFrame;
 import vistas.empleado.VentanaCuentaEmpleado;
-import vistas.empleado.VentanaGestIntercambios;
 
 public class ControlCuentaEmpleado implements ActionListener{
 	private Tienda tienda;

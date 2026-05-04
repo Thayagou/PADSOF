@@ -23,6 +23,9 @@ public enum ParametroSistema implements Serializable {
 
 	/** Ponderación que tiene la búsqueda por categorías sobre el vector de intereses del usuaro */
 	BUSQUEDA,
+	
+	/** Número de productos que se le recomienda al usuario */
+	NUMERO_PRODUCTOS_RECOMENDADOS,
 
 	/** Duración del carrito de compra hasta que caduque */
 	DURACION_CARRITO,

@@ -1,4 +1,4 @@
-package controladores.empleado;
+package controladores.empleado.gestionarProductos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,18 +6,18 @@ import java.awt.event.ActionListener;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.common.TiendaFrame;
-import vistas.empleado.VentanaGestPedidos;
+import vistas.empleado.VentanaGestProductos;
 
-public class ControlGestPedidos implements ActionListener{
-
+public class ControlGestProductos implements ActionListener{
+	
 	private final Tienda tienda;
 	private final Empleado empleado;
-	private VentanaGestPedidos vista;
+	private VentanaGestProductos vista;
 
-	public ControlGestPedidos(Tienda tienda, Empleado empleado) {
+	public ControlGestProductos(Tienda tienda, Empleado empleado) {
 		this.tienda = tienda;
 		this.empleado = empleado;
-		this.vista = new VentanaGestPedidos();
+		this.vista = new VentanaGestProductos();
 		this.vista.setControlador(this);
 		TiendaFrame.getInstance().setVistaActual(vista);
 	}

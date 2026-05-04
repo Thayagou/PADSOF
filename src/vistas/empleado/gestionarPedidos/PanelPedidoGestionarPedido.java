@@ -1,7 +1,8 @@
-package vistas.empleado;
+package vistas.empleado.gestionarPedidos;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,13 +28,9 @@ public class PanelPedidoGestionarPedido extends PanelPedido{
 		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
 		eastPanel.setPreferredSize(new Dimension(maxWidth, (int)(maxCompHeight * BOTON_PERC_H)));
 		
-		ButtonFactory f = new ButtonFactory();
-		
-		avanzarEstadoButton = f.newRoundedButton("Avanzar estado del pedido", (int)(maxCompHeight), maxCompHeight, 0.5f);
-				//f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(avanzarEstadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		f.addMouseMecanics(avanzarEstadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
-
+		avanzarEstadoButton = ButtonFactory.newRoundedButton(actionName, (int)(maxCompHeight), maxCompHeight, 0.5f);
+		ButtonFactory.paintButton(avanzarEstadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(avanzarEstadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		
 		int gapSize = (int) (maxCompHeight * (1 - 2*BOTON_PERC_H) / 2);
 		eastPanel.add(Box.createVerticalStrut(gapSize));
@@ -41,5 +38,12 @@ public class PanelPedidoGestionarPedido extends PanelPedido{
 		eastPanel.add(Box.createVerticalStrut(gapSize));
 		
 		this.add(eastPanel, BorderLayout.EAST);
+	}
+	
+	@Override
+	public void setControlador(ActionListener c) {
+		super.setControlador(c);
+		avanzarEstadoButton.addActionListener(c);
+		System.out.println("llega aqui");
 	}
 }

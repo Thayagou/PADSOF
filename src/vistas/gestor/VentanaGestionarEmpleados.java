@@ -22,7 +22,7 @@ public class VentanaGestionarEmpleados extends JPanel implements VentanaConDispl
 	private static double GAP_PERC = 0.05;
 	private JPanel listaEmpleados = new JPanel();
 
-	public VentanaGestionarEmpleados(Tienda tienda) {
+	public VentanaGestionarEmpleados() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 		

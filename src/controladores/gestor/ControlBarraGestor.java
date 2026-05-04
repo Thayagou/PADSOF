@@ -87,7 +87,7 @@ public class ControlBarraGestor implements ControlBarraLateral{
 	
 	private void consultarEstadisticas() {
 		SwingUtilities.invokeLater(()->
-			new ControlConsultarEstadisticas(tienda, gestor)
+			new ControlEstadisticasProductos(tienda, gestor)
 		);
 	}
 }

@@ -1,4 +1,4 @@
-package vistas.empleado;
+package vistas.empleado.gestionarProductos;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

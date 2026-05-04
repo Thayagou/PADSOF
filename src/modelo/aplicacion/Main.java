@@ -173,7 +173,7 @@ public class Main {
 	 * @return Duration Respuesta del usuario
 	 * @throws InvalidUserInputException
 	 */
-	protected static Duration getUserInputDuration(String message) throws InvalidUserInputException {
+	public static Duration getUserInputDuration(String message) throws InvalidUserInputException {
 		showMessage(message);
 		try {
 			String[] parts = sc.nextLine().split(":");
