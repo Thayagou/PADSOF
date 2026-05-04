@@ -3,21 +3,15 @@ package controladores.gestor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
-
-import controladores.ControlBarraTareas;
-import controladores.empleado.ControlBarraEmpleado;
-import controladores.empleado.ControlGestionarCategorias;
-import controladores.empleado.ControlGestionarProductos;
-import controladores.noRegistrado.ControlBarraTareasNoRegistrado;
+import controladores.empleado.gestionarProductos.ControlGestionarProductos;
+import controladores.gestor.anadirDescuento.ControlAnadirDescuento;
+import controladores.gestor.configurarSistema.ControlConfigurarSistema;
+import controladores.gestor.consultarEstadisticas.ControlConsultarEstadisticas;
+import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
-import vistas.common.BarraLateral;
 import vistas.common.TiendaFrame;
-import vistas.empleado.BarraEmpleado;
-import vistas.gestor.BarraGestor;
-import vistas.gestor.BarraTareasGestor;
 import vistas.gestor.VentanaInicioGestor;
-import vistas.noRegistrado.BarraTareasNoRegistrado;
 
 public class ControlInicioGestor implements ActionListener {
 	private Tienda tienda;

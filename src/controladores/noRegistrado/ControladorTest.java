@@ -19,7 +19,7 @@ import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
 import vistas.empleado.PanelPedidoGestionarPedido;
 import vistas.empleado.PanelProductoGestionarProducto;
-import vistas.gestor.PanelClienteEstadisticas;
+import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
 
 public class ControladorTest implements ActionListener {
 	private Producto producto;
