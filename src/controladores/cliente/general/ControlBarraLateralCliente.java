@@ -1,0 +1,50 @@
+package controladores.cliente.general;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.SwingUtilities;
+
+import controladores.ControlBarraLateral;
+import controladores.cliente.intercambios.ControlManejoCartera;
+import controladores.cliente.venta.ControlBuscarCliente;
+import controladores.cliente.venta.ControlManejoCarrito;
+import modelo.sistema.Tienda;
+import modelo.usuario.ClienteRegistrado;
+
+public class ControlBarraLateralCliente implements ControlBarraLateral {
+	
+	private Tienda tienda;
+	private ClienteRegistrado cliente;
+	
+	public ControlBarraLateralCliente(Tienda tienda, ClienteRegistrado cliente) {
+		this.tienda = tienda;
+		this.cliente = cliente;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		switch(e.getActionCommand()) {
+		case "Buscar Productos":
+			SwingUtilities.invokeLater(() -> new ControlBuscarCliente(tienda, cliente));
+			break;
+		case "Ver Carrito":
+			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente));
+			break;
+		case "Buscar Artículos":
+			SwingUtilities.invokeLater(() -> new ControlBuscarCliente(tienda, cliente));
+			break;
+		case "Ver Cartera":
+			SwingUtilities.invokeLater(() -> new ControlManejoCartera(tienda, cliente, cliente));
+			break;
+		case "Añadir Artículo":
+//			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente))
+			break;
+		case "Ver mis ofertas":
+//			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente))
+			break;
+		case "Ver mis compras":
+//			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente))
+			break;
+		}
+	}
+}

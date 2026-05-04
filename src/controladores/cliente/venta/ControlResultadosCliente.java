@@ -1,4 +1,4 @@
-package controladores.cliente;
+package controladores.cliente.venta;
 
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;

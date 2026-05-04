@@ -1,14 +1,15 @@
-package controladores.cliente;
+package controladores.cliente.venta;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
+import controladores.cliente.intercambios.ControlVentanaPago;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.StockExterno;
-import vistas.cliente.VentanaCarrito;
+import vistas.cliente.venta.VentanaCarrito;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 

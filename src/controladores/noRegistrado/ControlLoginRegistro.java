@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 
-import controladores.cliente.ControlInicioCliente;
+import controladores.cliente.general.ControlInicioCliente;
 import controladores.empleado.ControlInicioEmpleado;
 import controladores.gestor.ControlInicioGestor;
 import modelo.exceptions.CustomException;

@@ -1,4 +1,4 @@
-package controladores.cliente;
+package controladores.cliente.intercambios;
 
 import modelo.sistema.Tienda;
 

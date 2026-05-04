@@ -1,4 +1,4 @@
-package controladores.cliente;
+package controladores.cliente.general;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Notificacion;
-import vistas.cliente.VentanaNotificacionesCliente;
+import vistas.cliente.general.VentanaNotificacionesCliente;
 import vistas.common.*;
 
 public class ControlNotificacionesCliente implements ActionListener {

@@ -1,4 +1,4 @@
-package vistas.cliente;
+package vistas.cliente.venta;
 
 import java.awt.*;
 import java.awt.event.ActionListener;

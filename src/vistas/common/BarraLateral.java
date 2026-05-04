@@ -17,15 +17,15 @@ public abstract class BarraLateral extends JPanel{
 
 	public abstract void setControlador(ControlBarraLateral c);
 	
-	public JButton addBtn(ButtonFactory f, String text, int heigth, int width) {
-    	JButton btn = f.newButtonLeft(text, heigth, width);
+	public JButton addBtn(String text, int heigth, int width) {
+    	JButton btn = ButtonFactory.newButtonLeft(text, heigth, width);
     	btn.setMaximumSize(new Dimension(width, heigth));
     	btn.setAlignmentX(Component.RIGHT_ALIGNMENT);
     	btn.setHorizontalAlignment(SwingConstants.LEFT);
     	btn.setFont(Fonts.TEXT.getFont());
     	btn.setForeground(ColorPalette.DARK_GREY.getColor());
     	btn.setBackground(ColorPalette.CARD_LIGHT.getColor());
-    	f.addMouseMecanics(btn, ColorPalette.CARD_LIGHT, ColorPalette.CARD_DARK);
+    	ButtonFactory.addMouseMecanics(btn, ColorPalette.CARD_LIGHT, ColorPalette.CARD_DARK);
     	btn.setBorderPainted(false);
     	
     	return btn;

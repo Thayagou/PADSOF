@@ -1,4 +1,4 @@
-package controladores.cliente;
+package controladores.cliente.venta;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +13,7 @@ import modelo.venta.productos.Producto;
 import modelo.venta.productos.StockExterno;
 import vistas.common.*;
 import vistas.cliente.*;
+import vistas.cliente.venta.PanelItemCarrito;
 
 public class ControlItemCarrito implements ActionListener {
 	protected Producto producto;

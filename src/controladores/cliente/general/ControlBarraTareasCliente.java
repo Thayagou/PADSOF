@@ -1,10 +1,12 @@
-package controladores.cliente;
+package controladores.cliente.general;
 
 import java.awt.event.ActionEvent;
 
 import javax.swing.SwingUtilities;
 
 import controladores.*;
+import controladores.cliente.venta.ControlBuscarCliente;
+import controladores.cliente.venta.ControlManejoCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 

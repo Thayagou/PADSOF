@@ -1,25 +1,29 @@
-package controladores.cliente;
+package controladores.cliente.general;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.noRegistrado.*;
+import controladores.cliente.venta.ControlPanelProductoCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
-import vistas.cliente.BarraTareasCliente;
 import vistas.common.TiendaFrame;
 import vistas.cliente.*;
+import vistas.cliente.general.BarraLateralCliente;
+import vistas.cliente.general.BarraTareasCliente;
+import vistas.cliente.general.VentanaInicioCliente;
 
 public class ControlInicioCliente implements ActionListener {
 
 	private Tienda tienda;
 	private VentanaInicioCliente vista;
+	private ClienteRegistrado cliente;
 
 	public ControlInicioCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
+		this.cliente = cliente;
 		TiendaFrame tiendaFrame = TiendaFrame.getInstance();
 
 		// Barra de tareas superior
@@ -28,8 +32,12 @@ public class ControlInicioCliente implements ActionListener {
 		barraTareas.setControlador(ctrlBarraTareas);
 		tiendaFrame.setBarraTareas(barraTareas);
 
-		//Barra lateral vacía
-		tiendaFrame.removeBarraLateral();
+		//Barra lateral
+		
+		ControlBarraLateralCliente ctrlBarraLateral = new ControlBarraLateralCliente(tienda, cliente);
+		BarraLateralCliente barraLateral = new BarraLateralCliente();
+		barraLateral.setControlador(ctrlBarraLateral);
+		tiendaFrame.setBarraLateral(barraLateral);
 		
 		// Obtener productos populares del modelo y construir la vista
 		Producto[] populares = tienda.getAlmacen().getListaRecomendacion(cliente);
@@ -44,12 +52,7 @@ public class ControlInicioCliente implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "cartera":
-			SwingUtilities.invokeLater(() -> new ControlManejoCartera(tienda));
-		case "articulos":
-			SwingUtilities.invokeLater(() -> new ControlBuscarSegundaMano(tienda));
-		case "compras":
-			SwingUtilities.invokeLater(() -> new ControlVerCompras(tienda));
+
 		}
 	}
 }

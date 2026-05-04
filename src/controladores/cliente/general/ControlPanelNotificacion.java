@@ -1,4 +1,4 @@
-package controladores.cliente;
+package controladores.cliente.general;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

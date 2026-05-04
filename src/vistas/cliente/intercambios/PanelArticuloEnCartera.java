@@ -1,4 +1,4 @@
-package vistas.cliente;
+package vistas.cliente.intercambios;
 
 import vistas.common.PanelArticulo;
 

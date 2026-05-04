@@ -1,4 +1,4 @@
-package controladores.cliente;
+package controladores.cliente.venta;
 
 import java.awt.event.*;
 import java.util.ArrayList;

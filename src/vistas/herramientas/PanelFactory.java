@@ -79,6 +79,7 @@ public class PanelFactory {
 	public static JPanel getVentanaConCabecera(String title, JPanel contenido) {
 		JPanel ventana = new JPanel();
 		ventana.setLayout(new BorderLayout());
+		ventana.setOpaque(false);
 
 		JLabel cabecera = new JLabel(title);
 		cabecera.setFont(Fonts.TITLE3.getFont());
