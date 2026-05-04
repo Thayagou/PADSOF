@@ -17,6 +17,7 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaEstadisticasProductos extends JPanel implements VentanaConDisplay<PanelProducto>{
+	private static final long serialVersionUID = 1L;
 	public static String MAYOR_RECAUDACION = "Mayor recaudación";
 	public static String MENOR_RECAUDACION = "Menor recaudación";
 	public static String MAS_UNIDADES = "Más unidades vendidas";
