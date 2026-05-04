@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
+import controladores.empleado.gestionarIntercambios.ControlGestIntercambios;
+import controladores.empleado.valorarArticulos.ControlValorarObjetos;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.empleado.BarraEmpleado;
@@ -52,7 +54,7 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	private void showGIntercambios() {
 		barra.setInvisibleGestProductos();
 		SwingUtilities.invokeLater(() -> {
-			new ControlGestIntercambios(tienda);
+			new ControlGestIntercambios(tienda, empleado);
 		});
 	}
 

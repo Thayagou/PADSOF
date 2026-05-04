@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.*;
-import controladores.noRegistrado.*;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 
@@ -24,7 +23,8 @@ public class ControlBarraTareasCliente implements ControlBarraTareas{
 		switch (e.getActionCommand()) {
 		case "Buscar productos" -> SwingUtilities.invokeLater(() -> new ControlBuscarCliente(tienda, cliente));
 		case "Home" -> SwingUtilities.invokeLater(() -> new ControlInicioCliente(tienda, cliente));
-		case "Cuenta" -> SwingUtilities.invokeLater(() -> new ControlManejoCuenta(tienda));
+		case "Notificaciones" -> SwingUtilities.invokeLater(() -> new ControlNotificacionesCliente(tienda, cliente));
+		case "Cuenta" -> SwingUtilities.invokeLater(() -> new ControlManejoCuenta(tienda, cliente));
 		case "Carrito" -> SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente));
 		}
 	}

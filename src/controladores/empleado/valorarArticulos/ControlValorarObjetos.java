@@ -1,4 +1,4 @@
-package controladores.empleado;
+package controladores.empleado.valorarArticulos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +7,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.wallapop.Valoracion;
 import vistas.common.TiendaFrame;
-import vistas.empleado.VentanaValorarObjetos;
+import vistas.empleado.valorarArticulos.VentanaValorarObjetos;
 
 public class ControlValorarObjetos implements ActionListener{
 	private VentanaValorarObjetos vista;

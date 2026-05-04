@@ -2,6 +2,7 @@ package vistas.common;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -39,16 +40,11 @@ public class PanelIntercambioConBoton extends PanelIntercambio {
 		eastPanel.setOpaque(false);
 		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
 		eastPanel.setPreferredSize(new Dimension(maxWidth, (int) (maxCompHeight * BOTON_PERC_H)));
-		// eastPanel.setMaximumSize(new Dimension(maxWidth, (int)(maxCompHeight *
-		// BOTON_PERC_H)));
 
-		ButtonFactory f = new ButtonFactory();
-
-		boton = f.newRoundedButton(nombre, (int) (maxCompHeight), maxCompHeight, 0.5f);
+		boton = ButtonFactory.newRoundedButton(nombre, (int) (maxCompHeight), maxCompHeight, 0.5f);
 		boton.setActionCommand(nombre);
-		// f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(boton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		f.addMouseMecanics(boton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.paintButton(boton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(boton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
 		int gapSize = (int) (maxCompHeight * (1 - BOTON_PERC_H) / 2);
 		eastPanel.add(Box.createVerticalStrut(gapSize));
@@ -59,5 +55,10 @@ public class PanelIntercambioConBoton extends PanelIntercambio {
 		wrapperEast.add(Box.createHorizontalStrut(gapSize));
 
 		add(wrapperEast, BorderLayout.EAST);
+	}
+	
+	public void setControlador(ActionListener l) {
+		super.setControlador(l);
+		boton.addActionListener(l);
 	}
 }

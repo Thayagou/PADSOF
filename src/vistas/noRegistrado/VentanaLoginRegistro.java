@@ -34,9 +34,9 @@ public class VentanaLoginRegistro extends JPanel {
 
 		TiendaFrame t = TiendaFrame.getInstance();
 		
-		logInForum = new PanelFormulario("Iniciar Sesión", "Log In", new String[] {"Nombre", "Contraseña"});
+		logInForum = new PanelFormulario("Iniciar Sesión", "Log In", new Integer[] {2}, "Nombre", "Contraseña");
 		
-		signInForum = new PanelFormulario("Registrarse", "Crear cuenta", new String[] {"Nombre", "Contraseña", "Confirmar contraseña"});
+		signInForum = new PanelFormulario("Registrarse", "Crear cuenta", new Integer[] {2, 3}, "Nombre", "Contraseña", "Confirmar contraseña");
 
 		int spaceBetween = t.getPixelsWidth(SPACING);
 

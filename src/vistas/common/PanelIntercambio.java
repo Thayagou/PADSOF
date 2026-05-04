@@ -14,7 +14,6 @@ import vistas.herramientas.Fonts;
 
 public class PanelIntercambio extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
-	private static final double FOTO_W_PERC = 0.09;
 	private static final double FOTO_H_PERC = 0.99;
 	private static final double MAX_HEIGHT = 0.16;
 	private static final double GAP_PERC = 0.1;
@@ -36,19 +35,19 @@ public class PanelIntercambio extends PanelDisplay {
 		emisor.setLayout(new BoxLayout(emisor, BoxLayout.X_AXIS));
 		emisor.setMaximumSize(max);
 		
-		ButtonFactory f = new ButtonFactory();
 		PanelFotoPerfil perfilEmisor = new PanelFotoPerfil(imagenEmisor, fotoSize);
-		JLabel labelEmisor = f.newLabel(nombreEmisor, Fonts.BOLD);
+		JLabel labelEmisor = ButtonFactory.newLabel(nombreEmisor, Fonts.BOLD);
 		
 		JPanel articulosEmisor = new JPanel();
 		articulosEmisor.setOpaque(false);
 		articulosEmisor.setLayout(new BoxLayout( articulosEmisor, BoxLayout.Y_AXIS));
 		
 		articulosEmisor.add(Box.createVerticalStrut(gap));
-		for (int i = 0; i < articulosOfrecidos.length && i < 4; i++) {
-			articulosEmisor.add(f.newLeftAlignedLabel("- " + articulosOfrecidos[i], Fonts.TEXT));
+		articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(articulosOfrecidos[0], Fonts.TEXT));
+		for (int i = 1; i < articulosOfrecidos.length && i < 4; i++) {
+			articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(", " + articulosOfrecidos[i], Fonts.TEXT));
 		}
-		if (articulosOfrecidos.length >= 5) articulosEmisor.add(f.newLeftAlignedLabel("- ...", Fonts.TEXT));
+		if (articulosOfrecidos.length >= 5) articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(", ...", Fonts.TEXT));
 		articulosEmisor.add(Box.createVerticalStrut(gap));
 		
 		emisor.add(perfilEmisor);
@@ -66,7 +65,7 @@ public class PanelIntercambio extends PanelDisplay {
 		receptor.setMaximumSize(max);
 		
 		PanelFotoPerfil perfilreceptor = new PanelFotoPerfil(imagenReceptor, fotoSize);
-		JLabel labelReceptor = f.newLabel(nombreReceptor, Fonts.BOLD);
+		JLabel labelReceptor = ButtonFactory.newLabel(nombreReceptor, Fonts.BOLD);
 		
 		receptor.add(perfilreceptor);
 		receptor.add(Box.createHorizontalStrut(gap));
@@ -77,10 +76,11 @@ public class PanelIntercambio extends PanelDisplay {
 		articulosReceptor.setLayout(new BoxLayout( articulosReceptor, BoxLayout.Y_AXIS));
 		
 		articulosReceptor.add(Box.createVerticalStrut(gap));
-		for (int i = 0; i < articulosSolicitados.length && i < 4; i++) {
-			articulosReceptor.add(f.newLeftAlignedLabel("- " + articulosSolicitados[i], Fonts.TEXT));
+		articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(articulosSolicitados[0], Fonts.TEXT));
+		for (int i = 1; i < articulosSolicitados.length && i < 4; i++) {
+			articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(", " + articulosSolicitados[i], Fonts.TEXT));
 		}
-		if (articulosSolicitados.length >= 5) articulosReceptor.add(f.newLeftAlignedLabel("- ...", Fonts.TEXT));
+		if (articulosSolicitados.length >= 5) articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(", ...", Fonts.TEXT));
 		articulosReceptor.add(Box.createVerticalStrut(gap));
 		
 		receptor.add(perfilreceptor);

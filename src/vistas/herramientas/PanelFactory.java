@@ -25,11 +25,10 @@ public class PanelFactory {
 
 		JLabel left;
 		JTextField right;
-		ButtonFactory factory = new ButtonFactory();
 		for (int i = 0; i < Math.min(labelNames.length, textNames.length); i++) {
-			left = factory.newLabel(labelNames[i], font);
+			left = ButtonFactory.newLabel(labelNames[i], font);
 			left.setPreferredSize(size);
-			right = factory.newTextField(textNames[i], font);
+			right = ButtonFactory.newTextField(textNames[i], font);
 			right.setPreferredSize(size);
 
 			gbc.gridx = 0;
@@ -57,6 +56,18 @@ public class PanelFactory {
 		}
 		return wrapVertical(btnPanel, t.getPixelsHeight(VERTICAL_GAP));
 	}
+	
+	public static JPanel getColumnaDeBotones(double VERTICAL_GAP_PERC, JButton... botones) {
+		TiendaFrame t = TiendaFrame.getInstance();
+
+		JPanel btnPanel = new JPanel(new GridLayout(botones.length, 1, 0, t.getPixelsHeight(VERTICAL_GAP_PERC)));
+		btnPanel.setOpaque(false);
+
+		for (JButton btn : botones) {
+			btnPanel.add(btn);
+		}
+		return wrapVertical(btnPanel, t.getPixelsHeight(VERTICAL_GAP_PERC));
+	}
 
 	/**
 	 * Devuelve un panel con el contenido y una cabecera
@@ -68,6 +79,8 @@ public class PanelFactory {
 	public static JPanel getVentanaConCabecera(String title, JPanel contenido) {
 		JPanel ventana = new JPanel();
 		ventana.setLayout(new BorderLayout());
+		ventana.setOpaque(false);
+		contenido.setOpaque(false);
 
 		JLabel cabecera = new JLabel(title);
 		cabecera.setFont(Fonts.TITLE3.getFont());
@@ -86,8 +99,7 @@ public class PanelFactory {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int size = t.getPixelsHeight(0.04);
 
-		ButtonFactory f = new ButtonFactory();
-		ImageIcon icon = f.loadImageIconScaled("pfp.png", size, size);
+		ImageIcon icon = ButtonFactory.loadImageIconScaled("pfp.png", size, size);
 
 		return new JPanel() {
 			private static final long serialVersionUID = 1L;
@@ -133,9 +145,11 @@ public class PanelFactory {
 		TiendaFrame t = TiendaFrame.getInstance();
 
 		JScrollPane scroll = new JScrollPane(lista);
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.getVerticalScrollBar().setUnitIncrement(speed);
-		scroll.getViewport().setBackground(bg);
+		lista.setOpaque(false);
 
 		int borderPx = t.getPixelsWidth(borderW);
 
