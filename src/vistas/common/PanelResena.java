@@ -44,23 +44,6 @@ public class PanelResena extends JPanel {
 
 		add(header, BorderLayout.NORTH);
 		add(comentTxt, BorderLayout.CENTER);
-
-		// ── Hover effect ──────────────────────────────────────────────
-		addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent e) {
-				gradStart = ColorPalette.CARD_LIGHT_HOVER.getColor();
-				gradEnd = ColorPalette.CARD_DARK_HOVER.getColor();
-				repaint();
-			}
-
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent e) {
-				gradStart = ColorPalette.CARD_LIGHT.getColor();
-				gradEnd = ColorPalette.CARD_DARK.getColor();
-				repaint();
-			}
-		});
 	}
 
 	// ── Estrellas ────────────────────────────────────────────────────
