@@ -10,6 +10,8 @@ import controladores.empleado.gestionarProductos.ControlGestionarProductos;
 import controladores.gestor.anadirDescuento.ControlAnadirDescuento;
 import controladores.gestor.configurarSistema.ControlConfigurarSistema;
 import controladores.gestor.consultarEstadisticas.ControlEstadisticasClientes;
+import controladores.gestor.consultarEstadisticas.ControlEstadisticasProductos;
+import controladores.gestor.consultarEstadisticas.ControlEstadisticasVentas;
 import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
@@ -53,7 +55,14 @@ public class ControlBarraGestor implements ControlBarraLateral{
 			break;
 		case "Gestionar empleados":
 			this.gestionarEmpleados();
-			break;		
+			break;	
+		case "Consultar estadísticas productos":
+			this.consultarEstadisticasProductos();
+			break;
+		case "Consultar estadísticas tienda":
+			this.consultarEstadisticasTienda();
+			break;
+			
 		}
 		
 	}
@@ -91,6 +100,18 @@ public class ControlBarraGestor implements ControlBarraLateral{
 	private void consultarEstadisticas() {
 		SwingUtilities.invokeLater(()->
 			new ControlEstadisticasClientes(tienda, gestor)
+		);
+	}
+	
+	private void consultarEstadisticasProductos() {
+		SwingUtilities.invokeLater(()->
+			new ControlEstadisticasProductos(tienda, gestor)
+		);
+	}
+	
+	private void consultarEstadisticasTienda() {
+		SwingUtilities.invokeLater(()->
+			new ControlEstadisticasVentas(tienda, gestor)
 		);
 	}
 }

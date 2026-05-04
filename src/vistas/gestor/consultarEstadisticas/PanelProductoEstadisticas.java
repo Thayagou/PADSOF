@@ -2,93 +2,61 @@ package vistas.gestor.consultarEstadisticas;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
 public class PanelProductoEstadisticas extends PanelProducto{
 	
 	private static final long serialVersionUID = 1L;
+	public static final double LABEL_WIDTH = 0.15;
 
 	public PanelProductoEstadisticas(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, double recaudacion, int udsVendidas, double porcentaje, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, "Ver producto", categorias);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		int hComps = (int)(maxCompHeight * BOTON_PERC_H);
-		int wComps = t.getPixelsWidth(BOTON_PERC_W);
+		int wComps = t.getPixelsWidth(LABEL_WIDTH);
 		Dimension maxSize = new Dimension(wComps, hComps);
 		
 		// Panel final que se coloca
 		JPanel statsPanel = new JPanel();
-		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.X_AXIS));
+		statsPanel.setLayout(new GridLayout(1, 3));
 		statsPanel.setOpaque(false);
 		
-		// Panel recaudación
-		JPanel panelRecaudacion = new JPanel();
-		panelRecaudacion.setLayout(new BoxLayout(panelRecaudacion, BoxLayout.Y_AXIS));
-		panelRecaudacion.setOpaque(false);
-		
-		JLabel labelRecaudacion = ButtonFactory.newLeftAlignedLabel("Total recaudado:", Fonts.BOLD);
-		labelRecaudacion.setMaximumSize(maxSize);
-		labelRecaudacion.setAlignmentX(LEFT_ALIGNMENT);
-		
-		JLabel labelValorRecaudacion = ButtonFactory.newLeftAlignedLabel(String.format("%.2f €", recaudacion), Fonts.BOLD);
-		labelValorRecaudacion.setMaximumSize(maxSize);
-		labelValorRecaudacion.setAlignmentX(LEFT_ALIGNMENT);
-		
-		int gapSize = (int) (maxCompHeight * (1 - 2*BOTON_PERC_H) / 2);
-		panelRecaudacion.add(Box.createVerticalStrut(gapSize));
-		panelRecaudacion.add(labelRecaudacion);
-		panelRecaudacion.add(labelValorRecaudacion);
-		panelRecaudacion.add(Box.createVerticalStrut(gapSize));
-		statsPanel.add(panelRecaudacion);
-		statsPanel.add(Box.createHorizontalStrut(gapSize));
-		
-		JPanel panelUds = new JPanel();
-		panelUds.setLayout(new BoxLayout(panelUds, BoxLayout.Y_AXIS));
-		panelUds.setOpaque(false);
-		
-		JLabel labelUds = ButtonFactory.newLeftAlignedLabel("Unidades vendidas:", Fonts.BOLD);
-		labelUds.setMaximumSize(maxSize);
-		labelUds.setAlignmentX(LEFT_ALIGNMENT);
-		
-		JLabel labelValorUds = ButtonFactory.newLeftAlignedLabel(String.format("%d", udsVendidas), Fonts.BOLD);
-		labelValorUds.setMaximumSize(maxSize);
-		labelValorUds.setAlignmentX(LEFT_ALIGNMENT);
-		
-		panelUds.add(Box.createVerticalStrut(gapSize));
-		panelUds.add(labelUds);
-		panelUds.add(labelValorUds);
-		panelUds.add(Box.createVerticalStrut(gapSize));
-		statsPanel.add(panelUds);
-		statsPanel.add(Box.createHorizontalStrut(gapSize));
-		
-		JPanel panelPorcentaje = new JPanel();
-		panelPorcentaje.setLayout(new BoxLayout(panelPorcentaje, BoxLayout.Y_AXIS));
-		panelPorcentaje.setOpaque(false);
-		
-		JLabel labelPorcentaje = ButtonFactory.newLeftAlignedLabel("Porcentaje de ventas:", Fonts.BOLD);
-		labelPorcentaje.setMaximumSize(maxSize);
-		labelPorcentaje.setAlignmentX(LEFT_ALIGNMENT);
-		
-		JLabel labelValorPorcentaje = ButtonFactory.newLeftAlignedLabel(String.format("%.2f", porcentaje), Fonts.BOLD);
-		labelValorPorcentaje.setMaximumSize(maxSize);
-		labelValorPorcentaje.setAlignmentX(LEFT_ALIGNMENT);
-		
-		panelPorcentaje.add(Box.createVerticalStrut(gapSize));
-		panelPorcentaje.add(labelPorcentaje);
-		panelPorcentaje.add(labelValorPorcentaje);
-		panelPorcentaje.add(Box.createVerticalStrut(gapSize));
-		statsPanel.add(panelPorcentaje);
-		statsPanel.add(Box.createHorizontalStrut(gapSize));
-		
-		add(statsPanel, BorderLayout.EAST);		
+		statsPanel.add(crearColumnaStat(String.format("%.2f €", recaudacion), maxSize));
+	    statsPanel.add(crearColumnaStat(String.format("%d uds", udsVendidas), maxSize));
+	    statsPanel.add(crearColumnaStat(String.format("%.3f %%", porcentaje), maxSize));
+	    statsPanel.setMaximumSize(new Dimension(3*wComps, hComps));
+	    add(statsPanel, BorderLayout.EAST);
+	}
+
+	private JPanel crearColumnaStat(String texto, Dimension maxSize) {
+	    JPanel panel = new JPanel();
+	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+	    panel.setOpaque(false);
+	    
+	    JLabel label = ButtonFactory.newLabel(texto, Fonts.BOLD);
+	    label.setForeground(ColorPalette.DARK_GREY.getColor());
+	    label.setMaximumSize(maxSize);
+	    label.setPreferredSize(maxSize);
+	    //label.setVerticalTextPosition(SwingConstants.CENTER);
+	    //label.setAlignmentX(SwingConstants.CENTER);  // Centro horizontal en BoxLayout Y_AXIS
+	    
+	    panel.add(Box.createVerticalGlue());      // Empuja desde arriba
+	    panel.add(label);
+	    panel.add(Box.createVerticalGlue());      // Empuja desde abajo
+	    
+	    return panel;
 	}
 }

@@ -93,6 +93,16 @@ public class PanelFactory {
 
 		return ventana;
 	}
+	
+	public static JPanel getCabecera() {
+		JPanel cabecera = new JPanel();
+		cabecera.setForeground(ColorPalette.WHITE.getColor());
+		cabecera.setOpaque(true);
+		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());
+		cabecera.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+		
+		return cabecera;
+	}
 
 	public static JPanel buildAvatar() {
 		TiendaFrame t = TiendaFrame.getInstance();

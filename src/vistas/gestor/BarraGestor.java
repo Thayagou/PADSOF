@@ -17,6 +17,8 @@ public class BarraGestor extends BarraLateral {
 	private JButton gestionarEmpleados;
 	private JButton configurarSistema;
 	private JButton consultarEstadisticas;
+	private JButton consultarStatsProd;
+	private JButton consultarStatsTienda;
 
 	public BarraGestor() {
 		TiendaFrame frame = TiendaFrame.getInstance();
@@ -32,14 +34,17 @@ public class BarraGestor extends BarraLateral {
 		anadirDescuento = addBtn("Añadir nuevo descuento", btnHeigth, distFromLeft);
 		gestionarEmpleados = addBtn("Gestionar empleados", btnHeigth, distFromLeft);
 		configurarSistema = addBtn("Configurar sistema", btnHeigth, distFromLeft);
-		consultarEstadisticas = addBtn("Consultar estadísticas", btnHeigth, distFromLeft);
-
+		consultarEstadisticas = addBtn("Consultar estadísticas clientes", btnHeigth, distFromLeft);
+		consultarStatsProd = addBtn("Consultar estadísticas productos", btnHeigth, distFromLeft);
+		consultarStatsTienda = addBtn("Consultar estadísticas tienda", btnHeigth, distFromLeft);
+		
 		add(gestionarProductos);
 		add(gestionarCategorias);
 		add(anadirDescuento);
 		add(gestionarEmpleados);
 		add(configurarSistema);
 		add(consultarEstadisticas);
+		add(consultarStatsProd);
 	}
 
 	@Override
@@ -50,5 +55,7 @@ public class BarraGestor extends BarraLateral {
 		gestionarEmpleados.addActionListener(c);
 		configurarSistema.addActionListener(c);
 		consultarEstadisticas.addActionListener(c);
+		consultarStatsProd.addActionListener(c);
+		consultarStatsTienda.addActionListener(c);
 	}
 }
