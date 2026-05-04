@@ -24,7 +24,7 @@ public class PanelDisplay extends JPanel{
 	protected static final double BOTON_PERC_H = 0.3;
 	protected static final double BOTON_PERC_W = 0.2;
 	protected static double HOR_GAP = 0.01;
-	protected final JButton clickArea; // botón invisible que ocupa todo el panel
+	protected JButton clickArea; // botón invisible que ocupa todo el panel
 	protected int maxHeight;
 	protected int maxCompHeight;
 	private ColorPalette gradStart = ColorPalette.CARD_LIGHT;
@@ -36,53 +36,67 @@ public class PanelDisplay extends JPanel{
 		anadirFoto(imageName, fotoWPerc);
 	}
 	
+	/**
+	 * Constructor de PanelDisplay clicable.
+	 *
+	 * @param maxHPerc   Altura máxima del panel como porcentaje de la pantalla.
+	 * @param compHPerc  Altura de los componentes internos como porcentaje.
+	 * @param actionName Comando de acción disparado al hacer clic.
+	 */
 	public PanelDisplay(double maxHPerc, double compHPerc, String actionName) {
-		setOpaque(false);
+	    this(maxHPerc, compHPerc);
 
+	    /* ── Botón invisible que cubre toda la fila ── */
+	    clickArea = new JButton();
+	    clickArea.setOpaque(false);
+	    clickArea.setContentAreaFilled(false);
+	    clickArea.setBorderPainted(false);
+	    clickArea.setActionCommand(actionName);
+	    clickArea.setPreferredSize(new Dimension(0,0));
+
+	    setCursor(new Cursor(Cursor.HAND_CURSOR));
+	    addMouseListener(new java.awt.event.MouseAdapter() {
+	        @Override
+	        public void mouseEntered(java.awt.event.MouseEvent e) {
+	            gradStart = ColorPalette.CARD_LIGHT_HOVER;
+	            gradEnd   = ColorPalette.CARD_DARK_HOVER;
+	            repaint();
+	        }
+
+	        @Override
+	        public void mouseExited(java.awt.event.MouseEvent e) {
+	            gradStart = ColorPalette.CARD_LIGHT;
+	            gradEnd   = ColorPalette.CARD_DARK;
+	            repaint();
+	        }
+
+	        @Override
+	        public void mouseClicked(java.awt.event.MouseEvent e) {
+	            clickArea.doClick();
+	        }
+	    });
+	}
 	
-		TiendaFrame t = TiendaFrame.getInstance();
-		maxCompHeight = t.getPixelsHeight(compHPerc);
-		maxHeight = t.getPixelsHeight(maxHPerc);
-		
+	/**
+	 * Constructor de PanelDisplay no clicable.
+	 * No registra ningún MouseListener ni crea botón de acción.
+	 *
+	 * @param maxHPerc  Altura máxima del panel como porcentaje de la pantalla.
+	 * @param compHPerc Altura de los componentes internos como porcentaje.
+	 */
+	public PanelDisplay(double maxHPerc, double compHPerc) {
+	    setOpaque(false);
 
-		setLayout(new BorderLayout(30, 0));
-		setBackground(ColorPalette.CARD_LIGHT.getColor());
-		setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createMatteBorder(0, 0, 1, 0, ColorPalette.BLACK.getColor()),
-				BorderFactory.createEmptyBorder(8, 8, 8, 8)));
-		setMaximumSize(new Dimension(Integer.MAX_VALUE, maxHeight));
-		
-		
-		
-		// Botón invisible para detectar clic en toda la fila
-		clickArea = new JButton();
-		clickArea.setOpaque(false);
-		clickArea.setContentAreaFilled(false);
-		clickArea.setBorderPainted(false);
-		clickArea.setActionCommand(actionName);
-		clickArea.setPreferredSize(new Dimension(0, 0));
+	    TiendaFrame t = TiendaFrame.getInstance();
+	    maxCompHeight = t.getPixelsHeight(compHPerc);
+	    maxHeight     = t.getPixelsHeight(maxHPerc);
 
-		setCursor(new Cursor(Cursor.HAND_CURSOR));
-		addMouseListener(new java.awt.event.MouseAdapter() {
-			@Override
-			public void mouseEntered(java.awt.event.MouseEvent e) {
-			    gradStart = ColorPalette.CARD_LIGHT_HOVER;
-			    gradEnd = ColorPalette.CARD_DARK_HOVER;
-			    repaint();
-			}
-
-			@Override
-			public void mouseExited(java.awt.event.MouseEvent e) {
-			    gradStart = ColorPalette.CARD_LIGHT;
-			    gradEnd = ColorPalette.CARD_DARK;
-			    repaint();
-			}
-
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent e) {
-				clickArea.doClick();
-			}
-		});
+	    setLayout(new BorderLayout(30, 0));
+	    setBackground(ColorPalette.CARD_LIGHT.getColor());
+	    setBorder(BorderFactory.createCompoundBorder(
+	            BorderFactory.createMatteBorder(0, 0, 1, 0, ColorPalette.BLACK.getColor()),
+	            BorderFactory.createEmptyBorder(8, 8, 8, 8)));
+	    setMaximumSize(new Dimension(Integer.MAX_VALUE, maxHeight));
 	}
 	
 	@Override
@@ -106,7 +120,7 @@ public class PanelDisplay extends JPanel{
 	}
 	
 	public void setControlador(ActionListener l) {
-		clickArea.addActionListener(l);
+		if(clickArea != null) clickArea.addActionListener(l);
 	}
 	
 	public void anadirFoto(String imageName, double fotoWPerc) {

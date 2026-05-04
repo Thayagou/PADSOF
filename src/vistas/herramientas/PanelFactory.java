@@ -57,6 +57,18 @@ public class PanelFactory {
 		}
 		return wrapVertical(btnPanel, t.getPixelsHeight(VERTICAL_GAP));
 	}
+	
+	public static JPanel getColumnaDeBotones(double VERTICAL_GAP_PERC, JButton... botones) {
+		TiendaFrame t = TiendaFrame.getInstance();
+
+		JPanel btnPanel = new JPanel(new GridLayout(botones.length, 1, 0, t.getPixelsHeight(VERTICAL_GAP_PERC)));
+		btnPanel.setOpaque(false);
+
+		for (JButton btn : botones) {
+			btnPanel.add(btn);
+		}
+		return wrapVertical(btnPanel, t.getPixelsHeight(VERTICAL_GAP_PERC));
+	}
 
 	/**
 	 * Devuelve un panel con el contenido y una cabecera
