@@ -135,7 +135,7 @@ public class PanelFactory {
 	 */
 	public static JScrollPane getScroll(JPanel lista) {
 		/* Ajustes del scroll */
-		int speed = 16; /* Velocidad del scroll */
+		int speed = 16;//TiendaFrame.getInstance().getPixelsHeight(16/1080); /* Velocidad del scroll */
 		double width = 0.011; /* Grosor de la barra vertical */
 		Color bg = ColorPalette.DARK_GREY.getColor(); /* Color de fondo de la barra */
 		Color fg = ColorPalette.PURPLE.getColor(); /* Color de frente de la barra */
