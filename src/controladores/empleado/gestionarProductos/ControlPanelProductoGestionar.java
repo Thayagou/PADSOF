@@ -1,4 +1,4 @@
-package controladores.empleado;
+package controladores.empleado.gestionarProductos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

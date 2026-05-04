@@ -1,4 +1,4 @@
-package vistas.empleado;
+package vistas.empleado.gestionarProductos;
 
 import javax.swing.*;
 

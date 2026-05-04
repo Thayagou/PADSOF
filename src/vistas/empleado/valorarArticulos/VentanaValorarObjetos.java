@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import vistas.common.VentanaConDisplay;
-import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaValorarObjetos extends JPanel implements VentanaConDisplay<PanelArticuloPendienteValoracion> {
@@ -16,15 +15,24 @@ public class VentanaValorarObjetos extends JPanel implements VentanaConDisplay<P
 
 	public VentanaValorarObjetos() {
 		setLayout(new BorderLayout());
+		setOpaque(false);
+		
 		listaPanel = new JPanel();
 		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
-		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
+		listaPanel.setOpaque(false);
+		
 		JScrollPane scroll = PanelFactory.getScroll(listaPanel);
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
+		
 		JPanel panelCentral = new JPanel();
 		panelCentral.setLayout(new BorderLayout());
+		panelCentral.setOpaque(false);
 		panelCentral.add(BorderLayout.CENTER, scroll);
-
-		add(PanelFactory.getVentanaConCabecera("Artículos pendientes de valorar", panelCentral), BorderLayout.CENTER);
+		
+		JPanel ventana = PanelFactory.getVentanaConCabecera("Artículos pendientes de valorar", panelCentral);
+		ventana.setOpaque(false);
+		add(ventana, BorderLayout.CENTER);
 	}
 
 	@Override

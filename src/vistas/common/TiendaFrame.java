@@ -2,7 +2,6 @@ package vistas.common;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
@@ -87,6 +86,7 @@ public class TiendaFrame extends JFrame {
 		fondo.add(barraLateral, BorderLayout.WEST);
 		fondo.add(barraTareas, BorderLayout.NORTH);
 		fondo.add(vistaActual, BorderLayout.CENTER);
+		add(fondo);
 		revalidate();
 	    repaint();
 	}
