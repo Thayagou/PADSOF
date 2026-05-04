@@ -78,14 +78,13 @@ public class PanelFormulario extends JPanel {
 		}
 
 		/* ── Botón ── */
-		ButtonFactory bf = new ButtonFactory();
-		boton = bf.newRoundedButton(botonTexto, btnHeight, btnWidth, BTN_ROUNDNESS);
+		boton = ButtonFactory.newRoundedButton(botonTexto, btnHeight, btnWidth, BTN_ROUNDNESS);
 		boton.setActionCommand(botonTexto);
 		boton.setBackground(ColorPalette.PURPLE.getColor());
 		boton.setForeground(ColorPalette.WHITE.getColor());
 		//boton.setOpaque(true);
 		boton.setBorderPainted(false);
-		bf.addMouseMecanics(boton, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
+		ButtonFactory.addMouseMecanics(boton, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
 
 		/* ── Tarjeta redondeada ── */
 		RoundedPanel card = new RoundedPanel(cornerRadius);
