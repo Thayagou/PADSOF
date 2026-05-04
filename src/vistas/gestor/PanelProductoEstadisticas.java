@@ -34,7 +34,7 @@ public class PanelProductoEstadisticas extends PanelProducto{
 		// Panel recaudación
 		JPanel panelRecaudacion = new JPanel();
 		panelRecaudacion.setLayout(new BoxLayout(panelRecaudacion, BoxLayout.Y_AXIS));
-		//panelRecaudacion.setOpaque(false);
+		panelRecaudacion.setOpaque(false);
 		
 		JLabel labelRecaudacion = f.newLeftAlignedLabel("Total recaudado:", Fonts.BOLD);
 		labelRecaudacion.setMaximumSize(maxSize);
@@ -54,13 +54,13 @@ public class PanelProductoEstadisticas extends PanelProducto{
 		
 		JPanel panelUds = new JPanel();
 		panelUds.setLayout(new BoxLayout(panelUds, BoxLayout.Y_AXIS));
-		//panelUds.setOpaque(false);
+		panelUds.setOpaque(false);
 		
 		JLabel labelUds = f.newLeftAlignedLabel("Unidades vendidas:", Fonts.BOLD);
 		labelUds.setMaximumSize(maxSize);
 		labelUds.setAlignmentX(LEFT_ALIGNMENT);
 		
-		JLabel labelValorUds = f.newLeftAlignedLabel(String.format("%d.0 €", udsVendidas), Fonts.BOLD);
+		JLabel labelValorUds = f.newLeftAlignedLabel(String.format("%d", udsVendidas), Fonts.BOLD);
 		labelValorUds.setMaximumSize(maxSize);
 		labelValorUds.setAlignmentX(LEFT_ALIGNMENT);
 		
@@ -73,7 +73,7 @@ public class PanelProductoEstadisticas extends PanelProducto{
 		
 		JPanel panelPorcentaje = new JPanel();
 		panelPorcentaje.setLayout(new BoxLayout(panelPorcentaje, BoxLayout.Y_AXIS));
-		//panelPorcentaje.setOpaque(false);
+		panelPorcentaje.setOpaque(false);
 		
 		JLabel labelPorcentaje = f.newLeftAlignedLabel("Porcentaje de ventas:", Fonts.BOLD);
 		labelPorcentaje.setMaximumSize(maxSize);

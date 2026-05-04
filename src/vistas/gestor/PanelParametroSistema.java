@@ -70,6 +70,8 @@ public class PanelParametroSistema extends PanelDisplay{
 		add(eastPanel, BorderLayout.EAST);
 	}
 	
+	public String getValorTextField() {return valor.getText();}
+	
 	@Override
 	public void setControlador(ActionListener l) {
 		if (confirmarButton != null) confirmarButton.addActionListener(l);
