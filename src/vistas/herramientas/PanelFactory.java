@@ -67,6 +67,8 @@ public class PanelFactory {
 	public static JPanel getVentanaConCabecera(String title, JPanel contenido) {
 		JPanel ventana = new JPanel();
 		ventana.setLayout(new BorderLayout());
+		ventana.setOpaque(false);
+		contenido.setOpaque(false);
 
 		JLabel cabecera = new JLabel(title);
 		cabecera.setFont(Fonts.TITLE3.getFont());
@@ -131,9 +133,11 @@ public class PanelFactory {
 		TiendaFrame t = TiendaFrame.getInstance();
 
 		JScrollPane scroll = new JScrollPane(lista);
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.getVerticalScrollBar().setUnitIncrement(speed);
-		scroll.getViewport().setBackground(bg);
+		lista.setOpaque(false);
 
 		int borderPx = t.getPixelsWidth(borderW);
 

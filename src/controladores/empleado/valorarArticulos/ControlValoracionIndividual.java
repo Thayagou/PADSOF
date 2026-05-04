@@ -1,4 +1,4 @@
-package controladores.empleado;
+package controladores.empleado.valorarArticulos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +19,12 @@ import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.EstadoFisicoArticulo;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
-import vistas.empleado.VentanaValoracionIndividual;
+import vistas.empleado.valorarArticulos.VentanaValoracionIndividual;
 
 public class ControlValoracionIndividual implements ActionListener {
 	private final Tienda tienda;
 	private final Empleado empleado;
 	private final ArticuloSegundaMano articulo;
-
 	private final VentanaValoracionIndividual vista;
 
 	public ControlValoracionIndividual(Tienda tienda, Empleado empleado, ArticuloSegundaMano articulo) {
