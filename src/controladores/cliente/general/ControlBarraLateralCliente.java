@@ -8,6 +8,7 @@ import controladores.ControlBarraLateral;
 import controladores.cliente.intercambios.ControlManejoCartera;
 import controladores.cliente.venta.ControlBuscarCliente;
 import controladores.cliente.venta.ControlManejoCarrito;
+import controladores.cliente.venta.ControlVerCompras;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 
@@ -43,7 +44,7 @@ public class ControlBarraLateralCliente implements ControlBarraLateral {
 //			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente))
 			break;
 		case "Ver mis compras":
-//			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente))
+			SwingUtilities.invokeLater(() -> new ControlVerCompras(tienda, cliente));
 			break;
 		}
 	}

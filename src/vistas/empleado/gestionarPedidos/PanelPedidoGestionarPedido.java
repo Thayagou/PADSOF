@@ -18,8 +18,8 @@ public class PanelPedidoGestionarPedido extends PanelPedido{
 	private static final long serialVersionUID = 1L;
 	JButton avanzarEstadoButton;
 	
-	public PanelPedidoGestionarPedido(String nombreCliente, String imageName, String actionName, String...productos) {
-		super(nombreCliente, imageName, actionName, productos);
+	public PanelPedidoGestionarPedido(String nombreCliente, String estado, String imageName, String actionName, String...productos) {
+		super(nombreCliente, estado, imageName, actionName, productos);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		JPanel eastPanel = new JPanel();
@@ -44,6 +44,5 @@ public class PanelPedidoGestionarPedido extends PanelPedido{
 	public void setControlador(ActionListener c) {
 		super.setControlador(c);
 		avanzarEstadoButton.addActionListener(c);
-		System.out.println("llega aqui");
 	}
 }

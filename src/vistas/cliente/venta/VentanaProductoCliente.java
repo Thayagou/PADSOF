@@ -48,7 +48,7 @@ public class VentanaProductoCliente extends JPanel {
 		/* Panel izquierdo - Valoraciones */
 		JScrollPane scrollResenas = PanelFactory.getScroll(resenasPanel);
 		JPanel contenido = new JPanel(new BorderLayout());
-		contenido.add(scrollResenas);
+		contenido.add(scrollResenas, BorderLayout.CENTER);
 
 		JPanel resenas = PanelFactory.getVentanaConCabecera("Reseñas", contenido);
 		resenas.setPreferredSize(new Dimension(reviewsW, 0));
@@ -56,7 +56,7 @@ public class VentanaProductoCliente extends JPanel {
 		/* Panel derecho - Detalle del producto */
 		JPanel rightPanel = new PanelInfoProducto(nombre, descripcion, image, puntuacionMedia, precio, categorias);
 
-		comprar = new ButtonFactory().newRoundedButton("Añadir al carrito", t.getPixelsHeight(COMPRAR_BTN_HEIGHT),
+		comprar = ButtonFactory.newRoundedButton("Añadir al carrito", t.getPixelsHeight(COMPRAR_BTN_HEIGHT),
 				t.getPixelsWidth(COMPRAR_BTN_WIDTH), 1);
 		comprar.setActionCommand("comprar");
 		comprar.setAlignmentX(CENTER_ALIGNMENT);
@@ -68,6 +68,13 @@ public class VentanaProductoCliente extends JPanel {
 
 		add(resenas, BorderLayout.WEST);
 		add(rightPanel, BorderLayout.CENTER);
+		
+		refreshList();
+	}
+	
+	private void refreshList() {
+		resenasPanel.revalidate();
+		resenasPanel.repaint();
 	}
 
 	/**
@@ -79,6 +86,7 @@ public class VentanaProductoCliente extends JPanel {
 	 */
 	public void anadirPanelResena(double puntuacion, String comentario, String usr) {
 		resenasPanel.add(new PanelResena(puntuacion, comentario, usr));
+		refreshList();
 	}
 
 	public void setControlador(ActionListener c) {

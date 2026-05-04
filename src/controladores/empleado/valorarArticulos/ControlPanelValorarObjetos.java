@@ -44,6 +44,7 @@ public class ControlPanelValorarObjetos implements ActionListener {
 			SwingUtilities.invokeLater(() -> {
 				new ControlValoracionIndividual(tienda, empleado, articulo);
 			});
+			break;
 		}
 	}
 }
