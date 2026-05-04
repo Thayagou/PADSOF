@@ -1,9 +1,8 @@
 package controladores.gestor;
 
-import java.awt.*;
 import java.awt.event.*;
-
-import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
@@ -12,13 +11,15 @@ import modelo.venta.productos.Producto;
 import vistas.common.PanelMultiopcion;
 import vistas.common.TiendaFrame;
 import vistas.gestor.VentanaAnadirDescuento;
-import vistas.gestor.VentanaInicioGestor;
 
 public class ControlAnadirDescuento implements ActionListener{
 	private Tienda tienda;
 	private Gestor gestor;
 	private VentanaAnadirDescuento vista;
 	private String tipoActual;
+	private List<Producto> productosDescontados = new ArrayList<>();
+	private List<Producto> categoriasDescontados = new ArrayList<>();;
+	
 	
 	public ControlAnadirDescuento(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;

@@ -6,16 +6,28 @@ import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
 import controladores.empleado.ControlGestionarCategorias;
+import controladores.empleado.ControlGestionarProductos;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
+import vistas.common.BarraLateral;
+import vistas.common.TiendaFrame;
+import vistas.gestor.BarraGestor;
 
 public class ControlBarraGestor implements ControlBarraLateral{
 	private final Tienda tienda;
 	private final Gestor gestor;
+	private TiendaFrame frame;
+	private BarraGestor barraLateral;
 	
 	public ControlBarraGestor(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
+		this.frame = TiendaFrame.getInstance();
+		
+		barraLateral = new BarraGestor();
+        barraLateral.setControlador(this);
+        frame.setBarraLateral(barraLateral);
+        
 	}
 	
 	@Override
@@ -30,8 +42,11 @@ public class ControlBarraGestor implements ControlBarraLateral{
 		case "Consultar estadísticas":
 			this.consultarEstadisticas();
 			break;
-		case "Gestionar productos y categorías":
-			this.gestionarProdsYCats();
+		case "Gestionar productos":
+			this.gestionarProductos();
+			break;
+		case "Gestionar categorías":
+			this.gestionarCategorias();
 			break;
 		case "Gestionar empleados":
 			this.gestionarEmpleados();
@@ -52,7 +67,13 @@ public class ControlBarraGestor implements ControlBarraLateral{
 		);
 	}
 	
-	private void gestionarProdsYCats() {
+	private void gestionarProductos() {
+		SwingUtilities.invokeLater(()->
+			new ControlGestionarProductos(tienda, gestor)
+		);
+	}
+	
+	private void gestionarCategorias() {
 		SwingUtilities.invokeLater(()->
 			new ControlGestionarCategorias(tienda, gestor)
 		);

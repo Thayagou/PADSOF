@@ -23,13 +23,9 @@ public class PanelArticulo extends PanelDisplay {
 	private static final double FOTO_W_PERC = 0.09;
 	private static final double FOTO_H_PERC = 0.99;
 	private static final double MAX_HEIGHT = 0.16;
-	private static final int MAX_DESC = 120;
+	private static final int MAX_DESC = 40;
 	private static final double CENTER_DIST = 0.7;
 
-	private String nombre;
-	private String descripcion;
-	private String interesadoEn;
-	private double estimacion;
 	private int spaceBetween;
 	private JPanel centerPanel;
 	private GridBagConstraints gbc;
@@ -39,6 +35,7 @@ public class PanelArticulo extends PanelDisplay {
 			String interesadoEn, double estimacion, String estado, String actionName, String... categorias) {
 		this(nombre, descripcion, interesadoEn, estimacion, estado, actionName, categorias);
 
+		/* Construye parte de dueño del Artículo */
 		JPanel usuario = new JPanel();
 		usuario.setOpaque(false);
 		usuario.setLayout(new BoxLayout(usuario, BoxLayout.Y_AXIS));
@@ -46,21 +43,16 @@ public class PanelArticulo extends PanelDisplay {
 		ButtonFactory f = new ButtonFactory();
 		JLabel iconoUsuario = anadirIcono(fotoDePerfil, 0.3f, BOTON_PERC_W);
 		JLabel labelNombre = f.newLeftAlignedLabel(nombreUsuario, Fonts.TEXT);
-		// labelNombre.setMaximumSize(maxSize);
+
 		labelNombre.setAlignmentX(LEFT_ALIGNMENT);
 		JButton verCartera = f.newButton("Ver cartera");
 		verCartera.setFont(Fonts.BOLD.getFont());
-		// f.addMouseMecanics(verCartera, null, null);
+
 		verCartera.setMaximumSize(new Dimension(maxCompHeight, TiendaFrame.getInstance().getPixelsWidth(BOTON_PERC_W)));
-		// JButton iconoUsuario = f.newIconButton(nombreUsuario, maxCompHeight,
-		// maxCompHeight/2, fotoDePerfil);
-		// iconoUsuario.setMaximumSize(new Dimension(t.getPixelsWidth(BOTON_PERC_W),
-		// maxCompHeight));
+
 		int gapSize = (int) (maxCompHeight * (1 - 2 * BOTON_PERC_H) / 2);
 		usuario.add(Box.createVerticalStrut(gapSize));
-		// usuario.add(iconoUsuario);
-		// usuario.setMaximumSize(new Dimension(t.getPixelsWidth(BOTON_PERC_W),
-		// maxCompHeight));
+
 		usuario.add(iconoUsuario);
 		usuario.add(labelNombre);
 		usuario.add(verCartera);
@@ -76,12 +68,6 @@ public class PanelArticulo extends PanelDisplay {
 	public PanelArticulo(String nombre, String descripcion, String interesadoEn, double estimacion, String estado,
 			String actionName, String... categorias) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "producto.png", actionName);
-		// super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT, "Ver producto:");
-		// setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		this.interesadoEn = interesadoEn;
-		this.descripcion = descripcion;
-		this.nombre = nombre;
-		this.estimacion = estimacion;
 
 		TiendaFrame t = TiendaFrame.getInstance();
 		spaceBetween = t.getPixelsWidth(0.1f);
@@ -135,6 +121,7 @@ public class PanelArticulo extends PanelDisplay {
 		String cats = String.join(", ", categorias);
 
 		if (!cats.isEmpty()) {
+			if (cats.length() > MAX_DESC) cats = cats.substring(0, MAX_DESC) + "...";
 			JLabel categoriasLabel = new JLabel(cats);
 			categoriasLabel.setFont(Fonts.TEXT.getFont());
 			categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
@@ -197,13 +184,10 @@ public class PanelArticulo extends PanelDisplay {
 	}
 
 	private JLabel anadirIcono(String imageName, double fotoHPerc, double fotoWPerc) {
-		//add(Box.createHorizontalGlue());
-		//add(Box.createHorizontalStrut(spaceBetween));
 		ButtonFactory factory = new ButtonFactory();
 		TiendaFrame t = TiendaFrame.getInstance();
 		int fotoW = t.getPixelsWidth(fotoWPerc);
 
-		// JLabel fotoLabel = new JLabel("FOTO", JLabel.CENTER);
 		JLabel fotoLabel = new JLabel(factory.loadImageInBounds(imageName, (int) (fotoHPerc * maxCompHeight), fotoW));
 		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		fotoLabel.setFont(Fonts.BOLD.getFont());

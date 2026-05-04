@@ -1,5 +1,6 @@
 package vistas.empleado;
 
+import java.awt.BorderLayout;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -12,23 +13,25 @@ import vistas.herramientas.PanelFactory;
 
 public class VentanaValorarObjetos extends JPanel implements VentanaConDisplay<PanelArticuloPendienteValoracion> {
 	private static final long serialVersionUID = 1L;
-	private ArrayList<PanelArticuloPendienteValoracion> articulos = new ArrayList<>();
+	//private ArrayList<PanelArticuloPendienteValoracion> articulos = new ArrayList<>();
 	private JPanel listaPanel;
 
 	public VentanaValorarObjetos() {
+		setLayout(new BorderLayout());
 		listaPanel = new JPanel();
 		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
 		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
 		JScrollPane scroll = PanelFactory.getScroll(listaPanel);
 		JPanel panelCentral = new JPanel();
-		panelCentral.add(scroll);
+		panelCentral.setLayout(new BorderLayout());
+		panelCentral.add(BorderLayout.CENTER, scroll);
 
-		add(PanelFactory.getVentanaConCabecera("Artículos pendientes de valorar", panelCentral));
+		add(PanelFactory.getVentanaConCabecera("Artículos pendientes de valorar", panelCentral), BorderLayout.CENTER);
 	}
 
 	@Override
 	public PanelArticuloPendienteValoracion anadirDisplay(PanelArticuloPendienteValoracion panelDisplay) {
-		articulos.add(panelDisplay);
+		//articulos.add(panelDisplay);
 		listaPanel.add(panelDisplay);
 		listaPanel.revalidate();
 		listaPanel.repaint();

@@ -8,15 +8,25 @@ import controladores.ControlBarraTareas;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
+import vistas.common.TiendaFrame;
+import vistas.gestor.BarraGestor;
+import vistas.gestor.BarraTareasGestor;
 
 public class ControlBarraTareasGestor implements ControlBarraTareas {
 
 	private final Tienda tienda;
 	private final Gestor gestor;
+	private TiendaFrame frame;
+	private BarraTareasGestor barraTareas;
 	
 	public ControlBarraTareasGestor(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
+		this.frame = TiendaFrame.getInstance();
+		
+		barraTareas = new BarraTareasGestor();
+		barraTareas.setControlador(this);
+		frame.setBarraTareas(barraTareas);
 	}
 	
 	@Override

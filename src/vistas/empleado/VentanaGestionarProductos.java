@@ -61,8 +61,6 @@ public class VentanaGestionarProductos extends JSplitPane implements VentanaConD
 		contenido.setLayout(new BorderLayout());
 		contenido.add(BorderLayout.CENTER, scroll);
 		
-		
-
 		return PanelFactory.getVentanaConCabecera("     Productos", contenido);
 
 	}

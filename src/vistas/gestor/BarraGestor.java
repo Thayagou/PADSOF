@@ -13,6 +13,7 @@ public class BarraGestor extends BarraLateral {
 	private static final long serialVersionUID = 1L;
 
 	private JButton gestionarProductos;
+	private JButton gestionarCategorias;
 	private JButton anadirDescuento;
 	private JButton gestionarEmpleados;
 	private JButton configurarSistema;
@@ -29,13 +30,15 @@ public class BarraGestor extends BarraLateral {
 
 		ButtonFactory f = new ButtonFactory();
 
-		gestionarProductos = addBtn(f, "Gestionar productos y categorías", btnHeigth, distFromLeft);
+		gestionarProductos = addBtn(f, "Gestionar productos", btnHeigth, distFromLeft);
+		gestionarCategorias = addBtn(f, "Gestionar categorías", btnHeigth, distFromLeft);
 		anadirDescuento = addBtn(f, "Añadir nuevo descuento", btnHeigth, distFromLeft);
 		gestionarEmpleados = addBtn(f, "Gestionar empleados", btnHeigth, distFromLeft);
 		configurarSistema = addBtn(f, "Configurar sistema", btnHeigth, distFromLeft);
 		consultarEstadisticas = addBtn(f, "Consultar estadísticas", btnHeigth, distFromLeft);
 
 		add(gestionarProductos);
+		add(gestionarCategorias);
 		add(anadirDescuento);
 		add(gestionarEmpleados);
 		add(configurarSistema);
@@ -45,6 +48,7 @@ public class BarraGestor extends BarraLateral {
 	@Override
 	public void setControlador(ControlBarraLateral c) {
 		gestionarProductos.addActionListener(c);
+		gestionarCategorias.addActionListener(c);
 		anadirDescuento.addActionListener(c);
 		gestionarEmpleados.addActionListener(c);
 		configurarSistema.addActionListener(c);

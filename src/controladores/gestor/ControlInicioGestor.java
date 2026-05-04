@@ -19,38 +19,31 @@ import vistas.gestor.BarraTareasGestor;
 import vistas.gestor.VentanaInicioGestor;
 import vistas.noRegistrado.BarraTareasNoRegistrado;
 
-public class ControlInicioGestor implements ActionListener{
+public class ControlInicioGestor implements ActionListener {
 	private Tienda tienda;
 	private Gestor gestor;
 	private TiendaFrame frame;
 	private VentanaInicioGestor vista;
-	
+
 	public ControlInicioGestor(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
-		
+
 		this.vista = new VentanaInicioGestor(tienda);
 		this.vista.setControlador(this);
-		
+
 		this.frame = TiendaFrame.getInstance();
 		this.frame.setVistaActual(vista);
 		this.frame.setVisible(true);
-		
-		ControlBarraGestor ctrlBarraLateral = new ControlBarraGestor(tienda, gestor);
-        BarraLateral barraLatera = new BarraGestor();
-        barraLatera.setControlador(ctrlBarraLateral);
-        frame.setBarraLateral(barraLatera);
-        
-        ControlBarraTareas ctrlBarraTareas = new ControlBarraTareasGestor(tienda, gestor);
-        BarraTareasGestor barraTareas = new BarraTareasGestor();
-        barraTareas.setControlador(ctrlBarraTareas);
-        frame.setBarraTareas(barraTareas);
-		
-		
+
+		/* Se crean las barras que se autogestionan y añaden al frame */
+		new ControlBarraGestor(tienda, gestor);
+		new ControlBarraTareasGestor(tienda, gestor);
 	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch(e.getActionCommand()) {
+		switch (e.getActionCommand()) {
 		case "Añadir descuento":
 			this.anadirDescuento();
 			break;
@@ -65,45 +58,36 @@ public class ControlInicioGestor implements ActionListener{
 			break;
 		case "Gestionar empleados":
 			this.gestionarEmpleados();
-			break;		
+			break;
 		}
-		
+
 	}
-	
+
 	private void anadirDescuento() {
 		this.frame.remove(vista);
-		SwingUtilities.invokeLater(()->
-			new ControlAnadirDescuento(tienda, gestor)
-		);
+		SwingUtilities.invokeLater(() -> new ControlAnadirDescuento(tienda, gestor));
 	}
-	
+
 	private void configurarSistema() {
 		this.frame.remove(vista);
-		SwingUtilities.invokeLater(()->
-			new ControlConfigurarSistema(tienda, gestor)
-		);
+		SwingUtilities.invokeLater(() -> new ControlConfigurarSistema(tienda, gestor));
 	}
-	
+
 	private void gestionarProdsYCats() {
 		this.frame.remove(vista);
-		SwingUtilities.invokeLater(()->
-			new ControlGestionarProductos(tienda, gestor)
-			//new ControlGestionarCategorias(tienda, gestor)
+		SwingUtilities.invokeLater(() -> new ControlGestionarProductos(tienda, gestor)
+		// new ControlGestionarCategorias(tienda, gestor)
 		);
 	}
-	
+
 	private void gestionarEmpleados() {
 		this.frame.remove(vista);
-		SwingUtilities.invokeLater(()->
-			new ControlGestionarEmpleados(tienda, gestor)
-		);
+		SwingUtilities.invokeLater(() -> new ControlGestionarEmpleados(tienda, gestor));
 	}
-	
+
 	private void consultarEstadisticas() {
 		this.frame.remove(vista);
-		SwingUtilities.invokeLater(()->
-			new ControlConsultarEstadisticas(tienda, gestor)
-		);
+		SwingUtilities.invokeLater(() -> new ControlConsultarEstadisticas(tienda, gestor));
 	}
 
 }
