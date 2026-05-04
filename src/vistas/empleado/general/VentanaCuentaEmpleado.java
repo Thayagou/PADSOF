@@ -1,10 +1,8 @@
-package vistas.empleado;
+package vistas.empleado.general;
 
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
-
-import controladores.empleado.ControlCuentaEmpleado;
 
 public class VentanaCuentaEmpleado extends JPanel{
 	private static final long serialVersionUID = 1L;

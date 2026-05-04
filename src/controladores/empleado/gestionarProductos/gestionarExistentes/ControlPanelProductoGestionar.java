@@ -1,4 +1,4 @@
-package controladores.empleado.gestionarProductos;
+package controladores.empleado.gestionarProductos.gestionarExistentes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.PanelCategoria;
 import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
-import vistas.empleado.PanelCategoriaGestionarCategoria;
-import vistas.empleado.PanelProductoGestionarProducto;
+import vistas.empleado.gestionarProductos.gestionarExistentes.PanelProductoGestionarProducto;
 
 public class ControlPanelProductoGestionar implements ActionListener {
 	private Producto producto;

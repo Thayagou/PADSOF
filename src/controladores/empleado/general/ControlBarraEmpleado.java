@@ -1,4 +1,4 @@
-package controladores.empleado;
+package controladores.empleado.general;
 
 import java.awt.event.ActionEvent;
 
@@ -7,11 +7,12 @@ import javax.swing.SwingUtilities;
 import controladores.ControlBarraLateral;
 import controladores.empleado.gestionarIntercambios.ControlGestIntercambios;
 import controladores.empleado.gestionarPedidos.ControlGestPedidos;
-import controladores.empleado.gestionarProductos.ControlGestionarCategorias;
+import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
+import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
 import controladores.empleado.valorarArticulos.ControlValorarObjetos;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
-import vistas.empleado.BarraEmpleado;
+import vistas.empleado.general.BarraEmpleado;
 
 public class ControlBarraEmpleado implements ControlBarraLateral {
 
@@ -53,7 +54,9 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	}
 	
 	private void showProductosExistentes() {
-		
+		SwingUtilities.invokeLater(() -> {
+			new ControlGestionarExistentes(tienda, empleado);
+		});
 	}
 	
 	private void showCategoriasExistentes() {

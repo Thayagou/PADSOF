@@ -1,4 +1,4 @@
-package controladores.empleado.gestionarProductos;
+package controladores.empleado.gestionarProductos.gestionarCategorias;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,8 +10,8 @@ import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
 import vistas.common.VentanaMensaje;
-import vistas.empleado.gestionarProductos.PanelCrearCategoria;
-import vistas.empleado.gestionarProductos.VentanaGestionarCategorias;
+import vistas.empleado.gestionarProductos.gestionarCategorias.PanelCrearCategoria;
+import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCategorias;
 
 public class ControlPanelCrearCategoria implements ActionListener {
 	private final Tienda tienda;

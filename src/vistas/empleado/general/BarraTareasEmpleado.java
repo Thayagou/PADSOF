@@ -1,4 +1,4 @@
-package vistas.empleado;
+package vistas.empleado.general;
 
 import java.awt.Dimension;
 
@@ -34,26 +34,24 @@ public class BarraTareasEmpleado extends BarraTareas {
 
 		setBackground(ColorPalette.BLUE.getColor());
 		setPreferredSize(new Dimension(0, h));
-
-		ButtonFactory f = new ButtonFactory();
 		
-		btnHome = f.newIconButton("homeButton.png", btnH, homeW);
+		btnHome = ButtonFactory.newIconButton("homeButton.png", btnH, homeW);
 		btnHome.setBackground(ColorPalette.BLUE.getColor());
 		btnHome.setForeground(ColorPalette.WHITE.getColor());
 		btnHome.setActionCommand("Home");
-		f.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 		
-		btnCuenta = f.newIconButton("cuentaButton.png", btnH, homeW);
+		btnCuenta = ButtonFactory.newIconButton("cuentaButton.png", btnH, homeW);
 		btnCuenta.setBackground(ColorPalette.BLUE.getColor());
 		btnCuenta.setForeground(ColorPalette.WHITE.getColor());
 		btnCuenta.setActionCommand("Cuenta");
-		f.addMouseMecanics(btnCuenta, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addMouseMecanics(btnCuenta, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 
-		btnCerrarSesion = f.newRoundedButton("Cerrar sesión", btnH, accountW, 0.25);
+		btnCerrarSesion = ButtonFactory.newRoundedButton("Cerrar sesión", btnH, accountW, 0.25);
 		btnCerrarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
 		btnCerrarSesion.setForeground(ColorPalette.WHITE.getColor());
 		btnCerrarSesion.setActionCommand("Cerrar sesión");
-		f.addMouseMecanics(btnCerrarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.addMouseMecanics(btnCerrarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 

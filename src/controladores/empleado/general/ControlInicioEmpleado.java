@@ -1,10 +1,11 @@
-package controladores.empleado;
+package controladores.empleado.general;
 
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
-import vistas.common.BarraLateral;
 import vistas.common.TiendaFrame;
-import vistas.empleado.*;
+import vistas.empleado.general.BarraEmpleado;
+import vistas.empleado.general.BarraTareasEmpleado;
+import vistas.empleado.general.VentanaInicioEmpleado;
 
 public class ControlInicioEmpleado {
 	private VentanaInicioEmpleado vista;

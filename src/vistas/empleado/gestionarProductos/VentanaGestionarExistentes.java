@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import vistas.common.PanelCategoria;
 import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaConDisplay;
@@ -17,7 +16,7 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaGestionarProductos extends JSplitPane implements VentanaConDisplay<PanelProducto> {
+public class VentanaGestionarExistentes extends JSplitPane implements VentanaConDisplay<PanelProducto> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String NUEVA_CATEGORIA_ACTION = "Añadir nuevo producto";
@@ -25,21 +24,19 @@ public class VentanaGestionarProductos extends JSplitPane implements VentanaConD
 	
 	private JPanel listaProductos = new JPanel();
 
-	public VentanaGestionarProductos() {
+	public VentanaGestionarExistentes() {
 		setLeftComponent(crearPanelNuevoProducto());
 
 		setRightComponent(crearPanelProductos());
 	}
 
 	private JPanel crearPanelNuevoProducto() {
-		
-		ButtonFactory f = new ButtonFactory();
 		JPanel panelNuevaCategoria = new JPanel();
 		panelNuevaCategoria.setLayout(new BoxLayout(panelNuevaCategoria, BoxLayout.Y_AXIS));
 		
-		JButton nuevoEmpleadoButton = f.newRoundedButton(NUEVA_CATEGORIA_ACTION, 700, 300, 0.5f);
-		f.paintButton(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		f.addMouseMecanics(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		JButton nuevoEmpleadoButton = ButtonFactory.newRoundedButton(NUEVA_CATEGORIA_ACTION, 700, 300, 0.5f);
+		ButtonFactory.paintButton(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		panelNuevaCategoria.add(Box.createVerticalStrut(TiendaFrame.getInstance().getPixelsHeight(GAP_PERC)));
 		panelNuevaCategoria.add(nuevoEmpleadoButton);
 		
@@ -52,7 +49,6 @@ public class VentanaGestionarProductos extends JSplitPane implements VentanaConD
 	private JPanel crearPanelProductos() {
 		listaProductos.setLayout(new BoxLayout(listaProductos, BoxLayout.Y_AXIS));
 		listaProductos.setBackground(ColorPalette.CARD_LIGHT.getColor());
-		// listaEmpleados.setOpaque(false);
 
 		JScrollPane scroll = PanelFactory.getScroll(listaProductos);
 		scroll.getVerticalScrollBar().setUnitIncrement(10);
@@ -71,7 +67,6 @@ public class VentanaGestionarProductos extends JSplitPane implements VentanaConD
 		listaProductos.add(panelDisplay);
 		listaProductos.revalidate();
 		listaProductos.repaint();
-		
 		return panelDisplay;
 	}
 

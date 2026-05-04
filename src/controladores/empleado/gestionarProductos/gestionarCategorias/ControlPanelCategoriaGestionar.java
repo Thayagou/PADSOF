@@ -1,4 +1,4 @@
-package controladores.empleado.gestionarProductos;
+package controladores.empleado.gestionarProductos.gestionarCategorias;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +13,7 @@ import modelo.venta.productos.Categoria;
 import vistas.common.PanelCategoria;
 import vistas.common.VentanaConDisplay;
 import vistas.common.VentanaMensaje;
-import vistas.empleado.gestionarProductos.PanelCategoriaGestionarCategoria;
+import vistas.empleado.gestionarProductos.gestionarCategorias.PanelCategoriaGestionarCategoria;
 
 public class ControlPanelCategoriaGestionar implements ActionListener {
 	private final Categoria categoria;

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.common.TiendaFrame;
-import vistas.empleado.VentanaGestProductos;
+import vistas.empleado.gestionarProductos.VentanaGestProductos;
 
 public class ControlGestProductos implements ActionListener{
 	

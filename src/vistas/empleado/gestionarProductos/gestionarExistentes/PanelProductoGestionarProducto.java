@@ -1,11 +1,8 @@
-package vistas.empleado.gestionarProductos;
+package vistas.empleado.gestionarProductos.gestionarExistentes;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -31,18 +28,13 @@ public class PanelProductoGestionarProducto extends PanelProducto{
 		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
 		eastPanel.setPreferredSize(new Dimension(maxWidth, (int)(maxCompHeight * BOTON_PERC_H)));
 		
-		ButtonFactory f = new ButtonFactory();
+		JButton modButton = ButtonFactory.newRoundedButton("Editar", (int)(maxCompHeight), maxCompHeight, 0.5f);
+		ButtonFactory.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		
-		JButton modButton = f.newRoundedButton("Editar", (int)(maxCompHeight), maxCompHeight, 0.5f);
-				//f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		f.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
-		
-		JButton borrarButton = f.newRoundedButton("Borrar", (int)(maxCompHeight), maxCompHeight, 0.5f);
-		//f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(borrarButton, ColorPalette.RED, ColorPalette.WHITE);
-		f.addMouseMecanics(borrarButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
-		//modButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		JButton borrarButton = ButtonFactory.newRoundedButton("Borrar", (int)(maxCompHeight), maxCompHeight, 0.5f);
+		ButtonFactory.paintButton(borrarButton, ColorPalette.RED, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(borrarButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
 		
 		int gapSize = (int) (maxCompHeight * (1 - 2*BOTON_PERC_H) / 3);
 		eastPanel.add(Box.createVerticalStrut(gapSize));

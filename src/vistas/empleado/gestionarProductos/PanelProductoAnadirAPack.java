@@ -20,8 +20,6 @@ public class PanelProductoAnadirAPack extends PanelProducto{
 	
 	public PanelProductoAnadirAPack (String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, "", categorias);
-
-		ButtonFactory f = new ButtonFactory();
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		int hSpinner = (int)(maxCompHeight * BOTON_PERC_H);
@@ -32,7 +30,7 @@ public class PanelProductoAnadirAPack extends PanelProducto{
 		numUds.setMaximumSize(maxSize);
 		numUds.setAlignmentX(LEFT_ALIGNMENT);
 		
-		JLabel udsLabel = f.newLeftAlignedLabel("Unidades a añadir:", Fonts.BOLD);
+		JLabel udsLabel = ButtonFactory.newLeftAlignedLabel("Unidades a añadir:", Fonts.BOLD);
 		udsLabel.setMaximumSize(maxSize);
 		udsLabel.setAlignmentX(LEFT_ALIGNMENT);
 		

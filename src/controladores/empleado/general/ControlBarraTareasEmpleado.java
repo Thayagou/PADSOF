@@ -1,4 +1,4 @@
-package controladores.empleado;
+package controladores.empleado.general;
 
 import java.awt.event.ActionEvent;
 

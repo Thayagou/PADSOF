@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 
 import controladores.cliente.general.ControlInicioCliente;
-import controladores.empleado.ControlInicioEmpleado;
+import controladores.empleado.general.ControlInicioEmpleado;
 import controladores.gestor.ControlInicioGestor;
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;

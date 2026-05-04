@@ -1,4 +1,4 @@
-package controladores.empleado;
+package controladores.empleado.general;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.common.TiendaFrame;
-import vistas.empleado.VentanaCuentaEmpleado;
+import vistas.empleado.general.VentanaCuentaEmpleado;
 
 public class ControlCuentaEmpleado implements ActionListener{
 	private Tienda tienda;
