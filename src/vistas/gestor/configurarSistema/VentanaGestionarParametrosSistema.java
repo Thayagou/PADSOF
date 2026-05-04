@@ -1,4 +1,4 @@
-package vistas.gestor;
+package vistas.gestor.configurarSistema;
 
 import java.awt.BorderLayout;
 

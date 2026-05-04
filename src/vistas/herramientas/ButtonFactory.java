@@ -140,7 +140,7 @@ public class ButtonFactory {
 		return button;
 	}
 
-	public JButton newIconButton(String imageName, int height, int width) {
+	public static JButton newIconButton(String imageName, int height, int width) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = new JButton(icon);
 
@@ -222,7 +222,7 @@ public class ButtonFactory {
 		return field;
 	}
 
-	public JSpinner spinnerFecha(Fonts font) {
+	public static JSpinner spinnerFecha(Fonts font) {
 		SpinnerDateModel modelo = new SpinnerDateModel();
 		JSpinner spinner = new JSpinner(modelo);
 		JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");

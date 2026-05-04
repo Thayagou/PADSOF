@@ -1,19 +1,16 @@
-package vistas.gestor;
+package vistas.gestor.consultarEstadisticas;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import vistas.common.PanelDisplay;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
-import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
 public class PanelTiendaEstadisticas extends PanelDisplay{
@@ -25,20 +22,18 @@ public class PanelTiendaEstadisticas extends PanelDisplay{
 	public PanelTiendaEstadisticas(String nombreParametro, String valorString) {
 		super(MAX_HEIGHT, MAX_COMP_HEIGHT * MAX_HEIGHT, "");
 		
-		ButtonFactory f = new ButtonFactory();
-		
 		int gap = (int)((maxHeight * TEXT_FIELD_H)/2);
 		int maxWidth = TiendaFrame.getInstance().getPixelsWidth(BOTON_PERC_W);
 		Dimension size = new Dimension(maxWidth, (int)(maxCompHeight * BOTON_PERC_H));
 		
-		JLabel paramLabel = f.newLeftAlignedLabel(nombreParametro, Fonts.BOLD);
+		JLabel paramLabel = ButtonFactory.newLeftAlignedLabel(nombreParametro, Fonts.BOLD);
 		paramLabel.setPreferredSize(size);
 		add(paramLabel, BorderLayout.WEST);
 		
 		JPanel valorPanel = new JPanel();
 		valorPanel.setPreferredSize(size);
 		
-		JLabel valorLabel = f.newLeftAlignedLabel(valorString, Fonts.BOLD);
+		JLabel valorLabel = ButtonFactory.newLeftAlignedLabel(valorString, Fonts.BOLD);
 		paramLabel.setPreferredSize(size);
 		add(paramLabel, BorderLayout.WEST);
 		

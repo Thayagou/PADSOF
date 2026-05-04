@@ -1,15 +1,12 @@
-package vistas.gestor;
+package vistas.gestor.gestionarEmpleados;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import modelo.sistema.Tienda;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.ButtonFactory;
@@ -26,14 +23,13 @@ public class VentanaGestionarEmpleados extends JPanel implements VentanaConDispl
 		setOpaque(false);
 		setLayout(new BorderLayout());
 		
-		ButtonFactory f = new ButtonFactory();
 		JPanel panelDarDeAlta = new JPanel();
 		panelDarDeAlta.setLayout(new BoxLayout(panelDarDeAlta, BoxLayout.Y_AXIS));
 		
 		
-		JButton nuevoEmpleadoButton = f.newRoundedButton(NUEVO_EMPLEADO_ACTION, 700, 300, 0.5f);
-		f.paintButton(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		f.addMouseMecanics(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		JButton nuevoEmpleadoButton = ButtonFactory.newRoundedButton(NUEVO_EMPLEADO_ACTION, 700, 300, 0.5f);
+		ButtonFactory.paintButton(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		panelDarDeAlta.add(Box.createVerticalStrut(TiendaFrame.getInstance().getPixelsHeight(GAP_PERC)));
 		panelDarDeAlta.add(nuevoEmpleadoButton);
 		listaEmpleados.setLayout(new BoxLayout(listaEmpleados, BoxLayout.Y_AXIS));

@@ -1,4 +1,4 @@
-package controladores.gestor;
+package controladores.gestor.gestionarEmpleados;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.common.VentanaConDisplay;
-import vistas.gestor.PanelEmpleado;
+import vistas.gestor.gestionarEmpleados.PanelEmpleado;
 
 public class ControlPanelEmpleadoGestionar implements ActionListener{
 	private Empleado empleado;

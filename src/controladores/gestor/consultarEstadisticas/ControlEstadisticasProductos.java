@@ -1,4 +1,4 @@
-package controladores.gestor;
+package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,8 +6,6 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import modelo.aplicacion.Main;
 import modelo.estadistica.StatsMensual;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
@@ -16,8 +14,8 @@ import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
-import vistas.gestor.PanelProductoEstadisticas;
-import vistas.gestor.VentanaEstadisticasProductos;
+import vistas.gestor.consultarEstadisticas.PanelProductoEstadisticas;
+import vistas.gestor.consultarEstadisticas.VentanaEstadisticasProductos;
 
 public class ControlEstadisticasProductos implements ActionListener {
 	private Tienda tienda;

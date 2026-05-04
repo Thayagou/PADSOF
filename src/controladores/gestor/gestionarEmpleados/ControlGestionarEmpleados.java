@@ -1,4 +1,4 @@
-package controladores.gestor;
+package controladores.gestor.gestionarEmpleados;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +7,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
-import vistas.gestor.VentanaGestionarEmpleados;
+import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
 public class ControlGestionarEmpleados  implements ActionListener{
 	private Tienda tienda;

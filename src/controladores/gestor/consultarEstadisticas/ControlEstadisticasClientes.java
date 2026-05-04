@@ -1,4 +1,4 @@
-package controladores.gestor;
+package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,8 +8,8 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
-import vistas.gestor.PanelClienteEstadisticas;
-import vistas.gestor.VentanaEstadisticasCliente;
+import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
+import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 
 public class ControlEstadisticasClientes implements ActionListener {
 	private Tienda tienda;

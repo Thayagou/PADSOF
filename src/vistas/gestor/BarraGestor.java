@@ -6,7 +6,6 @@ import javax.swing.*;
 import controladores.ControlBarraLateral;
 import vistas.common.BarraLateral;
 import vistas.common.TiendaFrame;
-import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
 public class BarraGestor extends BarraLateral {
@@ -28,14 +27,12 @@ public class BarraGestor extends BarraLateral {
 		setPreferredSize(new Dimension(distFromLeft, 0));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		ButtonFactory f = new ButtonFactory();
-
-		gestionarProductos = addBtn(f, "Gestionar productos", btnHeigth, distFromLeft);
-		gestionarCategorias = addBtn(f, "Gestionar categorías", btnHeigth, distFromLeft);
-		anadirDescuento = addBtn(f, "Añadir nuevo descuento", btnHeigth, distFromLeft);
-		gestionarEmpleados = addBtn(f, "Gestionar empleados", btnHeigth, distFromLeft);
-		configurarSistema = addBtn(f, "Configurar sistema", btnHeigth, distFromLeft);
-		consultarEstadisticas = addBtn(f, "Consultar estadísticas", btnHeigth, distFromLeft);
+		gestionarProductos = addBtn("Gestionar productos", btnHeigth, distFromLeft);
+		gestionarCategorias = addBtn("Gestionar categorías", btnHeigth, distFromLeft);
+		anadirDescuento = addBtn("Añadir nuevo descuento", btnHeigth, distFromLeft);
+		gestionarEmpleados = addBtn("Gestionar empleados", btnHeigth, distFromLeft);
+		configurarSistema = addBtn("Configurar sistema", btnHeigth, distFromLeft);
+		consultarEstadisticas = addBtn("Consultar estadísticas", btnHeigth, distFromLeft);
 
 		add(gestionarProductos);
 		add(gestionarCategorias);

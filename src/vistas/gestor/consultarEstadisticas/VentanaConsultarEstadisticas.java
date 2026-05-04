@@ -1,14 +1,14 @@
-package vistas.gestor;
+package vistas.gestor.consultarEstadisticas;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 
 import modelo.sistema.Tienda;
-import vistas.common.FondoGradiente;
 
 public class VentanaConsultarEstadisticas extends JPanel{
 	
+	private static final long serialVersionUID = 1L;
+
 	public VentanaConsultarEstadisticas(Tienda tienda) {
 		setOpaque(false);
 		setLayout(new BorderLayout());

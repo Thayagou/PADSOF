@@ -5,11 +5,14 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
-import controladores.empleado.ControlGestionarCategorias;
-import controladores.empleado.ControlGestionarProductos;
+import controladores.empleado.gestionarProductos.ControlGestionarCategorias;
+import controladores.empleado.gestionarProductos.ControlGestionarProductos;
+import controladores.gestor.anadirDescuento.ControlAnadirDescuento;
+import controladores.gestor.configurarSistema.ControlConfigurarSistema;
+import controladores.gestor.consultarEstadisticas.ControlEstadisticasClientes;
+import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
-import vistas.common.BarraLateral;
 import vistas.common.TiendaFrame;
 import vistas.gestor.BarraGestor;
 

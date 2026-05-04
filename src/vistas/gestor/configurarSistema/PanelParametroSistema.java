@@ -1,4 +1,4 @@
-package vistas.gestor;
+package vistas.gestor.configurarSistema;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -29,13 +29,11 @@ public class PanelParametroSistema extends PanelDisplay{
 	public PanelParametroSistema(String nombreParametro, String valorActual, String actionName) {
 		super(MAX_HEIGHT, MAX_COMP_HEIGHT * MAX_HEIGHT, "");
 		
-		ButtonFactory f = new ButtonFactory();
-		
 		int gap = (int)((maxHeight * TEXT_FIELD_H)/2);
 		int maxWidth = TiendaFrame.getInstance().getPixelsWidth(BOTON_PERC_W);
 		Dimension size = new Dimension(maxWidth, (int)(maxCompHeight * BOTON_PERC_H));
 		
-		JLabel paramLabel = f.newLeftAlignedLabel(nombreParametro, Fonts.BOLD);
+		JLabel paramLabel = ButtonFactory.newLeftAlignedLabel(nombreParametro, Fonts.BOLD);
 		paramLabel.setPreferredSize(size);
 		add(paramLabel, BorderLayout.WEST);
 		valor = new JTextField(valorActual);
@@ -50,10 +48,10 @@ public class PanelParametroSistema extends PanelDisplay{
 		
 		add(valorPanel, BorderLayout.CENTER);	
 		
-		confirmarButton = f.newRoundedButton("Confirmar", (int)(maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		confirmarButton = ButtonFactory.newRoundedButton("Confirmar", (int)(maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
 		//f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		f.addMouseMecanics(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.paintButton(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		confirmarButton.setActionCommand(actionName);
 		
 		//modButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));

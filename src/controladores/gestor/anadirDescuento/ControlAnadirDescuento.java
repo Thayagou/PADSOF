@@ -1,16 +1,17 @@
-package controladores.gestor;
+package controladores.gestor.anadirDescuento;
 
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.common.PanelMultiopcion;
 import vistas.common.TiendaFrame;
-import vistas.gestor.VentanaAnadirDescuento;
+import vistas.gestor.anadirDescuento.VentanaAnadirDescuento;
 
 public class ControlAnadirDescuento implements ActionListener{
 	private Tienda tienda;

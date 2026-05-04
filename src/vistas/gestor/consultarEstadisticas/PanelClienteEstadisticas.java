@@ -1,45 +1,61 @@
-package vistas.gestor;
+package vistas.gestor.consultarEstadisticas;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import vistas.common.PanelProducto;
+import vistas.common.PanelDisplay;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-public class PanelProductoEstadisticas extends PanelProducto{
-	
+public class PanelClienteEstadisticas extends PanelDisplay{
 	private static final long serialVersionUID = 1L;
-
-	public PanelProductoEstadisticas(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, double recaudacion, int udsVendidas, double porcentaje, String...categorias) {
-		super(nombre, descripcion, imageName, puntuacionMedia, precio, "Ver producto", categorias);
+	private static final double FOTO_W_PERC = 0.09;
+	private static final double FOTO_H_PERC = 0.99;
+	private static final double MAX_HEIGHT = 0.16;
+	private static final double NAME_HEIGHT = 0.3;
+	
+	public PanelClienteEstadisticas(String userName, String imageName, double totalGastado, long udsCompradas, long artsIntercambiados) {
+		super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT, FOTO_W_PERC, imageName, "");
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		int hComps = (int)(maxCompHeight * BOTON_PERC_H);
 		int wComps = t.getPixelsWidth(BOTON_PERC_W);
+		int gap = t.getPixelsHeight((MAX_HEIGHT*(1 - NAME_HEIGHT))/2);
 		Dimension maxSize = new Dimension(wComps, hComps);
 		
+		JPanel info = new JPanel();
+		info.setOpaque(false);
+		info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
+		
+		JLabel nombreLabel = new JLabel(userName);
+		nombreLabel.setFont(Fonts.BOLD.getFont());
+		nombreLabel.setForeground(ColorPalette.DARK_GREY.getColor().darker());
+		info.add(Box.createVerticalStrut(gap));
+		info.add(nombreLabel);
+		//info.add(Box.createVerticalStrut(gap));
+		
+		add(info, BorderLayout.CENTER);
 		// Panel final que se coloca
 		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.X_AXIS));
 		statsPanel.setOpaque(false);
 		
-		// Panel recaudación
+		// Panel total gastado
 		JPanel panelRecaudacion = new JPanel();
 		panelRecaudacion.setLayout(new BoxLayout(panelRecaudacion, BoxLayout.Y_AXIS));
-		panelRecaudacion.setOpaque(false);
+		//panelRecaudacion.setOpaque(false);
 		
 		JLabel labelRecaudacion = ButtonFactory.newLeftAlignedLabel("Total recaudado:", Fonts.BOLD);
 		labelRecaudacion.setMaximumSize(maxSize);
 		labelRecaudacion.setAlignmentX(LEFT_ALIGNMENT);
 		
-		JLabel labelValorRecaudacion = ButtonFactory.newLeftAlignedLabel(String.format("%.2f €", recaudacion), Fonts.BOLD);
+		JLabel labelValorRecaudacion =ButtonFactory.newLeftAlignedLabel(String.format("%.2f €", totalGastado), Fonts.BOLD);
 		labelValorRecaudacion.setMaximumSize(maxSize);
 		labelValorRecaudacion.setAlignmentX(LEFT_ALIGNMENT);
 		
@@ -53,13 +69,13 @@ public class PanelProductoEstadisticas extends PanelProducto{
 		
 		JPanel panelUds = new JPanel();
 		panelUds.setLayout(new BoxLayout(panelUds, BoxLayout.Y_AXIS));
-		panelUds.setOpaque(false);
+		//panelUds.setOpaque(false);
 		
 		JLabel labelUds = ButtonFactory.newLeftAlignedLabel("Unidades vendidas:", Fonts.BOLD);
 		labelUds.setMaximumSize(maxSize);
 		labelUds.setAlignmentX(LEFT_ALIGNMENT);
 		
-		JLabel labelValorUds = ButtonFactory.newLeftAlignedLabel(String.format("%d", udsVendidas), Fonts.BOLD);
+		JLabel labelValorUds = ButtonFactory.newLeftAlignedLabel(String.format("%ld uds", udsCompradas), Fonts.BOLD);
 		labelValorUds.setMaximumSize(maxSize);
 		labelValorUds.setAlignmentX(LEFT_ALIGNMENT);
 		
@@ -72,13 +88,13 @@ public class PanelProductoEstadisticas extends PanelProducto{
 		
 		JPanel panelPorcentaje = new JPanel();
 		panelPorcentaje.setLayout(new BoxLayout(panelPorcentaje, BoxLayout.Y_AXIS));
-		panelPorcentaje.setOpaque(false);
+		//panelPorcentaje.setOpaque(false);
 		
-		JLabel labelPorcentaje = ButtonFactory.newLeftAlignedLabel("Porcentaje de ventas:", Fonts.BOLD);
+		JLabel labelPorcentaje = ButtonFactory.newLeftAlignedLabel("Unidades intercambiadas:", Fonts.BOLD);
 		labelPorcentaje.setMaximumSize(maxSize);
 		labelPorcentaje.setAlignmentX(LEFT_ALIGNMENT);
 		
-		JLabel labelValorPorcentaje = ButtonFactory.newLeftAlignedLabel(String.format("%.2f", porcentaje), Fonts.BOLD);
+		JLabel labelValorPorcentaje = ButtonFactory.newLeftAlignedLabel(String.format("%ld uds", artsIntercambiados), Fonts.BOLD);
 		labelValorPorcentaje.setMaximumSize(maxSize);
 		labelValorPorcentaje.setAlignmentX(LEFT_ALIGNMENT);
 		
@@ -89,6 +105,6 @@ public class PanelProductoEstadisticas extends PanelProducto{
 		statsPanel.add(panelPorcentaje);
 		statsPanel.add(Box.createHorizontalStrut(gapSize));
 		
-		add(statsPanel, BorderLayout.EAST);		
+		add(statsPanel, BorderLayout.EAST);	
 	}
 }

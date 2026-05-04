@@ -1,12 +1,10 @@
-package vistas.gestor;
+package vistas.gestor.gestionarEmpleados;
 
 import java.awt.*;
 import java.util.List;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import modelo.venta.productos.Producto;
 import vistas.common.PanelDisplay;
-import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
@@ -22,11 +20,6 @@ public class PanelEmpleado extends PanelDisplay {
 	private static final double FOTO_H_PERC = 0.99;
 	private static final double MAX_HEIGHT = 0.16;
 
-	private Color gradStart = ColorPalette.CARD_LIGHT.getColor();
-	private Color gradEnd = ColorPalette.CARD_DARK.getColor();
-
-	private String nombre;
-	private String fotoDePerfil;
 	private boolean deAlta;
 	private List<String> permisos;
 	private JButton modButton;
@@ -36,7 +29,6 @@ public class PanelEmpleado extends PanelDisplay {
 
 	public PanelEmpleado(String nombre, boolean deAlta, String... permisos) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "producto.png", "");
-		this.nombre = nombre;
 		this.deAlta = deAlta;
 		// this.fotoDePerfil = fotoDePerfil;
 		this.permisos = List.of(permisos);
@@ -44,8 +36,6 @@ public class PanelEmpleado extends PanelDisplay {
 		setOpaque(false);
 
 		TiendaFrame t = TiendaFrame.getInstance();
-
-		ButtonFactory factory = new ButtonFactory();
 
 		/* Info: nombre + permisos */
 		JPanel info = new JPanel();
@@ -73,7 +63,7 @@ public class PanelEmpleado extends PanelDisplay {
 
 		if (permisosString.isBlank())
 			permisosString = "sin permisos";
-		JLabel permisosLabel = factory.newLabel("Permisos: " + permisosString, Fonts.TEXT);
+		JLabel permisosLabel = ButtonFactory.newLabel("Permisos: " + permisosString, Fonts.TEXT);
 		permisosLabel.setForeground(ColorPalette.PURPLE.getColor());
 		permisosRow.add(permisosLabel, BorderLayout.WEST);
 		info.add(permisosRow);
@@ -101,18 +91,16 @@ public class PanelEmpleado extends PanelDisplay {
 		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
 		eastPanel.setPreferredSize(new Dimension(maxWidth, (int) (maxCompHeight * BOTON_PERC_H)));
 
-		ButtonFactory f = new ButtonFactory();
-
-		modButton = f.newRoundedButton(MODIFICAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
 		// f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		f.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
-		deAltaButton = f.newRoundedButton(deAlta ? "Dar de baja" : "Dar de alta", (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		deAltaButton = ButtonFactory.newRoundedButton(deAlta ? "Dar de baja" : "Dar de alta", (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
 		deAltaButton.setActionCommand(DE_ALTA_ACTION);
 		// f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(deAltaButton, ColorPalette.RED, ColorPalette.WHITE);
-		f.addMouseMecanics(deAltaButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
+		ButtonFactory.paintButton(deAltaButton, ColorPalette.RED, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(deAltaButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
 		// modButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
 		int gapSize = (int) (maxCompHeight * (1 - 2 * BOTON_PERC_H) / 3);

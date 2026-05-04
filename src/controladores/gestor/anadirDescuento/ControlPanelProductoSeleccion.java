@@ -1,4 +1,4 @@
-package controladores.gestor;
+package controladores.gestor.anadirDescuento;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

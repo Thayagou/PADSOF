@@ -1,4 +1,4 @@
-package vistas.gestor;
+package vistas.gestor.consultarEstadisticas;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop.Action;

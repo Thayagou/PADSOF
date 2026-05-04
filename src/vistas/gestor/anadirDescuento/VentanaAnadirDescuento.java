@@ -1,4 +1,4 @@
-package vistas.gestor;
+package vistas.gestor.anadirDescuento;
 
 import javax.swing.*;
 
@@ -47,46 +47,44 @@ public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisp
 		contenido.setLayout(new BoxLayout(contenido, BoxLayout.Y_AXIS));
 		contenido.setOpaque(false);
 
-		ButtonFactory factory = new ButtonFactory();
-
 		// -- Tipo de condición --
-		contenido.add(factory.newLabel("Tipo de condición:", Fonts.TEXT));
+		contenido.add(ButtonFactory.newLabel("Tipo de condición:", Fonts.TEXT));
 		contenido.add(Box.createVerticalStrut(4));
-		JComboBox<String> tipoCondicion = factory.newComboBox(Fonts.TEXT, "Cantidad", "Volumen", "Sin condiciones");
+		JComboBox<String> tipoCondicion = ButtonFactory.newComboBox(Fonts.TEXT, "Cantidad", "Volumen", "Sin condiciones");
 
 		contenido.add(tipoCondicion);
 		// panel.add(Box.createVerticalStrut(8));
 
-		contenido.add(factory.newLabel("Cantidad/volumen mínimo:", Fonts.TEXT));
+		contenido.add(ButtonFactory.newLabel("Cantidad/volumen mínimo:", Fonts.TEXT));
 		// panel.add(Box.createVerticalStrut(4));
-		contenido.add(factory.newTextField("Valor mínimo...", Fonts.TEXT));
+		contenido.add(ButtonFactory.newTextField("Valor mínimo...", Fonts.TEXT));
 		// panel.add(new JSeparator());
 		// panel.add(Box.createVerticalStrut(8));
 
 		// -- Tipo de compensación --
 		contenido.add(new JLabel("Tipo de compensación:"));
 		contenido.add(Box.createVerticalStrut(4));
-		tipoComp = factory.newComboBox(Fonts.TEXT, "Dinero", "Porcentaje", "Regalo");
+		tipoComp = ButtonFactory.newComboBox(Fonts.TEXT, "Dinero", "Porcentaje", "Regalo");
 		contenido.add(tipoComp);
 		// panel.add(Box.createVerticalStrut(8));
 
-		contenido.add(factory.newLabel("Valor de la compensación/Regalo:", Fonts.TEXT));
+		contenido.add(ButtonFactory.newLabel("Valor de la compensación/Regalo:", Fonts.TEXT));
 		// panel.add(Box.createVerticalStrut(4));
-		contenido.add(factory.newTextField("Valor (porcentaje o dinero)...", Fonts.TEXT));
+		contenido.add(ButtonFactory.newTextField("Valor (porcentaje o dinero)...", Fonts.TEXT));
 		// panel.add(Box.createVerticalStrut(4));
-		contenido.add(factory.newTextField("Seleccionar regalo...", Fonts.TEXT));
+		contenido.add(ButtonFactory.newTextField("Seleccionar regalo...", Fonts.TEXT));
 		// panel.add(new JSeparator());
 		// panel.add(Box.createVerticalStrut(8));
 
 		// -- Fechas --
-		contenido.add(factory.newLabel("Inicio/Fin del descuento:", Fonts.TEXT));
+		contenido.add(ButtonFactory.newLabel("Inicio/Fin del descuento:", Fonts.TEXT));
 		// panel.add(Box.createVerticalStrut(4));
-		contenido.add(factory.newLabel("Fecha inicial", Fonts.TEXT));
-		contenido.add(factory.spinnerFecha(Fonts.TEXT));
+		contenido.add(ButtonFactory.newLabel("Fecha inicial", Fonts.TEXT));
+		contenido.add(ButtonFactory.spinnerFecha(Fonts.TEXT));
 		// panel.add(factory.newTextField("Inicio del descuento...", Fonts.TEXT));
 		// panel.add(Box.createVerticalStrut(4));
-		contenido.add(factory.newLabel("Fecha final", Fonts.TEXT));
-		contenido.add(factory.spinnerFecha(Fonts.TEXT));
+		contenido.add(ButtonFactory.newLabel("Fecha final", Fonts.TEXT));
+		contenido.add(ButtonFactory.spinnerFecha(Fonts.TEXT));
 		// panel.add(factory.newTextField("Fin del descuento...", Fonts.TEXT));
 
 		// -- Glue empuja botones al fondo --
@@ -95,8 +93,8 @@ public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisp
 		// -- Botones --
 		JPanel botones = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 8));
 
-		confirmar = factory.newRoundedButton(CONFIRMAR_ACTION, 36, 400, 0.5f);
-		cancelar = factory.newRoundedButton(CANCELAR_ACTION, 36, 400, 0.5f);
+		confirmar = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, 36, 400, 0.5f);
+		cancelar = ButtonFactory.newRoundedButton(CANCELAR_ACTION, 36, 400, 0.5f);
 
 		botones.add(cancelar);
 		botones.add(confirmar);
@@ -129,6 +127,11 @@ public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisp
 	public void vaciarDescontados() {
 		listaDescontados.removeAll();
 	}
+	
+	public String getValorMinimo() {
+		return valorMinimo.getText();
+	}
+	
 	
 	
 

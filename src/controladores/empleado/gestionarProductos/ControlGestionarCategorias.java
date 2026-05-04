@@ -3,12 +3,11 @@ package controladores.empleado.gestionarProductos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import controladores.empleado.ControlPanelCategoriaGestionar;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import modelo.venta.productos.Categoria;
 import vistas.common.TiendaFrame;
-import vistas.empleado.VentanaGestionarCategorias;
+import vistas.empleado.gestionarProductos.VentanaGestionarCategorias;
 
 public class ControlGestionarCategorias implements ActionListener{
 	private Tienda tienda;

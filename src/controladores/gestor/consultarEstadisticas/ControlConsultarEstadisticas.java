@@ -1,4 +1,4 @@
-package controladores.gestor;
+package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
-import vistas.gestor.VentanaConsultarEstadisticas;
-import vistas.gestor.VentanaInicioGestor;
+import vistas.gestor.consultarEstadisticas.VentanaConsultarEstadisticas;
 
 public class ControlConsultarEstadisticas implements ActionListener{
 	private Tienda tienda;

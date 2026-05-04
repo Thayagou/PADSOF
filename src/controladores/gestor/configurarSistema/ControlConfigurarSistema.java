@@ -1,4 +1,4 @@
-package controladores.gestor;
+package controladores.gestor.configurarSistema;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +13,8 @@ import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
-import vistas.gestor.PanelParametroSistema;
-import vistas.gestor.VentanaGestionarParametrosSistema;
+import vistas.gestor.configurarSistema.PanelParametroSistema;
+import vistas.gestor.configurarSistema.VentanaGestionarParametrosSistema;
 
 public class ControlConfigurarSistema implements ActionListener{
 	private Tienda tienda;
