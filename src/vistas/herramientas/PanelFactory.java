@@ -25,11 +25,10 @@ public class PanelFactory {
 
 		JLabel left;
 		JTextField right;
-		ButtonFactory factory = new ButtonFactory();
 		for (int i = 0; i < Math.min(labelNames.length, textNames.length); i++) {
-			left = factory.newLabel(labelNames[i], font);
+			left = ButtonFactory.newLabel(labelNames[i], font);
 			left.setPreferredSize(size);
-			right = factory.newTextField(textNames[i], font);
+			right = ButtonFactory.newTextField(textNames[i], font);
 			right.setPreferredSize(size);
 
 			gbc.gridx = 0;
@@ -98,8 +97,7 @@ public class PanelFactory {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int size = t.getPixelsHeight(0.04);
 
-		ButtonFactory f = new ButtonFactory();
-		ImageIcon icon = f.loadImageIconScaled("pfp.png", size, size);
+		ImageIcon icon = ButtonFactory.loadImageIconScaled("pfp.png", size, size);
 
 		return new JPanel() {
 			private static final long serialVersionUID = 1L;

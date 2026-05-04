@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -40,12 +41,11 @@ public class PanelArticulo extends PanelDisplay {
 		usuario.setOpaque(false);
 		usuario.setLayout(new BoxLayout(usuario, BoxLayout.Y_AXIS));
 
-		ButtonFactory f = new ButtonFactory();
 		JLabel iconoUsuario = anadirIcono(fotoDePerfil, 0.3f, BOTON_PERC_W);
-		JLabel labelNombre = f.newLeftAlignedLabel(nombreUsuario, Fonts.TEXT);
+		JLabel labelNombre = ButtonFactory.newLeftAlignedLabel(nombreUsuario, Fonts.TEXT);
 
 		labelNombre.setAlignmentX(LEFT_ALIGNMENT);
-		JButton verCartera = f.newButton("Ver cartera");
+		JButton verCartera = ButtonFactory.newButton("Ver cartera");
 		verCartera.setFont(Fonts.BOLD.getFont());
 
 		verCartera.setMaximumSize(new Dimension(maxCompHeight, TiendaFrame.getInstance().getPixelsWidth(BOTON_PERC_W)));
@@ -62,7 +62,6 @@ public class PanelArticulo extends PanelDisplay {
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		centerPanel.add(usuario, gbc);
-		// statsPanel.add(Box.createHorizontalStrut(gapSize));
 	}
 
 	public PanelArticulo(String nombre, String descripcion, String interesadoEn, double estimacion, String estado,
@@ -71,7 +70,6 @@ public class PanelArticulo extends PanelDisplay {
 
 		TiendaFrame t = TiendaFrame.getInstance();
 		spaceBetween = t.getPixelsWidth(0.1f);
-		// setOpaque(false);
 		centerPanel = new JPanel(new GridBagLayout());
 		centerPanel.setOpaque(false);
 		gbc = new GridBagConstraints();
@@ -79,7 +77,6 @@ public class PanelArticulo extends PanelDisplay {
 		gbc.weighty = 1.0;
 
 		/* Info: estrellas + nombre + descripción + precio + categorías */
-
 		JPanel info = new JPanel();
 		info.setOpaque(false);
 		info.setLayout(new GridLayout(4, 1));
@@ -88,7 +85,6 @@ public class PanelArticulo extends PanelDisplay {
 		JPanel firstRow = new JPanel();
 		firstRow.setOpaque(false);
 		firstRow.setLayout(new BorderLayout(10, 0));
-		// firstRow.add(buildEstrellas(t, puntuacionMedia), BorderLayout.CENTER);
 
 		JLabel nombreLabel = new JLabel(nombre);
 		nombreLabel.setFont(Fonts.BOLD.getFont());
@@ -100,8 +96,7 @@ public class PanelArticulo extends PanelDisplay {
 		/* Segunda fila: descripcion */
 		if (descripcion != null && descripcion.length() > MAX_DESC)
 			descripcion = descripcion.substring(0, MAX_DESC) + "...";
-		ButtonFactory f = new ButtonFactory();
-		JLabel descripcionLabel = f.newLabel(descripcion, Fonts.SMALL);
+		JLabel descripcionLabel = ButtonFactory.newLabel(descripcion, Fonts.SMALL);
 		descripcionLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		info.add(descripcionLabel);
 
@@ -109,7 +104,7 @@ public class PanelArticulo extends PanelDisplay {
 		interesadoEn = "Interesado en: " + interesadoEn;
 		if (interesadoEn.length() > MAX_DESC)
 			interesadoEn = interesadoEn.substring(0, MAX_DESC) + "...";
-		JLabel interesadoLabel = f.newLabel(interesadoEn, Fonts.SMALL);
+		JLabel interesadoLabel = ButtonFactory.newLabel(interesadoEn, Fonts.SMALL);
 		interesadoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		info.add(interesadoLabel);
 
@@ -130,7 +125,7 @@ public class PanelArticulo extends PanelDisplay {
 
 		String valoracion = estimacion < 0 ? "Pendiente de valoracion"
 				: "Estado: " + estado + " " + "Estimacion: " + String.format("%.2f €", estimacion);
-		JLabel valoracionLabel = f.newLabel(valoracion, Fonts.TEXT);
+		JLabel valoracionLabel = ButtonFactory.newLabel(valoracion, Fonts.TEXT);
 		valoracionLabel.setForeground(Color.BLACK);
 		thirdRow.add(valoracionLabel, BorderLayout.CENTER);
 
@@ -142,9 +137,6 @@ public class PanelArticulo extends PanelDisplay {
 		centerPanel.add(info, gbc);
 
 		add(centerPanel, BorderLayout.CENTER);
-
-		// add(foto, BorderLayout.WEST);
-		// add(articulo, BorderLayout.CENTER);
 	}
 
 	public void inicializarBoton(String nombre) {
@@ -161,16 +153,12 @@ public class PanelArticulo extends PanelDisplay {
 		eastPanel.setOpaque(false);
 		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
 		eastPanel.setPreferredSize(new Dimension(maxWidth, (int) (maxCompHeight * BOTON_PERC_H)));
-		// eastPanel.setMaximumSize(new Dimension(maxWidth, (int)(maxCompHeight *
-		// BOTON_PERC_H)));
 
-		ButtonFactory f = new ButtonFactory();
 
-		boton = f.newRoundedButton(nombre, (int) (maxCompHeight), maxCompHeight, 0.5f);
+		boton = ButtonFactory.newRoundedButton(nombre, (int) (maxCompHeight), maxCompHeight, 0.5f);
 		boton.setActionCommand(nombre);
-		// f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		f.paintButton(boton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		f.addMouseMecanics(boton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.paintButton(boton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(boton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
 		int gapSize = (int) (maxCompHeight * (1 - BOTON_PERC_H) / 2);
 		eastPanel.add(Box.createVerticalStrut(gapSize));
@@ -193,5 +181,11 @@ public class PanelArticulo extends PanelDisplay {
 		fotoLabel.setFont(Fonts.BOLD.getFont());
 
 		return fotoLabel;
+	}
+	
+	@Override
+	public void setControlador(ActionListener l) {
+		super.setControlador(l);
+		if (boton != null) boton.addActionListener(l);
 	}
 }

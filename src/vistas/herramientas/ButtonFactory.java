@@ -26,15 +26,15 @@ public class ButtonFactory {
 
 	}
 
-	private String getHTMLCenteredLabel(String label) {
+	private static String getHTMLCenteredLabel(String label) {
 		return "<html><center>" + label + "</center></html>";
 	}
 
-	private String getHTMLLabel(String label) {
+	private static String getHTMLLabel(String label) {
 		return "<html><div style='text-align:left;'>" + label + "</div></html>";
 	}
 
-	public ImageIcon loadImageIconScaled(String imageName, int h, int w) {
+	public static ImageIcon loadImageIconScaled(String imageName, int h, int w) {
 		ImageIcon original = loadImageIcon(imageName);
 		if (h <= 0 || w <= 0)
 			return original;
@@ -65,11 +65,11 @@ public class ButtonFactory {
 		return original;
 	}
 
-	public ImageIcon loadImageIcon(String imageName) {
+	public static ImageIcon loadImageIcon(String imageName) {
 		return new ImageIcon(IMAGE_PATH + imageName);
 	}
 
-	private void setDefault(JButton button) {
+	private static void setDefault(JButton button) {
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		button.setFont(Fonts.TEXT.getFont());
 		button.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -80,23 +80,23 @@ public class ButtonFactory {
 		addMouseMecanics(button, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 	}
 
-	public void paintButton(JButton button, ColorPalette background, ColorPalette foreground) {
+	public static void paintButton(JButton button, ColorPalette background, ColorPalette foreground) {
 		button.setBackground(background.getColor());
 		button.setForeground(foreground.getColor());
 	}
 
-	private void iconoDinamico(JButton button, ImageIcon original, double percIcono) {
+	private static void iconoDinamico(JButton button, ImageIcon original, double percIcono) {
 		button.addComponentListener(new ButtonAdapter(button, percIcono, original));
 	}
 
-	public JButton newButton(String label) {
+	public static JButton newButton(String label) {
 		JButton button = new JButton(getHTMLCenteredLabel(label));
 		button.setActionCommand(label);
 
 		return button;
 	}
 
-	public JButton newRoundedButton(String label, int height, int width, double roundness) {
+	public static JButton newRoundedButton(String label, int height, int width, double roundness) {
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
 
 		button.setActionCommand(label);
@@ -107,7 +107,7 @@ public class ButtonFactory {
 		return button;
 	}
 
-	public JButton newRoundedIconButton(String label, int height, int width, double roundness, String imageName) {
+	public static JButton newRoundedIconButton(String label, int height, int width, double roundness, String imageName) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
 
@@ -121,7 +121,7 @@ public class ButtonFactory {
 		return button;
 	}
 
-	public JButton newButton(String label, int height, int width) {
+	public static JButton newButton(String label, int height, int width) {
 		JButton button = newButton(label);
 		Dimension size = new Dimension(width, height);
 		button.setPreferredSize(size);
@@ -130,7 +130,7 @@ public class ButtonFactory {
 		return button;
 	}
 	
-	public JButton newButtonLeft(String label, int height, int width) {
+	public static JButton newButtonLeft(String label, int height, int width) {
 		JButton button = new JButton(getHTMLLabel(label));
 		button.setActionCommand(label);
 		Dimension size = new Dimension(width, height);
@@ -167,7 +167,7 @@ public class ButtonFactory {
 		return button;
 	}
 
-	public void addMouseMecanics(JButton btn, ColorPalette defaultC, ColorPalette pressedC) {
+	public static void addMouseMecanics(JButton btn, ColorPalette defaultC, ColorPalette pressedC) {
 		btn.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent e) {
 				btn.setBackground(pressedC.getColor());
@@ -180,7 +180,7 @@ public class ButtonFactory {
 
 	}
 
-	public JLabel newLabel(String text, Fonts font) {
+	public static JLabel newLabel(String text, Fonts font) {
 		JLabel label = new JLabel(getHTMLCenteredLabel(text));
 		label.setFont(font.getFont());
 		label.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -188,7 +188,7 @@ public class ButtonFactory {
 		return label;
 	}
 	
-	public JLabel newLeftAlignedLabel(String text, Fonts font) {
+	public static JLabel newLeftAlignedLabel(String text, Fonts font) {
 		JLabel label = new JLabel(getHTMLLabel(text));
 		label.setFont(font.getFont());
 		label.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -196,8 +196,9 @@ public class ButtonFactory {
 		return label;
 	}
 
-	public JTextField newTextField(String text, Fonts font) {
+	public static JTextField newTextField(String text, Fonts font) {
 		JTextField field = new JTextField(text);
+		field.setFont(font.getFont());
 		field.setForeground(ColorPalette.GREY.getColor());
 
 		field.addFocusListener(new FocusAdapter() {
@@ -230,7 +231,7 @@ public class ButtonFactory {
 		return spinner;
 	}
 
-	public <T> JComboBox<T> newComboBox(Fonts font, @SuppressWarnings("unchecked") T... elementos) {
+	public static <T> JComboBox<T> newComboBox(Fonts font, @SuppressWarnings("unchecked") T... elementos) {
 		JComboBox<T> comboBox = new JComboBox<T>(elementos);
 		comboBox.setFont(font.getFont());
 
