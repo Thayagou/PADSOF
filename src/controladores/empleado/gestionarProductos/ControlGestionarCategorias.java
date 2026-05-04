@@ -15,6 +15,8 @@ public class ControlGestionarCategorias implements ActionListener{
 	public ControlGestionarCategorias(Tienda tienda, Usuario usuario) {
 		this.vista = new VentanaGestionarCategorias();
 		
+		new ControlPanelCrearCategoria(tienda, usuario, vista);
+		
 		Categoria[] categorias = tienda.getAlmacen().getCategorias();
 		for (Categoria c: categorias) {
 			new ControlPanelCategoriaGestionar(tienda, usuario, c, vista);

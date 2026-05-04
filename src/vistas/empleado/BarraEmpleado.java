@@ -6,7 +6,6 @@ import javax.swing.*;
 import controladores.ControlBarraLateral;
 import vistas.common.BarraLateral;
 import vistas.common.TiendaFrame;
-import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
 public class BarraEmpleado extends BarraLateral {
@@ -20,7 +19,6 @@ public class BarraEmpleado extends BarraLateral {
 	private JButton anadirProducto;
 	private JButton cargarFichero;
 	private JButton gestionarExistentes;
-	private JButton anadirCategoria;
 	private JButton gestionarCategorias;
 	private JButton crearPacks;
 
@@ -34,24 +32,21 @@ public class BarraEmpleado extends BarraLateral {
 		setPreferredSize(new Dimension(distFromLeft, 0));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		ButtonFactory f = new ButtonFactory();
-		gestionarProductos = addBtn(f, "Gestionar productos y categorías", btnHeigth, distFromLeft);
-		anadirProducto = addBtn(f, "Añadir nuevo producto", btnHeigth, distIndented);
-		cargarFichero = addBtn(f, "Cargar fichero de productos", btnHeigth, distIndented);
-		gestionarExistentes = addBtn(f, "Gestionar productos existentes", btnHeigth, distIndented);
-		anadirCategoria = addBtn(f, "Añadir nueva categoría", btnHeigth, distIndented);
-		gestionarCategorias = addBtn(f, "Gestionar categorías existentes", btnHeigth, distIndented);
-		crearPacks = addBtn(f, "Crear packs de productos", btnHeigth, distIndented);
+		gestionarProductos = addBtn("Gestionar productos y categorías", btnHeigth, distFromLeft);
+		anadirProducto = addBtn("Añadir nuevo producto", btnHeigth, distIndented);
+		cargarFichero = addBtn("Cargar fichero de productos", btnHeigth, distIndented);
+		gestionarExistentes = addBtn("Gestionar productos existentes", btnHeigth, distIndented);
+		gestionarCategorias = addBtn("Gestionar categorías", btnHeigth, distIndented);
+		crearPacks = addBtn("Crear packs de productos", btnHeigth, distIndented);
 		
-		gestionarPedidos = addBtn(f, "Gestionar pedidos", btnHeigth, distFromLeft);
-		valorarObjetos = addBtn(f, "Valorar objetos de segunda mano", btnHeigth, distFromLeft);
-		gestionarIntercambios = addBtn(f, "Gestionar intercambios", btnHeigth, distFromLeft);
+		gestionarPedidos = addBtn("Gestionar pedidos", btnHeigth, distFromLeft);
+		valorarObjetos = addBtn("Valorar objetos de segunda mano", btnHeigth, distFromLeft);
+		gestionarIntercambios = addBtn("Gestionar intercambios", btnHeigth, distFromLeft);
 
 		add(gestionarProductos);
 		add(anadirProducto);
 		add(cargarFichero);
 		add(gestionarExistentes);
-		add(anadirCategoria);
 		add(gestionarCategorias);
 		add(crearPacks);
 		
@@ -72,7 +67,6 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto.addActionListener(c);
 		cargarFichero.addActionListener(c);
 		gestionarExistentes.addActionListener(c);
-		anadirCategoria.addActionListener(c);
 		gestionarCategorias.addActionListener(c);
 		crearPacks.addActionListener(c);
 	}
@@ -81,7 +75,6 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto.setVisible(true);
 		cargarFichero.setVisible(true);
 		gestionarExistentes.setVisible(true);
-		anadirCategoria.setVisible(true);
 		gestionarCategorias.setVisible(true);
 		crearPacks.setVisible(true);
 	}
@@ -90,7 +83,6 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto.setVisible(false);
 		cargarFichero.setVisible(false);
 		gestionarExistentes.setVisible(false);
-		anadirCategoria.setVisible(false);
 		gestionarCategorias.setVisible(false);
 		crearPacks.setVisible(false);
 	}
