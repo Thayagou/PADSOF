@@ -146,8 +146,11 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param inicio Mes desde el cual se desea conocer las estadísticas
 	 * @param fin Mes hasta el cual se desea conocer las estadísticas
 	 * @return Lista con las estadísticas entre estos dos meses
+	 * @throws InvalidArgumentException Se lanza en caso de argumentos inválidos
 	 */
-	public List<StatsMensual> getVentasEntreMeses(YearMonth inicio, YearMonth fin) {
+	public List<StatsMensual> getVentasEntreMeses(YearMonth inicio, YearMonth fin) throws InvalidArgumentException {
+		if (inicio == null || fin == null) throw new InvalidArgumentException("Alguno de los meses introducidos no es válido", "obtener productos con mayor recaudación");
+		if (inicio.compareTo(fin) > 0) throw new InvalidArgumentException("El mes de inicio debe ser anterior al del final", "obtener productos con mayor recaudación");
 		List<StatsMensual> estadisticas = new ArrayList<>(ventasMensuales.subMap(inicio, true, fin, true).values());
 		
 		return estadisticas;

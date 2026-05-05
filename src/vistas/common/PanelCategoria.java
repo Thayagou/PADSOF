@@ -9,9 +9,12 @@ import vistas.herramientas.Fonts;
 
 public class PanelCategoria extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
+	private static double MAX_H = 0.08;
+	private static double MAX_H_COMP = 0.75;
+	
 	
 	public PanelCategoria(String nombreCategoria, String actionName) {
-		super(0.08, 0.06, actionName);
+		super(MAX_H, MAX_H * MAX_H_COMP, actionName);
 		
 		JLabel nombreLabel = new JLabel(nombreCategoria);
 		nombreLabel.setFont(Fonts.BOLD.getFont());

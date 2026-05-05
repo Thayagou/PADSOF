@@ -21,6 +21,8 @@ public class ControlConsultarEstadisticas implements ControladorPantalla{
 		this.gestor = gestor;
 		this.vista = new VentanaConsultarEstadisticas(tienda);
 		
+		tienda.getHis
+		
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
