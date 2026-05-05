@@ -7,7 +7,7 @@ import javax.swing.SwingUtilities;
 import controladores.ControlBarraLateral;
 import controladores.empleado.gestionarIntercambios.ControlGestIntercambios;
 import controladores.empleado.gestionarPedidos.ControlGestPedidos;
-import controladores.empleado.gestionarProductos.cargarFichero.ControlCargarFichero;
+import controladores.empleado.gestionarProductos.anadirProductos.ControlAnadirProductos;
 import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
 import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
 import controladores.empleado.valorarArticulos.ControlValorarObjetos;
@@ -32,7 +32,6 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 		switch (e.getActionCommand()) {
 		case "Gestionar productos y categorías" -> showGProductos();
 		case "Añadir nuevo producto" -> showAnadirProducto();
-		case "Cargar fichero de productos" -> showCargarFichero();
 		case "Gestionar productos existentes" -> showProductosExistentes();
 		case "Gestionar categorías" -> showCategoriasExistentes();
 		case "Crear packs de productos" -> showCrearPacks();
@@ -47,12 +46,8 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	}
 	
 	private void showAnadirProducto() {
-		
-	}
-	
-	private void showCargarFichero() {
 		SwingUtilities.invokeLater(() -> {
-			new ControlCargarFichero(tienda, empleado);
+			new ControlAnadirProductos(tienda, empleado);
 		});
 	}
 	

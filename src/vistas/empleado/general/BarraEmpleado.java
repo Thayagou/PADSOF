@@ -17,7 +17,6 @@ public class BarraEmpleado extends BarraLateral {
 	private JButton gestionarIntercambios;
 
 	private JButton anadirProducto;
-	private JButton cargarFichero;
 	private JButton gestionarExistentes;
 	private JButton gestionarCategorias;
 	private JButton crearPacks;
@@ -34,7 +33,6 @@ public class BarraEmpleado extends BarraLateral {
 
 		gestionarProductos = addBtn("Gestionar productos y categorías", btnHeigth, distFromLeft);
 		anadirProducto = addBtn("Añadir nuevo producto", btnHeigth, distIndented);
-		cargarFichero = addBtn("Cargar fichero de productos", btnHeigth, distIndented);
 		gestionarExistentes = addBtn("Gestionar productos existentes", btnHeigth, distIndented);
 		gestionarCategorias = addBtn("Gestionar categorías", btnHeigth, distIndented);
 		crearPacks = addBtn("Crear packs de productos", btnHeigth, distIndented);
@@ -45,7 +43,6 @@ public class BarraEmpleado extends BarraLateral {
 
 		add(gestionarProductos);
 		add(anadirProducto);
-		add(cargarFichero);
 		add(gestionarExistentes);
 		add(gestionarCategorias);
 		add(crearPacks);
@@ -65,7 +62,6 @@ public class BarraEmpleado extends BarraLateral {
 		gestionarIntercambios.addActionListener(c);
 
 		anadirProducto.addActionListener(c);
-		cargarFichero.addActionListener(c);
 		gestionarExistentes.addActionListener(c);
 		gestionarCategorias.addActionListener(c);
 		crearPacks.addActionListener(c);
@@ -73,7 +69,6 @@ public class BarraEmpleado extends BarraLateral {
 
 	public void setVisibleGestProductos() {
 		anadirProducto.setVisible(true);
-		cargarFichero.setVisible(true);
 		gestionarExistentes.setVisible(true);
 		gestionarCategorias.setVisible(true);
 		crearPacks.setVisible(true);
@@ -81,7 +76,6 @@ public class BarraEmpleado extends BarraLateral {
 	
 	public void setInvisibleGestProductos() {
 		anadirProducto.setVisible(false);
-		cargarFichero.setVisible(false);
 		gestionarExistentes.setVisible(false);
 		gestionarCategorias.setVisible(false);
 		crearPacks.setVisible(false);

@@ -1,4 +1,4 @@
-package controladores.empleado.gestionarProductos.cargarFichero;
+package controladores.empleado.gestionarProductos.anadirProductos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,35 +8,39 @@ import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
-import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
-import vistas.empleado.gestionarProductos.cargarFichero.VentanaCargarFichero;
+import vistas.empleado.gestionarProductos.anadirProductos.PanelCargarFichero;
+import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductos;
 
-public class ControlCargarFichero implements ActionListener {
+public class ControlPanelCargarFichero implements ActionListener {
 	private final Tienda tienda;
 	private final Usuario usuario;
-	private final VentanaCargarFichero vista;
+	private final PanelCargarFichero panel;
 	
-	public ControlCargarFichero(Tienda tienda, Usuario usuario) {
+	public ControlPanelCargarFichero(Tienda tienda, Usuario usuario, VentanaAnadirProductos vista) {
 		this.tienda = tienda;
 		this.usuario = usuario;
 		
-		this.vista = new VentanaCargarFichero();
-		vista.setControlador(this);
-		TiendaFrame.getInstance().setVistaActual(vista);
+		panel = new PanelCargarFichero();
+		panel.setControlador(this);
+		
+		vista.anadirDisplay(panel);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case VentanaCargarFichero.CONFIRMAR_ACTION_NAME: 
+		case PanelCargarFichero.CONFIRMAR_ACTION: 
 			intentarCargar();
 			break;
 		}
 	}
 	
 	private void intentarCargar() {
-		String nombreFichero = vista.getNombreFichero();
+		String nombreFichero = panel.getNombreFichero();
+		if(nombreFichero.length() < 1) {
+			new VentanaMensaje("Seleccione un archivo válido");
+		}
 		
 		try {
 			tienda.getAlmacen().anadirProductosDeFichero(usuario, nombreFichero);
