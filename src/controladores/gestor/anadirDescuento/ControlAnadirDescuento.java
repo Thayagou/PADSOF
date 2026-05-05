@@ -4,6 +4,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
@@ -13,7 +16,7 @@ import vistas.common.PanelMultiopcion;
 import vistas.common.TiendaFrame;
 import vistas.gestor.anadirDescuento.VentanaAnadirDescuento;
 
-public class ControlAnadirDescuento implements ActionListener{
+public class ControlAnadirDescuento implements ControladorPantalla{
 	private Tienda tienda;
 	private Gestor gestor;
 	private VentanaAnadirDescuento vista;
@@ -31,7 +34,7 @@ public class ControlAnadirDescuento implements ActionListener{
 		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
 		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
 		
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 		
     }
 	
@@ -87,6 +90,11 @@ public class ControlAnadirDescuento implements ActionListener{
 		}
 		
 		
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 
 }

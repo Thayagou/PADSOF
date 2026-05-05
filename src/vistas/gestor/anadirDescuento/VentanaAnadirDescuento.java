@@ -13,7 +13,7 @@ import vistas.herramientas.PanelFactory;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisplay<PanelDisplay> {
+public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<PanelDisplay> {
 	public static final String TIPO_PRODUCTO = "Productos";
 	public static final String TIPO_CATEGORIA = "Categorias";
 	public static final String CANCELAR_ACTION = "Cancelar";
@@ -36,10 +36,14 @@ public class VentanaAnadirDescuento extends JSplitPane implements VentanaConDisp
 	private static final long serialVersionUID = 1L;
 
 	public VentanaAnadirDescuento() {
+		JSplitPane split = new JSplitPane();
+		split.setLeftComponent(crearPanelParametros());
 
-		setLeftComponent(crearPanelParametros());
-
-		setRightComponent(crearPanelDescontados());
+		split.setRightComponent(crearPanelDescontados());
+		
+		this.setOpaque(false);
+		this.setLayout(new BorderLayout());
+		this.add(split);
 	}
 
 	private JPanel crearPanelParametros() {

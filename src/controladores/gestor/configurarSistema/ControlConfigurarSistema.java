@@ -1,11 +1,14 @@
 package controladores.gestor.configurarSistema;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
+
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.ParametroSistema;
 import modelo.sistema.Sistema;
@@ -16,7 +19,7 @@ import vistas.common.VentanaMensaje;
 import vistas.gestor.configurarSistema.PanelParametroSistema;
 import vistas.gestor.configurarSistema.VentanaGestionarParametrosSistema;
 
-public class ControlConfigurarSistema implements ActionListener{
+public class ControlConfigurarSistema implements ControladorPantalla{
 	private Tienda tienda;
 	private Gestor gestor;
 	private VentanaGestionarParametrosSistema vista;
@@ -25,7 +28,7 @@ public class ControlConfigurarSistema implements ActionListener{
 	public ControlConfigurarSistema(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
-		TiendaFrame frame = TiendaFrame.getInstance();
+		
 		this.vista = new VentanaGestionarParametrosSistema();
 		
 		Sistema sistema = Sistema.getInstancia();
@@ -75,7 +78,7 @@ public class ControlConfigurarSistema implements ActionListener{
 		vista.anadirDisplay(precioValoracion);
 		mapaPaneles.put(ParametroSistema.PRECIO_VALORACION, precioValoracion);
 		
-		frame.setVistaActual(vista);		
+		TiendaFrame.getInstance().navegarA(this);		
 	}
 	
 	@Override
@@ -125,6 +128,11 @@ public class ControlConfigurarSistema implements ActionListener{
 	    long seconds = duracion.toSecondsPart();
 
 	    return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, seconds);
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 
 }

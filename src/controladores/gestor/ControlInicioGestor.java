@@ -29,12 +29,12 @@ public class ControlInicioGestor implements ControladorPantalla {
 		this.vista = new VentanaInicioGestor(tienda);
 		this.vista.setControlador(this);
 
-		this.frame = TiendaFrame.getInstance();
-		frame.resetearNavegacion(this);
-
 		/* Se crean las barras que se autogestionan y añaden al frame */
 		new ControlBarraLateralGestor(tienda, gestor);
 		new ControlBarraTareasGestor(tienda, gestor);
+		
+		this.frame = TiendaFrame.getInstance();
+		frame.resetearNavegacion(this);
 	}
 
 	@Override
