@@ -6,11 +6,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import vistas.cliente.intercambios.PanelArticuloEnCartera;
 import vistas.common.*;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArticulo>{
+public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArticuloEnCartera>{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -43,7 +44,7 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 	}
 
 	@Override
-	public <K extends PanelArticulo> PanelArticulo anadirDisplay(K panelDisplay) {
+	public <K extends PanelArticuloEnCartera> PanelArticuloEnCartera anadirDisplay(K panelDisplay) {
 		objetos.add(panelDisplay);
 		refreshList();
 		

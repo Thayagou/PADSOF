@@ -26,7 +26,6 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 		setOpaque(false);
 		setLayout(new BorderLayout());
 
-		ButtonFactory bf = new ButtonFactory();
 		TiendaFrame t = TiendaFrame.getInstance();
 
 		int btnW = t.getPixelsWidth(BTN_WIDTH);
@@ -46,9 +45,9 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 		this.add(BorderLayout.CENTER, PanelFactory.getVentanaConCabecera(String.format("Carrito Coste total: %.2f", precio), contenido));
 
 		/* Botones de la izquierda */
-		pagar = bf.newRoundedButton("Finalizar y pagar", btnH, btnW, 0.5);
+		pagar = ButtonFactory.newRoundedButton("Finalizar y pagar", btnH, btnW, 0.5);
 		pagar.setActionCommand("pagar");
-		cancelar = bf.newRoundedButton("Cancelar compra", btnH, btnW, 0.5);
+		cancelar = ButtonFactory.newRoundedButton("Cancelar compra", btnH, btnW, 0.5);
 		cancelar.setActionCommand("cancelar");
 
 		JPanel rightPanel = PanelFactory.getColumnaDeBotones(pagar, cancelar);
@@ -71,6 +70,13 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 		}
 		pagar.addActionListener(l);
 		cancelar.addActionListener(l);
+	}
+	
+	public void quitarDisplay(PanelItemCarrito panel) {
+		if(panel != null) {
+			items.remove(panel);
+		}
+		refreshList();
 	}
 
 	@Override

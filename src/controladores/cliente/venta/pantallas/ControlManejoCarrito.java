@@ -31,12 +31,26 @@ public class ControlManejoCarrito implements ActionListener, ControladorPantalla
 		this.vista = new VentanaCarrito(precio);
 		
 		for(StockExterno st : cliente.getCarrito().getItems()) {
-			new ControlItemCarrito(tienda, cliente, st, vista);
+			new ControlItemCarrito(tienda, cliente, st, vista, this);
 		}
 		
 		vista.setControlador(this);
 		
 		TiendaFrame.getInstance().navegarA(this);
+	}
+	
+	public void recargarPantalla() {
+		double precio = cliente.getCarrito().calcularCarrito();
+		
+		this.vista = new VentanaCarrito(precio);
+		
+		for(StockExterno st : cliente.getCarrito().getItems()) {
+			new ControlItemCarrito(tienda, cliente, st, vista, this);
+		}
+		
+		vista.setControlador(this);
+		
+		TiendaFrame.getInstance().recargarPantallaActual(this);
 	}
 	
 	@Override
@@ -48,8 +62,7 @@ public class ControlManejoCarrito implements ActionListener, ControladorPantalla
 		case "cancelar":
 			try{
 				tienda.cancelarCarritoDe(cliente);
-				
-				SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente));
+				recargarPantalla();
 				new VentanaMensaje("Su carrito ha sido cancelado");
 			} catch(Exception ex) {
 				new VentanaMensaje(ex.getMessage());

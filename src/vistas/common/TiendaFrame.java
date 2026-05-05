@@ -207,6 +207,38 @@ public class TiendaFrame extends JFrame {
 		revalidate();
 		repaint();
 	}
+	
+	/**
+	 * Reemplaza la pantalla actual por una nueva instancia,
+	 * sin modificar el stack de navegacion
+	 *
+	 * @param nuevoControlador Controlador de la nueva patnalla que sustituira a la actual
+	 */
+	public void recargarPantallaActual(ControladorPantalla nuevoControlador) {
+	    if (controladorActual == null) {
+	        navegarA(nuevoControlador);
+	        return;
+	    }
+	    
+	    controladorActual.ocultar();
+	    controladorActual.destruir();
+	    
+	    JPanel nuevaVista = nuevoControlador.getVista();
+	    String clave = claveUnica(nuevoControlador);
+	    if (nuevaVista.getClientProperty("_navClave") == null) {
+	        nuevaVista.putClientProperty("_navClave", clave);
+	        contentPanel.add(nuevaVista, clave);
+	    }
+	    
+	    controladorActual = nuevoControlador;
+	    cardLayout.show(contentPanel, clave);
+	    controladorActual.mostrar();
+	    
+	    this.vistaActual = nuevaVista;
+	    
+	    revalidate();
+	    repaint();
+	}
 
 	/**
 	 * Vacía la pila de pantallas anteriores y destruye todos los controladores
