@@ -21,6 +21,8 @@ public class ControlPanelItemPedido implements ActionListener {
 	protected PanelItemPedido panel;
 	protected VentanaConDisplay<? super PanelItemPedido> vista;
 
+	protected static final String DF_PRODUCT_IMAGE = "producto.png";
+
 	public ControlPanelItemPedido(Tienda tienda, ClienteRegistrado cliente, StockExterno item,
 			VentanaConDisplay<? super PanelItemPedido> vista) {
 		this.tienda = tienda;
@@ -29,12 +31,18 @@ public class ControlPanelItemPedido implements ActionListener {
 		this.vista = vista;
 
 		int unidades = item.getUdsEnStock();
+		
+		String imageRoute;
+		if (item.getProducto().getImagen() == null || item.getProducto().getImagen().isBlank())
+			imageRoute = DF_PRODUCT_IMAGE;
+		else
+			imageRoute = item.getProducto().getImagen();
 
 		String[] categorias = java.util.Arrays.stream(item.getProducto().getCategorias()).map(c -> c.getNombre())
 				.toArray(String[]::new);
 
 		panel = new PanelItemPedido(item.getProducto().getNombre(), item.getProducto().getDescripcion(),
-				item.getProducto().getImagen(), item.getProducto().getPuntuacionMedia(), item.getProducto().getPrecio(),
+				imageRoute, item.getProducto().getPuntuacionMedia(), item.getProducto().getPrecio(),
 				unidades, "Ver producto", categorias);
 
 		vista.anadirDisplay(panel);

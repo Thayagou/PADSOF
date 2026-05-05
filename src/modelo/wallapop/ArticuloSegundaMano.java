@@ -24,7 +24,7 @@ public class ArticuloSegundaMano implements Serializable {
 	/** Cartera del cliente propietario */
 	private Cartera dueno;
 	/** Imagen publicada por el propietario */
-	private Image image;
+	private String image;
 	/** Lista de categorías a las que pertenece el artículo */
 	private List<Categoria> categorias = new ArrayList<>();
 	/** Descripción de artículos por los que el propietario querría intercambiar este artículo */
@@ -101,7 +101,7 @@ public class ArticuloSegundaMano implements Serializable {
 	 * Getter de la imagen del artículo
 	 * @return su imagen
 	 */
-	public Image getImage() {
+	public String getImage() {
 		return image;
 	}
 

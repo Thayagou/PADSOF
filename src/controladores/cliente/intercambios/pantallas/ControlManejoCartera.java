@@ -30,6 +30,8 @@ public class ControlManejoCartera implements ActionListener, ControladorPantalla
 		else 
 			this.vista = new VentanaCartera(dueno.getNombre());
 		
+		vista.setControlador(this);
+		
 		for(ArticuloSegundaMano a : dueno.getCartera().getArticulos()) {
 			new ControlPanelArticulo(tienda, cliente, a, vista);
 		}
@@ -39,7 +41,10 @@ public class ControlManejoCartera implements ActionListener, ControladorPantalla
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		switch(e.getActionCommand()) {
+		case "Hacer oferta":
+			break;
+		}
 	}
 
 	@Override
