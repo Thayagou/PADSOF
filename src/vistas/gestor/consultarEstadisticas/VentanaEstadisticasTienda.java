@@ -53,9 +53,9 @@ public class VentanaEstadisticasTienda extends JPanel implements VentanaConDispl
 		JPanel statsPanel = new JPanel(new GridLayout(1, 3, 20, 0));
 		statsPanel.setOpaque(false);
 
-		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Total recaudado", size));
-		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Productos comprados", size));
-		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Artículos intercambiados", size));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Total recaudado", size, ColorPalette.WHITE));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Productos comprados", size, ColorPalette.WHITE));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Artículos intercambiados", size, ColorPalette.WHITE));
 
 		cabecera.add(statsPanel, BorderLayout.EAST);
 		

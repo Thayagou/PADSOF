@@ -40,20 +40,20 @@ public class PanelEstadisticasTienda extends PanelDisplay{
 		JPanel statsPanel = new JPanel(new GridLayout(1, 3));
 		statsPanel.setOpaque(false);
 		
-		statsPanel.add(crearColumnaStat(String.format("%.2f €", recaudacion), maxSize));
-		statsPanel.add(crearColumnaStat(String.format("%d uds", uds), maxSize));
-		statsPanel.add(crearColumnaStat(String.format("%.3f %%", porcentaje), maxSize));
+		statsPanel.add(crearColumnaStat(String.format("%.2f €", recaudacion), maxSize, ColorPalette.DARK_GREY));
+		statsPanel.add(crearColumnaStat(String.format("%d uds", uds), maxSize, ColorPalette.DARK_GREY));
+		statsPanel.add(crearColumnaStat(String.format("%.3f %%", porcentaje), maxSize, ColorPalette.DARK_GREY));
 		add(statsPanel, BorderLayout.EAST);
 		
 	}
 	
-	public static JPanel crearColumnaStat(String texto, Dimension maxSize) {
+	public static JPanel crearColumnaStat(String texto, Dimension maxSize, ColorPalette colorTexto) {
 	    JPanel panel = new JPanel();
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	    panel.setOpaque(false);
 	    
 	    JLabel label = ButtonFactory.newLabel(texto, Fonts.BOLD);
-	    label.setForeground(ColorPalette.DARK_GREY.getColor());
+	    label.setForeground(colorTexto.getColor());
 	    label.setMaximumSize(maxSize);
 	    label.setPreferredSize(maxSize);
 	    //label.setVerticalTextPosition(SwingConstants.CENTER);

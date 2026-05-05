@@ -33,9 +33,9 @@ public class PanelProductoEstadisticas extends PanelProducto{
 		JPanel statsPanel = new JPanel(new GridLayout(1, 3));
 		statsPanel.setOpaque(false);
 		
-		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%.2f €", recaudacion), maxSize));
-	    statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%d uds", udsVendidas), maxSize));
-	    statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%.3f %%", porcentaje), maxSize));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%.2f €", recaudacion), maxSize, ColorPalette.DARK_GREY));
+	    statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%d uds", udsVendidas), maxSize, ColorPalette.DARK_GREY));
+	    statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%.3f %%", porcentaje), maxSize, ColorPalette.DARK_GREY));
 	    statsPanel.setMaximumSize(new Dimension(3*wComps, hComps));
 	    add(statsPanel, BorderLayout.EAST);
 	}

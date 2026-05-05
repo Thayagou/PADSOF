@@ -44,9 +44,6 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		case "Configurar sistema":
 			this.configurarSistema();
 			break;
-		case "Consultar estadísticas":
-			this.consultarEstadisticas();
-			break;
 		case "Gestionar productos":
 			this.gestionarProductos();
 			break;
@@ -56,6 +53,9 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		case "Gestionar empleados":
 			this.gestionarEmpleados();
 			break;	
+		case "Consultar estadísticas clientes":
+			this.consultarEstadisticasClientes();
+			break;
 		case "Consultar estadísticas productos":
 			this.consultarEstadisticasProductos();
 			break;
@@ -97,7 +97,7 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		);
 	}
 	
-	private void consultarEstadisticas() {
+	private void consultarEstadisticasClientes() {
 		SwingUtilities.invokeLater(()->
 			new ControlEstadisticasClientes(tienda, gestor)
 		);
