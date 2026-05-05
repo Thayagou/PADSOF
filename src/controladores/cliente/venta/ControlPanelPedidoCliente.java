@@ -34,7 +34,7 @@ public class ControlPanelPedidoCliente implements ActionListener {
 		}
 
 		// Usar el id/nombre del pedido como actionCommand para identificarlo al hacer clic
-		panel = new PanelPedido("Ver pedido", nombreProductos.toArray(new String[0]));
+		panel = new PanelPedido("Ver pedido", pedido.getEstado().name(), nombreProductos.toArray(new String[0]));
 
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);

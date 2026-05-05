@@ -19,7 +19,8 @@ public class ControlPanelItemPedido implements ActionListener {
 	protected PanelItemPedido panel;
 	protected VentanaConDisplay<? super PanelItemPedido> vista;
 
-	public ControlPanelItemPedido(Tienda tienda, ClienteRegistrado cliente, StockExterno item, VentanaConDisplay<? super PanelItemPedido> vista) {
+	public ControlPanelItemPedido(Tienda tienda, ClienteRegistrado cliente, StockExterno item,
+			VentanaConDisplay<? super PanelItemPedido> vista) {
 		this.tienda = tienda;
 		this.cliente = cliente;
 		this.item = item;
@@ -27,19 +28,12 @@ public class ControlPanelItemPedido implements ActionListener {
 
 		int unidades = item.getUdsEnStock();
 
-		String[] categorias = java.util.Arrays.stream(item.getProducto().getCategorias())
-				.map(c -> c.getNombre())
+		String[] categorias = java.util.Arrays.stream(item.getProducto().getCategorias()).map(c -> c.getNombre())
 				.toArray(String[]::new);
 
-		panel = new PanelItemPedido(
-				item.getProducto().getNombre(),
-				item.getProducto().getDescripcion(),
-				item.getProducto().getImagen(),
-				item.getProducto().getPuntuacionMedia(),
-				item.getProducto().getPrecio(),
-				unidades,
-				item.getProducto().getNombre(), // actionCommand
-				categorias);
+		panel = new PanelItemPedido(item.getProducto().getNombre(), item.getProducto().getDescripcion(),
+				item.getProducto().getImagen(), item.getProducto().getPuntuacionMedia(), item.getProducto().getPrecio(),
+				unidades, "Ver producto", categorias);
 
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);
@@ -47,7 +41,10 @@ public class ControlPanelItemPedido implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch(e.getActionCommand()) {
+		switch (e.getActionCommand()) {
+		case "Ver producto":
+			SwingUtilities.invokeLater(() -> new ControlInfoProductoCliente(tienda, cliente, item.getProducto()));
+			break;
 		case "valorar":
 			SwingUtilities.invokeLater(() -> new ControlAnadirResena(tienda, cliente, item.getProducto()));
 			break;
