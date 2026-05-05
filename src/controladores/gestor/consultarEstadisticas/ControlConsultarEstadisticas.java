@@ -3,24 +3,27 @@ package controladores.gestor.consultarEstadisticas;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
 import vistas.gestor.consultarEstadisticas.VentanaConsultarEstadisticas;
 
-public class ControlConsultarEstadisticas implements ActionListener{
+public class ControlConsultarEstadisticas implements ControladorPantalla{
 	private Tienda tienda;
-	private TiendaFrame frame;
 	private Gestor gestor;
 	private VentanaConsultarEstadisticas vista;
 	
 	public ControlConsultarEstadisticas(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
-		this.frame = TiendaFrame.getInstance();
 		this.vista = new VentanaConsultarEstadisticas(tienda);
 		
-		frame.setVistaActual(vista);
+		tienda.getHis
+		
+		TiendaFrame.getInstance().navegarA(this);
 	}
 	
 	@Override
@@ -29,6 +32,11 @@ public class ControlConsultarEstadisticas implements ActionListener{
 		
 		}
 		
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 
 }

@@ -6,6 +6,10 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.estadistica.StatsMensual;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
@@ -17,7 +21,7 @@ import vistas.common.VentanaMensaje;
 import vistas.gestor.consultarEstadisticas.PanelProductoEstadisticas;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasProductos;
 
-public class ControlEstadisticasProductos implements ActionListener {
+public class ControlEstadisticasProductos implements ControladorPantalla {
 	private Tienda tienda;
 	private Gestor gestor;
 	private VentanaEstadisticasProductos vista;
@@ -48,7 +52,7 @@ public class ControlEstadisticasProductos implements ActionListener {
 				vista.anadirDisplay(new PanelProductoEstadisticas(p.getNombre(), p.getDescripcion(), imageName, p.getPuntuacionMedia(), p.getPrecio(), stats.getRecaudacion(), stats.getUnidades(), stats.getRecaudacion()/total.getRecaudacion(), categorias.toArray(new String[0])));
 			}
 			
-			TiendaFrame.getInstance().setVistaActual(vista);
+			TiendaFrame.getInstance().navegarA(this);
 		} catch(InvalidArgumentException e) {
 			new VentanaMensaje(e.toString());
 		}
@@ -58,6 +62,11 @@ public class ControlEstadisticasProductos implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 	
 

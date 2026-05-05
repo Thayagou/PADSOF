@@ -50,31 +50,11 @@ public class PanelClienteEstadisticas extends PanelDisplay {
 		JPanel statsPanel = new JPanel(new GridLayout(1, 3));
 		statsPanel.setOpaque(false);
 
-		statsPanel.add(crearColumnaStat(String.format("%.2f €", totalGastado), maxSize));
-		statsPanel.add(crearColumnaStat(String.format("%d uds", udsCompradas), maxSize));
-		statsPanel.add(crearColumnaStat(String.format("%d uds", artsIntercambiados), maxSize));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%.2f €", totalGastado), maxSize, ColorPalette.DARK_GREY));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%d uds", udsCompradas), maxSize, ColorPalette.DARK_GREY));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(String.format("%d uds", artsIntercambiados), maxSize, ColorPalette.DARK_GREY));
 		statsPanel.setMaximumSize(new Dimension(3*wComps, hComps));
 		
 		add(statsPanel, BorderLayout.EAST);
-	}
-
-	private JPanel crearColumnaStat(String texto, Dimension maxSize) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setOpaque(false);
-
-		JLabel label = ButtonFactory.newLeftAlignedLabel(texto, Fonts.BOLD);
-		label.setForeground(ColorPalette.DARK_GREY.getColor().darker());
-		label.setMaximumSize(maxSize);
-		label.setPreferredSize(maxSize);
-		// label.setVerticalTextPosition(SwingConstants.CENTER);
-		// label.setAlignmentX(SwingConstants.CENTER); // Centro horizontal en BoxLayout
-		// Y_AXIS
-
-		panel.add(Box.createVerticalGlue()); // Empuja desde arriba
-		panel.add(label);
-		panel.add(Box.createVerticalGlue()); // Empuja desde abajo
-
-		return panel;
 	}
 }

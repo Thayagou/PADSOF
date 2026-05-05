@@ -25,7 +25,7 @@ public class BarraEmpleado extends BarraLateral {
 	public BarraEmpleado() {
 		TiendaFrame frame = TiendaFrame.getInstance();
 		int distFromLeft = frame.optionBarDistFromLeft();
-		int distIndented = (int) (distFromLeft * 0.9);
+		int distIndented = (int) (distFromLeft * BarraLateral.PERC_INDENTED);
 		int btnHeigth = frame.btnHeight();
 
 		setBackground(ColorPalette.CARD_LIGHT.getColor());

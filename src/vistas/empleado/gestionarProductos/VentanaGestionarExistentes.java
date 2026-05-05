@@ -16,7 +16,7 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaGestionarExistentes extends JSplitPane implements VentanaConDisplay<PanelProducto> {
+public class VentanaGestionarExistentes extends JPanel implements VentanaConDisplay<PanelProducto> {
 
 	private static final long serialVersionUID = 1L;
 	private static final String NUEVA_CATEGORIA_ACTION = "Añadir nuevo producto";
@@ -25,9 +25,14 @@ public class VentanaGestionarExistentes extends JSplitPane implements VentanaCon
 	private JPanel listaProductos = new JPanel();
 
 	public VentanaGestionarExistentes() {
-		setLeftComponent(crearPanelNuevoProducto());
+		JSplitPane split = new JSplitPane();
+		split.setLeftComponent(crearPanelNuevoProducto());
 
-		setRightComponent(crearPanelProductos());
+		split.setRightComponent(crearPanelProductos());
+		
+		this.setOpaque(false);
+		this.setLayout(new BorderLayout());
+		this.add(split);
 	}
 
 	private JPanel crearPanelNuevoProducto() {

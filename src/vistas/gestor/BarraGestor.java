@@ -45,6 +45,7 @@ public class BarraGestor extends BarraLateral {
 		add(configurarSistema);
 		add(consultarEstadisticas);
 		add(consultarStatsProd);
+		add(consultarStatsTienda);
 	}
 
 	@Override

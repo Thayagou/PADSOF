@@ -53,9 +53,9 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 		JPanel statsPanel = new JPanel(new GridLayout(1, 3));
 		statsPanel.setOpaque(false);
 
-		statsPanel.add(crearColumnaStat("Total gastado", size));
-		statsPanel.add(crearColumnaStat("Productos comprados", size));
-		statsPanel.add(crearColumnaStat("Artículos intercambiados", size));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Total gastado", size, ColorPalette.WHITE));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Productos comprados", size, ColorPalette.WHITE));
+		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Artículos intercambiados", size, ColorPalette.WHITE));
 		statsPanel.setMaximumSize(new Dimension(3*maxWidth, maxHeight));
 		
 		cabecera.add(statsPanel, BorderLayout.EAST);
@@ -75,27 +75,6 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 		add(panelOrdenacion, BorderLayout.CENTER);
 
 		refrescarLista();
-	}
-	
-	private JPanel crearColumnaStat(String texto, Dimension maxSize) {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setOpaque(false);
-
-		JLabel label = ButtonFactory.newLeftAlignedLabel(texto, Fonts.BOLD);
-		label.setForeground(ColorPalette.WHITE.getColor());
-		label.setOpaque(false);
-		label.setMaximumSize(maxSize);
-		label.setPreferredSize(maxSize);
-		//label.setVerticalTextPosition(SwingConstants.CENTER);
-		//label.setAlignmentX(SwingConstants.CENTER); // Centro horizontal en BoxLayout Y_AXIS
-
-		panel.add(Box.createVerticalGlue()); // Empuja desde arriba
-		panel.add(label);
-		panel.add(Box.createVerticalGlue()); // Empuja desde abajo
-		//panel.setMaximumSize(maxSize);
-
-		return panel;
 	}
 	
 	public void refrescarLista() {
