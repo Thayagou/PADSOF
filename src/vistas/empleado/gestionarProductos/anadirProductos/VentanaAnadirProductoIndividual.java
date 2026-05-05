@@ -44,7 +44,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	private JTextField imagenField;
 	private JComboBox<String> tipoProducto;
 	private String tipoFijo;
-	private List<JCheckBox> checkCategorias = new ArrayList<>();
+	private List<InvisibleCheckBox> checkCategorias = new ArrayList<>();
 	private List<JTextField> especFields = new ArrayList<>();
 	private JButton btnConfirmar;
 	private JPanel especPanel;
@@ -130,7 +130,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 
 		List<String> catSelList = Arrays.asList(catSeleccionadas);
 		for (String cat : categorias) {
-			JCheckBox cb = ButtonFactory.newInvisibleCheckBox(cat, cat, ColorPalette.BLACK, ColorPalette.CARD_DARK);
+			InvisibleCheckBox cb = ButtonFactory.newInvisibleCheckBox(cat, cat, ColorPalette.BLACK, ColorPalette.CARD_DARK);
 
 			cb.setAlignmentX(Component.LEFT_ALIGNMENT);
 			checkCategorias.add(cb);
@@ -143,13 +143,13 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 			wrapper.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					((InvisibleCheckBox) cb).toggleSelection();
+					 cb.toggleSelection();
 				}
 			});
 			centro.add(wrapper);
 		}
-		for (JCheckBox cb : checkCategorias) {
-			((InvisibleCheckBox) cb).setSeleccionado(catSelList.contains(cb.getText()));
+		for (InvisibleCheckBox cb : checkCategorias) {
+			cb.setSeleccionado(catSelList.contains(cb.getText()));
 		}
 
 		centro.add(Box.createVerticalStrut(16));
@@ -323,6 +323,6 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	}
 
 	public String[] getCategorias() {
-		return checkCategorias.stream().filter(JCheckBox::isSelected).map(JCheckBox::getText).toArray(String[]::new);
+		return checkCategorias.stream().filter(InvisibleCheckBox::isSelected).map(InvisibleCheckBox::getText).toArray(String[]::new);
 	}
 }
