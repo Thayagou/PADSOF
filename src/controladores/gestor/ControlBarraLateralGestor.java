@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
-import controladores.empleado.gestionarProductos.ControlGestionarCategorias;
-import controladores.empleado.gestionarProductos.ControlGestionarProductos;
+import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
+import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
 import controladores.gestor.anadirDescuento.ControlAnadirDescuento;
 import controladores.gestor.configurarSistema.ControlConfigurarSistema;
 import controladores.gestor.consultarEstadisticas.ControlEstadisticasClientes;
@@ -18,13 +18,13 @@ import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
 import vistas.gestor.BarraGestor;
 
-public class ControlBarraGestor implements ControlBarraLateral{
+public class ControlBarraLateralGestor implements ControlBarraLateral{
 	private final Tienda tienda;
 	private final Gestor gestor;
 	private TiendaFrame frame;
 	private BarraGestor barraLateral;
 	
-	public ControlBarraGestor(Tienda tienda, Gestor gestor) {
+	public ControlBarraLateralGestor(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
 		this.frame = TiendaFrame.getInstance();
@@ -81,7 +81,7 @@ public class ControlBarraGestor implements ControlBarraLateral{
 	
 	private void gestionarProductos() {
 		SwingUtilities.invokeLater(()->
-			new ControlGestionarProductos(tienda, gestor)
+			new ControlGestionarExistentes(tienda, gestor)
 		);
 	}
 	
