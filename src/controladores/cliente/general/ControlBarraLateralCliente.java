@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
+import controladores.cliente.intercambios.pantallas.ControlAnadirArticulo;
 import controladores.cliente.intercambios.pantallas.ControlBuscarArticulos;
 import controladores.cliente.intercambios.pantallas.ControlManejoCartera;
 import controladores.cliente.venta.pantallas.ControlBuscarCliente;
@@ -39,7 +40,7 @@ public class ControlBarraLateralCliente implements ControlBarraLateral {
 			SwingUtilities.invokeLater(() -> new ControlManejoCartera(tienda, cliente, cliente));
 			break;
 		case "Añadir Artículo":
-//			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente))
+			SwingUtilities.invokeLater(() -> new ControlAnadirArticulo(tienda, cliente));
 			break;
 		case "Ver mis ofertas":
 //			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente))

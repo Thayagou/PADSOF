@@ -32,9 +32,9 @@ public class PanelArticulo extends PanelDisplay {
 	private GridBagConstraints gbc;
 	private JButton boton;
 
-	public PanelArticulo(String nombreUsuario, String fotoDePerfil, String nombre, String descripcion,
+	public PanelArticulo(String nombreUsuario, String fotoDePerfil, String nombre, String foto, String descripcion,
 			String interesadoEn, double estimacion, String estado, String actionName, String... categorias) {
-		this(nombre, descripcion, interesadoEn, estimacion, estado, actionName, categorias);
+		this(nombre, foto, descripcion, interesadoEn, estimacion, estado, actionName, categorias);
 
 		/* Construye parte de dueño del Artículo */
 		JPanel usuario = new JPanel();
@@ -64,9 +64,9 @@ public class PanelArticulo extends PanelDisplay {
 		centerPanel.add(usuario, gbc);
 	}
 
-	public PanelArticulo(String nombre, String descripcion, String interesadoEn, double estimacion, String estado,
+	public PanelArticulo(String nombre, String foto, String descripcion, String interesadoEn, double estimacion, String estado,
 			String actionName, String... categorias) {
-		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "producto.png", actionName);
+		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, foto, actionName);
 
 		TiendaFrame t = TiendaFrame.getInstance();
 		spaceBetween = t.getPixelsWidth(0.1f);

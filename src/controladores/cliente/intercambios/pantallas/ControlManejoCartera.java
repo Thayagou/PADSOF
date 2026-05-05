@@ -15,9 +15,7 @@ import vistas.cliente.intercambios.pantallas.VentanaCartera;
 
 public class ControlManejoCartera implements ActionListener, ControladorPantalla {
 	
-	@SuppressWarnings("unused")
 	private Tienda tienda;
-	@SuppressWarnings("unused")
 	private ClienteRegistrado cliente;
 	private ClienteRegistrado dueno;
 	private VentanaCartera vista;

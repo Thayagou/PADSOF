@@ -17,7 +17,7 @@ import vistas.common.*;
 
 public class ControlPanelArticuloEnCartera implements ActionListener {
 
-	private PanelArticulo panel;
+	private PanelArticuloEnCartera panel;
 	private ArticuloSegundaMano articulo;
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
@@ -25,6 +25,7 @@ public class ControlPanelArticuloEnCartera implements ActionListener {
 	private VentanaConDisplay<PanelArticulo> vista;
 
 	private final String FOTO_PERFIL = "pfp.png";
+	private final String FOTO_ARTICULO_DF = "articuloDefault.png";
 
 	private static final String actionName = "clic";
 
@@ -79,8 +80,12 @@ public class ControlPanelArticuloEnCartera implements ActionListener {
 			estado = "Sin valorar";
 			estimacion = -1;
 		}
+		
+		String foto;
+		if(articulo.getImage() == null) foto = FOTO_ARTICULO_DF;
+		else foto = articulo.getImage();
 
-		panel = new PanelArticuloEnCartera(dueno.getNombre(), FOTO_PERFIL, articulo.getNombre(),
+		panel = new PanelArticuloEnCartera(dueno.getNombre(), FOTO_PERFIL, articulo.getNombre(), foto,
 				articulo.getDescripcion(), articulo.getInteresadoEn(), estimacion, estado, actionName,
 				categorias.toArray(new String[0]));
 		panel.setControlador(this);
