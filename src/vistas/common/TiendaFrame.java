@@ -196,14 +196,45 @@ public class TiendaFrame extends JFrame {
 		if (pilaPantallas.isEmpty()) {
 			return;
 		}
-		if (controladorActual != null) {
-			controladorActual.ocultar();
+		ControladorPantalla last = controladorActual;
+		if (last != null) {
+			last.ocultar();
 		}
-		controladorActual = pilaPantallas.pop();
-		String clave = (String) controladorActual.getVista().getClientProperty("_navClave");
-		cardLayout.show(contentPanel, clave);
-		controladorActual.mostrar();
-		this.vistaActual = controladorActual.getVista();
+		
+		ControladorPantalla prev = null;
+		while (!pilaPantallas.isEmpty()) {
+			prev = pilaPantallas.pop();
+			if (prev.puedeVolver()) {
+				break;
+			} else {
+				prev.destruir();
+				prev = null;
+			}
+		}
+
+		if (prev == null) {
+			if (last != null) {
+				controladorActual = last;
+				String clave = (String) last.getVista().getClientProperty("_navClave");
+				if (clave != null)
+					cardLayout.show(contentPanel, clave);
+				last.mostrar();
+				this.vistaActual = last.getVista();
+			}
+			return;
+		}
+
+		controladorActual = prev;
+		String clave = (String) prev.getVista().getClientProperty("_navClave");
+		if (clave != null) {
+			cardLayout.show(contentPanel, clave);
+		} else {
+			// Si no tiene clave, no se puede mostrar; error grave
+			throw new IllegalStateException("Controlador sin clave en CardLayout");
+		}
+		prev.mostrar();
+		this.vistaActual = prev.getVista();
+
 		revalidate();
 		repaint();
 	}

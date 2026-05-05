@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import vistas.common.PanelDisplay;
 import vistas.common.VentanaConDisplay;
+import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaGestionarCategorias extends JPanel implements VentanaConDisplay<PanelDisplay> {
@@ -23,18 +24,26 @@ public class VentanaGestionarCategorias extends JPanel implements VentanaConDisp
 		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
 		listaPanel.setOpaque(false);
 		
+		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
+		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
+		
 		JScrollPane scroll = PanelFactory.getScroll(listaPanel);
-		scroll.setOpaque(false);
-		scroll.getViewport().setOpaque(false);
+		//scroll.setOpaque(false);
+		//scroll.getViewport().setOpaque(false);
 		
 		JPanel panelCentral = new JPanel();
 		panelCentral.setLayout(new BorderLayout());
-		panelCentral.setOpaque(false);
+		//panelCentral.setOpaque(false);
 		panelCentral.add(BorderLayout.CENTER, scroll);
 
 		JPanel ventana = PanelFactory.getVentanaConCabecera("Gestionar categorías existentes", panelCentral);
-		ventana.setOpaque(false);
-		add(ventana, BorderLayout.CENTER);
+		//ventana.setOpaque(false);
+		add(ventana);
+		
+		listaPanel.revalidate();
+		listaPanel.repaint();
+		
+		
 	}
 
 	@Override

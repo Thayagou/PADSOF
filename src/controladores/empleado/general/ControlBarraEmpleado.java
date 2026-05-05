@@ -7,6 +7,7 @@ import javax.swing.SwingUtilities;
 import controladores.ControlBarraLateral;
 import controladores.empleado.gestionarIntercambios.ControlGestIntercambios;
 import controladores.empleado.gestionarPedidos.ControlGestPedidos;
+import controladores.empleado.gestionarProductos.cargarFichero.ControlCargarFichero;
 import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
 import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
 import controladores.empleado.valorarArticulos.ControlValorarObjetos;
@@ -50,7 +51,9 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	}
 	
 	private void showCargarFichero() {
-		
+		SwingUtilities.invokeLater(() -> {
+			new ControlCargarFichero(tienda, empleado);
+		});
 	}
 	
 	private void showProductosExistentes() {

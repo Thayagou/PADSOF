@@ -73,6 +73,7 @@ public class VentanaEstadisticasProductos extends JPanel implements VentanaConDi
 		
 		cabecera.add(wrapper, BorderLayout.EAST);
 		JPanel contenido = new JPanel(new BorderLayout());
+		
 		contenido.add(cabecera, BorderLayout.NORTH);
 		contenido.add(scroll, BorderLayout.CENTER);
 

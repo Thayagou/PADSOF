@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
-import controladores.cliente.intercambios.pantallas.ControlVentanaPago;
 import controladores.cliente.venta.ControlItemCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
