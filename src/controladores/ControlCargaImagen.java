@@ -61,13 +61,23 @@ public class ControlCargaImagen implements ActionListener {
 	 * Abre la carga de imagen y bloquea hasta que el usuario confirma o cancela.
 	 *
 	 * @param tipo Tipo de objeto
+	 * @param id Id del objeto
 	 * @return Nombre del fichero guardado, o null si el usuario canceló o hubo un error.
 	 */
-	public static String abrir(String tipo) {
-		String id = java.util.UUID.randomUUID().toString();
+	public static String abrir(String tipo, String id) {
 		ControlCargaImagen ctrl = new ControlCargaImagen(tipo, id);
 		ctrl.dialogo.setVisible(true);
 		return ctrl.resultado;
+	}
+	
+	/**
+	 * Metodo abrir pero generando una id aleatoria para la imagen
+	 *
+	 * @param Tipo de objeto
+	 * @return Nombre del fichero guardado, o null si el usuario canceló o hubo un error.
+	 */
+	public static String abrir(String tipo) {
+		return abrir(tipo,java.util.UUID.randomUUID().toString());
 	}
 
 	@Override

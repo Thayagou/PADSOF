@@ -7,7 +7,7 @@ import vistas.herramientas.*;
 
 /* Panel que muestra una lista de checkboxes con las categorías disponibles.
    Se puede obtener las categorías seleccionadas como un array de String. */
-public class PanelSelectorCategorias extends JPanel {
+public class PanelSelectorCajas extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static final double SCROLL_HEIGHT = 0.4; /* Altura del scroll (40% de la pantalla) */
 	private static final double V_PADDING = 0.01; /* Padding vertical entre checkboxes (1% alto) */
@@ -15,7 +15,7 @@ public class PanelSelectorCategorias extends JPanel {
 
 	private java.util.List<JCheckBox> checkboxes = new java.util.ArrayList<>();
 
-	public PanelSelectorCategorias(String[] nombresCategorias) {
+	public PanelSelectorCajas(String[] nombresCategorias) {
 		setLayout(new BorderLayout());
 		setOpaque(true);
 		setBackground(ColorPalette.WHITE.getColor());

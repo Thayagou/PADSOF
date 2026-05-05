@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.*;
 
-import vistas.common.PanelSelectorCategorias;
+import vistas.common.PanelSelectorCajas;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.*;
 
@@ -28,7 +28,7 @@ public class VentanaAnadirArticulo extends JPanel {
 	private JTextField nombreField;
 	private JTextArea intercambioArea;
 	private JTextArea descripcionArea;
-	private PanelSelectorCategorias selectorCategorias;
+	private PanelSelectorCajas selectorCategorias;
 	private JButton btnConfirmar;
 	private JButton btnCancelar;
 	private JButton btnFoto;
@@ -168,7 +168,7 @@ public class VentanaAnadirArticulo extends JPanel {
 		panel.setOpaque(false);
 
 		/* Selector de categorías */
-		selectorCategorias = new PanelSelectorCategorias(nombresCategorias);
+		selectorCategorias = new PanelSelectorCajas(nombresCategorias);
 		panel.add(selectorCategorias, BorderLayout.CENTER);
 
 		/* Botones: Cancelar y Confirmar */

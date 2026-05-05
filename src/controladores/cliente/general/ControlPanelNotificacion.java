@@ -3,8 +3,6 @@ package controladores.cliente.general;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.SwingUtilities;
-
 import controladores.cliente.general.pantallas.ControlNotificacionesCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
@@ -16,17 +14,18 @@ public class ControlPanelNotificacion implements ActionListener {
 	protected PanelNotificacion panel;
 	protected VentanaConDisplay<? super PanelNotificacion> vista;
 	protected ClienteRegistrado cliente;
-
-	protected static final String DF_PRODUCT_IMAGE = "producto.png";
+	private ControlNotificacionesCliente controlador;
 
 	public ControlPanelNotificacion(Tienda tienda, ClienteRegistrado cliente, Notificacion notificacion,
-			VentanaConDisplay<? super PanelNotificacion> vista) {
+			VentanaConDisplay<? super PanelNotificacion> vista, ControlNotificacionesCliente controlador) {
 		this.notificacion = notificacion;
 		this.tienda = tienda;
 		this.cliente = cliente;
 		this.vista = vista;
+		this.controlador = controlador;
 
-		panel = new PanelNotificacion(notificacion.getTipo().name(), notificacion.getContenido(), notificacion.getFecha(), notificacion.isLeida());
+		panel = new PanelNotificacion(notificacion.getTipo().name(), notificacion.getContenido(),
+				notificacion.getFecha(), notificacion.isLeida());
 
 		vista.anadirDisplay(panel);
 
@@ -38,12 +37,11 @@ public class ControlPanelNotificacion implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "leido":
 			this.notificacion.marcarLeida();
-			new VentanaMensaje("hola");
-			SwingUtilities.invokeLater(() -> new ControlNotificacionesCliente(tienda, cliente));
+			controlador.recargarPantalla();
 			break;
 		case "borrar":
 			this.notificacion.borrar();
-			SwingUtilities.invokeLater(() -> new ControlNotificacionesCliente(tienda, cliente));
+			controlador.recargarPantalla();
 			break;
 		}
 	}

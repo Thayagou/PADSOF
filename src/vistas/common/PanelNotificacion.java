@@ -36,8 +36,6 @@ public class PanelNotificacion extends PanelDisplay {
 		this.fecha = getFechaFormat(fecha);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
-		ButtonFactory bf = new ButtonFactory();
-		
 		JPanel contenido = new JPanel(new GridLayout(2, 1));
 		contenido.setOpaque(false);
 		
@@ -45,21 +43,21 @@ public class PanelNotificacion extends PanelDisplay {
 		if(leido == false) font = Fonts.BOLD;
 		else font = Fonts.TEXT;
 		
-		JLabel cabecera = bf.newLabel(this.fecha + ": " + this.titulo, font);
+		JLabel cabecera = ButtonFactory.newLabel(this.fecha + ": " + this.titulo, font);
 		cabecera.setOpaque(false);
 		contenido.add(cabecera);
-		JLabel panelTexto = bf.newLabel(this.texto, Fonts.SMALL);
+		JLabel panelTexto = ButtonFactory.newLabel(this.texto, Fonts.SMALL);
 		panelTexto.setOpaque(false);
 		contenido.add(panelTexto);
 		
 		add(contenido, BorderLayout.CENTER);
 		
 		JPanel botones;
-		borrar = bf.newRoundedButton("Borrar", t.getPixelsHeight(BTN_HEIGHT), t.getPixelsWidth(BTN_WIDTH), 1);
+		borrar = ButtonFactory.newRoundedButton("Borrar", t.getPixelsHeight(BTN_HEIGHT), t.getPixelsWidth(BTN_WIDTH), 1);
 		borrar.setActionCommand("borrar");
 		borrar.setMaximumSize(new Dimension(t.getPixelsWidth(BTN_WIDTH), t.getPixelsHeight(BTN_HEIGHT)));
 		
-		marcarLeido = bf.newRoundedButton("Leído", t.getPixelsHeight(BTN_HEIGHT), t.getPixelsWidth(BTN_WIDTH), 1);
+		marcarLeido = ButtonFactory.newRoundedButton("Leído", t.getPixelsHeight(BTN_HEIGHT), t.getPixelsWidth(BTN_WIDTH), 1);
 		marcarLeido.setActionCommand("leido");
 		marcarLeido.setMaximumSize(new Dimension(t.getPixelsWidth(BTN_WIDTH), t.getPixelsHeight(BTN_HEIGHT)));
 
@@ -74,7 +72,7 @@ public class PanelNotificacion extends PanelDisplay {
 	
 	private String getFechaFormat(LocalDate date) {
 		return date.getDayOfMonth()+"/"+date.getMonthValue()+"/"+date.getYear();
-	}	
+	}
 	
 	@Override
 	public void setControlador(ActionListener c) {

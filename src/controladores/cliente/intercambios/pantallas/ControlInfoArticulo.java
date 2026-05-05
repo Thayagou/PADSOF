@@ -20,7 +20,6 @@ public class ControlInfoArticulo implements ActionListener, ControladorPantalla 
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
 	private ArticuloSegundaMano articulo;
-	@SuppressWarnings("unused")
 	private VentanaInfoArticulo vista;
 	
 	private final String USER_PFP = "pfp.png";
