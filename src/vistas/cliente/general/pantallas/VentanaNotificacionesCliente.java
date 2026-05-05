@@ -33,7 +33,7 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 		refreshList();
 	}
 	
-	private void refreshList() {
+	public void refreshList() {
 		notificaciones.revalidate();
 		notificaciones.repaint();
 	}

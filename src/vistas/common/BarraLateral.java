@@ -31,4 +31,14 @@ public abstract class BarraLateral extends JPanel{
     	
     	return btn;
     }
+	
+	public void setVisibles(JButton...botones) {
+		for (JButton b: botones) 
+			b.setVisible(true);
+	}
+	
+	public void setInvisibles(JButton...botones) {
+		for (JButton b: botones) 
+			b.setVisible(false);
+	}
 }

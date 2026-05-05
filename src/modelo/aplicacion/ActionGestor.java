@@ -291,7 +291,7 @@ public class ActionGestor {
 			inicio = Main.getUserInputYearMonth("Introducir mes de inicio (formato MM/yyyy): ");
 			fin = Main.getUserInputYearMonth("Introducir mes de final (formato MM/yyyy): ");
 			
-			List<StatsMensual> intercambiosPorMeses = Main.tienda.getHistorial().getVentasEntreMeses(inicio, fin);
+			List<StatsMensual> intercambiosPorMeses = Main.tienda.getHistorial().getIntercambiosEntreMeses(inicio, fin);
 			
 			for (StatsMensual stats: intercambiosPorMeses) {
 				Main.showMessage(stats.getMes() + ") " + "Total: " + stats.getRecaudacion() + "€ Uds vendidas: " + stats.getUnidades());

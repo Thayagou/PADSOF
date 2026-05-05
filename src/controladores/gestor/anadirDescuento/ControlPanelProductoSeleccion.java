@@ -16,10 +16,12 @@ public class ControlPanelProductoSeleccion implements ActionListener {
 	private Producto producto;
 	private Tienda tienda;
 	private PanelProductoSeleccion panel;
+	private ControlAnadirDescuento superControl;
 	
-	public ControlPanelProductoSeleccion(Tienda tienda, Producto producto, VentanaConDisplay<? super PanelProducto> vista) {
+	public ControlPanelProductoSeleccion(Tienda tienda, Producto producto, ControlAnadirDescuento superControl, VentanaConDisplay<? super PanelProducto> vista) {
 		this.tienda = tienda;
 		this.producto = producto;
+		this.superControl = superControl;
 		
 		String imageName = producto.getImagen();
 		if (imageName == null || imageName.isBlank()) imageName = "producto.png";
@@ -40,6 +42,7 @@ public class ControlPanelProductoSeleccion implements ActionListener {
 		switch (e.getActionCommand()) {
 		case PanelCategoriaSeleccion.INCLUIR_ACTION:
 			panel.toggleCheckBox();
+			superControl.incluirProducto(producto, panel.isSeleccionado());
 			break;
 		}
 	}

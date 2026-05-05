@@ -48,8 +48,8 @@ public class ControlEstadisticasProductos implements ControladorPantalla {
 					categorias.add(c.getNombre());
 				}
 				String imageName = p.getImagen() == null ? "producto.png" : p.getImagen();
-				
-				vista.anadirDisplay(new PanelProductoEstadisticas(p.getNombre(), p.getDescripcion(), imageName, p.getPuntuacionMedia(), p.getPrecio(), stats.getRecaudacion(), stats.getUnidades(), stats.getRecaudacion()/total.getRecaudacion(), categorias.toArray(new String[0])));
+				double porcentaje = stats.getRecaudacion()/total.getRecaudacion() * 100;
+				vista.anadirDisplay(new PanelProductoEstadisticas(p.getNombre(), p.getDescripcion(), imageName, p.getPuntuacionMedia(), p.getPrecio(), stats.getRecaudacion(), stats.getUnidades(), porcentaje, categorias.toArray(new String[0])));
 			}
 			
 			TiendaFrame.getInstance().navegarA(this);

@@ -135,6 +135,18 @@ public class PanelFactory {
 			}
 		};
 	}
+	
+	public static JPanel avatarConNombre(String usrName) {
+		JPanel contenido = new JPanel(new BorderLayout());
+		contenido.setOpaque(false);
+		contenido.add(buildAvatar(), BorderLayout.WEST);
+		JLabel nombre = new JLabel(usrName);
+		nombre.setOpaque(false);
+		nombre.setFont(Fonts.BOLD.getFont());
+		nombre.setAlignmentX(javax.swing.JComponent.LEFT_ALIGNMENT);
+		contenido.add(nombre, BorderLayout.CENTER);
+		return contenido;
+	}
 
 	/**
 	 * Devuelve un scroll con el contenido de una lista

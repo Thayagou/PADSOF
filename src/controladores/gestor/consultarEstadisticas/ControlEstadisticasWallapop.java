@@ -1,7 +1,6 @@
 package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -9,25 +8,21 @@ import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
 import modelo.estadistica.StatsMensual;
-import modelo.estadistica.StatsUsuario;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
-import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
-import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
 import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
-import vistas.herramientas.ColorPalette;
 
-public class ControlEstadisticasVentas implements ControladorPantalla {
+public class ControlEstadisticasWallapop implements ControladorPantalla {
 	private Tienda tienda;
 	private Gestor gestor;
 	private VentanaEstadisticasTienda vista;
-	private static String[] COLUMNAS = {"Total recaudado", "Productos comprados", "Porcentaje recaudación"};
+	private static String[] COLUMNAS = {"Total recaudado", "Artículos intercambiados", "Porcentaje recaudación"};
 	
-	public ControlEstadisticasVentas(Tienda tienda, Gestor gestor) {
+	public ControlEstadisticasWallapop(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
 		
@@ -37,7 +32,7 @@ public class ControlEstadisticasVentas implements ControladorPantalla {
 		YearMonth fin = YearMonth.now();
 	
 		try {
-			List<StatsMensual> listaMeses = tienda.getHistorial().getVentasEntreMeses(inicio, fin);
+			List<StatsMensual> listaMeses = tienda.getHistorial().getIntercambiosEntreMeses(inicio, fin);
 			StatsMensual total = tienda.getHistorial().getVentasEntreMesesAcumulado(inicio, fin);
 			
 			for (StatsMensual stats: listaMeses) {

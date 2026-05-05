@@ -12,6 +12,7 @@ import controladores.gestor.configurarSistema.ControlConfigurarSistema;
 import controladores.gestor.consultarEstadisticas.ControlEstadisticasClientes;
 import controladores.gestor.consultarEstadisticas.ControlEstadisticasProductos;
 import controladores.gestor.consultarEstadisticas.ControlEstadisticasVentas;
+import controladores.gestor.consultarEstadisticas.ControlEstadisticasWallapop;
 import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
@@ -38,30 +39,23 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "Añadir nuevo descuento":
-			this.anadirDescuento();
-			break;
-		case "Configurar sistema":
-			this.configurarSistema();
-			break;
-		case "Gestionar productos":
-			this.gestionarProductos();
-			break;
-		case "Gestionar categorías":
-			this.gestionarCategorias();
-			break;
-		case "Gestionar empleados":
-			this.gestionarEmpleados();
-			break;	
-		case "Consultar estadísticas clientes":
-			this.consultarEstadisticasClientes();
-			break;
-		case "Consultar estadísticas productos":
-			this.consultarEstadisticasProductos();
-			break;
-		case "Consultar estadísticas tienda":
-			this.consultarEstadisticasTienda();
-			break;
+		case "Añadir nuevo descuento"-> anadirDescuento();
+		case "Configurar sistema" -> configurarSistema();
+		
+		case "Gestionar productos y categorías" -> mostrarGestion();
+		//case "Añadir nuevo producto" -> anadirNuevoProducto();
+		case "Gestionar productos existentes" -> gestionarProductos();
+		case "Gestionar categorías" -> gestionarCategorias();
+		//case "Crear packs de productos" -> crearNuevoPack();
+		
+		case "Gestionar empleados" -> gestionarEmpleados();
+		
+		case "Consultar estadísticas" -> consultarEstadisticas();
+		case "Estadísticas clientes" -> consultarEstadisticasClientes();
+		case "Estadísticas productos" -> consultarEstadisticasProductos();
+		case "Estadísticas ventas" -> consultarEstadisticasVentas();
+		case "Estadísticas intercambios" -> consultarEstadisticasWallapop();
+			
 			
 		}
 		
@@ -79,6 +73,10 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		);
 	}
 	
+	private void mostrarGestion() {
+		barraLateral.setVisiblesGestionarProdsYCats();
+	}
+	
 	private void gestionarProductos() {
 		SwingUtilities.invokeLater(()->
 			new ControlGestionarExistentes(tienda, gestor)
@@ -91,10 +89,28 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		);
 	}
 	
+	private void anadirNuevoProducto() {
+		SwingUtilities.invokeLater(()->
+			new ControlGestionarCategorias(tienda, gestor)
+		);
+	}
+	
+	private void crearNuevoPack() {
+		SwingUtilities.invokeLater(()->
+			new ControlGestionarCategorias(tienda, gestor)
+		);
+	}
+	
+	
+	
 	private void gestionarEmpleados() {
 		SwingUtilities.invokeLater(()->
 			new ControlGestionarEmpleados(tienda, gestor)
 		);
+	}
+	
+	private void consultarEstadisticas() {
+		barraLateral.setVisiblesEstadisticas();
 	}
 	
 	private void consultarEstadisticasClientes() {
@@ -109,9 +125,15 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		);
 	}
 	
-	private void consultarEstadisticasTienda() {
+	private void consultarEstadisticasVentas() {
 		SwingUtilities.invokeLater(()->
 			new ControlEstadisticasVentas(tienda, gestor)
+		);
+	}
+	
+	private void consultarEstadisticasWallapop() {
+		SwingUtilities.invokeLater(()->
+			new ControlEstadisticasWallapop(tienda, gestor)
 		);
 	}
 }

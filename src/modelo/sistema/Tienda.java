@@ -443,6 +443,23 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	}
 	
 	/**
+	 * Método para añadir un nuevo artículo a la tienda
+	 * @param nombre Nombre del artículo
+	 * @param desc Descripción del artículo
+	 * @param cartera Cartera a la que se añade
+	 * @param interesadoEn Descripción de los intereses de intercambio
+	 * @param image Nombre de la imagen del articulo
+	 * @param categorias Categorías del artículo
+	 * @return true si se pudo añadir 
+	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos 
+	 */
+	public boolean anadirArticulo(String nombre, String desc, Cartera cartera, String interesadoEn, String image, Categoria[] categorias) throws InvalidArgumentException {
+		ArticuloSegundaMano nuevo = new ArticuloSegundaMano(nombre, desc, cartera, interesadoEn, image, categorias);
+		cartera.addArticulo(nuevo);
+		return this.getAlmacen().anadirArticuloSegundaMano(nuevo);
+	}
+	
+	/**
 	 * Método para añadir un producto a un carrito
 	 * @param cliente Cliente al que se le añade un producto
 	 * @param producto Producto que se añade al carrito

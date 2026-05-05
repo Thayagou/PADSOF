@@ -3,11 +3,11 @@ package vistas.noRegistrado;
 import javax.swing.*;
 
 import controladores.noRegistrado.ControlBuscar;
+import vistas.common.PanelSelectorCajas;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.*;
 
 import java.awt.*;
-import java.util.*;
 
 /**
  * Tipo: Class VentanaBusqueda.
@@ -30,11 +30,10 @@ public class VentanaBusqueda extends JPanel {
 	private JButton botonBuscar;
 
 	/** Campo checkboxes. */
-	java.util.List<JCheckBox> checkboxes = new ArrayList<>();;
+	private PanelSelectorCajas selectorCategorias;
 
 	/** Campo PREFERRED_FILTER_SIZE. */
 	private static double PREFERRED_FILTER_SIZE = 0.35;
-	private static double PREFERRED_CATEG_SIZE = 0.35;
 	private static double PANELS_HEIGHT = 0.5;
 	private static double SPACING = 0.03;
 
@@ -58,9 +57,6 @@ public class VentanaBusqueda extends JPanel {
 		final double BUTTON_HEIGHT_FACTOR = 0.05;
 		final double BUTTON_WIDTH_FACTOR = 0.1;
 		final int BUTTON_ROUND_RADIUS = 1;
-		
-		final double CHECKBOX_PADDING_V = 0.01;
-		final double CHECKBOX_PADDING_H = 0.02;
 		
 		final double GBC_WEIGHTX = 0.5; // peso para GridBagConstraints
 
@@ -116,28 +112,11 @@ public class VentanaBusqueda extends JPanel {
 
 		JPanel filtros = PanelFactory.getVentanaConCabecera("Filtros", contenidoFiltros);
 
-		JPanel contenidoCategorias = new JPanel();
-		contenidoCategorias.setLayout(new BoxLayout(contenidoCategorias, BoxLayout.Y_AXIS));
-		contenidoCategorias.setOpaque(true);
-		contenidoCategorias.setBackground(ColorPalette.WHITE.getColor());
-		contenidoCategorias.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_CATEG_SIZE), 0));
+		/* Selector de categorias */
+		selectorCategorias = new PanelSelectorCajas(categorias);
+		JPanel panelCategorias = PanelFactory.getVentanaConCabecera("Categorías", selectorCategorias);
 
-		for (String cat : categorias) {
-			JCheckBox cb = new JCheckBox(cat);
-			cb.setFont(Fonts.TEXT.getFont());
-			cb.setOpaque(false);
-			cb.setBorder(BorderFactory.createEmptyBorder(t.getPixelsHeight(CHECKBOX_PADDING_V), t.getPixelsHeight(CHECKBOX_PADDING_H),
-					t.getPixelsHeight(CHECKBOX_PADDING_V), t.getPixelsHeight(CHECKBOX_PADDING_H)));
-			checkboxes.add(cb);
-			contenidoCategorias.add(cb);
-		}
-
-		JPanel scroll = new JPanel();
-		scroll.setLayout(new BorderLayout());
-		scroll.add(BorderLayout.CENTER, PanelFactory.getScroll(contenidoCategorias));
-
-		JPanel panelCategorias = PanelFactory.getVentanaConCabecera("Categorías", scroll);
-
+		/* Botón de buscar */
 		botonBuscar = ButtonFactory.newRoundedButton("Buscar", t.getPixelsHeight(BUTTON_HEIGHT_FACTOR),
 				t.getPixelsWidth(BUTTON_WIDTH_FACTOR), BUTTON_ROUND_RADIUS);
 		botonBuscar.setBackground(ColorPalette.PURPLE.getColor());
@@ -148,6 +127,7 @@ public class VentanaBusqueda extends JPanel {
 		panelBoton.setOpaque(false);
 		panelBoton.add(botonBuscar);
 
+		/* Layout general */
 		JPanel contenido = new JPanel(new BorderLayout(0, spaceBetween));
 		JPanel formulario = new JPanel();
 		formulario.setLayout(new BoxLayout(formulario, BoxLayout.X_AXIS));
@@ -213,6 +193,6 @@ public class VentanaBusqueda extends JPanel {
 	 * @return valor de CategoriasSeleccionadas
 	 */
 	public String[] getCategoriasSeleccionadas() {
-		return checkboxes.stream().filter(JCheckBox::isSelected).map(JCheckBox::getText).toArray(String[]::new);
+		return selectorCategorias.getCategoriasSeleccionadas();
 	}
 }

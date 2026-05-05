@@ -15,10 +15,8 @@ import vistas.common.*;
 
 public class ControlNotificacionesCliente implements ActionListener, ControladorPantalla {
 
-	@SuppressWarnings("unused")
 	private Tienda tienda;
 	private VentanaNotificacionesCliente vista;
-	@SuppressWarnings("unused")
 	private ClienteRegistrado cliente;
 
 	public ControlNotificacionesCliente(Tienda tienda, ClienteRegistrado cliente) {
@@ -29,7 +27,7 @@ public class ControlNotificacionesCliente implements ActionListener, Controlador
 
 		for (Notificacion n : cliente.getNotificaciones()) {
 			if (!n.isBorrada()) {
-				new ControlPanelNotificacion(tienda, cliente, n, vista);
+				new ControlPanelNotificacion(tienda, cliente, n, vista, this);
 			}
 		}
 
@@ -37,6 +35,24 @@ public class ControlNotificacionesCliente implements ActionListener, Controlador
 
 		TiendaFrame.getInstance().navegarA(this);
 
+	}
+	
+	public void recargarPantalla() {
+		this.vista = new VentanaNotificacionesCliente();
+
+		for (Notificacion n : cliente.getNotificaciones()) {
+			if (!n.isBorrada()) {
+				new ControlPanelNotificacion(tienda, cliente, n, vista, this);
+			}
+		}
+
+		vista.setControlador(this);
+
+		TiendaFrame.getInstance().recargarPantallaActual(this);
+	}
+	
+	public void refreshVista() {
+		vista.refreshList();
 	}
 
 	@Override

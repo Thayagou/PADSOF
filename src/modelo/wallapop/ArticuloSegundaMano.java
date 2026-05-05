@@ -55,6 +55,15 @@ public class ArticuloSegundaMano implements Serializable {
 		this.interesadoEn = interesadoEn;
 		this.disponible = false;
 	}
+	
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public ArticuloSegundaMano(String nombre, String desc, Cartera dueno, String interesadoEn, String image, Categoria...categorias) {
+		this(nombre, desc, dueno, interesadoEn, categorias);
+		this.image = image;
+	}
 
 	/**
 	 * Getter del nombre del artículo

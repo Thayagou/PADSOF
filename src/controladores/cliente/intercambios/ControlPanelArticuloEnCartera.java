@@ -7,15 +7,17 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 
 import controladores.cliente.intercambios.pantallas.ControlInfoArticulo;
+import controladores.cliente.intercambios.pantallas.ControlVentanaPagoValoracion;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
+import vistas.cliente.intercambios.PanelArticuloEnCartera;
 import vistas.common.*;
 
-public class ControlPanelArticulo implements ActionListener {
+public class ControlPanelArticuloEnCartera implements ActionListener {
 
-	private PanelArticulo panel;
+	private PanelArticuloEnCartera panel;
 	private ArticuloSegundaMano articulo;
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
@@ -27,7 +29,7 @@ public class ControlPanelArticulo implements ActionListener {
 
 	private static final String actionName = "clic";
 
-	public ControlPanelArticulo(Tienda tienda, ClienteRegistrado cliente, ArticuloSegundaMano articulo,
+	public ControlPanelArticuloEnCartera(Tienda tienda, ClienteRegistrado cliente, ArticuloSegundaMano articulo,
 			VentanaConDisplay<PanelArticulo> vista) {
 		ClienteRegistrado dueno = articulo.getDueno().getDueno();
 		this.articulo = articulo;
@@ -38,6 +40,10 @@ public class ControlPanelArticulo implements ActionListener {
 		ArrayList<String> categorias = new ArrayList<>();
 		for (Categoria c : articulo.getCategorias()) {
 			categorias.add(c.getNombre());
+		}
+
+		if (articulo.getValoracion() == null) {
+
 		}
 
 		String estado;
@@ -79,8 +85,9 @@ public class ControlPanelArticulo implements ActionListener {
 		if(articulo.getImage() == null) foto = FOTO_ARTICULO_DF;
 		else foto = articulo.getImage();
 
-		panel = new PanelArticulo(dueno.getNombre(), FOTO_PERFIL, articulo.getNombre(), foto, articulo.getDescripcion(),
-				articulo.getInteresadoEn(), estimacion, estado, actionName, categorias.toArray(new String[0]));
+		panel = new PanelArticuloEnCartera(dueno.getNombre(), FOTO_PERFIL, articulo.getNombre(), foto,
+				articulo.getDescripcion(), articulo.getInteresadoEn(), estimacion, estado, actionName,
+				categorias.toArray(new String[0]));
 		panel.setControlador(this);
 		
 		vista.anadirDisplay(panel);
@@ -88,8 +95,16 @@ public class ControlPanelArticulo implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().endsWith(actionName)) {
+		switch(e.getActionCommand()) {
+		case actionName:
 			SwingUtilities.invokeLater(() -> new ControlInfoArticulo(tienda, cliente, articulo));
+			break;
+		case "Solicitar valoracion":
+			SwingUtilities.invokeLater(() -> new ControlVentanaPagoValoracion(tienda, cliente, articulo));
+			break;
+
+		}
+		if (e.getActionCommand().endsWith(actionName)) {
 		}
 
 	}
