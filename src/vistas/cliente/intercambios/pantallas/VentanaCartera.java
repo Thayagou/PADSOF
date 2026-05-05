@@ -8,13 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import vistas.cliente.intercambios.PanelArticuloEnCartera;
 import vistas.common.*;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArticuloEnCartera>{
+public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArticulo>{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -59,6 +58,13 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 		refreshList();
 	}
 	
+	public void limpiarDisplays() {
+		objetos.removeAll();
+		refreshList();
+		revalidate();
+		repaint();
+	}
+	
 	public void setControlador(ActionListener c) {
 		hacerOferta.addActionListener(c);
 	}
@@ -69,7 +75,7 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 	}
 
 	@Override
-	public <K extends PanelArticuloEnCartera> PanelArticuloEnCartera anadirDisplay(K panelDisplay) {
+	public <K extends PanelArticulo> PanelArticulo anadirDisplay(K panelDisplay) {
 		objetos.add(panelDisplay);
 		refreshList();
 		

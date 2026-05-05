@@ -4,15 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaInfoArticulo;
+import vistas.common.TiendaFrame;
 
-public class ControlInfoArticulo implements ActionListener {
+public class ControlInfoArticulo implements ActionListener, ControladorPantalla {
 	
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
@@ -75,7 +78,9 @@ public class ControlInfoArticulo implements ActionListener {
 		String[] categorias = listCategorias.toArray(new String[0]);
 		
 		this.vista = new VentanaInfoArticulo(dueno.getNombre(), USER_PFP, articulo.getNombre(), articulo.getImage(), articulo.getDescripcion(), articulo.getInteresadoEn(), estado, estimacion, ajeno, categorias);
+		this.vista.setControlador(this);
 		
+		TiendaFrame.getInstance().navegarA(this);
 	}
 	
 	
@@ -89,6 +94,11 @@ public class ControlInfoArticulo implements ActionListener {
 			break;
 		}
 		
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 	
 }
