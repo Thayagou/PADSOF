@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
-import controladores.cliente.intercambios.ControlPanelArticulo;
+import controladores.cliente.intercambios.ControlPanelArticuloEnCartera;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
@@ -19,11 +19,13 @@ public class ControlManejoCartera implements ActionListener, ControladorPantalla
 	private Tienda tienda;
 	@SuppressWarnings("unused")
 	private ClienteRegistrado cliente;
+	private ClienteRegistrado dueno;
 	private VentanaCartera vista;
 
 	public ControlManejoCartera(Tienda tienda, ClienteRegistrado cliente, ClienteRegistrado dueno) {
 		this.tienda = tienda;
 		this.cliente = cliente;
+		this.dueno = dueno;
 		
 		if(dueno == cliente)
 			this.vista = new VentanaCartera(null);
@@ -32,11 +34,17 @@ public class ControlManejoCartera implements ActionListener, ControladorPantalla
 		
 		vista.setControlador(this);
 		
-		for(ArticuloSegundaMano a : dueno.getCartera().getArticulos()) {
-			new ControlPanelArticulo(tienda, cliente, a, vista);
-		}
+		refresh();
 		
 		TiendaFrame.getInstance().navegarA(this);
+	}
+	
+	private void refresh() {
+		vista.limpiarDisplays();
+		
+		for(ArticuloSegundaMano a : dueno.getCartera().getArticulos()) {
+			new ControlPanelArticuloEnCartera(tienda, cliente, a, vista);
+		}
 	}
 
 	@Override
@@ -50,5 +58,10 @@ public class ControlManejoCartera implements ActionListener, ControladorPantalla
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+	
+	@Override
+	public void mostrar() {
+		refresh();
 	}
 }
