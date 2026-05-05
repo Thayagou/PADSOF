@@ -12,13 +12,11 @@ import vistas.empleado.gestionarProductos.VentanaGestionarExistentes;
 public class ControlGestionarExistentes implements ActionListener{
 	private Tienda tienda;
 	private Usuario usuario;
-	private TiendaFrame frame;
 	private VentanaGestionarExistentes vista;
 	
 	public ControlGestionarExistentes(Tienda tienda, Usuario usuario) {
 		this.tienda = tienda;
 		this.usuario = usuario;
-		this.frame = TiendaFrame.getInstance();
 		this.vista = new VentanaGestionarExistentes();
 		
 		Producto[] productos = tienda.getAlmacen().getProductosCoincidentes("");
@@ -30,7 +28,7 @@ public class ControlGestionarExistentes implements ActionListener{
 		vista.revalidate();
 		vista.repaint();
 		
-		frame.setVistaActual(vista);
+		TiendaFrame.getInstance().setVistaActual(vista);
 	}
 	
 	@Override
