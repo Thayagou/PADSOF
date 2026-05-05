@@ -1,4 +1,4 @@
-package controladores.cliente.venta;
+package controladores.cliente.venta.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Resena;
-import vistas.cliente.venta.VentanaAnadirResena;
+import vistas.cliente.venta.pantallas.VentanaAnadirResena;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 

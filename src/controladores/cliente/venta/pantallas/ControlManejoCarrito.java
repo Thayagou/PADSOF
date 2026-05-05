@@ -1,4 +1,4 @@
-package controladores.cliente.venta;
+package controladores.cliente.venta.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,11 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
-import controladores.cliente.intercambios.ControlVentanaPago;
+import controladores.cliente.intercambios.pantallas.ControlVentanaPago;
+import controladores.cliente.venta.ControlItemCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.StockExterno;
-import vistas.cliente.venta.VentanaCarrito;
+import vistas.cliente.venta.pantallas.VentanaCarrito;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 

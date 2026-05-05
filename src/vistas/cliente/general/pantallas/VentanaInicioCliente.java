@@ -1,4 +1,4 @@
-package vistas.cliente.general;
+package vistas.cliente.general.pantallas;
 
 import java.awt.*;
 import java.awt.event.ActionListener;

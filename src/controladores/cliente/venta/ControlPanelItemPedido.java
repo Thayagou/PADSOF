@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
+import controladores.cliente.venta.pantallas.ControlAnadirResena;
+import controladores.cliente.venta.pantallas.ControlInfoProductoCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.StockExterno;

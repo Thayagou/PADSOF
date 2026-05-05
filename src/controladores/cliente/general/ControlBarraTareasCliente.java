@@ -5,8 +5,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraTareas;
-import controladores.cliente.venta.ControlBuscarCliente;
-import controladores.cliente.venta.ControlManejoCarrito;
+import controladores.cliente.general.pantallas.ControlInicioCliente;
+import controladores.cliente.general.pantallas.ControlManejoCuenta;
+import controladores.cliente.general.pantallas.ControlNotificacionesCliente;
+import controladores.cliente.venta.pantallas.ControlBuscarCliente;
+import controladores.cliente.venta.pantallas.ControlManejoCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import vistas.common.TiendaFrame;

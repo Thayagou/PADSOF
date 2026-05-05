@@ -1,4 +1,4 @@
-package vistas.cliente.intercambios;
+package vistas.cliente.intercambios.pantallas;
 
 import java.awt.BorderLayout;
 

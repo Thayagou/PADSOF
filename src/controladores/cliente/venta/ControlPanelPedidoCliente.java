@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import controladores.cliente.venta.pantallas.ControlVerInfoPedidoCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.pedidos.Pedido;

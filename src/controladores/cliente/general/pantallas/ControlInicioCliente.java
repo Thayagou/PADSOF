@@ -1,4 +1,4 @@
-package controladores.cliente.general;
+package controladores.cliente.general.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.cliente.general.ControlBarraLateralCliente;
+import controladores.cliente.general.ControlBarraTareasCliente;
 import controladores.cliente.venta.ControlPanelProductoCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
@@ -13,7 +15,7 @@ import modelo.venta.productos.Producto;
 import vistas.common.TiendaFrame;
 import vistas.cliente.general.BarraLateralCliente;
 import vistas.cliente.general.BarraTareasCliente;
-import vistas.cliente.general.VentanaInicioCliente;
+import vistas.cliente.general.pantallas.VentanaInicioCliente;
 
 public class ControlInicioCliente implements ActionListener, ControladorPantalla {
 

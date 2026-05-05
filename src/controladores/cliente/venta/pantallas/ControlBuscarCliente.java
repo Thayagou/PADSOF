@@ -1,4 +1,4 @@
-package controladores.cliente.venta;
+package controladores.cliente.venta.pantallas;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package controladores.cliente.general;
+package controladores.cliente.general.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +10,7 @@ import controladores.ControladorPantalla;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
-import vistas.cliente.general.VentanaCuentaCliente;
+import vistas.cliente.general.pantallas.VentanaCuentaCliente;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 

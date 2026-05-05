@@ -1,10 +1,11 @@
-package vistas.cliente.venta;
+package vistas.cliente.venta.pantallas;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import vistas.cliente.venta.PanelItemCarrito;
 import vistas.common.*;
 import vistas.herramientas.*;
 

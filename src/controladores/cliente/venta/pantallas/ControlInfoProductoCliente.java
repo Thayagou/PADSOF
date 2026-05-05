@@ -1,4 +1,4 @@
-package controladores.cliente.venta;
+package controladores.cliente.venta.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +12,9 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Resena;
+import vistas.cliente.venta.pantallas.VentanaProductoCliente;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
-import vistas.cliente.venta.VentanaProductoCliente;
 
 public class ControlInfoProductoCliente implements ActionListener, ControladorPantalla {
 

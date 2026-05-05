@@ -1,4 +1,4 @@
-package controladores.cliente.intercambios;
+package controladores.cliente.intercambios.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

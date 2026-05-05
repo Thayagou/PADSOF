@@ -1,15 +1,15 @@
-package controladores.cliente.intercambios;
+package controladores.cliente.intercambios.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.cliente.general.ControlInicioCliente;
+import controladores.cliente.general.pantallas.ControlInicioCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import vistas.cliente.*;
-import vistas.cliente.venta.VentanaPago;
+import vistas.cliente.venta.pantallas.VentanaPago;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 

@@ -1,4 +1,4 @@
-package controladores.cliente.general;
+package controladores.cliente.general.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,10 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.cliente.general.ControlPanelNotificacion;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Notificacion;
-import vistas.cliente.general.VentanaNotificacionesCliente;
+import vistas.cliente.general.pantallas.VentanaNotificacionesCliente;
 import vistas.common.*;
 
 public class ControlNotificacionesCliente implements ActionListener, ControladorPantalla {

@@ -1,14 +1,15 @@
-package controladores.cliente.intercambios;
+package controladores.cliente.intercambios.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import controladores.cliente.intercambios.ControlPanelArticulo;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.common.TiendaFrame;
 import vistas.cliente.*;
-import vistas.cliente.intercambios.VentanaCartera;
+import vistas.cliente.intercambios.pantallas.VentanaCartera;
 
 public class ControlManejoCartera implements ActionListener {
 	

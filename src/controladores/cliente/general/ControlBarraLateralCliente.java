@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
-import controladores.cliente.intercambios.ControlManejoCartera;
-import controladores.cliente.venta.ControlBuscarCliente;
-import controladores.cliente.venta.ControlManejoCarrito;
-import controladores.cliente.venta.ControlVerCompras;
+import controladores.cliente.intercambios.pantallas.ControlManejoCartera;
+import controladores.cliente.venta.pantallas.ControlBuscarCliente;
+import controladores.cliente.venta.pantallas.ControlManejoCarrito;
+import controladores.cliente.venta.pantallas.ControlVerCompras;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 

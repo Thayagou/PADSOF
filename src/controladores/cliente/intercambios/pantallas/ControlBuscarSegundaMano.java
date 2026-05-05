@@ -1,4 +1,4 @@
-package controladores.cliente.intercambios;
+package controladores.cliente.intercambios.pantallas;
 
 import modelo.sistema.Tienda;
 
