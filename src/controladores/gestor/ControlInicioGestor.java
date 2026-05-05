@@ -9,7 +9,7 @@ import controladores.ControladorPantalla;
 import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
 import controladores.gestor.anadirDescuento.ControlAnadirDescuento;
 import controladores.gestor.configurarSistema.ControlConfigurarSistema;
-import controladores.gestor.consultarEstadisticas.ControlConsultarEstadisticas;
+import controladores.gestor.consultarEstadisticas.ControlEstadisticasProductos;
 import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
@@ -83,7 +83,7 @@ public class ControlInicioGestor implements ControladorPantalla {
 
 	private void consultarEstadisticas() {
 		this.frame.remove(vista);
-		SwingUtilities.invokeLater(() -> new ControlConsultarEstadisticas(tienda, gestor));
+		SwingUtilities.invokeLater(() -> new ControlEstadisticasProductos(tienda, gestor));
 	}
 
 	@Override

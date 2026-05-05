@@ -50,4 +50,9 @@ public class InvisibleCheckBox extends JLabel{
 	    		? labelSelected 
 	    		: labelUnselected);
 	}
+    
+    public void toggleSelection(boolean select) {
+    	if (select == isSelected) return;
+    	else toggleSelection();
+    }
 }

@@ -11,7 +11,7 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-public class PanelCategoriaSeleccion extends PanelCategoria {
+public class PanelCategoriaSeleccion extends PanelCategoria implements PanelSeleccion{
 
 	private static final long serialVersionUID = 1L;
 	public static final String INCLUIR_ACTION= "Incluir";
@@ -28,15 +28,13 @@ public class PanelCategoriaSeleccion extends PanelCategoria {
 		// Cuando se hace click en la fila, alternar estado
 	}
 
-	public boolean isSeleccionada() {
+	@Override
+	public boolean isSeleccionado() {
 		return checkBox.isSelected();
 	}
 	
+	@Override
 	public void toggleCheckBox() {
 		checkBox.toggleSelection();
-	}
-
-	public String getCategoria() {
-		return clickArea.getActionCommand();
 	}
 }

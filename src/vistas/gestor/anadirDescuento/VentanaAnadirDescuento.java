@@ -24,14 +24,17 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 	private JTextField valorMinimo;
 	private JComboBox<String> tipoComp;
 	private JTextField valorCompensacion;
-	private JButton regalo;
 	private JSpinner inicio;
 	private JSpinner fin;
 
 	private JButton confirmar;
 	private JButton cancelar;
+	private JButton regalo;
 	private JPanel listaDescontados = new JPanel();
 	private PanelMultiopcion panelOpciones;
+	private PanelMultiopcion tipoCondicion;
+	private PanelMultiopcion tipoCompensacion;
+	
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,24 +55,28 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		contenido.setOpaque(false);
 
 		// -- Tipo de condición --
-		contenido.add(ButtonFactory.newLabel("Tipo de condición:", Fonts.TEXT));
+		tipoCondicion = new PanelMultiopcion("Tipo de condición:", Fonts.BOLD, Fonts.TEXT, new String[] {"Cantidad", "Volumen", "Sin condiciones"});
+		
+		/*contenido.add(ButtonFactory.newLabel("Tipo de condición:", Fonts.TEXT));
 		contenido.add(Box.createVerticalStrut(4));
-		JComboBox<String> tipoCondicion = ButtonFactory.newComboBox(Fonts.TEXT, "Cantidad", "Volumen", "Sin condiciones");
+		JComboBox<String> tipoCondicion = ButtonFactory.newComboBox(Fonts.TEXT, "Cantidad", "Volumen", "Sin condiciones");*/
 
 		contenido.add(tipoCondicion);
 		// panel.add(Box.createVerticalStrut(8));
 
-		contenido.add(ButtonFactory.newLabel("Cantidad/volumen mínimo:", Fonts.TEXT));
+		/*contenido.add(ButtonFactory.newLabel("Cantidad/volumen mínimo:", Fonts.TEXT));
 		// panel.add(Box.createVerticalStrut(4));
-		contenido.add(ButtonFactory.newTextField("Valor mínimo...", Fonts.TEXT));
+		contenido.add(ButtonFactory.newTextField("Valor mínimo...", Fonts.TEXT));*/
 		// panel.add(new JSeparator());
 		// panel.add(Box.createVerticalStrut(8));
 
 		// -- Tipo de compensación --
-		contenido.add(new JLabel("Tipo de compensación:"));
-		contenido.add(Box.createVerticalStrut(4));
-		tipoComp = ButtonFactory.newComboBox(Fonts.TEXT, "Dinero", "Porcentaje", "Regalo");
-		contenido.add(tipoComp);
+		tipoCompensacion = new PanelMultiopcion("Tipo de compensación:", Fonts.BOLD, Fonts.TEXT, new String[] {"Dinero", "Porcentaje", "Regalo"});
+		
+		contenido.add(tipoCompensacion);
+		
+		regalo = ButtonFactory.newButton("Regalo");
+		contenido.add(regalo);
 		// panel.add(Box.createVerticalStrut(8));
 
 		contenido.add(ButtonFactory.newLabel("Valor de la compensación/Regalo:", Fonts.TEXT));
@@ -149,5 +156,6 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		panelOpciones.setControlador(l);
 		confirmar.addActionListener(l);
 		cancelar.addActionListener(l);
+		regalo.addActionListener(l);
 	}
 }

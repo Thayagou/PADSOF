@@ -293,6 +293,7 @@ public abstract class Producto implements Serializable, Descontable {
 	public boolean anadirDescuento(Descuento descuento) throws InvalidArgumentException, DoubleDiscountException {
 		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null", "añadir descuento a producto");
 		if(tieneDescuento()) throw new DoubleDiscountException("El producto ya tiene un descuento", "añadir descuento a producto", getNombre());
+		
 		this.descuento = descuento;
 		return true;
 	}
