@@ -2,6 +2,7 @@ package vistas.empleado.gestionarProductos.gestionarExistentes;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,6 +18,8 @@ public class PanelProductoGestionarProducto extends PanelProducto{
 	private static final long serialVersionUID = 1L;
 	public static final String MODIFICAR_ACTION = "Modificar";
 	public static final String BORRAR_ACTION = "Borrar";
+	private JButton modButton;
+	private JButton borrarButton;
 	
 	public PanelProductoGestionarProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, "", categorias);
@@ -28,11 +31,11 @@ public class PanelProductoGestionarProducto extends PanelProducto{
 		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
 		eastPanel.setPreferredSize(new Dimension(maxWidth, (int)(maxCompHeight * BOTON_PERC_H)));
 		
-		JButton modButton = ButtonFactory.newRoundedButton("Editar", (int)(maxCompHeight), maxCompHeight, 0.5f);
+		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int)(maxCompHeight), maxCompHeight, 0.5f);
 		ButtonFactory.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		
-		JButton borrarButton = ButtonFactory.newRoundedButton("Borrar", (int)(maxCompHeight), maxCompHeight, 0.5f);
+		borrarButton = ButtonFactory.newRoundedButton(BORRAR_ACTION, (int)(maxCompHeight), maxCompHeight, 0.5f);
 		ButtonFactory.paintButton(borrarButton, ColorPalette.RED, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(borrarButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
 		
@@ -44,5 +47,11 @@ public class PanelProductoGestionarProducto extends PanelProducto{
 		eastPanel.add(Box.createVerticalStrut(gapSize));
 		
 		this.add(eastPanel, BorderLayout.EAST);
+	}
+	
+	public void setControlador(ActionListener c) {
+		super.setControlador(c);
+		modButton.addActionListener(c);
+		borrarButton.addActionListener(c);
 	}
 }

@@ -10,6 +10,7 @@ public enum Fonts {
 	TITLE3("Arial", Font.BOLD, 0.03),
 	BOLD("Arial", Font.BOLD, 0.02),
 	SMALL("Arial", Font.PLAIN, 0.015),
+	SMALL_BOLD("Arial", Font.BOLD, 0.015),
 	TEXT("Arial", Font.PLAIN, 0.02);
 	
 	private Font font;

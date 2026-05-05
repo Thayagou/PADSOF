@@ -20,4 +20,10 @@ public interface CaracteristicasProducto {
 	 * @throws DoubleDiscountException Si las categorías no son compatibles entre sí o con el producto por descuentos
 	 */
 	public abstract Producto crearProducto(String nombre, String descripcion, double precio, String image, Categoria...categorias) throws InvalidArgumentException, DoubleDiscountException;
+	
+	/**
+	 * Devuelve los nombres de las características específicas de cada tipo de producto
+	 * @return Array de nombres de las características
+	 */
+	public abstract String[] getNombresCaracteristicas();
 }

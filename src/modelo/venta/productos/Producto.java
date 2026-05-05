@@ -366,6 +366,18 @@ public abstract class Producto implements Serializable, Descontable {
 	public abstract String getCaracteristicas();
 	
 	/**
+	 * Método abstracto para obtener los valores de las características
+	 * @return Array con valores de las características en String
+	 */
+	public abstract String[] getValoresCaracteristicas();
+	
+	/**
+	 * Devuelve el nombre del tipo de producto que es
+	 * @return Nombre del tipo de producto
+	 */
+	public abstract String getTipoProducto();
+	
+	/**
 	 * Método abstracto para modificar las características de un producto
 	 * @param c Objeto que contiene las características del producto
 	 * @throws InvalidArgumentException Se lanza si los argumentos son inválidos

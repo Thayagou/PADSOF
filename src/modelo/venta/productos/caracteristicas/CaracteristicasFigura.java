@@ -1,5 +1,7 @@
 package modelo.venta.productos.caracteristicas;
 
+import java.util.List;
+
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.venta.productos.*;
@@ -25,6 +27,11 @@ public class CaracteristicasFigura implements CaracteristicasProducto {
 		this.dimensiones = dimensiones;
 		this.marca = marca;
 		this.material = material;
+	}
+	
+	@Override
+	public String[] getNombresCaracteristicas() {
+		return List.of("Dimensiones", "Marca", "Material").toArray(new String[0]);
 	}
 	
 	@Override

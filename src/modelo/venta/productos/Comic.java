@@ -2,6 +2,8 @@ package modelo.venta.productos;
 
 import java.io.Serializable;
 import java.time.*;
+import java.util.LinkedList;
+import java.util.List;
 
 import modelo.exceptions.*;
 import modelo.venta.productos.caracteristicas.*;
@@ -70,5 +72,20 @@ public class Comic extends Producto implements Serializable {
 	public String getCaracteristicas() {
 		return String.format("(fecha de publicacion=%s, Autor=%s, Numero de paginas=%d, Editorial=%s)",
 				fechaPublicacion, autor, numPaginas, editorial);
+	}
+	
+	@Override
+	public String[] getValoresCaracteristicas() {
+		List<String> valores = new LinkedList<>();
+		valores.add(fechaPublicacion.toString());
+		valores.add(autor);
+		valores.add(numPaginas+"");
+		valores.add(editorial);
+		return valores.toArray(new String[0]);
+	}
+	
+	@Override
+	public String getTipoProducto() {
+		return "Comic";
 	}
 }

@@ -1,14 +1,15 @@
 package controladores.empleado.valorarArticulos;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import controladores.ControladorPantalla;
 import modelo.exceptions.ArticuloSinValoracionException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
@@ -21,7 +22,7 @@ import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 import vistas.empleado.valorarArticulos.VentanaValoracionIndividual;
 
-public class ControlValoracionIndividual implements ActionListener {
+public class ControlValoracionIndividual implements ControladorPantalla {
 	private final Tienda tienda;
 	private final Empleado empleado;
 	private final ArticuloSegundaMano articulo;
@@ -50,7 +51,7 @@ public class ControlValoracionIndividual implements ActionListener {
 				articulo.getNombre(), "producto.png", categorias.toArray(new String[0]), articulo.getDescripcion(),
 				tiposEstado.toArray(new String[0]));
 		vista.setControlador(this);
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
@@ -89,6 +90,11 @@ public class ControlValoracionIndividual implements ActionListener {
 		new VentanaMensaje("El artículo se ha valorado correctamente");
 		
 		SwingUtilities.invokeLater(() -> new ControlValorarObjetos(tienda, empleado));
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 
 }
