@@ -2,10 +2,13 @@ package vistas.empleado.gestionarProductos.anadirProductos;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -15,6 +18,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import vistas.common.PanelDisplay;
+import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
@@ -34,10 +38,15 @@ public class PanelCargarFichero extends PanelDisplay {
 		label.setFont(Fonts.TITLE3.getFont());
 		add(label, BorderLayout.CENTER);
 		
-		btnConfirmar = ButtonFactory.newButton(CONFIRMAR_ACTION, (int) (HEIGHT * 0.2), (int) (WIDTH * 0.2));
-		ButtonFactory.paintButton(btnConfirmar, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(btnConfirmar, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
-		btnConfirmar.setEnabled(false);
+		int height = TiendaFrame.getInstance().getHeight();
+		int width = TiendaFrame.getInstance().getWidth();
+		
+		btnConfirmar = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (height * 0.08), (int) (width * 0.1), 0.5);
+		btnConfirmar.setMaximumSize(new Dimension((int) (height * 0.08), (int) (width * 0.1)));
+		btnConfirmar.setFont(Fonts.BOLD.getFont());
+	    ButtonFactory.paintButton(btnConfirmar, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+	    ButtonFactory.addMouseMecanics(btnConfirmar, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
+	    btnConfirmar.setEnabled(false);
 
 		setOpaque(false);
 	}
@@ -57,7 +66,8 @@ public class PanelCargarFichero extends PanelDisplay {
 	}
 
 	private JPanel ventanaSeleccionarArchivo() {
-		JPanel ventanaSeleccionar = new JPanel();
+		JPanel ventanaSeleccionar = new JPanel(new BorderLayout(0, 10));
+		ventanaSeleccionar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		// Ventana pop-up para seleccionar archivo
 		seleccionador = new JFileChooser();
@@ -70,9 +80,12 @@ public class PanelCargarFichero extends PanelDisplay {
 		seleccionador.addPropertyChangeListener(JFileChooser.SELECTED_FILE_CHANGED_PROPERTY, e -> {
 			btnConfirmar.setEnabled(seleccionador.getSelectedFile() != null);
 		});
+		
+		JPanel sur = new JPanel(new FlowLayout());
+	    sur.add(btnConfirmar);
 
 		ventanaSeleccionar.add(seleccionador, BorderLayout.CENTER);
-		ventanaSeleccionar.add(btnConfirmar, BorderLayout.SOUTH);
+		ventanaSeleccionar.add(sur, BorderLayout.SOUTH);
 		
 		return ventanaSeleccionar;
 	}
@@ -91,5 +104,4 @@ public class PanelCargarFichero extends PanelDisplay {
 		File f = seleccionador.getSelectedFile();
 		return f != null ? f.getAbsolutePath() : null;
 	}
-
 }

@@ -1,15 +1,17 @@
 package controladores.empleado.gestionarIntercambios;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.wallapop.Intercambio;
 import vistas.common.TiendaFrame;
 import vistas.empleado.gestionarIntercambios.VentanaGestIntercambios;
 
-public class ControlGestIntercambios implements ActionListener{
+public class ControlGestIntercambios implements ControladorPantalla {
 	private VentanaGestIntercambios vista;
 
 	public ControlGestIntercambios(Tienda tienda, Empleado empleado) {
@@ -19,11 +21,16 @@ public class ControlGestIntercambios implements ActionListener{
 			new ControlPanelIntercambioConBoton(tienda, empleado, i, vista);
 		}
 		
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

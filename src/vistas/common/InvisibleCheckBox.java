@@ -31,6 +31,12 @@ public class InvisibleCheckBox extends JCheckBox{
     public boolean contains(int x, int y) {
         return false; 
     }
+	
+	public void setSeleccionado(boolean seleccionado) {
+	    if (this.isSelected() != seleccionado) {
+	        toggleSelection();
+	    }
+	}
     
     public void toggleSelection() {
 	    this.setSelected(!this.isSelected());

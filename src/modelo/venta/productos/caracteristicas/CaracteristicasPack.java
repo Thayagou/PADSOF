@@ -1,5 +1,7 @@
 package modelo.venta.productos.caracteristicas;
 
+import java.util.List;
+
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.venta.productos.*;
@@ -17,6 +19,11 @@ public class CaracteristicasPack implements CaracteristicasProducto {
 	 */
 	public CaracteristicasPack(Stock...stocks) {
 		this.stocks = stocks;
+	}
+	
+	@Override
+	public String[] getNombresCaracteristicas() {
+		return List.of("Productos").toArray(new String[0]);
 	}
 	
 	/**
