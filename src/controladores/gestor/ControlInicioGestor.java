@@ -1,9 +1,12 @@
 package controladores.gestor;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import controladores.empleado.gestionarProductos.ControlGestionarProductos;
+
+import controladores.ControladorPantalla;
+import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
 import controladores.gestor.anadirDescuento.ControlAnadirDescuento;
 import controladores.gestor.configurarSistema.ControlConfigurarSistema;
 import controladores.gestor.consultarEstadisticas.ControlConsultarEstadisticas;
@@ -13,7 +16,7 @@ import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
 import vistas.gestor.VentanaInicioGestor;
 
-public class ControlInicioGestor implements ActionListener {
+public class ControlInicioGestor implements ControladorPantalla {
 	private Tienda tienda;
 	private Gestor gestor;
 	private TiendaFrame frame;
@@ -27,11 +30,10 @@ public class ControlInicioGestor implements ActionListener {
 		this.vista.setControlador(this);
 
 		this.frame = TiendaFrame.getInstance();
-		this.frame.setVistaActual(vista);
-		this.frame.setVisible(true);
+		frame.resetearNavegacion(this);
 
 		/* Se crean las barras que se autogestionan y añaden al frame */
-		new ControlBarraGestor(tienda, gestor);
+		new ControlBarraLateralGestor(tienda, gestor);
 		new ControlBarraTareasGestor(tienda, gestor);
 	}
 
@@ -69,7 +71,7 @@ public class ControlInicioGestor implements ActionListener {
 
 	private void gestionarProdsYCats() {
 		this.frame.remove(vista);
-		SwingUtilities.invokeLater(() -> new ControlGestionarProductos(tienda, gestor)
+		SwingUtilities.invokeLater(() -> new ControlGestionarExistentes(tienda, gestor)
 		// new ControlGestionarCategorias(tienda, gestor)
 		);
 	}
@@ -82,6 +84,11 @@ public class ControlInicioGestor implements ActionListener {
 	private void consultarEstadisticas() {
 		this.frame.remove(vista);
 		SwingUtilities.invokeLater(() -> new ControlConsultarEstadisticas(tienda, gestor));
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 
 }

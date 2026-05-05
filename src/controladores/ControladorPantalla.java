@@ -1,5 +1,7 @@
 package controladores;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 
 /**
@@ -36,7 +38,7 @@ import javax.swing.JPanel;
  *       // mostrar(), ocultar(), destruir() → no hace falta declararlos
  *   }
  */
-public interface ControladorPantalla {
+public interface ControladorPantalla extends ActionListener{
 
     /**
      * Devuelve el JPanel asociado a esta pantalla.
