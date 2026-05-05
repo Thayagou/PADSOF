@@ -38,7 +38,7 @@ public class VentanaEstadisticasTienda extends JPanel implements VentanaConDispl
 	private PanelMultiopcion panelOrdenacion;
 	private List<PanelEstadisticasTienda> listaPaneles = new ArrayList<>();
 	
-	public VentanaEstadisticasTienda() {
+	public VentanaEstadisticasTienda(String...columnas) {
 		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
 
@@ -50,13 +50,13 @@ public class VentanaEstadisticasTienda extends JPanel implements VentanaConDispl
 		cabecera.setLayout(new BorderLayout());
 		cabecera.setMaximumSize(new Dimension(Integer.MAX_VALUE, maxHeight));
 
-		JPanel statsPanel = new JPanel(new GridLayout(1, 3, 20, 0));
+		JPanel statsPanel = new JPanel(new GridLayout(1, columnas.length, 20, 0));
 		statsPanel.setOpaque(false);
 
-		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Total recaudado", size, ColorPalette.WHITE));
-		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Productos comprados", size, ColorPalette.WHITE));
-		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Artículos intercambiados", size, ColorPalette.WHITE));
-
+		for (String col: columnas) {
+			statsPanel.add(PanelEstadisticasTienda.crearColumnaStat(col, size, ColorPalette.WHITE));
+		}
+		
 		cabecera.add(statsPanel, BorderLayout.EAST);
 		
 		// Lista 

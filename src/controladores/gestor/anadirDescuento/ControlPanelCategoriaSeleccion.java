@@ -14,14 +14,12 @@ public class ControlPanelCategoriaSeleccion  implements ActionListener {
 	private Categoria categoria;
 	private Tienda tienda;
 	private PanelCategoriaSeleccion panel;
+	private ControlAnadirDescuento superControl;
 	
-	public ControlPanelCategoriaSeleccion(Tienda tienda, Usuario usuario, Categoria categoria, VentanaConDisplay<? super PanelCategoria> vista) {
-		this(tienda, categoria, vista);
-	}
-	
-	public ControlPanelCategoriaSeleccion(Tienda tienda, Categoria categoria, VentanaConDisplay<? super PanelCategoria> vista) {
+	public ControlPanelCategoriaSeleccion(Tienda tienda, Categoria categoria, ControlAnadirDescuento superControl, VentanaConDisplay<? super PanelCategoria> vista) {
 		this.tienda = tienda;
 		this.categoria = categoria;
+		this.superControl = superControl;
 		
 		panel = new PanelCategoriaSeleccion(categoria.getNombre());
 		panel.setControlador(this);
@@ -34,6 +32,7 @@ public class ControlPanelCategoriaSeleccion  implements ActionListener {
 		switch (e.getActionCommand()) {
 		case PanelCategoriaSeleccion.INCLUIR_ACTION:
 			panel.toggleCheckBox();
+			superControl.incluirCategoria(categoria, panel.isSeleccionada());
 			break;
 		}
 	}

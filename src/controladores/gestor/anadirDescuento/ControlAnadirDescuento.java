@@ -1,8 +1,8 @@
 package controladores.gestor.anadirDescuento;
 
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
@@ -21,8 +21,8 @@ public class ControlAnadirDescuento implements ControladorPantalla{
 	private Gestor gestor;
 	private VentanaAnadirDescuento vista;
 	private String tipoActual;
-	private List<Producto> productosDescontados = new ArrayList<>();
-	private List<Producto> categoriasDescontados = new ArrayList<>();;
+	private Set<Producto> productosDescontados = new LinkedHashSet<>();
+	private Set<Categoria> categoriasDescontados = new LinkedHashSet<>();;
 	
 	
 	public ControlAnadirDescuento(Tienda tienda, Gestor gestor) {
@@ -38,27 +38,43 @@ public class ControlAnadirDescuento implements ControladorPantalla{
 		
     }
 	
-	public void anadirProductos() {
+	private void anadirProductos() {
 		Producto[] catalogo = tienda.getAlmacen().getProductosCoincidentes("");
 	
 		vista.vaciarDescontados();
 		
 		for (Producto p: catalogo) {
-			new ControlPanelProductoSeleccion(tienda, p, vista);
+			new ControlPanelProductoSeleccion(tienda, p, this, vista);
 		}
 	}
 	
-	public void anadirCategorias() {
+	private void anadirCategorias() {
 		Categoria[] categorias = tienda.getAlmacen().getCategorias();
 	
 		vista.vaciarDescontados();
 		
 		for (Categoria c: categorias) {
-			new ControlPanelCategoriaSeleccion(tienda, c, vista);
+			new ControlPanelCategoriaSeleccion(tienda, c, this, vista);
 		}
 		
 		vista.revalidate();
 		vista.repaint();
+	}
+	
+	public void incluirCategoria(Categoria c, boolean estaIncluido) {
+		if (estaIncluido) {
+			categoriasDescontados.add(c);
+		} else {
+			categoriasDescontados.remove(c);
+		}
+	}
+	
+	public void incluirProducto(Producto p, boolean estaIncluido) {
+		if (estaIncluido) {
+			productosDescontados.add(p);
+		} else {
+			productosDescontados.remove(p);
+		}
 	}
 	
 	private void cambiarTipoDescontado() {

@@ -1,16 +1,18 @@
 package vistas.common;
 
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-public class InvisibleCheckBox extends JCheckBox{
+public class InvisibleCheckBox extends JLabel{
 	private static final long serialVersionUID = 1L;
 	private String labelSelected;
 	private String labelUnselected;
 	private ColorPalette selected;
 	private ColorPalette unselected;
+	private boolean isSelected;
 	
 	public InvisibleCheckBox(String labelSelected, String labelUnselected, ColorPalette selected, ColorPalette unselected) {
 		super(labelUnselected);
@@ -18,23 +20,29 @@ public class InvisibleCheckBox extends JCheckBox{
 		this.labelUnselected = labelUnselected;
 		this.selected = selected;
 		this.unselected = unselected;
+		this.isSelected = false;
 		setOpaque(false);
-		setFocusPainted(false);
-		setSelected(false);
+		//setFocusPainted(false);
+		//setSelected(false);
 		setFocusable(false);
 		setFont(Fonts.BOLD.getFont());
-		setForeground(ColorPalette.GREY.getColor());
+		setForeground(unselected.getColor());
 		setEnabled(true);
+		
+		//setSelectedIcon(null);
+		
 	}
 	
 	@Override
     public boolean contains(int x, int y) {
         return false; 
     }
+	
+	public boolean isSelected() { return isSelected; }
     
     public void toggleSelection() {
-	    this.setSelected(!this.isSelected());
-	    boolean isSelected = this.isSelected();
+    	isSelected = !isSelected;
+	    
 	    this.setForeground( isSelected
 	        ? selected.getColor() 
 	        : unselected.getColor());
