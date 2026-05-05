@@ -65,4 +65,12 @@ public interface ControladorPantalla extends ActionListener{
      * Por defecto no hace nada.
      */
     default void destruir() {}
+    
+    /**
+     * Indica si se puede regresar a la pantalla de este controlador
+     * Para que no se pueda, hay que hacer override y poner return false;
+     *
+     * @return true -> se puede volver, false -> no se puede volver
+     */
+    default boolean puedeVolver() {return true;}
 }

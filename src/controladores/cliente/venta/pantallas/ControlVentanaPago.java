@@ -1,19 +1,20 @@
-package controladores.cliente.intercambios.pantallas;
+package controladores.cliente.venta.pantallas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import controladores.ControladorPantalla;
 import controladores.cliente.general.pantallas.ControlInicioCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
-import vistas.cliente.*;
 import vistas.cliente.venta.pantallas.VentanaPago;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaMensaje;
 
-public class ControlVentanaPago implements ActionListener {
+public class ControlVentanaPago implements ActionListener, ControladorPantalla {
 	
 	private Tienda tienda;
 	private VentanaPago vista;
@@ -26,7 +27,7 @@ public class ControlVentanaPago implements ActionListener {
 		vista = new VentanaPago();
 		vista.setControlador(this);
 		
-		TiendaFrame.getInstance().setVistaActual(vista);
+		TiendaFrame.getInstance().navegarA(this);
 	}
 
 	@Override
@@ -41,4 +42,12 @@ public class ControlVentanaPago implements ActionListener {
 			}
 		}
 	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
+	}
+	
+	@Override
+	public boolean puedeVolver() {return false;}
 }
