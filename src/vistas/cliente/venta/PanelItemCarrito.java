@@ -13,15 +13,16 @@ public class PanelItemCarrito extends PanelProducto {
 	private static final long serialVersionUID = 1L;
 
 	private JButton quitar;
-	
+	private JLabel unidadesLabel;
+
 	private static final double SPACE_EAST_PANEL = 0.01;
 
-	public PanelItemCarrito(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, int unidades,
-			String actionName, String... categorias) {
+	public PanelItemCarrito(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio,
+			int unidades, String actionName, String... categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, actionName, categorias);
 
 		TiendaFrame t = TiendaFrame.getInstance();
-		
+
 		JPanel eastPanel = new JPanel();
 		eastPanel.setLayout(new BorderLayout(t.getPixelsWidth(SPACE_EAST_PANEL), 0));
 
@@ -42,21 +43,22 @@ public class PanelItemCarrito extends PanelProducto {
 		buttons.add(Box.createVerticalStrut(gapSize));
 
 		eastPanel.add(buttons, BorderLayout.EAST);
-		
+
 		JPanel unitPanel = new JPanel();
-		unitPanel.add(ButtonFactory.newLabel(String.format("x%d", unidades), Fonts.TEXT));
+		unidadesLabel = ButtonFactory.newLabel(String.format("x%d", unidades), Fonts.TEXT);
+		unitPanel.add(unidadesLabel);
 		unitPanel.setOpaque(false);
-		
+
 		JPanel centerWrapper = new JPanel();
 		centerWrapper.setLayout(new BoxLayout(centerWrapper, BoxLayout.Y_AXIS));
 		centerWrapper.setOpaque(false);
 		centerWrapper.add(Box.createVerticalGlue());
 		centerWrapper.add(unitPanel);
 		centerWrapper.add(Box.createVerticalGlue());
-		
+
 		eastPanel.add(centerWrapper, BorderLayout.WEST);
 		eastPanel.setOpaque(false);
-		
+
 		this.add(eastPanel, BorderLayout.EAST);
 	}
 
@@ -64,5 +66,16 @@ public class PanelItemCarrito extends PanelProducto {
 	public void setControlador(ActionListener l) {
 		super.setControlador(l);
 		quitar.addActionListener(l);
+	}
+
+	/**
+	 * Actualiza el número de unidades mostrado en el panel.
+	 * 
+	 * @param uds nuevas unidades
+	 */
+	public void actualizarUnidades(int uds) {
+		if (unidadesLabel != null) {
+			unidadesLabel.setText(String.format("x%d", uds));
+		}
 	}
 }

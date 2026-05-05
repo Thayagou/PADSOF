@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.SwingUtilities;
-
 import controladores.cliente.venta.pantallas.ControlManejoCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
@@ -22,16 +20,18 @@ public class ControlItemCarrito implements ActionListener {
 	protected VentanaConDisplay<? super PanelItemCarrito> vista;
 	protected ClienteRegistrado cliente;
 	private int unidades;
+	private ControlManejoCarrito controlador;
 
 	protected static final String DF_PRODUCT_IMAGE = "producto.png";
 
 	public ControlItemCarrito(Tienda tienda, ClienteRegistrado cliente, StockExterno stock,
-			VentanaConDisplay<? super PanelItemCarrito> vista) {
+			VentanaConDisplay<? super PanelItemCarrito> vista, ControlManejoCarrito controlador) {
 		this.producto = stock.getProducto();
 		this.unidades = stock.getUdsEnStock();
 		this.tienda = tienda;
 		this.cliente = cliente;
 		this.vista = vista;
+		this.controlador = controlador;
 
 		ArrayList<String> categorias = new ArrayList<>();
 		for (Categoria c : producto.getCategorias()) {
@@ -58,8 +58,8 @@ public class ControlItemCarrito implements ActionListener {
 		switch (e.getActionCommand()) {
 		case "quitar":
 			try {
-				SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente));
 				tienda.quitarDeCarritoDe(cliente, producto);
+				controlador.recargarPantalla();
 			} catch (Exception ex) {
 				new VentanaMensaje(ex.getMessage());
 			}

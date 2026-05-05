@@ -6,17 +6,22 @@ import java.awt.event.ActionListener;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
+import vistas.cliente.intercambios.pantallas.VentanaInfoArticulo;
 
 public class ControlInfoArticulo implements ActionListener {
 	
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
 	private ArticuloSegundaMano articulo;
+	private VentanaInfoArticulo vista;
 
 	public ControlInfoArticulo(Tienda tienda, ClienteRegistrado cliente, ArticuloSegundaMano articulo) {
 		this.tienda = tienda;
 		this.cliente = cliente;
 		this.articulo = articulo;
+		
+		this.vista = new VentanaInfoArticulo()
+		
 	}
 	
 	
