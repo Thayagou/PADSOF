@@ -56,4 +56,14 @@ public class DescuentoDinero extends Descuento implements Serializable{
 	public String toString() {
 		return super.toString()+"{Dinero="+dinero+"}";
 	}
+
+	/**
+	 * Getter del mensaje de descuento
+	 * @return Mensaje específico
+	 */
+	@Override
+	public String getMessage() {
+		
+		return dinero + "€ de descuento ";
+	}
 }

@@ -12,6 +12,7 @@ import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
 //import java.awt.*;
@@ -27,65 +28,18 @@ public class VentanaInicioGestor extends JPanel {
 	private JButton empleados;
 	
 	public VentanaInicioGestor(Tienda tienda) {
-		int vertGap = TiendaFrame.getInstance().getPixelsHeight(GAP);
-		int horGap = TiendaFrame.getInstance().getPixelsWidth(GAP);
-		setLayout(new BorderLayout(horGap, vertGap));
 		setOpaque(false);
-		TiendaFrame t = TiendaFrame.getInstance();
-		
-		JPanel center = new JPanel(new GridLayout(2, 1, 0, 16));
-		TitledBorder centerTitle = BorderFactory.createTitledBorder("Opciones");
-		centerTitle.setTitleFont(Fonts.TITLE3.getFont());
-		center.setBorder(centerTitle);
-		int totalHeight = t.getHeight();
-		
-		int buttonHeight = (int) ((totalHeight - t.toolBarDistFromTop())/2 * 0.8);
-		Dimension buttomDimension = new Dimension(0, buttonHeight);
-		JPanel top = new JPanel(new GridLayout(1, 3, 16, 30));
-		
-		ButtonFactory factory = new ButtonFactory();
-		descuentos = factory.newIconButton("Añadir descuento", buttonHeight, 0, "descuento.png");
-		descuentos.setFont(Fonts.SUBTITLE.getFont());
-		
-		sistema = factory.newIconButton("Configurar sistema", buttonHeight, 0, "sistema.png");
-		sistema.setFont(Fonts.SUBTITLE.getFont());
-		
-		estadisticas = factory.newIconButton("Consultar estadísticas", buttonHeight, 0, "estadistica.png");
-		estadisticas.setFont(Fonts.SUBTITLE.getFont());
-		
-		top.add(descuentos);
-		top.add(sistema);
-		top.add(estadisticas);
+		setLayout(new BorderLayout());
 
+		// ── Cabecera ──────────────────────────────────────────────
+		JLabel cabecera = new JLabel("  Menú de gestor   Seleccione una tarea para continuar");
+		cabecera.setFont(Fonts.TITLE3.getFont());
+		cabecera.setForeground(ColorPalette.WHITE.getColor());
+		cabecera.setOpaque(true);
+		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());
+		cabecera.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		
-		JPanel bottom = new JPanel(new GridLayout(1, 2, 16, 30));
-		bottom.setBorder(BorderFactory.createEmptyBorder(0, 80, 0, 80)); // margen lateral
-		
-		prodYCats = factory.newIconButton("Gestionar productos y categorías", buttonHeight, 0, "productosYCategorias.png");
-				//new JButton("Gestionar productos y categorias");
-		empleados = factory.newIconButton("Gestionar empleados", buttonHeight, 0, "productosYCategorias.png");
-		
-		
-		prodYCats.setFont(Fonts.SUBTITLE.getFont());
-		empleados.setFont(Fonts.SUBTITLE.getFont());
-		
-		prodYCats.setPreferredSize(buttomDimension);
-		empleados.setPreferredSize(buttomDimension);
-		
-		bottom.add(prodYCats); 
-		bottom.add(empleados);
-
-		center.add(top);
-		center.add(bottom);
-		
-		center.setOpaque(false);
-		top.setOpaque(false);
-		bottom.setOpaque(false);
-		center.setBackground(Color.WHITE);
-		top.setBackground(Color.WHITE);
-		bottom.setBackground(Color.WHITE);
-		
-		this.add(center, BorderLayout.CENTER);
+		add(cabecera, BorderLayout.NORTH);
 	}
 
 	public void setControlador(ControlInicioGestor controlInicioGestor) {

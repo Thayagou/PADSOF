@@ -56,4 +56,13 @@ public class DescuentoRegalo extends Descuento implements Serializable {
 	public String toString() {
 		return super.toString()+"{Regalo="+regalo.getNombre()+"}";
 	}
+	
+	/**
+	 * Getter del mensaje de descuento
+	 * @return Mensaje específico
+	 */
+	@Override
+	public String getMessage() {
+		return "Llévate un " + regalo.getNombre() + " de regalo";
+	}
 }

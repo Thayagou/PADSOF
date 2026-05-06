@@ -54,4 +54,13 @@ public class DescuentoPorcentaje extends Descuento implements Serializable {
 	public String toString() {
 		return super.toString()+"{Porcentaje="+porcentaje+"}";
 	}
+	
+	/**
+	 * Getter del mensaje de descuento
+	 * @return Mensaje específico
+	 */
+	@Override
+	public String getMessage() {
+		return porcentaje + "% de descuento ";
+	}
 }

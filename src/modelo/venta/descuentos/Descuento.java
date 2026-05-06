@@ -186,6 +186,12 @@ public abstract class Descuento implements Serializable {
 	}
 	
 	/**
+	 * Método para obtener el mensaje del descuento
+	 * @return dicho mensaje
+	 */
+	public abstract String getMessage();
+	
+	/**
 	 * Método para imprimir un descuento
 	 */
 	@Override

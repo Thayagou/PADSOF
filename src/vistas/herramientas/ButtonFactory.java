@@ -281,6 +281,8 @@ public class ButtonFactory {
 	    SpinnerNumberModel modelo = new SpinnerNumberModel(valor, min, max, paso);
 	    JSpinner spinner = new JSpinner(modelo);
 	    spinner.setFont(font.getFont());
+	    JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, "0.00");
+	    spinner.setEditor(editor);
 	    return spinner;
 	}
 

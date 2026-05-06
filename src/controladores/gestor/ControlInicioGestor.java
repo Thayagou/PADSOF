@@ -14,6 +14,7 @@ import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.TiendaFrame;
+import vistas.empleado.general.VentanaInicioEmpleado;
 import vistas.gestor.VentanaInicioGestor;
 
 public class ControlInicioGestor implements ControladorPantalla {
@@ -27,7 +28,7 @@ public class ControlInicioGestor implements ControladorPantalla {
 		this.gestor = gestor;
 
 		this.vista = new VentanaInicioGestor(tienda);
-		this.vista.setControlador(this);
+		//this.vista.setControlador(this);
 
 		/* Se crean las barras que se autogestionan y añaden al frame */
 		new ControlBarraLateralGestor(tienda, gestor);

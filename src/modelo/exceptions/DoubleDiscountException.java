@@ -24,6 +24,6 @@ public class DoubleDiscountException extends CustomException {
 	 */
 	@Override
 	public String getMessage() {
-		return super.toString() + ". Conflicto en \"" + nombre + "\"";
+		return super.getMessage() + ". Conflicto en \"" + nombre + "\"";
 	}
 }

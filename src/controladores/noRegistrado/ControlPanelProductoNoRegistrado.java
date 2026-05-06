@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 
 import modelo.sistema.Tienda;
+import modelo.venta.descuentos.CondicionDescuento;
+import modelo.venta.descuentos.Descuento;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.common.PanelProducto;
@@ -32,28 +34,40 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 		if(producto.getImagen() == null || producto.getImagen().isBlank()) imageRoute = DF_PRODUCT_IMAGE;
 		else imageRoute = producto.getImagen();
 
-		panel =  //new PanelCategoriaGestionarCategoria(producto.getNombre());
-				//new PanelEmpleado(producto.getNombre(), ((int) producto.getPrecio()) % 2 == 1 ? true : false, "Pedidos", "Productos");
-				//new PanelCategoriaSeleccion(producto.getNombre());
-				//new PanelDisplay(1.01*0.1, 0.1, 0.09, "producto.png", "Ver producto:");
-				new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", categorias.toArray(new String[0]));
-				//new PanelProductoGestionarProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
-				//new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", categorias.toArray(new String[0]));
-				//new PanelClienteEstadisticas("Juan de Lara", DF_PRODUCT_IMAGE, 20.75f, 3, 15);
-				//new PanelProductoAplicarDescuento(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
-				//new PanelProductoAnadirAPack(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
-				//new PanelProductoEstadisticas(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), 10f, 25, 15f, categorias.toArray(new String[0]));
-				//new PanelArticulo("Juan de Lara", "producto.png", producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", producto.getPrecio(), "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));
-				//new PanelArticuloPendienteValoracion("Juan de Lara", "producto.png", producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", -1, "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));
-				//new PanelArticuloEnCartera("Juan de Lara", "producto.png", producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", -1, "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));
-				//new PanelArticuloSeleccion(producto.getNombre(), producto.getDescripcion(), "Cosas de One Piece", -1, "Muy bueno", "Ver preoducto", categorias.toArray(new String[0]));
-				
+		if (producto.tieneDescuento()) {
+			panel = new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", getMensajeDescuento(producto), categorias.toArray(new String[0]));
+		} else {
+			panel = new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", categorias.toArray(new String[0]));
+		}
 		
 		vista.anadirDisplay(panel);
 		
-		//panel = vista.anadirProductoRecomendado(producto.getNombre(), producto.getDescripcion(), producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
-		
 		panel.setControlador(this);
+	}
+	
+	private String getMensajeDescuento(Producto p) {
+		Descuento desc = p.getDescuento();
+		String mensaje = "¡Oferta!<br>";
+		mensaje = mensaje + desc.getMessage();
+		
+		String stringCond = "";
+		switch (desc.getCondicion()) {
+			case CondicionDescuento.CANTIDAD -> {
+				int valorMin = (int) desc.getValorMin();
+				stringCond = " al comprar " + valorMin + (valorMin == 1 ? " unidad":" unidades") + " de ";
+			}
+		case CondicionDescuento.VOLUMEN -> stringCond = " al gastar " + desc.getValorMin() + "€ en ";
+			case CondicionDescuento.SIN_CONDICION-> stringCond = ""; 
+		}
+		
+		mensaje = mensaje + stringCond;
+		
+		Categoria[] categorias = p.getCategorias();
+		for (Categoria c: categorias) {
+			if (c.tieneDescuento()) return mensaje + c.getNombre();
+		}
+		
+		return mensaje + p.getNombre();
 	}
 	
 	@Override

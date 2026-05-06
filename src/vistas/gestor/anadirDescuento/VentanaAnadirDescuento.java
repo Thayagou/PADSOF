@@ -13,6 +13,9 @@ import vistas.herramientas.PanelFactory;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<PanelDisplay> {
 	public static final String CAMBIO_CONDICION_ACTION = "Cambiar opcion condición";
@@ -95,27 +98,10 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		Dimension sizeSpinner = new Dimension(10, buttonHeight/3);
 		
 		// Panel mínima cantidad
-		JLabel labelMinCantidad = ButtonFactory.newLeftAlignedLabel("Valor mínimo (€): ", Fonts.BOLD);
-		labelMinCantidad.setPreferredSize(new Dimension((int) maxWidthCond * 2 / 3, buttonHeight));
-		valorMinCantidad = ButtonFactory.spinnerEntero(Fonts.TEXT, 1, 1, Integer.MAX_VALUE, 1);
-		valorMinCantidad.setPreferredSize(sizeSpinner);
-		
-		JPanel cantidadMinWrapper = new JPanel();
-		cantidadMinWrapper.setLayout(new BoxLayout(cantidadMinWrapper, BoxLayout.Y_AXIS));
-		cantidadMinWrapper.add(Box.createVerticalStrut(buttonHeight/3));
-		cantidadMinWrapper.add(valorMinCantidad);
-		cantidadMinWrapper.add(Box.createVerticalStrut(buttonHeight/3));
-		
-		panelMinCantidad = new JPanel(new BorderLayout());
-		panelMinCantidad.add(labelMinCantidad, BorderLayout.WEST);
-		panelMinCantidad.add(cantidadMinWrapper, BorderLayout.CENTER);
-
-		// Panel mínimo volumen
-		JLabel labelMinVolumen = ButtonFactory.newLeftAlignedLabel("Unidades mínimas (uds): ", Fonts.BOLD);
+		JLabel labelMinVolumen = ButtonFactory.newLeftAlignedLabel("Valor mínimo (€): ", Fonts.BOLD);
 		labelMinVolumen.setPreferredSize(new Dimension((int) maxWidthCond * 2 / 3, buttonHeight));
 		valorMinVolumen = ButtonFactory.spinnerDouble(Fonts.TEXT, 1f, 1f, Double.MAX_VALUE, 0.5);
 		valorMinVolumen.setPreferredSize(sizeSpinner);
-		
 		
 		JPanel volumenMinWrapper = new JPanel();
 		volumenMinWrapper.setLayout(new BoxLayout(volumenMinWrapper, BoxLayout.Y_AXIS));
@@ -123,9 +109,26 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		volumenMinWrapper.add(valorMinVolumen);
 		volumenMinWrapper.add(Box.createVerticalStrut(buttonHeight/3));
 		
-		panelMinVolumen = new JPanel(new BorderLayout());
+		panelMinVolumen= new JPanel(new BorderLayout());
 		panelMinVolumen.add(labelMinVolumen, BorderLayout.WEST);
 		panelMinVolumen.add(volumenMinWrapper, BorderLayout.CENTER);
+
+		// Panel mínimo volumen
+		JLabel labelMinCantidad = ButtonFactory.newLeftAlignedLabel("Unidades mínimas (uds): ", Fonts.BOLD);
+		labelMinCantidad.setPreferredSize(new Dimension((int) maxWidthCond * 2 / 3, buttonHeight));
+		valorMinCantidad = ButtonFactory.spinnerEntero(Fonts.TEXT, 1, 1, Integer.MAX_VALUE, 1);
+		valorMinCantidad.setPreferredSize(sizeSpinner);
+		
+		
+		JPanel cantidadMinWrapper = new JPanel();
+		cantidadMinWrapper.setLayout(new BoxLayout(cantidadMinWrapper, BoxLayout.Y_AXIS));
+		cantidadMinWrapper.add(Box.createVerticalStrut(buttonHeight/3));
+		cantidadMinWrapper.add(valorMinCantidad);
+		cantidadMinWrapper.add(Box.createVerticalStrut(buttonHeight/3));
+		
+		panelMinCantidad= new JPanel(new BorderLayout());
+		panelMinCantidad.add(labelMinCantidad, BorderLayout.WEST);
+		panelMinCantidad.add(cantidadMinWrapper, BorderLayout.CENTER);
 		
 		panelMinVolumen.setVisible(false);
 		
@@ -133,8 +136,8 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		JPanel panelContenidoOpcionesCondicion = new JPanel();
 		panelContenidoOpcionesCondicion.setLayout(new BoxLayout(panelContenidoOpcionesCondicion, BoxLayout.Y_AXIS));
 
-		panelContenidoOpcionesCondicion.add(panelMinCantidad);
 		panelContenidoOpcionesCondicion.add(panelMinVolumen);
+		panelContenidoOpcionesCondicion.add(panelMinCantidad);
 		
 		// Panel multiopción tipo condición
 		panelOpcionesCondicion = new PanelMultiopcion("Tipo de condición:", panelContenidoOpcionesCondicion, Fonts.BOLD, Fonts.TEXT, 
@@ -147,7 +150,7 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		// Panel porcentaje
 		JLabel labelPorcentaje = ButtonFactory.newLeftAlignedLabel("Porcentaje descontado (%): ", Fonts.BOLD);
 		labelPorcentaje.setPreferredSize(new Dimension((int) maxWidthCond * 2 / 3, buttonHeight));
-		valorPorcentaje = ButtonFactory.spinnerDouble(Fonts.TEXT, 10f, 1f, Double.MAX_VALUE, 5f);
+		valorPorcentaje = ButtonFactory.spinnerDouble(Fonts.TEXT, 10.00, 1f, Double.MAX_VALUE, 5f);
 		valorPorcentaje.setPreferredSize(sizeSpinner);
 		
 		JPanel porcentajeWrapper = new JPanel();
@@ -323,7 +326,31 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 	}
 
 	public double getValorMinVolumen() {
-		return (double) valorMinCantidad.getValue();
+		return (double) valorMinVolumen.getValue();
+	}
+	
+	public double getCompensacionDinero() {
+		return (double) valorDinero.getValue();
+	}
+
+	public double getCompensacionPorcentaje() {
+		return (double) valorPorcentaje.getValue();
+	}
+	
+	public LocalDateTime getFechaInicio() {
+		return getValorFecha(inicio);
+	}
+	
+	public LocalDateTime getFechaFin() {
+		return getValorFecha(fin);
+	}
+	
+	private LocalDateTime getValorFecha(JSpinner spinnerFecha) {
+		Date date = (Date) spinnerFecha.getValue();
+		LocalDateTime ldt = date.toInstant()
+		    .atZone(ZoneId.systemDefault())
+		    .toLocalDateTime();
+		return ldt;
 	}
 
 	@Override

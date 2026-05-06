@@ -1,19 +1,23 @@
 package controladores.gestor.anadirDescuento;
 
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.JPanel;
 
+import modelo.venta.descuentos.CondicionDescuento;
 import modelo.venta.descuentos.Descontable;
 import controladores.ControladorPantalla;
 import controladores.gestor.ControlInicioGestor;
+import modelo.exceptions.*;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.PanelMultiopcion;
 import vistas.common.PanelSeleccion;
 import vistas.common.TiendaFrame;
+import vistas.common.VentanaMensaje;
 import vistas.gestor.anadirDescuento.VentanaAnadirDescuento;
 
 public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontable>, ControladorPantalla{
@@ -26,26 +30,32 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 	private Producto regalo;
 	
 	
-	
 	public ControlAnadirDescuento(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		vista = new VentanaAnadirDescuento();
 		tipoActual = vista.getOpcionSeleccionadaDescontado();
 		vista.setControlador(this);
 		
-		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
-		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
+		cargarDescontados();
 		
 		TiendaFrame.getInstance().navegarA(this);
 		
     }
 	
+	private void cargarDescontados() {
+		
+		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
+		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
+		
+	}
+	
 	private void anadirProductos() {
 		Producto[] catalogo = tienda.getAlmacen().getProductosCoincidentes("");
-	
+		
 		vista.vaciarDescontados();
 		
 		for (Producto p: catalogo) {
+			if (p.tieneDescuento()) continue;
 			ControlPanelProductoSeleccion control = new ControlPanelProductoSeleccion(tienda, p, "Descontado", "Descontar", this, vista);
 			if (this.descontado != null && this.descontado.equals(p)) {
 				this.panelDescontado = control.getPanel();
@@ -60,6 +70,7 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		vista.vaciarDescontados();
 		
 		for (Categoria c: categorias) {
+			if (c.tieneDescuento()) continue;
 			ControlPanelCategoriaSeleccion control = new ControlPanelCategoriaSeleccion(tienda, c, this, vista);
 			if (this.descontado != null && this.descontado.equals(c)) {
 				this.panelDescontado = control.getPanel();
@@ -140,6 +151,66 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 	}
 	
 	private void computarDescuento() {
+		
+		if (descontado == null) {
+			new VentanaMensaje("Debes seleccionar un producto o categoría a descontar");
+			return;
+		}
+		
+		double valorMinimo = -1;
+		CondicionDescuento condicion = null;
+		
+		switch (vista.getOpcionSeleccionadaCondicion())	{
+			case VentanaAnadirDescuento.COND_CANTIDAD -> {
+				condicion = CondicionDescuento.CANTIDAD;
+				valorMinimo = vista.getValorMinCantidad();
+			}
+			case VentanaAnadirDescuento.COND_VOLUMEN -> {
+				condicion = CondicionDescuento.VOLUMEN;
+				valorMinimo = vista.getValorMinVolumen();
+			}
+			case VentanaAnadirDescuento.COND_SIN -> {
+				condicion = CondicionDescuento.SIN_CONDICION;
+			}
+		}
+		
+		LocalDateTime fechaInicio = null, fechaFin = null;
+		
+		try {	
+			fechaInicio = vista.getFechaInicio();
+			fechaFin = vista.getFechaFin();
+		} catch(DateTimeParseException e) {
+			new VentanaMensaje("Formato inválido de fecha. Correcto dd/mm/yyyy HH:MM");
+			return;
+		}
+		
+		try {
+			switch (vista.getOpcionSeleccionadaCompensacion() ) {
+				case VentanaAnadirDescuento.COMP_DINERO -> {
+					double compDinero = vista.getCompensacionDinero();
+					tienda.getAlmacen().anadirDescuentoDinero(descontado, valorMinimo, fechaInicio, fechaFin, condicion, compDinero);
+				}
+				case VentanaAnadirDescuento.COMP_PORCENTAJE -> {
+					double compPorcentaje = vista.getCompensacionPorcentaje();
+					tienda.getAlmacen().anadirDescuentoPorcentaje(descontado, valorMinimo, fechaInicio, fechaFin, condicion, compPorcentaje);
+				}
+				case VentanaAnadirDescuento.COMP_REGALO -> {
+					if (regalo == null) new VentanaMensaje("Debes seleccionar un producto como regalo");
+					tienda.getAlmacen().anadirDescuentoRegalo(descontado, valorMinimo, fechaInicio, fechaFin, condicion, regalo);
+				}
+			}
+		} catch (DoubleDiscountException e) {
+			new VentanaMensaje(e.getMessage());
+			return;
+		} catch (InvalidArgumentException iae) {
+			new VentanaMensaje(iae.getMessage());
+			return;
+		}
+		
+		new VentanaMensaje("Añadido??");
+		
+		cargarDescontados();
+		
 		
 	}
 	
