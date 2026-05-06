@@ -13,18 +13,15 @@ import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGest
 import controladores.empleado.valorarArticulos.ControlValorarObjetos;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
-import vistas.empleado.general.BarraEmpleado;
 
 public class ControlBarraEmpleado implements ControlBarraLateral {
 
 	private final Tienda tienda;
 	private final Empleado empleado;
-	private final BarraEmpleado barra;
 
-	public ControlBarraEmpleado(Tienda tienda, Empleado empleado, BarraEmpleado barra) {
+	public ControlBarraEmpleado(Tienda tienda, Empleado empleado) {
 		this.tienda = tienda;
 		this.empleado = empleado;
-		this.barra = barra;
 	}
 	
 	@Override

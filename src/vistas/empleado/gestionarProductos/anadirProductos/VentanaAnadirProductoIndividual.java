@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -58,6 +59,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	private String[] espComic, espJuego, espFigura, espPack;
 	private List<JCheckBox> checkProductosPack = new ArrayList<>();
 	private PanelProducto[] productos;
+	private PanelProducto[] productosPack;
 	private boolean isModificacion;
 
 	public VentanaAnadirProductoIndividual(String[] categorias, String[] tiposProductos, String[] espComic,
@@ -75,7 +77,6 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		this.espJuego = espJuego;
 		this.espFigura = espFigura;
 		this.espPack = espPack;
-		this.productos = productos;
 		this.isModificacion = isModificacion;
 		this.tipoFijo = (tipo != null && !tipo.isEmpty()) ? tipo : "";
 
@@ -300,10 +301,13 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 				JSpinner spinner = ButtonFactory.spinnerLocalDate(Fonts.BOLD);
 				spinner.setMaximumSize(new Dimension(Integer.MAX_VALUE, spinner.getPreferredSize().height));
 				spinner.setAlignmentX(Component.LEFT_ALIGNMENT);
+				System.out.println("Valor fecha: " + valor);
+				System.out.println("Modelo: " + spinner.getModel().getClass());
+				System.out.println("Valor actual tipo: " + spinner.getValue().getClass());
 
 				if (!valor.isEmpty()) {
 					try {
-						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 						spinner.setValue(sdf.parse(valor));
 					} catch (Exception ignored) {
 					}
@@ -324,7 +328,8 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 					JPanel productosPanel = new JPanel();
 					productosPanel.setLayout(new BoxLayout(productosPanel, BoxLayout.Y_AXIS));
 					productosPanel.setOpaque(false);
-
+					
+					List<PanelProducto> nuevosProductos = new LinkedList<>();
 					for (PanelProducto p : productos) {
 						if (!valor.isEmpty() && valor.contains(p.getNombre())) {
 							JPanel fila = new JPanel(new BorderLayout(8, 0));
@@ -334,6 +339,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 							fila.add(p, BorderLayout.CENTER);
 							productosPanel.add(fila);
 							productosPanel.add(Box.createVerticalStrut(4));
+							nuevosProductos.add(p);
 						}
 					}
 
@@ -344,6 +350,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 					scrollProductos.getViewport().setOpaque(false);
 					scrollProductos.setOpaque(false);
 
+					productosPack = nuevosProductos.toArray(new PanelProducto[0]);
 					tf = scrollProductos;
 
 				} else {
@@ -362,10 +369,6 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 						JCheckBox cb = new JCheckBox();
 						cb.setOpaque(false);
 						cb.setFocusPainted(false);
-						// si ya estaba seleccionado (caso modificar)
-						if (!valor.isEmpty() && valor.contains(p.getNombre())) {
-							cb.setSelected(true);
-						}
 						checkProductos.add(cb);
 
 						fila.add(cb, BorderLayout.WEST);
@@ -383,6 +386,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 
 					// Guardar referencia a los checks para el getter
 					this.checkProductosPack = checkProductos;
+					this.productos = productos;
 
 					tf = scrollProductos;
 				}
@@ -455,12 +459,21 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		if (c instanceof JComboBox)
 			return (String) ((JComboBox<?>) c).getSelectedItem();
 		if (c instanceof JSpinner)
-			return new SimpleDateFormat("dd/MM/yyyy").format(((JSpinner) c).getValue());
+			return new SimpleDateFormat("yyyy-MM-dd").format(((JSpinner) c).getValue());
 		if (c instanceof JScrollPane) {
-			Stream<String> ids = IntStream.range(0, checkProductosPack.size())
-					.filter(j -> checkProductosPack.get(j).isSelected())
-					.mapToObj(j -> (String) productos[j].getNombre());
-			return ids.collect(Collectors.joining(","));
+			if(isModificacion) {
+				StringBuilder sb = new StringBuilder();
+				for(PanelProducto p : productosPack) {
+					sb.append(p.getNombre());
+					sb.append(";");
+				}
+				return sb.toString();
+			} else {
+				Stream<String> ids = IntStream.range(0, checkProductosPack.size())
+						.filter(j -> checkProductosPack.get(j).isSelected())
+						.mapToObj(j -> (String) productos[j].getNombre());
+				return ids.collect(Collectors.joining(";"));
+			}
 		}
 		return "";
 	}

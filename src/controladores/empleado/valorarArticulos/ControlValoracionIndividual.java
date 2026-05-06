@@ -96,5 +96,10 @@ public class ControlValoracionIndividual implements ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+	
+	@Override
+	public boolean puedeVolver() {
+		return false;
+	}
 
 }
