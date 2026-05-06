@@ -21,9 +21,11 @@ public enum ColorPalette {
 	DARK_GREY(88,88,88),
 	GREY(166, 166, 166),
 	LIGHT_GREY(205,205,205),
-	RED(255, 87, 87),
+	RED(230, 0, 0),
 	LIGHT_RED(255, 160, 160),
 	GREEN(0, 191, 99);
+	
+	private static final int CONTRAST = 20;
 
 	private final Color color;
 
@@ -33,5 +35,12 @@ public enum ColorPalette {
 
 	public Color getColor() {
 		return color;
+	}
+	
+	public static Color getHoverColor(Color color) {
+	    int r = Math.min(color.getRed() + CONTRAST, 255);
+	    int g = Math.min(color.getGreen() + CONTRAST, 255);
+	    int b = Math.min(color.getBlue() + CONTRAST, 255);
+	    return new Color(r, g, b, color.getAlpha());
 	}
 }

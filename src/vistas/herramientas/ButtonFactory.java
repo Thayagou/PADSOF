@@ -1,5 +1,6 @@
 package vistas.herramientas;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.FocusAdapter;
@@ -191,6 +192,19 @@ public class ButtonFactory {
 			}
 		});
 
+	}
+	
+	public static void addHoverColorChange(JButton btn) {
+		Color color = btn.getBackground();
+		btn.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent e) {
+				btn.setBackground(ColorPalette.getHoverColor(color));
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent e) {
+				btn.setBackground(color);
+			}
+		});
 	}
 
 	public static JLabel newLabel(String text, Fonts font) {

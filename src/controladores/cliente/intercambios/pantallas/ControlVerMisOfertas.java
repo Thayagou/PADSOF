@@ -26,7 +26,6 @@ public class ControlVerMisOfertas implements ControladorPantalla {
 		vista.setControlador(this);
 		
 		for(Intercambio i : cliente.getCartera().getIntercambiosPendientes()) {
-			System.out.println(i);
 			new ControlPanelOferta(tienda, cliente, i, vista, this);
 		}
 		
