@@ -41,7 +41,6 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	}
 
 	private void showGProductos() {
-		barra.setVisibleGestProductos();
 	}
 	
 	private void showAnadirProducto() {
@@ -63,21 +62,18 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	}
 
 	private void showGPedidos() {
-		barra.setInvisibleGestProductos();
 		SwingUtilities.invokeLater(() -> {
 			new ControlGestPedidos(tienda, empleado);
 		});
 	}
 
 	private void showValorar() {
-		barra.setInvisibleGestProductos();
 		SwingUtilities.invokeLater(() -> {
 			new ControlValorarObjetos(tienda, empleado);
 		});
 	}
 	
 	private void showGIntercambios() {
-		barra.setInvisibleGestProductos();
 		SwingUtilities.invokeLater(() -> {
 			new ControlGestIntercambios(tienda, empleado);
 		});

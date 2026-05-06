@@ -1,6 +1,7 @@
 package vistas.empleado.general;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import controladores.ControlBarraLateral;
@@ -34,7 +35,8 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto = addBtn("Añadir nuevo producto", btnHeigth, distIndented);
 		gestionarExistentes = addBtn("Gestionar productos existentes", btnHeigth, distIndented);
 		gestionarCategorias = addBtn("Gestionar categorías", btnHeigth, distIndented);
-		
+		addIndentedBtns(gestionarProductos, anadirProducto, gestionarCategorias, gestionarExistentes);
+
 		gestionarPedidos = addBtn("Gestionar pedidos", btnHeigth, distFromLeft);
 		valorarObjetos = addBtn("Valorar objetos de segunda mano", btnHeigth, distFromLeft);
 		gestionarIntercambios = addBtn("Gestionar intercambios", btnHeigth, distFromLeft);
@@ -43,12 +45,10 @@ public class BarraEmpleado extends BarraLateral {
 		add(anadirProducto);
 		add(gestionarExistentes);
 		add(gestionarCategorias);
-		
+
 		add(gestionarPedidos);
 		add(valorarObjetos);
 		add(gestionarIntercambios);
-		
-		setInvisibleGestProductos();
 	}
 
 	@Override
@@ -63,16 +63,4 @@ public class BarraEmpleado extends BarraLateral {
 		gestionarCategorias.addActionListener(c);
 	}
 
-	public void setVisibleGestProductos() {
-		anadirProducto.setVisible(true);
-		gestionarExistentes.setVisible(true);
-		gestionarCategorias.setVisible(true);
-	}
-	
-	public void setInvisibleGestProductos() {
-		anadirProducto.setVisible(false);
-		gestionarExistentes.setVisible(false);
-		gestionarCategorias.setVisible(false);
-	}
-	
 }
