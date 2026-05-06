@@ -39,9 +39,6 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 			break;
 		case PanelEmpleado.MODIFICAR_ACTION:
 			break;
-			
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + e.getActionCommand());
 		}
 		
 	}

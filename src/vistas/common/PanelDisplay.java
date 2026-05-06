@@ -135,7 +135,7 @@ public class PanelDisplay extends JPanel {
 		JPanel foto = new JPanel();
 		foto.setOpaque(false);
 		foto.setPreferredSize(new Dimension(fotoW, maxCompHeight));
-		JLabel fotoLabel = new JLabel(ButtonFactory.loadImageIconScaled(imageName, maxCompHeight, fotoW));
+		JLabel fotoLabel = new JLabel(ButtonFactory.loadImageIconScaled(imageName, 9*maxCompHeight/10, fotoW));
 		fotoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		fotoLabel.setFont(Fonts.BOLD.getFont());
 		foto.add(fotoLabel);

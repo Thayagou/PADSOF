@@ -28,7 +28,7 @@ public class PanelEmpleado extends PanelDisplay {
 	JPanel eastPanel;
 
 	public PanelEmpleado(String nombre, boolean deAlta, String... permisos) {
-		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "producto.png", "");
+		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "pfp.png", "");
 		this.deAlta = deAlta;
 		// this.fotoDePerfil = fotoDePerfil;
 		this.permisos = List.of(permisos);

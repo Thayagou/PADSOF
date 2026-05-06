@@ -11,12 +11,10 @@ import vistas.herramientas.ColorPalette;
 public class BarraGestor extends BarraLateral {
 	private static final long serialVersionUID = 1L;
 
-	private JButton gestionarProductosYCategorias;
 	private JButton gestionarProductos;
 	private JButton anadirProducto;
 	private JButton gestionarExistentes;
 	private JButton gestionarCategorias;
-	private JButton crearPacks;
 	
 	private JButton anadirDescuento;
 	private JButton gestionarEmpleados;
@@ -42,8 +40,10 @@ public class BarraGestor extends BarraLateral {
 		anadirProducto = addBtn("Añadir nuevo producto", btnHeigth, distIndented);
 		gestionarExistentes = addBtn("Gestionar productos existentes", btnHeigth, distIndented);
 		gestionarCategorias = addBtn("Gestionar categorías", btnHeigth, distIndented);
-		crearPacks = addBtn("Crear packs de productos", btnHeigth, distIndented);
+		//crearPacks = addBtn("Crear packs de productos", btnHeigth, distIndented);
 
+		addIndentedBtns(gestionarProductos, anadirProducto, gestionarExistentes, gestionarCategorias);
+		
 		anadirDescuento = addBtn("Añadir nuevo descuento", btnHeigth, distFromLeft);
 		gestionarEmpleados = addBtn("Gestionar empleados", btnHeigth, distFromLeft);
 		configurarSistema = addBtn("Configurar sistema", btnHeigth, distFromLeft);
@@ -55,11 +55,12 @@ public class BarraGestor extends BarraLateral {
 		consultarStatsVentas = addBtn("Estadísticas ventas", btnHeigth, distIndented);
 		consultarStatsIntercambios = addBtn("Estadísticas intercambios", btnHeigth, distIndented);
 		
+		addIndentedBtns(consultarEstadisticas, consultarStatsProductos, consultarStatsClientes, consultarStatsVentas, consultarStatsIntercambios);
+		
 		add(gestionarProductos);
 		add(anadirProducto);
 		add(gestionarExistentes);
 		add(gestionarCategorias);
-		add(crearPacks);
 		
 		add(anadirDescuento);
 		add(gestionarEmpleados);
@@ -71,24 +72,8 @@ public class BarraGestor extends BarraLateral {
 		add(consultarStatsVentas);
 		add(consultarStatsIntercambios);
 		
-		setInvisiblesEstadisticas();
-		setInvisiblesGestionarProdsYCats();
-	}
-	
-	public void setVisiblesGestionarProdsYCats() {
-		setVisibles(gestionarProductos, anadirProducto, gestionarExistentes, gestionarCategorias, crearPacks);
-	}
-	
-	public void setInvisiblesGestionarProdsYCats() {
-		setInvisibles(anadirProducto, gestionarExistentes, gestionarCategorias, crearPacks);
-	}
-	
-	public void setVisiblesEstadisticas() {
-		setVisibles(consultarStatsProductos, consultarStatsClientes, consultarStatsVentas, consultarStatsIntercambios);
-	}
-	
-	public void setInvisiblesEstadisticas() {
-		setInvisibles(consultarStatsProductos, consultarStatsClientes, consultarStatsVentas, consultarStatsIntercambios);
+		//setInvisiblesEstadisticas();
+		//setInvisiblesGestionarProdsYCats();
 	}
 
 	@Override
@@ -97,8 +82,7 @@ public class BarraGestor extends BarraLateral {
 		anadirProducto.addActionListener(c);
 		gestionarExistentes.addActionListener(c);
 		gestionarCategorias.addActionListener(c);
-		crearPacks.addActionListener(c);
-		
+
 		anadirDescuento.addActionListener(c);
 		gestionarEmpleados.addActionListener(c);
 		configurarSistema.addActionListener(c);
