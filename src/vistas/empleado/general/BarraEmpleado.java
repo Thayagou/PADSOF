@@ -1,6 +1,7 @@
 package vistas.empleado.general;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import controladores.ControlBarraLateral;
@@ -19,7 +20,6 @@ public class BarraEmpleado extends BarraLateral {
 	private JButton anadirProducto;
 	private JButton gestionarExistentes;
 	private JButton gestionarCategorias;
-	private JButton crearPacks;
 
 	public BarraEmpleado() {
 		TiendaFrame frame = TiendaFrame.getInstance();
@@ -35,8 +35,8 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto = addBtn("Añadir nuevo producto", btnHeigth, distIndented);
 		gestionarExistentes = addBtn("Gestionar productos existentes", btnHeigth, distIndented);
 		gestionarCategorias = addBtn("Gestionar categorías", btnHeigth, distIndented);
-		crearPacks = addBtn("Crear packs de productos", btnHeigth, distIndented);
-		
+		addIndentedBtns(gestionarProductos, anadirProducto, gestionarCategorias, gestionarExistentes);
+
 		gestionarPedidos = addBtn("Gestionar pedidos", btnHeigth, distFromLeft);
 		valorarObjetos = addBtn("Valorar objetos de segunda mano", btnHeigth, distFromLeft);
 		gestionarIntercambios = addBtn("Gestionar intercambios", btnHeigth, distFromLeft);
@@ -45,13 +45,10 @@ public class BarraEmpleado extends BarraLateral {
 		add(anadirProducto);
 		add(gestionarExistentes);
 		add(gestionarCategorias);
-		add(crearPacks);
-		
+
 		add(gestionarPedidos);
 		add(valorarObjetos);
 		add(gestionarIntercambios);
-		
-		setInvisibleGestProductos();
 	}
 
 	@Override
@@ -64,21 +61,6 @@ public class BarraEmpleado extends BarraLateral {
 		anadirProducto.addActionListener(c);
 		gestionarExistentes.addActionListener(c);
 		gestionarCategorias.addActionListener(c);
-		crearPacks.addActionListener(c);
 	}
 
-	public void setVisibleGestProductos() {
-		anadirProducto.setVisible(true);
-		gestionarExistentes.setVisible(true);
-		gestionarCategorias.setVisible(true);
-		crearPacks.setVisible(true);
-	}
-	
-	public void setInvisibleGestProductos() {
-		anadirProducto.setVisible(false);
-		gestionarExistentes.setVisible(false);
-		gestionarCategorias.setVisible(false);
-		crearPacks.setVisible(false);
-	}
-	
 }

@@ -30,7 +30,7 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 	public ControlAnadirDescuento(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		vista = new VentanaAnadirDescuento();
-		tipoActual = vista.getOpcionSeleccionada();
+		tipoActual = vista.getOpcionSeleccionadaDescontado();
 		vista.setControlador(this);
 		
 		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
@@ -107,7 +107,7 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 	}
 	
 	private void cambiarTipoDescontado() {
-		String tipoNuevo = vista.getOpcionSeleccionada();
+		String tipoNuevo = vista.getOpcionSeleccionadaDescontado();
 		if (tipoNuevo.equals(tipoActual)) return;
 		
 		tipoActual = tipoNuevo;
@@ -116,25 +116,49 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
 	}
 	
-	private void computarDescuento() {
+	private void cambiarTipoCondicion() {
+		vista.setVisibilidadCantidad(false);
+		vista.setVisibilidadVolumen(false);
 
+		String condicion = vista.getOpcionSeleccionadaCondicion();
+		
+		if (condicion.equals(VentanaAnadirDescuento.COND_CANTIDAD)) vista.setVisibilidadCantidad(true);
+		if (condicion.equals(VentanaAnadirDescuento.COND_VOLUMEN)) vista.setVisibilidadVolumen(true);
+		
+	}
+	
+	private void cambiarTipoCompensacion() {
+		vista.setVisibilidadRegalo(false);
+		vista.setVisibilidadDinero(false);
+		vista.setVisibilidadPorcentaje(false);
+
+		String condicion = vista.getOpcionSeleccionadaCompensacion();
+		
+		if (condicion.equals(VentanaAnadirDescuento.COMP_DINERO)) vista.setVisibilidadDinero(true);
+		if (condicion.equals(VentanaAnadirDescuento.COMP_PORCENTAJE)) vista.setVisibilidadPorcentaje(true);
+		if (condicion.equals(VentanaAnadirDescuento.COMP_REGALO)) vista.setVisibilidadRegalo(true);
+	}
+	
+	private void computarDescuento() {
+		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case PanelMultiopcion.CAMBIO_OPCION_ACTION -> {
-			cambiarTipoDescontado();
-		}
+		case VentanaAnadirDescuento.CAMBIO_TIPO_DESCONTADO_ACTION -> cambiarTipoDescontado();
+		case VentanaAnadirDescuento.CAMBIO_CONDICION_ACTION -> cambiarTipoCondicion();
+		case VentanaAnadirDescuento.CAMBIO_COMPENSACION_ACTION -> cambiarTipoCompensacion();
+		
 		case VentanaAnadirDescuento.CANCELAR_ACTION -> new ControlInicioGestor(tienda, gestor);
 		case VentanaAnadirDescuento.CONFIRMAR_ACTION-> computarDescuento();
-		case "Regalo" -> seleccionRegalo();
+		case VentanaAnadirDescuento.COMP_REGALO -> seleccionRegalo();
 		
 		}
 		
 		
 	}
-	
+
 	public void seleccionRegalo() {
 		ControlSeleccionarRegalo control = new ControlSeleccionarRegalo(tienda, vista);
 		regalo = control.getRegalo();
