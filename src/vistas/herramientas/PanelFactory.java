@@ -77,12 +77,24 @@ public class PanelFactory {
 	 * @return Panel con cabecera y contenido
 	 */
 	public static JPanel getVentanaConCabecera(String title, JPanel contenido) {
+		return getVentanaConCabecera(title, contenido, Fonts.TITLE3);
+	}
+	
+	/**
+	 * Devuelve un panel con el contenido y una cabecera con font especificada
+	 *
+	 * @param title     Texto de la cabecera
+	 * @param contenido Panel al que se añade la cabecera
+	 * @param font 	Font que se le establece a la cabecera
+	 * @return Panel con cabecera y contenido
+	 */
+	public static JPanel getVentanaConCabecera(String title, JPanel contenido, Fonts font) {
 		JPanel ventana = new JPanel();
 		ventana.setLayout(new BorderLayout());
 		ventana.setOpaque(false);
 
 		JLabel cabecera = new JLabel(title);
-		cabecera.setFont(Fonts.TITLE3.getFont());
+		cabecera.setFont(font.getFont());
 		cabecera.setForeground(ColorPalette.WHITE.getColor());
 		cabecera.setOpaque(true);
 		cabecera.setBackground(ColorPalette.DARK_BLUE.getColor());

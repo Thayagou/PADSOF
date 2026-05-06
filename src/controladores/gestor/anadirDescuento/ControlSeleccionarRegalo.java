@@ -20,6 +20,7 @@ public class ControlSeleccionarRegalo implements ControlGestionSeleccion<Product
 	private Producto regalo;
 	private PanelSeleccion panelRegalo;
 	private VentanaSeleccionRegalo vista;
+	private JDialog dialog;
 
 	public ControlSeleccionarRegalo(Tienda tienda, JPanel vistaInferior) {
 		this.tienda = tienda;
@@ -30,7 +31,7 @@ public class ControlSeleccionarRegalo implements ControlGestionSeleccion<Product
 		int width = frame.getPixelsWidth(POPUP_WIDTH);
 		int height = frame.getPixelsHeight(POPUP_HEIGHT);
 
-		JDialog dialog = new JDialog(frame, "Productos populares", true);
+		dialog = new JDialog(frame, "Productos populares", true);
 
 		dialog.setContentPane(vista);
 		dialog.setSize(width, height);
@@ -88,6 +89,8 @@ public class ControlSeleccionarRegalo implements ControlGestionSeleccion<Product
 
 			}
 		}
+		
+		//if (regalo != null) dialog.setVisible(false);
 
 	}
 	

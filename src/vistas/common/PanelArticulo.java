@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -14,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
@@ -47,11 +50,15 @@ public class PanelArticulo extends PanelDisplay {
 	private JPanel centerPanel;
 	private GridBagConstraints gbc;
 	private JButton boton;
+	
+	private PanelDisplay parentPanel;
 
 	public PanelArticulo(String nombreUsuario, String fotoDePerfil, String nombre, String foto, String descripcion,
 			String interesadoEn, double estimacion, String estado, String actionName, String... categorias) {
 		/* Llamada al constructor de la superclase (PanelProducto) */
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, foto, actionName);
+		
+		parentPanel = this;
 
 		TiendaFrame t = TiendaFrame.getInstance();
 		int avatarSize = t.getPixelsHeight(AVATAR_SIZE_PERC);
@@ -66,7 +73,7 @@ public class PanelArticulo extends PanelDisplay {
 
 		contentPanel.add(crearColumnaIzquierda(t, nombre, categorias, nombreUsuario, avatarSize, rowGap));
 
-		contentPanel.add(crearColumnaDerecha(t, interesadoEn, rowGap, interesadoMaxHeight));
+		contentPanel.add(crearColumnaDerecha(t, interesadoEn, estimacion, rowGap, interesadoMaxHeight));
 
 		this.add(contentPanel, BorderLayout.CENTER);
 		
@@ -123,12 +130,13 @@ public class PanelArticulo extends PanelDisplay {
 		columna.add(nombreLabel);
 		columna.add(Box.createVerticalStrut(rowGap));
 
-		/* Fila 2: Categorías (en morado, una debajo de otra con separación reducida) */
+		/* Fila 2: Categorías */
 		String cats = String.join(", ", categorias);
 		
 		if (!cats.isEmpty()) {
 			JLabel categoriasLabel = ButtonFactory.newLabel(cats, Fonts.TEXT);
 			categoriasLabel.setText(Fonts.truncar(cats, catsWidth, Fonts.TEXT.getFont(), categoriasLabel));
+			categoriasLabel.setForeground(ColorPalette.LIGHT_PURPLE.getColor());
 			nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
 			columna.add(categoriasLabel);
 		}
@@ -143,34 +151,37 @@ public class PanelArticulo extends PanelDisplay {
 		avatarPanel.setPreferredSize(new Dimension(avatarSize, avatarSize));
 		avatarPanel.setMaximumSize(new Dimension(avatarSize, avatarSize));
 		filaUsuario.add(avatarPanel);
-		filaUsuario.add(Box.createHorizontalStrut(t.getPixelsWidth(AVATAR_NAME_SPACE))); /* Separación fija pequeña entre avatar y texto */
+		filaUsuario.add(Box.createHorizontalStrut(t.getPixelsWidth(AVATAR_NAME_SPACE)));
 
 		JLabel usuarioLabel = ButtonFactory.newLabel(nombreUsuario, Fonts.TEXT);
 		usuarioLabel.setText(Fonts.truncar(nombreUsuario, usrNameWidth, Fonts.TEXT.getFont(), usuarioLabel));
 		usuarioLabel.setAlignmentX(LEFT_ALIGNMENT);
 		filaUsuario.add(usuarioLabel);
-		filaUsuario.add(Box.createHorizontalGlue()); /* Empuja a la izquierda */
+		filaUsuario.add(Box.createHorizontalGlue());
 
 		columna.add(filaUsuario);
-		columna.add(Box.createVerticalGlue()); /* Empuja todo hacia arriba */
+		columna.add(Box.createVerticalGlue());
 
 		return columna;
 	}
 
-	private JPanel crearColumnaDerecha(TiendaFrame t, String interesadoEn, int rowGap, int interesadoMaxHeight) {
+	private JPanel crearColumnaDerecha(TiendaFrame t, String interesadoEn, double estimacion, int rowGap, int interesadoMaxHeight) {
 		int interesWidth = t.getPixelsWidth(INTEREST_MAX_WIDTH);
 		
-		JPanel columna = new JPanel();
-		columna.setLayout(new BoxLayout(columna, BoxLayout.Y_AXIS));
+		JPanel columna = new JPanel(new BorderLayout());
 		columna.setOpaque(false);
+		
+		JPanel panelIntereses = new JPanel();
+		panelIntereses.setLayout(new BoxLayout(panelIntereses, BoxLayout.Y_AXIS));
+		panelIntereses.setOpaque(false);
 
 		/* Fila 1: Etiqueta "Está buscando:" */
 		JLabel etiqueta = ButtonFactory.newLabel("Está buscando:", Fonts.SMALL_BOLD);
 		etiqueta.setAlignmentX(LEFT_ALIGNMENT);
-		columna.add(etiqueta);
-		columna.add(Box.createVerticalStrut(rowGap));
+		panelIntereses.add(etiqueta);
+		panelIntereses.add(Box.createVerticalStrut(rowGap));
 
-		/* Fila 2: Texto de "interesadoEn" con scroll si es necesario */
+		/* Fila 2: Texto de intereses */
 		JTextArea interesadoArea = new JTextArea(interesadoEn);
 		interesadoArea.setText(Fonts.truncar(interesadoEn, interesWidth * INTEREST_LINES_MAX, Fonts.TEXT.getFont(), interesadoArea));
 		interesadoArea.setFont(Fonts.SMALL.getFont());
@@ -181,10 +192,39 @@ public class PanelArticulo extends PanelDisplay {
 		interesadoArea.setForeground(ColorPalette.DARK_GREY.getColor());
 		interesadoArea.setAlignmentX(LEFT_ALIGNMENT);
 		interesadoArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, interesadoMaxHeight));
+		
+		interesadoArea.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseEntered(MouseEvent e) {
+		        // Redirige el evento al panel que debería recibir el hover
+		        parentPanel.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, parentPanel));
+		    }
+		    @Override
+		    public void mouseExited(MouseEvent e) {
+		        parentPanel.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, parentPanel));
+		    }
+		});
 
-		columna.add(interesadoArea);
-
-		columna.add(Box.createVerticalGlue()); /* Empuja el contenido hacia arriba */
+		panelIntereses.add(interesadoArea);
+		panelIntereses.add(Box.createVerticalGlue());
+		
+		columna.add(panelIntereses, BorderLayout.CENTER);
+		
+		JPanel panelEstimacion = new JPanel();
+		panelEstimacion.setLayout(new BoxLayout(panelEstimacion, BoxLayout.Y_AXIS));
+		panelEstimacion.setOpaque(false);
+		panelEstimacion.add(Box.createVerticalStrut(rowGap));
+		
+		String estimado;
+		if(estimacion < 0) estimado = "Sin estimación";
+		else estimado = estimacion + " €";
+		
+		JLabel etiquetaEst = ButtonFactory.newLabel("Estimación: " + estimado, Fonts.BOLD);
+		etiquetaEst.setAlignmentX(LEFT_ALIGNMENT);
+		panelEstimacion.add(etiquetaEst);
+		panelEstimacion.add(Box.createVerticalStrut(rowGap));
+		
+		columna.add(panelEstimacion, BorderLayout.SOUTH);
 
 		return columna;
 	}

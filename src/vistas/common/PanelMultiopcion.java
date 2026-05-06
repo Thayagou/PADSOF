@@ -61,6 +61,10 @@ public class PanelMultiopcion extends JPanel {
 
 		/* ── Composición ── */
 		add(cabecera, BorderLayout.NORTH);
+		
+		JPanel relleno = new JPanel();
+	    relleno.setOpaque(false);
+	    add(relleno, BorderLayout.CENTER);
 	}
 	
 	/**
@@ -73,6 +77,28 @@ public class PanelMultiopcion extends JPanel {
 	public PanelMultiopcion(String titulo, JPanel contenido, String[] opciones) {
 		this(titulo, Fonts.TITLE3, Fonts.TEXT, opciones);
 		add(contenido, BorderLayout.CENTER);
+	}
+	
+	/**
+	 * Construye el panel con cabecera, selector de opciones y contenido central.
+	 *
+	 * @param titulo    Texto que aparece en la cabecera.
+	 * @param contenido Panel que ocupa la zona central del panel.
+	 * @param titleFont Font del título
+	 * @param selectorFont Font del selector
+	 * @param opciones  Array de strings con las opciones del selector.
+	 */
+	public PanelMultiopcion(String titulo, JPanel contenido, Fonts titleFont, Fonts selectorFont, String[] opciones) {
+		this(titulo, titleFont, selectorFont, opciones);
+		add(contenido, BorderLayout.CENTER);
+	}
+	
+	/**
+	 * Establece el Action Command del panel
+	 * @param aCommand Nuevo Action Command
+	 */
+	public void setActionCommand(String aCommand) {
+		selector.setActionCommand(aCommand);
 	}
 	
 	/**
