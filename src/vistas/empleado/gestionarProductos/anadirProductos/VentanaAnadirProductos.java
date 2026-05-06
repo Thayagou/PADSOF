@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import vistas.common.PanelDisplay;
+import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
@@ -15,7 +16,7 @@ public class VentanaAnadirProductos extends JPanel implements VentanaConDisplay<
 	private JPanel listaPanel = new JPanel();
 	private final VentanaAnadirProductoIndividual vista;
 	
-	public VentanaAnadirProductos(String[] categorias, String[] tiposProducto, String[] espComic, String[] espJuego, String[] espFigura) {
+	public VentanaAnadirProductos(String[] categorias, String[] tiposProducto, String[] espComic, String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos) {
 		setLayout(new BorderLayout());
 		setOpaque(false);
 		
@@ -24,7 +25,7 @@ public class VentanaAnadirProductos extends JPanel implements VentanaConDisplay<
 		listaPanel.setOpaque(false);
 		
 		
-		this.vista = new VentanaAnadirProductoIndividual(categorias, tiposProducto, espComic, espJuego, espFigura);
+		this.vista = new VentanaAnadirProductoIndividual(categorias, tiposProducto, espComic, espJuego, espFigura, espPack, tiposJuego, productos);
 		
 		JPanel panelCentral = new JPanel();
 		panelCentral.setLayout(new BorderLayout());
@@ -47,6 +48,10 @@ public class VentanaAnadirProductos extends JPanel implements VentanaConDisplay<
 	
 	public void setControlador(ActionListener c) {
 		vista.setControlador(c);
+	}
+	
+	public VentanaAnadirProductoIndividual getVentanaIndividual() {
+		return vista;
 	}
 
 }

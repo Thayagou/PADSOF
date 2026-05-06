@@ -269,6 +269,14 @@ public class ButtonFactory {
 		spinner.setFont(font.getFont());
 		return spinner;
 	}
+	
+	public static JSpinner spinnerLocalDate(Fonts font) {
+		JSpinner spinner = new JSpinner(new SpinnerDateModel());
+	    JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy");
+	    spinner.setEditor(editor);
+	    spinner.setFont(font.getFont());
+	    return spinner;
+	}
 
 	public static <T> JComboBox<T> newComboBox(Fonts font, @SuppressWarnings("unchecked") T... elementos) {
 		JComboBox<T> comboBox = new JComboBox<T>(elementos);

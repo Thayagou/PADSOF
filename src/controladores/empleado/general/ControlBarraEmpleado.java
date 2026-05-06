@@ -34,7 +34,6 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 		case "Añadir nuevo producto" -> showAnadirProducto();
 		case "Gestionar productos existentes" -> showProductosExistentes();
 		case "Gestionar categorías" -> showCategoriasExistentes();
-		case "Crear packs de productos" -> showCrearPacks();
 		case "Gestionar pedidos" -> showGPedidos();
 		case "Valorar objetos de segunda mano" -> showValorar();
 		case "Gestionar intercambios" -> showGIntercambios();
@@ -61,10 +60,6 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 		SwingUtilities.invokeLater(() -> {
 			new ControlGestionarCategorias(tienda, empleado);
 		});
-	}
-	
-	private void showCrearPacks() {
-		
 	}
 
 	private void showGPedidos() {
