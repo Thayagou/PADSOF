@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
 import controladores.cliente.intercambios.ControlPanelArticuloEnCartera;
@@ -49,6 +50,7 @@ public class ControlManejoCartera implements ActionListener, ControladorPantalla
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case "Hacer oferta":
+			SwingUtilities.invokeLater(() -> new ControlHacerOferta(tienda, cliente, dueno));
 			break;
 		}
 	}

@@ -13,8 +13,8 @@ public class PanelArticuloSeleccion extends PanelArticulo {
 	private static final long serialVersionUID = 1L;
 	private InvisibleCheckBox checkBox;
 
-	public PanelArticuloSeleccion (String nombre, String descripcion, String interesadoEn, double estimacion, String estado, String actionName, String...categorias) {
-		super(nombre, descripcion, interesadoEn, estimacion, estado, actionName, categorias);
+	public PanelArticuloSeleccion (String nombre, String foto, String descripcion, String interesadoEn, double estimacion, String estado, String actionName, String...categorias) {
+		super(nombre, foto, descripcion, interesadoEn, estimacion, estado, actionName, categorias);
 
 		checkBox = ButtonFactory.newInvisibleCheckBox("Incluído", "Incluir", ColorPalette.BLACK, ColorPalette.GREY);
 		
@@ -23,11 +23,15 @@ public class PanelArticuloSeleccion extends PanelArticulo {
 		int gap = TiendaFrame.getInstance().getPixelsWidth(HOR_GAP);
 		centerPanel.add(Box.createHorizontalStrut(gap));
 		centerPanel.add(checkBox);
-		
 
 		this.add(checkBox, BorderLayout.EAST);
+	}
 
-		// Cuando se hace click en la fila, alternar estado
-		setControlador(p->checkBox.toggleSelection());
+	public void toggleSelection() {
+		checkBox.toggleSelection();
+	}
+	
+	public boolean isSelected() {
+		return checkBox.isSelected();
 	}
 }
