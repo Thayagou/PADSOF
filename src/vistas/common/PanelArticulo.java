@@ -30,16 +30,18 @@ public class PanelArticulo extends PanelDisplay {
 	private static final double CENTER_DIST = 0.7;
 
 	private static final double AVATAR_SIZE_PERC = 0.05; /* Tamaño del avatar (5% del alto) */
+	private static final double AVATAR_NAME_SPACE = 0.01;
 	private static final double ROW_GAP_PERC = 0.005; /* Espacio vertical entre filas (0.5% del alto) */
 	private static final double COLUMN_GAP_PERC = 0.01; /* Espacio horizontal entre columnas (1% del ancho) */
 	private static final double INTERESADO_HEIGHT_PERC = 0.08; /* Altura del área de "interesado en" (8% del alto) */
 
     private static final double BTN_SOLIC_WIDTH = 0.12;
     
-    private static final int NAME_MAX_CHARS = 50;
-    private static final int USER_NAME_MAX_CHARS = 50;
-    private static final int CATS_MAX_CHARS = 50;
-    private static final int INTEREST_MAX_CHARS = 50;
+    private static final double NAME_MAX_WIDTH = 0.27;
+    private static final double USER_NAME_WIDTH = NAME_MAX_WIDTH - AVATAR_NAME_SPACE - AVATAR_SIZE_PERC - COLUMN_GAP_PERC;
+    private static final double CATS_MAX_WIDTH = NAME_MAX_WIDTH;
+    private static final double INTEREST_MAX_WIDTH = NAME_MAX_WIDTH;
+    private static final int INTEREST_LINES_MAX = 5;
 	
 	private int spaceBetween;
 	private JPanel centerPanel;
@@ -75,7 +77,7 @@ public class PanelArticulo extends PanelDisplay {
 		wrapperEast.add(Box.createHorizontalGlue());
 		wrapperEast.add(Box.createHorizontalStrut(spaceBetween));
 		
-		JPanel rightPlaceHolder = crearEspacioBoton();
+		JPanel rightPlaceHolder = panelEstado(estado);
 		
 		wrapperEast.add(rightPlaceHolder);
 		int gapSize = (int) (maxCompHeight * (1 - BOTON_PERC_H) / 2);
@@ -84,7 +86,7 @@ public class PanelArticulo extends PanelDisplay {
 		this.add(wrapperEast, BorderLayout.EAST);
 	}
 	
-	private JPanel crearEspacioBoton() {
+	private JPanel panelEstado(String estado) {
 	    TiendaFrame t = TiendaFrame.getInstance();
 
 	    int maxWidth = t.getPixelsWidth(BTN_SOLIC_WIDTH);
@@ -92,27 +94,31 @@ public class PanelArticulo extends PanelDisplay {
 
 	    JPanel espacio = new JPanel();
 	    espacio.setOpaque(false);
+	    espacio.setLayout(new BorderLayout());
 	    espacio.setPreferredSize(new Dimension(maxWidth, height));
 	    espacio.setMinimumSize(new Dimension(maxWidth, height));
 	    espacio.setMaximumSize(new Dimension(maxWidth, height));
+	    
+	    JLabel estadoPanel = new JLabel(estado);
+	    estadoPanel.setFont(Fonts.TEXT.getFont());
+	    espacio.add(estadoPanel);
 
 	    return espacio;
-	}
-	
-	private String truncarTexto(String texto, int maxChars) {
-		if (texto == null) return "";
-		if (texto.length() <= maxChars) return texto;
-		return texto.substring(0, maxChars - 3) + "...";
 	}
 
 	private JPanel crearColumnaIzquierda(TiendaFrame t, String nombre, String[] categorias, String nombreUsuario,
 			int avatarSize, int rowGap) {
+		int nameWidth = t.getPixelsWidth(NAME_MAX_WIDTH);
+		int catsWidth = t.getPixelsWidth(CATS_MAX_WIDTH);
+		int usrNameWidth = t.getPixelsWidth(USER_NAME_WIDTH);
+		
 		JPanel columna = new JPanel();
 		columna.setLayout(new BoxLayout(columna, BoxLayout.Y_AXIS));
 		columna.setOpaque(false);
 
 		/* Fila 1: Nombre del artículo */
-		JLabel nombreLabel = ButtonFactory.newLabel(truncarTexto(nombre, NAME_MAX_CHARS), Fonts.BOLD);
+		JLabel nombreLabel = ButtonFactory.newLabel(nombre, Fonts.BOLD);
+		nombreLabel.setText(Fonts.truncar(nombre, nameWidth, Fonts.BOLD.getFont(), nombreLabel));
 		nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
 		columna.add(nombreLabel);
 		columna.add(Box.createVerticalStrut(rowGap));
@@ -121,9 +127,9 @@ public class PanelArticulo extends PanelDisplay {
 		String cats = String.join(", ", categorias);
 		
 		if (!cats.isEmpty()) {
-			JLabel categoriasLabel = new JLabel(truncarTexto(cats, CATS_MAX_CHARS));
-			categoriasLabel.setFont(Fonts.TEXT.getFont());
-			categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
+			JLabel categoriasLabel = ButtonFactory.newLabel(cats, Fonts.TEXT);
+			categoriasLabel.setText(Fonts.truncar(cats, catsWidth, Fonts.TEXT.getFont(), categoriasLabel));
+			nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
 			columna.add(categoriasLabel);
 		}
 
@@ -137,9 +143,10 @@ public class PanelArticulo extends PanelDisplay {
 		avatarPanel.setPreferredSize(new Dimension(avatarSize, avatarSize));
 		avatarPanel.setMaximumSize(new Dimension(avatarSize, avatarSize));
 		filaUsuario.add(avatarPanel);
-		filaUsuario.add(Box.createHorizontalStrut(10)); /* Separación fija pequeña entre avatar y texto */
+		filaUsuario.add(Box.createHorizontalStrut(t.getPixelsWidth(AVATAR_NAME_SPACE))); /* Separación fija pequeña entre avatar y texto */
 
-		JLabel usuarioLabel = ButtonFactory.newLabel(truncarTexto(nombreUsuario, USER_NAME_MAX_CHARS), Fonts.TEXT);
+		JLabel usuarioLabel = ButtonFactory.newLabel(nombreUsuario, Fonts.TEXT);
+		usuarioLabel.setText(Fonts.truncar(nombreUsuario, usrNameWidth, Fonts.TEXT.getFont(), usuarioLabel));
 		usuarioLabel.setAlignmentX(LEFT_ALIGNMENT);
 		filaUsuario.add(usuarioLabel);
 		filaUsuario.add(Box.createHorizontalGlue()); /* Empuja a la izquierda */
@@ -151,6 +158,8 @@ public class PanelArticulo extends PanelDisplay {
 	}
 
 	private JPanel crearColumnaDerecha(TiendaFrame t, String interesadoEn, int rowGap, int interesadoMaxHeight) {
+		int interesWidth = t.getPixelsWidth(INTEREST_MAX_WIDTH);
+		
 		JPanel columna = new JPanel();
 		columna.setLayout(new BoxLayout(columna, BoxLayout.Y_AXIS));
 		columna.setOpaque(false);
@@ -162,7 +171,8 @@ public class PanelArticulo extends PanelDisplay {
 		columna.add(Box.createVerticalStrut(rowGap));
 
 		/* Fila 2: Texto de "interesadoEn" con scroll si es necesario */
-		JTextArea interesadoArea = new JTextArea(truncarTexto(interesadoEn, INTEREST_MAX_CHARS));
+		JTextArea interesadoArea = new JTextArea(interesadoEn);
+		interesadoArea.setText(Fonts.truncar(interesadoEn, interesWidth * INTEREST_LINES_MAX, Fonts.TEXT.getFont(), interesadoArea));
 		interesadoArea.setFont(Fonts.SMALL.getFont());
 		interesadoArea.setLineWrap(true);
 		interesadoArea.setWrapStyleWord(true);

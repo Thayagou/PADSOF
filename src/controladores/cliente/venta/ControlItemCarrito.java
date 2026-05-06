@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.SwingUtilities;
+
+import controladores.cliente.venta.pantallas.ControlInfoProductoCliente;
 import controladores.cliente.venta.pantallas.ControlManejoCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
@@ -64,6 +67,8 @@ public class ControlItemCarrito implements ActionListener {
 				new VentanaMensaje(ex.getMessage());
 			}
 			break;
+		case "Ver producto":
+			SwingUtilities.invokeLater(() -> new ControlInfoProductoCliente(tienda, cliente, producto));
 		}
 	}
 }

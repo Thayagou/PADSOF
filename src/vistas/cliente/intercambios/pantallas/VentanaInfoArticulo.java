@@ -57,6 +57,7 @@ public class VentanaInfoArticulo extends JPanel {
 		/* ── Scroll general ──────────────────────────────────────────── */
 		JPanel contenido = buildContenido(t, usrName, fotoPerfil, nombreArticulo, fotoArticulo, descripcion,
 				buscaACambio, estado, estimacion, ajeno, categorias, pad, gap, fotoW, fotoH, btnH, btnW);
+		contenido.setOpaque(true);
 
 		JScrollPane scroll = PanelFactory.getScroll(contenido);
 		scroll.getVerticalScrollBar().setUnitIncrement(16);

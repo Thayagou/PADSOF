@@ -399,11 +399,12 @@ public abstract class Producto implements Serializable, Descontable {
 	    		+ "  %s\n"
 	    		+ "  %s\n"
 	    		+ "  precio=%.2f\n"
+	    		+ "  imagen=%s\n"
 	    		+ "  caracteristicas=%s\n"
 	    		+ "  puntuacionMedia=%f\n"
 	    		+ "  reseñas=%s\n"
 	    		+ "  categorias=%s\n"
 	    		+ "  descuento=[%s]\n", 
-	    		id, nombre, descripcion, precio, getCaracteristicas(), getPuntuacionMedia(), resenas, categorias, descuento);
+	    		id, nombre, descripcion, precio, imagen, getCaracteristicas(), getPuntuacionMedia(), resenas, categorias, descuento);
 	}
 }
