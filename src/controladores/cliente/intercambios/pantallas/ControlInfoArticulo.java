@@ -90,6 +90,7 @@ public class ControlInfoArticulo implements ActionListener, ControladorPantalla 
 			SwingUtilities.invokeLater(() -> new ControlManejoCartera(tienda, cliente, articulo.getPropietario()));
 			break;
 		case "Hacer oferta":
+			SwingUtilities.invokeLater(() -> new ControlHacerOferta(tienda, cliente, articulo.getPropietario()));
 			break;
 		}
 		

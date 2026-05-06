@@ -1,10 +1,7 @@
 package vistas.common;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -29,8 +26,6 @@ public class PanelArticulo extends PanelDisplay {
 	private static final double FOTO_W_PERC = 0.09;
 	private static final double FOTO_H_PERC = 0.99;
 	private static final double MAX_HEIGHT = 0.16;
-	private static final int MAX_DESC = 40;
-	private static final double CENTER_DIST = 0.7;
 
 	private static final double AVATAR_SIZE_PERC = 0.05; /* Tamaño del avatar (5% del alto) */
 	private static final double AVATAR_NAME_SPACE = 0.01;
@@ -47,12 +42,24 @@ public class PanelArticulo extends PanelDisplay {
     private static final int INTEREST_LINES_MAX = 5;
 	
 	private int spaceBetween;
-	private JPanel centerPanel;
-	private GridBagConstraints gbc;
 	private JButton boton;
 	
 	private PanelDisplay parentPanel;
 
+	/**
+	 * Constructor para usar en carteras y busqueda
+	 *
+	 * @param nombreUsuario
+	 * @param fotoDePerfil
+	 * @param nombre
+	 * @param foto
+	 * @param descripcion
+	 * @param interesadoEn
+	 * @param estimacion
+	 * @param estado
+	 * @param actionName
+	 * @param categorias
+	 */
 	public PanelArticulo(String nombreUsuario, String fotoDePerfil, String nombre, String foto, String descripcion,
 			String interesadoEn, double estimacion, String estado, String actionName, String... categorias) {
 		/* Llamada al constructor de la superclase (PanelProducto) */
@@ -229,81 +236,72 @@ public class PanelArticulo extends PanelDisplay {
 		return columna;
 	}
 
-	@Deprecated
-	public PanelArticulo(String nombre, String foto, String descripcion, String interesadoEn, double estimacion,
-			String estado, String actionName, String... categorias) {
+	/**
+	 * Constructor para usar en Intercambios
+	 *
+	 * @param nombre
+	 * @param foto
+	 * @param descripcion
+	 * @param interesadoEn
+	 * @param estimacion
+	 * @param estado
+	 * @param actionName
+	 * @param categorias
+	 */
+	public PanelArticulo(String nombre, String foto, String descripcion, String interesadoEn, double estimacion, String estado,
+			String actionName, String[] categorias) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, foto, actionName);
+		int nameWidth = TiendaFrame.getInstance().getPixelsWidth(NAME_MAX_WIDTH);
+		int catsWidth = TiendaFrame.getInstance().getPixelsWidth(CATS_MAX_WIDTH);
+		
+		parentPanel = this;
 
 		TiendaFrame t = TiendaFrame.getInstance();
-		spaceBetween = t.getPixelsWidth(0.1f);
-		centerPanel = new JPanel(new GridBagLayout());
-		centerPanel.setOpaque(false);
-		gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weighty = 1.0;
+		int rowGap = t.getPixelsHeight(ROW_GAP_PERC);
 
-		/* Info: estrellas + nombre + descripción + precio + categorías */
-		JPanel info = new JPanel();
-		info.setOpaque(false);
-		info.setLayout(new GridLayout(4, 1));
+		JPanel contentPanel = new JPanel();
+		contentPanel.setOpaque(false);
+		contentPanel.setLayout(new GridLayout(3, 1, rowGap, 0));
+		
+		/* Fila 1: Nombre del artículo */
+		JLabel nombreLabel = ButtonFactory.newLabel(nombre, Fonts.BOLD);
+		nombreLabel.setText(Fonts.truncar(nombre, nameWidth, Fonts.BOLD.getFont(), nombreLabel));
+		nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
+		contentPanel.add(nombreLabel);
 
-		/* Primera fila: estrellas + nombre */
-		JPanel firstRow = new JPanel();
-		firstRow.setOpaque(false);
-		firstRow.setLayout(new BorderLayout(10, 0));
-
-		JLabel nombreLabel = new JLabel(nombre);
-		nombreLabel.setFont(Fonts.BOLD.getFont());
-		nombreLabel.setForeground(ColorPalette.DARK_GREY.getColor().darker());
-		firstRow.add(nombreLabel, BorderLayout.WEST);
-
-		info.add(firstRow);
-
-		/* Segunda fila: descripcion */
-		if (descripcion != null && descripcion.length() > MAX_DESC)
-			descripcion = descripcion.substring(0, MAX_DESC) + "...";
-		JLabel descripcionLabel = ButtonFactory.newLabel(descripcion, Fonts.SMALL);
-		descripcionLabel.setForeground(ColorPalette.DARK_GREY.getColor());
-		info.add(descripcionLabel);
-
-		/* Tercera file: interesado en */
-		interesadoEn = "Interesado en: " + interesadoEn;
-		if (interesadoEn.length() > MAX_DESC)
-			interesadoEn = interesadoEn.substring(0, MAX_DESC) + "...";
-		JLabel interesadoLabel = ButtonFactory.newLabel(interesadoEn, Fonts.SMALL);
-		interesadoLabel.setForeground(ColorPalette.DARK_GREY.getColor());
-		info.add(interesadoLabel);
-
-		/* Cuarta fila: categorias + precio */
-		JPanel thirdRow = new JPanel();
-		thirdRow.setLayout(new BorderLayout(10, 0));
-		thirdRow.setOpaque(false);
-
+		/* Fila 2: Categorías */
 		String cats = String.join(", ", categorias);
-
+		
 		if (!cats.isEmpty()) {
-			if (cats.length() > MAX_DESC)
-				cats = cats.substring(0, MAX_DESC) + "...";
-			JLabel categoriasLabel = new JLabel(cats);
-			categoriasLabel.setFont(Fonts.TEXT.getFont());
-			categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
-			thirdRow.add(categoriasLabel, BorderLayout.WEST);
+			JLabel categoriasLabel = ButtonFactory.newLabel(cats, Fonts.TEXT);
+			categoriasLabel.setText(Fonts.truncar(cats, catsWidth, Fonts.TEXT.getFont(), categoriasLabel));
+			categoriasLabel.setForeground(ColorPalette.LIGHT_PURPLE.getColor());
+			nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
+			contentPanel.add(categoriasLabel);
 		}
+		
+		/* Fila 3: Estado y estimación */
+		JPanel thirdRow = new JPanel();
+		thirdRow.setOpaque(false);
+		thirdRow.setLayout(new GridLayout(1, 2));
+		
+		String estadoString = "Estado: " + estado;
+		JLabel estadoLabel = ButtonFactory.newLabel(estadoString, Fonts.BOLD);
+		estadoLabel.setText(Fonts.truncar(estadoString, nameWidth/2, Fonts.BOLD.getFont(), estadoLabel));
+		estadoLabel.setAlignmentX(LEFT_ALIGNMENT);
+		thirdRow.add(estadoLabel);
+		
+		String estimacionStr = "Estimación: " + estimacion + " €";
+		if(estimacion < 0) estimacionStr = "Sin estimación";
+		
+		JLabel estimacionLbl = ButtonFactory.newLabel(estimacionStr, Fonts.BOLD);
+		estimacionLbl.setText(Fonts.truncar(estimacionStr, nameWidth/2, Fonts.BOLD.getFont(), estimacionLbl));
+		estimacionLbl.setAlignmentX(LEFT_ALIGNMENT);
+		thirdRow.add(estimacionLbl);
+		
+		contentPanel.add(thirdRow);
 
-		String valoracion = estimacion < 0 ? "Pendiente de valoracion"
-				: "Estado: " + estado + " " + "Estimacion: " + String.format("%.2f €", estimacion);
-		JLabel valoracionLabel = ButtonFactory.newLabel(valoracion, Fonts.TEXT);
-		valoracionLabel.setForeground(Color.BLACK);
-		thirdRow.add(valoracionLabel, BorderLayout.CENTER);
-
-		info.add(thirdRow);
-
-		gbc.weightx = CENTER_DIST;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		centerPanel.add(info, gbc);
-
-		add(centerPanel, BorderLayout.CENTER);
+		this.add(contentPanel, BorderLayout.CENTER);
 	}
 
 	public void inicializarBoton(String nombre) {
