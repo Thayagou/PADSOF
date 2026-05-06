@@ -10,6 +10,7 @@ import controladores.cliente.general.ControlPanelNotificacion;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Notificacion;
+import modelo.usuario.TipoNotificacion;
 import vistas.cliente.general.pantallas.VentanaNotificacionesCliente;
 import vistas.common.*;
 
@@ -19,11 +20,18 @@ public class ControlNotificacionesCliente implements ActionListener, Controlador
 	private VentanaNotificacionesCliente vista;
 	private ClienteRegistrado cliente;
 
+	private final String[] options = { "Pedido", "Caducidad", "Valoracion", "Intercambios" };
+	TipoNotificacion[] allTypes = { TipoNotificacion.PEDIDO, TipoNotificacion.CADUCIDAD,
+			TipoNotificacion.VALORACION, TipoNotificacion.INTERCAMBIO };
+	private final String actionName = "Aplicar";
+
 	public ControlNotificacionesCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
 		this.cliente = cliente;
 
-		this.vista = new VentanaNotificacionesCliente();
+		int[] indexes = getSelectedOptions();
+
+		this.vista = new VentanaNotificacionesCliente(options, indexes, actionName);
 
 		for (Notificacion n : cliente.getNotificaciones()) {
 			if (!n.isBorrada()) {
@@ -36,9 +44,11 @@ public class ControlNotificacionesCliente implements ActionListener, Controlador
 		TiendaFrame.getInstance().navegarA(this);
 
 	}
-	
+
 	public void recargarPantalla() {
-		this.vista = new VentanaNotificacionesCliente();
+		int[] indexes = getSelectedOptions();
+
+		this.vista = new VentanaNotificacionesCliente(options, indexes, actionName);
 
 		for (Notificacion n : cliente.getNotificaciones()) {
 			if (!n.isBorrada()) {
@@ -50,14 +60,56 @@ public class ControlNotificacionesCliente implements ActionListener, Controlador
 
 		TiendaFrame.getInstance().recargarPantallaActual(this);
 	}
-	
+
 	public void refreshVista() {
 		vista.refreshList();
+	}
+	
+	private int[] getSelectedOptions() {
+		TipoNotificacion[] selected = cliente.getIntereses();
+		
+		int[] indexes = new int[selected.length];
+		for (int i = 0, count = 0; i < allTypes.length; i++) {
+			for (int j = 0; j < selected.length; j++) {
+				if (allTypes[i].equals(selected[j])) {
+					indexes[count] = i;
+					count++;
+					break;
+				}
+			}
+		}
+
+		return indexes;
+	}
+	
+	private void aplicarCambios() {
+		String[] selected = vista.getSelectedOptions();
+		TipoNotificacion[] notis = new TipoNotificacion[selected.length];
+		for(int i = 0, count = 0; i < selected.length; i++) {
+			for(int j=0 ; j<options.length ; j++) {
+				if(selected[i].equals(options[j])) {
+					notis[count] = allTypes[j];
+					count++;
+					break;
+				}
+			}
+		}
+		
+		for(TipoNotificacion n : TipoNotificacion.values())
+			cliente.quitarInteres(n);
+		
+		for(TipoNotificacion n : notis) 
+			cliente.anadirInteres(n);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		switch(e.getActionCommand()) {
+		case actionName:
+			aplicarCambios();
+			new VentanaMensaje("Sus cambios se han guardado");
+			break;
+		}
 	}
 
 	@Override

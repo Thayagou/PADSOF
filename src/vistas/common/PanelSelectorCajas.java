@@ -15,7 +15,13 @@ public class PanelSelectorCajas extends JPanel {
 
 	private java.util.List<JCheckBox> checkboxes = new java.util.ArrayList<>();
 
+	/* Constructor sin selección inicial */
 	public PanelSelectorCajas(String[] nombresCategorias) {
+		this(nombresCategorias, null);
+	}
+
+	/* Constructor con selección inicial por índices */
+	public PanelSelectorCajas(String[] nombresCategorias, int[] indicesSeleccionados) {
 		setLayout(new BorderLayout());
 		setOpaque(true);
 		setBackground(ColorPalette.WHITE.getColor());
@@ -28,11 +34,15 @@ public class PanelSelectorCajas extends JPanel {
 		int vPad = t.getPixelsHeight(V_PADDING);
 		int hPad = t.getPixelsWidth(H_PADDING);
 
-		for (String cat : nombresCategorias) {
+		for (int i = 0; i < nombresCategorias.length; i++) {
+			String cat = nombresCategorias[i];
 			JCheckBox cb = new JCheckBox(cat);
 			cb.setFont(Fonts.TEXT.getFont());
 			cb.setOpaque(false);
 			cb.setBorder(BorderFactory.createEmptyBorder(vPad, hPad, vPad, hPad));
+			if (indicesSeleccionados != null && estaSeleccionado(i, indicesSeleccionados)) {
+				cb.setSelected(true);
+			}
 			checkboxes.add(cb);
 			panelCheckboxes.add(cb);
 		}
@@ -44,12 +54,21 @@ public class PanelSelectorCajas extends JPanel {
 		add(scroll, BorderLayout.CENTER);
 	}
 
+	/* Comprueba si un índice está en el array de seleccionados */
+	private boolean estaSeleccionado(int indice, int[] indices) {
+		for (int i : indices) {
+			if (i == indice)
+				return true;
+		}
+		return false;
+	}
+
 	/* Devuelve un array con los nombres de las categorías seleccionadas */
 	public String[] getCategoriasSeleccionadas() {
 		return checkboxes.stream().filter(JCheckBox::isSelected).map(JCheckBox::getText).toArray(String[]::new);
 	}
 
-	/* (Opcional) Limpia todas las selecciones */
+	/* Limpia todas las selecciones */
 	public void limpiarSeleccion() {
 		for (JCheckBox cb : checkboxes) {
 			cb.setSelected(false);
