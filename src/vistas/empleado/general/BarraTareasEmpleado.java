@@ -20,7 +20,7 @@ public class BarraTareasEmpleado extends BarraTareas {
 	private static final double BTN_ACCOUNT_W = 0.13;
 
 	private JButton btnHome;
-	private JButton btnCuenta;
+	private JButton btnVolver;
 	private JButton btnCerrarSesion;
 
 	public BarraTareasEmpleado() {
@@ -41,11 +41,11 @@ public class BarraTareasEmpleado extends BarraTareas {
 		btnHome.setActionCommand("Home");
 		ButtonFactory.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 		
-		btnCuenta = ButtonFactory.newIconButton("cuentaButton.png", btnH, homeW);
-		btnCuenta.setBackground(ColorPalette.BLUE.getColor());
-		btnCuenta.setForeground(ColorPalette.WHITE.getColor());
-		btnCuenta.setActionCommand("Cuenta");
-		ButtonFactory.addMouseMecanics(btnCuenta, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		btnVolver = ButtonFactory.newIconButton("flechaAtras.png", btnH, homeW);
+		btnVolver.setBackground(ColorPalette.BLUE.getColor());
+		btnVolver.setForeground(ColorPalette.WHITE.getColor());
+		btnVolver.setActionCommand("Volver");
+		ButtonFactory.addMouseMecanics(btnVolver, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 
 		btnCerrarSesion = ButtonFactory.newRoundedButton("Cerrar sesión", btnH, accountW, 0.25);
 		btnCerrarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
@@ -62,14 +62,14 @@ public class BarraTareasEmpleado extends BarraTareas {
 		add(btnHome);
 		add(Box.createHorizontalStrut(spaceBetween));
 
-		btnCuenta.setMaximumSize(new Dimension(homeW, btnH));
-		btnCuenta.setPreferredSize(new Dimension(homeW, btnH));
-		btnCuenta.setMinimumSize(new Dimension(100, btnH));
+		btnVolver.setMaximumSize(new Dimension(homeW, btnH));
+		btnVolver.setPreferredSize(new Dimension(homeW, btnH));
+		btnVolver.setMinimumSize(new Dimension(100, btnH));
 				
 		btnCerrarSesion.setMaximumSize(new Dimension(accountW, btnH));
 		btnCerrarSesion.setPreferredSize(new Dimension(accountW, btnH));
 
-		add(btnCuenta);
+		add(btnVolver);
 		add(Box.createHorizontalGlue());
 		add(Box.createHorizontalStrut(spaceBetween));
 
@@ -80,7 +80,7 @@ public class BarraTareasEmpleado extends BarraTareas {
 	@Override
 	public void setControlador(ControlBarraTareas c) {
 		btnHome.addActionListener(c);
-		btnCuenta.addActionListener(c);
+		btnVolver.addActionListener(c);
 		btnCerrarSesion.addActionListener(c);
 	}
 

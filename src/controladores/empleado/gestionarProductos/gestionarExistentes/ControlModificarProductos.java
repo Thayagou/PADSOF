@@ -80,7 +80,8 @@ public class ControlModificarProductos implements ControladorPantalla {
 		this.vista = new VentanaAnadirProductoIndividual(p.getNombre(), p.getDescripcion(),
 				productoCategorias.toArray(new String[0]), categorias.toArray(new String[0]), p.getPrecio() + "",
 				producto.getUdsEnStock() + "", p.getTipoProducto(), tiposProductos, p.getValoresCaracteristicas(),
-				espComic, espJuego, espFigura, espPack, tiposJuego.toArray(new String[0]), paneles.toArray(new PanelProducto[0]), true);
+				espComic, espJuego, espFigura, espPack, tiposJuego.toArray(new String[0]),
+				paneles.toArray(new PanelProducto[0]), true);
 		this.vista.setControlador(this);
 		TiendaFrame.getInstance().navegarA(this);
 	}
@@ -130,10 +131,10 @@ public class ControlModificarProductos implements ControladorPantalla {
 
 			LocalDate fecha = null;
 			try {
-			    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(esp[0]);
-			    fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				Date date = new SimpleDateFormat("yyyy-MM-dd").parse(esp[0]);
+				fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			} catch (Exception e) {
-			    e.printStackTrace();
+				e.printStackTrace();
 			}
 
 			int numPags = Integer.parseInt(esp[2]);
@@ -173,27 +174,30 @@ public class ControlModificarProductos implements ControladorPantalla {
 		}
 		return categorias.toArray(new Categoria[0]);
 	}
-	
+
 	private Stock[] getProductos(String prods) {
-	    if (prods == null || prods.isEmpty()) return new Stock[0];
-	    
-	    String[] nombres = prods.split(",");
-	    List<Stock> productos = new LinkedList<>();
+		if (prods == null || prods.isEmpty())
+			return new Stock[0];
 
-	    for (String n : nombres) {
-	        for (Stock s : tienda.getAlmacen().getInventario()) {
-	            if (s.getProducto().getNombre().equals(n.trim())) {
-	                productos.add(s);
-	                break;
-	            }
-	        }
-	    }
+		String[] nombres = prods.split(";");
+		List<Stock> productos = new LinkedList<>();
 
-	    return productos.toArray(new Stock[0]);
+		for (String n : nombres) {
+			for (Stock s : tienda.getAlmacen().getInventario()) {
+				if (s.getProducto().getNombre().equals(n.trim())) {
+					productos.add(s);
+					break;
+				}
+			}
+		}
+
+		return productos.toArray(new Stock[0]);
 	}
 
 	@Override
 	public JPanel getVista() {
 		return vista;
 	}
+	
+	
 }

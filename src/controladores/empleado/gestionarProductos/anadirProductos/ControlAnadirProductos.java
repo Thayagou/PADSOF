@@ -121,7 +121,7 @@ public class ControlAnadirProductos implements ControladorPantalla {
 
 			LocalDate fecha = null;
 			try {
-			    Date date = new SimpleDateFormat("dd/MM/yyyy").parse(esp[0]);
+			    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(esp[0]);
 			    fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			} catch (Exception e) {
 			    e.printStackTrace();
@@ -168,7 +168,7 @@ public class ControlAnadirProductos implements ControladorPantalla {
 	private Stock[] getProductos(String prods) {
 	    if (prods == null || prods.isEmpty()) return new Stock[0];
 	    
-	    String[] nombres = prods.split(",");
+	    String[] nombres = prods.split(";");
 	    List<Stock> productos = new LinkedList<>();
 
 	    for (String n : nombres) {

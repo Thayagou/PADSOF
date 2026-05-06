@@ -18,7 +18,7 @@ public class ControlInicioEmpleado implements ControladorPantalla {
 	public ControlInicioEmpleado(Tienda tienda, Empleado empleado) {
 		// Barra lateral
 		BarraEmpleado barraLateral = new BarraEmpleado();
-		ControlBarraEmpleado ctrlBarraLateral = new ControlBarraEmpleado(tienda, empleado, barraLateral);
+		ControlBarraEmpleado ctrlBarraLateral = new ControlBarraEmpleado(tienda, empleado);
 		barraLateral.setControlador(ctrlBarraLateral);
 		TiendaFrame.getInstance().setBarraLateral(barraLateral);
 
@@ -34,7 +34,6 @@ public class ControlInicioEmpleado implements ControladorPantalla {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
