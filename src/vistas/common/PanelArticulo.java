@@ -123,12 +123,13 @@ public class PanelArticulo extends PanelDisplay {
 		columna.add(nombreLabel);
 		columna.add(Box.createVerticalStrut(rowGap));
 
-		/* Fila 2: Categorías (en morado, una debajo de otra con separación reducida) */
+		/* Fila 2: Categorías */
 		String cats = String.join(", ", categorias);
 		
 		if (!cats.isEmpty()) {
 			JLabel categoriasLabel = ButtonFactory.newLabel(cats, Fonts.TEXT);
 			categoriasLabel.setText(Fonts.truncar(cats, catsWidth, Fonts.TEXT.getFont(), categoriasLabel));
+			categoriasLabel.setForeground(ColorPalette.LIGHT_PURPLE.getColor());
 			nombreLabel.setAlignmentX(LEFT_ALIGNMENT);
 			columna.add(categoriasLabel);
 		}
@@ -143,16 +144,16 @@ public class PanelArticulo extends PanelDisplay {
 		avatarPanel.setPreferredSize(new Dimension(avatarSize, avatarSize));
 		avatarPanel.setMaximumSize(new Dimension(avatarSize, avatarSize));
 		filaUsuario.add(avatarPanel);
-		filaUsuario.add(Box.createHorizontalStrut(t.getPixelsWidth(AVATAR_NAME_SPACE))); /* Separación fija pequeña entre avatar y texto */
+		filaUsuario.add(Box.createHorizontalStrut(t.getPixelsWidth(AVATAR_NAME_SPACE)));
 
 		JLabel usuarioLabel = ButtonFactory.newLabel(nombreUsuario, Fonts.TEXT);
 		usuarioLabel.setText(Fonts.truncar(nombreUsuario, usrNameWidth, Fonts.TEXT.getFont(), usuarioLabel));
 		usuarioLabel.setAlignmentX(LEFT_ALIGNMENT);
 		filaUsuario.add(usuarioLabel);
-		filaUsuario.add(Box.createHorizontalGlue()); /* Empuja a la izquierda */
+		filaUsuario.add(Box.createHorizontalGlue());
 
 		columna.add(filaUsuario);
-		columna.add(Box.createVerticalGlue()); /* Empuja todo hacia arriba */
+		columna.add(Box.createVerticalGlue());
 
 		return columna;
 	}

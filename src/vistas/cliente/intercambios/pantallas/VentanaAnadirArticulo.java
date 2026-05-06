@@ -38,38 +38,28 @@ public class VentanaAnadirArticulo extends JPanel {
 	public VentanaAnadirArticulo(String[] nombresCategorias) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
+		int panelGap = t.getPixelsWidth(PANEL_GAP);
+
 		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
 
-		/* Construir el contenido principal con tres columnas usando GridBagLayout */
-		JPanel contenidoCentral = new JPanel(new GridBagLayout());
-		contenidoCentral.setOpaque(false);
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.BOTH;
-		gbc.weightx = 0.33;
-		gbc.weighty = 1.0;
-		gbc.insets = new Insets(0, t.getPixelsWidth(PANEL_GAP), 0, t.getPixelsWidth(PANEL_GAP));
+		/* Construir el contenido principal con tres columnas usando Grid */
+		JPanel contenidoCentral = new JPanel(new GridLayout(1, 3));
 
-		/* Columna izquierda (foto, nombre, intercambio buscado) */
-		gbc.gridx = 0;
-		contenidoCentral.add(crearColumnaIzquierda(t), gbc);
+		JPanel leftColumn = PanelFactory.wrapHorizontal(crearColumnaIzquierda(t), panelGap);
+		contenidoCentral.add(leftColumn);
 
-		/* Columna central (descripción) */
-		gbc.gridx = 1;
-		contenidoCentral.add(crearColumnaCentral(t), gbc);
+		contenidoCentral.add(crearColumnaCentral(t));
 
-		/* Columna derecha (categorías y botones) */
-		gbc.gridx = 2;
-		contenidoCentral.add(crearColumnaDerecha(t, nombresCategorias), gbc);
+		contenidoCentral.add(crearColumnaDerecha(t, nombresCategorias));
 
 		/* Envolver con cabecera */
 		JPanel ventanaCompleta = PanelFactory.getVentanaConCabecera("Añadir artículo de segunda mano",
-				contenidoCentral);
-		ventanaCompleta.setOpaque(false);
+				PanelFactory.wrapVertical(contenidoCentral, panelGap));
+		ventanaCompleta.setOpaque(true);
+		
 		add(ventanaCompleta, BorderLayout.CENTER);
 	}
-
-	/* ========== CONSTRUCCIÓN DE COLUMNAS ========== */
 
 	private JPanel crearColumnaIzquierda(TiendaFrame t) {
 		JPanel panel = new JPanel(new BorderLayout(0, t.getPixelsHeight(0.02)));
@@ -78,22 +68,21 @@ public class VentanaAnadirArticulo extends JPanel {
 		/* Bloque de la foto */
 		panel.add(crearPanelFoto(t), BorderLayout.NORTH);
 
-		/* Bloque de nombre + intercambio buscado (ocupa el resto) */
+		/* Bloque de nombre + intercambio buscado */
 		JPanel centro = new JPanel(new BorderLayout(0, t.getPixelsHeight(0.01)));
 		centro.setOpaque(false);
 
 		/* Nombre */
-		JPanel nombrePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		JPanel nombrePanel = new JPanel(new BorderLayout(10, 0));
 		nombrePanel.setOpaque(false);
 		JLabel nombreLabel = ButtonFactory.newLabel("Nombre:", Fonts.TEXT);
-		nombreField = new JTextField(20);
+		nombreField = new JTextField();
 		nombreField.setFont(Fonts.TEXT.getFont());
-		nombrePanel.add(nombreLabel);
-		nombrePanel.add(Box.createHorizontalStrut(10));
-		nombrePanel.add(nombreField);
+		nombrePanel.add(nombreLabel, BorderLayout.NORTH);
+		nombrePanel.add(nombreField, BorderLayout.CENTER);
 		centro.add(nombrePanel, BorderLayout.NORTH);
 
-		/* Intercambio buscado (ocupa el espacio restante) */
+		/* Intercambio buscado  */
 		JPanel intercambioPanel = new JPanel(new BorderLayout());
 		intercambioPanel.setOpaque(false);
 		JLabel intercambioLabel = ButtonFactory.newLabel("Intercambio buscado:", Fonts.TEXT);
@@ -164,8 +153,15 @@ public class VentanaAnadirArticulo extends JPanel {
 	}
 
 	private JPanel crearColumnaDerecha(TiendaFrame t, String[] nombresCategorias) {
+		int topWrap = t.getPixelsHeight(0.02);
+		
 		JPanel panel = new JPanel(new BorderLayout(0, t.getPixelsHeight(0.02)));
 		panel.setOpaque(false);
+		
+		/* Etiqueta arriba para bajar todo un poco */
+		JPanel cabecera = new JPanel(new BorderLayout());
+		cabecera.add(ButtonFactory.newLabel("Categorías:", Fonts.TEXT));
+		panel.add(PanelFactory.wrapVertical(PanelFactory.wrapHorizontal(cabecera, topWrap), topWrap), BorderLayout.NORTH);
 
 		/* Selector de categorías */
 		selectorCategorias = new PanelSelectorCajas(nombresCategorias);
