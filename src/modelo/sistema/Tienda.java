@@ -380,14 +380,15 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws InvalidArgumentException Se lanza en caso de error a la hora de guardar el intercambio
 	 */
 	public boolean hacerOfertaIntercambio(ClienteRegistrado cliente, ArticuloSegundaMano[] ofrecidos, ArticuloSegundaMano[] solicitados) throws InvalidArgumentException {
+		if (ofrecidos.length < 1) throw new InvalidArgumentException("Se debe ofrecer al menos un artículo a intercambiar", "hacer oferta de intercambio");
+		if (solicitados.length < 1) throw new InvalidArgumentException("Se debe solicitar al menos un artículo a intercambiar", "hacer oferta de intercambio");
+		
 		ClienteRegistrado clienteRecibe = solicitados[0].getDueno().getDueno();
 		if(clienteRecibe == null) return false;
 		
 		Intercambio intercambio = new Intercambio(ofrecidos, solicitados);
 		historial.guardarIntercambio(intercambio);
-		
-		cliente.getCartera().addIntercambio(intercambio);
-		clienteRecibe.getCartera().addIntercambio(intercambio);
+
 		clienteRecibe.enviarNotificacion("Ha recibido una nueva oferta de intercambio", TipoNotificacion.INTERCAMBIO);
 		
 		Intercambio[] intercambiosInvalidados = intercambio.getEmisor().invalidarIntercambiosConArticulos(ofrecidos);
