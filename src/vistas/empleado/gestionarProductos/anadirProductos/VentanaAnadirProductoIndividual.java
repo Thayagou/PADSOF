@@ -8,9 +8,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -18,15 +22,18 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import vistas.common.InvisibleCheckBox;
+import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
@@ -45,24 +52,31 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	private JComboBox<String> tipoProducto;
 	private String tipoFijo;
 	private List<InvisibleCheckBox> checkCategorias = new ArrayList<>();
-	private List<JTextField> especFields = new ArrayList<>();
+	private List<JComponent> especFields = new ArrayList<>();
 	private JButton btnConfirmar;
 	private JPanel especPanel;
-	private String[] espComic, espJuego, espFigura;
+	private String[] espComic, espJuego, espFigura, espPack;
+	private List<JCheckBox> checkProductosPack = new ArrayList<>();
+	private PanelProducto[] productos;
+	private boolean isModificacion;
 
 	public VentanaAnadirProductoIndividual(String[] categorias, String[] tiposProductos, String[] espComic,
-			String[] espJuego, String[] espFigura) {
+			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos) {
 		this("Nombre", "Descripción", new String[0], categorias, "0.0", "0", "", tiposProductos, new String[0],
-				espComic, espJuego, espFigura, false);
+				espComic, espJuego, espFigura, espPack, tiposJuego, productos, false);
 	}
 
 	public VentanaAnadirProductoIndividual(String nombre, String desc, String[] catSeleccionadas, String[] categorias,
 			String precio, String uds, String tipo, String[] tiposProducto, String[] espValores, String[] espComic,
-			String[] espJuego, String[] espFigura, boolean isModificacion) {
+			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos,
+			boolean isModificacion) {
 
 		this.espComic = espComic;
 		this.espJuego = espJuego;
 		this.espFigura = espFigura;
+		this.espPack = espPack;
+		this.productos = productos;
+		this.isModificacion = isModificacion;
 		this.tipoFijo = (tipo != null && !tipo.isEmpty()) ? tipo : "";
 
 		setOpaque(false);
@@ -130,7 +144,8 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 
 		List<String> catSelList = Arrays.asList(catSeleccionadas);
 		for (String cat : categorias) {
-			InvisibleCheckBox cb = ButtonFactory.newInvisibleCheckBox(cat, cat, ColorPalette.BLACK, ColorPalette.CARD_DARK);
+			InvisibleCheckBox cb = ButtonFactory.newInvisibleCheckBox(cat, cat, ColorPalette.BLACK,
+					ColorPalette.CARD_DARK);
 
 			cb.setAlignmentX(Component.LEFT_ALIGNMENT);
 			checkCategorias.add(cb);
@@ -143,7 +158,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 			wrapper.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					 cb.toggleSelection();
+					cb.toggleSelection();
 				}
 			});
 			centro.add(wrapper);
@@ -209,7 +224,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		especPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		String tipoInicial = !tipoFijo.isEmpty() ? tipoFijo : (tiposProducto.length > 0 ? tiposProducto[0] : "");
-		construirEspecificaciones(tipoInicial, espValores);
+		construirEspecificaciones(tipoInicial, espValores, tiposJuego, productos);
 
 		dcha.add(especPanel);
 		dcha.add(Box.createVerticalGlue());
@@ -217,7 +232,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		if (this.tipoProducto != null) {
 			this.tipoProducto.addActionListener(e -> {
 				String sel = (String) this.tipoProducto.getSelectedItem();
-				construirEspecificaciones(sel, new String[0]);
+				construirEspecificaciones(sel, new String[0], tiposJuego, productos);
 			});
 		}
 
@@ -227,7 +242,8 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 
 		int height = TiendaFrame.getInstance().getHeight();
 		int width = TiendaFrame.getInstance().getWidth();
-		btnConfirmar = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (height * 0.08), (int) (width * 0.1), 0.5);
+		btnConfirmar = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (height * 0.08), (int) (width * 0.1),
+				0.5);
 		ButtonFactory.paintButton(btnConfirmar, ColorPalette.PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(btnConfirmar, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
 
@@ -248,15 +264,16 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		columnas.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		if (isModificacion) {
-	        JPanel ventana = PanelFactory.getVentanaConCabecera("Modificar producto", columnas);
-	        ventana.setOpaque(false);
-	        add(ventana, BorderLayout.CENTER);
-	    } else {
-	        add(columnas, BorderLayout.CENTER);
-	    }
+			JPanel ventana = PanelFactory.getVentanaConCabecera("Modificar producto", columnas);
+			ventana.setOpaque(false);
+			add(ventana, BorderLayout.CENTER);
+		} else {
+			add(columnas, BorderLayout.CENTER);
+		}
 	}
 
-	private void construirEspecificaciones(String tipo, String[] valores) {
+	private void construirEspecificaciones(String tipo, String[] valores, String[] tiposJuego,
+			PanelProducto[] productos) {
 		especPanel.removeAll();
 		especFields.clear();
 
@@ -267,21 +284,121 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 			espActuales = espJuego;
 		else if (tipo.equalsIgnoreCase("Figura"))
 			espActuales = espFigura;
+		else if (tipo.equalsIgnoreCase("Pack"))
+			espActuales = espPack;
 		else
 			espActuales = new String[0];
 
 		for (int i = 0; i < espActuales.length; i++) {
+
 			JLabel lbl = ButtonFactory.newLabel(espActuales[i] + ":", Fonts.TEXT);
 			lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
 			String valor = (valores != null && i < valores.length) ? valores[i] : "";
-			JTextField tf = ButtonFactory.newTextField(valor, Fonts.TEXT);
-			tf.setMaximumSize(new Dimension(Integer.MAX_VALUE, tf.getPreferredSize().height));
-			tf.setAlignmentX(Component.LEFT_ALIGNMENT);
+			JComponent tf;
+
+			if (espActuales[i].equals("Fecha publicación")) {
+				JSpinner spinner = ButtonFactory.spinnerLocalDate(Fonts.BOLD);
+				spinner.setMaximumSize(new Dimension(Integer.MAX_VALUE, spinner.getPreferredSize().height));
+				spinner.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+				if (!valor.isEmpty()) {
+					try {
+						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+						spinner.setValue(sdf.parse(valor));
+					} catch (Exception ignored) {
+					}
+				}
+				tf = spinner;
+
+			} else if (espActuales[i].equals("Tipo de juego")) {
+				JComboBox<String> combo = ButtonFactory.newComboBox(Fonts.TEXT, tiposJuego);
+				if (!valor.isEmpty()) {
+					combo.setSelectedItem(valor);
+				}
+				combo.setMaximumSize(new Dimension(Integer.MAX_VALUE, combo.getPreferredSize().height));
+				combo.setAlignmentX(Component.LEFT_ALIGNMENT);
+				tf = combo;
+
+			} else if (espActuales[i].equals("Productos")) {
+				if (isModificacion) {
+					JPanel productosPanel = new JPanel();
+					productosPanel.setLayout(new BoxLayout(productosPanel, BoxLayout.Y_AXIS));
+					productosPanel.setOpaque(false);
+
+					for (PanelProducto p : productos) {
+						if (!valor.isEmpty() && valor.contains(p.getNombre())) {
+							JPanel fila = new JPanel(new BorderLayout(8, 0));
+							fila.setOpaque(false);
+							fila.setMaximumSize(new Dimension(Integer.MAX_VALUE, p.getPreferredSize().height));
+							fila.setAlignmentX(Component.LEFT_ALIGNMENT);
+							fila.add(p, BorderLayout.CENTER);
+							productosPanel.add(fila);
+							productosPanel.add(Box.createVerticalStrut(4));
+						}
+					}
+
+					JScrollPane scrollProductos = PanelFactory.getScroll(productosPanel);
+					scrollProductos.setAlignmentX(Component.LEFT_ALIGNMENT);
+					scrollProductos.setMaximumSize(new Dimension(Integer.MAX_VALUE, (int) (HEIGHT * 0.3)));
+					scrollProductos.setBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()));
+					scrollProductos.getViewport().setOpaque(false);
+					scrollProductos.setOpaque(false);
+
+					tf = scrollProductos;
+
+				} else {
+					JPanel productosPanel = new JPanel();
+					productosPanel.setLayout(new BoxLayout(productosPanel, BoxLayout.Y_AXIS));
+					productosPanel.setOpaque(false);
+
+					List<JCheckBox> checkProductos = new ArrayList<>();
+
+					for (PanelProducto p : productos) {
+						JPanel fila = new JPanel(new BorderLayout(8, 0));
+						fila.setOpaque(false);
+						fila.setMaximumSize(new Dimension(Integer.MAX_VALUE, p.getPreferredSize().height));
+						fila.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+						JCheckBox cb = new JCheckBox();
+						cb.setOpaque(false);
+						cb.setFocusPainted(false);
+						// si ya estaba seleccionado (caso modificar)
+						if (!valor.isEmpty() && valor.contains(p.getNombre())) {
+							cb.setSelected(true);
+						}
+						checkProductos.add(cb);
+
+						fila.add(cb, BorderLayout.WEST);
+						fila.add(p, BorderLayout.CENTER);
+						productosPanel.add(fila);
+						productosPanel.add(Box.createVerticalStrut(4));
+					}
+
+					JScrollPane scrollProductos = PanelFactory.getScroll(productosPanel);
+					scrollProductos.setAlignmentX(Component.LEFT_ALIGNMENT);
+					scrollProductos.setMaximumSize(new Dimension(Integer.MAX_VALUE, (int) (HEIGHT * 0.3)));
+					scrollProductos.setBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()));
+					scrollProductos.getViewport().setOpaque(false);
+					scrollProductos.setOpaque(false);
+
+					// Guardar referencia a los checks para el getter
+					this.checkProductosPack = checkProductos;
+
+					tf = scrollProductos;
+				}
+			} else {
+				JTextField textField = ButtonFactory.newTextField(valor, Fonts.TEXT);
+				textField.setMaximumSize(new Dimension(Integer.MAX_VALUE, textField.getPreferredSize().height));
+				textField.setAlignmentX(Component.LEFT_ALIGNMENT);
+				tf = textField;
+			}
+
 			especFields.add(tf);
 			especPanel.add(lbl);
 			especPanel.add(Box.createVerticalStrut(4));
 			especPanel.add(tf);
 			especPanel.add(Box.createVerticalStrut(10));
+
 		}
 
 		especPanel.revalidate();
@@ -318,11 +435,38 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		return tipoFijo;
 	}
 
+	public PanelProducto[] getProductosPackSeleccionados() {
+		List<PanelProducto> seleccionados = new ArrayList<>();
+		for (int i = 0; i < checkProductosPack.size(); i++) {
+			if (checkProductosPack.get(i).isSelected()) {
+				seleccionados.add(productos[i]);
+			}
+		}
+		return seleccionados.toArray(new PanelProducto[0]);
+	}
+
 	public String[] getEspecificaciones() {
-		return especFields.stream().map(JTextField::getText).toArray(String[]::new);
+		return especFields.stream().map(this::extraerValor).toArray(String[]::new);
+	}
+
+	private String extraerValor(JComponent c) {
+		if (c instanceof JTextField)
+			return ((JTextField) c).getText();
+		if (c instanceof JComboBox)
+			return (String) ((JComboBox<?>) c).getSelectedItem();
+		if (c instanceof JSpinner)
+			return new SimpleDateFormat("dd/MM/yyyy").format(((JSpinner) c).getValue());
+		if (c instanceof JScrollPane) {
+			Stream<String> ids = IntStream.range(0, checkProductosPack.size())
+					.filter(j -> checkProductosPack.get(j).isSelected())
+					.mapToObj(j -> (String) productos[j].getNombre());
+			return ids.collect(Collectors.joining(","));
+		}
+		return "";
 	}
 
 	public String[] getCategorias() {
-		return checkCategorias.stream().filter(InvisibleCheckBox::isSelected).map(InvisibleCheckBox::getText).toArray(String[]::new);
+		return checkCategorias.stream().filter(InvisibleCheckBox::isSelected).map(InvisibleCheckBox::getText)
+				.toArray(String[]::new);
 	}
 }

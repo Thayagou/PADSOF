@@ -270,6 +270,13 @@ public class ButtonFactory {
 		return spinner;
 	}
 	
+	public static JSpinner spinnerLocalDate(Fonts font) {
+		JSpinner spinner = new JSpinner(new SpinnerDateModel());
+	    JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy");
+	    spinner.setEditor(editor);
+	    return spinner;
+	}    
+	    
 	public static JSpinner spinnerEntero(Fonts font, int valor, int min, int max, int paso) {
 	    SpinnerNumberModel modelo = new SpinnerNumberModel(valor, min, max, paso);
 	    JSpinner spinner = new JSpinner(modelo);

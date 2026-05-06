@@ -23,7 +23,6 @@ public class ControlBarraTareasEmpleado implements ControlBarraTareas {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "Home" -> SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda, empleado));
-		case "Cuenta" -> SwingUtilities.invokeLater(() -> new ControlCuentaEmpleado(tienda, empleado));
 		case "Cerrar sesión" -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
 		}
 		
