@@ -1,5 +1,10 @@
 package controladores.empleado.general;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.JPanel;
+
+import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.common.TiendaFrame;
@@ -7,25 +12,34 @@ import vistas.empleado.general.BarraEmpleado;
 import vistas.empleado.general.BarraTareasEmpleado;
 import vistas.empleado.general.VentanaInicioEmpleado;
 
-public class ControlInicioEmpleado {
+public class ControlInicioEmpleado implements ControladorPantalla {
 	private VentanaInicioEmpleado vista;
 
 	public ControlInicioEmpleado(Tienda tienda, Empleado empleado) {
-		TiendaFrame tiendaFrame = TiendaFrame.getInstance();
-		
 		// Barra lateral
 		BarraEmpleado barraLateral = new BarraEmpleado();
 		ControlBarraEmpleado ctrlBarraLateral = new ControlBarraEmpleado(tienda, empleado, barraLateral);
 		barraLateral.setControlador(ctrlBarraLateral);
-		tiendaFrame.setBarraLateral(barraLateral);
+		TiendaFrame.getInstance().setBarraLateral(barraLateral);
 
 		// Barra de tareas superior
 		ControlBarraTareasEmpleado ctrlBarraTareas = new ControlBarraTareasEmpleado(tienda, empleado);
 		BarraTareasEmpleado barraTareas = new BarraTareasEmpleado();
 		barraTareas.setControlador(ctrlBarraTareas);
-		tiendaFrame.setBarraTareas(barraTareas);
+		TiendaFrame.getInstance().setBarraTareas(barraTareas);
 		
 		this.vista = new VentanaInicioEmpleado(tienda);
-		tiendaFrame.setVistaActual(this.vista);
+		TiendaFrame.getInstance().navegarA(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public JPanel getVista() {
+		return vista;
 	}
 }

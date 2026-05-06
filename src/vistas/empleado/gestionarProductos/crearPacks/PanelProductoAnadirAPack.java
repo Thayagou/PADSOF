@@ -1,4 +1,4 @@
-package vistas.empleado.gestionarProductos;
+package vistas.empleado.gestionarProductos.crearPacks;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

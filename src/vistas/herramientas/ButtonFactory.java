@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
@@ -210,6 +211,32 @@ public class ButtonFactory {
 
 	public static JTextField newTextField(String text, Fonts font) {
 		JTextField field = new JTextField(text);
+		field.setFont(font.getFont());
+		field.setForeground(ColorPalette.GREY.getColor());
+
+		field.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (field.getText().equals(text)) {
+					field.setText("");
+					field.setForeground(ColorPalette.BLACK.getColor());
+				}
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (field.getText().isEmpty()) {
+					field.setText(text);
+					field.setForeground(ColorPalette.GREY.getColor());
+				}
+			}
+		});
+
+		return field;
+	}
+	
+	public static JTextArea newTextArea(String text, Fonts font) {
+		JTextArea field = new JTextArea(text);
 		field.setFont(font.getFont());
 		field.setForeground(ColorPalette.GREY.getColor());
 

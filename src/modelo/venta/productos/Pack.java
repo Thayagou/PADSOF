@@ -93,5 +93,19 @@ public class Pack extends Producto implements Serializable {
 
 	    return s.toString();
 	}
+	
+	@Override
+	public String[] getValoresCaracteristicas() {
+		List<String> valores = new LinkedList<>();
+		for(Stock p : productos) {
+			valores.add(p.getProducto().getNombre());
+		}
+		return valores.toArray(new String[0]);
+	}
+	
+	@Override
+	public String getTipoProducto() {
+		return "Pack";
+	}
 
 }

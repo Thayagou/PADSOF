@@ -1,11 +1,10 @@
 package controladores.gestor.anadirDescuento;
 
 import java.awt.event.*;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import javax.swing.JPanel;
 
+import modelo.venta.descuentos.Descontable;
 import controladores.ControladorPantalla;
 import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
@@ -13,16 +12,19 @@ import modelo.usuario.Gestor;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.common.PanelMultiopcion;
+import vistas.common.PanelSeleccion;
 import vistas.common.TiendaFrame;
 import vistas.gestor.anadirDescuento.VentanaAnadirDescuento;
 
-public class ControlAnadirDescuento implements ControladorPantalla{
+public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontable>, ControladorPantalla{
 	private Tienda tienda;
 	private Gestor gestor;
 	private VentanaAnadirDescuento vista;
 	private String tipoActual;
-	private Set<Producto> productosDescontados = new LinkedHashSet<>();
-	private Set<Categoria> categoriasDescontados = new LinkedHashSet<>();;
+	private Descontable descontado;
+	private PanelSeleccion panelDescontado;
+	private Producto regalo;
+	
 	
 	
 	public ControlAnadirDescuento(Tienda tienda, Gestor gestor) {
@@ -44,7 +46,11 @@ public class ControlAnadirDescuento implements ControladorPantalla{
 		vista.vaciarDescontados();
 		
 		for (Producto p: catalogo) {
-			new ControlPanelProductoSeleccion(tienda, p, this, vista);
+			ControlPanelProductoSeleccion control = new ControlPanelProductoSeleccion(tienda, p, "Descontado", "Descontar", this, vista);
+			if (this.descontado != null && this.descontado.equals(p)) {
+				this.panelDescontado = control.getPanel();
+				this.panelDescontado.toggleCheckBox();
+			}
 		}
 	}
 	
@@ -54,27 +60,50 @@ public class ControlAnadirDescuento implements ControladorPantalla{
 		vista.vaciarDescontados();
 		
 		for (Categoria c: categorias) {
-			new ControlPanelCategoriaSeleccion(tienda, c, this, vista);
+			ControlPanelCategoriaSeleccion control = new ControlPanelCategoriaSeleccion(tienda, c, this, vista);
+			if (this.descontado != null && this.descontado.equals(c)) {
+				this.panelDescontado = control.getPanel();
+				this.panelDescontado.toggleCheckBox();
+			}
+			
 		}
 		
 		vista.revalidate();
 		vista.repaint();
 	}
 	
-	public void incluirCategoria(Categoria c, boolean estaIncluido) {
-		if (estaIncluido) {
-			categoriasDescontados.add(c);
-		} else {
-			categoriasDescontados.remove(c);
+	@Override
+	public void setSeleccionado(Descontable elem, PanelSeleccion panel, boolean seleccionado) {
+		if (this.descontado == null) {
+			if (!seleccionado) return;
+			
+			this.descontado = elem;
+			this.panelDescontado = panel;
+			this.panelDescontado.toggleCheckBox();
 		}
-	}
+		else if (seleccionado) {
+			this.panelDescontado.toggleCheckBox();
+			panel.toggleCheckBox();
+			this.panelDescontado = panel;
+			this.descontado = elem;
+		} else {
+			if (!seleccionado) {
+				if (this.descontado.equals(elem)) {
+					this.panelDescontado.toggleCheckBox();
+					this.descontado = null;
+					this.panelDescontado = null;
+				}
+			} else {
+				if (!this.descontado.equals(elem)) {
+					this.panelDescontado.toggleCheckBox();
+					panel.toggleCheckBox();
+					this.panelDescontado = panel;
+					this.descontado = elem;
+				}
 	
-	public void incluirProducto(Producto p, boolean estaIncluido) {
-		if (estaIncluido) {
-			productosDescontados.add(p);
-		} else {
-			productosDescontados.remove(p);
+			}
 		}
+		
 	}
 	
 	private void cambiarTipoDescontado() {
@@ -94,16 +123,21 @@ public class ControlAnadirDescuento implements ControladorPantalla{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case PanelMultiopcion.CAMBIO_OPCION_ACTION:
+		case PanelMultiopcion.CAMBIO_OPCION_ACTION -> {
 			cambiarTipoDescontado();
-			break;
-		case VentanaAnadirDescuento.CANCELAR_ACTION:
-			new ControlInicioGestor(tienda, gestor);
-			break;
-		case VentanaAnadirDescuento.CONFIRMAR_ACTION:
-			computarDescuento();
-			break;
 		}
+		case VentanaAnadirDescuento.CANCELAR_ACTION -> new ControlInicioGestor(tienda, gestor);
+		case VentanaAnadirDescuento.CONFIRMAR_ACTION-> computarDescuento();
+		case "Regalo" -> seleccionRegalo();
+		
+		}
+		
+		
+	}
+	
+	public void seleccionRegalo() {
+		ControlSeleccionarRegalo control = new ControlSeleccionarRegalo(tienda, vista);
+		regalo = control.getRegalo();
 		
 		
 	}

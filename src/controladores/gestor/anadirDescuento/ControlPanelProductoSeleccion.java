@@ -16,9 +16,9 @@ public class ControlPanelProductoSeleccion implements ActionListener {
 	private Producto producto;
 	private Tienda tienda;
 	private PanelProductoSeleccion panel;
-	private ControlAnadirDescuento superControl;
+	private ControlGestionSeleccion<? super Producto> superControl;
 	
-	public ControlPanelProductoSeleccion(Tienda tienda, Producto producto, ControlAnadirDescuento superControl, VentanaConDisplay<? super PanelProducto> vista) {
+	public ControlPanelProductoSeleccion(Tienda tienda, Producto producto, String seleccionado, String desSeleccionado, ControlGestionSeleccion<? super Producto> superControl, VentanaConDisplay<? super PanelProducto> vista) {
 		this.tienda = tienda;
 		this.producto = producto;
 		this.superControl = superControl;
@@ -31,18 +31,19 @@ public class ControlPanelProductoSeleccion implements ActionListener {
 			categorias.add(c.getNombre());
 		}
 		
-		panel = new PanelProductoSeleccion(producto.getNombre(), producto.getDescripcion(), imageName, producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+		panel = new PanelProductoSeleccion(producto.getNombre(), producto.getDescripcion(), imageName, producto.getPuntuacionMedia(), producto.getPrecio(), seleccionado, desSeleccionado, categorias.toArray(new String[0]));
 		panel.setControlador(this);
 		
 		vista.anadirDisplay(panel);
 	}
 	
+	public PanelProductoSeleccion getPanel() { return panel; }
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case PanelCategoriaSeleccion.INCLUIR_ACTION:
-			panel.toggleCheckBox();
-			superControl.incluirProducto(producto, panel.isSeleccionado());
+			superControl.setSeleccionado(producto, panel, !panel.isSeleccionado());
 			break;
 		}
 	}

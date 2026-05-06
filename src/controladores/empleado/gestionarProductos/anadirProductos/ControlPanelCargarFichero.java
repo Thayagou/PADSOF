@@ -3,6 +3,8 @@ package controladores.empleado.gestionarProductos.anadirProductos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.SwingUtilities;
+
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
@@ -41,11 +43,13 @@ public class ControlPanelCargarFichero implements ActionListener {
 		if(nombreFichero.length() < 1) {
 			new VentanaMensaje("Seleccione un archivo válido");
 		}
-		
 		try {
 			tienda.getAlmacen().anadirProductosDeFichero(usuario, nombreFichero);
 		} catch (DoubleDiscountException | InvalidArgumentException | InvalidPermitException e) {
 			new VentanaMensaje(e.getMessage());
+			return;
 		}
+		SwingUtilities.invokeLater(() -> new ControlAnadirProductos(tienda, usuario));
+		new VentanaMensaje("Se han añadido los productos en el fichero correctamente");
 	}
 }

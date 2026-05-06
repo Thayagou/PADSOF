@@ -1,6 +1,5 @@
 package vistas.common;
 
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 
 import vistas.herramientas.ColorPalette;
@@ -38,6 +37,11 @@ public class InvisibleCheckBox extends JLabel{
         return false; 
     }
 	
+	public void setSeleccionado(boolean seleccionado) {
+	    if (this.isSelected() != seleccionado) {
+	        toggleSelection();
+	    }
+	}
 	public boolean isSelected() { return isSelected; }
     
     public void toggleSelection() {
@@ -50,4 +54,9 @@ public class InvisibleCheckBox extends JLabel{
 	    		? labelSelected 
 	    		: labelUnselected);
 	}
+    
+    public void toggleSelection(boolean select) {
+    	if (select == isSelected) return;
+    	else toggleSelection();
+    }
 }

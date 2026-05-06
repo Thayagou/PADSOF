@@ -7,7 +7,6 @@ import modelo.sistema.AsignadorId;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 
-import java.awt.Image;
 import java.io.Serializable;
 
 /**

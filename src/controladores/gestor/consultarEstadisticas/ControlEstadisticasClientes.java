@@ -15,15 +15,12 @@ import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 
 public class ControlEstadisticasClientes implements ControladorPantalla {
-	private Tienda tienda;
-	private Gestor gestor;
 	private VentanaEstadisticasCliente vista;
 	
 	public ControlEstadisticasClientes(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
-		this.gestor = gestor;
 		
 		this.vista = new VentanaEstadisticasCliente();
+		vista.setControlador(this);
 	
 		List<StatsUsuario> listaUsuarios = tienda.getHistorial().getUsuariosMasActivos();
 

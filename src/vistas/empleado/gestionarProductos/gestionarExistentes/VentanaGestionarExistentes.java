@@ -1,22 +1,22 @@
-package vistas.empleado.gestionarProductos.gestionarCategorias;
+package vistas.empleado.gestionarProductos.gestionarExistentes;
 
 import java.awt.BorderLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import vistas.common.PanelDisplay;
+
+import vistas.common.PanelProducto;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaGestionarCategorias extends JPanel implements VentanaConDisplay<PanelDisplay> {
+public class VentanaGestionarExistentes extends JPanel implements VentanaConDisplay<PanelProducto> {
 
 	private static final long serialVersionUID = 1L;
-	
 	private JPanel listaPanel = new JPanel();
 
-	public VentanaGestionarCategorias() {
+	public VentanaGestionarExistentes() {
 		setLayout(new BorderLayout());
 		setOpaque(false);
 		
@@ -36,23 +36,21 @@ public class VentanaGestionarCategorias extends JPanel implements VentanaConDisp
 		panelCentral.setOpaque(false);
 		panelCentral.add(BorderLayout.CENTER, scroll);
 
-		JPanel ventana = PanelFactory.getVentanaConCabecera("Gestionar categorías existentes", panelCentral);
+		JPanel ventana = PanelFactory.getVentanaConCabecera("Gestionar productos existentes", panelCentral);
 		ventana.setOpaque(false);
 		add(ventana);
 		
 		listaPanel.revalidate();
 		listaPanel.repaint();
 		
-		
 	}
-
+	
 	@Override
-	public <K extends PanelDisplay> PanelDisplay anadirDisplay(K panelDisplay) {
+	public <K extends PanelProducto> PanelProducto anadirDisplay(K panelDisplay) {
 		listaPanel.add(panelDisplay);
 		listaPanel.revalidate();
 		listaPanel.repaint();
 		return panelDisplay;
 	}
-	
-	
+
 }

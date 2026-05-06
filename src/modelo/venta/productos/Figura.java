@@ -1,6 +1,8 @@
 package modelo.venta.productos;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 import modelo.exceptions.*;
 import modelo.venta.productos.caracteristicas.*;
@@ -62,4 +64,18 @@ public class Figura extends Producto implements Serializable {
 		return String.format("(Dimensiones=%s, Marca=%s, Material=%s)", dimensiones, marca, material);
 	}
 
+	@Override
+	public String[] getValoresCaracteristicas() {
+		List<String> valores = new LinkedList<>();
+		valores.add(dimensiones);
+		valores.add(marca);
+		valores.add(material);
+		return valores.toArray(new String[0]);
+	}
+	
+	@Override
+	public String getTipoProducto() {
+		return "Figura";
+	}
+	
 }

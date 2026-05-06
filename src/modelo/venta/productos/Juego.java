@@ -1,6 +1,8 @@
 package modelo.venta.productos;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
 import modelo.exceptions.*;
 import modelo.venta.productos.caracteristicas.*;
@@ -61,5 +63,19 @@ public class Juego extends Producto implements Serializable {
 	@Override
 	public String getCaracteristicas() {
 		return String.format("(Tipo de juego=%s, Numero de Jugadores=%d, Rango de edad=%s)", tipo, numJugadores, rangoEdad);
+	}
+	
+	@Override
+	public String[] getValoresCaracteristicas() {
+		List<String> valores = new LinkedList<>();
+		valores.add(numJugadores+"");
+		valores.add(rangoEdad);
+		valores.add(tipo.name());
+		return valores.toArray(new String[0]);
+	}
+	
+	@Override
+	public String getTipoProducto() {
+		return "Juego";
 	}
 }

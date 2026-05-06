@@ -1,6 +1,7 @@
 package modelo.venta.productos.caracteristicas;
 
 import java.time.*;
+import java.util.List;
 
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
@@ -31,6 +32,11 @@ public class CaracteristicasComic implements CaracteristicasProducto {
 		this.autor = autor;
 		this.numPaginas = numPaginas;
 		this.editorial = editorial;
+	}
+	
+	@Override
+	public String[] getNombresCaracteristicas() {
+		return List.of("Fecha publicación", "Autor", "Número de páginas", "Editorial").toArray(new String[0]);
 	}
 
 	@Override

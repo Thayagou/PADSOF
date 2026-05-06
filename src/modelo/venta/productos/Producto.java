@@ -293,6 +293,7 @@ public abstract class Producto implements Serializable, Descontable {
 	public boolean anadirDescuento(Descuento descuento) throws InvalidArgumentException, DoubleDiscountException {
 		if(descuento == null) throw new InvalidArgumentException("El descuento no puede ser null", "añadir descuento a producto");
 		if(tieneDescuento()) throw new DoubleDiscountException("El producto ya tiene un descuento", "añadir descuento a producto", getNombre());
+		
 		this.descuento = descuento;
 		return true;
 	}
@@ -363,6 +364,18 @@ public abstract class Producto implements Serializable, Descontable {
 	 * @return Descripción de las características, según el tipo
 	 */
 	public abstract String getCaracteristicas();
+	
+	/**
+	 * Método abstracto para obtener los valores de las características
+	 * @return Array con valores de las características en String
+	 */
+	public abstract String[] getValoresCaracteristicas();
+	
+	/**
+	 * Devuelve el nombre del tipo de producto que es
+	 * @return Nombre del tipo de producto
+	 */
+	public abstract String getTipoProducto();
 	
 	/**
 	 * Método abstracto para modificar las características de un producto

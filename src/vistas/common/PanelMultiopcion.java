@@ -26,13 +26,12 @@ public class PanelMultiopcion extends JPanel {
 	private final JComboBox<String> selector;
 
 	/**
-	 * Construye el panel con cabecera, selector de opciones y contenido central.
+	 * Construye el panel con cabecera y selector de opciones 
 	 *
 	 * @param titulo    Texto que aparece en la cabecera.
-	 * @param contenido Panel que ocupa la zona central del panel.
 	 * @param opciones  Array de strings con las opciones del selector.
 	 */
-	public PanelMultiopcion(String titulo, JPanel contenido, String[] opciones) {
+	public PanelMultiopcion(String titulo, Fonts titleFont, Fonts selectorFont, String[] opciones) {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 
@@ -45,7 +44,7 @@ public class PanelMultiopcion extends JPanel {
 
 		/* ── Selector ── */
 		selector = new JComboBox<>(opciones);
-		selector.setFont(Fonts.TEXT.getFont());
+		selector.setFont(selectorFont.getFont());
 		selector.setActionCommand(CAMBIO_OPCION_ACTION);
 
 		/* ── Cabecera ── */
@@ -54,7 +53,7 @@ public class PanelMultiopcion extends JPanel {
 		cabecera.setBorder(BorderFactory.createEmptyBorder(headerPad, headerPad, headerPad, headerPad));
 
 		JLabel lblTitulo = new JLabel(titulo);
-		lblTitulo.setFont(Fonts.TITLE3.getFont());
+		lblTitulo.setFont(titleFont.getFont());
 		lblTitulo.setForeground(ColorPalette.WHITE.getColor());
 
 		cabecera.add(lblTitulo);
@@ -62,6 +61,17 @@ public class PanelMultiopcion extends JPanel {
 
 		/* ── Composición ── */
 		add(cabecera, BorderLayout.NORTH);
+	}
+	
+	/**
+	 * Construye el panel con cabecera, selector de opciones y contenido central.
+	 *
+	 * @param titulo    Texto que aparece en la cabecera.
+	 * @param contenido Panel que ocupa la zona central del panel.
+	 * @param opciones  Array de strings con las opciones del selector.
+	 */
+	public PanelMultiopcion(String titulo, JPanel contenido, String[] opciones) {
+		this(titulo, Fonts.TITLE3, Fonts.TEXT, opciones);
 		add(contenido, BorderLayout.CENTER);
 	}
 	
