@@ -194,6 +194,19 @@ public class ButtonFactory {
 
 	}
 	
+	public static void addMouseMecanics(JButton btn, ColorPalette defaultC) {
+		btn.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent e) {
+				btn.setBackground(ColorPalette.getHoverColor(defaultC.getColor()));
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent e) {
+				btn.setBackground(defaultC.getColor());
+			}
+		});
+
+	}
+	
 	public static void addHoverColorChange(JButton btn) {
 		Color color = btn.getBackground();
 		btn.addMouseListener(new java.awt.event.MouseAdapter() {

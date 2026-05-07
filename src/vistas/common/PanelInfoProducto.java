@@ -26,7 +26,7 @@ public class PanelInfoProducto extends JPanel {
 
 	/* Foto del producto */
 	private static final double FOTO_W = 0.32;
-	private static final double FOTO_H = 0.32;
+	private static final double FOTO_H = 0.37;
 
 	/* Estrellas */
 	private static final int MAX_STARS = 5;
@@ -162,6 +162,7 @@ public class PanelInfoProducto extends JPanel {
 		JLabel img = new JLabel(ButtonFactory.loadImageInBounds(image, fotoH, fotoW));
 		img.setAlignmentX(LEFT_ALIGNMENT);
 		panel.add(img);
+		panel.setBorder(BorderFactory.createLineBorder(ColorPalette.GREY.getColor()));
 
 		return panel;
 	}
@@ -190,6 +191,7 @@ public class PanelInfoProducto extends JPanel {
 		String truncado = truncarTextoMultilinea(texto, maxLines, maxWidth, Fonts.TEXT.getFont());
 
 		JTextArea area = new FixedTextArea();
+		area.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		area.setText(truncado);
 		area.setEditable(false);
 		area.setOpaque(false);
@@ -210,6 +212,7 @@ public class PanelInfoProducto extends JPanel {
 		scroll.setOpaque(false);
 		scroll.getViewport().setOpaque(false);
 		scroll.setAlignmentX(LEFT_ALIGNMENT);
+		scroll.setBorder(BorderFactory.createLineBorder(ColorPalette.LIGHT_GREY.getColor()));
 
 		/* Ajusta el ancho del area al viewport cuando este se redimensiona */
 		scroll.getViewport().addComponentListener(new ComponentAdapter() {

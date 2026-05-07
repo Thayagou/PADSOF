@@ -20,13 +20,15 @@ public class ControlAnadirResena implements ActionListener, ControladorPantalla 
 	ClienteRegistrado cliente;
 	Producto producto;
 	VentanaAnadirResena vista;
+	
+	private static final String actionName = "enviar";
 
 	public ControlAnadirResena(Tienda tienda, ClienteRegistrado cliente, Producto producto) {
 		this.tienda = tienda;
 		this.cliente = cliente;
 		this.producto = producto;
 		
-		this.vista = new VentanaAnadirResena();
+		this.vista = new VentanaAnadirResena(actionName);
 		vista.setControlador(this);
 		
 		TiendaFrame.getInstance().navegarA(this);
@@ -35,7 +37,7 @@ public class ControlAnadirResena implements ActionListener, ControladorPantalla 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "enviar":
+		case actionName:
 			try{
 				producto.anadirResena(new Resena(vista.getValoracion(), vista.getComentario(), cliente));
 				TiendaFrame.getInstance().volverAtras();

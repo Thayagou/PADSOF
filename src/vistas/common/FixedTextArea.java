@@ -1,5 +1,7 @@
 package vistas.common;
 
+import java.awt.Font;
+
 import javax.swing.JTextArea;
 
 public class FixedTextArea extends JTextArea {
@@ -17,6 +19,11 @@ public class FixedTextArea extends JTextArea {
 		public FixedTextArea(String texto) {
 			this();
 			setText(texto);
+		}
+		
+		public FixedTextArea(String texto, Font font) {
+			this(texto);
+			setFont(font);
 		}
 	    
 	    @Override

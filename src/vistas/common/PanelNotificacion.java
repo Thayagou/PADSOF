@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import javax.swing.*;
 
 import vistas.herramientas.ButtonFactory;
+import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
@@ -17,7 +18,7 @@ public class PanelNotificacion extends PanelDisplay {
 	private static final double FOTO_H_PERC = 0.99;
 	private static final double MAX_HEIGHT = 0.16;
 //	private static final int MAX_DESC = 120;
-	private static final double BTN_WIDTH = 0.07;
+	private static final double BTN_WIDTH = 0.05;
 	private static final double BTN_HEIGHT = 0.03;
 	
 	private static final double VERTICAL_GAP = 0.01;
@@ -36,24 +37,37 @@ public class PanelNotificacion extends PanelDisplay {
 		this.fecha = getFechaFormat(fecha);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
-		JPanel contenido = new JPanel(new GridLayout(2, 1));
+		JPanel contenido = new JPanel(new BorderLayout());
 		contenido.setOpaque(false);
 		
-		Fonts font;
-		if(leido == false) font = Fonts.BOLD;
-		else font = Fonts.TEXT;
+		Fonts fontTitle;
+		Fonts fontContent;
+		ColorPalette fontColor;
+		if(leido == false) {
+			fontTitle = Fonts.BOLD;
+			fontContent = Fonts.TEXT;
+			fontColor = ColorPalette.BLACK;
+		} else {
+			fontTitle = Fonts.TEXT;
+			fontContent = Fonts.TEXT;
+			fontColor = ColorPalette.GREY;
+		}
 		
-		JLabel cabecera = ButtonFactory.newLabel(this.fecha + ": " + this.titulo, font);
+		JLabel cabecera = ButtonFactory.newLabel(this.fecha + ": " + this.titulo, fontTitle);
 		cabecera.setOpaque(false);
-		contenido.add(cabecera);
-		JLabel panelTexto = ButtonFactory.newLabel(this.texto, Fonts.SMALL);
+		cabecera.setForeground(fontColor.getColor());
+		contenido.add(cabecera, BorderLayout.NORTH);
+		JTextArea panelTexto = new FixedTextArea(this.texto, fontContent.getFont());
+		panelTexto.setForeground(fontColor.getColor());
 		panelTexto.setOpaque(false);
-		contenido.add(panelTexto);
+		contenido.add(panelTexto, BorderLayout.CENTER);
 		
 		add(contenido, BorderLayout.CENTER);
 		
 		JPanel botones;
 		borrar = ButtonFactory.newRoundedButton("Borrar", t.getPixelsHeight(BTN_HEIGHT), t.getPixelsWidth(BTN_WIDTH), 1);
+		ButtonFactory.paintButton(borrar, ColorPalette.CARD_DARK, ColorPalette.DARK_GREY);
+		ButtonFactory.addMouseMecanics(borrar, ColorPalette.CARD_DARK);
 		borrar.setActionCommand("borrar");
 		borrar.setMaximumSize(new Dimension(t.getPixelsWidth(BTN_WIDTH), t.getPixelsHeight(BTN_HEIGHT)));
 		
@@ -64,7 +78,7 @@ public class PanelNotificacion extends PanelDisplay {
 		if(leido == false) {
 			botones = PanelFactory.getColumnaDeBotones(VERTICAL_GAP, marcarLeido, borrar);
 		} else {
-			botones = PanelFactory.getColumnaDeBotones(VERTICAL_GAP, borrar);
+			botones = PanelFactory.getColumnaDeBotones(VERTICAL_GAP*4.5, borrar);
 		}
 		
 		add(botones, BorderLayout.EAST);

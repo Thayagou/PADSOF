@@ -203,6 +203,7 @@ public class VentanaInfoArticulo extends JPanel {
 		img.setAlignmentX(LEFT_ALIGNMENT);
 		
 		panel.add(img);
+		panel.setBorder(BorderFactory.createLineBorder(ColorPalette.GREY.getColor()));
 
 		return panel;
 	}
@@ -228,6 +229,7 @@ public class VentanaInfoArticulo extends JPanel {
 	    String truncado = truncarTextoMultilinea(texto, maxLines, maxWidth, Fonts.TEXT.getFont());
 
 	    JTextArea area = new FixedTextArea(truncado);
+	    area.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 	    area.setEditable(false);
 	    area.setOpaque(false);
 	    area.setLineWrap(true);
@@ -249,6 +251,7 @@ public class VentanaInfoArticulo extends JPanel {
 	    scroll.setOpaque(false);
 	    scroll.getViewport().setOpaque(false);
 	    scroll.setAlignmentX(LEFT_ALIGNMENT);
+	    scroll.setBorder(BorderFactory.createLineBorder(ColorPalette.LIGHT_GREY.getColor()));
 
 	    // Listener para que el JTextArea se ajuste al ancho real del viewport
 	    // (teniendo en cuenta si aparece la barra vertical)
