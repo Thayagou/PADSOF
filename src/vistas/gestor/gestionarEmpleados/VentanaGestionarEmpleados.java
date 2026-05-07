@@ -7,13 +7,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import vistas.common.PanelDisplay;
 import vistas.common.TiendaFrame;
 import vistas.common.VentanaConDisplay;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
-public class VentanaGestionarEmpleados extends JPanel implements VentanaConDisplay<PanelEmpleado>{
+public class VentanaGestionarEmpleados extends JPanel implements VentanaConDisplay<PanelDisplay>{
 	private static final long serialVersionUID = 1L;
 	public static final String NUEVO_EMPLEADO_ACTION = "Dar de alta nuevo empleado";
 	private static double GAP_PERC = 0.05;
@@ -23,15 +25,6 @@ public class VentanaGestionarEmpleados extends JPanel implements VentanaConDispl
 		setOpaque(false);
 		setLayout(new BorderLayout());
 		
-		JPanel panelDarDeAlta = new JPanel();
-		panelDarDeAlta.setLayout(new BoxLayout(panelDarDeAlta, BoxLayout.Y_AXIS));
-		
-		
-		JButton nuevoEmpleadoButton = ButtonFactory.newRoundedButton(NUEVO_EMPLEADO_ACTION, 700, 300, 0.5f);
-		ButtonFactory.paintButton(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(nuevoEmpleadoButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
-		panelDarDeAlta.add(Box.createVerticalStrut(TiendaFrame.getInstance().getPixelsHeight(GAP_PERC)));
-		panelDarDeAlta.add(nuevoEmpleadoButton);
 		listaEmpleados.setLayout(new BoxLayout(listaEmpleados, BoxLayout.Y_AXIS));
 		listaEmpleados.setBackground(ColorPalette.CARD_LIGHT.getColor());
 		//listaEmpleados.setOpaque(false);
@@ -42,9 +35,6 @@ public class VentanaGestionarEmpleados extends JPanel implements VentanaConDispl
 		JPanel contenido = new JPanel();
 		contenido.setLayout(new BorderLayout());
 		contenido.add(BorderLayout.CENTER, scroll);
-		JPanel cabeceraDeAlta = PanelFactory.getVentanaConCabecera("Nuevo empleado  ", panelDarDeAlta);
-		cabeceraDeAlta.setOpaque(false);
-		this.add(cabeceraDeAlta, BorderLayout.WEST);
 		
 		JPanel cabeceraEmpleados = PanelFactory.getVentanaConCabecera("      Empleados de la tienda", contenido);
 		//cabeceraEmpleados.setOpaque(false);
@@ -59,7 +49,7 @@ public class VentanaGestionarEmpleados extends JPanel implements VentanaConDispl
 	}
 
 	@Override
-	public <K extends PanelEmpleado> PanelEmpleado anadirDisplay(K panelDisplay) {
+	public <K extends PanelDisplay> PanelDisplay anadirDisplay(K panelDisplay) {
 		listaEmpleados.add(panelDisplay);
 		refreshList();
 		

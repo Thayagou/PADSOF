@@ -42,7 +42,7 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		case "Añadir nuevo descuento"-> anadirDescuento();
 		case "Configurar sistema" -> configurarSistema();
 		
-		case "Gestionar productos y categorías" -> mostrarGestion();
+		//case "Gestionar productos y categorías" -> mostrarGestion();
 		//case "Añadir nuevo producto" -> anadirNuevoProducto();
 		case "Gestionar productos existentes" -> gestionarProductos();
 		case "Gestionar categorías" -> gestionarCategorias();
@@ -50,7 +50,7 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		
 		case "Gestionar empleados" -> gestionarEmpleados();
 		
-		case "Consultar estadísticas" -> consultarEstadisticas();
+		//case "Consultar estadísticas" -> consultarEstadisticas();
 		case "Estadísticas clientes" -> consultarEstadisticasClientes();
 		case "Estadísticas productos" -> consultarEstadisticasProductos();
 		case "Estadísticas ventas" -> consultarEstadisticasVentas();
@@ -73,9 +73,9 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		);
 	}
 	
-	private void mostrarGestion() {
+	/*private void mostrarGestion() {
 		barraLateral.setVisiblesGestionarProdsYCats();
-	}
+	}*/
 	
 	private void gestionarProductos() {
 		SwingUtilities.invokeLater(()->
@@ -87,20 +87,7 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		SwingUtilities.invokeLater(()->
 			new ControlGestionarCategorias(tienda, gestor)
 		);
-	}
-	
-	private void anadirNuevoProducto() {
-		SwingUtilities.invokeLater(()->
-			new ControlGestionarCategorias(tienda, gestor)
-		);
-	}
-	
-	private void crearNuevoPack() {
-		SwingUtilities.invokeLater(()->
-			new ControlGestionarCategorias(tienda, gestor)
-		);
-	}
-	
+	}	
 	
 	
 	private void gestionarEmpleados() {
@@ -109,9 +96,9 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		);
 	}
 	
-	private void consultarEstadisticas() {
+	/*private void consultarEstadisticas() {
 		barraLateral.setVisiblesEstadisticas();
-	}
+	}*/
 	
 	private void consultarEstadisticasClientes() {
 		SwingUtilities.invokeLater(()->

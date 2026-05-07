@@ -19,6 +19,8 @@ public class ControlGestionarEmpleados  implements ControladorPantalla{
 		this.gestor = gestor;
 		this.vista = new VentanaGestionarEmpleados();
 		
+		new ControlPanelNuevoEmpleado(tienda, gestor, vista);
+		
 		for (Empleado e: tienda.getTodosEmpleados()) {
 			new ControlPanelEmpleadoGestionar(tienda, e, vista);
 		}

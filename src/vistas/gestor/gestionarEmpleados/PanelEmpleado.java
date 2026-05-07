@@ -1,9 +1,15 @@
 package vistas.gestor.gestionarEmpleados;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
+
+import vistas.common.InvisibleCheckBox;
 import vistas.common.PanelDisplay;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
@@ -13,6 +19,7 @@ import vistas.herramientas.Fonts;
 public class PanelEmpleado extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
 
+	public static final String CONFIRMAR_ACTION = "Confirmar";
 	public static final String MODIFICAR_ACTION = "Modificar información y permisos";
 	public static final String DE_ALTA_ACTION = "Alta";
 
@@ -26,9 +33,19 @@ public class PanelEmpleado extends PanelDisplay {
 	private JButton deAltaButton;
 	private JLabel estado;
 	JPanel eastPanel;
+	
+	private JButton confirmarButton;
+	private boolean expanded = false;
+	private JPanel expandedPanel;
+	private Dimension originalMaxSize;
+	
+	private InvisibleCheckBox permisoProducto = ButtonFactory.newInvisibleCheckBox("Productos", "Productos", ColorPalette.BLACK,ColorPalette.GREY);
+	private InvisibleCheckBox permisoPedidos  = ButtonFactory.newInvisibleCheckBox("Pedidos", "Pedidos", ColorPalette.BLACK,ColorPalette.GREY);
+	private InvisibleCheckBox permisoIntercambios  = ButtonFactory.newInvisibleCheckBox("Intercambios", "Intercambios", ColorPalette.BLACK,ColorPalette.GREY);
+
 
 	public PanelEmpleado(String nombre, boolean deAlta, String... permisos) {
-		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "pfp.png", "");
+		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "pfp.png", MODIFICAR_ACTION);
 		this.deAlta = deAlta;
 		// this.fotoDePerfil = fotoDePerfil;
 		this.permisos = List.of(permisos);
@@ -67,6 +84,13 @@ public class PanelEmpleado extends PanelDisplay {
 		permisosLabel.setForeground(ColorPalette.PURPLE.getColor());
 		permisosRow.add(permisosLabel, BorderLayout.WEST);
 		info.add(permisosRow);
+		
+		List<String> listPermisos = new ArrayList<>();
+		for (String p: permisos) listPermisos.add(p);
+		
+		if (listPermisos.contains(PanelNuevoEmpleado.PERM_PEDIDOS)) permisoPedidos.setSeleccionado(true);
+		if (listPermisos.contains(PanelNuevoEmpleado.PERM_PRODUCTOS)) permisoProducto.setSeleccionado(true);
+		if (listPermisos.contains(PanelNuevoEmpleado.PERM_INTERCAMBIOS)) permisoIntercambios.setSeleccionado(true);
 
 		/* Tercera fila: de alta */
 		JPanel deAltaRow = new JPanel();
@@ -110,7 +134,94 @@ public class PanelEmpleado extends PanelDisplay {
 		eastPanel.add(deAltaButton);
 		eastPanel.add(Box.createVerticalStrut(gapSize));
 
-		this.add(eastPanel, BorderLayout.EAST);
+		this.add(eastPanel, BorderLayout.EAST);		
+		
+		confirmarButton = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		ButtonFactory.paintButton(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+	}
+	
+	public void toggleExpand() {
+		if (expanded) {
+			collapsePanel();
+		} else {
+			expandPanel();
+		}
+		expanded = !expanded;
+	}
+
+	private void expandPanel() {
+		if (expandedPanel == null) {
+			expandedPanel = new JPanel();
+			expandedPanel.setOpaque(false);
+			expandedPanel.setLayout(new BoxLayout(expandedPanel, BoxLayout.X_AXIS));
+
+			int gapSize = (int) (maxCompHeight * (1 - 2 * BOTON_PERC_H) / 3);
+			expandedPanel.add(Box.createHorizontalGlue());
+			expandedPanel.add(wrapperCheckBox(permisoProducto));
+			expandedPanel.add(Box.createHorizontalStrut(gapSize));
+			expandedPanel.add(wrapperCheckBox(permisoPedidos));
+			expandedPanel.add(Box.createHorizontalStrut(gapSize));
+			expandedPanel.add(wrapperCheckBox(permisoIntercambios));
+			
+			expandedPanel.add(confirmarButton);
+			
+			expandedPanel.setVisible(false);
+			add(expandedPanel, BorderLayout.SOUTH);
+		}
+
+		expandedPanel.setVisible(true);
+		
+		if (originalMaxSize == null) {
+	        originalMaxSize = getMaximumSize();
+	    }
+		int expandedHeight = (int)(originalMaxSize.height * 1.5);
+	    setMaximumSize(new Dimension(originalMaxSize.width, expandedHeight));
+
+	    revalidate();
+	    repaint();
+	}
+	
+	private JPanel wrapperCheckBox(InvisibleCheckBox cb	) {
+		JPanel wrapper = new JPanel();
+		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
+		wrapper.setOpaque(false);
+		wrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, cb.getPreferredSize().height));
+		wrapper.setAlignmentX(Component.CENTER_ALIGNMENT);
+		wrapper.add(Box.createHorizontalGlue());
+		wrapper.add(cb);
+		wrapper.add(Box.createHorizontalGlue());
+		wrapper.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cb.toggleSelection();
+			}
+		});
+		
+		return wrapper;
+	}
+
+	private void collapsePanel() {
+		if (expandedPanel != null) {
+	        expandedPanel.setVisible(false);
+	    }
+
+		if (originalMaxSize != null && getParent() != null) {
+	        setMaximumSize(originalMaxSize);
+	    }
+
+	    revalidate();
+	    repaint();
+	}
+	
+	public List<String> getPermisos() {
+		List<String> listaPermisos = new ArrayList<>();
+		
+		if (permisoPedidos.isSelected()) listaPermisos.add(PanelNuevoEmpleado.PERM_PEDIDOS);
+		if (permisoIntercambios.isSelected()) listaPermisos.add(PanelNuevoEmpleado.PERM_INTERCAMBIOS);
+		if (permisoProducto.isSelected()) listaPermisos.add(PanelNuevoEmpleado.PERM_PRODUCTOS);
+		
+		return listaPermisos;
 	}
 
 	@Override
@@ -118,6 +229,7 @@ public class PanelEmpleado extends PanelDisplay {
 		super.setControlador(l);
 		modButton.addActionListener(l);
 		deAltaButton.addActionListener(l);
+		confirmarButton.addActionListener(l);
 
 	}
 
