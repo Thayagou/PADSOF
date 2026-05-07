@@ -23,13 +23,18 @@ public class ControlVerOferta implements ControladorPantalla {
 	
 	private static final String BTN_ACCEPT = "Aceptar";
 	private static final String BTN_REJECT = "Rechazar";
+	private static final String BTN_CANCEL = "Cancelar";
 	
 	public ControlVerOferta(Tienda tienda, ClienteRegistrado cliente, Intercambio intercambio) {
 		this.tienda = tienda;
 		this.cliente = cliente;
 		this.intercambio = intercambio;
 		
-		this.vista = new VentanaOfertaIntercambio(BTN_REJECT, BTN_ACCEPT);
+		if(!cliente.equals(intercambio.getEmisor().getDueno()))
+			this.vista = new VentanaOfertaIntercambio(BTN_REJECT, BTN_ACCEPT);
+		else 
+			this.vista = new VentanaOfertaIntercambio(BTN_CANCEL);
+		
 		vista.setControlador(this);
 		
 		anadirArticulos(intercambio.getOfrecidos());
@@ -52,7 +57,7 @@ public class ControlVerOferta implements ControladorPantalla {
 				new VentanaMensaje("Has aceptado la oferta");
 				TiendaFrame.getInstance().volverAtras();
 			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+				new VentanaMensaje(ex.getMessage(), 2);
 			}
 			break;
 		case BTN_REJECT:
@@ -61,9 +66,15 @@ public class ControlVerOferta implements ControladorPantalla {
 				new VentanaMensaje("Has rechazado la oferta");
 				TiendaFrame.getInstance().volverAtras();
 			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+				new VentanaMensaje(ex.getMessage(), 2);
 			}
 			break;
+		case BTN_CANCEL:
+			try{
+				intercambio.cancelarIntercambio();
+			} catch(Exception ex) {
+				new VentanaMensaje(ex.getMessage(), 1);
+			}
 		}
 	}
 

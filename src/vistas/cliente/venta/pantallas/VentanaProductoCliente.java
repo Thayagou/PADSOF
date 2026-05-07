@@ -34,7 +34,7 @@ public class VentanaProductoCliente extends JPanel {
 	 * @param categorias      parámetro categorias
 	 */
 	public VentanaProductoCliente(String nombre, String descripcion, String image, double puntuacionMedia,
-			double precio, String... categorias) {
+			double precio, String caracteristicas, String... categorias) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
 		resenasPanel.setLayout(new BoxLayout(resenasPanel, BoxLayout.Y_AXIS));
@@ -54,7 +54,8 @@ public class VentanaProductoCliente extends JPanel {
 		resenas.setPreferredSize(new Dimension(reviewsW, 0));
 
 		/* Panel derecho - Detalle del producto */
-		JPanel rightPanel = new PanelInfoProducto(nombre, descripcion, image, puntuacionMedia, precio, categorias);
+		JPanel rightPanel = new JPanel(new BorderLayout());
+		rightPanel.add(BorderLayout.CENTER, new PanelInfoProducto(nombre, descripcion, image, puntuacionMedia, precio, caracteristicas, categorias));
 
 		comprar = ButtonFactory.newRoundedButton("Añadir al carrito", t.getPixelsHeight(COMPRAR_BTN_HEIGHT),
 				t.getPixelsWidth(COMPRAR_BTN_WIDTH), 1);
@@ -62,9 +63,10 @@ public class VentanaProductoCliente extends JPanel {
 		comprar.setAlignmentX(CENTER_ALIGNMENT);
 
 		JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		wrapper.setOpaque(false);
+		wrapper.setOpaque(true);
+		wrapper.setBackground(ColorPalette.WHITE.getColor());
 		wrapper.add(comprar);
-		rightPanel.add(wrapper);
+		rightPanel.add(wrapper, BorderLayout.SOUTH);
 
 		add(resenas, BorderLayout.WEST);
 		add(rightPanel, BorderLayout.CENTER);

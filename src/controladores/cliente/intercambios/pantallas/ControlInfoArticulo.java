@@ -23,6 +23,8 @@ public class ControlInfoArticulo implements ActionListener, ControladorPantalla 
 	private VentanaInfoArticulo vista;
 	
 	private final String USER_PFP = "pfp.png";
+	private static final String actionOffer = "Hacer oferta";
+	private static final String actionWallet = "Ver cartera";
 
 	public ControlInfoArticulo(Tienda tienda, ClienteRegistrado cliente, ArticuloSegundaMano articulo) {
 		this.tienda = tienda;
@@ -76,7 +78,7 @@ public class ControlInfoArticulo implements ActionListener, ControladorPantalla 
 		}
 		String[] categorias = listCategorias.toArray(new String[0]);
 		
-		this.vista = new VentanaInfoArticulo(dueno.getNombre(), USER_PFP, articulo.getNombre(), articulo.getImage(), articulo.getDescripcion(), articulo.getInteresadoEn(), estado, estimacion, ajeno, categorias);
+		this.vista = new VentanaInfoArticulo(dueno.getNombre(), USER_PFP, articulo.getNombre(), articulo.getImage(), articulo.getDescripcion(), articulo.getInteresadoEn(), estado, estimacion, ajeno, actionOffer, actionWallet, categorias);
 		this.vista.setControlador(this);
 		
 		TiendaFrame.getInstance().navegarA(this);
@@ -86,10 +88,10 @@ public class ControlInfoArticulo implements ActionListener, ControladorPantalla 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "Ver cartera":
+		case actionWallet:
 			SwingUtilities.invokeLater(() -> new ControlManejoCartera(tienda, cliente, articulo.getPropietario()));
 			break;
-		case "Hacer oferta":
+		case actionOffer:
 			SwingUtilities.invokeLater(() -> new ControlHacerOferta(tienda, cliente, articulo.getPropietario()));
 			break;
 		}

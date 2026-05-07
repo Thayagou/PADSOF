@@ -1,7 +1,6 @@
 package vistas.common;
 
 import java.awt.*;
-import java.security.cert.CertificateFactory;
 
 import javax.swing.*;
 import vistas.herramientas.*;
@@ -17,54 +16,52 @@ public class PanelProducto extends PanelDisplay {
 	private static final double FOTO_W_PERC = 0.09;
 	private static final double FOTO_H_PERC = 0.99;
 	private static final double MAX_HEIGHT = 0.16;
-	private static final int MAX_DESC = 120;
+	
+	private static final double NAME_WIDTH = 0.5;
+	private static final double DESC_WIDTH = NAME_WIDTH + 0.058;
+	private static final int DESC_MAX_LINES = 3;
 	
 	private String nombre;
 	private String descripcion;
 	private double puntuacionMedia;
 	private double precio;
-
-	//private final JButton clickArea; // botón invisible que ocupa todo el panel
-
+	
 	public PanelProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String actionName, String...categorias) {
 		super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT, FOTO_W_PERC, imageName, actionName);
-		//super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT, "Ver producto:");
 		
 		this.puntuacionMedia = puntuacionMedia;
 		this.descripcion = descripcion;
 		this.nombre = nombre;
 		this.precio = precio;
 		
-		//setOpaque(false);
-
 		TiendaFrame t = TiendaFrame.getInstance();
 		/* Info: estrellas + nombre + descripción + precio + categorías */
 		JPanel info = new JPanel();
 		info.setOpaque(false);
-		// ── Estrellas ──────────────────────────────────────────────────────────
-			info.setLayout(new GridLayout(3, 1));
+		info.setLayout(new BorderLayout());
 		
 		/*Primera fila: estrellas + nombre */
 		JPanel firstRow = new JPanel();
 		firstRow.setOpaque(false);
 		firstRow.setLayout(new BorderLayout(10, 0));
-		firstRow.add(buildEstrellas(t, puntuacionMedia), BorderLayout.CENTER);
+		firstRow.add(buildEstrellas(t, puntuacionMedia), BorderLayout.WEST);
 
-		JLabel nombreLabel = new JLabel(nombre);
+		JLabel nombreLabel = new JLabel();
+		nombreLabel.setText(Fonts.truncar(nombre, t.getPixelsWidth(NAME_WIDTH), Fonts.BOLD.getFont(), nombreLabel));
 		nombreLabel.setFont(Fonts.BOLD.getFont());
 		nombreLabel.setForeground(ColorPalette.DARK_GREY.getColor().darker());
-		firstRow.add(nombreLabel, BorderLayout.WEST);
+		firstRow.add(nombreLabel, BorderLayout.CENTER);
 
-		info.add(firstRow);
+		info.add(firstRow, BorderLayout.NORTH);
 		
 		/*Segunda fila: descripcion*/
-		if (descripcion != null && descripcion.length() > MAX_DESC)
-			descripcion = descripcion.substring(0, MAX_DESC) + "...";
-		JLabel descripcionLabel = ButtonFactory.newLabel(descripcion, Fonts.SMALL);
-				//new JLabel("<html>" + descripcion + "</html>");
-		//descripcionLabel.setFont(Fonts.SMALL.getFont());
+		JTextArea descripcionLabel = new FixedTextArea();
+		descripcionLabel.setFont(Fonts.SMALL.getFont());
+		descripcionLabel.setSize(t.getPixelsWidth(DESC_WIDTH), Short.MAX_VALUE);
+		descripcionLabel.setText(Fonts.truncar(descripcion, t.getPixelsWidth(DESC_WIDTH)*DESC_MAX_LINES, Fonts.SMALL.getFont(), descripcionLabel));
 		descripcionLabel.setForeground(ColorPalette.DARK_GREY.getColor());
-		info.add(descripcionLabel);
+		
+		info.add(descripcionLabel, BorderLayout.CENTER);
 		
 		/*Tercera fila: categorias + precio*/
 		JPanel thirdRow = new JPanel();
@@ -85,7 +82,7 @@ public class PanelProducto extends PanelDisplay {
 		precioLabel.setForeground(Color.BLACK);
 		thirdRow.add(precioLabel, BorderLayout.CENTER);
 		
-		info.add(thirdRow);
+		info.add(thirdRow, BorderLayout.SOUTH);
 		
 		add(info, BorderLayout.CENTER);
 	}

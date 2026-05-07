@@ -28,7 +28,7 @@ public class VentanaInfoPedidoCliente extends JPanel implements VentanaConDispla
 		JPanel contenido = new JPanel(new BorderLayout());
 		contenido.add(BorderLayout.CENTER, scroll);
 
-		this.add(BorderLayout.CENTER, PanelFactory.getVentanaConCabecera("      Detalle del pedido", contenido));
+		this.add(BorderLayout.CENTER, PanelFactory.getVentanaConCabecera("      Detalles del pedido", contenido));
 
 		refreshList();
 	}
@@ -46,6 +46,6 @@ public class VentanaInfoPedidoCliente extends JPanel implements VentanaConDispla
 	}
 
 	public void setControlador(ActionListener c) {
-		// Reservado para acciones globales futuras (ej. botón "Volver")
+		/* Sin acciones para esta ventana */
 	}
 }

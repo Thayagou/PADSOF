@@ -42,7 +42,7 @@ public class ControlInfoProductoCliente implements ActionListener, ControladorPa
 			imageRoute = producto.getImagen();
 
 		this.vista = new VentanaProductoCliente(producto.getNombre(), producto.getDescripcion(), imageRoute,
-				producto.getPuntuacionMedia(), producto.getPrecio(), categorias.toArray(new String[0]));
+				producto.getPuntuacionMedia(), producto.getPrecio(), producto.getCaracteristicas(), categorias.toArray(new String[0]));
 		vista.setControlador(this);
 		
 		for (Resena r : producto.getResenas()) {

@@ -6,6 +6,7 @@ import vistas.common.BarraTareas;
 import vistas.common.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
+import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelSizes;
 import controladores.ControlBarraTareas;
 
@@ -68,6 +69,9 @@ public class BarraTareasCliente extends BarraTareas {
 		ButtonFactory.addHoverInfo(carrito, "Ver Carrito", 0);
 
 		cuenta = ButtonFactory.newRoundedButton(cliente, btnH, accountW, 0.25);
+		String usrName = Fonts.truncar(cliente, accountW, cuenta.getFont(), cuenta);
+		cuenta.setText(usrName);
+		
 		ButtonFactory.paintButton(cuenta, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		cuenta.setActionCommand("Cuenta");
 		ButtonFactory.addMouseMecanics(cuenta, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
@@ -117,7 +121,7 @@ public class BarraTareasCliente extends BarraTareas {
 
 	@Override
 	public void setControlador(ControlBarraTareas c) {
-		volver.addActionListener(c); // [NUEVO]
+		volver.addActionListener(c);
 		home.addActionListener(c);
 		notificaciones.addActionListener(c);
 		buscar.addActionListener(c);
