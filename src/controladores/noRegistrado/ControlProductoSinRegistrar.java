@@ -33,7 +33,7 @@ public class ControlProductoSinRegistrar implements ActionListener, ControladorP
 		
 		this.vista = new VentanaProductoSinRegistrar(producto.getNombre(), 
 				producto.getDescripcion(), imageRoute, producto.getPuntuacionMedia(), 
-				producto.getPrecio(), categorias.toArray(new String[0]));
+				producto.getPrecio(), producto.getCaracteristicas(), categorias.toArray(new String[0]));
 		for(Resena r : producto.getResenas()) {
 			vista.anadirPanelResena(r.getPuntuacion(), r.getComentario(), r.getUsuario().getNombre());
 		}

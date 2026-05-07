@@ -15,6 +15,7 @@ public enum Fonts {
     BOLD("Arial", Font.BOLD, 0.02),
     SMALL("Arial", Font.PLAIN, 0.015),
     SMALL_BOLD("Arial", Font.BOLD, 0.015),
+    LIGHT("Arial", Font.ROMAN_BASELINE, 0.02),
     TEXT("Arial", Font.PLAIN, 0.02);
 	
 	private Font font;

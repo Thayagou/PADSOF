@@ -32,7 +32,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
 	 * @param precio          parámetro precio
 	 * @param categorias      parámetro categorias
 	 */
-	public VentanaProductoSinRegistrar(String nombre, String descripcion, String image, double puntuacionMedia, double precio,
+	public VentanaProductoSinRegistrar(String nombre, String descripcion, String image, double puntuacionMedia, double precio, String caracteristicas,
 			String... categorias) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -53,7 +53,7 @@ public class VentanaProductoSinRegistrar extends JPanel {
 		resenas.setPreferredSize(new Dimension(reviewsW, 0));
 
 		/* Panel derecho - Detalle del producto */
-		JPanel rightPanel = new PanelInfoProducto(nombre, descripcion, image, puntuacionMedia, precio, categorias);
+		JPanel rightPanel = new PanelInfoProducto(nombre, descripcion, image, puntuacionMedia, precio, caracteristicas, categorias);
 		
 		add(resenas, BorderLayout.WEST);
 		add(rightPanel, BorderLayout.CENTER);

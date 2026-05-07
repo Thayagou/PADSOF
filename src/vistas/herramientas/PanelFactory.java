@@ -268,7 +268,7 @@ public class PanelFactory {
 	 * @param space Espacio en píxeles que se añade arriba y abajo
 	 * @return Panel con el Panel que se pasó con dos espacios arriba y abajo
 	 */
-	public static JPanel wrapHorizontal(JPanel panel, int space) {
+	public static JPanel wrapHorizontal(JComponent panel, int space) {
 		JPanel wrapper = new JPanel();
 		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
 		wrapper.setOpaque(false);

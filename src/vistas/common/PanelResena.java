@@ -6,12 +6,17 @@ import vistas.herramientas.*;
 
 public class PanelResena extends JPanel {
 	private static final long serialVersionUID = 1L;
-
+	
 	private Color gradStart = ColorPalette.CARD_LIGHT.getColor();
 	private Color gradEnd = ColorPalette.CARD_DARK.getColor();
 
 	public PanelResena(double puntuacion, String comentario, String usr) {
 		setOpaque(false);
+		setLayout(new BorderLayout(30, 0));
+		setBackground(ColorPalette.CARD_LIGHT.getColor());
+		setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createMatteBorder(0, 0, 1, 0, ColorPalette.BLACK.getColor()),
+				BorderFactory.createEmptyBorder(8, 8, 8, 8)));
 
 		TiendaFrame t = TiendaFrame.getInstance();
 
