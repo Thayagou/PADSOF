@@ -288,6 +288,7 @@ public class ButtonFactory {
 		JSpinner spinner = new JSpinner(new SpinnerDateModel());
 	    JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy");
 	    spinner.setEditor(editor);
+	    spinner.setFont(font.getFont());
 	    return spinner;
 	}    
 	    

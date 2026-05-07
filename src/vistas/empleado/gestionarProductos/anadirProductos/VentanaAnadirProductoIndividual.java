@@ -298,7 +298,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 			JComponent tf;
 
 			if (espActuales[i].equals("Fecha publicación")) {
-				JSpinner spinner = ButtonFactory.spinnerLocalDate(Fonts.BOLD);
+				JSpinner spinner = ButtonFactory.spinnerLocalDate(Fonts.TEXT);
 				spinner.setMaximumSize(new Dimension(Integer.MAX_VALUE, spinner.getPreferredSize().height));
 				spinner.setAlignmentX(Component.LEFT_ALIGNMENT);
 				System.out.println("Valor fecha: " + valor);
