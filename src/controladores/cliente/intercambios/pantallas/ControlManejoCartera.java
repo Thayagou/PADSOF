@@ -11,8 +11,8 @@ import controladores.cliente.intercambios.ControlPanelArticuloEnCartera;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
-import vistas.common.TiendaFrame;
 import vistas.cliente.intercambios.pantallas.VentanaCartera;
+import vistas.common.app.TiendaFrame;
 
 public class ControlManejoCartera implements ActionListener, ControladorPantalla {
 	

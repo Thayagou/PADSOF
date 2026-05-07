@@ -13,8 +13,8 @@ import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Resena;
 import vistas.cliente.venta.pantallas.VentanaProductoCliente;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlInfoProductoCliente implements ActionListener, ControladorPantalla {
 

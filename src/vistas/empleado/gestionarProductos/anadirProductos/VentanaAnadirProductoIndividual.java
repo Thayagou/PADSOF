@@ -33,9 +33,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import vistas.common.InvisibleCheckBox;
-import vistas.common.PanelProducto;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.components.InvisibleCheckBox;
+import vistas.common.displays.PanelProducto;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;

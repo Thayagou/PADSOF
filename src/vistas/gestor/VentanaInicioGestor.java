@@ -10,7 +10,7 @@ import javax.swing.border.TitledBorder;
 
 import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;

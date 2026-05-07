@@ -11,8 +11,8 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import vistas.cliente.intercambios.pantallas.VentanaAnadirArticulo;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlAnadirArticulo implements ActionListener, ControladorPantalla {
 	private Tienda tienda;

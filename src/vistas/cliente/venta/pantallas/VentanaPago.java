@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import vistas.common.*;
+import vistas.common.assets.PanelFormulario;
 
 public class VentanaPago extends JPanel {
 

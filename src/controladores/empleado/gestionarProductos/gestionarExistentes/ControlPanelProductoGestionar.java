@@ -13,9 +13,9 @@ import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Stock;
-import vistas.common.PanelProducto;
-import vistas.common.VentanaConDisplay;
-import vistas.common.VentanaMensaje;
+import vistas.common.assets.VentanaMensaje;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.empleado.gestionarProductos.gestionarExistentes.PanelProductoGestionarProducto;
 
 public class ControlPanelProductoGestionar implements ActionListener {

@@ -13,8 +13,8 @@ import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.Intercambio;
-import vistas.common.PanelIntercambioConBoton;
-import vistas.common.VentanaMensaje;
+import vistas.common.assets.VentanaMensaje;
+import vistas.common.displays.PanelIntercambioConBoton;
 import vistas.empleado.gestionarIntercambios.VentanaGestIntercambios;
 
 public class ControlPanelIntercambioConBoton implements ActionListener {

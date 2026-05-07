@@ -1,4 +1,4 @@
-package vistas.common;
+package vistas.common.displays;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -6,6 +6,8 @@ import java.time.LocalDate;
 
 import javax.swing.*;
 
+import vistas.common.app.TiendaFrame;
+import vistas.common.components.FixedTextArea;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;

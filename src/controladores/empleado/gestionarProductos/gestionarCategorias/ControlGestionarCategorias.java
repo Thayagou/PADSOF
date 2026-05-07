@@ -8,7 +8,7 @@ import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCategorias;
 
 public class ControlGestionarCategorias implements ControladorPantalla{

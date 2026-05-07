@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import vistas.common.PanelDisplay;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.displays.PanelDisplay;
 import vistas.herramientas.*;
 
 public class PanelOferta extends PanelDisplay {

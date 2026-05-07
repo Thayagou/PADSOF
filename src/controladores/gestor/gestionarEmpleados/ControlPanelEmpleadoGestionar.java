@@ -8,7 +8,7 @@ import java.util.List;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.usuario.Permiso;
-import vistas.common.VentanaConDisplay;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.gestor.gestionarEmpleados.PanelEmpleado;
 import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 

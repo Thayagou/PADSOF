@@ -5,6 +5,9 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import vistas.common.*;
+import vistas.common.assets.PanelMultiopcion;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
 // TODO: Auto-generated Javadoc

@@ -13,7 +13,7 @@ import controladores.gestor.consultarEstadisticas.ControlEstadisticasProductos;
 import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.empleado.general.VentanaInicioEmpleado;
 import vistas.gestor.VentanaInicioGestor;
 

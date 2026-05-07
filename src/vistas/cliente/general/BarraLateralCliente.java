@@ -1,56 +1,44 @@
 package vistas.cliente.general;
 
-import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.util.*;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import controladores.ControlBarraLateral;
-import vistas.common.BarraLateral;
-import vistas.common.TiendaFrame;
-import vistas.herramientas.ColorPalette;
+import vistas.common.app.BarraLateral;
+import vistas.common.app.MenuLateral;
 
 public class BarraLateralCliente extends BarraLateral {
 
 	private static final long serialVersionUID = 1L;
 
-	private JButton buscarProductos;
+	private JButton buscarProductos = new JButton("Buscar productos");
 
-	private JButton verCarrito;
+	private JButton verCarrito = new JButton("Ver carrito");
 
-	private JButton buscarArticulos;
+	private JButton buscarArticulos = new JButton("Buscar artículos");
 
-	private JButton verCartera;
-	private JButton anadirArticulo;
-	private JButton verMisOfertas;
+	private JButton verCartera = new JButton("Ver cartera");
+	private JButton anadirArticulo = new JButton("Añadir artículo");
+	private JButton verMisOfertas = new JButton("Ver mis ofertas");
 
-	private JButton verCompras;
+	private JButton verCompras = new JButton("Ver mis compras");
 
 	public BarraLateralCliente() {
-		TiendaFrame frame = TiendaFrame.getInstance();
-		int distFromLeft = frame.optionBarDistFromLeft();
-		int distIndented = (int) (distFromLeft * 0.9);
-		int btnHeight = frame.btnHeight();
-
-		setBackground(ColorPalette.CARD_LIGHT.getColor());
-		setPreferredSize(new Dimension(distFromLeft, 0));
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-		buscarProductos = addBtn("Buscar Productos", btnHeight, distFromLeft);
-
-		verCarrito = addBtn("Ver Carrito", btnHeight, distFromLeft);
-
-		buscarArticulos = addBtn("Buscar Artículos", btnHeight, distFromLeft);
-
-		verCartera = addBtn("Ver Cartera", btnHeight, distFromLeft);
-		anadirArticulo = addBtn("Añadir Artículo", btnHeight, distIndented);
-		verMisOfertas = addBtn("Ver mis ofertas", btnHeight, distIndented);
-
-		verCompras = addBtn("Ver mis compras", btnHeight, distFromLeft);
+		Map<String, List<JButton>> mapa = new TreeMap<>();
 		
-		for(JButton btn : new JButton[] {buscarProductos, verCarrito, buscarArticulos, verCartera, anadirArticulo, verMisOfertas, verCompras}) {
-			add(btn);
-		}
+		mapa.put("Comprar", new ArrayList<JButton>(List.of(buscarProductos, verCarrito)));
+		mapa.put("Segunda mano", new ArrayList<JButton>(List.of(buscarArticulos, verCartera, anadirArticulo, verMisOfertas)));
+		mapa.put("Mis compras", new ArrayList<JButton>(List.of(verCompras)));
+		
+		setOpaque(false);
+		setLayout(new GridLayout(1,1));
+		
+		add(new MenuLateral(mapa));
 	}
 
 	@Override

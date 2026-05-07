@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
-import vistas.common.PanelCategoria;
-import vistas.common.PanelCategoriaSeleccion;
-import vistas.common.VentanaConDisplay;
+import vistas.common.displays.PanelCategoria;
+import vistas.common.displays.PanelCategoriaSeleccion;
+import vistas.common.displays.VentanaConDisplay;
 
 public class ControlPanelCategoriaSeleccion  implements ActionListener {
 	private Categoria categoria;

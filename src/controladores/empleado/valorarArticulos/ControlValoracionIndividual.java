@@ -18,8 +18,8 @@ import modelo.usuario.Empleado;
 import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.EstadoFisicoArticulo;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.valorarArticulos.VentanaValoracionIndividual;
 
 public class ControlValoracionIndividual implements ControladorPantalla {

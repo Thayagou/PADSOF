@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import vistas.common.*;
+import vistas.common.displays.PanelPedido;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
 public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPedido> {

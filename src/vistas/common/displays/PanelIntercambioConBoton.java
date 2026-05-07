@@ -1,4 +1,4 @@
-package vistas.common;
+package vistas.common.displays;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -9,6 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 

@@ -17,7 +17,7 @@ import controladores.gestor.consultarEstadisticas.ControlEstadisticasWallapop;
 import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.gestor.BarraGestor;
 
 public class ControlBarraLateralGestor implements ControlBarraLateral{

@@ -5,8 +5,9 @@ import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import vistas.common.PanelDisplay;
-import vistas.common.VentanaConDisplay;
+
+import vistas.common.displays.PanelDisplay;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 

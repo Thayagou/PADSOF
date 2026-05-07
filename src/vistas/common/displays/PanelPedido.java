@@ -1,4 +1,4 @@
-package vistas.common;
+package vistas.common.displays;
 
 import java.awt.BorderLayout;
 
@@ -7,6 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import vistas.common.assets.PanelFotoPerfil;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.Fonts;
 

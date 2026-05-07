@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import vistas.common.PanelDisplay;
-import vistas.common.PanelProducto;
-import vistas.common.VentanaConDisplay;
+import vistas.common.displays.PanelDisplay;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaAnadirProductos extends JPanel implements VentanaConDisplay<PanelDisplay>{

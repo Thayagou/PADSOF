@@ -13,7 +13,7 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaInfoArticulo;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class ControlInfoArticulo implements ActionListener, ControladorPantalla {
 	

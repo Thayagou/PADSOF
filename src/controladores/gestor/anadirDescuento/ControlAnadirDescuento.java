@@ -15,9 +15,9 @@ import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.PanelSeleccion;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
+import vistas.common.components.PanelSeleccion;
 import vistas.gestor.anadirDescuento.VentanaAnadirDescuento;
 
 public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontable>, ControladorPantalla{

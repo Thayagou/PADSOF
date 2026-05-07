@@ -14,6 +14,8 @@ import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.PanelArticuloEnCartera;
 import vistas.common.*;
+import vistas.common.displays.PanelArticulo;
+import vistas.common.displays.VentanaConDisplay;
 
 public class ControlPanelArticuloEnCartera implements ActionListener {
 

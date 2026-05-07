@@ -11,8 +11,8 @@ import controladores.cliente.general.pantallas.ControlInicioCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import vistas.cliente.venta.pantallas.VentanaPago;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlVentanaPago implements ActionListener, ControladorPantalla {
 	

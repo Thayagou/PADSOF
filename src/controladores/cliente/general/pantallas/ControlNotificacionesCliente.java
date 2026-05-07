@@ -13,6 +13,8 @@ import modelo.usuario.Notificacion;
 import modelo.usuario.TipoNotificacion;
 import vistas.cliente.general.pantallas.VentanaNotificacionesCliente;
 import vistas.common.*;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlNotificacionesCliente implements ActionListener, ControladorPantalla {
 

@@ -6,7 +6,7 @@ import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.usuario.Gestor;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
 public class ControlGestionarEmpleados  implements ControladorPantalla{

@@ -7,9 +7,9 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
-import vistas.common.FixedTextArea;
-import vistas.common.PanelFotoPerfil;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelFotoPerfil;
+import vistas.common.components.FixedTextArea;
 import vistas.herramientas.*;
 
 public class VentanaInfoArticulo extends JPanel {

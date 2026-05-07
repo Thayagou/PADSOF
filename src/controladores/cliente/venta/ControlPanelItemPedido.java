@@ -12,6 +12,7 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.StockExterno;
 import vistas.cliente.venta.PanelItemPedido;
 import vistas.common.*;
+import vistas.common.displays.VentanaConDisplay;
 
 public class ControlPanelItemPedido implements ActionListener {
 

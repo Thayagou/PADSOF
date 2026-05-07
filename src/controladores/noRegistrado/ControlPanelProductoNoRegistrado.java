@@ -11,9 +11,9 @@ import modelo.venta.descuentos.CondicionDescuento;
 import modelo.venta.descuentos.Descuento;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.PanelProducto;
-import vistas.common.VentanaConDisplay;
-import vistas.common.VentanaMensaje;
+import vistas.common.assets.VentanaMensaje;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 public class ControlPanelProductoNoRegistrado implements ActionListener {
 	private Producto producto;
 	private Tienda tienda;

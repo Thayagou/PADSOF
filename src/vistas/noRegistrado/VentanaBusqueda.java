@@ -3,8 +3,8 @@ package vistas.noRegistrado;
 import javax.swing.*;
 
 import controladores.noRegistrado.ControlBuscar;
-import vistas.common.PanelSelectorCajas;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelSelectorCajas;
 import vistas.herramientas.*;
 
 import java.awt.*;

@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import vistas.common.*;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelFormulario;
 import vistas.herramientas.*;
 
 public class VentanaCuentaCliente extends JPanel {

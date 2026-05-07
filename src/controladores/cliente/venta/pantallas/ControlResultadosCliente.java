@@ -12,6 +12,7 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
 import vistas.noRegistrado.*;
 import vistas.common.*;
+import vistas.common.app.TiendaFrame;
 
 public class ControlResultadosCliente implements ActionListener, ControladorPantalla {
 	

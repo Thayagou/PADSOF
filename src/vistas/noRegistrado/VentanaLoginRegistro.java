@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import vistas.common.PanelFormulario;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelFormulario;
 import vistas.herramientas.*;
 
 // TODO: Auto-generated Javadoc

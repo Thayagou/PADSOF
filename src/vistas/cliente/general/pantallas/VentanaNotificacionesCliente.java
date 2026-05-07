@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import vistas.common.*;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelSelectorCajas;
+import vistas.common.displays.PanelNotificacion;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
 public class VentanaNotificacionesCliente extends JPanel implements VentanaConDisplay<PanelNotificacion> {

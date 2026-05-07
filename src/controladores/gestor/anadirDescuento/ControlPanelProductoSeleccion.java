@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.PanelCategoriaSeleccion;
-import vistas.common.PanelProducto;
-import vistas.common.PanelProductoSeleccion;
-import vistas.common.VentanaConDisplay;
+import vistas.common.displays.PanelCategoriaSeleccion;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.PanelProductoSeleccion;
+import vistas.common.displays.VentanaConDisplay;
 
 public class ControlPanelProductoSeleccion implements ActionListener {
 	private Producto producto;

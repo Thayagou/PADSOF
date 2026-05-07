@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.noRegistrado.VentanaResultadosNoRegistrado;
 
 public class ControlResultadosNoRegistrado implements ActionListener, ControladorPantalla {
@@ -49,7 +49,7 @@ public class ControlResultadosNoRegistrado implements ActionListener, Controlado
 				Producto producto = tienda.getAlmacen().getStock(nombreProducto).getProducto();
 				new ControlProductoSinRegistrar(tienda, producto);
 			} catch (Exception ex) {
-				new vistas.common.VentanaMensaje("Producto no encontrado: " + nombreProducto);
+				new vistas.common.assets.VentanaMensaje("Producto no encontrado: " + nombreProducto);
 			}
 		});
 	}

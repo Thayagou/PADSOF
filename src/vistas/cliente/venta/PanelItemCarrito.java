@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import vistas.common.PanelProducto;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.displays.PanelProducto;
 import vistas.herramientas.*;
 
 public class PanelItemCarrito extends PanelProducto {

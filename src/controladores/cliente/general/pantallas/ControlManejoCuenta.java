@@ -11,8 +11,8 @@ import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import vistas.cliente.general.pantallas.VentanaCuentaCliente;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlManejoCuenta implements ActionListener, ControladorPantalla {
 

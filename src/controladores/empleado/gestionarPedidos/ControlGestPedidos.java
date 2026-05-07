@@ -8,7 +8,7 @@ import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.venta.pedidos.Pedido;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.empleado.gestionarPedidos.VentanaGestPedidos;
 
 public class ControlGestPedidos implements ControladorPantalla {

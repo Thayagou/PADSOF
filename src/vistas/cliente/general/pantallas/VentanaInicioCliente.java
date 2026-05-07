@@ -7,6 +7,8 @@ import javax.swing.*;
 
 import vistas.herramientas.*;
 import vistas.common.*;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 
 public class VentanaInicioCliente extends JPanel implements VentanaConDisplay<PanelProducto> {
 

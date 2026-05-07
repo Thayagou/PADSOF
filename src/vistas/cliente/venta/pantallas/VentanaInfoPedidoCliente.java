@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import vistas.cliente.venta.PanelItemPedido;
 import vistas.common.*;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
 public class VentanaInfoPedidoCliente extends JPanel implements VentanaConDisplay<PanelItemPedido> {

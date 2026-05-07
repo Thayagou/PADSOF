@@ -8,6 +8,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import vistas.common.displays.PanelDisplay;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 

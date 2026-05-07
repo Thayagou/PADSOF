@@ -1,4 +1,4 @@
-package vistas.common;
+package vistas.common.app;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;

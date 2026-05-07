@@ -3,7 +3,7 @@ package vistas.herramientas;
 import java.awt.*;
 import javax.swing.*;
 
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class PanelFactory {
 	private double DF_GAP = 0.05;

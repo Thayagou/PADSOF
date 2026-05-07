@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import vistas.common.PanelArticulo;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.displays.PanelArticulo;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;

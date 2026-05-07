@@ -8,7 +8,7 @@ import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.wallapop.Intercambio;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.empleado.gestionarIntercambios.VentanaGestIntercambios;
 
 public class ControlGestIntercambios implements ControladorPantalla {

@@ -12,10 +12,10 @@ import controladores.cliente.venta.ControlPanelProductoCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
-import vistas.common.TiendaFrame;
 import vistas.cliente.general.BarraLateralCliente;
 import vistas.cliente.general.BarraTareasCliente;
 import vistas.cliente.general.pantallas.VentanaInicioCliente;
+import vistas.common.app.TiendaFrame;
 
 public class ControlInicioCliente implements ActionListener, ControladorPantalla {
 

@@ -1,6 +1,6 @@
 package vistas.empleado.valorarArticulos;
 
-import vistas.common.PanelArticulo;
+import vistas.common.displays.PanelArticulo;
 
 public class PanelArticuloPendienteValoracion extends PanelArticulo{
 	private static final long serialVersionUID = 1L;

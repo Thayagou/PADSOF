@@ -14,10 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 
-import vistas.common.PanelMultiopcion;
-import vistas.common.PanelProducto;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaConDisplay;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelMultiopcion;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;

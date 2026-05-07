@@ -9,9 +9,9 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
-import vistas.common.InvisibleCheckBox;
-import vistas.common.PanelDisplay;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.components.InvisibleCheckBox;
+import vistas.common.displays.PanelDisplay;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;

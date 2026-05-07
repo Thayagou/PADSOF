@@ -1,4 +1,4 @@
-package vistas.common;
+package vistas.common.displays;
 
 import java.awt.BorderLayout;
 import java.awt.Cursor;
@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;

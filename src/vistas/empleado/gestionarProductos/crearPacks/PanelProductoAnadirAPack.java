@@ -9,8 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
-import vistas.common.PanelProducto;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.displays.PanelProducto;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.Fonts;
 

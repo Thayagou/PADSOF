@@ -29,7 +29,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import controladores.ButtonAdapter;
-import vistas.common.InvisibleCheckBox;
+import vistas.common.components.InvisibleCheckBox;
 
 public class ButtonFactory {
 	private static String IMAGE_PATH = "resources/gui/";

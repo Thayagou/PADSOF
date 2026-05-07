@@ -1,4 +1,4 @@
-package vistas.common;
+package vistas.common.assets;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -6,6 +6,8 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
+import vistas.common.app.TiendaFrame;
+import vistas.common.components.FixedTextArea;
 import vistas.herramientas.*;
 
 /**

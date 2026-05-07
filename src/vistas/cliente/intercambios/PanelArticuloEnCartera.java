@@ -1,6 +1,6 @@
 package vistas.cliente.intercambios;
 
-import vistas.common.PanelArticulo;
+import vistas.common.displays.PanelArticulo;
 
 public class PanelArticuloEnCartera extends PanelArticulo{
 	private static final long serialVersionUID = 1L;

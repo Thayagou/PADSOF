@@ -1,8 +1,10 @@
-package vistas.common;
+package vistas.common.assets;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;
 
 /**

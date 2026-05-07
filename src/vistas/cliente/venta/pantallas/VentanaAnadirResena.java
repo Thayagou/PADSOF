@@ -9,7 +9,7 @@ import javax.swing.*;
 
 import vistas.herramientas.*;
 import vistas.cliente.venta.pantallas.starRating.StarRating;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class VentanaAnadirResena extends JPanel {
 	private static final long serialVersionUID = 1L;

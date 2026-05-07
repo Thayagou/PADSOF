@@ -12,7 +12,7 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.venta.pedidos.Pedido;
 import modelo.venta.productos.StockExterno;
 import vistas.cliente.venta.pantallas.VentanaInfoPedidoCliente;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class ControlVerInfoPedidoCliente implements ActionListener, ControladorPantalla {
 

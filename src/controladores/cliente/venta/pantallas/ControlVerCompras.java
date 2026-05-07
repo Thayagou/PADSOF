@@ -11,7 +11,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.pedidos.Pedido;
 import vistas.cliente.venta.pantallas.VentanaCompras;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class ControlVerCompras implements ActionListener, ControladorPantalla { 
     private Tienda tienda;

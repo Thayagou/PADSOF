@@ -1,8 +1,10 @@
-package vistas.common;
+package vistas.common.assets;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.*;
+
+import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;
 
 /* Panel que muestra una lista de checkboxes con las categorías disponibles.

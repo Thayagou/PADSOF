@@ -9,8 +9,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import vistas.common.PanelPedido;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.displays.PanelPedido;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 

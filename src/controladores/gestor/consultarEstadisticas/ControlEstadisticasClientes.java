@@ -10,7 +10,7 @@ import modelo.estadistica.StatsUsuario;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Gestor;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 

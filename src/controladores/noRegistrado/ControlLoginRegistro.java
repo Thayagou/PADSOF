@@ -13,8 +13,8 @@ import controladores.gestor.ControlInicioGestor;
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 import vistas.noRegistrado.VentanaLoginRegistro;
 
 /**

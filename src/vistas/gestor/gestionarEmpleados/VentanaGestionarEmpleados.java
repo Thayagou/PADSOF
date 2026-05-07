@@ -8,9 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import vistas.common.PanelDisplay;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaConDisplay;
+import vistas.common.app.TiendaFrame;
+import vistas.common.displays.PanelDisplay;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;

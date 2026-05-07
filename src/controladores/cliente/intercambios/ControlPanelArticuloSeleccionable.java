@@ -9,7 +9,7 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaOfertaIntercambio;
-import vistas.common.PanelArticuloSeleccion;
+import vistas.common.displays.PanelArticuloSeleccion;
 
 public class ControlPanelArticuloSeleccionable implements ActionListener {
 

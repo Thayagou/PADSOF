@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.*;
 
-import vistas.common.PanelSelectorCajas;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelSelectorCajas;
 import vistas.herramientas.*;
 
 public class VentanaAnadirArticulo extends JPanel {

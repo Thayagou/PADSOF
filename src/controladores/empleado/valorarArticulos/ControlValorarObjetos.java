@@ -8,7 +8,7 @@ import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.wallapop.Valoracion;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.empleado.valorarArticulos.VentanaValorarObjetos;
 
 public class ControlValorarObjetos implements ControladorPantalla {

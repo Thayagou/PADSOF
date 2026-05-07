@@ -1,4 +1,4 @@
-package vistas.common;
+package vistas.common.components;
 
 import javax.swing.JLabel;
 

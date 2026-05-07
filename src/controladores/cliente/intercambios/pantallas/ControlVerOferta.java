@@ -11,8 +11,8 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.Intercambio;
 import vistas.cliente.intercambios.pantallas.VentanaOfertaIntercambio;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlVerOferta implements ControladorPantalla {
 	

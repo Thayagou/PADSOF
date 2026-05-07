@@ -1,4 +1,4 @@
-package vistas.common;
+package vistas.common.assets;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

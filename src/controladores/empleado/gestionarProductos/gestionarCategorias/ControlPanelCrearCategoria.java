@@ -9,7 +9,7 @@ import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
-import vistas.common.VentanaMensaje;
+import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.gestionarCategorias.PanelCrearCategoria;
 import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCategorias;
 

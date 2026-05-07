@@ -11,7 +11,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaBuscarArticulos;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class ControlBuscarArticulos implements ActionListener, ControladorPantalla {
 	

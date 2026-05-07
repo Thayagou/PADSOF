@@ -12,7 +12,7 @@ import controladores.cliente.venta.pantallas.ControlBuscarCliente;
 import controladores.cliente.venta.pantallas.ControlManejoCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class ControlBarraTareasCliente implements ControlBarraTareas {
 

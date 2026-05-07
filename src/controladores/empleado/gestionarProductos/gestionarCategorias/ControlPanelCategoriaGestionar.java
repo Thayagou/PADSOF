@@ -10,9 +10,9 @@ import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
-import vistas.common.PanelCategoria;
-import vistas.common.VentanaConDisplay;
-import vistas.common.VentanaMensaje;
+import vistas.common.assets.VentanaMensaje;
+import vistas.common.displays.PanelCategoria;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.empleado.gestionarProductos.gestionarCategorias.PanelCategoriaGestionarCategoria;
 
 public class ControlPanelCategoriaGestionar implements ActionListener {

@@ -1,12 +1,11 @@
 package vistas.herramientas;
 
 import java.awt.Font;
-
-import vistas.common.TiendaFrame;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import vistas.common.app.TiendaFrame;
 
 public enum Fonts {
 	TITLE("Arial", Font.BOLD, 0.05),

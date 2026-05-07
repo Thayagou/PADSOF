@@ -1,8 +1,9 @@
-package vistas.common;
+package vistas.common.assets;
 
 import java.awt.*;
 import javax.swing.*;
 
+import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;
 
 /**

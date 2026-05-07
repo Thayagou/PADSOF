@@ -10,7 +10,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.Intercambio;
 import vistas.cliente.intercambios.pantallas.VentanaVerMisOfertas;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class ControlVerMisOfertas implements ControladorPantalla {
 	

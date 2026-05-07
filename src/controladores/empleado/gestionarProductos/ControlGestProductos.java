@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.empleado.gestionarProductos.VentanaGestProductos;
 
 public class ControlGestProductos implements ControladorPantalla {

@@ -10,9 +10,9 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.PanelProducto;
-import vistas.common.VentanaConDisplay;
-import vistas.common.VentanaMensaje;
+import vistas.common.assets.VentanaMensaje;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 
 public class ControlPanelProductoCliente implements ActionListener {
 	protected Producto producto;

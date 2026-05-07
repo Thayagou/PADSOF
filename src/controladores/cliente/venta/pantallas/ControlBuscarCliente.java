@@ -9,7 +9,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.VentanaMensaje;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlBuscarCliente extends ControlBuscar {
 	

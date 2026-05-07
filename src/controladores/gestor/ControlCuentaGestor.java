@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 import vistas.gestor.VentanaCuentaGestor;
 
 public class ControlCuentaGestor implements ActionListener{

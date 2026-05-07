@@ -10,8 +10,8 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.venta.pantallas.VentanaPago;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlVentanaPagoValoracion implements ActionListener, ControladorPantalla {
 	

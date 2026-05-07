@@ -1,9 +1,10 @@
-package vistas.common;
+package vistas.common.ventanas;
 
 import javax.swing.*;
 
 import modelo.sistema.Tienda;
 import modelo.venta.productos.*;
+import vistas.common.assets.VentanaMensaje;
 
 public class VentanaResultados extends JFrame {
 

@@ -6,8 +6,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import vistas.common.PanelIntercambioConBoton;
-import vistas.common.VentanaConDisplay;
+import vistas.common.displays.PanelIntercambioConBoton;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaGestIntercambios extends JPanel implements VentanaConDisplay<PanelIntercambioConBoton>{

@@ -13,7 +13,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.venta.pedidos.Pedido;
 import modelo.venta.productos.StockExterno;
-import vistas.common.VentanaMensaje;
+import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarPedidos.PanelPedidoGestionarPedido;
 import vistas.empleado.gestionarPedidos.VentanaGestPedidos;
 

@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import vistas.common.*;
+import vistas.common.displays.PanelArticulo;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 

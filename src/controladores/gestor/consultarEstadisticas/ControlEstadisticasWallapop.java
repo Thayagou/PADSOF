@@ -11,8 +11,8 @@ import modelo.estadistica.StatsMensual;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
 

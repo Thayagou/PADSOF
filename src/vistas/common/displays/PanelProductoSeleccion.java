@@ -1,7 +1,9 @@
-package vistas.common;
+package vistas.common.displays;
 
 import java.awt.BorderLayout;
 
+import vistas.common.components.InvisibleCheckBox;
+import vistas.common.components.PanelSeleccion;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 

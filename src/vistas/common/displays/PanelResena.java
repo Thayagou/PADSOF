@@ -1,7 +1,9 @@
-package vistas.common;
+package vistas.common.displays;
 
 import java.awt.*;
 import javax.swing.*;
+
+import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;
 
 public class PanelResena extends JPanel {

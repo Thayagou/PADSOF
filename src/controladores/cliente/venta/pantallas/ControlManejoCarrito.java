@@ -12,8 +12,8 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.StockExterno;
 import vistas.cliente.venta.pantallas.VentanaCarrito;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlManejoCarrito implements ActionListener, ControladorPantalla {
 	

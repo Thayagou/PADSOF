@@ -7,8 +7,8 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import vistas.common.PanelCargaImagen;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelCargaImagen;
 import vistas.herramientas.ButtonFactory;
 
 /**

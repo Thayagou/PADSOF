@@ -7,6 +7,8 @@ import controladores.cliente.general.pantallas.ControlNotificacionesCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
 import vistas.common.*;
+import vistas.common.displays.PanelNotificacion;
+import vistas.common.displays.VentanaConDisplay;
 
 public class ControlPanelNotificacion implements ActionListener {
 	protected Notificacion notificacion;

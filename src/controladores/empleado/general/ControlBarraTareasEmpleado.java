@@ -8,7 +8,7 @@ import controladores.ControlBarraTareas;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
 
 public class ControlBarraTareasEmpleado implements ControlBarraTareas {
 

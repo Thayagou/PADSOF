@@ -26,9 +26,9 @@ import modelo.venta.productos.caracteristicas.CaracteristicasFigura;
 import modelo.venta.productos.caracteristicas.CaracteristicasJuego;
 import modelo.venta.productos.caracteristicas.CaracteristicasPack;
 import modelo.venta.productos.caracteristicas.CaracteristicasProducto;
-import vistas.common.PanelProducto;
-import vistas.common.TiendaFrame;
-import vistas.common.VentanaMensaje;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
+import vistas.common.displays.PanelProducto;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductoIndividual;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductos;
 

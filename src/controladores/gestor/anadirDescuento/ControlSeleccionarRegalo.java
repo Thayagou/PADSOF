@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
-import vistas.common.PanelSeleccion;
-import vistas.common.TiendaFrame;
+import vistas.common.app.TiendaFrame;
+import vistas.common.components.PanelSeleccion;
 import vistas.gestor.anadirDescuento.VentanaSeleccionRegalo;
 
 public class ControlSeleccionarRegalo implements ControlGestionSeleccion<Producto>, ActionListener {

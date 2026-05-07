@@ -7,6 +7,9 @@ import javax.swing.*;
 
 import vistas.cliente.venta.PanelItemCarrito;
 import vistas.common.*;
+import vistas.common.app.TiendaFrame;
+import vistas.common.displays.PanelProducto;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
 public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelItemCarrito> {

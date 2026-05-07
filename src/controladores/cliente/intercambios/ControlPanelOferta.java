@@ -13,6 +13,8 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.Intercambio;
 import vistas.common.*;
+import vistas.common.assets.VentanaMensaje;
+import vistas.common.displays.VentanaConDisplay;
 import vistas.cliente.intercambios.*;
 
 public class ControlPanelOferta implements ActionListener {
