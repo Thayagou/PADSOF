@@ -98,7 +98,7 @@ public class Pack extends Producto implements Serializable {
 	public String[] getValoresCaracteristicas() {
 		StringBuilder sb = new StringBuilder();
 		for(Stock p : productos) {
-			sb.append(p.getProducto().getNombre() + ", ");
+			sb.append(p.getProducto().getNombre() + ";");
 		}
 		String[] productos = {sb.toString()};
 		return productos;

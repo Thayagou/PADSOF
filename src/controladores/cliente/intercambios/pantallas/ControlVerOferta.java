@@ -32,10 +32,6 @@ public class ControlVerOferta implements ControladorPantalla {
 		this.vista = new VentanaOfertaIntercambio(BTN_REJECT, BTN_ACCEPT);
 		vista.setControlador(this);
 		
-		for(ArticuloSegundaMano a : intercambio.getOfrecidos()) {
-			new ControlPanelArticuloEnOferta(tienda, this.cliente, a, vista);
-		}
-		
 		anadirArticulos(intercambio.getOfrecidos());
 		anadirArticulos(intercambio.getSolicitados());
 		
