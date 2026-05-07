@@ -28,9 +28,10 @@ public class PanelEmpleado extends PanelDisplay {
 	private static final double MAX_HEIGHT = 0.16;
 
 	private boolean deAlta;
-	private List<String> permisos;
+	private List<String> permisos = new ArrayList<>();
 	private JButton modButton;
 	private JButton deAltaButton;
+	private JLabel permisosLabel;
 	private JLabel estado;
 	JPanel eastPanel;
 	
@@ -48,7 +49,7 @@ public class PanelEmpleado extends PanelDisplay {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "pfp.png", MODIFICAR_ACTION);
 		this.deAlta = deAlta;
 		// this.fotoDePerfil = fotoDePerfil;
-		this.permisos = List.of(permisos);
+		for (String p: permisos) this.permisos.add(p);
 
 		setOpaque(false);
 
@@ -80,17 +81,14 @@ public class PanelEmpleado extends PanelDisplay {
 
 		if (permisosString.isBlank())
 			permisosString = "sin permisos";
-		JLabel permisosLabel = ButtonFactory.newLabel("Permisos: " + permisosString, Fonts.TEXT);
+		permisosLabel = ButtonFactory.newLabel("Permisos: " + permisosString, Fonts.TEXT);
 		permisosLabel.setForeground(ColorPalette.PURPLE.getColor());
 		permisosRow.add(permisosLabel, BorderLayout.WEST);
 		info.add(permisosRow);
 		
-		List<String> listPermisos = new ArrayList<>();
-		for (String p: permisos) listPermisos.add(p);
-		
-		if (listPermisos.contains(PanelNuevoEmpleado.PERM_PEDIDOS)) permisoPedidos.setSeleccionado(true);
-		if (listPermisos.contains(PanelNuevoEmpleado.PERM_PRODUCTOS)) permisoProducto.setSeleccionado(true);
-		if (listPermisos.contains(PanelNuevoEmpleado.PERM_INTERCAMBIOS)) permisoIntercambios.setSeleccionado(true);
+		if (this.permisos.contains(PanelNuevoEmpleado.PERM_PEDIDOS)) permisoPedidos.setSeleccionado(true);
+		if (this.permisos.contains(PanelNuevoEmpleado.PERM_PRODUCTOS)) permisoProducto.setSeleccionado(true);
+		if (this.permisos.contains(PanelNuevoEmpleado.PERM_INTERCAMBIOS)) permisoIntercambios.setSeleccionado(true);
 
 		/* Tercera fila: de alta */
 		JPanel deAltaRow = new JPanel();
@@ -223,6 +221,19 @@ public class PanelEmpleado extends PanelDisplay {
 		
 		return listaPermisos;
 	}
+	
+	public void setPermisos(List<String> nuevosPermisos) {
+		permisos.clear();
+		permisos.addAll(nuevosPermisos);
+		
+		String permisosString = String.join(", ", this.permisos);
+
+		if (permisosString.isBlank())
+			permisosString = "sin permisos";
+		permisosString = "Permisos: " + permisosString;
+		
+		permisosLabel.setText(permisosString);
+	}
 
 	@Override
 	public void setControlador(ActionListener l) {
@@ -243,6 +254,7 @@ public class PanelEmpleado extends PanelDisplay {
 	
 	@Override
 	public void refreshDisplay() {
-		super.refreshDisplay();
+		revalidate();
+		repaint();
 	}
 }

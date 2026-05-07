@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.SwingUtilities;
 
 import controladores.ControlBarraLateral;
+import controladores.empleado.gestionarProductos.anadirProductos.ControlAnadirProductos;
 import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
 import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
 import controladores.gestor.anadirDescuento.ControlAnadirDescuento;
@@ -44,6 +45,7 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		
 		//case "Gestionar productos y categorías" -> mostrarGestion();
 		//case "Añadir nuevo producto" -> anadirNuevoProducto();
+		case "Añadir nuevo producto" -> anadirNuevoProducto();
 		case "Gestionar productos existentes" -> gestionarProductos();
 		case "Gestionar categorías" -> gestionarCategorias();
 		//case "Crear packs de productos" -> crearNuevoPack();
@@ -61,6 +63,12 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		
 	}
 	
+	private void anadirNuevoProducto() {
+		SwingUtilities.invokeLater(() -> {
+			new ControlAnadirProductos(tienda, gestor);
+		});
+	}
+
 	private void anadirDescuento() {
 		SwingUtilities.invokeLater(()->
 			new ControlAnadirDescuento(tienda, gestor)

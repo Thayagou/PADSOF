@@ -61,6 +61,7 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 			if (listaPermisosString.contains(PanelNuevoEmpleado.PERM_INTERCAMBIOS)) listaPermisos.add(Permiso.INTERCAMBIOS);
 			
 			empleado.setPermisos(listaPermisos.toArray(new Permiso[0]));
+			panel.setPermisos(listaPermisosString);
 			panel.refreshDisplay();
 			break;
 		}
