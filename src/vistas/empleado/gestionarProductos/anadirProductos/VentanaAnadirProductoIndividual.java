@@ -33,7 +33,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import controladores.ControlCargaImagen;
 import vistas.common.InvisibleCheckBox;
 import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
