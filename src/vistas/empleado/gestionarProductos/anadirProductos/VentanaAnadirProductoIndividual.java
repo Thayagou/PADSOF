@@ -33,6 +33,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import controladores.ControlCargaImagen;
 import vistas.common.InvisibleCheckBox;
 import vistas.common.PanelProducto;
 import vistas.common.TiendaFrame;
@@ -91,7 +92,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 				BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()),
 						BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-		imagenField = ButtonFactory.newTextField("URL imagen", Fonts.TEXT);
+		imagenField = ButtonFactory.newTextField("Selecciona la imagen", Fonts.TEXT);
 		imagenField.setMaximumSize(new Dimension(Integer.MAX_VALUE, imagenField.getPreferredSize().height));
 		imagenField.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -105,6 +106,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		descField.setWrapStyleWord(true);
 		descField.setRows(5);
 
+		//String fotoSeleccionada = ControlCargaImagen.abrir("Producto");
 		JLabel urlLabel = ButtonFactory.newLabel("URL de la imagen:", Fonts.BOLD);
 		urlLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		izqda.add(Box.createVerticalStrut(8));
