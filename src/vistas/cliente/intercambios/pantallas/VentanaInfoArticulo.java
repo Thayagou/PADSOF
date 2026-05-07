@@ -278,17 +278,17 @@ public class VentanaInfoArticulo extends JPanel {
 
 		btnOferta.setActionCommand(actionOffer);
 
-		ButtonFactory.paintButton(btnOferta, ColorPalette.PURPLE, ColorPalette.WHITE);
+		ButtonFactory.paintButton(btnOferta, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 
-		ButtonFactory.addMouseMecanics(btnOferta, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
+		ButtonFactory.addMouseMecanics(btnOferta, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
 		btnCartera = ButtonFactory.newRoundedButton(actionWallet, btnH, btnW, BTN_ROUNDNESS);
 
 		btnCartera.setActionCommand(actionWallet);
 
-		ButtonFactory.paintButton(btnCartera, ColorPalette.CARD_DARK, ColorPalette.DARK_GREY);
+		ButtonFactory.paintButton(btnCartera, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 
-		ButtonFactory.addMouseMecanics(btnCartera, ColorPalette.CARD_DARK, ColorPalette.CARD_DARK_HOVER);
+		ButtonFactory.addMouseMecanics(btnCartera, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
 		JPanel botones = new JPanel(new FlowLayout(FlowLayout.CENTER, gap, 0));
 		botones.setOpaque(false);

@@ -19,6 +19,7 @@ public class PanelItemPedido extends PanelProducto {
 	private static final long serialVersionUID = 1L;
 
 	private static final double SPACE_EAST_PANEL = 0.01;
+	private static final double BTN_WIDTH = 100.0/1876.0;
 	
 	private JButton valorar;
 
@@ -35,10 +36,9 @@ public class PanelItemPedido extends PanelProducto {
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 		buttons.setOpaque(false);
-		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
-		buttons.setPreferredSize(new Dimension(maxWidth, (int) (maxCompHeight * BOTON_PERC_H)));
+		buttons.setPreferredSize(new Dimension((int)t.getPixelsWidth(BTN_WIDTH), (int) (maxCompHeight * BOTON_PERC_H)));
 
-		valorar = ButtonFactory.newRoundedButton("Valorar", (int) (maxCompHeight), maxCompHeight, 0.5f);
+		valorar = ButtonFactory.newRoundedButton("Valorar", (int) (maxCompHeight), maxCompHeight, 0.5);
 		valorar.setActionCommand("valorar");
 		ButtonFactory.paintButton(valorar, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(valorar, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
@@ -61,7 +61,7 @@ public class PanelItemPedido extends PanelProducto {
 		centerWrapper.add(unitPanel);
 		centerWrapper.add(Box.createVerticalGlue());
 		
-		eastPanel.add(centerWrapper, BorderLayout.WEST);
+		eastPanel.add(centerWrapper, BorderLayout.CENTER);
 		eastPanel.setOpaque(false);
 		
 		this.add(eastPanel, BorderLayout.EAST);

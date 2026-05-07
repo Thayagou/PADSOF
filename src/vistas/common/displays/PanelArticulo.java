@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,9 +11,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 
 import vistas.common.app.TiendaFrame;
+import vistas.common.components.FixedTextArea;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
@@ -44,8 +42,6 @@ public class PanelArticulo extends PanelDisplay {
 	
 	private int spaceBetween;
 	private JButton boton;
-	
-	private PanelDisplay parentPanel;
 
 	/**
 	 * Constructor para usar en carteras y busqueda
@@ -66,8 +62,6 @@ public class PanelArticulo extends PanelDisplay {
 		/* Llamada al constructor de la superclase (PanelProducto) */
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, foto, actionName);
 		
-		parentPanel = this;
-
 		TiendaFrame t = TiendaFrame.getInstance();
 		int avatarSize = t.getPixelsHeight(AVATAR_SIZE_PERC);
 		int rowGap = t.getPixelsHeight(ROW_GAP_PERC);
@@ -190,7 +184,7 @@ public class PanelArticulo extends PanelDisplay {
 		panelIntereses.add(Box.createVerticalStrut(rowGap));
 
 		/* Fila 2: Texto de intereses */
-		JTextArea interesadoArea = new JTextArea(interesadoEn);
+		JTextArea interesadoArea = new FixedTextArea(interesadoEn);
 		interesadoArea.setText(Fonts.truncar(interesadoEn, interesWidth * INTEREST_LINES_MAX, Fonts.TEXT.getFont(), interesadoArea));
 		interesadoArea.setFont(Fonts.SMALL.getFont());
 		interesadoArea.setLineWrap(true);
@@ -200,18 +194,6 @@ public class PanelArticulo extends PanelDisplay {
 		interesadoArea.setForeground(ColorPalette.DARK_GREY.getColor());
 		interesadoArea.setAlignmentX(LEFT_ALIGNMENT);
 		interesadoArea.setMaximumSize(new Dimension(Integer.MAX_VALUE, interesadoMaxHeight));
-		
-		interesadoArea.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseEntered(MouseEvent e) {
-		        // Redirige el evento al panel que debería recibir el hover
-		        parentPanel.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, parentPanel));
-		    }
-		    @Override
-		    public void mouseExited(MouseEvent e) {
-		        parentPanel.dispatchEvent(SwingUtilities.convertMouseEvent(e.getComponent(), e, parentPanel));
-		    }
-		});
 
 		panelIntereses.add(interesadoArea);
 		panelIntereses.add(Box.createVerticalGlue());
@@ -255,8 +237,6 @@ public class PanelArticulo extends PanelDisplay {
 		int nameWidth = TiendaFrame.getInstance().getPixelsWidth(NAME_MAX_WIDTH);
 		int catsWidth = TiendaFrame.getInstance().getPixelsWidth(CATS_MAX_WIDTH);
 		
-		parentPanel = this;
-
 		TiendaFrame t = TiendaFrame.getInstance();
 		int rowGap = t.getPixelsHeight(ROW_GAP_PERC);
 
