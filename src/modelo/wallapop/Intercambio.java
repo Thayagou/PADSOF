@@ -68,6 +68,7 @@ public class Intercambio implements Serializable, Caducable {
 		fechaCaducaOferta = Reloj.now().plus(Sistema.getInstancia().getTiempoCaducaOferta());
 		
 		for(ArticuloSegundaMano art : ofrecidos) {
+			System.out.println(art.getNombre());
 			this.ofrecidos.add(art);
 			art.reservar();
 		}
