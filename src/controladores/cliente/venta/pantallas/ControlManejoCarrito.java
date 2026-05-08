@@ -1,7 +1,6 @@
 package controladores.cliente.venta.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -15,7 +14,7 @@ import vistas.cliente.venta.pantallas.VentanaCarrito;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
-public class ControlManejoCarrito implements ActionListener, ControladorPantalla {
+public class ControlManejoCarrito implements ControladorPantalla {
 	
 	private Tienda tienda;
 	private VentanaCarrito vista;
@@ -73,5 +72,10 @@ public class ControlManejoCarrito implements ActionListener, ControladorPantalla
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se muestran los productos de tu carrito. Puedes quitarlos, finalizar la compra o cancelarla.";
 	}
 }

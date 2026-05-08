@@ -1,7 +1,6 @@
 package controladores.cliente.venta.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -16,7 +15,7 @@ import vistas.cliente.venta.pantallas.VentanaProductoCliente;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
-public class ControlInfoProductoCliente implements ActionListener, ControladorPantalla {
+public class ControlInfoProductoCliente implements ControladorPantalla {
 
 	private Tienda tienda;
 	private Producto producto;
@@ -67,5 +66,10 @@ public class ControlInfoProductoCliente implements ActionListener, ControladorPa
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "";
 	}
 }

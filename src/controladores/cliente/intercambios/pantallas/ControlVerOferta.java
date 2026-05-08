@@ -83,4 +83,9 @@ public class ControlVerOferta implements ControladorPantalla {
 		return vista;
 	}
 
+	@Override
+	public String getExplicacion() {
+		return "Aquí puedes ver la información de una oferta. Se muestran los artículos que se intercambiarán en caso de que la oferta sea aceptada.";
+	}
+
 }

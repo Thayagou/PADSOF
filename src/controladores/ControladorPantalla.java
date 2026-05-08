@@ -47,6 +47,11 @@ public interface ControladorPantalla extends ActionListener{
      * tiene su propia vista.</p>
      */
     JPanel getVista();
+    
+    /**
+     * Método para obtener la explicación de la utilidad de la pantalla
+     */
+    String getExplicacion();
 
     /**
      * Se llama justo ANTES de que la pantalla se haga visible.

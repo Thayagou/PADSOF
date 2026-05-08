@@ -83,4 +83,9 @@ public class ControlHacerOferta implements ControladorPantalla {
 		return vista;
 	}
 
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se seleccionan los artículos para incluir en una oferta. Se muestran a un lado tus objetos y al otro los del otro usuario. Para incluir un artículo en la oferta, haz clic sobre un artículo que no esté seleccionado ya. Para sacar un artículo de la oferta, vuelve a clicar sobre un objeto seleccionado.";
+	}
+
 }

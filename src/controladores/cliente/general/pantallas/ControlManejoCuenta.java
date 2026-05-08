@@ -1,7 +1,6 @@
 package controladores.cliente.general.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -14,7 +13,7 @@ import vistas.cliente.general.pantallas.VentanaCuentaCliente;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
-public class ControlManejoCuenta implements ActionListener, ControladorPantalla {
+public class ControlManejoCuenta implements ControladorPantalla {
 
 	private Tienda tienda;
 	private VentanaCuentaCliente vista;
@@ -49,5 +48,10 @@ public class ControlManejoCuenta implements ActionListener, ControladorPantalla 
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "Aquí puedes cerrar sesión o cambiar tu contraseña.";
 	}
 }

@@ -1,7 +1,6 @@
 package controladores.cliente.intercambios.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -14,7 +13,7 @@ import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaCartera;
 import vistas.common.app.TiendaFrame;
 
-public class ControlManejoCartera implements ActionListener, ControladorPantalla {
+public class ControlManejoCartera implements ControladorPantalla {
 	
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
@@ -63,5 +62,10 @@ public class ControlManejoCartera implements ActionListener, ControladorPantalla
 	@Override
 	public void mostrar() {
 		refresh();
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "Aquí se muestran los artículos de tu cartera. Puedes solicitar una valoración para aquellos que no hayan sido valorados ya.";
 	}
 }

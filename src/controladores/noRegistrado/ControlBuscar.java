@@ -63,4 +63,9 @@ public class ControlBuscar implements ActionListener, ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se introducen los parámetros de búsqueda para encontrar productos.";
+	}
 }

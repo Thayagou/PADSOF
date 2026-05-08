@@ -1,7 +1,6 @@
 package controladores.cliente.general.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
@@ -12,11 +11,10 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Notificacion;
 import modelo.usuario.TipoNotificacion;
 import vistas.cliente.general.pantallas.VentanaNotificacionesCliente;
-import vistas.common.*;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
-public class ControlNotificacionesCliente implements ActionListener, ControladorPantalla {
+public class ControlNotificacionesCliente implements ControladorPantalla {
 
 	private Tienda tienda;
 	private VentanaNotificacionesCliente vista;
@@ -117,6 +115,11 @@ public class ControlNotificacionesCliente implements ActionListener, Controlador
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "Aquí puedes ver tus notificaciones. Puedes marcarlas como leídas o borrarlas";
 	}
 
 }

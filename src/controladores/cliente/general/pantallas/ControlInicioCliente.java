@@ -1,7 +1,6 @@
 package controladores.cliente.general.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
@@ -17,12 +16,11 @@ import vistas.cliente.general.BarraTareasCliente;
 import vistas.cliente.general.pantallas.VentanaInicioCliente;
 import vistas.common.app.TiendaFrame;
 
-public class ControlInicioCliente implements ActionListener, ControladorPantalla {
+public class ControlInicioCliente implements ControladorPantalla {
 
 	@SuppressWarnings("unused")
 	private Tienda tienda;
 	private final VentanaInicioCliente vista;
-	@SuppressWarnings("unused")
 	private ClienteRegistrado cliente;
 
 	public ControlInicioCliente(Tienda tienda, ClienteRegistrado cliente) {
@@ -63,5 +61,10 @@ public class ControlInicioCliente implements ActionListener, ControladorPantalla
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "¡Bienvenido " + cliente.getNombre() + "! Esta es la ventana de inicio. Aquí puedes ver los productos recomendados seleccionados para tí.";
 	}
 }

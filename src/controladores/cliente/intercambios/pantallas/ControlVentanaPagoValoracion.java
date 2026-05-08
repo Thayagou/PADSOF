@@ -1,7 +1,6 @@
 package controladores.cliente.intercambios.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
@@ -13,7 +12,7 @@ import vistas.cliente.venta.pantallas.VentanaPago;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
-public class ControlVentanaPagoValoracion implements ActionListener, ControladorPantalla {
+public class ControlVentanaPagoValoracion implements ControladorPantalla {
 	
 	Tienda tienda;
 	ClienteRegistrado cliente;
@@ -53,5 +52,10 @@ public class ControlVentanaPagoValoracion implements ActionListener, Controlador
 	
 	@Override
 	public boolean puedeVolver() {return false;}
+
+	@Override
+	public String getExplicacion() {
+		return "Introduce tus datos para realizar el pago y que el pequeño Timmy pueda comer hoy.";
+	}
 
 }

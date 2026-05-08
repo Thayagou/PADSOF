@@ -10,7 +10,6 @@ import javax.swing.SwingUtilities;
 import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.*;
-import vistas.common.*;
 import vistas.common.app.TiendaFrame;
 import vistas.noRegistrado.VentanaProductoSinRegistrar;
 
@@ -61,5 +60,10 @@ public class ControlProductoSinRegistrar implements ActionListener, ControladorP
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se muestra la información de un producto. Para poder añadirlo al producto, inicia sesión como cliente.";
 	}
 }

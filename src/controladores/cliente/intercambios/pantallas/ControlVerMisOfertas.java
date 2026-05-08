@@ -53,4 +53,9 @@ public class ControlVerMisOfertas implements ControladorPantalla {
 		return vista;
 	}
 
+	@Override
+	public String getExplicacion() {
+		return "Aquí se muestran las ofertas que usted ha realizado o recibido. Para aceptar/rechazar una oferta o para cancelar una propia, haz clic sobre ella y continúa en la nueva ventana.";
+	}
+
 }
