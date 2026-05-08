@@ -22,15 +22,31 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Esta clase representa una ventana donde especificar una valoración de un artículo
+ */
 public class VentanaValoracionIndividual extends JPanel {
 	private static final long serialVersionUID = 1L;
-
+	/** Campo de la estimación asociada al artículo */
 	private JTextField estimacion;
+	/** Seleccionador del estado del artículo */
 	private JComboBox<String> estado;
+	/** Botón de valorar */
 	private JButton btnValorar;
-
+	/** Carácteres máximos para la descripción */
 	private static int MAX_DESC = 120;
 
+	/**
+	 * Constructor de la ventana de crear una valoración
+	 * @param nombreUser Nombre el usuario propietario
+	 * @param imagenUser Imagen del usuario
+	 * @param fecha Fecha de solicitud de la valoración
+	 * @param nombreArt Nombre del artículo
+	 * @param imagenArt Imagen del artículo
+	 * @param categorias Categorías del artículo
+	 * @param desc En qué está interesado el propietario
+	 * @param tiposEstado Tipos de estados posibles para el artículo
+	 */
 	public VentanaValoracionIndividual(String nombreUser, String imagenUser, String fecha, String nombreArt,
 			String imagenArt, String[] categorias, String desc, String[] tiposEstado) {
 		setOpaque(false);
@@ -191,16 +207,28 @@ public class VentanaValoracionIndividual extends JPanel {
 		add(PanelFactory.getVentanaConCabecera("Producto a valorar", contenido), BorderLayout.CENTER);
 	}
 
+	/**
+	 * Asigna un controlador a los componentes de la ventana
+	 * @param c Controlador que se asigna
+	 */
 	public void setControlador(ActionListener c) {
 		estimacion.addActionListener(c);
 		estado.addActionListener(c);
 		btnValorar.addActionListener(c);
 	}
 
+	/**
+	 * Devuelve la estimación elegida
+	 * @return Estimación para el artículo
+	 */
 	public String getEstimacion() {
 		return estimacion.getText();
 	}
 
+	/**
+	 * Devuelve el estado físico seleccionado
+	 * @return Estado físico seleccionado
+	 */
 	public String getEstadoFisico() {
 		return (String) estado.getSelectedItem();
 	}

@@ -11,12 +11,17 @@ import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Esta clase representa una ventana donde gestionar las categorías
+ */
 public class VentanaGestionarCategorias extends JPanel implements VentanaConDisplay<PanelDisplay> {
-
 	private static final long serialVersionUID = 1L;
-	
+	/** Panel con los paneles de categorías */
 	private JPanel listaPanel = new JPanel();
 
+	/**
+	 * Constructor de la ventana para gestionar categorías
+	 */
 	public VentanaGestionarCategorias() {
 		setLayout(new BorderLayout());
 		setOpaque(false);

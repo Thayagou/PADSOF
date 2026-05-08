@@ -198,6 +198,11 @@ public class ControlModificarProductos implements ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana puedes modificar la información del producto que desees, cambiando los valores establecidos en los campos";
+	}
 	
 	
 }

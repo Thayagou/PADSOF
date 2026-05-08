@@ -35,6 +35,9 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 	
 	/** Campo btnHome. */
 	private JButton btnHome;
+	
+	/** Boton para ver la informacion */
+	private JButton info;
 
 	/**
 	 * Instancia un nuevo Objeto BarraTareasNoRegistrado.
@@ -72,6 +75,12 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		btnBuscar.setActionCommand("Buscar productos");
 		ButtonFactory.addMouseMecanics(btnBuscar, ColorPalette.WHITE, ColorPalette.HOVER_BLUE);
 		ButtonFactory.addHoverInfo(btnBuscar, "Buscar Productos", 0);
+		
+		info = ButtonFactory.newIconButton("interrogacion.png", btnH, btnH);
+		ButtonFactory.paintButton(info, ColorPalette.BLUE, ColorPalette.WHITE);
+		info.setActionCommand("Info");
+		ButtonFactory.addMouseMecanics(info, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(info, "Información", 0);
 
 		btnIniciarSesion = ButtonFactory.newRoundedButton("Iniciar sesión / Registrarse", btnH, accountW, 0.25);
 		ButtonFactory.paintButton(btnIniciarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
@@ -107,9 +116,20 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		add(btnBuscar);
 		add(Box.createHorizontalGlue());
 		add(Box.createHorizontalStrut(spaceBetween));
+		
+		fijarTamano(info, btnH, btnH);
+		add(info);
+		add(Box.createHorizontalStrut(spaceBetween));
 
 		add(btnIniciarSesion);
 		add(Box.createHorizontalStrut(spaceBetween));
+	}
+	
+	private static void fijarTamano(JButton btn, int w, int h) {
+		Dimension d = new Dimension(w, h);
+		btn.setMaximumSize(d);
+		btn.setPreferredSize(d);
+		btn.setMinimumSize(d);
 	}
 
 	/**
@@ -123,5 +143,6 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		btnIniciarSesion.addActionListener(c);
 		btnHome.addActionListener(c);
 		volverAtras.addActionListener(c);
+		info.addActionListener(c);
 	}
 }

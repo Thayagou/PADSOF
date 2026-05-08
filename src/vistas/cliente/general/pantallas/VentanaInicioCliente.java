@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import vistas.herramientas.*;
-import vistas.common.*;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 

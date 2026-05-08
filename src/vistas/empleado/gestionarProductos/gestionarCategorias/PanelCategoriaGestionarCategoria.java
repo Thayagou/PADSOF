@@ -17,21 +17,37 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+/**
+ * Esta clase representa un panel para modificar o borrar una categoría
+ */
 public class PanelCategoriaGestionarCategoria extends PanelCategoria {
-
 	private static final long serialVersionUID = 1L;
+	/** Nombre de la acción asociada a modificar */
 	public static final String MODIFICAR_ACTION = "Modificar";
+	/** Nombre de la acción asociada a borrar */
 	public static final String BORRAR_ACTION = "Borrar";
+	/** Nombre de la acción asociada a confirmar */
 	public static final String CONFIRMAR_ACTION = "Confirmar";
+	/** Botón de modificar */
 	private JButton modButton;
+	/** Botón de borrar */
 	private JButton borrarButton;
+	/** Botón de confirmar */
 	private JButton confirmarMod;
 
+	/** Campo de nombre de la categoría */
 	private JTextField nombreCategoria;
+	/** Indica si el panel está extendido */
 	private boolean expanded = false;
+	/** Panel extendido */
 	private JPanel expandedPanel;
+	/** Dimensión original del panel */
 	private Dimension originalMaxSize;
 
+	/**
+	 * Constructor del panel de gestionar categorías
+	 * @param nombreCategoria Nombre de la categoría
+	 */
 	public PanelCategoriaGestionarCategoria(String nombreCategoria) {
 		super(nombreCategoria, "");
 
@@ -68,6 +84,9 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 		modButton.addActionListener(e -> toggleExpand());
 	}
 
+	/**
+	 * Modifica el estado de expansión del panel
+	 */
 	public void toggleExpand() {
 		if (expanded) {
 			collapsePanel();
@@ -77,6 +96,9 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 		expanded = !expanded;
 	}
 
+	/**
+	 * Expande el panel con la opción de modificar la categoría
+	 */
 	private void expandPanel() {
 		if (expandedPanel == null) {
 			expandedPanel = new JPanel();
@@ -112,6 +134,9 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 	    repaint();
 	}
 
+	/**
+	 * Contrae el panel de gestionar categorías
+	 */
 	private void collapsePanel() {
 		if (expandedPanel != null) {
 	        expandedPanel.setVisible(false);
@@ -125,6 +150,10 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 	    repaint();
 	}
 
+	/**
+	 * Asigna un controlador a los botones del panel
+	 * @param c Controlador que se asigna
+	 */
 	public void setControlador(ActionListener c) {
 		super.setControlador(c);
 		modButton.addActionListener(c);
@@ -132,6 +161,10 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 		confirmarMod.addActionListener(c);
 	}
 
+	/**
+	 * Devuelve el nuevo nombre de la categoría
+	 * @return Nombre para la categoría
+	 */
 	public String getNombreCategoria() {
 		return nombreCategoria.getText();
 	}

@@ -8,7 +8,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import vistas.common.*;
 import vistas.common.app.TiendaFrame;
 import vistas.common.displays.PanelArticulo;
 import vistas.common.displays.VentanaConDisplay;

@@ -29,4 +29,9 @@ public class ControlGestProductos implements ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana puedes realizar varias tareas relacionadas con gestionar los productos y categorías de la tienda, selecciona una para continuar";
+	}
 }

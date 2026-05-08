@@ -34,4 +34,9 @@ public class ControlNotificacionesEmpleado implements ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "Aquí puedes ver todas las notificaciones sobre posibles tareas pendientes";
+	}
 }

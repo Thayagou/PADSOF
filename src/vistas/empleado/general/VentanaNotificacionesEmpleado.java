@@ -10,10 +10,17 @@ import vistas.common.displays.PanelNotificacion;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Esta clase representa la ventana de notificaciones para empleados
+ */
 public class VentanaNotificacionesEmpleado extends JPanel implements VentanaConDisplay<PanelNotificacion>{
 	private static final long serialVersionUID = 1L;
+	/** Panel con la lista de notificaciones */
 	private JPanel listaPanel;
 
+	/**
+	 * Constructor de la ventana de notificaciones
+	 */
 	public VentanaNotificacionesEmpleado() {
 		setLayout(new BorderLayout());
 		setOpaque(false);

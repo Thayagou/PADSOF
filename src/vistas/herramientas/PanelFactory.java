@@ -177,7 +177,18 @@ public class PanelFactory {
 
 		TiendaFrame t = TiendaFrame.getInstance();
 
-		JScrollPane scroll = new JScrollPane(lista);
+		JScrollPane scroll = new JScrollPane(lista) {
+		    @Override
+		    public JViewport createViewport() {
+		        return new JViewport() {
+		            @Override
+		            public void scrollRectToVisible(Rectangle r) {
+		                /* No hacer nada: evita el desplazamiento automatico al añadir contenido */
+		            }
+		        };
+		    }
+		};
+		
 		scroll.setBorder(BorderFactory.createEmptyBorder());
 		scroll.getVerticalScrollBar().setUnitIncrement(speed);
 

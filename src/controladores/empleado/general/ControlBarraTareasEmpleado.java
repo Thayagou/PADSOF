@@ -9,6 +9,7 @@ import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 public class ControlBarraTareasEmpleado implements ControlBarraTareas {
 
@@ -27,6 +28,7 @@ public class ControlBarraTareasEmpleado implements ControlBarraTareas {
 		case "Volver" -> TiendaFrame.getInstance().volverAtras();
 		case "Notificaciones" -> SwingUtilities.invokeLater(() -> new ControlNotificacionesEmpleado(tienda, empleado));
 		case "Cerrar sesión" -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+		case "Info" -> new VentanaMensaje(TiendaFrame.getInstance().getInfo());
 		}
 		
 	}

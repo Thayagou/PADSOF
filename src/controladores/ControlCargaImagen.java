@@ -1,5 +1,6 @@
 package controladores;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -9,7 +10,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelCargaImagen;
-import vistas.herramientas.ButtonFactory;
 
 /**
  * Controlador del diálogo modal de carga de imagen.
@@ -43,14 +43,14 @@ public class ControlCargaImagen implements ActionListener {
 
 		TiendaFrame frame = TiendaFrame.getInstance();
 
-		vista = new PanelCargaImagen(tipo, id);
+		vista = new PanelCargaImagen(tipo);
 		vista.setControlador(this);
 
 		int w = frame.getPixelsWidth(DIALOG_W);
 		int h = frame.getPixelsHeight(DIALOG_H);
 
 		dialogo = new JDialog(frame, "Cargar imagen", true);
-		dialogo.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		dialogo.setDefaultCloseOperation(accionCancelar());
 		dialogo.setSize(w, h);
 		dialogo.setLocationRelativeTo(frame);
 		dialogo.setResizable(false);
@@ -108,7 +108,9 @@ public class ControlCargaImagen implements ActionListener {
 		int previewW = t.getPixelsWidth(0.19);
 		int previewH = t.getPixelsHeight(0.21);
 
-		ImageIcon imagenEscalada = ButtonFactory.loadImageIconScaled(fichero.getAbsolutePath(), previewH, previewW);
+		ImageIcon sinEscalar = new ImageIcon(fichero.getAbsolutePath());
+		Image img = sinEscalar.getImage().getScaledInstance(previewW, previewH, Image.SCALE_SMOOTH);
+		ImageIcon imagenEscalada = new ImageIcon(img);
 
 		vista.setPreview(imagenEscalada, fichero.getName());
 	}
@@ -128,9 +130,10 @@ public class ControlCargaImagen implements ActionListener {
 		}
 	}
 
-	private void accionCancelar() {
+	private int accionCancelar() {
 		resultado = null;
 		ficheroSeleccionado = null;
 		dialogo.dispose();
+		return WindowConstants.DISPOSE_ON_CLOSE;
 	}
 }

@@ -21,7 +21,7 @@ public class PanelCargaImagen extends JPanel {
 
 	private static final double PREVIEW_W = 0.20;
 	private static final double PREVIEW_H = 0.22;
-	private static final double BTN_W = 0.14;
+	private static final double BTN_W = 0.08;
 	private static final double BTN_H = 0.04;
 	private static final double GAP = 0.015;
 	private static final double PADDING = 0.02;
@@ -37,7 +37,7 @@ public class PanelCargaImagen extends JPanel {
 	 * @param tipo Tipo de objeto para mostrar en el título (ej. "Producto").
 	 * @param id   ID del objeto para mostrar en el título.
 	 */
-	public PanelCargaImagen(String tipo, String id) {
+	public PanelCargaImagen(String tipo) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
 		int previewW = t.getPixelsWidth(PREVIEW_W);
@@ -51,13 +51,14 @@ public class PanelCargaImagen extends JPanel {
 		setLayout(new BorderLayout(gap, gap));
 		setBorder(BorderFactory.createEmptyBorder(pad, pad, pad, pad));
 
-		add(buildCabecera(tipo, id), BorderLayout.NORTH);
+		add(buildCabecera(tipo), BorderLayout.NORTH);
 		add(buildCentro(previewW, previewH, gap), BorderLayout.CENTER);
 		add(buildBotones(btnW, btnH, gap), BorderLayout.SOUTH);
 	}
 
-	private JPanel buildCabecera(String tipo, String id) {
-		JLabel titulo = ButtonFactory.newLabel("Cargar imagen para " + tipo + " (id: " + id + ")", Fonts.BOLD);
+	private JPanel buildCabecera(String tipo) {
+		JLabel titulo = ButtonFactory.newLabel("Cargar imagen", Fonts.BOLD);
+		titulo.setAlignmentX(CENTER_ALIGNMENT);
 		titulo.setForeground(ColorPalette.DARK_GREY.getColor());
 
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -95,9 +96,9 @@ public class PanelCargaImagen extends JPanel {
 	}
 
 	private JPanel buildBotones(int btnW, int btnH, int gap) {
-		btnSeleccionar = ButtonFactory.newRoundedButton("Seleccionar archivo", btnH, btnW, 0.5);
-		ButtonFactory.paintButton(btnSeleccionar, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(btnSeleccionar, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		btnSeleccionar = ButtonFactory.newRoundedButton("Seleccionar", btnH, btnW, 0.5);
+		ButtonFactory.paintButton(btnSeleccionar, ColorPalette.PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(btnSeleccionar, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
 		btnSeleccionar.setActionCommand("Seleccionar");
 
 		btnConfirmar = ButtonFactory.newRoundedButton("Confirmar", btnH, btnW, 0.5);

@@ -9,18 +9,31 @@ import vistas.common.app.BarraLateral;
 import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 
+/**
+ * Esta clase representa la barra lateral en el menú de empleado
+ */
 public class BarraEmpleado extends BarraLateral {
 	private static final long serialVersionUID = 1L;
 
+	/** Botón de gestionar productos */
 	private JButton gestionarProductos;
+	/** Botón de gestionar pedidos */
 	private JButton gestionarPedidos;
+	/** Votón de valorar objetos */
 	private JButton valorarObjetos;
+	/** Botón de gestionar intercambios */
 	private JButton gestionarIntercambios;
 
+	/** Botón de añadir productos */
 	private JButton anadirProducto;
+	/** Botón de gestionar existentes */
 	private JButton gestionarExistentes;
+	/** Botón de gestionar categorías */
 	private JButton gestionarCategorias;
 
+	/**
+	 * Constructor de la barra lateral de empleado
+	 */
 	public BarraEmpleado() {
 		TiendaFrame frame = TiendaFrame.getInstance();
 		int distFromLeft = frame.optionBarDistFromLeft();

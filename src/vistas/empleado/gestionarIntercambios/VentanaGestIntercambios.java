@@ -10,10 +10,17 @@ import vistas.common.displays.PanelIntercambioConBoton;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Esta clase representa la ventana que muestra los intercambios pendientes a un empleado
+ */
 public class VentanaGestIntercambios extends JPanel implements VentanaConDisplay<PanelIntercambioConBoton>{
 	private static final long serialVersionUID = 1L;
+	/** Panel que contiene la lista de intercambios */
 	private JPanel listaPanel;
 
+	/**
+	 * Constructor de la ventana de intercambios
+	 */
 	public VentanaGestIntercambios() {
 		setLayout(new BorderLayout());
 		setOpaque(false);

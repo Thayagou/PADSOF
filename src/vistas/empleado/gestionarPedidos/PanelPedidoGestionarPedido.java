@@ -14,10 +14,22 @@ import vistas.common.displays.PanelPedido;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
+/**
+ * Esta clase representa un panel para gestionr un pedido
+ */
 public class PanelPedidoGestionarPedido extends PanelPedido{
 	private static final long serialVersionUID = 1L;
+	/** Botón de avanzar estado de pedido */
 	JButton avanzarEstadoButton;
 	
+	/**
+	 * Constructor de un panel de gestionar pedido
+	 * @param nombreCliente Nombre del cliente que hizo el pedido
+	 * @param estado Estado actual del pedido
+	 * @param imageName Nombre de la imagen del usuario
+	 * @param actionName Acción asociada al botón
+	 * @param productos Productos incluídos en el pedido
+	 */
 	public PanelPedidoGestionarPedido(String nombreCliente, String estado, String imageName, String actionName, String...productos) {
 		super(nombreCliente, estado, imageName, actionName, productos);
 		
