@@ -80,6 +80,14 @@ public class Reloj {
 	}
 	
 	/**
+	 * Retrocede el reloj interno de la tienda en un mes
+	 */
+	public static void retrocederMes() {
+		clock = Clock.offset(clock, Duration.ofDays(mesNow().lengthOfMonth()));
+		tiempoReal = false;
+	}
+	
+	/**
 	 * Pausa el reloj en el instante en el que se encontraba
 	 */
 	public static void pausarReloj() {

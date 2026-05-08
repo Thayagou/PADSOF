@@ -1,7 +1,6 @@
 package controladores.cliente.intercambios.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -15,7 +14,7 @@ import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaInfoArticulo;
 import vistas.common.app.TiendaFrame;
 
-public class ControlInfoArticulo implements ActionListener, ControladorPantalla {
+public class ControlInfoArticulo implements ControladorPantalla {
 	
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
@@ -101,6 +100,12 @@ public class ControlInfoArticulo implements ActionListener, ControladorPantalla 
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+
+	@Override
+	public String getExplicacion() {
+		return "Aquí se ve la información sobre un artículo de segunda mano.";
 	}
 	
 }

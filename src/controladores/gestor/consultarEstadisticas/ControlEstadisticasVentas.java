@@ -12,36 +12,63 @@ import controladores.ControladorPantalla;
 import modelo.estadistica.StatsMensual;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
-import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
 
+/**
+ * Clase controladora de la vista correspondiente a las estadísticas asociadas a las ventas de la tienda
+ */
 public class ControlEstadisticasVentas implements ControladorPantalla {
+	
+	/** Constante label de ordenación: por mayor recaudación */
 	private static final String MAYOR_RECAUDACION = "Mayor recaudación";
+	
+	/** Constante label de ordenación: por menor recaudación */
 	private static final String MENOR_RECAUDACION = "Menor recaudación";
+	
+	/** Constante label de ordenación: por más productos comprados */
 	private static final String MAS_UNIDADES = "Más productos comprados";
+	
+	/** Constante label de ordenación: por menos productos comprados */
 	private static final String MENOS_UNIDADES = "Menos productos comprados";
 
 	
 	
+	/** Columnas que se muestran para las estadísticas */
 	private static String[] COLUMNAS = {"Total recaudado", "Productos comprados", "Porcentaje recaudación"};
+	
+	/** Tienda cargada del modelo */
 	private Tienda tienda;
-	private Gestor gestor;
+	
+	/** Vista que muestra el controlador por pantalla */
 	private VentanaEstadisticasTienda vista;
+	
+	/** Lista de pares de estadísticas y paneles que nos permite reordenar los paneles siguiendo parámetros de las estadísticas sin la necesidad de generar nuevos paneles */
 	private List<ParElementoPanel<StatsMensual, PanelEstadisticasTienda>> panelesEstadisticas = new ArrayList<>();
+	
+	/** Comparador que está siendo utilizado actualmente en la vista */
 	private Comparator<ParElementoPanel<StatsMensual, PanelEstadisticasTienda>> orden;
 	
 	
-	public ControlEstadisticasVentas(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
-		this.gestor = gestor;
-		
-		this.vista = new VentanaEstadisticasTienda(COLUMNAS);
+	/**
+	 * Instancia un nuevo controlador ControlEstadisticasVentas.
+	 *
+	 * @param tienda Tienda cargada del modelo
+	 */
+	public ControlEstadisticasVentas(Tienda tienda) {
+		this.vista = new VentanaEstadisticasTienda(new String[] {MAYOR_RECAUDACION, MENOR_RECAUDACION, MAS_UNIDADES, MENOS_UNIDADES}, COLUMNAS);
 		vista.setControlador(this);
 		
+		cargarResultados();
+	}
+	
+	/**
+	 * Carga los resultados de las estadísticas por pantalla
+	 */
+	private void cargarResultados() {
 		YearMonth inicio = YearMonth.of(2000, 1);
 		YearMonth fin = YearMonth.now();
 	
@@ -61,9 +88,17 @@ public class ControlEstadisticasVentas implements ControladorPantalla {
 		} catch(InvalidArgumentException e) {
 			new VentanaMensaje(e.toString());
 		}
-	
+		
 	}
-	
+
+
+
+	/**
+	 * Obtiene el comparator asociado al criterio actual de la vista.
+	 *
+	 * @param criterio String del panel de selección
+	 * @return Comparador que nos permite ordenar los paneles
+	 */
 	private Comparator<ParElementoPanel<StatsMensual, PanelEstadisticasTienda>> getComparator(String criterio) {
 		switch(criterio) {
 		case MAYOR_RECAUDACION:
@@ -100,6 +135,13 @@ public class ControlEstadisticasVentas implements ControladorPantalla {
 		return orden;
 	}
 	
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
+	 * 
+	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes
+	 *
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals(VentanaEstadisticasCliente.CAMBIO_ORDEN_ACTION)) {
@@ -116,9 +158,24 @@ public class ControlEstadisticasVentas implements ControladorPantalla {
 		}
 	}
 
+	/**
+	 * Getter de la vista que controla este controlador.
+	 *
+	 * @return JPanel de la vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return la información de soporte
+	 */
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se muestran, siguiendo un orden establecido, las estadísticas mensuales de ventas de la tienda entre los meses de inicio y fin";
 	}
 
 }

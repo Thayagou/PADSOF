@@ -58,4 +58,9 @@ public class ControlResultadosNoRegistrado implements ActionListener, Controlado
 	public JPanel getVista() {
 		return vista;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana puedes ver los resultados de una búsqueda. Para añadir productos al carrito, inicia sesión o registrate como cliente.";
+	}
 }

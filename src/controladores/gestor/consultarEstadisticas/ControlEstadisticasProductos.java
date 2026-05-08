@@ -1,7 +1,6 @@
 package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,17 +24,27 @@ import vistas.gestor.consultarEstadisticas.PanelProductoEstadisticas;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasProductos;
 
+/**
+ * Clase controladora de las estadísticas asociadas a los productos
+ */
 public class ControlEstadisticasProductos implements ControladorPantalla {
-	private Tienda tienda;
-	private Gestor gestor;
+	
+	/** Campo vista. */
 	private VentanaEstadisticasProductos vista;
+	
+	/** Campo panelesEstadisticas. */
 	private List<ParElementoPanel<StatsMensual, PanelProductoEstadisticas>> panelesEstadisticas = new ArrayList<>();
+	
+	/** Campo orden. */
 	private Comparator<ParElementoPanel<StatsMensual, PanelProductoEstadisticas>> orden;
 	
+	/**
+	 * Instancia un nuevo Objeto ControlEstadisticasProductos.
+	 *
+	 * @param tienda parámetro tienda
+	 * @param gestor parámetro gestor
+	 */
 	public ControlEstadisticasProductos(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
-		this.gestor = gestor;
-		
 		this.vista = new VentanaEstadisticasProductos();
 		vista.setControlador(this);
 		orden = getComparator(VentanaEstadisticasProductos.ORDENES[0]);
@@ -70,6 +79,13 @@ public class ControlEstadisticasProductos implements ControladorPantalla {
 		}
 	}
 	
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
+	 * 
+	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
+	 *
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals(VentanaEstadisticasProductos.CAMBIO_ORDEN_ACTION)) {
@@ -87,6 +103,12 @@ public class ControlEstadisticasProductos implements ControladorPantalla {
 		
 	}
 	
+	/**
+	 * Obtiene el comparator asociado al criterio actual de la vista.
+	 *
+	 * @param criterio String del panel de selección
+	 * @return Comparador que nos permite ordenar los paneles
+	 */
 	private Comparator<ParElementoPanel<StatsMensual, PanelProductoEstadisticas>> getComparator(String criterio) {
 		switch(criterio) {
 		case VentanaEstadisticasProductos.MAYOR_RECAUDACION:
@@ -122,9 +144,24 @@ public class ControlEstadisticasProductos implements ControladorPantalla {
 		return orden;
 	}
 
+	/**
+	 * Getter de la vista que controla este controlador.
+	 *
+	 * @return JPanel de la vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return the explicacion
+	 */
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se muestran, siguiendo un orden establecido, las estadísticas relacionadas con los productos de la tienda entre los meses de inicio y fin";
 	}
 	
 

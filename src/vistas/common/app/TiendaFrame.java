@@ -165,6 +165,10 @@ public class TiendaFrame extends JFrame {
 	public int btnHeight() {
 		return (int) (height * PanelSizes.BTN_HEIGHT);
 	}
+	
+	public String getInfo() {
+		return controladorActual.getExplicacion();
+	}
 
 	/* ========== NUEVOS MÉTODOS PARA NAVEGACIÓN ========== */
 	/**

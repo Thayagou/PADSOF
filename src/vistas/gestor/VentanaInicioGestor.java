@@ -1,26 +1,18 @@
 package vistas.gestor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 
 import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
-import vistas.common.app.TiendaFrame;
-import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
 //import java.awt.*;
 
 public class VentanaInicioGestor extends JPanel {
-
 	private static final long serialVersionUID = 1L;
-	private static double GAP = 0.01;
 	private JButton descuentos;
 	private JButton sistema;
 	private JButton estadisticas;

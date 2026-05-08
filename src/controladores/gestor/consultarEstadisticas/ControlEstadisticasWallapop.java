@@ -19,25 +19,49 @@ import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
 
+/**
+ * Clase controladora de la vista correspondiente a las estadísticas asociadas a los intercambios y productos de segunda mano de la tienda.
+ */
 public class ControlEstadisticasWallapop implements ControladorPantalla {
-	public static final String MAYOR_RECAUDACION = "Mayor recaudación";
-	public static final String MENOR_RECAUDACION = "Menor recaudación";
-	public static final String MAS_UNIDADES = "Más artículos intercambiados";
-	public static final String MENOS_UNIDADES = "Menos artículos intercambiados";
-
-	private Tienda tienda;
-	private Gestor gestor;
-	private VentanaEstadisticasTienda vista;
-	private List<ParElementoPanel<StatsMensual, PanelEstadisticasTienda>> panelesEstadisticas = new ArrayList<>();
-	private Comparator<ParElementoPanel<StatsMensual, PanelEstadisticasTienda>> orden;
 	
+	/** Constante label de ordenación: por mayor recaudación. */
+	private static final String MAYOR_RECAUDACION = "Mayor recaudación";
+	
+	/** Constante label de ordenación: por menor recaudación. */
+	private static final String MENOR_RECAUDACION = "Menor recaudación";
+	
+	/** Constante label de ordenación: por más productos comprados. */
+	private static final String MAS_UNIDADES = "Más artículos intercambiados";
+	
+	/** Constante label de ordenación: por menos productos comprados. */
+	private static final String MENOS_UNIDADES = "Menos artículos intercambiados";
 
+	/** Tienda sobre la que se actúa y muestran datos. */
+	private Tienda tienda;
+
+	/** Gestor de la tienda sobre la que estamos actuando. */
+	private Gestor gestor;
+	
+	/** Vista que muestra el controlador por pantalla. */
+	private VentanaEstadisticasTienda vista;
+	
+	/** Lista de pares de estadísticas y paneles que nos permite reordenar los paneles siguiendo parámetros de las estadísticas sin la necesidad de generar nuevos paneles. */
+	private List<ParElementoPanel<StatsMensual, PanelEstadisticasTienda>> panelesEstadisticas = new ArrayList<>();
+	
+	/** Comparador que está siendo utilizado actualmente en la vista. */
+	private Comparator<ParElementoPanel<StatsMensual, PanelEstadisticasTienda>> orden;
+
+	/** Columnas de estadísticas que serán mostradas. */
 	private static String[] COLUMNAS = {"Total recaudado", "Artículos intercambiados", "Porcentaje recaudación"};
 	
+
+	/**
+	 * Instancia un nuevo Objeto ControlEstadisticasWallapop.
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
+	 */
 	public ControlEstadisticasWallapop(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
-		this.gestor = gestor;
-		
 		this.vista = new VentanaEstadisticasTienda(COLUMNAS);
 		
 		YearMonth inicio = YearMonth.of(2000, 1);
@@ -59,6 +83,12 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 	
 	}
 	
+	/**
+	 * Obtiene el comparator asociado al criterio actual de la vista.
+	 *
+	 * @param criterio String del panel de selección
+	 * @return Comparador que nos permite ordenar los paneles
+	 */
 	private Comparator<ParElementoPanel<StatsMensual, PanelEstadisticasTienda>> getComparator(String criterio) {
 		switch(criterio) {
 		case MAYOR_RECAUDACION:
@@ -95,6 +125,13 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 		return orden;
 	}
 	
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
+	 * 
+	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
+	 *
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals(VentanaEstadisticasTienda.CAMBIO_ORDEN_ACTION)) {
@@ -111,9 +148,24 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 		}
 	}
 
+	/**
+	 * Getter de la vista que controla este controlador.
+	 *
+	 * @return JPanel de la vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return the explicacion
+	 */
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se muestran, siguiendo un orden establecido, las estadísticas mensuales de intercambios de la tienda entre los meses de inicio y fin";
 	}
 
 }

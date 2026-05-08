@@ -114,4 +114,9 @@ public class ControlEstadisticasClientes implements ControladorPantalla {
 		return vista;
 	}
 
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se muestran, siguiendo un orden establecido, las estadísticas relacionadas con los clientes de la tienda";
+	}
+
 }

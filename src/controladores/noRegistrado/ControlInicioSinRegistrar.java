@@ -8,7 +8,6 @@ import javax.swing.SwingUtilities;
 import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.*;
-import vistas.common.*;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.noRegistrado.*;
@@ -61,5 +60,10 @@ public class ControlInicioSinRegistrar implements ActionListener, ControladorPan
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "Esta es la ventana de inicio de la tienda. Para hacer compras inicia sesión o registrate como cliente.";
 	}
 }

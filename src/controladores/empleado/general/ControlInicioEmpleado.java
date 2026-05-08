@@ -29,7 +29,7 @@ public class ControlInicioEmpleado implements ControladorPantalla {
 		TiendaFrame.getInstance().setBarraTareas(barraTareas);
 		
 		this.vista = new VentanaInicioEmpleado(tienda);
-		TiendaFrame.getInstance().navegarA(this);
+		TiendaFrame.getInstance().resetearNavegacion(this);
 	}
 
 	@Override

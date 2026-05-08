@@ -102,4 +102,9 @@ public class ControlAnadirArticulo implements ActionListener, ControladorPantall
 	public boolean puedeVolver() {
 		return false;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se introducen los datos para añadir un nuevo artículo a la cartera.";
+	}
 }

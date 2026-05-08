@@ -21,6 +21,7 @@ public class BarraTareasEmpleado extends BarraTareas {
 
 	private JButton btnHome;
 	private JButton btnVolver;
+	private JButton btnNotificaciones;
 	private JButton btnCerrarSesion;
 
 	public BarraTareasEmpleado() {
@@ -46,6 +47,12 @@ public class BarraTareasEmpleado extends BarraTareas {
 		btnVolver.setForeground(ColorPalette.WHITE.getColor());
 		btnVolver.setActionCommand("Volver");
 		ButtonFactory.addMouseMecanics(btnVolver, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		
+		btnNotificaciones = ButtonFactory.newIconButton("notificaciones.png", btnH, homeW);
+		btnNotificaciones.setBackground(ColorPalette.BLUE.getColor());
+		btnNotificaciones.setForeground(ColorPalette.WHITE.getColor());
+		btnNotificaciones.setActionCommand("Notificaciones");
+		ButtonFactory.addMouseMecanics(btnNotificaciones, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 
 		btnCerrarSesion = ButtonFactory.newRoundedButton("Cerrar sesión", btnH, accountW, 0.25);
 		btnCerrarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
@@ -66,10 +73,16 @@ public class BarraTareasEmpleado extends BarraTareas {
 		btnVolver.setPreferredSize(new Dimension(homeW, btnH));
 		btnVolver.setMinimumSize(new Dimension(100, btnH));
 				
+		btnNotificaciones.setMaximumSize(new Dimension(homeW, btnH));
+		btnNotificaciones.setPreferredSize(new Dimension(homeW, btnH));
+		btnNotificaciones.setMinimumSize(new Dimension(100, btnH));
+		
 		btnCerrarSesion.setMaximumSize(new Dimension(accountW, btnH));
 		btnCerrarSesion.setPreferredSize(new Dimension(accountW, btnH));
 
 		add(btnVolver);
+		add(Box.createHorizontalStrut(spaceBetween));
+		add(btnNotificaciones);
 		add(Box.createHorizontalGlue());
 		add(Box.createHorizontalStrut(spaceBetween));
 
@@ -81,6 +94,7 @@ public class BarraTareasEmpleado extends BarraTareas {
 	public void setControlador(ControlBarraTareas c) {
 		btnHome.addActionListener(c);
 		btnVolver.addActionListener(c);
+		btnNotificaciones.addActionListener(c);
 		btnCerrarSesion.addActionListener(c);
 	}
 

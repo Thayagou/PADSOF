@@ -24,6 +24,7 @@ public class BarraTareasCliente extends BarraTareas {
 	private JButton buscar;
 	private JButton carrito;
 	private JButton cuenta;
+	private JButton info;
 
 	public BarraTareasCliente(String cliente) {
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -62,6 +63,12 @@ public class BarraTareasCliente extends BarraTareas {
 		buscar.setActionCommand("Buscar productos");
 		ButtonFactory.addMouseMecanics(buscar, ColorPalette.WHITE, ColorPalette.HOVER_BLUE);
 		ButtonFactory.addHoverInfo(buscar, "Buscar Productos", 0);
+		
+		info = ButtonFactory.newIconButton("interrogacion.png", btnH, squareW);
+		ButtonFactory.paintButton(info, ColorPalette.BLUE, ColorPalette.WHITE);
+		info.setActionCommand("Info");
+		ButtonFactory.addMouseMecanics(info, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(info, "Información", 0);
 
 		carrito = ButtonFactory.newIconButton("carrito.png", btnH, squareW);
 		ButtonFactory.paintButton(carrito, ColorPalette.BLUE, ColorPalette.WHITE);
@@ -102,6 +109,10 @@ public class BarraTareasCliente extends BarraTareas {
 		add(buscar);
 		add(Box.createHorizontalGlue());
 		add(Box.createHorizontalStrut(spaceBetween));
+		
+		fijarTamano(info, squareW, btnH);
+		add(info);
+		add(Box.createHorizontalStrut(spaceBetween));
 
 		fijarTamano(carrito, squareW, btnH);
 		add(carrito);
@@ -128,5 +139,6 @@ public class BarraTareasCliente extends BarraTareas {
 		buscar.addActionListener(c);
 		carrito.addActionListener(c);
 		cuenta.addActionListener(c);
+		info.addActionListener(c);
 	}
 }

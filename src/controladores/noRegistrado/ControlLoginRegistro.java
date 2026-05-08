@@ -37,7 +37,6 @@ public class ControlLoginRegistro implements ActionListener, ControladorPantalla
         TiendaFrame.getInstance().navegarA(this);
     }
 
-    // ──────────────────────────────────────────────────────────────────────
     private void intentarLogin() {
         String nombre = vista.getLoginUsuario();
         String pass   = new String(vista.getLoginPassword());
@@ -88,5 +87,10 @@ public class ControlLoginRegistro implements ActionListener, ControladorPantalla
 			intentarRegistro();
 			break;
 		}
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "Esta ventana sirve para introducir los datos para iniciar sesión o registrarse.";
 	}
 }

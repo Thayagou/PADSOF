@@ -1,7 +1,6 @@
 package controladores.cliente.venta.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
@@ -11,10 +10,9 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
 import vistas.noRegistrado.*;
-import vistas.common.*;
 import vistas.common.app.TiendaFrame;
 
-public class ControlResultadosCliente implements ActionListener, ControladorPantalla {
+public class ControlResultadosCliente implements ControladorPantalla {
 	
 	@SuppressWarnings("unused")
 	private Tienda tienda;
@@ -39,5 +37,10 @@ public class ControlResultadosCliente implements ActionListener, ControladorPant
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		/* Sin acciones en esta ventana */
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "Aquí se muestran los resultados de una búsqueda. Para añadir un producto al carrito, haz clic sobre él y luego pincha en \"Añadir al carrito\"";
 	}
 }

@@ -20,15 +20,21 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 	
 	/** Campo empleado. */
 	private Empleado empleado;
+<<<<<<< HEAD
 	
 	/** Campo tienda. */
 	private Tienda tienda;
 	
 	/** Campo panel. */
+=======
+>>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF.git
 	private PanelEmpleado panel;
+<<<<<<< HEAD
 	
 	/** Campo vista. */
 	private VentanaConDisplay<? super PanelEmpleado> vista;
+=======
+>>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF.git
 	
 	/**
 	 * Instancia un nuevo Objeto ControlPanelEmpleadoGestionar.
@@ -38,9 +44,7 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 	 * @param vista parámetro vista
 	 */
 	public ControlPanelEmpleadoGestionar(Tienda tienda, Empleado empleado, VentanaConDisplay<? super PanelEmpleado> vista) {
-		this.tienda = tienda;
 		this.empleado = empleado;
-		this.vista = vista;
 		
 		List<String> permisos = new ArrayList<>();
 		for (Permiso p: empleado.getPermisos()) {

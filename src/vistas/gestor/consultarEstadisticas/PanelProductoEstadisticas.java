@@ -4,17 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import vistas.common.app.TiendaFrame;
 import vistas.common.displays.PanelProducto;
-import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
-import vistas.herramientas.Fonts;
 
 public class PanelProductoEstadisticas extends PanelProducto{
 	

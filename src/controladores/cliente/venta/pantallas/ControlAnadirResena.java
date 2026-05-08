@@ -1,7 +1,6 @@
 package controladores.cliente.venta.pantallas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
@@ -14,7 +13,7 @@ import vistas.cliente.venta.pantallas.VentanaAnadirResena;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
-public class ControlAnadirResena implements ActionListener, ControladorPantalla {
+public class ControlAnadirResena implements ControladorPantalla {
 	
 	Tienda tienda;
 	ClienteRegistrado cliente;
@@ -51,6 +50,11 @@ public class ControlAnadirResena implements ActionListener, ControladorPantalla 
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se introducen los datos para añadir una reseña a un producto. Las estrellas marcadas serán la puntuación que se envíe.";
 	}
 }
 

@@ -23,8 +23,7 @@ public class PanelFotoPerfil extends JPanel {
 		this.setPreferredSize(new Dimension(size, size));
 		this.setMaximumSize(new Dimension(size, size));
 
-		ButtonFactory f = new ButtonFactory();
-		ImageIcon icon = f.loadImageIcon(imageName);
+		ImageIcon icon = ButtonFactory.loadImageIcon(imageName);
 		imagen = icon.getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH);
 	}
 

@@ -9,30 +9,29 @@ import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
+
 // TODO: Auto-generated Javadoc
 /**
- * Tipo: Class ControlGestionarEmpleados.
+ * Clase controladora de la vista correspondiente a.la gestión de los empleados de la tienda
  */
 public class ControlGestionarEmpleados  implements ControladorPantalla{
 	
-	/** Campo tienda. */
+	/** Tienda sobre la que se actúa y muestran datos. */
 	private Tienda tienda;
 	
-	/** Campo gestor. */
+	/** Gestor de la tienda sobre la que estamos actuando. */
 	private Gestor gestor;
 	
-	/** Campo vista. */
+	/** Vista que muestra el controlador por pantalla. */
 	private VentanaGestionarEmpleados vista;
 	
 	/**
-	 * Instancia un nuevo Objeto ControlGestionarEmpleados.
+	 * Instancia un nuevo Objeto ControlGestionarEmpleados, que crea la vista asociada y todos los paneles asociados a cada uno de los empleados.
 	 *
-	 * @param tienda parámetro tienda
-	 * @param gestor parámetro gestor
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
 	 */
 	public ControlGestionarEmpleados(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
-		this.gestor = gestor;
 		this.vista = new VentanaGestionarEmpleados();
 		
 		new ControlPanelNuevoEmpleado(tienda, gestor, vista);
@@ -43,29 +42,40 @@ public class ControlGestionarEmpleados  implements ControladorPantalla{
 		
 		TiendaFrame.getInstance().navegarA(this);
 	}
-	
+
 	/**
-	 * actionPerformed.
+	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
+	 * 
+	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
 	 *
-	 * @param e parámetro e
+	 * @param e Evento de acción lanzado por un componente Swing
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case VentanaGestionarEmpleados.NUEVO_EMPLEADO_ACTION:
-			
+		
 		}
 		
 	}
 
 	/**
-	 * Obtiene Vista.
+	 * Getter de la vista que controla este controlador.
 	 *
-	 * @return valor de Vista
+	 * @return JPanel de la vista
 	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return the explicacion
+	 */
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se muestran los empleados de la tienda, permitiendo asignarle los permisos deseados y darles de alta o baja"; 
 	}
 
 }

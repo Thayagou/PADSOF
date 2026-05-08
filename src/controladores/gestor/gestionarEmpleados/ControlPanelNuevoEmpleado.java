@@ -5,51 +5,25 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
 import modelo.exceptions.InvalidArgumentException;
-import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import modelo.usuario.Permiso;
-import modelo.usuario.Usuario;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
-import vistas.common.components.InvisibleCheckBox;
-import vistas.empleado.gestionarProductos.gestionarCategorias.PanelCrearCategoria;
-import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCategorias;
 import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
-// TODO: Auto-generated Javadoc
-/**
- * Tipo: Class ControlPanelNuevoEmpleado.
- */
+
 public class ControlPanelNuevoEmpleado implements ActionListener {
 	
-	/** Campo tienda. */
 	private final Tienda tienda;
 	
-	/** Campo gestor. */
 	private final Gestor gestor;
 	
-	/** Campo panel. */
 	private final PanelNuevoEmpleado panel;
-	
-	/** Campo checkPermisos. */
-	private List<InvisibleCheckBox> checkPermisos = new ArrayList<>();
-	
-	/**
-	 * Instancia un nuevo Objeto ControlPanelNuevoEmpleado.
-	 *
-	 * @param tienda parámetro tienda
-	 * @param gestor parámetro gestor
-	 * @param vista parámetro vista
-	 */
+
+
 	public ControlPanelNuevoEmpleado(Tienda tienda, Gestor gestor, VentanaGestionarEmpleados vista) {
 		this.tienda = tienda;
 		this.gestor = gestor;
@@ -60,11 +34,7 @@ public class ControlPanelNuevoEmpleado implements ActionListener {
 		vista.anadirDisplay(panel);
 	}
 	
-	/**
-	 * actionPerformed.
-	 *
-	 * @param e parámetro e
-	 */
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -74,18 +44,18 @@ public class ControlPanelNuevoEmpleado implements ActionListener {
 	}
 	
 	/**
-	 * intentarCrear.
+	 * Método que intenta crear un empleado a partir de los datos introducidos en el panel creado
 	 */
 	private void intentarCrear() {
 		String nombre = panel.getNombreEmpleado();
 		if(nombre.equals(PanelNuevoEmpleado.DF_NOMBRE) || nombre.length() < 1) {
-			new VentanaMensaje("Introduzca un nombre para el nuevo empleado");
+			new VentanaMensaje("Introduzca un nombre para el nuevo empleado", 1);
 			return;
 		}
 		
 		String contrasena = panel.getContrasenaEmpleado();
 		if(contrasena.equals(PanelNuevoEmpleado.DF_CONTRASENA) || nombre.length() < 1) {
-			new VentanaMensaje("Introduzca una contraseña para el nuevo empleado");
+			new VentanaMensaje("Introduzca una contraseña para el nuevo empleado", 1);
 			return;
 		}
 		

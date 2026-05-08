@@ -1,17 +1,11 @@
 package vistas.common.displays;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.Box;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
 
 import vistas.common.components.InvisibleCheckBox;
 import vistas.common.components.PanelSeleccion;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
-import vistas.herramientas.Fonts;
 
 public class PanelCategoriaSeleccion extends PanelCategoria implements PanelSeleccion{
 

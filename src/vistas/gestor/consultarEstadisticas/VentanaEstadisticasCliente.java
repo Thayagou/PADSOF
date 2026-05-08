@@ -7,18 +7,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.common.displays.VentanaConDisplay;
-import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
-import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisplay<PanelClienteEstadisticas>{
