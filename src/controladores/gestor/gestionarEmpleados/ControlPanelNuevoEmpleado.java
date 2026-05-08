@@ -25,12 +25,31 @@ import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCa
 import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Tipo: Class ControlPanelNuevoEmpleado.
+ */
 public class ControlPanelNuevoEmpleado implements ActionListener {
+	
+	/** Campo tienda. */
 	private final Tienda tienda;
+	
+	/** Campo gestor. */
 	private final Gestor gestor;
+	
+	/** Campo panel. */
 	private final PanelNuevoEmpleado panel;
+	
+	/** Campo checkPermisos. */
 	private List<InvisibleCheckBox> checkPermisos = new ArrayList<>();
 	
+	/**
+	 * Instancia un nuevo Objeto ControlPanelNuevoEmpleado.
+	 *
+	 * @param tienda parámetro tienda
+	 * @param gestor parámetro gestor
+	 * @param vista parámetro vista
+	 */
 	public ControlPanelNuevoEmpleado(Tienda tienda, Gestor gestor, VentanaGestionarEmpleados vista) {
 		this.tienda = tienda;
 		this.gestor = gestor;
@@ -41,6 +60,11 @@ public class ControlPanelNuevoEmpleado implements ActionListener {
 		vista.anadirDisplay(panel);
 	}
 	
+	/**
+	 * actionPerformed.
+	 *
+	 * @param e parámetro e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -49,6 +73,9 @@ public class ControlPanelNuevoEmpleado implements ActionListener {
 		}
 	}
 	
+	/**
+	 * intentarCrear.
+	 */
 	private void intentarCrear() {
 		String nombre = panel.getNombreEmpleado();
 		if(nombre.equals(PanelNuevoEmpleado.DF_NOMBRE) || nombre.length() < 1) {

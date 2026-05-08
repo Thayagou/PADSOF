@@ -12,12 +12,31 @@ import vistas.common.displays.VentanaConDisplay;
 import vistas.gestor.gestionarEmpleados.PanelEmpleado;
 import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Tipo: Class ControlPanelEmpleadoGestionar.
+ */
 public class ControlPanelEmpleadoGestionar implements ActionListener{
+	
+	/** Campo empleado. */
 	private Empleado empleado;
+	
+	/** Campo tienda. */
 	private Tienda tienda;
+	
+	/** Campo panel. */
 	private PanelEmpleado panel;
+	
+	/** Campo vista. */
 	private VentanaConDisplay<? super PanelEmpleado> vista;
 	
+	/**
+	 * Instancia un nuevo Objeto ControlPanelEmpleadoGestionar.
+	 *
+	 * @param tienda parámetro tienda
+	 * @param empleado parámetro empleado
+	 * @param vista parámetro vista
+	 */
 	public ControlPanelEmpleadoGestionar(Tienda tienda, Empleado empleado, VentanaConDisplay<? super PanelEmpleado> vista) {
 		this.tienda = tienda;
 		this.empleado = empleado;
@@ -39,6 +58,11 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 		panel.setControlador(this);
 	}
 	
+	/**
+	 * actionPerformed.
+	 *
+	 * @param e parámetro e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {

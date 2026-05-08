@@ -23,12 +23,14 @@ import vistas.herramientas.PanelFactory;
 
 public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisplay<PanelClienteEstadisticas>{
 	private static final long serialVersionUID = 1L;
-	public static String MAYOR_RECAUDACION = "Mayor recaudación";
-	public static String MENOR_RECAUDACION = "Menor recaudación";
-	public static String MAS_UNIDADES = "Más productos comprados";
-	public static String MENOS_UNIDADES = "Menos productos comprados";
-	public static String MAS_ARTICULOS = "Más artículos intercambiados";
-	public static String MENOS_ARTICULOS = "Menos artículos intercambiados";
+	public static final String CAMBIO_ORDEN_ACTION = "Cambiar orden";
+	public static final String MAYOR_RECAUDACION = "Mayor recaudación";
+	public static final String MENOR_RECAUDACION = "Menor recaudación";
+	public static final String MAS_UNIDADES = "Más productos comprados";
+	public static final String MENOS_UNIDADES = "Menos productos comprados";
+	public static final String MAS_ARTICULOS = "Más artículos intercambiados";
+	public static final String MENOS_ARTICULOS = "Menos artículos intercambiados";
+	
 	
 	
 	public static String[] ORDENES = {MAYOR_RECAUDACION, MENOR_RECAUDACION, 
@@ -60,7 +62,6 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 		
 		cabecera.add(statsPanel, BorderLayout.EAST);
 		
-		// Lista 
 		listaClientes = new JPanel();
 		listaClientes.setLayout(new BoxLayout(listaClientes, BoxLayout.Y_AXIS));
 		listaClientes.setBackground(ColorPalette.CARD_LIGHT.getColor());
@@ -71,10 +72,15 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 		contenido.add(scroll, BorderLayout.CENTER);
 
 		panelOrdenacion = new PanelMultiopcion("Ordenar por", contenido, ORDENES);
+		panelOrdenacion.setActionCommand(CAMBIO_ORDEN_ACTION);
 		
 		add(panelOrdenacion, BorderLayout.CENTER);
 
 		refrescarLista();
+	}
+	
+	public void vaciarLista() {
+		listaPaneles.clear();
 	}
 	
 	public void refrescarLista() {
@@ -88,8 +94,8 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 		repaint();
 	}
 	
-	public List<PanelClienteEstadisticas> getListaPaneles() {
-		return listaPaneles;
+	public String getOpcionSeleccionadaOrden() {
+		return ORDENES[panelOrdenacion.getOpcionSeleccionada()];
 	}
 	
 	public void setControlador(ActionListener l) {
