@@ -34,4 +34,9 @@ public class ControlGestPedidos implements ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana puedes avanzar el estado de los pedidos pendientes";
+	}
 }

@@ -33,4 +33,9 @@ public class ControlGestionarExistentes implements ControladorPantalla{
 		return vista;
 	}
 
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana puedes modificar o borrar productos existentes de la tienda, pulsando sobre uno de los botones al lado de cada producto";
+	}
+
 }

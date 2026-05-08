@@ -11,11 +11,17 @@ import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Esta clase representa una ventana para gestionar productos existentes
+ */
 public class VentanaGestionarExistentes extends JPanel implements VentanaConDisplay<PanelProducto> {
-
 	private static final long serialVersionUID = 1L;
+	/** Panel que contiene los paneles de los productos */
 	private JPanel listaPanel = new JPanel();
 
+	/**
+	 * Cosntructor de una ventana de gestionar productos existentes 
+	 */
 	public VentanaGestionarExistentes() {
 		setLayout(new BorderLayout());
 		setOpaque(false);

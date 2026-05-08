@@ -41,4 +41,9 @@ public class ControlInicioEmpleado implements ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "Este es el menú principal para empleados, seleccione una tarea para continuar";
+	}
 }

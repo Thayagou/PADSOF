@@ -23,13 +23,23 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+/**
+ * Esta clase representa el panel que permite cargar un fichero de productos
+ */
 public class PanelCargarFichero extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
-	private static final String ARCHIVOS_ACTION = "Cargar fichero de productos";
+	/** Nombre de la acción del panel */
+	private static final String ARCHIVOS_ACTION = "Cargar fichero de productos...";
+	/** Nombre de la acción de confirmar la selección del fichero */
 	public final static String CONFIRMAR_ACTION = "Confirmar";
+	/** Seleccionador de fichero */
 	private JFileChooser seleccionador;
+	/** Botón de confirmar la selección del fichero */
 	private JButton btnConfirmar;
 
+	/**
+	 * Constructor de un panel de cargar fichero de productos
+	 */
 	public PanelCargarFichero() {
 		super(0.08, 0.06, ARCHIVOS_ACTION);
 		
@@ -51,6 +61,9 @@ public class PanelCargarFichero extends PanelDisplay {
 		setOpaque(false);
 	}
 	
+	/**
+	 * Muestra la ventana de selección del fichero
+	 */
 	private void showSeleccionar() {
 	    Window owner = SwingUtilities.getWindowAncestor(this);
 
@@ -65,6 +78,10 @@ public class PanelCargarFichero extends PanelDisplay {
 	    dialog.setVisible(true);
 	}
 
+	/**
+	 * Crea la ventana de selección del fichero
+	 * @return La ventana de selección creada
+	 */
 	private JPanel ventanaSeleccionarArchivo() {
 		JPanel ventanaSeleccionar = new JPanel(new BorderLayout(0, 10));
 		ventanaSeleccionar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -90,16 +107,28 @@ public class PanelCargarFichero extends PanelDisplay {
 		return ventanaSeleccionar;
 	}
 
+	/**
+	 * Asigna un controlador a los componentes de esta ventana
+	 * @param c Controlador que se asigna
+	 */
 	public void setControlador(ActionListener c) {
 		super.setControlador(c);
 		btnConfirmar.addActionListener(c);
 	}
 
+	/**
+	 * Devuelve el nombre del fichero seleccionado
+	 * @return El nombre del fichero seleccionado
+	 */
 	public String getNombreFichero() {
 		File f = seleccionador.getSelectedFile();
 		return f != null ? f.getName() : null;
 	}
 
+	/**
+	 * Devuelve la ruta del fichero seleccionado
+	 * @return La ruta del fichero seleccionado
+	 */
 	public String getRutaFichero() {
 		File f = seleccionador.getSelectedFile();
 		return f != null ? f.getAbsolutePath() : null;

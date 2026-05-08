@@ -16,10 +16,10 @@ public class ControlValorarObjetos implements ControladorPantalla {
 
 	public ControlValorarObjetos(Tienda tienda, Empleado empleado) {
 		this.vista = new VentanaValorarObjetos();
-		for(Valoracion v : tienda.getHistorial().getValoracionesPendientes()) {
+		for (Valoracion v : tienda.getHistorial().getValoracionesPendientes()) {
 			new ControlPanelValorarObjetos(tienda, v.getArticulo(), empleado, vista);
 		}
-		
+
 		TiendaFrame.getInstance().navegarA(this);
 	}
 
@@ -31,5 +31,10 @@ public class ControlValorarObjetos implements ControladorPantalla {
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana puedes valorar los artículos pendientes de valoración";
 	}
 }

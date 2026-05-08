@@ -13,17 +13,31 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelSizes;
 
+/**
+ * Esta clase representa la barra superior en el menú de empleado
+ */
 public class BarraTareasEmpleado extends BarraTareas {
 	private static final long serialVersionUID = 1L;
 
+	/** Espacio que se guarda entre botones */
 	private static final double SPACE_BETWEEN = 0.01;
+	/** Ancho de los botones */
 	private static final double BTN_ACCOUNT_W = 0.13;
 
+	/** Botón Home */
 	private JButton btnHome;
+	/** Botón Volver */
 	private JButton btnVolver;
+	/** Botón notificaciones */
 	private JButton btnNotificaciones;
+	/** Botón Cerrar Sesión */
 	private JButton btnCerrarSesion;
+	/** Botón Información de la ventana */
+	private JButton info;
 
+	/**
+	 * Cosntructor de la barra superior de empleado
+	 */
 	public BarraTareasEmpleado() {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -53,6 +67,12 @@ public class BarraTareasEmpleado extends BarraTareas {
 		btnNotificaciones.setForeground(ColorPalette.WHITE.getColor());
 		btnNotificaciones.setActionCommand("Notificaciones");
 		ButtonFactory.addMouseMecanics(btnNotificaciones, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		
+		info = ButtonFactory.newIconButton("interrogacion.png", btnH, btnH);
+		ButtonFactory.paintButton(info, ColorPalette.BLUE, ColorPalette.WHITE);
+		info.setActionCommand("Info");
+		ButtonFactory.addMouseMecanics(info, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(info, "Información", 0);
 
 		btnCerrarSesion = ButtonFactory.newRoundedButton("Cerrar sesión", btnH, accountW, 0.25);
 		btnCerrarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
@@ -85,6 +105,12 @@ public class BarraTareasEmpleado extends BarraTareas {
 		add(btnNotificaciones);
 		add(Box.createHorizontalGlue());
 		add(Box.createHorizontalStrut(spaceBetween));
+		
+		info.setMaximumSize(new Dimension(homeW, btnH));
+		info.setPreferredSize(new Dimension(homeW, btnH));
+		info.setMinimumSize(new Dimension(100, btnH));
+		add(info);
+		add(Box.createHorizontalStrut(spaceBetween));
 
 		add(btnCerrarSesion);
 		add(Box.createHorizontalStrut(spaceBetween));
@@ -96,6 +122,7 @@ public class BarraTareasEmpleado extends BarraTareas {
 		btnVolver.addActionListener(c);
 		btnNotificaciones.addActionListener(c);
 		btnCerrarSesion.addActionListener(c);
+		info.addActionListener(c);
 	}
 
 }

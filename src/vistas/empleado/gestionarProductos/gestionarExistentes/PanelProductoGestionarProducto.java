@@ -14,13 +14,29 @@ import vistas.common.displays.PanelProducto;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
-public class PanelProductoGestionarProducto extends PanelProducto{
+/**
+ * Esta clase representa un panel con opciones de gestionar un producto
+ */
+public class PanelProductoGestionarProducto extends PanelProducto {
 	private static final long serialVersionUID = 1L;
+	/** Nombre de la acción asociada a modificar */
 	public static final String MODIFICAR_ACTION = "Modificar";
+	/** Nombre de la acción asociada a borrar */
 	public static final String BORRAR_ACTION = "Borrar";
+	/** Botón de modificar */
 	private JButton modButton;
+	/** Botón de borrar */
 	private JButton borrarButton;
 	
+	/**
+	 * Constructor de un panel de gestionar un producto
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del producto
+	 * @param imageName Imagen del producto
+	 * @param puntuacionMedia Puntuación media del producto
+	 * @param precio Precio del producto
+	 * @param categorias Categorías del producto
+	 */
 	public PanelProductoGestionarProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, "", categorias);
 		
@@ -49,6 +65,10 @@ public class PanelProductoGestionarProducto extends PanelProducto{
 		this.add(eastPanel, BorderLayout.EAST);
 	}
 	
+	/**
+	 * Asigna un controlador a los botones del panel
+	 * @param c Controlador que se asigna
+	 */
 	public void setControlador(ActionListener c) {
 		super.setControlador(c);
 		modButton.addActionListener(c);

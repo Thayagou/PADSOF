@@ -16,17 +16,30 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+/**
+ * Esta clase representa el panel que permite crear una nueva categoría
+ */
 public class PanelCrearCategoria extends PanelDisplay {
 	private static final long serialVersionUID = 1L;
-	public final static String CREAR_ACTION = "Crear nueva categoría";
+	/** Nombre de la acción de crear una categoría */
+	public final static String CREAR_ACTION = "Crear nueva categoría...";
+	/** Nombre de la acción confirmar */
 	public final static String CONFIRMAR_ACTION = "Confirmar";
+	/** Botón de confirmar */
 	private JButton confirmarButton;
 	
+	/** Campo con nombre de la categoría */
 	private JTextField nombreCategoria;
+	/** Indica si el panel está expandido */
 	private boolean expanded = false;
+	/** Panel expandido */
 	private JPanel expandedPanel;
+	/** Dimensión original del panel */
 	private Dimension originalMaxSize;
 
+	/**
+	 * Constructor de un panel para crear una categoría
+	 */
 	public PanelCrearCategoria() {
 		super(0.08, 0.06, CREAR_ACTION);
 		
@@ -41,6 +54,9 @@ public class PanelCrearCategoria extends PanelDisplay {
 		super.getClickArea().addActionListener(e -> toggleExpand());
 	}
 	
+	/**
+	 * Modifica el estado de expansión del panel
+	 */
 	public void toggleExpand() {
 		if (expanded) {
 			collapsePanel();
@@ -50,6 +66,9 @@ public class PanelCrearCategoria extends PanelDisplay {
 		expanded = !expanded;
 	}
 
+	/**
+	 * Expande el panel
+	 */
 	private void expandPanel() {
 		if (expandedPanel == null) {
 			expandedPanel = new JPanel();
@@ -85,6 +104,9 @@ public class PanelCrearCategoria extends PanelDisplay {
 	    repaint();
 	}
 
+	/**
+	 * Reduce el tamaño del panel
+	 */
 	private void collapsePanel() {
 		if (expandedPanel != null) {
 	        expandedPanel.setVisible(false);
@@ -98,11 +120,19 @@ public class PanelCrearCategoria extends PanelDisplay {
 	    repaint();
 	}
 	
+	/**
+	 * Asigna un controlador a los componentes del panel
+	 * @param c Controlador que se asigna
+	 */
 	public void setControlador(ActionListener c) {
 		super.setControlador(c);
 		confirmarButton.addActionListener(c);
 	}
 	
+	/**
+	 * Devuelve el nombre de la nueva categoría
+	 * @return El nombre de la categoría
+	 */
 	public String getNombreCategoria() {
 		return nombreCategoria.getText();
 	}

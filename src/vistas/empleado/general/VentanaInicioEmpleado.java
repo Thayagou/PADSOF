@@ -8,9 +8,16 @@ import modelo.sistema.Tienda;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+/**
+ * Esta clase representa la ventana de inicio de los empleados
+ */
 public class VentanaInicioEmpleado extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Cosntructor de la ventana de inicio de empleado
+	 * @param tienda Modelo tienda
+	 */
 	public VentanaInicioEmpleado(Tienda tienda) {
 		setOpaque(false);
 		setLayout(new BorderLayout());

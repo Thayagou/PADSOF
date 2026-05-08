@@ -187,4 +187,9 @@ public class ControlAnadirProductos implements ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana puedes añadir varios productos mediante un fichero de productos, pulsando sobre \"Cargar fichero de productos...\", o añadir un nuevo productos rellenando los campos que se ven";
+	}
 }

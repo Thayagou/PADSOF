@@ -9,10 +9,17 @@ import javax.swing.JScrollPane;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Esta clase representa la ventana donde un empleado gestiona los pedidos
+ */
 public class VentanaGestPedidos extends JPanel implements VentanaConDisplay<PanelPedidoGestionarPedido>{
 	private static final long serialVersionUID = 1L;
+	/** Panel con la lista de pedidos */
 	private JPanel listaPanel;
 
+	/**
+	 * Constructor de la ventana de gestión de pedidos
+	 */
 	public VentanaGestPedidos() {
 		setLayout(new BorderLayout());
 		setOpaque(false);

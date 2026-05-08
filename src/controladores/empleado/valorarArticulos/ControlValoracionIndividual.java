@@ -102,4 +102,9 @@ public class ControlValoracionIndividual implements ControladorPantalla {
 		return false;
 	}
 
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana debes valorar el artículo seleccionado, asignandole una estimación de precio y un estado físico";
+	}
+
 }

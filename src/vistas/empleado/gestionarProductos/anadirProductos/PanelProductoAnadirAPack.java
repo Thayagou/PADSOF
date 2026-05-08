@@ -1,4 +1,4 @@
-package vistas.empleado.gestionarProductos.crearPacks;
+package vistas.empleado.gestionarProductos.anadirProductos;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,10 +14,23 @@ import vistas.common.displays.PanelProducto;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.Fonts;
 
-public class PanelProductoAnadirAPack extends PanelProducto{
+/**
+ * Panel para seleccionar los productos que se añaden a un pack
+ */
+public class PanelProductoAnadirAPack extends PanelProducto {
 	private static final long serialVersionUID = 1L;
+	/** Seleccionador del número de unidades */
 	private JSpinner numUds;
 	
+	/**
+	 * Constructor del panel de seleccionar los productos de un pack
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del producto
+	 * @param imageName Nombre de la imagen del producto
+	 * @param puntuacionMedia Puntuación media del producto
+	 * @param precio Precio del producto
+	 * @param categorias Categorías del producto
+	 */
 	public PanelProductoAnadirAPack (String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, "", categorias);
 		

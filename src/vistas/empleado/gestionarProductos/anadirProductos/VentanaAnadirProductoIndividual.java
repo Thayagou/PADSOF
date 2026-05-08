@@ -41,33 +41,83 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Esta clase representa una ventana que permite añadir o modificar un producto
+ */
 public class VentanaAnadirProductoIndividual extends JPanel {
 	private static final long serialVersionUID = 1L;
+	/** Nombre de la acción de confirmar */
 	public static final String CONFIRMAR_ACTION = "Confirmar";
 
+	/** Campo nombre del producto */
 	private JTextField nombreField;
+	/** Campo descripción del producto */
 	private JTextArea descField;
+	/** Campo precio del producto */
 	private JTextField precioField;
+	/** Campo unidades del producto */
 	private JTextField stockField;
+	/** Campo imagen del producto */
 	private JTextField imagenField;
+	/** Campo tipo de producto */
 	private JComboBox<String> tipoProducto;
+	/** Campo en caso de que el tipo de producto sea fijo*/
 	private String tipoFijo;
+	/** Selección de las categorías */
 	private List<InvisibleCheckBox> checkCategorias = new ArrayList<>();
+	/** Paneles de características específicas */
 	private List<JComponent> especFields = new ArrayList<>();
+	/** Botón de confirmar */
 	private JButton btnConfirmar;
+	/** Panel de características específicas */
 	private JPanel especPanel;
+	/** Nombre de las características específicas para cada tipo de producto */
 	private String[] espComic, espJuego, espFigura, espPack;
+	/** CheckBox de productos que se añaden a un pack */
 	private List<JCheckBox> checkProductosPack = new ArrayList<>();
+	/** Paneles con los productos de la tienda */
 	private PanelProducto[] productos;
+	/** Paneles con los productos que contiene un pack */
 	private PanelProducto[] productosPack;
+	/** Indica si la ventana es para una modificar o añadir un producto */
 	private boolean isModificacion;
 
+	/**
+	 * Constructor de la ventana de añadir un producto
+	 * @param categorias Nombre de las categorías de la tienda
+	 * @param tiposProductos Nombre de los tipos de productos de la tienda
+	 * @param espComic Características específicas de un Comic
+	 * @param espJuego Características específicas de un Juego
+	 * @param espFigura Características específicas de una Figura
+	 * @param espPack Características específicas de un Pack
+	 * @param tiposJuego Nombres de los tipos de juegos
+	 * @param productos Paneles con los productos de la tienda
+	 */
 	public VentanaAnadirProductoIndividual(String[] categorias, String[] tiposProductos, String[] espComic,
 			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos) {
 		this("Nombre", "Descripción", new String[0], categorias, "0.0", "0", "", tiposProductos, new String[0],
 				espComic, espJuego, espFigura, espPack, tiposJuego, productos, false);
 	}
 
+	/**
+	 * Constructor de la ventana de modificar un producto
+	 * @param nombre Nombre del producto
+	 * @param desc Descripción del producto
+	 * @param catSeleccionadas Categorías del producto
+	 * @param categorias Nombre de las categorías de la tienda
+	 * @param precio Precio del producto
+	 * @param uds Unidades del producto
+	 * @param tipo Tipo fijo del producto
+	 * @param tiposProductos Nombre de los tipos de productos de la tienda
+	 * @param espValores Características específicas del producto
+	 * @param espComic Características específicas de un Comic
+	 * @param espJuego Características específicas de un Juego
+	 * @param espFigura Características específicas de una Figura
+	 * @param espPack Características específicas de un Pack
+	 * @param tiposJuego Nombres de los tipos de juegos
+	 * @param productos Paneles con los productos de la tienda
+	 * @param isModificacion Indica si la ventana es para una modificar o añadir un producto
+	 */
 	public VentanaAnadirProductoIndividual(String nombre, String desc, String[] catSeleccionadas, String[] categorias,
 			String precio, String uds, String tipo, String[] tiposProducto, String[] espValores, String[] espComic,
 			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos,
@@ -274,6 +324,13 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		}
 	}
 
+	/**
+	 * Cosntruye los paneles de características específicas del producto
+	 * @param tipo Tipo de producto
+	 * @param valores Valores de las características específicas del producto
+	 * @param tiposJuego Nombres de los tipos de juegos
+	 * @param productos Paneles con los productos en la tienda
+	 */
 	private void construirEspecificaciones(String tipo, String[] valores, String[] tiposJuego,
 			PanelProducto[] productos) {
 		especPanel.removeAll();
@@ -410,36 +467,68 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		especPanel.repaint();
 	}
 
+	/**
+	 * Asigna un controlador a los componentes de la tienda
+	 * @param c Controlador que se asigna
+	 */
 	public void setControlador(ActionListener c) {
 		btnConfirmar.addActionListener(c);
 	}
 
+	/**
+	 * Devuelve el nombre del producto
+	 * @return Nombre del producto
+	 */
 	public String getNombre() {
 		return nombreField.getText();
 	}
 
+	/**
+	 * Devuelve la descripción del producto
+	 * @return descripción del producto
+	 */
 	public String getDescripcion() {
 		return descField.getText();
 	}
 
+	/**
+	 * Devuelve el nombre de la imagen del producto
+	 * @return Imagen del producto
+	 */
 	public String getImagen() {
 		return imagenField.getText();
 	}
 
+	/**
+	 * Devuelve el precio del producto
+	 * @return El precio del producto
+	 */
 	public String getPrecio() {
 		return precioField.getText().trim();
 	}
 
+	/**
+	 * Devuelve las unidades del producto
+	 * @return Unidades del producto
+	 */
 	public String getStock() {
 		return stockField.getText().trim();
 	}
 
+	/**
+	 * Devuelve el tipo de producto
+	 * @return Tipo de producto
+	 */
 	public String getTipo() {
 		if (tipoProducto != null)
 			return (String) tipoProducto.getSelectedItem();
 		return tipoFijo;
 	}
 
+	/**
+	 * Devuelve los paneles seleccionados del pack
+	 * @return Paneles seleccionados
+	 */
 	public PanelProducto[] getProductosPackSeleccionados() {
 		List<PanelProducto> seleccionados = new ArrayList<>();
 		for (int i = 0; i < checkProductosPack.size(); i++) {
@@ -450,10 +539,18 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		return seleccionados.toArray(new PanelProducto[0]);
 	}
 
+	/**
+	 * Devuelve las características específicas del producto
+	 * @return Valores de las especificaciones
+	 */
 	public String[] getEspecificaciones() {
 		return especFields.stream().map(this::extraerValor).toArray(String[]::new);
 	}
 
+	/**
+	 * Devuelve el valor de un componente
+	 * @return Valor del componente
+	 */
 	private String extraerValor(JComponent c) {
 		if (c instanceof JTextField)
 			return ((JTextField) c).getText();
@@ -479,6 +576,10 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		return "";
 	}
 
+	/**
+	 * Devuelve las categorías del producto
+	 * @return Categorías del producto
+	 */
 	public String[] getCategorias() {
 		return checkCategorias.stream().filter(InvisibleCheckBox::isSelected).map(InvisibleCheckBox::getText)
 				.toArray(String[]::new);

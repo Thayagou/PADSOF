@@ -37,4 +37,9 @@ public class ControlGestionarCategorias implements ControladorPantalla{
 		return vista;
 	}
 
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana puedes crear una nueva categoría pulsando el botón \" Crear nueva categoría\", o modificar o borrar una existente pulsando los botones al lado de cada categoría";
+	}
+
 }

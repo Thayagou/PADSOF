@@ -17,12 +17,26 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelIntercambioConBoton;
 import vistas.empleado.gestionarIntercambios.VentanaGestIntercambios;
 
+/**
+ * Esta clase representa el controlador de un panel de intercambio con botón
+ */
 public class ControlPanelIntercambioConBoton implements ActionListener {
+	/** Modelo de la tienda */
 	private final Tienda tienda;
+	/** Empleado que realiza la acción */
 	private final Empleado empleado;
+	/** Intercambio que se puede confirmar */
 	private final Intercambio intercambio;
+	/** Nombre de la acción confirmar*/
 	private final String ACTION_NAME = "Confirmar";
 
+	/**
+	 * Cosntructor del controlador de panel intercambio
+	 * @param tienda Modelo de la tienda
+	 * @param empleado Empleado que realiza la acción
+	 * @param intercambio Intercambio que se puede confirmar
+	 * @param vista Ventana en la que se muestra el panel
+	 */
 	public ControlPanelIntercambioConBoton(Tienda tienda, Empleado empleado, Intercambio intercambio, VentanaGestIntercambios vista) {
 		this.tienda = tienda;
 		this.empleado = empleado;
@@ -52,6 +66,9 @@ public class ControlPanelIntercambioConBoton implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Acción una vez que se pulsa confirmar
+	 */
 	private void intentarConfirmar() {
 		try {
 			tienda.getHistorial().validarIntercambio(empleado, intercambio);
