@@ -31,8 +31,8 @@ public class PanelNotificacion extends PanelDisplay {
 	
 	private JButton marcarLeido;
 	private JButton borrar;
-
-	public PanelNotificacion(String titulo, String texto, LocalDate fecha, boolean leido) {
+	
+	public PanelNotificacion(String titulo, String texto, LocalDate fecha, boolean leido, boolean ponerBotones) {
 		super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT);
 		this.titulo = titulo;
 		this.texto = texto;
@@ -82,8 +82,13 @@ public class PanelNotificacion extends PanelDisplay {
 		} else {
 			botones = PanelFactory.getColumnaDeBotones(VERTICAL_GAP*4.5, borrar);
 		}
-		
-		add(botones, BorderLayout.EAST);
+		if(ponerBotones) {
+			add(botones, BorderLayout.EAST);
+		}
+	}
+
+	public PanelNotificacion(String titulo, String texto, LocalDate fecha, boolean leido) {
+		this(titulo, texto, fecha, leido, true);
 	}
 	
 	private String getFechaFormat(LocalDate date) {
