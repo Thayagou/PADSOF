@@ -10,13 +10,9 @@ import vistas.common.app.TiendaFrame;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
 public class ControlGestionarEmpleados  implements ControladorPantalla{
-	private Tienda tienda;
-	private Gestor gestor;
 	private VentanaGestionarEmpleados vista;
 	
 	public ControlGestionarEmpleados(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
-		this.gestor = gestor;
 		this.vista = new VentanaGestionarEmpleados();
 		
 		new ControlPanelNuevoEmpleado(tienda, gestor, vista);

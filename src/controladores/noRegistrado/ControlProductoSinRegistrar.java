@@ -10,7 +10,6 @@ import javax.swing.SwingUtilities;
 import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.*;
-import vistas.common.*;
 import vistas.common.app.TiendaFrame;
 import vistas.noRegistrado.VentanaProductoSinRegistrar;
 

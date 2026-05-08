@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
@@ -18,9 +17,7 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
-import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
-import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaEstadisticasProductos extends JPanel implements VentanaConDisplay<PanelProducto> {

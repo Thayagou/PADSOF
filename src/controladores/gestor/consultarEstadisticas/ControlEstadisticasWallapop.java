@@ -17,15 +17,10 @@ import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
 
 public class ControlEstadisticasWallapop implements ControladorPantalla {
-	private Tienda tienda;
-	private Gestor gestor;
 	private VentanaEstadisticasTienda vista;
 	private static String[] COLUMNAS = {"Total recaudado", "Artículos intercambiados", "Porcentaje recaudación"};
 	
 	public ControlEstadisticasWallapop(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
-		this.gestor = gestor;
-		
 		this.vista = new VentanaEstadisticasTienda(COLUMNAS);
 		
 		YearMonth inicio = YearMonth.of(2000, 1);

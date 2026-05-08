@@ -1,7 +1,6 @@
 package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -9,28 +8,19 @@ import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
 import modelo.estadistica.StatsMensual;
-import modelo.estadistica.StatsUsuario;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
-import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
-import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
 import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
-import vistas.herramientas.ColorPalette;
 
 public class ControlEstadisticasVentas implements ControladorPantalla {
-	private Tienda tienda;
-	private Gestor gestor;
 	private VentanaEstadisticasTienda vista;
 	private static String[] COLUMNAS = {"Total recaudado", "Productos comprados", "Porcentaje recaudación"};
 	
 	public ControlEstadisticasVentas(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
-		this.gestor = gestor;
-		
 		this.vista = new VentanaEstadisticasTienda(COLUMNAS);
 		
 		YearMonth inicio = YearMonth.of(2000, 1);
