@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 import controladores.ControlBarraTareas;
 import modelo.sistema.Tienda;
 import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 
 /**
  * Controlador de la barra de tareas superior cuando no hay sesión iniciada.
@@ -25,6 +26,7 @@ public class ControlBarraTareasNoRegistrado implements ControlBarraTareas {
 		case "Volver" -> TiendaFrame.getInstance().volverAtras();
 		case "Iniciar sesión" -> SwingUtilities.invokeLater(() -> new ControlLoginRegistro(tienda));
 		case "Home" -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+		case "Info" -> new VentanaMensaje(TiendaFrame.getInstance().getInfo());
 		}
 	}
 }
