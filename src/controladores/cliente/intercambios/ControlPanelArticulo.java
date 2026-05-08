@@ -11,7 +11,6 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
-import vistas.common.*;
 import vistas.common.displays.PanelArticulo;
 import vistas.common.displays.VentanaConDisplay;
 

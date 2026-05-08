@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import vistas.common.*;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelInfoProducto;
 import vistas.common.displays.PanelResena;

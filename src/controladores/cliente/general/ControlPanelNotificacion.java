@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import controladores.cliente.general.pantallas.ControlNotificacionesCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
-import vistas.common.*;
 import vistas.common.displays.PanelNotificacion;
 import vistas.common.displays.VentanaConDisplay;
 
