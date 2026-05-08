@@ -14,14 +14,10 @@ import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 
 public class ControlPanelEmpleadoGestionar implements ActionListener{
 	private Empleado empleado;
-	private Tienda tienda;
 	private PanelEmpleado panel;
-	private VentanaConDisplay<? super PanelEmpleado> vista;
 	
 	public ControlPanelEmpleadoGestionar(Tienda tienda, Empleado empleado, VentanaConDisplay<? super PanelEmpleado> vista) {
-		this.tienda = tienda;
 		this.empleado = empleado;
-		this.vista = vista;
 		
 		List<String> permisos = new ArrayList<>();
 		for (Permiso p: empleado.getPermisos()) {

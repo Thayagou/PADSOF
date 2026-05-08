@@ -14,12 +14,10 @@ import vistas.common.displays.VentanaConDisplay;
 
 public class ControlPanelProductoSeleccion implements ActionListener {
 	private Producto producto;
-	private Tienda tienda;
 	private PanelProductoSeleccion panel;
 	private ControlGestionSeleccion<? super Producto> superControl;
 	
 	public ControlPanelProductoSeleccion(Tienda tienda, Producto producto, String seleccionado, String desSeleccionado, ControlGestionSeleccion<? super Producto> superControl, VentanaConDisplay<? super PanelProducto> vista) {
-		this.tienda = tienda;
 		this.producto = producto;
 		this.superControl = superControl;
 		

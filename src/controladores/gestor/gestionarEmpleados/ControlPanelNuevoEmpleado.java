@@ -5,23 +5,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
 import modelo.exceptions.InvalidArgumentException;
-import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import modelo.usuario.Permiso;
-import modelo.usuario.Usuario;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
-import vistas.common.components.InvisibleCheckBox;
-import vistas.empleado.gestionarProductos.gestionarCategorias.PanelCrearCategoria;
-import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCategorias;
 import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
@@ -29,7 +18,6 @@ public class ControlPanelNuevoEmpleado implements ActionListener {
 	private final Tienda tienda;
 	private final Gestor gestor;
 	private final PanelNuevoEmpleado panel;
-	private List<InvisibleCheckBox> checkPermisos = new ArrayList<>();
 	
 	public ControlPanelNuevoEmpleado(Tienda tienda, Gestor gestor, VentanaGestionarEmpleados vista) {
 		this.tienda = tienda;

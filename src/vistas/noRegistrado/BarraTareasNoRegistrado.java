@@ -3,7 +3,6 @@ package vistas.noRegistrado;
 import java.awt.*;
 import javax.swing.*;
 import controladores.ControlBarraTareas;
-import vistas.common.*;
 import vistas.common.app.BarraTareas;
 import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;

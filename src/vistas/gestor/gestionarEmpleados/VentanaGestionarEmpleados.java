@@ -2,23 +2,18 @@ package vistas.gestor.gestionarEmpleados;
 
 import java.awt.BorderLayout;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import vistas.common.app.TiendaFrame;
 import vistas.common.displays.PanelDisplay;
 import vistas.common.displays.VentanaConDisplay;
-import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaGestionarEmpleados extends JPanel implements VentanaConDisplay<PanelDisplay>{
 	private static final long serialVersionUID = 1L;
 	public static final String NUEVO_EMPLEADO_ACTION = "Dar de alta nuevo empleado";
-	private static double GAP_PERC = 0.05;
 	private JPanel listaEmpleados = new JPanel();
 
 	public VentanaGestionarEmpleados() {
