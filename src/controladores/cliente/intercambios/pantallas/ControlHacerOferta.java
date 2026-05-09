@@ -64,12 +64,14 @@ public class ControlHacerOferta implements ControladorPantalla {
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case BTN_CONFIRM:
-			try {
-				tienda.hacerOfertaIntercambio(cliente, getArticulosSeleccionados(cliente), getArticulosSeleccionados(receptor));
-				new VentanaMensaje("Su oferta se ha enviado con éxito");
-				TiendaFrame.getInstance().volverAtras();
-			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+			if(TiendaFrame.getConfirmacionUsuario("Cuando envíes la oferta tus objetos incluidos en ella quedarán bloqueados y no podrás incluirlos en nuevas ofertas ni podrán hacerte ofertas con ellos. Podrás cancelar la oferta más tarde si aún no ha sido aceptada.")) {
+				try {
+					tienda.hacerOfertaIntercambio(cliente, getArticulosSeleccionados(cliente), getArticulosSeleccionados(receptor));
+					new VentanaMensaje("Su oferta se ha enviado con éxito");
+					TiendaFrame.getInstance().volverAtras();
+				} catch (Exception ex) {
+					new VentanaMensaje(ex.getMessage());
+				}
 			}
 			break;
 		case BTN_CANCEL:
