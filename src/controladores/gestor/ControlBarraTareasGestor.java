@@ -16,7 +16,6 @@ import vistas.herramientas.ButtonFactory;
 public class ControlBarraTareasGestor implements ControlBarraTareas {
 	private static final String VOLVER_ACTION = "Volver";
 	private static final String HOME_ACTION = "Home";
-	private static final String CUENTA_ACTION = "Cuenta";
 	private static final String CERRAR_SESION_ACTION = "Cerrar sesión";
 	private static final String INFO = "Info";
 	private final Tienda tienda;
@@ -41,7 +40,6 @@ public class ControlBarraTareasGestor implements ControlBarraTareas {
 			TiendaFrame.getInstance().volverAtras();
 		}
 		case HOME_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda, gestor));
-		case CUENTA_ACTION -> SwingUtilities.invokeLater(() -> new ControlCuentaGestor(tienda, gestor));
 		case CERRAR_SESION_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
 		case INFO -> new VentanaMensaje(TiendaFrame.getInstance().getInfo(), 0);
 		}
