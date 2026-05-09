@@ -14,37 +14,30 @@ import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 
 // TODO: Auto-generated Javadoc
 /**
- * Tipo: Class ControlPanelEmpleadoGestionar.
+ * Clase controladora de la vista correspondiente a.
  */
 public class ControlPanelEmpleadoGestionar implements ActionListener{
 	
 	/** Campo empleado. */
 	private Empleado empleado;
-<<<<<<< HEAD
 	
-	/** Campo tienda. */
+	/** Tienda sobre la que se actúa y muestran datos. */
 	private Tienda tienda;
 	
-	/** Campo panel. */
-=======
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF.git
+	/** Panel que se muestra por pantalla y del que se obtiene la información pertinente. */
 	private PanelEmpleado panel;
-<<<<<<< HEAD
 	
-	/** Campo vista. */
-	private VentanaConDisplay<? super PanelEmpleado> vista;
-=======
->>>>>>> branch 'main' of https://github.com/Thayagou/PADSOF.git
 	
 	/**
-	 * Instancia un nuevo Objeto ControlPanelEmpleadoGestionar.
+	 * Instancia un nuevo Controlador del panel de empleados para permitir su gestión.
 	 *
-	 * @param tienda parámetro tienda
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
 	 * @param empleado parámetro empleado
-	 * @param vista parámetro vista
+	 * @param vista Ventana a la que se añaden el panel creado
 	 */
 	public ControlPanelEmpleadoGestionar(Tienda tienda, Empleado empleado, VentanaConDisplay<? super PanelEmpleado> vista) {
 		this.empleado = empleado;
+		this.tienda = tienda;
 		
 		List<String> permisos = new ArrayList<>();
 		for (Permiso p: empleado.getPermisos()) {
@@ -63,17 +56,20 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 	}
 	
 	/**
-	 * actionPerformed.
+	 * Método que maneja todas las posibles acciones realizadas con el panel que maneja el controlador
+	 * 
+	 * .Estas acciones pueden ser dar de alta/baja a un empleado, modificar sus permisos y confirmar los cambios
 	 *
-	 * @param e parámetro e
+	 * @param e Evento de acción lanzado por un componente Swing
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case PanelEmpleado.DE_ALTA_ACTION:
+			
 			boolean deAlta = empleado.estaDeAlta();
-			if (deAlta) empleado.darDeBaja();
-			else empleado.darDeAlta();
+			if (deAlta) tienda.darDeBajaEmpleado(empleado.getNombre());
+			else tienda.darDeAltaEmpleado(empleado.getNombre());
 			panel.setEstadoDeAlta(!deAlta);
 			panel.refreshDisplay();
 			break;

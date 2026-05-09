@@ -3,6 +3,8 @@ package controladores.gestor.anadirDescuento;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -18,18 +20,48 @@ import modelo.venta.productos.Producto;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.components.PanelSeleccion;
+import vistas.common.displays.PanelProductoSeleccion;
 import vistas.gestor.anadirDescuento.VentanaAnadirDescuento;
 
+/**
+ * Clase controladora de la vista correspondiente a añadir un nuevo descuento a la tienda
+ */
 public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontable>, ControladorPantalla{
+	
+	/** Tienda sobre la que se actúa y muestran datos. */
 	private Tienda tienda;
+	
+	/** Gestor de la tienda sobre la que estamos actuando. */
 	private Gestor gestor;
+	
+	/** Vista que muestra el controlador por pantalla. */
 	private VentanaAnadirDescuento vista;
+	
+	/** Tipo de descontable actualmente, productos o categorías */
 	private String tipoActual;
+	
+	/** Elemento descontable sobre el que se va a aplicar el descuento */
 	private Descontable descontado;
+	
+	/** Panel del descontado, lo guardamos para hacer toggleSelection de manera eficiente */
 	private PanelSeleccion panelDescontado;
+	
+	/** En el caso de que la compensación sea de Regalo, el producto a ser regalado */
 	private Producto regalo;
 	
+	/** Lista de controladores que nos permite no tener que volver a crear los paneles de los productos */
+	private List<ControlPanelProductoSeleccion> listaControlesPanelesProductos;
 	
+	/** Lista de controladores que nos permite no tener que volver a crear los paneles de las categorías */
+	private List<ControlPanelCategoriaSeleccion> listaControlesPanelesCategorias;
+	
+	
+	/**
+	 * Instancia un nuevo Controlador, que crea la vista de añadir descuento y los paneles de Producto/ Categoría.
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
+	 */
 	public ControlAnadirDescuento(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		vista = new VentanaAnadirDescuento();
@@ -42,6 +74,9 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		
     }
 	
+	/**
+	 * Dependiendo del tipo de descontado carga las categorías o productos a descontar
+	 */
 	private void cargarDescontados() {
 		
 		if (tipoActual.equals(VentanaAnadirDescuento.TIPO_CATEGORIA)) anadirCategorias();
@@ -49,40 +84,74 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		
 	}
 	
+	/**
+	 * Añade los productos de la tienda, y, si ya están cargados los controladores, simplemente los enseña
+	 */
 	private void anadirProductos() {
-		Producto[] catalogo = tienda.getAlmacen().getProductosCoincidentes("");
-		
 		vista.vaciarDescontados();
 		
-		for (Producto p: catalogo) {
-			if (p.tieneDescuento()) continue;
-			ControlPanelProductoSeleccion control = new ControlPanelProductoSeleccion(tienda, p, "Descontado", "Descontar", this, vista);
-			if (this.descontado != null && this.descontado.equals(p)) {
-				this.panelDescontado = control.getPanel();
-				this.panelDescontado.toggleCheckBox();
+		if (listaControlesPanelesProductos != null) {
+			System.out.println("Productos");
+			for (ControlPanelProductoSeleccion control : listaControlesPanelesProductos) {
+				vista.anadirDisplay(control.getPanel());
 			}
-		}
-	}
-	
-	private void anadirCategorias() {
-		Categoria[] categorias = tienda.getAlmacen().getCategorias();
-	
-		vista.vaciarDescontados();
-		
-		for (Categoria c: categorias) {
-			if (c.tieneDescuento()) continue;
-			ControlPanelCategoriaSeleccion control = new ControlPanelCategoriaSeleccion(tienda, c, this, vista);
-			if (this.descontado != null && this.descontado.equals(c)) {
-				this.panelDescontado = control.getPanel();
-				this.panelDescontado.toggleCheckBox();
-			}
+		} else {
+			Producto[] catalogo = tienda.getAlmacen().getProductosCoincidentes("");
+			listaControlesPanelesProductos = new ArrayList<>();
 			
+			for (Producto p: catalogo) {
+				if (p.tieneDescuento()) continue;
+				ControlPanelProductoSeleccion control = new ControlPanelProductoSeleccion(tienda, p, "Descontado", "Descontar", this, vista);
+				listaControlesPanelesProductos.add(control);
+				if (this.descontado != null && this.descontado.equals(p)) {
+					this.panelDescontado = control.getPanel();
+					this.panelDescontado.toggleCheckBox();
+				}
+			}
 		}
 		
 		vista.revalidate();
 		vista.repaint();
 	}
 	
+	/**
+	 * Añade las categorías de la tienda, y, si ya están cargados los controladores, simplemente los enseña
+	 */
+	private void anadirCategorias() {
+		vista.vaciarDescontados();
+		
+		if (listaControlesPanelesCategorias != null) {
+			System.out.println("Categorias");
+			for (ControlPanelCategoriaSeleccion control : listaControlesPanelesCategorias) {
+				vista.anadirDisplay(control.getPanel());
+			}
+		} else {
+			Categoria[] categorias = tienda.getAlmacen().getCategorias();
+			listaControlesPanelesCategorias = new ArrayList<>();
+			
+			for (Categoria c: categorias) {
+				if (c.tieneDescuento()) continue;
+				ControlPanelCategoriaSeleccion control = new ControlPanelCategoriaSeleccion(tienda, c, this, vista);
+				listaControlesPanelesCategorias.add(control);
+				if (this.descontado != null && this.descontado.equals(c)) {
+					this.panelDescontado = control.getPanel();
+					this.panelDescontado.toggleCheckBox();
+				}
+				
+			}
+		}
+		
+		vista.revalidate();
+		vista.repaint();
+	}
+	
+	/**
+	 * Establece el elemeto seleccionado a descontar
+	 *
+	 * @param elem Elemento de la interfaz Descontable a descontar
+	 * @param panel Panel correspondiente a dicho elemento
+	 * @param seleccionado Determina si está o no seleccionado
+	 */
 	@Override
 	public void setSeleccionado(Descontable elem, PanelSeleccion panel, boolean seleccionado) {
 		if (this.descontado == null) {
@@ -117,6 +186,9 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		
 	}
 	
+	/**
+	 * Cambia el tipo de descontable que se está mostrando en pantalla a partir del que está seleccionado en la vista
+	 */
 	private void cambiarTipoDescontado() {
 		String tipoNuevo = vista.getOpcionSeleccionadaDescontado();
 		if (tipoNuevo.equals(tipoActual)) return;
@@ -127,6 +199,9 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		else if (tipoActual.equals(VentanaAnadirDescuento.TIPO_PRODUCTO)) anadirProductos();
 	}
 	
+	/**
+	 * Cambia el tipo de condición de descuento que se está mostrando en pantalla a partir del que está seleccionado en la vista
+	 */
 	private void cambiarTipoCondicion() {
 		vista.setVisibilidadCantidad(false);
 		vista.setVisibilidadVolumen(false);
@@ -138,6 +213,9 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		
 	}
 	
+	/**
+	 * cambiarTipoCompensacion.
+	 */
 	private void cambiarTipoCompensacion() {
 		vista.setVisibilidadRegalo(false);
 		vista.setVisibilidadDinero(false);
@@ -150,10 +228,13 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		if (condicion.equals(VentanaAnadirDescuento.COMP_REGALO)) vista.setVisibilidadRegalo(true);
 	}
 	
+	/**
+	 * A partir de los datos introducidos en la vista se añade un nuevo descuento, y, en el caso de que no se hayan introducido los datos correctamente, manda un mensaje de error
+	 */
 	private void computarDescuento() {
 		
 		if (descontado == null) {
-			new VentanaMensaje("Debes seleccionar un producto o categoría a descontar");
+			new VentanaMensaje("Debes seleccionar un producto o categoría a descontar", VentanaMensaje.ERROR);
 			return;
 		}
 		
@@ -180,7 +261,7 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 			fechaInicio = vista.getFechaInicio();
 			fechaFin = vista.getFechaFin();
 		} catch(DateTimeParseException e) {
-			new VentanaMensaje("Formato inválido de fecha. Correcto dd/mm/yyyy HH:MM");
+			new VentanaMensaje("Formato inválido de fecha. Correcto dd/mm/yyyy HH:MM", VentanaMensaje.ERROR);
 			return;
 		}
 		
@@ -200,20 +281,31 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 				}
 			}
 		} catch (DoubleDiscountException e) {
-			new VentanaMensaje(e.getMessage());
+			new VentanaMensaje(e.getMessage(), VentanaMensaje.ERROR);
 			return;
 		} catch (InvalidArgumentException iae) {
-			new VentanaMensaje(iae.getMessage());
+			new VentanaMensaje(iae.getMessage(), VentanaMensaje.ERROR);
 			return;
 		}
 		
-		new VentanaMensaje("Añadido??");
+		new VentanaMensaje("Se ha añadido correctamente el descuento a la tienda");
+		
+		/* Se asegura que se vuelven a cargar */
+		listaControlesPanelesProductos = null;
+		listaControlesPanelesCategorias = null;
 		
 		cargarDescontados();
 		
 		
 	}
 	
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
+	 * 
+	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
+	 *
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
@@ -230,6 +322,9 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		
 	}
 
+	/**
+	 * seleccionRegalo.
+	 */
 	public void seleccionRegalo() {
 		ControlSeleccionarRegalo control = new ControlSeleccionarRegalo(tienda, vista);
 		regalo = control.getRegalo();
@@ -237,9 +332,24 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		
 	}
 
+	/**
+	 * Getter de la vista que controla este controlador.
+	 *
+	 * @return JPanel de la vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return the explicacion
+	 */
+	@Override
+	public String getExplicacion() {
+		return "En esta pantalla se permite añadir un nuevo descuento a un producto o categoría de la tienda especificando las condiciones para aplicarse, la compensación recibida y el periodo de tiempo sobre el que estará activo";
 	}
 
 }

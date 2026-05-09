@@ -229,7 +229,7 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		panelInicio.add(labelInicio, BorderLayout.WEST);
 		panelInicio.add(inicioWrapper, BorderLayout.CENTER);
 		
-		JLabel labelFin = ButtonFactory.newLeftAlignedLabel("Inicio (dd/mm/yyyy HH:MM): ", Fonts.BOLD);
+		JLabel labelFin = ButtonFactory.newLeftAlignedLabel("Fin (dd/mm/yyyy HH:MM): ", Fonts.BOLD);
 		labelFin.setPreferredSize(new Dimension((int) maxWidthCond * 2 / 3, buttonHeight));
 		fin = ButtonFactory.spinnerFecha(Fonts.TEXT);
 		fin.setPreferredSize(sizeSpinner);

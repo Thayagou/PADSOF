@@ -15,15 +15,28 @@ import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
 
+/**
+ * Clase controladora del panel correspondiente a añadir un nuevo empleado a la tienda
+ */
 public class ControlPanelNuevoEmpleado implements ActionListener {
 	
+	/** Tienda sobre la que se actúa y muestran datos. */
 	private final Tienda tienda;
 	
+	/** Gestor de la tienda sobre la que estamos actuando. */
 	private final Gestor gestor;
 	
+	/** Panel que se muestra por pantalla y del que se obtiene la información pertinente. */
 	private final PanelNuevoEmpleado panel;
 
 
+	/**
+	 * Instancia un nuevo Controlador, que crea la vista y todos los paneles asociados.
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
+	 * @param vista Ventana a la que se añaden el panel creado
+	 */
 	public ControlPanelNuevoEmpleado(Tienda tienda, Gestor gestor, VentanaGestionarEmpleados vista) {
 		this.tienda = tienda;
 		this.gestor = gestor;
@@ -35,6 +48,13 @@ public class ControlPanelNuevoEmpleado implements ActionListener {
 	}
 	
 
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre el panel que maneja este controlador
+	 * 
+	 * Controla la expansión del panel para mostrar la información extra 
+	 *
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -44,7 +64,7 @@ public class ControlPanelNuevoEmpleado implements ActionListener {
 	}
 	
 	/**
-	 * Método que intenta crear un empleado a partir de los datos introducidos en el panel creado
+	 * Método que intenta crear un empleado a partir de los datos introducidos en el panel creado.
 	 */
 	private void intentarCrear() {
 		String nombre = panel.getNombreEmpleado();

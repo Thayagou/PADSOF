@@ -102,7 +102,7 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 	/**
 	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador. En este caso corresponde a la confirmación de cambio de un parámetro del sistema
 	 * 
-	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
+	 * Recibe valores de entrada de los paneles, cambia los valores del sistema y actualiza las ventanas correspondientes.
 	 *
 	 * @param e Evento de acción lanzado por un componente Swing
 	 */

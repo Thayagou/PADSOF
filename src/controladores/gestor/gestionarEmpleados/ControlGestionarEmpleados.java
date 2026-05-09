@@ -9,8 +9,6 @@ import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * Clase controladora de la vista correspondiente a.la gestión de los empleados de la tienda
  */
@@ -26,7 +24,7 @@ public class ControlGestionarEmpleados  implements ControladorPantalla{
 	private VentanaGestionarEmpleados vista;
 	
 	/**
-	 * Instancia un nuevo Objeto ControlGestionarEmpleados, que crea la vista asociada y todos los paneles asociados a cada uno de los empleados.
+	 * Instancia un nuevo Controlador ControlGestionarEmpleados, que crea la vista y todos los paneles asociados a cada uno de los empleados.
 	 *
 	 * @param tienda Tienda sobre la que se actúa y muestran datos.
 	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
@@ -34,8 +32,10 @@ public class ControlGestionarEmpleados  implements ControladorPantalla{
 	public ControlGestionarEmpleados(Tienda tienda, Gestor gestor) {
 		this.vista = new VentanaGestionarEmpleados();
 		
+		// Panel para crear nuevo empleado
 		new ControlPanelNuevoEmpleado(tienda, gestor, vista);
 		
+		// Paneles individuales de cada empleado
 		for (Empleado e: tienda.getTodosEmpleados()) {
 			new ControlPanelEmpleadoGestionar(tienda, e, vista);
 		}

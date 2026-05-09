@@ -43,16 +43,12 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		case "Añadir nuevo descuento"-> anadirDescuento();
 		case "Configurar sistema" -> configurarSistema();
 		
-		//case "Gestionar productos y categorías" -> mostrarGestion();
-		//case "Añadir nuevo producto" -> anadirNuevoProducto();
 		case "Añadir nuevo producto" -> anadirNuevoProducto();
 		case "Gestionar productos existentes" -> gestionarProductos();
 		case "Gestionar categorías" -> gestionarCategorias();
-		//case "Crear packs de productos" -> crearNuevoPack();
 		
 		case "Gestionar empleados" -> gestionarEmpleados();
 		
-		//case "Consultar estadísticas" -> consultarEstadisticas();
 		case "Estadísticas clientes" -> consultarEstadisticasClientes();
 		case "Estadísticas productos" -> consultarEstadisticasProductos();
 		case "Estadísticas ventas" -> consultarEstadisticasVentas();
@@ -81,10 +77,6 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 		);
 	}
 	
-	/*private void mostrarGestion() {
-		barraLateral.setVisiblesGestionarProdsYCats();
-	}*/
-	
 	private void gestionarProductos() {
 		SwingUtilities.invokeLater(()->
 			new ControlGestionarExistentes(tienda, gestor)
@@ -103,10 +95,6 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 			new ControlGestionarEmpleados(tienda, gestor)
 		);
 	}
-	
-	/*private void consultarEstadisticas() {
-		barraLateral.setVisiblesEstadisticas();
-	}*/
 	
 	private void consultarEstadisticasClientes() {
 		SwingUtilities.invokeLater(()->

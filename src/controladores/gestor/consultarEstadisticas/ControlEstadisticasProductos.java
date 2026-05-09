@@ -25,7 +25,7 @@ import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasProductos;
 
 /**
- * Clase controladora de las estadísticas asociadas a los productos
+ * Clase controladora de la vista correspondiente a las estadísticas asociadas a los productos
  */
 public class ControlEstadisticasProductos implements ControladorPantalla {
 	

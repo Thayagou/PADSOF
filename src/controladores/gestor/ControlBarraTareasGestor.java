@@ -9,6 +9,7 @@ import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.BarraTareasGestor;
 import vistas.herramientas.ButtonFactory;
 
@@ -42,9 +43,7 @@ public class ControlBarraTareasGestor implements ControlBarraTareas {
 		case HOME_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda, gestor));
 		case CUENTA_ACTION -> SwingUtilities.invokeLater(() -> new ControlCuentaGestor(tienda, gestor));
 		case CERRAR_SESION_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
-		case INFO -> {
-			ButtonFactory.addHoverInfo(barraTareas.getInfoButton(), TiendaFrame.getInstance().getInfo(), 0);
-		}
+		case INFO -> new VentanaMensaje(TiendaFrame.getInstance().getInfo(), 0);
 		}
 		
 	}
