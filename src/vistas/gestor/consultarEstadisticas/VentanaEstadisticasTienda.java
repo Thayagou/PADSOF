@@ -4,27 +4,39 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.time.YearMonth;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
-import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
+import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
+import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaEstadisticasTienda extends JPanel implements VentanaConDisplay<PanelEstadisticasTienda>{
 	private static final long serialVersionUID = 1L;
+	public static final String CONFIRMAR_CAMBIO_FECHA_ACTION = "Confirmar";
 
 	public static final String CAMBIO_ORDEN_ACTION = "Cambiar orden";
 
 	
 	private String[] ordenes;
+	private JSpinner inicio;
+	private JSpinner fin;
+	private JButton confirmar;
 	private static double MAX_HEIGHT_CABECERA = 0.05;
 	private JPanel listaStats;
 	private PanelMultiopcion panelOrdenacion;
@@ -66,6 +78,32 @@ public class VentanaEstadisticasTienda extends JPanel implements VentanaConDispl
 		panelOrdenacion = new PanelMultiopcion("Ordenar por", contenido, ordenes);
 		panelOrdenacion.setActionCommand(CAMBIO_ORDEN_ACTION);
 		
+		// Obtiene el panel de cabecera norte del PanelMultiopcion y le añade los spinners para elegir mes de inicio y fin 
+		BorderLayout layout = (BorderLayout) panelOrdenacion.getLayout();
+		JPanel norte = (JPanel) layout.getLayoutComponent(panelOrdenacion, BorderLayout.NORTH);
+		
+		// Crea los spinners de inicio y fin y los añade a la cabecera
+		JLabel labelInicio = ButtonFactory.newLeftAlignedLabel("Inicio", Fonts.TITLE3);
+		labelInicio.setForeground(ColorPalette.WHITE.getColor());
+		inicio = ButtonFactory.spinnerFechaYearMonth(Fonts.TEXT);
+		
+		JLabel labelFin = ButtonFactory.newLeftAlignedLabel("Fin", Fonts.TITLE3);
+		labelFin.setForeground(ColorPalette.WHITE.getColor());
+		fin = ButtonFactory.spinnerFechaYearMonth(Fonts.TEXT);
+		
+		confirmar = ButtonFactory.newRoundedButton(CONFIRMAR_CAMBIO_FECHA_ACTION, maxHeight, TiendaFrame.getInstance().getPixelsWidth(0.08), maxHeight);
+		
+		
+		int gap = TiendaFrame.getInstance().getPixelsWidth(0.07);
+		norte.add(Box.createHorizontalStrut(gap));
+		norte.add(labelInicio);
+		norte.add(inicio);
+		norte.add(Box.createHorizontalStrut(gap));
+		norte.add(labelFin);
+		norte.add(fin);
+		norte.add(Box.createHorizontalStrut(gap));
+		norte.add(confirmar);
+		
 		add(panelOrdenacion, BorderLayout.CENTER);
 
 		refrescarLista();
@@ -86,12 +124,39 @@ public class VentanaEstadisticasTienda extends JPanel implements VentanaConDispl
 		repaint();
 	}
 
+	public YearMonth getInicio() {
+		return getMes(inicio);
+	}
+	
+	public YearMonth getFin() {
+		return getMes(fin);
+	}	
+	
+	public void setInicio(YearMonth inicio) {
+		setMes(this.inicio, inicio);
+	}
+	
+	public void setFin(YearMonth fin) {
+		setMes(this.fin, fin);
+	}
+	
+	public static YearMonth getMes(JSpinner spinner) {
+		Date date = (Date) spinner.getValue();
+	    return YearMonth.from(date.toInstant().atZone(ZoneId.systemDefault()));
+	}
+	
+	public static void setMes(JSpinner spinner, YearMonth month) {
+		Date date = Date.from(month.atDay(1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+	    spinner.setValue(date);
+	}
+	
 	public String getOpcionSeleccionadaOrden() {
 		return ordenes[panelOrdenacion.getOpcionSeleccionada()];
 	}
 	
 	public void setControlador(ActionListener l) {
 		panelOrdenacion.setControlador(l);
+		confirmar.addActionListener(l);
 	}
 	
 	@Override

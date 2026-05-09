@@ -164,6 +164,7 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @throws InvalidArgumentException Se lanza en caso de haber problemas con las estadísticas acumuladas
 	 */
 	public StatsMensual getVentasEntreMesesAcumulado(YearMonth inicio, YearMonth fin) throws InvalidArgumentException {
+		if (inicio.compareTo(fin) > 0) throw new InvalidArgumentException("El mes de inicio debe ser anterior al del final", "obtener estadísticas de ventas entre meses acumulado");
 		List<StatsMensual> lista = getVentasEntreMeses(inicio, fin);
 		
 		StatsMensual acumulado = new StatsMensual();
@@ -179,11 +180,32 @@ public class Historial implements Serializable, ObservadorProducto {
 	 * @param inicio Mes desde el cual se desea conocer las estadísticas
 	 * @param fin Mes hasta el cual se desea conocer las estadísticas
 	 * @return Lista con las estadísticas entre estos dos meses
+	 * @throws InvalidArgumentException Se lanza en el caso de que el mes de inicio sea después del mes de final
 	 */
-	public List<StatsMensual> getIntercambiosEntreMeses(YearMonth inicio, YearMonth fin) {
+	public List<StatsMensual> getIntercambiosEntreMeses(YearMonth inicio, YearMonth fin) throws InvalidArgumentException {
+		if (inicio.compareTo(fin) > 0) throw new InvalidArgumentException("El mes de inicio debe ser anterior al del final", "obtener estadísticas de intercambios entre meses");
 		List<StatsMensual> estadisticas = new ArrayList<>(wallapopMensuales.subMap(inicio, true, fin, true).values());
 		
 		return estadisticas;	
+	}
+	
+	/**
+	 * Obtiene el valor acumulado de la parte de intercambios entre los meses establecidos
+	 * @param inicio Mes desde el cual se desea conocer las estadísticas
+	 * @param fin Mes hasta el cual se desea conocer las estadísticas
+	 * @return StatsMensual con el acumulado entre meses
+	 * @throws InvalidArgumentException Se lanza en caso de haber problemas con las estadísticas acumuladas
+	 */
+	public StatsMensual getIntercambiosEntreMesesAcumulado(YearMonth inicio, YearMonth fin) throws InvalidArgumentException {
+		if (inicio.compareTo(fin) > 0) throw new InvalidArgumentException("El mes de inicio debe ser anterior al del final", "obtener estadísticas de intercambios entre meses");
+		List<StatsMensual> lista = getIntercambiosEntreMeses(inicio, fin);
+		
+		StatsMensual acumulado = new StatsMensual();
+		for (StatsMensual stats: lista) {
+			acumulado.incrementar(stats.getUnidades(), stats.getRecaudacion());
+		}
+		
+		return acumulado;
 	}
 	
 	/**

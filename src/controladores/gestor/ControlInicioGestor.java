@@ -3,27 +3,30 @@ package controladores.gestor;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import controladores.ControladorPantalla;
-import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
-import controladores.gestor.anadirDescuento.ControlAnadirDescuento;
-import controladores.gestor.configurarSistema.ControlConfigurarSistema;
-import controladores.gestor.consultarEstadisticas.ControlEstadisticasProductos;
-import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.gestor.VentanaInicioGestor;
 
+/**
+ * Clase controladora de la vista correspondiente a la ventana de inicio del gestor	
+ */
 public class ControlInicioGestor implements ControladorPantalla {
-	private Tienda tienda;
+	
+	/** Gestor de la tienda sobre la que estamos actuando. */
 	private Gestor gestor;
-	private TiendaFrame frame;
+	
+	/** Vista que muestra el controlador por pantalla. */
 	private VentanaInicioGestor vista;
 
+	/**
+	 * Instancia un nuevo Controlador, que crea la vista y todos los paneles asociados.
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
+	 */
 	public ControlInicioGestor(Tienda tienda, Gestor gestor) {
-		this.tienda = tienda;
 		this.gestor = gestor;
 
 		this.vista = new VentanaInicioGestor(tienda);
@@ -32,59 +35,32 @@ public class ControlInicioGestor implements ControladorPantalla {
 		new ControlBarraLateralGestor(tienda, gestor);
 		new ControlBarraTareasGestor(tienda, gestor);
 		
-		this.frame = TiendaFrame.getInstance();
-		frame.resetearNavegacion(this);
+		TiendaFrame.getInstance().resetearNavegacion(this);
 	}
 
+	/**
+	 * Controla las acciones posibles sobre el inicio del gestor, pero al ser solo una pantalla de bienvenida no se realizan acciones
+	 *
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		switch (e.getActionCommand()) {
-		case "Añadir descuento":
-			this.anadirDescuento();
-			break;
-		case "Configurar sistema":
-			this.configurarSistema();
-			break;
-		case "Consultar estadísticas":
-			this.consultarEstadisticas();
-			break;
-		case "Gestionar productos y categorías":
-			this.gestionarProdsYCats();
-			break;
-		case "Gestionar empleados":
-			this.gestionarEmpleados();
-			break;
-		}
+	public void actionPerformed(ActionEvent e) { }
 
-	}
-
-	private void anadirDescuento() {
-		SwingUtilities.invokeLater(() -> new ControlAnadirDescuento(tienda, gestor));
-	}
-
-	private void configurarSistema() {
-		SwingUtilities.invokeLater(() -> new ControlConfigurarSistema(tienda, gestor));
-	}
-
-	private void gestionarProdsYCats() {
-		SwingUtilities.invokeLater(() -> new ControlGestionarExistentes(tienda, gestor)
-		// new ControlGestionarCategorias(tienda, gestor)
-		);
-	}
-
-	private void gestionarEmpleados() {
-		SwingUtilities.invokeLater(() -> new ControlGestionarEmpleados(tienda, gestor));
-	}
-
-	private void consultarEstadisticas() {
-		SwingUtilities.invokeLater(() -> new ControlEstadisticasProductos(tienda, gestor));
-	}
-
+	/**
+	 * Getter de la vista que controla este controlador.
+	 *
+	 * @return JPanel de la vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
 	}
 
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return the explicacion
+	 */
 	@Override
 	public String getExplicacion() {
 		return "Bienvenido " + gestor.getNombre() + "! Selecciona una opción para empezar";

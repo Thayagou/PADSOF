@@ -2,6 +2,7 @@ package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
 import java.time.YearMonth;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,8 +36,6 @@ public class ControlEstadisticasVentas implements ControladorPantalla {
 	/** Constante label de ordenación: por menos productos comprados */
 	private static final String MENOS_UNIDADES = "Menos productos comprados";
 
-	
-	
 	/** Columnas que se muestran para las estadísticas */
 	private static String[] COLUMNAS = {"Total recaudado", "Productos comprados", "Porcentaje recaudación"};
 	
@@ -59,34 +58,50 @@ public class ControlEstadisticasVentas implements ControladorPantalla {
 	 * @param tienda Tienda cargada del modelo
 	 */
 	public ControlEstadisticasVentas(Tienda tienda) {
+		this.tienda = tienda;
+		
 		this.vista = new VentanaEstadisticasTienda(new String[] {MAYOR_RECAUDACION, MENOR_RECAUDACION, MAS_UNIDADES, MENOS_UNIDADES}, COLUMNAS);
 		vista.setControlador(this);
 		
+		orden = getComparator(vista.getOpcionSeleccionadaOrden());
+		
 		cargarResultados();
+		
+		TiendaFrame.getInstance().navegarA(this);
 	}
 	
 	/**
 	 * Carga los resultados de las estadísticas por pantalla
 	 */
-	private void cargarResultados() {
-		YearMonth inicio = YearMonth.of(2000, 1);
-		YearMonth fin = YearMonth.now();
-	
+	private void cargarResultados() {	
 		try {
+			YearMonth inicio = vista.getInicio();
+			YearMonth fin = vista.getFin();
+			panelesEstadisticas.clear();
+			vista.vaciarLista();
+			
 			List<StatsMensual> listaMeses = tienda.getHistorial().getVentasEntreMeses(inicio, fin);
 			StatsMensual total = tienda.getHistorial().getVentasEntreMesesAcumulado(inicio, fin);
+			
 			
 			for (StatsMensual stats: listaMeses) {
 				double porcentaje = stats.getRecaudacion()/total.getRecaudacion() * 100;
 				PanelEstadisticasTienda panel = new PanelEstadisticasTienda(stats.getMes(), stats.getRecaudacion(), stats.getUnidades(), porcentaje);
 				panelesEstadisticas.add(new ParElementoPanel<>(stats, panel));
-					
-				vista.anadirDisplay(panel);
 			}
 			
-			TiendaFrame.getInstance().navegarA(this);
+			panelesEstadisticas.sort(orden);
+			
+			for (ParElementoPanel<StatsMensual, PanelEstadisticasTienda> par: panelesEstadisticas) {
+				vista.anadirDisplay(par.getPanel());
+			}
+			
+			vista.refrescarLista();
 		} catch(InvalidArgumentException e) {
 			new VentanaMensaje(e.toString());
+		} catch(DateTimeParseException e) {
+			new VentanaMensaje("Formato inválido de fecha. Correcto mm/yyyy", VentanaMensaje.ERROR);
+			return;
 		}
 		
 	}
@@ -144,17 +159,22 @@ public class ControlEstadisticasVentas implements ControladorPantalla {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(VentanaEstadisticasCliente.CAMBIO_ORDEN_ACTION)) {
-			orden = getComparator(vista.getOpcionSeleccionadaOrden());
-			panelesEstadisticas.sort(orden);
-			
-			vista.vaciarLista();
-			
-			for (ParElementoPanel<StatsMensual, PanelEstadisticasTienda> par : panelesEstadisticas) {
-				vista.anadirDisplay(par.getPanel());
+		switch(e.getActionCommand()) {
+			case VentanaEstadisticasTienda.CAMBIO_ORDEN_ACTION -> {
+				orden = getComparator(vista.getOpcionSeleccionadaOrden());
+				panelesEstadisticas.sort(orden);
+				
+				vista.vaciarLista();
+				
+				for (ParElementoPanel<StatsMensual, PanelEstadisticasTienda> par : panelesEstadisticas) {
+					vista.anadirDisplay(par.getPanel());
+				}
+				
+				vista.refrescarLista();	
 			}
-			
-			vista.refrescarLista();	
+			case VentanaEstadisticasTienda.CONFIRMAR_CAMBIO_FECHA_ACTION -> {
+				cargarResultados();
+			}
 		}
 	}
 

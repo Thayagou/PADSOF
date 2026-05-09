@@ -13,16 +13,29 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.BarraTareasGestor;
 import vistas.herramientas.ButtonFactory;
 
+/**
+ * Clase controladora de la barra de tareas superior del gestor
+ */
 public class ControlBarraTareasGestor implements ControlBarraTareas {
-	private static final String VOLVER_ACTION = "Volver";
-	private static final String HOME_ACTION = "Home";
-	private static final String CERRAR_SESION_ACTION = "Cerrar sesión";
-	private static final String INFO = "Info";
+	
+	/** Tienda sobre la que se actúa y muestran datos. */
 	private final Tienda tienda;
+	
+	/** Gestor de la tienda sobre la que estamos actuando. */
 	private final Gestor gestor;
+	
+	/** Campo frame. */
 	private TiendaFrame frame;
+	
+	/** Campo barraTareas. */
 	private BarraTareasGestor barraTareas;
 	
+	/**
+	 * Instancia un nuevo Controlador, que crea la vista y todos los paneles asociados.
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
+	 */
 	public ControlBarraTareasGestor(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
@@ -33,15 +46,20 @@ public class ControlBarraTareasGestor implements ControlBarraTareas {
 		frame.setBarraTareas(barraTareas);
 	}
 	
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre la barra de tareas del gestor
+	 * 
+	 * Se permite volver una pantalla atrás, ir a la ventana del inicio, cerrar sesión y ver la información de la ventana actual
+	 * 
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case VOLVER_ACTION -> {
-			TiendaFrame.getInstance().volverAtras();
-		}
-		case HOME_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda, gestor));
-		case CERRAR_SESION_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
-		case INFO -> new VentanaMensaje(TiendaFrame.getInstance().getInfo(), 0);
+		case BarraTareasGestor.VOLVER_ACTION -> TiendaFrame.getInstance().volverAtras();
+		case BarraTareasGestor.HOME_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda, gestor));
+		case BarraTareasGestor.CERRAR_SESION_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+		case BarraTareasGestor.INFO_ACTION -> new VentanaMensaje(TiendaFrame.getInstance().getInfo(), 0);
 		}
 		
 	}

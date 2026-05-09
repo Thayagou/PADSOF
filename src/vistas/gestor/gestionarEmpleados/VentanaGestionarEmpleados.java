@@ -38,6 +38,10 @@ public class VentanaGestionarEmpleados extends JPanel implements VentanaConDispl
 		refreshList();
 	}
 	
+	public void vaciarLista() {
+		listaEmpleados.removeAll();
+	}
+	
 	public void refreshList() {
 		listaEmpleados.revalidate();
 		listaEmpleados.repaint();

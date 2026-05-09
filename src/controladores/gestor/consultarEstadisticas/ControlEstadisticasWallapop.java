@@ -1,6 +1,7 @@
 package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,9 +17,9 @@ import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
-import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
 
+// TODO: Auto-generated Javadoc
 /**
  * Clase controladora de la vista correspondiente a las estadísticas asociadas a los intercambios y productos de segunda mano de la tienda.
  */
@@ -38,9 +39,6 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 
 	/** Tienda sobre la que se actúa y muestran datos. */
 	private Tienda tienda;
-
-	/** Gestor de la tienda sobre la que estamos actuando. */
-	private Gestor gestor;
 	
 	/** Vista que muestra el controlador por pantalla. */
 	private VentanaEstadisticasTienda vista;
@@ -56,33 +54,54 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 	
 
 	/**
-	 * Instancia un nuevo Objeto ControlEstadisticasWallapop.
+	 * Instancia un nuevo controlador ControlEstadisticasWallapop que crea la vista y paneles asociados a las estadísticas d elos intercambios.
 	 *
 	 * @param tienda Tienda sobre la que se actúa y muestran datos.
 	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
 	 */
-	public ControlEstadisticasWallapop(Tienda tienda, Gestor gestor) {
-		this.vista = new VentanaEstadisticasTienda(COLUMNAS);
+	public ControlEstadisticasWallapop(Tienda tienda) {
+		this.vista = new VentanaEstadisticasTienda(new String[] {MAYOR_RECAUDACION, MENOR_RECAUDACION, MAS_UNIDADES, MENOS_UNIDADES},COLUMNAS);
+		vista.setControlador(this);
 		
-		YearMonth inicio = YearMonth.of(2000, 1);
-		YearMonth fin = YearMonth.now();
+		orden = getComparator(vista.getOpcionSeleccionadaOrden());
+		
+		cargarResultados();
 	
+		TiendaFrame.getInstance().navegarA(this);
+	}
+	
+	/**
+	 * Carga los resultados de la consulta de estadísticas por pantalla a partir del intervalo de fechas y orden establecido
+	 */
+	private void cargarResultados() {	
 		try {
+			YearMonth inicio = vista.getInicio();
+			YearMonth fin = vista.getFin();
+			panelesEstadisticas.clear();
+			vista.vaciarLista();
+			
 			List<StatsMensual> listaMeses = tienda.getHistorial().getIntercambiosEntreMeses(inicio, fin);
-			StatsMensual total = tienda.getHistorial().getVentasEntreMesesAcumulado(inicio, fin);
+			StatsMensual total = tienda.getHistorial().getIntercambiosEntreMesesAcumulado(inicio, fin);
 			
 			for (StatsMensual stats: listaMeses) {
 				double porcentaje = stats.getRecaudacion()/total.getRecaudacion() * 100;
-				vista.anadirDisplay(new PanelEstadisticasTienda(stats.getMes(), stats.getRecaudacion(), stats.getUnidades(), porcentaje));
+				PanelEstadisticasTienda panel = new PanelEstadisticasTienda(stats.getMes(), stats.getRecaudacion(), stats.getUnidades(), porcentaje);
+				panelesEstadisticas.add(new ParElementoPanel<>(stats, panel));
 			}
 			
-			TiendaFrame.getInstance().navegarA(this);
+			panelesEstadisticas.sort(orden);
+			
+			for (ParElementoPanel<StatsMensual, PanelEstadisticasTienda> par: panelesEstadisticas) {
+				vista.anadirDisplay(par.getPanel());
+			}
+			
+			vista.refrescarLista();
 		} catch(InvalidArgumentException e) {
-			new VentanaMensaje(e.toString());
+			new VentanaMensaje(e.getMessage());
 		}
-	
+		
 	}
-	
+
 	/**
 	 * Obtiene el comparator asociado al criterio actual de la vista.
 	 *

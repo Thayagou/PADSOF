@@ -9,23 +9,38 @@ import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
 import modelo.estadistica.StatsUsuario;
+import modelo.sistema.Reloj;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
-import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 
+/**
+ * Clase controladora de la vista correspondiente a mostrar .
+ */
 public class ControlEstadisticasClientes implements ControladorPantalla {
+	
+	/** Vista que muestra el controlador por pantalla. */
 	private VentanaEstadisticasCliente vista;
+	
+	/** Lista de pares de estadísticas y paneles que nos permite reordenar los paneles siguiendo parámetros de las estadísticas sin la necesidad de generar nuevos paneles. */
 	private List<ParElementoPanel<StatsUsuario, PanelClienteEstadisticas>> panelesEstadisticas = new ArrayList<>();
+	
+	/** Comparador que está siendo utilizado actualmente en la vista. */
 	private Comparator<ParElementoPanel<StatsUsuario, PanelClienteEstadisticas>> orden;
 	
 	
-	public ControlEstadisticasClientes(Tienda tienda, Gestor gestor) {
+	/**
+	 * Instancia un nuevo Controlador, que crea la vista y todos los paneles asociados a las estadísticas de los clientes.
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 */
+	public ControlEstadisticasClientes(Tienda tienda) {
 		
 		this.vista = new VentanaEstadisticasCliente();
 		vista.setControlador(this);
+		
 		orden = getComparator(VentanaEstadisticasCliente.ORDENES[0]);
 	
 		List<StatsUsuario> listaUsuarios = tienda.getHistorial().getUsuariosMasActivos();
@@ -42,6 +57,13 @@ public class ControlEstadisticasClientes implements ControladorPantalla {
 	
 	}
 	
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
+	 * 
+	 * Permite cambiar el orden en que se muestran los paneles
+	 * 
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals(VentanaEstadisticasCliente.CAMBIO_ORDEN_ACTION)) {
@@ -58,6 +80,12 @@ public class ControlEstadisticasClientes implements ControladorPantalla {
 		}	
 	}
 	
+	/**
+	 * Obtiene el comparator asociado al criterio actual de la vista.
+	 *
+	 * @param criterio String del panel de selección
+	 * @return Comparador que nos permite ordenar los paneles
+	 */
 	private Comparator<ParElementoPanel<StatsUsuario, PanelClienteEstadisticas>> getComparator(String criterio) {
 		switch(criterio) {
 		case VentanaEstadisticasCliente.MAYOR_RECAUDACION:
@@ -109,11 +137,21 @@ public class ControlEstadisticasClientes implements ControladorPantalla {
 		
 	}
 
+	/**
+	 * Getter de la vista que controla este controlador.
+	 *
+	 * @return JPanel de la vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
 	}
 
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return the explicacion
+	 */
 	@Override
 	public String getExplicacion() {
 		return "En esta ventana se muestran, siguiendo un orden establecido, las estadísticas relacionadas con los clientes de la tienda";

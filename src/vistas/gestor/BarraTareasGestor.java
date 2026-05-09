@@ -15,7 +15,18 @@ import vistas.herramientas.PanelSizes;
 
 public class BarraTareasGestor extends BarraTareas {
 	private static final long serialVersionUID = 1L;
-
+	/** Constante VOLVER_ACTION que representa la acción de retroceder  */
+	public static final String VOLVER_ACTION = "Volver";
+	
+	/** Constante HOME_ACTION que representa la acción de volver a la ventana principal */
+	public static final String HOME_ACTION = "Home";
+	
+	/** Constante CERRAR_SESION_ACTION que representa la acción de cerrar sesión */
+	public static final String CERRAR_SESION_ACTION = "Cerrar sesión";
+	
+	/** Constante INFO que representa la acción de ver la información */
+	public static final String INFO_ACTION = "Info";
+	
 	private static final double SPACE_BETWEEN = 0.01;
 	private static final double BTN_ACCOUNT_W = 0.13;
 
@@ -38,7 +49,7 @@ public class BarraTareasGestor extends BarraTareas {
 		
 		volver = ButtonFactory.newIconButton("flechaAtras.png", btnH, homeW);
 		ButtonFactory.paintButton(volver, ColorPalette.BLUE, ColorPalette.WHITE);
-		volver.setActionCommand("Volver");
+		volver.setActionCommand(VOLVER_ACTION);
 		volver.setToolTipText("Volver atrás");
 		ButtonFactory.addMouseMecanics(volver, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 		ButtonFactory.addHoverInfo(volver, "Volver atrás", 0);
@@ -46,22 +57,22 @@ public class BarraTareasGestor extends BarraTareas {
 		btnHome = ButtonFactory.newIconButton("homeButton.png", btnH, homeW);
 		btnHome.setBackground(ColorPalette.BLUE.getColor());
 		btnHome.setForeground(ColorPalette.WHITE.getColor());
-		btnHome.setActionCommand("Home");
+		btnHome.setActionCommand(HOME_ACTION);
 		ButtonFactory.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 		ButtonFactory.addHoverInfo(btnHome, "Volver a la pantalla principal", 0);
 	
 		btnCerrarSesion = ButtonFactory.newRoundedButton("Cerrar sesión", btnH, accountW, 0.25);
 		btnCerrarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
 		btnCerrarSesion.setForeground(ColorPalette.WHITE.getColor());
-		btnCerrarSesion.setActionCommand("Cerrar sesión");
+		btnCerrarSesion.setActionCommand(CERRAR_SESION_ACTION);
 		ButtonFactory.addMouseMecanics(btnCerrarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		ButtonFactory.addHoverInfo(btnCerrarSesion, "Cerrar sesión", 0);
 
 		info = ButtonFactory.newIconButton("interrogacion.png", btnH, homeW);
 		ButtonFactory.paintButton(info, ColorPalette.BLUE, ColorPalette.WHITE);
-		info.setActionCommand("Info");
+		info.setActionCommand(INFO_ACTION);
 		ButtonFactory.addMouseMecanics(info, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
-		ButtonFactory.addHoverInfo(info, "Información", 0);
+		ButtonFactory.addHoverInfo(info, "Ver información de la ventana", 0);
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 

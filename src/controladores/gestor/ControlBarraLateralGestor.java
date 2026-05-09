@@ -98,13 +98,13 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 	
 	private void consultarEstadisticasClientes() {
 		SwingUtilities.invokeLater(()->
-			new ControlEstadisticasClientes(tienda, gestor)
+			new ControlEstadisticasClientes(tienda)
 		);
 	}
 	
 	private void consultarEstadisticasProductos() {
 		SwingUtilities.invokeLater(()->
-			new ControlEstadisticasProductos(tienda, gestor)
+			new ControlEstadisticasProductos(tienda)
 		);
 	}
 	
@@ -116,7 +116,7 @@ public class ControlBarraLateralGestor implements ControlBarraLateral{
 	
 	private void consultarEstadisticasWallapop() {
 		SwingUtilities.invokeLater(()->
-			new ControlEstadisticasWallapop(tienda, gestor)
+			new ControlEstadisticasWallapop(tienda)
 		);
 	}
 }

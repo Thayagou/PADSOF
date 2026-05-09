@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,7 +32,9 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 	
 	public static String[] ORDENES = {MAYOR_RECAUDACION, MENOR_RECAUDACION, 
 			MAS_UNIDADES, MENOS_UNIDADES, MAS_ARTICULOS, MENOS_ARTICULOS};
+	
 	private static double MAX_HEIGHT_CABECERA = 0.05;
+	
 	private JPanel listaClientes;
 	private PanelMultiopcion panelOrdenacion;
 	private List<PanelClienteEstadisticas> listaPaneles = new ArrayList<>();
@@ -40,6 +43,7 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 		setOpaque(false);
 		setLayout(new BorderLayout(30, 0));
 
+		// Crea una cabecera con las columnas
 		int maxWidth = TiendaFrame.getInstance().getPixelsWidth(PanelClienteEstadisticas.LABEL_WIDTH);
 		int maxHeight = TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT_CABECERA);
 		Dimension size = new Dimension(maxWidth, maxHeight);
@@ -58,6 +62,14 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 		
 		cabecera.add(statsPanel, BorderLayout.EAST);
 		
+		JPanel cliente = new JPanel();
+		cliente.setOpaque(false);
+		cliente.setLayout(new BoxLayout(cliente, BoxLayout.X_AXIS));
+		cliente.add(Box.createHorizontalStrut(TiendaFrame.getInstance().getPixelsWidth(0.005)));
+		cliente.add(PanelEstadisticasTienda.crearColumnaStat("Clientes", size, ColorPalette.WHITE));
+		cabecera.add(cliente, BorderLayout.WEST);
+		
+		// Crea el Scroll donde se colocan los paneles de estadísticas
 		listaClientes = new JPanel();
 		listaClientes.setLayout(new BoxLayout(listaClientes, BoxLayout.Y_AXIS));
 		listaClientes.setBackground(ColorPalette.CARD_LIGHT.getColor());
@@ -67,6 +79,7 @@ public class VentanaEstadisticasCliente extends JPanel implements VentanaConDisp
 		contenido.add(cabecera, BorderLayout.NORTH);
 		contenido.add(scroll, BorderLayout.CENTER);
 
+		// Crea el panel con las opciones de ordenación
 		panelOrdenacion = new PanelMultiopcion("Ordenar por", contenido, ORDENES);
 		panelOrdenacion.setActionCommand(CAMBIO_ORDEN_ACTION);
 		

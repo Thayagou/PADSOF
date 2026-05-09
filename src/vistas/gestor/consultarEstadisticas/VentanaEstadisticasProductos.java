@@ -4,24 +4,31 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.UIManager;
 
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
+import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
+import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaEstadisticasProductos extends JPanel implements VentanaConDisplay<PanelProducto> {
 	private static final long serialVersionUID = 1L;
+	public static final String CONFIRMAR_CAMBIO_FECHA_ACTION = "Confirmar";
 	public static final String CAMBIO_ORDEN_ACTION = "Cambiar orden";
 	public static final String MAYOR_RECAUDACION = "Mayor recaudación";
 	public static final String MENOR_RECAUDACION = "Menor recaudación";
@@ -30,6 +37,9 @@ public class VentanaEstadisticasProductos extends JPanel implements VentanaConDi
 
 	public static String[] ORDENES = { MAYOR_RECAUDACION, MENOR_RECAUDACION, MAS_UNIDADES, MENOS_UNIDADES };
 	private static double MAX_HEIGHT_CABECERA = 0.05;
+	private JSpinner inicio;
+	private JSpinner fin;
+	private JButton confirmar;
 	private JPanel listaProductos;
 	private PanelMultiopcion panelOrdenacion;
 	private List<PanelProducto> listaPaneles = new ArrayList<>();
@@ -52,8 +62,6 @@ public class VentanaEstadisticasProductos extends JPanel implements VentanaConDi
 		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Total recaudado", size, ColorPalette.WHITE));
 		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Unidades vendidas", size, ColorPalette.WHITE));
 		statsPanel.add(PanelEstadisticasTienda.crearColumnaStat("Porcentaje de recaudación", size, ColorPalette.WHITE));
-		//statsPanel.setMaximumSize(new Dimension(3*maxWidth, maxHeight));
-		
 
 		// Lista
 		listaProductos = new JPanel();
@@ -77,6 +85,33 @@ public class VentanaEstadisticasProductos extends JPanel implements VentanaConDi
 
 		panelOrdenacion = new PanelMultiopcion("Ordenar por", contenido, ORDENES);
 		panelOrdenacion.setActionCommand(CAMBIO_ORDEN_ACTION);
+		
+		// Obtiene el panel de cabecera norte del PanelMultiopcion y le añade los spinners para elegir mes de inicio y fin 
+		BorderLayout layout = (BorderLayout) panelOrdenacion.getLayout();
+		JPanel norte = (JPanel) layout.getLayoutComponent(panelOrdenacion, BorderLayout.NORTH);
+		
+		// Crea los spinners de inicio y fin y los añade a la cabecera
+		JLabel labelInicio = ButtonFactory.newLeftAlignedLabel("Inicio", Fonts.TITLE3);
+		labelInicio.setForeground(ColorPalette.WHITE.getColor());
+		inicio = ButtonFactory.spinnerFechaYearMonth(Fonts.TEXT);
+		
+		JLabel labelFin = ButtonFactory.newLeftAlignedLabel("Fin", Fonts.TITLE3);
+		labelFin.setForeground(ColorPalette.WHITE.getColor());
+		fin = ButtonFactory.spinnerFechaYearMonth(Fonts.TEXT);
+		
+		confirmar = ButtonFactory.newRoundedButton(CONFIRMAR_CAMBIO_FECHA_ACTION, maxHeight, TiendaFrame.getInstance().getPixelsWidth(0.08), maxHeight);
+		
+		
+		int gap = TiendaFrame.getInstance().getPixelsWidth(0.07);
+		norte.add(Box.createHorizontalStrut(gap));
+		norte.add(labelInicio);
+		norte.add(inicio);
+		norte.add(Box.createHorizontalStrut(gap));
+		norte.add(labelFin);
+		norte.add(fin);
+		norte.add(Box.createHorizontalStrut(gap));
+		norte.add(confirmar);
+		
 		add(panelOrdenacion, BorderLayout.CENTER);
 
 		refrescarLista();
@@ -100,9 +135,26 @@ public class VentanaEstadisticasProductos extends JPanel implements VentanaConDi
 	public String getOpcionSeleccionadaOrden() {
 		return ORDENES[panelOrdenacion.getOpcionSeleccionada()];
 	}
+	
+	public YearMonth getInicio() {
+		return VentanaEstadisticasTienda.getMes(inicio);
+	}
+	
+	public YearMonth getFin() {
+		return VentanaEstadisticasTienda.getMes(fin);
+	}	
+	
+	public void setInicio(YearMonth inicio) {
+		VentanaEstadisticasTienda.setMes(this.inicio, inicio);
+	}
+	
+	public void setFin(YearMonth fin) {
+		VentanaEstadisticasTienda.setMes(this.fin, fin);
+	}
 
 	public void setControlador(ActionListener l) {
 		panelOrdenacion.setControlador(l);
+		confirmar.addActionListener(l);
 	}
 
 	@Override

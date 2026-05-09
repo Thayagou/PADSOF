@@ -30,8 +30,19 @@ public class ControlGestionarEmpleados  implements ControladorPantalla{
 	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
 	 */
 	public ControlGestionarEmpleados(Tienda tienda, Gestor gestor) {
+		this.tienda = tienda;
+		this.gestor = gestor;
 		this.vista = new VentanaGestionarEmpleados();
 		
+		cargarVista();
+		
+		TiendaFrame.getInstance().navegarA(this);
+	}
+	
+	/**
+	 * Carga la información de los empleados por pantalla
+	 */
+	private void cargarVista() {
 		// Panel para crear nuevo empleado
 		new ControlPanelNuevoEmpleado(tienda, gestor, vista);
 		
@@ -39,14 +50,22 @@ public class ControlGestionarEmpleados  implements ControladorPantalla{
 		for (Empleado e: tienda.getTodosEmpleados()) {
 			new ControlPanelEmpleadoGestionar(tienda, e, vista);
 		}
-		
-		TiendaFrame.getInstance().navegarA(this);
+	}
+	
+	/**
+	 * Método que se invoca para volver atrás correctamente y que se muestren los cambios reales
+	 */
+	@Override
+	public void mostrar() {
+		vista.vaciarLista();
+		cargarVista();
+		vista.refreshList();
 	}
 
 	/**
 	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
 	 * 
-	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
+	 *En este caso este controlador sirve para colocar los paneles por pantalla por lo que no realiza acciones
 	 *
 	 * @param e Evento de acción lanzado por un componente Swing
 	 */

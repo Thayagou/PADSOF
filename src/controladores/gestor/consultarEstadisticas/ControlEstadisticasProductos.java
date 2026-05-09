@@ -2,6 +2,7 @@ package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
 import java.time.YearMonth;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -11,51 +12,65 @@ import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
 import modelo.estadistica.StatsMensual;
-import modelo.estadistica.StatsUsuario;
 import modelo.exceptions.InvalidArgumentException;
+import modelo.sistema.Reloj;
 import modelo.sistema.Tienda;
-import modelo.usuario.Gestor;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
-import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
 import vistas.gestor.consultarEstadisticas.PanelProductoEstadisticas;
-import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasProductos;
 
 /**
- * Clase controladora de la vista correspondiente a las estadísticas asociadas a los productos
+ * Clase controladora de la vista correspondiente a las estadísticas asociadas a los productos.
  */
 public class ControlEstadisticasProductos implements ControladorPantalla {
 	
-	/** Campo vista. */
+	/** Tienda sobre la que se obtienen las estadísticas */
+	private Tienda tienda;
+	
+	/** Vista que muestra el controlador por pantalla. */
 	private VentanaEstadisticasProductos vista;
 	
-	/** Campo panelesEstadisticas. */
+	/** Pares de StatsMensual y PanelProductoEstadisticas que permite reordenación fácil para mostrar los elementos sin crear nuevos paneles. */
 	private List<ParElementoPanel<StatsMensual, PanelProductoEstadisticas>> panelesEstadisticas = new ArrayList<>();
 	
-	/** Campo orden. */
+	/** Orden establecido para mostrar las estadísticas de los productos. */
 	private Comparator<ParElementoPanel<StatsMensual, PanelProductoEstadisticas>> orden;
 	
+
 	/**
-	 * Instancia un nuevo Objeto ControlEstadisticasProductos.
+	 * Instancia un nuevo Controlador, que crea la vista y todos los paneles asociados a las estadísticas de los productos.
 	 *
-	 * @param tienda parámetro tienda
-	 * @param gestor parámetro gestor
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
 	 */
-	public ControlEstadisticasProductos(Tienda tienda, Gestor gestor) {
+	public ControlEstadisticasProductos(Tienda tienda) {
+		this.tienda = tienda;
+		
 		this.vista = new VentanaEstadisticasProductos();
 		vista.setControlador(this);
+		vista.setInicio(Reloj.mesNow().minusMonths(1));
+		vista.setFin(Reloj.mesNow());
+		
 		orden = getComparator(VentanaEstadisticasProductos.ORDENES[0]);
+				
+		cargarProductos();
 		
-		YearMonth inicio = YearMonth.of(2000, 1);
-		YearMonth fin = YearMonth.now();
-		
-		
+		TiendaFrame.getInstance().navegarA(this);
+	}
+	
+	private void cargarProductos() {
 		try {
+			panelesEstadisticas.clear();
+			
+			YearMonth inicio = vista.getInicio();
+			YearMonth fin = vista.getFin();
+			
 			List<Map.Entry<Producto, StatsMensual>> listaProductos = tienda.getHistorial().getProductosMayorRecaudacion(inicio, fin);
 			StatsMensual total = tienda.getHistorial().getVentasEntreMesesAcumulado(inicio, fin);
+			
+			vista.vaciarLista();
 			
 			for (Map.Entry<Producto, StatsMensual> par : listaProductos) {
 				Producto p = par.getKey();
@@ -73,12 +88,16 @@ public class ControlEstadisticasProductos implements ControladorPantalla {
 				vista.anadirDisplay(panel);
 			}
 			
-			TiendaFrame.getInstance().navegarA(this);
+			vista.refrescarLista();
 		} catch(InvalidArgumentException e) {
-			new VentanaMensaje(e.toString());
+			new VentanaMensaje(e.getMessage(), VentanaMensaje.ERROR);
+		} catch(DateTimeParseException e) {
+			new VentanaMensaje("Formato inválido de fecha. Correcto mm/yyyy", VentanaMensaje.ERROR);
+			return;
 		}
+		
 	}
-	
+
 	/**
 	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
 	 * 
@@ -88,17 +107,23 @@ public class ControlEstadisticasProductos implements ControladorPantalla {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(VentanaEstadisticasProductos.CAMBIO_ORDEN_ACTION)) {
-			orden = getComparator(vista.getOpcionSeleccionadaOrden());
-			panelesEstadisticas.sort(orden);
-			
-			vista.vaciarLista();
-			
-			for (ParElementoPanel<StatsMensual, PanelProductoEstadisticas> par : panelesEstadisticas) {
-				vista.anadirDisplay(par.getPanel());
+		switch (e.getActionCommand()) {
+			case VentanaEstadisticasProductos.CAMBIO_ORDEN_ACTION -> {
+				orden = getComparator(vista.getOpcionSeleccionadaOrden());
+				panelesEstadisticas.sort(orden);
+				
+				vista.vaciarLista();
+				
+				for (ParElementoPanel<StatsMensual, PanelProductoEstadisticas> par : panelesEstadisticas) {
+					vista.anadirDisplay(par.getPanel());
+				}
+				
+				vista.refrescarLista();	
 			}
 			
-			vista.refrescarLista();	
+			case VentanaEstadisticasProductos.CONFIRMAR_CAMBIO_FECHA_ACTION -> {
+				cargarProductos();
+			}
 		}
 		
 	}

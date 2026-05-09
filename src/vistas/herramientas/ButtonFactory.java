@@ -303,7 +303,16 @@ public class ButtonFactory {
 	    spinner.setEditor(editor);
 	    spinner.setFont(font.getFont());
 	    return spinner;
-	}    
+	}   
+	
+	public static JSpinner spinnerFechaYearMonth(Fonts font) {
+		SpinnerDateModel modelo = new SpinnerDateModel();
+		JSpinner spinner = new JSpinner(modelo);
+		JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "MM/yyyy");
+		spinner.setEditor(editor);
+		spinner.setFont(font.getFont());
+		return spinner;
+	}
 	    
 	public static JSpinner spinnerEntero(Fonts font, int valor, int min, int max, int paso) {
 	    SpinnerNumberModel modelo = new SpinnerNumberModel(valor, min, max, paso);

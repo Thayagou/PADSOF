@@ -20,7 +20,6 @@ import modelo.venta.productos.Producto;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.components.PanelSeleccion;
-import vistas.common.displays.PanelProductoSeleccion;
 import vistas.gestor.anadirDescuento.VentanaAnadirDescuento;
 
 /**
