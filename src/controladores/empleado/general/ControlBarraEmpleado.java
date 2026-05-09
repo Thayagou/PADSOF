@@ -27,17 +27,13 @@ public class ControlBarraEmpleado implements ControlBarraLateral {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Gestionar productos y categorías" -> showGProductos();
-		case "Añadir nuevo producto" -> showAnadirProducto();
+		case "Añadir productos" -> showAnadirProducto();
 		case "Gestionar productos existentes" -> showProductosExistentes();
 		case "Gestionar categorías" -> showCategoriasExistentes();
 		case "Gestionar pedidos" -> showGPedidos();
-		case "Valorar objetos de segunda mano" -> showValorar();
+		case "Valorar artículos de segunda mano" -> showValorar();
 		case "Gestionar intercambios" -> showGIntercambios();
 		}
-	}
-
-	private void showGProductos() {
 	}
 	
 	private void showAnadirProducto() {

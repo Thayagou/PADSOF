@@ -3,13 +3,12 @@ package controladores.empleado.gestionarProductos.gestionarCategorias;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.SwingUtilities;
-
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
+import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelCategoria;
 import vistas.common.displays.VentanaConDisplay;
@@ -20,11 +19,13 @@ public class ControlPanelCategoriaGestionar implements ActionListener {
 	private final Usuario usuario;
 	private final Tienda tienda;
 	private PanelCategoriaGestionarCategoria panel;
+	private final ControlGestionarCategorias padre;
 	
-	public ControlPanelCategoriaGestionar(Tienda tienda, Usuario usuario, Categoria categoria, VentanaConDisplay<? super PanelCategoria> vista) {
+	public ControlPanelCategoriaGestionar(Tienda tienda, Usuario usuario, Categoria categoria, VentanaConDisplay<? super PanelCategoria> vista, ControlGestionarCategorias padre) {
 		this.tienda = tienda;
 		this.usuario = usuario;
 		this.categoria = categoria;
+		this.padre = padre;
 		
 		panel = new PanelCategoriaGestionarCategoria(categoria.getNombre());
 		panel.setControlador(this);
@@ -45,29 +46,35 @@ public class ControlPanelCategoriaGestionar implements ActionListener {
 	}
 	
 	private void intentarBorrar() {
-		try {
-			tienda.getAlmacen().eliminarCategoria(usuario, categoria);
-		} catch (InvalidArgumentException | InvalidPermitException e) {
-			new VentanaMensaje(e.getMessage());
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas borrar esta categoría?")) {
+			try {
+				tienda.getAlmacen().eliminarCategoria(usuario, categoria);
+			} catch (InvalidArgumentException | InvalidPermitException e) {
+				new VentanaMensaje(e.getMessage(), 1);
+				return;
+			}
+			padre.mostrar();
+			new VentanaMensaje("La categoría se ha borrado correctamente");
 		}
-		SwingUtilities.invokeLater(() -> new ControlGestionarCategorias(tienda, usuario));
-		new VentanaMensaje("La categoría se ha borrado correctamente");
 	}
 
 	private void intentarModificar() {
 		String nuevoNombre = panel.getNombreCategoria();
 		if(nuevoNombre.equals("Nombre") || nuevoNombre.length() < 1) {
-			new VentanaMensaje("Introduzca un nuevo nombre para la categoría");
+			new VentanaMensaje("Introduza un nuevo nombre válido para la categoría", 1);
 			return;
 		}
 		
-		try {
-			tienda.getAlmacen().modificarCategoria(usuario, categoria, nuevoNombre);
-		} catch (InvalidArgumentException | InvalidPermitException e) {
-			new VentanaMensaje(e.getMessage());
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas modificar esta categoría?")) {
+			try {
+				tienda.getAlmacen().modificarCategoria(usuario, categoria, nuevoNombre);
+			} catch (InvalidArgumentException | InvalidPermitException e) {
+				new VentanaMensaje(e.getMessage(), 1);
+				return;
+			}
+			padre.mostrar();
+			new VentanaMensaje("La categoría se ha modificado correctamente");
 		}
-		SwingUtilities.invokeLater(() -> new ControlGestionarCategorias(tienda, usuario));
-		new VentanaMensaje("La categoría se ha modificado correctamente");
 	}
 	
 }

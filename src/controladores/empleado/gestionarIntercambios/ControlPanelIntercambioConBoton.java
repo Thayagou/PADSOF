@@ -5,14 +5,13 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.Intercambio;
+import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelIntercambioConBoton;
 import vistas.empleado.gestionarIntercambios.VentanaGestIntercambios;
@@ -29,6 +28,8 @@ public class ControlPanelIntercambioConBoton implements ActionListener {
 	private final Intercambio intercambio;
 	/** Nombre de la acción confirmar*/
 	private final String ACTION_NAME = "Confirmar";
+	/** Controlador de la ventana padre en la que está */
+	private final ControlGestIntercambios padre;
 
 	/**
 	 * Cosntructor del controlador de panel intercambio
@@ -37,10 +38,11 @@ public class ControlPanelIntercambioConBoton implements ActionListener {
 	 * @param intercambio Intercambio que se puede confirmar
 	 * @param vista Ventana en la que se muestra el panel
 	 */
-	public ControlPanelIntercambioConBoton(Tienda tienda, Empleado empleado, Intercambio intercambio, VentanaGestIntercambios vista) {
+	public ControlPanelIntercambioConBoton(Tienda tienda, Empleado empleado, Intercambio intercambio, VentanaGestIntercambios vista, ControlGestIntercambios padre) {
 		this.tienda = tienda;
 		this.empleado = empleado;
 		this.intercambio = intercambio;
+		this.padre = padre;
 		
 		List<String> articulosOfrecidos = new LinkedList<>();
 		for(ArticuloSegundaMano a : intercambio.getOfrecidos()) {
@@ -70,14 +72,15 @@ public class ControlPanelIntercambioConBoton implements ActionListener {
 	 * Acción una vez que se pulsa confirmar
 	 */
 	private void intentarConfirmar() {
-		try {
-			tienda.getHistorial().validarIntercambio(empleado, intercambio);
-		} catch (InvalidPermitException | InvalidArgumentException ex) {
-			new VentanaMensaje(ex.getMessage());
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas confirmar intercambio?")) {
+			try {
+				tienda.getHistorial().validarIntercambio(empleado, intercambio);
+			} catch (InvalidPermitException | InvalidArgumentException ex) {
+				new VentanaMensaje(ex.getMessage(), 1);
+				return;
+			}
+			padre.mostrar();
+			new VentanaMensaje("El intercambio se ha confirmado correctamente");
 		}
-		
-		new VentanaMensaje("El intercambio se ha confirmado correctamente");
-		SwingUtilities.invokeLater(() -> new ControlGestIntercambios(tienda, empleado));
 	}
-
 }

@@ -35,54 +35,13 @@ public class ControlModificarProductos implements ControladorPantalla {
 	private final Tienda tienda;
 	private final Usuario usuario;
 	private final Stock producto;
-	private final VentanaAnadirProductoIndividual vista;
+	private VentanaAnadirProductoIndividual vista;
 
 	public ControlModificarProductos(Tienda tienda, Usuario usuario, Stock producto) {
 		this.tienda = tienda;
 		this.usuario = usuario;
 		this.producto = producto;
-		Producto p = producto.getProducto();
 
-		List<String> categorias = new LinkedList<>();
-		for (Categoria c : tienda.getAlmacen().getCategorias()) {
-			categorias.add(c.getNombre());
-		}
-
-		List<String> productoCategorias = new LinkedList<>();
-		for (Categoria c : p.getCategorias()) {
-			productoCategorias.add(c.getNombre());
-		}
-
-		List<String> tiposJuego = new LinkedList<>();
-		for (TipoJuego t : TipoJuego.values()) {
-			tiposJuego.add(t.name());
-		}
-
-		List<PanelProducto> paneles = new LinkedList<>();
-		for (Stock s : tienda.getAlmacen().getInventario()) {
-			Producto prod = s.getProducto();
-
-			List<String> prodCategorias = new LinkedList<>();
-			for (Categoria c : prod.getCategorias()) {
-				prodCategorias.add(c.getNombre());
-			}
-
-			paneles.add(new PanelProducto(prod.getNombre(), prod.getDescripcion(), prod.getImagen(),
-					prod.getPuntuacionMedia(), prod.getPrecio(), "Producto", prodCategorias.toArray(new String[0])));
-		}
-
-		String[] tiposProductos = { "Comic", "Juego", "Figura", "Pack" };
-		String[] espComic = new CaracteristicasComic(null, null, 0, null).getNombresCaracteristicas();
-		String[] espJuego = new CaracteristicasJuego(0, null, null).getNombresCaracteristicas();
-		String[] espFigura = new CaracteristicasFigura(null, null, null).getNombresCaracteristicas();
-		String[] espPack = new CaracteristicasPack(new Stock[0]).getNombresCaracteristicas();
-
-		this.vista = new VentanaAnadirProductoIndividual(p.getNombre(), p.getDescripcion(),
-				productoCategorias.toArray(new String[0]), categorias.toArray(new String[0]), p.getPrecio() + "",
-				producto.getUdsEnStock() + "", p.getTipoProducto(), tiposProductos, p.getValoresCaracteristicas(),
-				espComic, espJuego, espFigura, espPack, tiposJuego.toArray(new String[0]),
-				paneles.toArray(new PanelProducto[0]), true);
-		this.vista.setControlador(this);
 		TiendaFrame.getInstance().navegarA(this);
 	}
 
@@ -204,5 +163,50 @@ public class ControlModificarProductos implements ControladorPantalla {
 		return "En esta ventana puedes modificar la información del producto que desees, cambiando los valores establecidos en los campos";
 	}
 	
+	@Override
+	public void mostrar() {
+		Producto p = producto.getProducto();
+
+		List<String> categorias = new LinkedList<>();
+		for (Categoria c : tienda.getAlmacen().getCategorias()) {
+			categorias.add(c.getNombre());
+		}
+
+		List<String> productoCategorias = new LinkedList<>();
+		for (Categoria c : p.getCategorias()) {
+			productoCategorias.add(c.getNombre());
+		}
+
+		List<String> tiposJuego = new LinkedList<>();
+		for (TipoJuego t : TipoJuego.values()) {
+			tiposJuego.add(t.name());
+		}
+
+		List<PanelProducto> paneles = new LinkedList<>();
+		for (Stock s : tienda.getAlmacen().getInventario()) {
+			Producto prod = s.getProducto();
+
+			List<String> prodCategorias = new LinkedList<>();
+			for (Categoria c : prod.getCategorias()) {
+				prodCategorias.add(c.getNombre());
+			}
+
+			paneles.add(new PanelProducto(prod.getNombre(), prod.getDescripcion(), prod.getImagen(),
+					prod.getPuntuacionMedia(), prod.getPrecio(), "Producto", prodCategorias.toArray(new String[0])));
+		}
+
+		String[] tiposProductos = { "Comic", "Juego", "Figura", "Pack" };
+		String[] espComic = new CaracteristicasComic(null, null, 0, null).getNombresCaracteristicas();
+		String[] espJuego = new CaracteristicasJuego(0, null, null).getNombresCaracteristicas();
+		String[] espFigura = new CaracteristicasFigura(null, null, null).getNombresCaracteristicas();
+		String[] espPack = new CaracteristicasPack(new Stock[0]).getNombresCaracteristicas();
+
+		this.vista = new VentanaAnadirProductoIndividual(p.getNombre(), p.getDescripcion(),
+				productoCategorias.toArray(new String[0]), categorias.toArray(new String[0]), p.getPrecio() + "",
+				producto.getUdsEnStock() + "", p.getTipoProducto(), tiposProductos, p.getValoresCaracteristicas(),
+				espComic, espJuego, espFigura, espPack, tiposJuego.toArray(new String[0]),
+				paneles.toArray(new PanelProducto[0]), true);
+		this.vista.setControlador(this);
+	}
 	
 }

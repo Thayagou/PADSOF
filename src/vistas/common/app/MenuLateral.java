@@ -53,7 +53,6 @@ public class MenuLateral extends JPanel {
 	private static final Font FUENTE_BOTONES = Fonts.TEXT.getFont();
 	
 	private static final int PADDING_TITULO = TiendaFrame.getInstance().getPixelsWidth(0.01);
-	private static final int INDENT_BOTONES = TiendaFrame.getInstance().getPixelsWidth(0.01);
 	
 	private static final int BTN_HEIGHT = TiendaFrame.getInstance().getPixelsWidth(0.03);
 
@@ -147,7 +146,7 @@ public class MenuLateral extends JPanel {
 	        tituloLabel.setForeground(COLOR_TEXTO_TITULO);
 	        tituloLabel.setOpaque(true);
 	        tituloLabel.setBackground(COLOR_TITULO_BG);
-	        tituloLabel.setBorder(BorderFactory.createEmptyBorder(PADDING_TITULO, INDENT_BOTONES, PADDING_TITULO, 0));
+	        tituloLabel.setBorder(BorderFactory.createEmptyBorder(PADDING_TITULO, PADDING_TITULO, PADDING_TITULO, 0));
 	        tituloLabel.addMouseListener(new MouseAdapter() {
 	            @Override
 	            public void mouseClicked(MouseEvent e) {
@@ -192,9 +191,9 @@ public class MenuLateral extends JPanel {
 	        /* Forzar que los botones tengan el ancho deseado (mismo ancho para todos) */
 	        for (int i = 0; i < panelBotones.getComponentCount(); i++) {
 	            JButton btn = (JButton) panelBotones.getComponent(i);
-	            btn.setMinimumSize(new Dimension(width - INDENT_BOTONES, BTN_HEIGHT));
-	            btn.setMaximumSize(new Dimension(width - INDENT_BOTONES, BTN_HEIGHT));
-	            btn.setPreferredSize(new Dimension(width - INDENT_BOTONES, BTN_HEIGHT));
+	            btn.setMinimumSize(new Dimension(width, BTN_HEIGHT));
+	            btn.setMaximumSize(new Dimension(width, BTN_HEIGHT));
+	            btn.setPreferredSize(new Dimension(width, BTN_HEIGHT));
 	        }
 	        
 	        /* (Opcional) ya no forzamos el ancho de los botones porque puede causar problemas */

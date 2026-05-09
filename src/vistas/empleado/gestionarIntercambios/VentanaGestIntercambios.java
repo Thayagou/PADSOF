@@ -51,4 +51,10 @@ public class VentanaGestIntercambios extends JPanel implements VentanaConDisplay
 		listaPanel.repaint();
 		return panelDisplay;
 	}
+	
+	public void vaciar() {
+		listaPanel.removeAll();
+		listaPanel.revalidate();
+		listaPanel.repaint();
+	}
 }

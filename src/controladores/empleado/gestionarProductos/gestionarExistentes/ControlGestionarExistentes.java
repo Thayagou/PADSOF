@@ -4,20 +4,29 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
+import modelo.usuario.Permiso;
 import modelo.usuario.Usuario;
 import modelo.venta.productos.Stock;
 import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.gestionarExistentes.VentanaGestionarExistentes;
 
-public class ControlGestionarExistentes implements ControladorPantalla{
+public class ControlGestionarExistentes implements ControladorPantalla {
+	private final Tienda tienda;
+	private final Usuario usuario;
 	private VentanaGestionarExistentes vista;
+
+	/** Permiso requerido para realizar esta acción */
+	private static Permiso requerido = Permiso.PRODUCTOS;
 	
 	public ControlGestionarExistentes(Tienda tienda, Usuario usuario) {
-		this.vista = new VentanaGestionarExistentes();
-		
-		for (Stock s : tienda.getAlmacen().getInventario()) {
-			new ControlPanelProductoGestionar(tienda, usuario, s, vista);
+		this.tienda = tienda;
+		this.usuario = usuario;
+		if(!usuario.tienePermiso(requerido)) {
+			new VentanaMensaje("No tiene el permiso para realizar esta acción", 1);
+			return;
 		}
+		this.vista = new VentanaGestionarExistentes();
 		
 		vista.revalidate();
 		vista.repaint();
@@ -36,6 +45,12 @@ public class ControlGestionarExistentes implements ControladorPantalla{
 	@Override
 	public String getExplicacion() {
 		return "En esta ventana puedes modificar o borrar productos existentes de la tienda, pulsando sobre uno de los botones al lado de cada producto";
+	}
+	
+	public void mostrar() {
+		for (Stock s : tienda.getAlmacen().getInventario()) {
+			new ControlPanelProductoGestionar(tienda, usuario, s, vista, this);
+		}
 	}
 
 }
