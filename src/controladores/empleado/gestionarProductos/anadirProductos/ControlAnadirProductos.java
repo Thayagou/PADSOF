@@ -32,11 +32,26 @@ import vistas.common.displays.PanelProducto;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductoIndividual;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductos;
 
+/**
+ * Clase controladora de la vista correspondiente a anadir un nuevo producto
+ */
 public class ControlAnadirProductos implements ControladorPantalla {
+	
+	/** Tienda sobre la que se actúa y muestran datos. */
 	private final Tienda tienda;
+	
+	/** Usuario que realiza la acción */
 	private final Usuario usuario;
+	
+	/** Vista que muestra el controlador por pantalla. */
 	private VentanaAnadirProductos vista;
 	
+	/**
+	 * Instancia un nuevo Controlador, que crea la vista y todos los paneles asociados.
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 * @param usuario parámetro usuario
+	 */
 	public ControlAnadirProductos(Tienda tienda, Usuario usuario) {
 		this.tienda = tienda;
 		this.usuario = usuario;
@@ -78,6 +93,13 @@ public class ControlAnadirProductos implements ControladorPantalla {
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
+	 * 
+	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
+	 *
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -87,6 +109,9 @@ public class ControlAnadirProductos implements ControladorPantalla {
 		}
 	}
 	
+	/**
+	 * intentarAnadir.
+	 */
 	private void intentarAnadir() {
 		int udsStock = Integer.parseInt(vista.getVentanaIndividual().getStock());
 
@@ -113,6 +138,11 @@ public class ControlAnadirProductos implements ControladorPantalla {
 		new VentanaMensaje("El producto se añadió correctamente");
 	}
 	
+	/**
+	 * Obtiene CaracteristicasEsp.
+	 *
+	 * @return valor de CaracteristicasEsp
+	 */
 	private CaracteristicasProducto getCaracteristicasEsp() {
 		String tipo = vista.getVentanaIndividual().getTipo();
 		String[] esp = vista.getVentanaIndividual().getEspecificaciones();
@@ -153,6 +183,11 @@ public class ControlAnadirProductos implements ControladorPantalla {
 		return null;
 	}
 
+	/**
+	 * Obtiene Categorias.
+	 *
+	 * @return valor de Categorias
+	 */
 	private Categoria[] getCategorias() {
 		List<Categoria> categorias = new LinkedList<>();
 		for (String cat : vista.getVentanaIndividual().getCategorias()) {
@@ -165,6 +200,12 @@ public class ControlAnadirProductos implements ControladorPantalla {
 		return categorias.toArray(new Categoria[0]);
 	}
 	
+	/**
+	 * Obtiene Productos.
+	 *
+	 * @param prods parámetro prods
+	 * @return valor de Productos
+	 */
 	private Stock[] getProductos(String prods) {
 	    if (prods == null || prods.isEmpty()) return new Stock[0];
 	    
@@ -183,11 +224,21 @@ public class ControlAnadirProductos implements ControladorPantalla {
 	    return productos.toArray(new Stock[0]);
 	}
 
+	/**
+	 * Getter de la vista que controla este controlador.
+	 *
+	 * @return JPanel de la vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
 	}
 
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return the explicacion
+	 */
 	@Override
 	public String getExplicacion() {
 		return "En esta ventana puedes añadir varios productos mediante un fichero de productos, pulsando sobre \"Cargar fichero de productos...\", o añadir un nuevo productos rellenando los campos que se ven";
