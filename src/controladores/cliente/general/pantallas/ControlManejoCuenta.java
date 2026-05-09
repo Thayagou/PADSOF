@@ -41,7 +41,9 @@ public class ControlManejoCuenta implements ControladorPantalla {
 			}
 			break;
 		case "Cerrar Sesión":
+			if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que quieres cerrar sesión? Podrás volver a iniciar sesión más tarde."))
 			SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+			break;
 		}
 	}
 
