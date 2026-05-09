@@ -31,7 +31,6 @@ public class ControlLoginRegistro implements ActionListener, ControladorPantalla
         this.tienda = tienda;
         this.vista  = new VentanaLoginRegistro();
 
-        // Inyectar listener de login
         vista.setControlador(this);
 
         TiendaFrame.getInstance().navegarA(this);
@@ -80,10 +79,10 @@ public class ControlLoginRegistro implements ActionListener, ControladorPantalla
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "Log In":
+		case VentanaLoginRegistro.LOGIN_ACTION:
 			intentarLogin();
 			break;
-		case "Crear cuenta":
+		case VentanaLoginRegistro.SIGNIN_ACTION:
 			intentarRegistro();
 			break;
 		}

@@ -10,6 +10,9 @@ import vistas.common.assets.PanelInfoProducto;
 import vistas.common.displays.PanelResena;
 import vistas.herramientas.*;
 
+/**
+ * Tipo: Class VentanaProductoCliente.
+ */
 public class VentanaProductoCliente extends JPanel {
 
 	/** Constante serialVersionUID. */
@@ -18,12 +21,19 @@ public class VentanaProductoCliente extends JPanel {
 	/** Constante REVIEWS_W_PERC. */
 	private static final double REVIEWS_W_PERC = 0.33;
 
+	/** Constante COMPRAR_BTN_WIDTH. */
 	private static final double COMPRAR_BTN_WIDTH = 0.2;
+	
+	/** Constante COMPRAR_BTN_HEIGHT. */
 	private static final double COMPRAR_BTN_HEIGHT = 0.06;
+	
+	/** Constante BUY_ACTION. */
+	public static final String BUY_ACTION = "comprar";
 
+	/** boton comprar. */
 	private JButton comprar;
 
-	/** Campo resenasPanel. */
+	/** boton resenasPanel. */
 	private JPanel resenasPanel = new JPanel();
 
 	/**
@@ -31,8 +41,10 @@ public class VentanaProductoCliente extends JPanel {
 	 *
 	 * @param nombre          parámetro nombre
 	 * @param descripcion     parámetro descripcion
+	 * @param image parámetro image
 	 * @param puntuacionMedia parámetro puntuacionMedia
 	 * @param precio          parámetro precio
+	 * @param caracteristicas parámetro caracteristicas
 	 * @param categorias      parámetro categorias
 	 */
 	public VentanaProductoCliente(String nombre, String descripcion, String image, double puntuacionMedia,
@@ -61,7 +73,7 @@ public class VentanaProductoCliente extends JPanel {
 
 		comprar = ButtonFactory.newRoundedButton("Añadir al carrito", t.getPixelsHeight(COMPRAR_BTN_HEIGHT),
 				t.getPixelsWidth(COMPRAR_BTN_WIDTH), 1);
-		comprar.setActionCommand("comprar");
+		comprar.setActionCommand(BUY_ACTION);
 		comprar.setAlignmentX(CENTER_ALIGNMENT);
 
 		JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -76,6 +88,9 @@ public class VentanaProductoCliente extends JPanel {
 		refreshList();
 	}
 	
+	/**
+	 * refreshList.
+	 */
 	private void refreshList() {
 		resenasPanel.revalidate();
 		resenasPanel.repaint();
@@ -93,6 +108,11 @@ public class VentanaProductoCliente extends JPanel {
 		refreshList();
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	public void setControlador(ActionListener c) {
 		comprar.addActionListener(c);
 	}

@@ -9,14 +9,38 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.displays.PanelProducto;
 import vistas.herramientas.*;
 
+/**
+ * Tipo: Class PanelItemCarrito.
+ */
 public class PanelItemCarrito extends PanelProducto {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Constante QUITAR_ACTION. */
+	public static final String QUITAR_ACTION = "Quitar";
 
+	/** Campo quitar. */
 	private JButton quitar;
+	
+	/** Campo unidadesLabel. */
 	private JLabel unidadesLabel;
 
+	/** Constante SPACE_EAST_PANEL. */
 	private static final double SPACE_EAST_PANEL = 0.01;
 
+	/**
+	 * Instancia un nuevo Objeto PanelItemCarrito.
+	 *
+	 * @param nombre parámetro nombre
+	 * @param descripcion parámetro descripcion
+	 * @param imageName parámetro imageName
+	 * @param puntuacionMedia parámetro puntuacionMedia
+	 * @param precio parámetro precio
+	 * @param unidades parámetro unidades
+	 * @param actionName parámetro actionName
+	 * @param categorias parámetro categorias
+	 */
 	public PanelItemCarrito(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio,
 			int unidades, String actionName, String... categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, actionName, categorias);
@@ -62,6 +86,11 @@ public class PanelItemCarrito extends PanelProducto {
 		this.add(eastPanel, BorderLayout.EAST);
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param l nuevo valor
+	 */
 	@Override
 	public void setControlador(ActionListener l) {
 		super.setControlador(l);

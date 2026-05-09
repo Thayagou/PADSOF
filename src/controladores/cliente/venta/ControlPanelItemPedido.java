@@ -20,6 +20,8 @@ public class ControlPanelItemPedido implements ActionListener {
 	protected StockExterno item;
 	protected PanelItemPedido panel;
 	protected VentanaConDisplay<? super PanelItemPedido> vista;
+	
+	private static final String seeProduct = "Ver producto";
 
 	protected static final String DF_PRODUCT_IMAGE = "producto.png";
 
@@ -43,7 +45,7 @@ public class ControlPanelItemPedido implements ActionListener {
 
 		panel = new PanelItemPedido(item.getProducto().getNombre(), item.getProducto().getDescripcion(),
 				imageRoute, item.getProducto().getPuntuacionMedia(), item.getProducto().getPrecio(),
-				unidades, "Ver producto", categorias);
+				unidades, seeProduct, categorias);
 
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);
@@ -52,10 +54,10 @@ public class ControlPanelItemPedido implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Ver producto":
+		case seeProduct:
 			SwingUtilities.invokeLater(() -> new ControlInfoProductoCliente(tienda, cliente, item.getProducto()));
 			break;
-		case "valorar":
+		case PanelItemPedido.VALORAR_ACTION:
 			SwingUtilities.invokeLater(() -> new ControlAnadirResena(tienda, cliente, item.getProducto()));
 			break;
 		}

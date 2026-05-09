@@ -20,11 +20,22 @@ import java.awt.geom.Rectangle2D;
  */
 public class Star2D implements Shape {
 
+    /** Campo starShape. */
     private Shape starShape;
+    
+    /** Campo x. */
     private double x;
+    
+    /** Campo y. */
     private double y;
+    
+    /** Campo innerRadius. */
     private double innerRadius;
+    
+    /** Campo outerRadius. */
     private double outerRadius;
+    
+    /** Campo branchesCount. */
     private int branchesCount;
 
     /**
@@ -63,6 +74,16 @@ public class Star2D implements Shape {
         starShape = generateStar(x, y, innerRadius, outerRadius, branchesCount);
     }
 
+    /**
+     * generateStar.
+     *
+     * @param x parámetro x
+     * @param y parámetro y
+     * @param innerRadius parámetro innerRadius
+     * @param outerRadius parámetro outerRadius
+     * @param branchesCount parámetro branchesCount
+     * @return valor de tipo Shape
+     */
     private static Shape generateStar(double x, double y,
             double innerRadius, double outerRadius,
             int branchesCount) {

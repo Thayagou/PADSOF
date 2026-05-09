@@ -50,13 +50,13 @@ public class ControlAnadirArticulo implements ActionListener, ControladorPantall
 		String comando = e.getActionCommand();
 
 		switch (comando) {
-		case "Confirmar":
+		case VentanaAnadirArticulo.ACTION_CONFIRMAR:
 			confirmar();
 			break;
-		case "Cancelar":
+		case VentanaAnadirArticulo.ACTION_CANCELAR:
 			TiendaFrame.getInstance().volverAtras();
 			break;
-		case "SeleccionarFoto":
+		case VentanaAnadirArticulo.ACTION_SELECCIONAR_FOTO:
 			fotoSeleccionada = ControlCargaImagen.abrir("Articulo");
 			vista.actualizarPreview(fotoSeleccionada);
 			break;

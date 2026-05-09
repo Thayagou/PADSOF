@@ -52,28 +52,34 @@ public class ControlVerOferta implements ControladorPantalla {
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case BTN_ACCEPT:
-			try {
-				cliente.getCartera().aceptarIntercambio(intercambio);
-				new VentanaMensaje("Has aceptado la oferta");
-				TiendaFrame.getInstance().volverAtras();
-			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage(), 2);
+			if(TiendaFrame.getConfirmacionUsuario("Una vez aceptes la oferta, tus objetos incluidos en ella desaparecerán de tu cartera.")) {
+				try {
+					cliente.getCartera().aceptarIntercambio(intercambio);
+					new VentanaMensaje("Has aceptado la oferta");
+					TiendaFrame.getInstance().volverAtras();
+				} catch (Exception ex) {
+					new VentanaMensaje(ex.getMessage(), 2);
+				}
 			}
 			break;
 		case BTN_REJECT:
-			try {
-				cliente.getCartera().rechazarIntercambio(intercambio);
-				new VentanaMensaje("Has rechazado la oferta");
-				TiendaFrame.getInstance().volverAtras();
-			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage(), 2);
+			if(TiendaFrame.getConfirmacionUsuario("Una vez rechazada, esta oferta no volverá a aparecer entre tus ofertas.")) {
+				try {
+					cliente.getCartera().rechazarIntercambio(intercambio);
+					new VentanaMensaje("Has rechazado la oferta");
+					TiendaFrame.getInstance().volverAtras();
+				} catch (Exception ex) {
+					new VentanaMensaje(ex.getMessage(), 2);
+				}
 			}
 			break;
 		case BTN_CANCEL:
-			try{
-				intercambio.cancelarIntercambio();
-			} catch(Exception ex) {
-				new VentanaMensaje(ex.getMessage(), 1);
+			if(TiendaFrame.getConfirmacionUsuario("¿Quieres cancelar la oferta?")) {
+				try{
+					intercambio.cancelarIntercambio();
+				} catch(Exception ex) {
+					new VentanaMensaje(ex.getMessage(), 1);
+				}
 			}
 		}
 	}

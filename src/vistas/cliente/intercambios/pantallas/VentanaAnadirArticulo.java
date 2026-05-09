@@ -9,32 +9,73 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelSelectorCajas;
 import vistas.herramientas.*;
 
+/**
+ * Tipo: Class VentanaAnadirArticulo.
+ */
 public class VentanaAnadirArticulo extends JPanel {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante ACTION_CONFIRMAR. */
 	/* Acciones para los botones */
-	private static final String ACTION_CONFIRMAR = "Confirmar";
-	private static final String ACTION_CANCELAR = "Cancelar";
-	private static final String ACTION_SELECCIONAR_FOTO = "SeleccionarFoto";
+	public static final String ACTION_CONFIRMAR = "Confirmar";
+	
+	/** Constante ACTION_CANCELAR. */
+	public static final String ACTION_CANCELAR = "Cancelar";
+	
+	/** Constante ACTION_SELECCIONAR_FOTO. */
+	public static final String ACTION_SELECCIONAR_FOTO = "SeleccionarFoto";
 
+	/** Constante FOTO_ANCHO. */
 	/* Macros de dimensiones relativas */
 	private static final double FOTO_ANCHO = 0.2; /* Ancho de la foto (20% ancho pantalla) */
+	
+	/** Constante FOTO_ALTO. */
 	private static final double FOTO_ALTO = 0.25; /* Alto de la foto (25% alto pantalla) */
+	
+	/** Constante BOTON_ANCHO. */
 	private static final double BOTON_ANCHO = 0.15; /* Ancho botones (15% ancho) */
+	
+	/** Constante BOTON_ALTO. */
 	private static final double BOTON_ALTO = 0.05; /* Alto botones (5% alto) */
+	
+	/** Constante PANEL_GAP. */
 	private static final double PANEL_GAP = 0.02; /* Separación horizontal entre columnas (2% ancho) */
 
+	/** Campo nombreField. */
 	/* Componentes de la vista */
 	private JTextField nombreField;
+	
+	/** Campo intercambioArea. */
 	private JTextArea intercambioArea;
+	
+	/** Campo descripcionArea. */
 	private JTextArea descripcionArea;
+	
+	/** Campo selectorCategorias. */
 	private PanelSelectorCajas selectorCategorias;
+	
+	/** Campo btnConfirmar. */
 	private JButton btnConfirmar;
+	
+	/** Campo btnCancelar. */
 	private JButton btnCancelar;
+	
+	/** Campo btnFoto. */
 	private JButton btnFoto;
+	
+	/** Campo fotoPreviewLabel. */
 	private JLabel fotoPreviewLabel;
+	
+	/** Campo imagenArchivo. */
 	private File imagenArchivo; /* Archivo temporal seleccionado, aún no guardado */
 
+	/**
+	 * Instancia un nuevo Objeto VentanaAnadirArticulo.
+	 *
+	 * @param nombresCategorias parámetro nombresCategorias
+	 */
 	public VentanaAnadirArticulo(String[] nombresCategorias) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -61,6 +102,12 @@ public class VentanaAnadirArticulo extends JPanel {
 		add(ventanaCompleta, BorderLayout.CENTER);
 	}
 
+	/**
+	 * crearColumnaIzquierda.
+	 *
+	 * @param t parámetro t
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel crearColumnaIzquierda(TiendaFrame t) {
 		JPanel panel = new JPanel(new BorderLayout(0, t.getPixelsHeight(0.02)));
 		panel.setOpaque(false);
@@ -100,6 +147,12 @@ public class VentanaAnadirArticulo extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * crearPanelFoto.
+	 *
+	 * @param t parámetro t
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel crearPanelFoto(TiendaFrame t) {
 		int fotoW = t.getPixelsWidth(FOTO_ANCHO);
 		int fotoH = t.getPixelsHeight(FOTO_ALTO);
@@ -136,6 +189,12 @@ public class VentanaAnadirArticulo extends JPanel {
 		return contenedor;
 	}
 
+	/**
+	 * crearColumnaCentral.
+	 *
+	 * @param t parámetro t
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel crearColumnaCentral(TiendaFrame t) {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setOpaque(false);
@@ -152,6 +211,13 @@ public class VentanaAnadirArticulo extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * crearColumnaDerecha.
+	 *
+	 * @param t parámetro t
+	 * @param nombresCategorias parámetro nombresCategorias
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel crearColumnaDerecha(TiendaFrame t, String[] nombresCategorias) {
 		int topWrap = t.getPixelsHeight(0.02);
 		
@@ -190,12 +256,22 @@ public class VentanaAnadirArticulo extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	public void setControlador(ActionListener c) {
 		btnConfirmar.addActionListener(c);
 		btnCancelar.addActionListener(c);
 		btnFoto.addActionListener(c);
 	}
 
+	/**
+	 * actualizarPreview.
+	 *
+	 * @param archivo parámetro archivo
+	 */
 	public void actualizarPreview(String archivo) {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int ancho = t.getPixelsWidth(FOTO_ANCHO);
@@ -205,27 +281,55 @@ public class VentanaAnadirArticulo extends JPanel {
 		fotoPreviewLabel.setText(null);
 	}
 
+	/**
+	 * Obtiene Nombre.
+	 *
+	 * @return valor de Nombre
+	 */
 	/* Getters para obtener los datos del formulario */
 	public String getNombre() {
 		return nombreField.getText().trim();
 	}
 
+	/**
+	 * Obtiene IntercambioBuscado.
+	 *
+	 * @return valor de IntercambioBuscado
+	 */
 	public String getIntercambioBuscado() {
 		return intercambioArea.getText().trim();
 	}
 
+	/**
+	 * Obtiene Descripcion.
+	 *
+	 * @return valor de Descripcion
+	 */
 	public String getDescripcion() {
 		return descripcionArea.getText().trim();
 	}
 
+	/**
+	 * Obtiene CategoriasSeleccionadas.
+	 *
+	 * @return valor de CategoriasSeleccionadas
+	 */
 	public String[] getCategoriasSeleccionadas() {
 		return selectorCategorias.getCategoriasSeleccionadas();
 	}
 
+	/**
+	 * Obtiene ImagenArchivo.
+	 *
+	 * @return valor de ImagenArchivo
+	 */
 	public File getImagenArchivo() {
 		return imagenArchivo;
 	}
 
+	/**
+	 * limpiarFormulario.
+	 */
 	public void limpiarFormulario() {
 		nombreField.setText("");
 		intercambioArea.setText("");

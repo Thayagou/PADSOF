@@ -16,13 +16,33 @@ import vistas.herramientas.*;
  */
 public class PanelItemPedido extends PanelProducto {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante SPACE_EAST_PANEL. */
 	private static final double SPACE_EAST_PANEL = 0.01;
+	
+	/** Constante BTN_WIDTH. */
 	private static final double BTN_WIDTH = 100.0/1876.0;
 	
+	/** Constante VALORAR_ACTION. */
+	public static final String VALORAR_ACTION = "Valorar";
+	
+	/** Campo valorar. */
 	private JButton valorar;
 
+	/**
+	 * Instancia un nuevo Objeto PanelItemPedido.
+	 *
+	 * @param nombre parámetro nombre
+	 * @param descripcion parámetro descripcion
+	 * @param imageName parámetro imageName
+	 * @param puntuacionMedia parámetro puntuacionMedia
+	 * @param precio parámetro precio
+	 * @param unidades parámetro unidades
+	 * @param actionName parámetro actionName
+	 * @param categorias parámetro categorias
+	 */
 	public PanelItemPedido(String nombre, String descripcion, String imageName,
 			double puntuacionMedia, double precio, int unidades,
 			String actionName, String... categorias) {
@@ -39,7 +59,7 @@ public class PanelItemPedido extends PanelProducto {
 		buttons.setPreferredSize(new Dimension((int)t.getPixelsWidth(BTN_WIDTH), (int) (maxCompHeight * BOTON_PERC_H)));
 
 		valorar = ButtonFactory.newRoundedButton("Valorar", (int) (maxCompHeight), maxCompHeight, 0.5);
-		valorar.setActionCommand("valorar");
+		valorar.setActionCommand(VALORAR_ACTION);
 		ButtonFactory.paintButton(valorar, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(valorar, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
@@ -67,6 +87,11 @@ public class PanelItemPedido extends PanelProducto {
 		this.add(eastPanel, BorderLayout.EAST);
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param l nuevo valor
+	 */
 	@Override
 	public void setControlador(ActionListener l) {
 		super.setControlador(l);

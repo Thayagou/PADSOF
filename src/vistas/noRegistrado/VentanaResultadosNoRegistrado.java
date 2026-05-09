@@ -9,7 +9,6 @@ import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * Muestra los resultados de una búsqueda en forma de lista scrolleable. Incluye
  * combo de ordenación (igual que maqueta 4).
@@ -37,8 +36,6 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 
 	/**
 	 * Instancia un nuevo Objeto VentanaResultadosNoRegistrado.
-	 *
-	 * @param productos parámetro productos
 	 */
 	public VentanaResultadosNoRegistrado() {
 		setOpaque(false);
@@ -61,6 +58,16 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 		refrescarLista();
 	}
 	
+	/**
+	 * anadirProducto.
+	 *
+	 * @param nombre parámetro nombre
+	 * @param descripcion parámetro descripcion
+	 * @param image parámetro image
+	 * @param puntuacionMedia parámetro puntuacionMedia
+	 * @param precio parámetro precio
+	 * @param categorias parámetro categorias
+	 */
 	public void anadirProducto(String nombre, String descripcion, String image, double puntuacionMedia, double precio, String...categorias) {
 		productos.add(new PanelProducto(nombre, descripcion, image, puntuacionMedia, precio, "Ver producto",categorias));
 		refrescarLista();
@@ -104,6 +111,13 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 		}
 	}
 
+	/**
+	 * anadirDisplay.
+	 *
+	 * @param <K> clave genérica
+	 * @param panelDisplay parámetro panelDisplay
+	 * @return valor de tipo PanelProducto
+	 */
 	@Override
 	public <K extends PanelProducto> PanelProducto anadirDisplay(K panelDisplay) {
 		productos.add(panelDisplay);

@@ -9,12 +9,20 @@ import vistas.herramientas.*;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 
+/**
+ * Tipo: Class VentanaInicioCliente.
+ */
 public class VentanaInicioCliente extends JPanel implements VentanaConDisplay<PanelProducto> {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Campo recomendados. */
 	private JPanel recomendados = new JPanel();
 
+	/**
+	 * Instancia un nuevo Objeto VentanaInicioCliente.
+	 */
 	public VentanaInicioCliente() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -34,15 +42,29 @@ public class VentanaInicioCliente extends JPanel implements VentanaConDisplay<Pa
 		refreshList();
 	}
 
+	/**
+	 * refreshList.
+	 */
 	private void refreshList() {
 		recomendados.revalidate();
 		recomendados.repaint();
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param l nuevo valor
+	 */
 	public void setControlador(ActionListener l) {
 
 	}
 
+	/**
+	 * anadirDisplay.
+	 *
+	 * @param panelDisplay parámetro panelDisplay
+	 * @return valor de tipo PanelProducto
+	 */
 	@Override
 	public PanelProducto anadirDisplay(PanelProducto panelDisplay) {
 		recomendados.add(panelDisplay);

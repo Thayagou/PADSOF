@@ -38,7 +38,7 @@ public class ControlVentanaPagoValoracion implements ControladorPantalla {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "Pagar":
+		case VentanaPago.PAY_ACTION:
 			try{
 				tienda.solicitarValoracion(cliente, articulo, vista.getNumeroTarjeta());
 				TiendaFrame.getInstance().volverAtras();

@@ -21,6 +21,8 @@ public class ControlPanelPedidoCliente implements ActionListener {
 	protected Pedido pedido;
 	protected PanelPedido panel;
 	protected VentanaConDisplay<? super PanelPedido> vista;
+	
+	private static final String actionName = "Ver pedido";
 
 	public ControlPanelPedidoCliente(Tienda tienda, ClienteRegistrado cliente, Pedido pedido,
 			VentanaConDisplay<? super PanelPedido> vista) {
@@ -29,14 +31,12 @@ public class ControlPanelPedidoCliente implements ActionListener {
 		this.pedido = pedido;
 		this.vista = vista;
 
-		// Obtener los nombres de los productos del pedido para mostrarlos en el panel
 		ArrayList<String> nombreProductos = new ArrayList<>();
 		for(StockExterno st : pedido.getItemsPedido()) {
 			nombreProductos.add(st.getProducto().getNombre());
 		}
 
-		// Usar el id/nombre del pedido como actionCommand para identificarlo al hacer clic
-		panel = new PanelPedido("Ver pedido", pedido.getEstado().name(), nombreProductos.toArray(new String[0]));
+		panel = new PanelPedido(actionName, pedido.getEstado().name(), nombreProductos.toArray(new String[0]));
 
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);
@@ -44,7 +44,7 @@ public class ControlPanelPedidoCliente implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Ver pedido")) {
+		if (e.getActionCommand().equals(actionName)) {
 			SwingUtilities.invokeLater(() -> new ControlVerInfoPedidoCliente(tienda, cliente, pedido));
 		}
 	}

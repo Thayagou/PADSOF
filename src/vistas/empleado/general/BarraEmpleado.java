@@ -1,13 +1,16 @@
 package vistas.empleado.general;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.*;
 
 import controladores.ControlBarraLateral;
 import vistas.common.app.BarraLateral;
-import vistas.common.app.TiendaFrame;
-import vistas.herramientas.ColorPalette;
+import vistas.common.app.MenuLateral;
 
 /**
  * Esta clase representa la barra lateral en el menú de empleado
@@ -15,62 +18,45 @@ import vistas.herramientas.ColorPalette;
 public class BarraEmpleado extends BarraLateral {
 	private static final long serialVersionUID = 1L;
 
-	/** Botón de gestionar productos */
-	private JButton gestionarProductos;
 	/** Botón de gestionar pedidos */
-	private JButton gestionarPedidos;
+	private JButton gestionarPedidos = new JButton("Gestionar pedidos");
 	/** Votón de valorar objetos */
-	private JButton valorarObjetos;
+	private JButton valorarObjetos = new JButton("Valorar artículos de segunda mano");
 	/** Botón de gestionar intercambios */
-	private JButton gestionarIntercambios;
-
+	private JButton gestionarIntercambios = new JButton("Gestionar intercambios");
 	/** Botón de añadir productos */
-	private JButton anadirProducto;
+	private JButton anadirProducto = new JButton("Añadir productos");
 	/** Botón de gestionar existentes */
-	private JButton gestionarExistentes;
+	private JButton gestionarExistentes = new JButton("Gestionar productos existentes");
 	/** Botón de gestionar categorías */
-	private JButton gestionarCategorias;
+	private JButton gestionarCategorias = new JButton("Gestionar categorías");
+	/** Ancho del menú */
+	private static final double MENU_WIDTH = 0.17;
 
 	/**
 	 * Constructor de la barra lateral de empleado
 	 */
 	public BarraEmpleado() {
-		TiendaFrame frame = TiendaFrame.getInstance();
-		int distFromLeft = frame.optionBarDistFromLeft();
-		int distIndented = (int) (distFromLeft * BarraLateral.PERC_INDENTED);
-		int btnHeigth = frame.btnHeight();
-
-		setBackground(ColorPalette.CARD_LIGHT.getColor());
-		setPreferredSize(new Dimension(distFromLeft, 0));
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-		gestionarProductos = addBtn("Gestionar productos y categorías", btnHeigth, distFromLeft);
-		anadirProducto = addBtn("Añadir nuevo producto", btnHeigth, distIndented);
-		gestionarExistentes = addBtn("Gestionar productos existentes", btnHeigth, distIndented);
-		gestionarCategorias = addBtn("Gestionar categorías", btnHeigth, distIndented);
-		addIndentedBtns(gestionarProductos, anadirProducto, gestionarCategorias, gestionarExistentes);
-
-		gestionarPedidos = addBtn("Gestionar pedidos", btnHeigth, distFromLeft);
-		valorarObjetos = addBtn("Valorar objetos de segunda mano", btnHeigth, distFromLeft);
-		gestionarIntercambios = addBtn("Gestionar intercambios", btnHeigth, distFromLeft);
-
-		add(gestionarProductos);
-		add(anadirProducto);
-		add(gestionarExistentes);
-		add(gestionarCategorias);
-
-		add(gestionarPedidos);
-		add(valorarObjetos);
-		add(gestionarIntercambios);
+		setOpaque(false);
+		setLayout(new BorderLayout());
+		
+		Map<String, List<JButton>> mapa = new TreeMap<>();
+		
+		mapa.put("Gestionar Catálogo", new ArrayList<JButton>(List.of(anadirProducto, gestionarExistentes, gestionarCategorias)));
+		mapa.put("Gestionar Pedidos", new ArrayList<JButton>(List.of(gestionarPedidos)));
+		mapa.put("Valorar Artículos", new ArrayList<JButton>(List.of(valorarObjetos)));
+		mapa.put("Gestionar Intercambios", new ArrayList<JButton>(List.of(gestionarIntercambios)));
+		
+		MenuLateral menu = new MenuLateral(mapa, MENU_WIDTH);
+		
+		add(menu);
 	}
 
 	@Override
 	public void setControlador(ControlBarraLateral c) {
-		gestionarProductos.addActionListener(c);
 		gestionarPedidos.addActionListener(c);
 		valorarObjetos.addActionListener(c);
 		gestionarIntercambios.addActionListener(c);
-
 		anadirProducto.addActionListener(c);
 		gestionarExistentes.addActionListener(c);
 		gestionarCategorias.addActionListener(c);

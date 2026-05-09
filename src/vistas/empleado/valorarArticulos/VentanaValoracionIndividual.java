@@ -1,13 +1,16 @@
 package vistas.empleado.valorarArticulos;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -49,160 +52,154 @@ public class VentanaValoracionIndividual extends JPanel {
 	 */
 	public VentanaValoracionIndividual(String nombreUser, String imagenUser, String fecha, String nombreArt,
 			String imagenArt, String[] categorias, String desc, String[] tiposEstado) {
-		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
+		setBackground(ColorPalette.CARD_LIGHT.getColor());
 
-		// Panel IZQUIERDO: info del artículo
-		JPanel dcha = new JPanel(new GridBagLayout());
+		JPanel dcha = new JPanel();
+		dcha.setLayout(new BoxLayout(dcha, BoxLayout.Y_AXIS));
 		dcha.setOpaque(false);
 		dcha.setBorder(BorderFactory.createEmptyBorder(16, 16, 16, 24));
-		GridBagConstraints gbcD = new GridBagConstraints();
-		gbcD.insets = new Insets(6, 0, 6, 0);
-		gbcD.anchor = GridBagConstraints.WEST;
-		gbcD.fill = GridBagConstraints.HORIZONTAL;
-		gbcD.gridx = 0;
-		gbcD.weightx = 1.0;
 
-		//Información del artículo
 		JLabel fechaSol = ButtonFactory.newLabel(fecha, Fonts.SUBTITLE);
-		gbcD.gridy = 0;
-		dcha.add(fechaSol, gbcD);
+		fechaSol.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		JLabel nombreArtic = ButtonFactory.newLabel(nombreArt, Fonts.TITLE);
-		gbcD.gridy = 1;
-		dcha.add(nombreArtic, gbcD);
+		nombreArtic.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		JLabel imageArtic = new JLabel(
-				ButtonFactory.loadImageIconScaled(imagenArt, TiendaFrame.getInstance().getPixelsHeight(0.4), TiendaFrame.getInstance().getPixelsWidth(0.3)));
-		imageArtic.setHorizontalAlignment(SwingConstants.CENTER);
-		gbcD.gridy = 2;
-		gbcD.fill = GridBagConstraints.NONE;
-		gbcD.anchor = GridBagConstraints.CENTER;
-		dcha.add(imageArtic, gbcD);
+		    ButtonFactory.loadImageIconScaled(imagenArt,
+		        TiendaFrame.getInstance().getPixelsHeight(0.4),
+		        TiendaFrame.getInstance().getPixelsWidth(0.3)));
+		imageArtic.setHorizontalAlignment(SwingConstants.LEFT);
+		imageArtic.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		dcha.add(fechaSol);
+		dcha.add(Box.createVerticalStrut(6));
+		dcha.add(nombreArtic);
+		dcha.add(Box.createVerticalStrut(6));
+		dcha.add(imageArtic);
+		dcha.add(Box.createVerticalStrut(6));
 
 		String cats = String.join(", ", categorias);
 		if (!cats.isEmpty()) {
-			if (cats.length() > MAX_DESC)
-				cats = cats.substring(0, MAX_DESC) + "...";
-			JLabel categoriasLabel = ButtonFactory.newLabel(cats, Fonts.BOLD);
-			categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
-			gbcD.gridy = 3;
-			gbcD.fill = GridBagConstraints.HORIZONTAL;
-			gbcD.anchor = GridBagConstraints.WEST;
-			dcha.add(categoriasLabel, gbcD);
+		    if (cats.length() > MAX_DESC) cats = cats.substring(0, MAX_DESC) + "...";
+		    JLabel categoriasLabel = ButtonFactory.newLabel(cats, Fonts.BOLD);
+		    categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
+		    categoriasLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		    dcha.add(categoriasLabel);
+		    dcha.add(Box.createVerticalStrut(6));
 		}
 
-		if (desc.length() > MAX_DESC)
-			desc = desc.substring(0, MAX_DESC) + "...";
+		if (desc.length() > MAX_DESC) desc = desc.substring(0, MAX_DESC) + "...";
 		JLabel descArt = ButtonFactory.newLabel(desc, Fonts.BOLD);
 		descArt.setForeground(ColorPalette.DARK_GREY.getColor());
-		gbcD.gridy = 4;
-		dcha.add(descArt, gbcD);
+		descArt.setAlignmentX(Component.LEFT_ALIGNMENT);
+		dcha.add(descArt);
 
-		// Información de usuario
-		JPanel izqdaWrapper = new JPanel(new BorderLayout());
-		izqdaWrapper.setOpaque(false);
-		izqdaWrapper.setBorder(BorderFactory.createEmptyBorder(16, 24, 16, 16));
-		
-		JPanel izqda = new JPanel(new GridBagLayout());
+
+		JPanel izqda = new JPanel();
+		izqda.setLayout(new BoxLayout(izqda, BoxLayout.Y_AXIS));
 		izqda.setOpaque(false);
-		izqda.setBorder(BorderFactory.createEmptyBorder(16, 24, 16, 16));
-		GridBagConstraints gbcI = new GridBagConstraints();
-		gbcI.insets = new Insets(6, 0, 6, 0);
-		gbcI.fill = GridBagConstraints.HORIZONTAL;
-		gbcI.anchor = GridBagConstraints.NORTHWEST;
-		gbcI.gridx = 0;
-		gbcI.weightx = 1.0;
 
-		// Bloque de usuario
 		JLabel labelSolicitante = ButtonFactory.newLabel("Solicitante", Fonts.SUBTITLE);
 		labelSolicitante.setForeground(ColorPalette.PURPLE.getColor());
-		gbcI.gridy = 0;
-		izqda.add(labelSolicitante, gbcI);
+		labelSolicitante.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		JLabel imageUser = new JLabel(
-				ButtonFactory.loadImageIconScaled(imagenUser, TiendaFrame.getInstance().getPixelsHeight(0.12), TiendaFrame.getInstance().getPixelsHeight(0.12)));
+		    ButtonFactory.loadImageIconScaled(imagenUser,
+		        TiendaFrame.getInstance().getPixelsHeight(0.12),
+		        TiendaFrame.getInstance().getPixelsHeight(0.12)));
 		JLabel labelNombreUser = ButtonFactory.newLabel(nombreUser, Fonts.TITLE3);
 
-		JPanel userPanel = new JPanel();
+		JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
 		userPanel.setOpaque(false);
+		userPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		userPanel.add(imageUser);
 		userPanel.add(labelNombreUser);
-		gbcI.gridy = 1;
-		izqda.add(userPanel, gbcI);
 
-		// Separador
 		JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
 		sep.setForeground(ColorPalette.PURPLE.getColor());
-		gbcI.gridy = 2;
-		gbcI.insets = new Insets(10, 0, 10, 0);
-		izqda.add(sep, gbcI);
+		sep.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+		sep.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		// Bloque izquierda
 		JLabel labelValoracion = ButtonFactory.newLabel("Valoración", Fonts.SUBTITLE);
 		labelValoracion.setForeground(ColorPalette.PURPLE.getColor());
-		gbcI.gridy = 3;
-		gbcI.insets = new Insets(6, 0, 6, 0);
-		izqda.add(labelValoracion, gbcI);
+		labelValoracion.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		// Elegir estimación
 		JLabel labelEstimacion = ButtonFactory.newLabel("Estimación de precio:", Fonts.TITLE3);
-		gbcI.gridy = 4;
-		izqda.add(labelEstimacion, gbcI);
+		labelEstimacion.setAlignmentX(Component.LEFT_ALIGNMENT);
 		estimacion = ButtonFactory.newTextField(" 0.0 €", Fonts.TITLE3);
-		gbcI.gridy = 5;
-		izqda.add(estimacion, gbcI);
+		estimacion.setAlignmentX(Component.LEFT_ALIGNMENT);
+		estimacion.setMaximumSize(new Dimension(Integer.MAX_VALUE, estimacion.getPreferredSize().height));
 
-		// Elegir estado
 		JLabel labelEstado = ButtonFactory.newLabel("Estado:", Fonts.TITLE3);
-		gbcI.gridy = 6;
-		izqda.add(labelEstado, gbcI);
+		labelEstado.setAlignmentX(Component.LEFT_ALIGNMENT);
 		estado = ButtonFactory.newComboBox(Fonts.TITLE3, tiposEstado);
-		gbcI.gridy = 7;
-		izqda.add(estado, gbcI);
-		izqdaWrapper.add(izqda, BorderLayout.NORTH);
+		estado.setAlignmentX(Component.LEFT_ALIGNMENT);
+		estado.setMaximumSize(new Dimension(Integer.MAX_VALUE, estado.getPreferredSize().height));
 
-		// Botón valorar
-		btnValorar = ButtonFactory.newRoundedButton("Valorar", TiendaFrame.getInstance().getPixelsHeight(0.1), TiendaFrame.getInstance().getPixelsWidth(0.05), 0.5f);
+		izqda.add(labelSolicitante);
+		izqda.add(Box.createVerticalStrut(6));
+		izqda.add(userPanel);
+		izqda.add(Box.createVerticalStrut(10));
+		izqda.add(sep);
+		izqda.add(Box.createVerticalStrut(10));
+		izqda.add(labelValoracion);
+		izqda.add(Box.createVerticalStrut(6));
+		izqda.add(labelEstimacion);
+		izqda.add(Box.createVerticalStrut(6));
+		izqda.add(estimacion);
+		izqda.add(Box.createVerticalStrut(6));
+		izqda.add(labelEstado);
+		izqda.add(Box.createVerticalStrut(6));
+		izqda.add(estado);
+
+
+		btnValorar = ButtonFactory.newRoundedButton("Valorar",
+		    TiendaFrame.getInstance().getPixelsHeight(0.1),
+		    TiendaFrame.getInstance().getPixelsWidth(0.05), 0.5f);
 		btnValorar.setActionCommand("Valorar");
 		btnValorar.setFont(Fonts.BOLD.getFont());
 		ButtonFactory.paintButton(btnValorar, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(btnValorar, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
-		gbcI.gridy = 9;
-		gbcI.weighty = 0;
-		gbcI.fill = GridBagConstraints.HORIZONTAL;
-		gbcI.anchor = GridBagConstraints.SOUTH;
-		gbcI.insets = new Insets(10, 0, 10, 0);
+
+
+		JPanel izqdaWrapper = new JPanel(new BorderLayout());
+		izqdaWrapper.setOpaque(false);
+		izqdaWrapper.setBorder(BorderFactory.createEmptyBorder(16, 24, 16, 16));
+		izqdaWrapper.add(izqda, BorderLayout.NORTH);
 		izqdaWrapper.add(btnValorar, BorderLayout.SOUTH);
 
-		// Separador vertical entre paneles
+
 		JSeparator separadorVertical = new JSeparator(SwingConstants.VERTICAL);
 		separadorVertical.setForeground(ColorPalette.PURPLE.getColor());
-		separadorVertical.setPreferredSize(new Dimension(2, 0));
+		separadorVertical.setMaximumSize(new Dimension(2, Integer.MAX_VALUE));
+		separadorVertical.setAlignmentY(Component.TOP_ALIGNMENT);
 
-		// Panel contenedor
-		JPanel contenido = new JPanel(new GridBagLayout());
+
+		// CONTENEDOR PRINCIPAL
+		JPanel contenido = new JPanel();
+		contenido.setLayout(new BoxLayout(contenido, BoxLayout.X_AXIS));
 		contenido.setOpaque(false);
-		GridBagConstraints gbcC = new GridBagConstraints();
 
-		gbcC.gridy = 0;
-		gbcC.fill = GridBagConstraints.BOTH;
-		gbcC.weighty = 1.0;
+		izqdaWrapper.setAlignmentY(Component.TOP_ALIGNMENT);
+		dcha.setAlignmentY(Component.TOP_ALIGNMENT);
 
-		gbcC.gridx = 2;
-		gbcC.weightx = 0.5;
-		contenido.add(dcha, gbcC);
+		contenido.add(izqdaWrapper);
+		contenido.add(separadorVertical);
+		contenido.add(dcha);
 
-		gbcC.gridx = 1;
-		gbcC.weightx = 0.0;
-		gbcC.fill = GridBagConstraints.VERTICAL;
-		contenido.add(separadorVertical, gbcC);
-
-		gbcC.gridx = 0;
-		gbcC.weightx = 0.5;
-		gbcC.weighty = 1.0;
-		gbcC.fill = GridBagConstraints.BOTH;
-		contenido.add(izqdaWrapper, gbcC);
+		// Dividir 50/50 al redimensionar
+		contenido.addComponentListener(new ComponentAdapter() {
+		    @Override
+		    public void componentResized(ComponentEvent e) {
+		        int mitad = (contenido.getWidth() - 2) / 2;
+		        int alto = contenido.getHeight();
+		        izqdaWrapper.setPreferredSize(new Dimension(mitad, alto));
+		        dcha.setPreferredSize(new Dimension(mitad, alto));
+		        contenido.revalidate();
+		    }
+		});
 
 		add(PanelFactory.getVentanaConCabecera("Producto a valorar", contenido), BorderLayout.CENTER);
 	}

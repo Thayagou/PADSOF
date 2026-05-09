@@ -5,14 +5,13 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.SwingUtilities;
-
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.venta.pedidos.Pedido;
 import modelo.venta.productos.StockExterno;
+import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarPedidos.PanelPedidoGestionarPedido;
 import vistas.empleado.gestionarPedidos.VentanaGestPedidos;
@@ -22,11 +21,14 @@ public class ControlPanelGestionarPedido implements ActionListener {
 	private final Empleado empleado;
 	private final Pedido pedido;
 	private final String ACTION_NAME = "Avanzar estado del pedido";
+	/** Controlador de la ventana padre en la que está */
+	private final ControlGestPedidos padre;
 	
-	public ControlPanelGestionarPedido(Tienda tienda, Empleado empleado, Pedido pedido, VentanaGestPedidos vista) {
+	public ControlPanelGestionarPedido(Tienda tienda, Empleado empleado, Pedido pedido, VentanaGestPedidos vista, ControlGestPedidos padre) {
 		this.tienda = tienda;
 		this.empleado = empleado;
 		this.pedido = pedido;
+		this.padre = padre;
 		
 		List<String> productos = new LinkedList<>();
 		for(StockExterno s : pedido.getItemsPedido()) {
@@ -48,13 +50,15 @@ public class ControlPanelGestionarPedido implements ActionListener {
 	}
 	
 	private void intentarAvanzar() {
-		try {
-			tienda.getHistorial().avanzarEstadoPedido(empleado, pedido);
-		} catch (InvalidArgumentException | InvalidPermitException e) {
-			new VentanaMensaje(e.getMessage());
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas avanzar este pedido?")) {
+			try {
+				tienda.getHistorial().avanzarEstadoPedido(empleado, pedido);
+			} catch (InvalidArgumentException | InvalidPermitException e) {
+				new VentanaMensaje(e.getMessage(), 1);
+				return;
+			}
+			padre.mostrar();
+			new VentanaMensaje("El pedido se ha avanzado correctamente");
 		}
-		
-		new VentanaMensaje("El pedido se ha avanzado correctamente");
-		SwingUtilities.invokeLater(() -> new ControlGestPedidos(tienda, empleado));
 	}
 }

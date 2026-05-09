@@ -7,10 +7,17 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JButton;
 
+/**
+ * Tipo: Class Star.
+ */
 public class Star extends JButton {
 
+    /** Constante serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instancia un nuevo Objeto Star.
+	 */
 	public Star() {
         setContentAreaFilled(false);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -18,6 +25,11 @@ public class Star extends JButton {
         setForeground(Color.yellow);
     }
 
+    /**
+     * paint.
+     *
+     * @param grphcs parámetro grphcs
+     */
     @Override
     public void paint(Graphics grphcs) {
         super.paint(grphcs);

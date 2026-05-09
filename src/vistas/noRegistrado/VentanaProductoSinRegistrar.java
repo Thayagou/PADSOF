@@ -8,7 +8,6 @@ import vistas.common.assets.PanelInfoProducto;
 import vistas.common.displays.PanelResena;
 import vistas.herramientas.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * Vista detallada de un producto (maqueta 5). Layout: izquierda = panel de
  * valoraciones/reseñas (scrolleable), derecha = foto grande + nombre +
@@ -30,8 +29,10 @@ public class VentanaProductoSinRegistrar extends JPanel {
 	 *
 	 * @param nombre          parámetro nombre
 	 * @param descripcion     parámetro descripcion
+	 * @param image parámetro image
 	 * @param puntuacionMedia parámetro puntuacionMedia
 	 * @param precio          parámetro precio
+	 * @param caracteristicas parámetro caracteristicas
 	 * @param categorias      parámetro categorias
 	 */
 	public VentanaProductoSinRegistrar(String nombre, String descripcion, String image, double puntuacionMedia, double precio, String caracteristicas,

@@ -142,37 +142,6 @@ public class TiendaFrame extends JFrame {
 		repaint();
 	}
 
-	/**
-	 * Establece la vista actual (compatible con código antiguo). Si se pasa un
-	 * JPanel que pertenece a un ControladorPantalla, se puede usar navegarA(). Por
-	 * simplicidad, aquí se añade directamente al contentPanel.
-	 */
-	@Deprecated
-	public void setVistaActual(Component vista) {
-		if (vistaActual != null) {
-			contentPanel.remove(vistaActual);
-		}
-		vistaActual = vista;
-		// Para compatibilidad, añadimos el componente al contentPanel con una clave
-		String clave = "legacy_" + System.identityHashCode(vista);
-		if (vista instanceof JPanel && ((JPanel) vista).getClientProperty("_navClave") == null) {
-			((JPanel) vista).putClientProperty("_navClave", clave);
-			contentPanel.add((JPanel) vista, clave);
-		} else if (vista instanceof JPanel) {
-			// ya añadido, no hacer nada
-		} else {
-			// No es JPanel, no podemos añadirlo al CardLayout (solo acepta JPanel)
-			// En ese caso, se añade directamente al fondo (comportamiento original)
-			fondo.add(vista, BorderLayout.CENTER);
-			revalidate();
-			repaint();
-			return;
-		}
-		cardLayout.show(contentPanel, clave);
-		revalidate();
-		repaint();
-	}
-
 	public Component getVistaActual() {
 		return vistaActual;
 	}
@@ -211,6 +180,7 @@ public class TiendaFrame extends JFrame {
 			controladorActual.ocultar();
 			pilaPantallas.push(controladorActual);
 		}
+		nuevoControlador.mostrar();
 		JPanel vista = nuevoControlador.getVista();
 		String clave = claveUnica(nuevoControlador);
 		if (vista.getClientProperty("_navClave") == null) {
@@ -219,7 +189,6 @@ public class TiendaFrame extends JFrame {
 		}
 		controladorActual = nuevoControlador;
 		cardLayout.show(contentPanel, clave);
-		controladorActual.mostrar();
 		// Actualizar vistaActual por si se usa el método antiguo
 		this.vistaActual = vista;
 		revalidate();

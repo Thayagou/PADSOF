@@ -60,6 +60,7 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
 	 */
 	public ControlEstadisticasWallapop(Tienda tienda) {
+		this.tienda = tienda;
 		this.vista = new VentanaEstadisticasTienda(new String[] {MAYOR_RECAUDACION, MENOR_RECAUDACION, MAS_UNIDADES, MENOS_UNIDADES},COLUMNAS);
 		vista.setControlador(this);
 		

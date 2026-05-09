@@ -22,8 +22,6 @@ public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDispl
 
 	/**
 	 * Instancia un nuevo Objeto VentanaInicioSinRegistrar.
-	 *
-	 * @param populares parámetro populares
 	 */
 	public VentanaInicioSinRegistrar() {
 		setOpaque(false);
@@ -33,7 +31,6 @@ public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDispl
 		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
 
 		JScrollPane scroll = PanelFactory.getScroll(listaPanel);
-		//scroll.getVerticalScrollBar().setUnitIncrement(10);
 		
 		JPanel contenido = new JPanel();
 		contenido.setLayout(new BorderLayout());
@@ -44,6 +41,9 @@ public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDispl
 		refreshList();
 	}
 	
+	/**
+	 * refreshList.
+	 */
 	private void refreshList() {
 		listaPanel.revalidate();
 		listaPanel.repaint();
@@ -62,6 +62,12 @@ public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDispl
 		}
 	}
 
+	/**
+	 * anadirDisplay.
+	 *
+	 * @param panelDisplay parámetro panelDisplay
+	 * @return valor de tipo PanelProducto
+	 */
 	@Override
 	public PanelProducto anadirDisplay(PanelProducto panelDisplay) {
 		listaPanel.add(panelDisplay);

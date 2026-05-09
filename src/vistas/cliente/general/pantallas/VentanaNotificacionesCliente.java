@@ -11,24 +11,48 @@ import vistas.common.displays.PanelNotificacion;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
+/**
+ * Tipo: Class VentanaNotificacionesCliente.
+ */
 public class VentanaNotificacionesCliente extends JPanel implements VentanaConDisplay<PanelNotificacion> {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** Constante BTN_WIDTH. */
 	private static final double BTN_WIDTH = 0.1;
+	
+	/** Constante BTN_HEIGHT. */
 	private static final double BTN_HEIGHT = 0.07;
 	
+	/** Constante BTN_V_WRAP. */
 	private static final double BTN_V_WRAP = 0.05;
+	
+	/** Constante BTN_H_WRAP. */
 	private static final double BTN_H_WRAP = 0.02;
 	
+	/** Constante EAST_PANEL_WIDTH. */
 	private static final double EAST_PANEL_WIDTH = 0.25;
 	
+	/** Campo notificaciones. */
 	private JPanel notificaciones = new JPanel();
 	
+	/** Constante APPLY_BTN. */
+	public static final String APPLY_BTN = "Aplicar cambios";
+	
+	/** Campo confirmar. */
 	JButton confirmar;
+	
+	/** Campo panelAjustes. */
 	PanelSelectorCajas panelAjustes;
 	
-	public VentanaNotificacionesCliente(String[] ajustes, int[] selected, String actionName) {
+	/**
+	 * Instancia un nuevo Objeto VentanaNotificacionesCliente.
+	 *
+	 * @param ajustes parámetro ajustes
+	 * @param selected parámetro selected
+	 */
+	public VentanaNotificacionesCliente(String[] ajustes, int[] selected) {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 		
@@ -50,8 +74,7 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 		
 		panelAjustes = new PanelSelectorCajas(ajustes, selected);
 		
-		confirmar = ButtonFactory.newRoundedButton("Aplicar cambios", btnHeight, btnWidth, 1);
-		confirmar.setActionCommand(actionName);
+		confirmar = ButtonFactory.newRoundedButton(APPLY_BTN, btnHeight, btnWidth, 1);
 		JPanel btnPanel = new JPanel(new BorderLayout());
 		btnPanel.add(confirmar);
 		btnPanel.setMaximumSize(new Dimension(btnWidth, btnHeight));
@@ -68,15 +91,30 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 		refreshList();
 	}
 	
+	/**
+	 * refreshList.
+	 */
 	public void refreshList() {
 		notificaciones.revalidate();
 		notificaciones.repaint();
 	}
 	
+	/**
+	 * Obtiene SelectedOptions.
+	 *
+	 * @return valor de SelectedOptions
+	 */
 	public String[] getSelectedOptions() {
 		return panelAjustes.getCategoriasSeleccionadas();
 	}
 
+	/**
+	 * anadirDisplay.
+	 *
+	 * @param <K> clave genérica
+	 * @param panelDisplay parámetro panelDisplay
+	 * @return valor de tipo PanelNotificacion
+	 */
 	@Override
 	public <K extends PanelNotificacion> PanelNotificacion anadirDisplay(K panelDisplay) {
 		notificaciones.add(panelDisplay);
@@ -85,6 +123,11 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 		return panelDisplay;
 	}
 	
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	public void setControlador(ActionListener c) {
 		confirmar.addActionListener(c);
 	}

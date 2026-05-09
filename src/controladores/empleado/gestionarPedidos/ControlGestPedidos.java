@@ -7,20 +7,28 @@ import javax.swing.JPanel;
 import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
+import modelo.usuario.Permiso;
 import modelo.venta.pedidos.Pedido;
 import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarPedidos.VentanaGestPedidos;
 
 public class ControlGestPedidos implements ControladorPantalla {
-
+	private final Tienda tienda;
+	private final Empleado empleado;
 	private VentanaGestPedidos vista;
+	
+	/** Permiso requerido para realizar esta acción */
+	private static Permiso requerido = Permiso.PEDIDOS;
 
 	public ControlGestPedidos(Tienda tienda, Empleado empleado) {
-		this.vista = new VentanaGestPedidos();
-		Pedido[] pedidos = tienda.getHistorial().getPedidosPendientes();
-		for(Pedido p : pedidos) {
-			new ControlPanelGestionarPedido(tienda, empleado, p, vista);
+		this.tienda = tienda;
+		this.empleado = empleado;
+		if(!empleado.tienePermiso(requerido)) {
+			new VentanaMensaje("No tiene el permiso para realizar esta acción", 1);
+			return;
 		}
+		this.vista = new VentanaGestPedidos();
 		
 		TiendaFrame.getInstance().navegarA(this);
 	}
@@ -38,5 +46,13 @@ public class ControlGestPedidos implements ControladorPantalla {
 	@Override
 	public String getExplicacion() {
 		return "En esta ventana puedes avanzar el estado de los pedidos pendientes";
+	}
+	
+	public void mostrar() {
+		this.vista.vaciar();
+		Pedido[] pedidos = tienda.getHistorial().getPedidosPendientes();
+		for(Pedido p : pedidos) {
+			new ControlPanelGestionarPedido(tienda, empleado, p, vista, this);
+		}
 	}
 }

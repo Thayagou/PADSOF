@@ -95,7 +95,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	 */
 	public VentanaAnadirProductoIndividual(String[] categorias, String[] tiposProductos, String[] espComic,
 			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos) {
-		this("Nombre", "Descripción", new String[0], categorias, "0.0", "0", "", tiposProductos, new String[0],
+		this("Nombre", "Descripción", new String[0], categorias, "0.0 €", "0 uds", "", tiposProductos, new String[0],
 				espComic, espJuego, espFigura, espPack, tiposJuego, productos, false);
 	}
 

@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
 import modelo.exceptions.ArticuloSinValoracionException;
@@ -48,7 +47,7 @@ public class ControlValoracionIndividual implements ControladorPantalla {
 		String fechaFormateada = fecha.format(formatter);
 
 		this.vista = new VentanaValoracionIndividual(articulo.getPropietario().getNombre(), "pfp.png", fechaFormateada,
-				articulo.getNombre(), "producto.png", categorias.toArray(new String[0]), articulo.getDescripcion(),
+				articulo.getNombre(), articulo.getImage(), categorias.toArray(new String[0]), articulo.getDescripcion(),
 				tiposEstado.toArray(new String[0]));
 		vista.setControlador(this);
 		TiendaFrame.getInstance().navegarA(this);
@@ -67,7 +66,8 @@ public class ControlValoracionIndividual implements ControladorPantalla {
 		try {
 			estimacion = Double.parseDouble(vista.getEstimacion());
 		} catch (RuntimeException ex) {
-			new VentanaMensaje("Introduzca una estimación de valor válida");
+			new VentanaMensaje("Introduzca una estimación de valor válida", 1);
+			return;
 		}
 		
 		String estadoFisico = vista.getEstadoFisico();
@@ -78,18 +78,22 @@ public class ControlValoracionIndividual implements ControladorPantalla {
 			}
 		}
 		if(estado == null) {
-			new VentanaMensaje("Introduzca un estado físico válido");
+			new VentanaMensaje("Introduzca un estado físico válido", 1);
+			return;
 		}
 		
-		try {
-			tienda.getHistorial().valorarArticulo(empleado, articulo, estimacion, estado);
-		} catch (InvalidPermitException | InvalidArgumentException | ArticuloSinValoracionException ex) {
-			new VentanaMensaje(ex.getMessage());
+		
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas valorar este artículo?")) {
+			try {
+				tienda.getHistorial().valorarArticulo(empleado, articulo, estimacion, estado);
+			} catch (InvalidPermitException | InvalidArgumentException | ArticuloSinValoracionException ex) {
+				new VentanaMensaje(ex.getMessage(), 1);
+				TiendaFrame.getInstance().volverAtras();
+				return;
+			}
+			TiendaFrame.getInstance().volverAtras();
+			new VentanaMensaje("El artículo se ha valorado correctamente");
 		}
-		
-		new VentanaMensaje("El artículo se ha valorado correctamente");
-		
-		SwingUtilities.invokeLater(() -> new ControlValorarObjetos(tienda, empleado));
 	}
 
 	@Override

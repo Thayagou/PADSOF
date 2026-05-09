@@ -12,36 +12,69 @@ import vistas.common.assets.PanelFotoPerfil;
 import vistas.common.components.FixedTextArea;
 import vistas.herramientas.*;
 
+/**
+ * Tipo: Class VentanaInfoArticulo.
+ */
 public class VentanaInfoArticulo extends JPanel {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/* Proporciones generales */
+	/** Constante PADDING. */
 	private static final double PADDING = 0.02;
+	
+	/** Constante GAP. */
 	private static final double GAP = 0.015;
 
-	/* Foto */
+	/** Constante FOTO_W. */
 	private static final double FOTO_W = 0.32;
+	
+	/** Constante FOTO_H. */
 	private static final double FOTO_H = 0.32;
 
-	/* Avatar */
+	/** Constante AVATAR_SIZE. */
 	private static final double AVATAR_SIZE = 0.055;
 
-	/* Botones */
+	/** Constante BTN_W. */
 	private static final double BTN_W = 0.18;
+	
+	/** Constante BTN_H. */
 	private static final double BTN_H = 0.05;
+	
+	/** Constante BTN_ROUNDNESS. */
 	private static final double BTN_ROUNDNESS = 0.5;
 
-	/* Truncado */
+	/** Constante TEXT_MAX_W. */
 	private static final double TEXT_MAX_W = 0.35;
 
-	/* TextAreas */
+	/** Constante DESC_MAX_LINES. */
 	private static final int DESC_MAX_LINES = 8;
+	
+	/** Constante INTERES_MAX_LINES. */
 	private static final int INTERES_MAX_LINES = 5;
 
+	/** Campo btnOferta. */
 	private JButton btnOferta;
+	
+	/** Campo btnCartera. */
 	private JButton btnCartera;
 
+	/**
+	 * Instancia un nuevo Objeto VentanaInfoArticulo.
+	 *
+	 * @param usrName parámetro usrName
+	 * @param fotoPerfil parámetro fotoPerfil
+	 * @param nombreArticulo parámetro nombreArticulo
+	 * @param fotoArticulo parámetro fotoArticulo
+	 * @param descripcion parámetro descripcion
+	 * @param interesadoEn parámetro interesadoEn
+	 * @param estado parámetro estado
+	 * @param estimacion parámetro estimacion
+	 * @param ajeno parámetro ajeno
+	 * @param actionOffer parámetro actionOffer
+	 * @param actionWallet parámetro actionWallet
+	 * @param categorias parámetro categorias
+	 */
 	public VentanaInfoArticulo(String usrName, String fotoPerfil, String nombreArticulo, String fotoArticulo,
 			String descripcion, String interesadoEn, String estado, double estimacion, boolean ajeno,
 			String actionOffer, String actionWallet, String... categorias) {
@@ -67,6 +100,22 @@ public class VentanaInfoArticulo extends JPanel {
 		}
 	}
 
+	/**
+	 * buildContenido.
+	 *
+	 * @param t parámetro t
+	 * @param usrName parámetro usrName
+	 * @param fotoPerfil parámetro fotoPerfil
+	 * @param nombreArticulo parámetro nombreArticulo
+	 * @param fotoArticulo parámetro fotoArticulo
+	 * @param descripcion parámetro descripcion
+	 * @param interesadoEn parámetro interesadoEn
+	 * @param estado parámetro estado
+	 * @param estimacion parámetro estimacion
+	 * @param categorias parámetro categorias
+	 * @param gap parámetro gap
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel buildContenido(TiendaFrame t, String usrName, String fotoPerfil, String nombreArticulo,
 			String fotoArticulo, String descripcion, String interesadoEn, String estado, double estimacion,
 			String[] categorias, int gap) {
@@ -82,6 +131,15 @@ public class VentanaInfoArticulo extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * buildColumnaIzquierda.
+	 *
+	 * @param t parámetro t
+	 * @param fotoArticulo parámetro fotoArticulo
+	 * @param descripcion parámetro descripcion
+	 * @param gap parámetro gap
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel buildColumnaIzquierda(TiendaFrame t, String fotoArticulo, String descripcion, int gap) {
 
 		JPanel columna = new JPanel();
@@ -113,6 +171,20 @@ public class VentanaInfoArticulo extends JPanel {
 		return columna;
 	}
 
+	/**
+	 * buildColumnaDerecha.
+	 *
+	 * @param t parámetro t
+	 * @param usrName parámetro usrName
+	 * @param fotoPerfil parámetro fotoPerfil
+	 * @param nombreArticulo parámetro nombreArticulo
+	 * @param estado parámetro estado
+	 * @param estimacion parámetro estimacion
+	 * @param interesadoEn parámetro interesadoEn
+	 * @param categorias parámetro categorias
+	 * @param gap parámetro gap
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel buildColumnaDerecha(TiendaFrame t, String usrName, String fotoPerfil, String nombreArticulo,
 			String estado, double estimacion, String interesadoEn, String[] categorias, int gap) {
 		
@@ -165,6 +237,15 @@ public class VentanaInfoArticulo extends JPanel {
 		return columna;
 	}
 
+	/**
+	 * buildUsuario.
+	 *
+	 * @param t parámetro t
+	 * @param usrName parámetro usrName
+	 * @param fotoPerfil parámetro fotoPerfil
+	 * @param gap parámetro gap
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel buildUsuario(TiendaFrame t, String usrName, String fotoPerfil, int gap) {
 
 		JPanel fila = new JPanel(new BorderLayout(gap, 0));
@@ -186,6 +267,13 @@ public class VentanaInfoArticulo extends JPanel {
 		return fila;
 	}
 
+	/**
+	 * buildFotoArticulo.
+	 *
+	 * @param t parámetro t
+	 * @param fotoArticulo parámetro fotoArticulo
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel buildFotoArticulo(TiendaFrame t, String fotoArticulo) {
 
 		int fotoW = t.getPixelsWidth(FOTO_W);
@@ -208,6 +296,15 @@ public class VentanaInfoArticulo extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * buildTextoSimple.
+	 *
+	 * @param t parámetro t
+	 * @param texto parámetro texto
+	 * @param fuente parámetro fuente
+	 * @param color parámetro color
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel buildTextoSimple(TiendaFrame t, String texto, Fonts fuente, ColorPalette color) {
 
 		JPanel panel = new JPanel(new BorderLayout());
@@ -224,6 +321,14 @@ public class VentanaInfoArticulo extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * buildTextArea.
+	 *
+	 * @param t parámetro t
+	 * @param texto parámetro texto
+	 * @param maxLines parámetro maxLines
+	 * @return valor de tipo JScrollPane
+	 */
 	private JScrollPane buildTextArea(TiendaFrame t, String texto, int maxLines) {
 	    int maxWidth = t.getPixelsWidth(TEXT_MAX_W - 0.05);
 	    String truncado = truncarTextoMultilinea(texto, maxLines, maxWidth, Fonts.TEXT.getFont());
@@ -237,8 +342,8 @@ public class VentanaInfoArticulo extends JPanel {
 	    area.setFont(Fonts.TEXT.getFont());
 	    area.setForeground(ColorPalette.DARK_GREY.getColor());
 
-	    // Evitar que el JTextArea intente crecer horizontalmente
-	    area.setSize(maxWidth, Short.MAX_VALUE); // Ancho fijo inicial
+	    /* Evitar que el JTextArea intente crecer horizontalmente */
+	    area.setSize(maxWidth, Short.MAX_VALUE);
 
 	    JPanel areaContent = new JPanel(new BorderLayout());
 	    areaContent.setOpaque(true);
@@ -253,8 +358,7 @@ public class VentanaInfoArticulo extends JPanel {
 	    scroll.setAlignmentX(LEFT_ALIGNMENT);
 	    scroll.setBorder(BorderFactory.createLineBorder(ColorPalette.LIGHT_GREY.getColor()));
 
-	    // Listener para que el JTextArea se ajuste al ancho real del viewport
-	    // (teniendo en cuenta si aparece la barra vertical)
+	    /* Listener para que el JTextArea se ajuste al ancho real del viewport */
 	    scroll.getViewport().addComponentListener(new ComponentAdapter() {
 	        @Override
 	        public void componentResized(ComponentEvent e) {
@@ -269,6 +373,15 @@ public class VentanaInfoArticulo extends JPanel {
 	    return scroll;
 	}
 
+	/**
+	 * buildBotones.
+	 *
+	 * @param t parámetro t
+	 * @param actionOffer parámetro actionOffer
+	 * @param actionWallet parámetro actionWallet
+	 * @param gap parámetro gap
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel buildBotones(TiendaFrame t, String actionOffer, String actionWallet, int gap) {
 
 		int btnW = t.getPixelsWidth(BTN_W);
@@ -299,6 +412,15 @@ public class VentanaInfoArticulo extends JPanel {
 		return PanelFactory.wrapVertical(botones, gap);
 	}
 
+	/**
+	 * truncarTextoMultilinea.
+	 *
+	 * @param texto parámetro texto
+	 * @param maxLines parámetro maxLines
+	 * @param maxWidth parámetro maxWidth
+	 * @param font parámetro font
+	 * @return valor de tipo String
+	 */
 	private String truncarTextoMultilinea(String texto, int maxLines, int maxWidth, Font font) {
 
 		if (texto == null) {
@@ -342,6 +464,11 @@ public class VentanaInfoArticulo extends JPanel {
 		return resultado.toString();
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	public void setControlador(ActionListener c) {
 
 		if (btnOferta != null) {

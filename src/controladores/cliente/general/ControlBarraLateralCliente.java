@@ -14,39 +14,57 @@ import controladores.cliente.venta.pantallas.ControlManejoCarrito;
 import controladores.cliente.venta.pantallas.ControlVerCompras;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
+import vistas.cliente.general.BarraLateralCliente;
 
+/**
+ * Tipo: Class ControlBarraLateralCliente.
+ */
 public class ControlBarraLateralCliente implements ControlBarraLateral {
 	
+	/** Campo tienda. */
 	private Tienda tienda;
+	
+	/** Campo cliente. */
 	private ClienteRegistrado cliente;
 	
+	/**
+	 * Instancia un nuevo Objeto ControlBarraLateralCliente.
+	 *
+	 * @param tienda parámetro tienda
+	 * @param cliente parámetro cliente
+	 */
 	public ControlBarraLateralCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
 		this.cliente = cliente;
 	}
 
+	/**
+	 * actionPerformed.
+	 *
+	 * @param e parámetro e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "Buscar Productos":
+		case BarraLateralCliente.SEARCH_PRODUCTS:
 			SwingUtilities.invokeLater(() -> new ControlBuscarCliente(tienda, cliente));
 			break;
-		case "Ver Carrito":
+		case BarraLateralCliente.SHOP_CAR:
 			SwingUtilities.invokeLater(() -> new ControlManejoCarrito(tienda, cliente));
 			break;
-		case "Buscar Artículos":
+		case BarraLateralCliente.SEARCH_ART:
 			SwingUtilities.invokeLater(() -> new ControlBuscarArticulos(tienda, cliente));
 			break;
-		case "Ver Cartera":
+		case BarraLateralCliente.WALLET:
 			SwingUtilities.invokeLater(() -> new ControlManejoCartera(tienda, cliente, cliente));
 			break;
-		case "Añadir Artículo":
+		case BarraLateralCliente.ADD_ART:
 			SwingUtilities.invokeLater(() -> new ControlAnadirArticulo(tienda, cliente));
 			break;
-		case "Ver mis ofertas":
+		case BarraLateralCliente.OFFERS:
 			SwingUtilities.invokeLater(() -> new ControlVerMisOfertas(tienda, cliente));
 			break;
-		case "Ver mis compras":
+		case BarraLateralCliente.COMPRAS:
 			SwingUtilities.invokeLater(() -> new ControlVerCompras(tienda, cliente));
 			break;
 		}

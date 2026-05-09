@@ -54,16 +54,18 @@ public class ControlManejoCarrito implements ControladorPantalla {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "pagar":
+		case VentanaCarrito.PAY_ACTION:
 			SwingUtilities.invokeLater(() -> new ControlVentanaPago(tienda, cliente));
 			break;
-		case "cancelar":
-			try{
-				tienda.cancelarCarritoDe(cliente);
-				recargarPantalla();
-				new VentanaMensaje("Su carrito ha sido cancelado");
-			} catch(Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+		case VentanaCarrito.CANCEL_ACTION:
+			if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de querer cancelar la compra? Se eliminarán todos los productos del carrito.")) {
+				try{
+					tienda.cancelarCarritoDe(cliente);
+					recargarPantalla();
+					new VentanaMensaje("Su carrito ha sido cancelado");
+				} catch(Exception ex) {
+					new VentanaMensaje(ex.getMessage());
+				}
 			}
 			break;
 		}

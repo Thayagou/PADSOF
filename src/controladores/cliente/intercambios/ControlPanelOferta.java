@@ -12,6 +12,7 @@ import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.Intercambio;
+import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.cliente.intercambios.*;
@@ -72,28 +73,35 @@ public class ControlPanelOferta implements ActionListener {
 			SwingUtilities.invokeLater(() -> new ControlVerOferta(tienda, cliente, intercambio));
 			break;
 		case acceptAction:
-			try {
-				cliente.getCartera().aceptarIntercambio(intercambio);
-				controlador.refrescar();
-			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+			if(TiendaFrame.getConfirmacionUsuario("¿Quieres aceptar la oferta de " + intercambio.getEmisor().getDueno().getNombre() + "?" )) {
+				try {
+					cliente.getCartera().aceptarIntercambio(intercambio);
+					controlador.refrescar();
+				} catch (Exception ex) {
+					new VentanaMensaje(ex.getMessage());
+				}
 			}
 			break;
 		case rejectAction:
-			try {
-				cliente.getCartera().rechazarIntercambio(intercambio);
-				controlador.refrescar();
-			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+			if(TiendaFrame.getConfirmacionUsuario("¿Quieres rechazar la oferta de " + intercambio.getEmisor().getDueno().getNombre() + "?" )) {
+				try {
+					cliente.getCartera().rechazarIntercambio(intercambio);
+					controlador.refrescar();
+				} catch (Exception ex) {
+					new VentanaMensaje(ex.getMessage());
+				}
 			}
 			break;
 		case cancelAction:
-			try {
-				cliente.getCartera().cancelarIntercambio(intercambio);
-				controlador.refrescar();
-			} catch (Exception e1) {
-				new VentanaMensaje(e1.getMessage());
+			if(TiendaFrame.getConfirmacionUsuario("¿Quieres cancelar la oferta?")) {
+				try {
+					cliente.getCartera().cancelarIntercambio(intercambio);
+					controlador.refrescar();
+				} catch (Exception e1) {
+					new VentanaMensaje(e1.getMessage());
+				}
 			}
+			break;
 		}
 	}
 

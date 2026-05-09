@@ -13,6 +13,7 @@ import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Stock;
+import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
@@ -23,12 +24,14 @@ public class ControlPanelProductoGestionar implements ActionListener {
 	private final Usuario usuario;
 	private final Tienda tienda;
 	private final PanelProductoGestionarProducto panel;
+	private final ControlGestionarExistentes padre;
 	
-	public ControlPanelProductoGestionar(Tienda tienda, Usuario usuario, Stock stock, VentanaConDisplay<? super PanelProducto> vista) {
+	public ControlPanelProductoGestionar(Tienda tienda, Usuario usuario, Stock stock, VentanaConDisplay<? super PanelProducto> vista, ControlGestionarExistentes padre) {
 		this.tienda = tienda;
 		this.usuario = usuario;
 		this.stock = stock;
 		Producto producto = stock.getProducto();
+		this.padre = padre;
 		
 		ArrayList<String> categorias = new ArrayList<>();
 		for(Categoria c : producto.getCategorias()) {
@@ -58,13 +61,16 @@ public class ControlPanelProductoGestionar implements ActionListener {
 	}
 	
 	private void intentarBorrar() {
-		try {
-			tienda.getAlmacen().eliminarProducto(usuario, stock.getProducto());
-		} catch (InvalidArgumentException | InvalidPermitException e) {
-			new VentanaMensaje(e.getMessage());
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas borrar este producto?")) {
+			try {
+				tienda.getAlmacen().eliminarProducto(usuario, stock.getProducto());
+			} catch (InvalidArgumentException | InvalidPermitException e) {
+				new VentanaMensaje(e.getMessage());
+				return;
+			}
+			padre.mostrar();
+			new VentanaMensaje("El producto se elimino correctamente");
 		}
-		SwingUtilities.invokeLater(() -> new ControlGestionarExistentes(tienda, usuario));
-		new VentanaMensaje("El producto se elimino correctamente");
 	}
 	
 	private void intentarModificar() {
