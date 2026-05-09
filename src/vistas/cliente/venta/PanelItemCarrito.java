@@ -11,6 +11,8 @@ import vistas.herramientas.*;
 
 public class PanelItemCarrito extends PanelProducto {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String QUITAR_ACTION = "Quitar";
 
 	private JButton quitar;
 	private JLabel unidadesLabel;

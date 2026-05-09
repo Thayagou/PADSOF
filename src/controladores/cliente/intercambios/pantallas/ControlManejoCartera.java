@@ -48,7 +48,7 @@ public class ControlManejoCartera implements ControladorPantalla {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "Hacer oferta":
+		case VentanaCartera.OFFER_ACTION:
 			SwingUtilities.invokeLater(() -> new ControlHacerOferta(tienda, cliente, dueno));
 			break;
 		}

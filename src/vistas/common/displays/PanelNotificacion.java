@@ -19,11 +19,13 @@ public class PanelNotificacion extends PanelDisplay {
 	
 	private static final double FOTO_H_PERC = 0.99;
 	private static final double MAX_HEIGHT = 0.16;
-//	private static final int MAX_DESC = 120;
 	private static final double BTN_WIDTH = 0.05;
 	private static final double BTN_HEIGHT = 0.03;
 	
 	private static final double VERTICAL_GAP = 0.01;
+	
+	public static final String READ_ACTION = "leido";
+	public static final String DELETE_ACTION = "borrar";
 	
 	private String titulo;
 	private String texto;
@@ -70,11 +72,11 @@ public class PanelNotificacion extends PanelDisplay {
 		borrar = ButtonFactory.newRoundedButton("Borrar", t.getPixelsHeight(BTN_HEIGHT), t.getPixelsWidth(BTN_WIDTH), 1);
 		ButtonFactory.paintButton(borrar, ColorPalette.CARD_DARK, ColorPalette.DARK_GREY);
 		ButtonFactory.addMouseMecanics(borrar, ColorPalette.CARD_DARK);
-		borrar.setActionCommand("borrar");
+		borrar.setActionCommand(DELETE_ACTION);
 		borrar.setMaximumSize(new Dimension(t.getPixelsWidth(BTN_WIDTH), t.getPixelsHeight(BTN_HEIGHT)));
 		
 		marcarLeido = ButtonFactory.newRoundedButton("Leído", t.getPixelsHeight(BTN_HEIGHT), t.getPixelsWidth(BTN_WIDTH), 1);
-		marcarLeido.setActionCommand("leido");
+		marcarLeido.setActionCommand(READ_ACTION);
 		marcarLeido.setMaximumSize(new Dimension(t.getPixelsWidth(BTN_WIDTH), t.getPixelsHeight(BTN_HEIGHT)));
 
 		if(leido == false) {

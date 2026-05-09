@@ -12,18 +12,22 @@ import vistas.common.app.MenuLateral;
 public class BarraLateralCliente extends BarraLateral {
 
 	private static final long serialVersionUID = 1L;
+	
+	public static final String SEARCH_PRODUCTS = "Buscar Productos";
+	public static final String SHOP_CAR = "Ver Carrito";
+	public static final String SEARCH_ART = "Buscar Artículos";
+	public static final String WALLET = "Ver Cartera";
+	public static final String ADD_ART = "Añadir Artículo";
+	public static final String OFFERS = "Ver mis ofertas";
+	public static final String COMPRAS = "Ver mis compras";
 
-	private JButton buscarProductos = new JButton("Buscar Productos");
-
-	private JButton verCarrito = new JButton("Ver Carrito");
-
-	private JButton buscarArticulos = new JButton("Buscar Artículos");
-
-	private JButton verCartera = new JButton("Ver Cartera");
-	private JButton anadirArticulo = new JButton("Añadir Artículo");
-	private JButton verMisOfertas = new JButton("Ver mis ofertas");
-
-	private JButton verCompras = new JButton("Ver mis compras");
+	private JButton buscarProductos = new JButton(SEARCH_PRODUCTS);
+	private JButton verCarrito = new JButton(SHOP_CAR);
+	private JButton buscarArticulos = new JButton(SEARCH_ART);
+	private JButton verCartera = new JButton(WALLET);
+	private JButton anadirArticulo = new JButton(ADD_ART);
+	private JButton verMisOfertas = new JButton(OFFERS);
+	private JButton verCompras = new JButton(COMPRAS);
 	
 	private static final double MENU_WIDTH = 0.17;
 

@@ -29,7 +29,7 @@ public class ControlBuscar implements ActionListener, ControladorPantalla {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Buscar") || e.getActionCommand().equals("Entrar")) 
+		if (e.getActionCommand().equals(VentanaBusqueda.BUSCAR_ACTION))
 			this.intentarBusqueda();
 	}
 	
@@ -50,7 +50,6 @@ public class ControlBuscar implements ActionListener, ControladorPantalla {
 		try {
 			Producto[] productos = tienda.getAlmacen().getProductosPorFiltros(categorias.toArray(new Categoria[0]),
 					pMin, pMax, eMin);
-			// Navegar a la vista de resultados con su controlador
 			new ControlResultadosNoRegistrado(tienda, productos);
 		} catch (CustomException ex) {
 			new VentanaMensaje(ex.getMessage());

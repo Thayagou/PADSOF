@@ -29,14 +29,12 @@ public class ControlVerCompras implements ControladorPantalla {
         TiendaFrame.getInstance().navegarA(this);
     }
  
- 
     private void cargarPedidos() {
         vista.limpiarPedidos();
         for (Pedido pedido : cliente.getPedidos()) {
             new ControlPanelPedidoCliente(tienda, cliente, pedido, vista);
         }
     }
- 
  
     @Override
     public JPanel getVista() {
@@ -51,11 +49,9 @@ public class ControlVerCompras implements ControladorPantalla {
         cargarPedidos();
     }
  
-    // ── ActionListener ────────────────────────────────────────────────────
- 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Acciones globales futuras (ej. filtros, ordenación)
+        /* Sin acciones para esta ventana */
     }
 
 	@Override

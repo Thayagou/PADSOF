@@ -41,6 +41,7 @@ public class PanelInfoProducto extends JPanel {
 	/* Numero maximo de lineas en las text areas */
 	private static final int DESC_MAX_LINES = 8;
 	private static final int CARACT_MAX_LINES = 5;
+	private static final int BW = TiendaFrame.getInstance().getPixelsWidth(8.0/1080.0);
 
 	/* Factor de reduccion del ancho para el scroll (deja margen para la barra) */
 	private static final double SCROLL_W_MARGIN = 0.05;
@@ -192,13 +193,8 @@ public class PanelInfoProducto extends JPanel {
 		int maxWidth = t.getPixelsWidth(TEXT_MAX_W - SCROLL_W_MARGIN);
 		String truncado = truncarTextoMultilinea(texto, maxLines, maxWidth, Fonts.TEXT.getFont());
 
-		JTextArea area = new FixedTextArea();
-		area.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-		area.setText(truncado);
-		area.setEditable(false);
-		area.setOpaque(false);
-		area.setLineWrap(true);
-		area.setWrapStyleWord(true);
+		JTextArea area = new FixedTextArea(truncado);
+		area.setBorder(BorderFactory.createEmptyBorder(BW, BW, BW, BW));
 		area.setFont(Fonts.TEXT.getFont());
 		area.setForeground(ColorPalette.DARK_GREY.getColor());
 		area.setSize(maxWidth, Short.MAX_VALUE);

@@ -100,7 +100,7 @@ public class ControlPanelArticuloEnCartera implements ActionListener {
 		case actionName:
 			SwingUtilities.invokeLater(() -> new ControlInfoArticulo(tienda, cliente, articulo));
 			break;
-		case "Solicitar valoracion":
+		case PanelArticuloEnCartera.SOLICITAR_BTN:
 			SwingUtilities.invokeLater(() -> new ControlVentanaPagoValoracion(tienda, cliente, articulo));
 			break;
 

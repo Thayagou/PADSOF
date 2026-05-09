@@ -17,6 +17,8 @@ public class VentanaBusqueda extends JPanel {
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	public static final String BUSCAR_ACTION = "Buscar";
+
 	/** Campo estrellas. */
 	private JSpinner estrellas;
 
@@ -47,18 +49,18 @@ public class VentanaBusqueda extends JPanel {
 		final double MAX_STARS = 5.0;
 		final double STEP_STARS = 0.5;
 		final double INIT_STARS = 0.0;
-		
+
 		final String DEFAULT_MIN_PRICE = "0.0";
 		final String DEFAULT_MAX_PRICE = "999999.0";
-		
+
 		final double SPINNER_WIDTH_FACTOR = 0.08;
 		final double SPINNER_HEIGHT_FACTOR = 0.03;
-		
+
 		final double BUTTON_HEIGHT_FACTOR = 0.05;
 		final double BUTTON_WIDTH_FACTOR = 0.1;
 		final int BUTTON_ROUND_RADIUS = 1;
-		
-		final double GBC_WEIGHTX = 0.5; // peso para GridBagConstraints
+
+		final double GBC_WEIGHTX = 0.5;
 
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -79,7 +81,8 @@ public class VentanaBusqueda extends JPanel {
 		contenidoFiltros.setOpaque(true);
 		contenidoFiltros.setBackground(ColorPalette.WHITE.getColor());
 		contenidoFiltros.setLayout(new GridBagLayout());
-		contenidoFiltros.setPreferredSize(new Dimension(t.getPixelsWidth(PREFERRED_FILTER_SIZE), t.getPixelsHeight(PANELS_HEIGHT)));
+		contenidoFiltros.setPreferredSize(
+				new Dimension(t.getPixelsWidth(PREFERRED_FILTER_SIZE), t.getPixelsHeight(PANELS_HEIGHT)));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(spaceBetween, spaceBetween, spaceBetween, spaceBetween);
@@ -117,7 +120,7 @@ public class VentanaBusqueda extends JPanel {
 		JPanel panelCategorias = PanelFactory.getVentanaConCabecera("Categorías", selectorCategorias);
 
 		/* Botón de buscar */
-		botonBuscar = ButtonFactory.newRoundedButton("Buscar", t.getPixelsHeight(BUTTON_HEIGHT_FACTOR),
+		botonBuscar = ButtonFactory.newRoundedButton(BUSCAR_ACTION, t.getPixelsHeight(BUTTON_HEIGHT_FACTOR),
 				t.getPixelsWidth(BUTTON_WIDTH_FACTOR), BUTTON_ROUND_RADIUS);
 		botonBuscar.setBackground(ColorPalette.PURPLE.getColor());
 		botonBuscar.setForeground(ColorPalette.WHITE.getColor());
@@ -144,7 +147,7 @@ public class VentanaBusqueda extends JPanel {
 		contenido.add(BorderLayout.NORTH, formulario);
 		contenido.add(BorderLayout.SOUTH, panelBoton);
 		contenido.setOpaque(false);
-		
+
 		JPanel ventana = PanelFactory.getVentanaConCabecera("      Buscar Productos", contenido);
 		ventana.setOpaque(false);
 		this.add(ventana);

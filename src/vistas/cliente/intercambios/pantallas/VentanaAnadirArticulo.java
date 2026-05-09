@@ -13,9 +13,9 @@ public class VentanaAnadirArticulo extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/* Acciones para los botones */
-	private static final String ACTION_CONFIRMAR = "Confirmar";
-	private static final String ACTION_CANCELAR = "Cancelar";
-	private static final String ACTION_SELECCIONAR_FOTO = "SeleccionarFoto";
+	public static final String ACTION_CONFIRMAR = "Confirmar";
+	public static final String ACTION_CANCELAR = "Cancelar";
+	public static final String ACTION_SELECCIONAR_FOTO = "SeleccionarFoto";
 
 	/* Macros de dimensiones relativas */
 	private static final double FOTO_ANCHO = 0.2; /* Ancho de la foto (20% ancho pantalla) */

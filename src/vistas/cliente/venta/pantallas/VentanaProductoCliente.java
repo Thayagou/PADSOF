@@ -20,6 +20,8 @@ public class VentanaProductoCliente extends JPanel {
 
 	private static final double COMPRAR_BTN_WIDTH = 0.2;
 	private static final double COMPRAR_BTN_HEIGHT = 0.06;
+	
+	public static final String BUY_ACTION = "comprar";
 
 	private JButton comprar;
 
@@ -61,7 +63,7 @@ public class VentanaProductoCliente extends JPanel {
 
 		comprar = ButtonFactory.newRoundedButton("Añadir al carrito", t.getPixelsHeight(COMPRAR_BTN_HEIGHT),
 				t.getPixelsWidth(COMPRAR_BTN_WIDTH), 1);
-		comprar.setActionCommand("comprar");
+		comprar.setActionCommand(BUY_ACTION);
 		comprar.setAlignmentX(CENTER_ALIGNMENT);
 
 		JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));

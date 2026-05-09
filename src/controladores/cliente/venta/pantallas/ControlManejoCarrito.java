@@ -54,10 +54,10 @@ public class ControlManejoCarrito implements ControladorPantalla {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "pagar":
+		case VentanaCarrito.PAY_ACTION:
 			SwingUtilities.invokeLater(() -> new ControlVentanaPago(tienda, cliente));
 			break;
-		case "cancelar":
+		case VentanaCarrito.CANCEL_ACTION:
 			try{
 				tienda.cancelarCarritoDe(cliente);
 				recargarPantalla();

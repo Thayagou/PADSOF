@@ -36,11 +36,11 @@ public class ControlPanelNotificacion implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "leido":
+		case PanelNotificacion.READ_ACTION:
 			this.notificacion.marcarLeida();
 			controlador.recargarPantalla();
 			break;
-		case "borrar":
+		case PanelNotificacion.DELETE_ACTION:
 			this.notificacion.borrar();
 			controlador.recargarPantalla();
 			break;

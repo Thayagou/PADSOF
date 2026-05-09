@@ -27,6 +27,7 @@ public class ControlItemCarrito implements ActionListener {
 	private ControlManejoCarrito controlador;
 
 	protected static final String DF_PRODUCT_IMAGE = "producto.png";
+	private static final String seeProduct = "Ver producto";
 
 	public ControlItemCarrito(Tienda tienda, ClienteRegistrado cliente, StockExterno stock,
 			VentanaConDisplay<? super PanelItemCarrito> vista, ControlManejoCarrito controlador) {
@@ -49,7 +50,7 @@ public class ControlItemCarrito implements ActionListener {
 			imageRoute = producto.getImagen();
 
 		panel = new PanelItemCarrito(producto.getNombre(), producto.getDescripcion(), imageRoute,
-				producto.getPuntuacionMedia(), producto.getPrecio(), unidades, "Ver producto",
+				producto.getPuntuacionMedia(), producto.getPrecio(), unidades, seeProduct,
 				categorias.toArray(new String[0]));
 
 		vista.anadirDisplay(panel);
@@ -60,7 +61,7 @@ public class ControlItemCarrito implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "quitar":
+		case PanelItemCarrito.QUITAR_ACTION:
 			try {
 				tienda.quitarDeCarritoDe(cliente, producto);
 				controlador.recargarPantalla();
@@ -68,7 +69,7 @@ public class ControlItemCarrito implements ActionListener {
 				new VentanaMensaje(ex.getMessage());
 			}
 			break;
-		case "Ver producto":
+		case seeProduct:
 			SwingUtilities.invokeLater(() -> new ControlInfoProductoCliente(tienda, cliente, producto));
 		}
 	}

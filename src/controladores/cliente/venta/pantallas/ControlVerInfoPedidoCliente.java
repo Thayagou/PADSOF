@@ -15,17 +15,9 @@ import vistas.common.app.TiendaFrame;
 
 public class ControlVerInfoPedidoCliente implements ControladorPantalla {
 
-	private Tienda tienda;
-	private ClienteRegistrado cliente;
-	@SuppressWarnings("unused")
-	private Pedido pedido;
 	private VentanaInfoPedidoCliente vista;
 
 	public ControlVerInfoPedidoCliente(Tienda tienda, ClienteRegistrado cliente, Pedido pedido) {
-		this.tienda = tienda;
-		this.cliente = cliente;
-		this.pedido = pedido;
-
 		this.vista = new VentanaInfoPedidoCliente();
 
 		for (StockExterno st : pedido.getItemsPedido()) {
@@ -39,11 +31,8 @@ public class ControlVerInfoPedidoCliente implements ControladorPantalla {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// Reservado para acciones globales futuras (ej. "Volver a mis compras")
 		switch (e.getActionCommand()) {
-		case "Volver":
-			new ControlVerCompras(tienda, cliente);
-			break;
+			/* Sin acciones para esta ventana */
 		}
 	}
 

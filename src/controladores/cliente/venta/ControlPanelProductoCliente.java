@@ -22,6 +22,8 @@ public class ControlPanelProductoCliente implements ActionListener {
 	protected ClienteRegistrado cliente;
 
 	protected static final String DF_PRODUCT_IMAGE = "producto.png";
+	
+	private static final String actionName = "Ver producto";
 
 	public ControlPanelProductoCliente(Tienda tienda, ClienteRegistrado cliente, Producto producto,
 			VentanaConDisplay<? super PanelProducto> vista) {
@@ -42,7 +44,7 @@ public class ControlPanelProductoCliente implements ActionListener {
 			imageRoute = producto.getImagen();
 
 		panel = new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute,
-				producto.getPuntuacionMedia(), producto.getPrecio(), "Ver producto", categorias.toArray(new String[0]));
+				producto.getPuntuacionMedia(), producto.getPrecio(), actionName, categorias.toArray(new String[0]));
 
 		vista.anadirDisplay(panel);
 
@@ -52,7 +54,7 @@ public class ControlPanelProductoCliente implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Ver producto":
+		case actionName:
 			SwingUtilities.invokeLater(() -> {
 				try {
 					new ControlInfoProductoCliente(tienda, cliente, producto);

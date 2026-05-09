@@ -21,6 +21,8 @@ public class PanelItemPedido extends PanelProducto {
 	private static final double SPACE_EAST_PANEL = 0.01;
 	private static final double BTN_WIDTH = 100.0/1876.0;
 	
+	public static final String VALORAR_ACTION = "Valorar";
+	
 	private JButton valorar;
 
 	public PanelItemPedido(String nombre, String descripcion, String imageName,
@@ -39,7 +41,7 @@ public class PanelItemPedido extends PanelProducto {
 		buttons.setPreferredSize(new Dimension((int)t.getPixelsWidth(BTN_WIDTH), (int) (maxCompHeight * BOTON_PERC_H)));
 
 		valorar = ButtonFactory.newRoundedButton("Valorar", (int) (maxCompHeight), maxCompHeight, 0.5);
-		valorar.setActionCommand("valorar");
+		valorar.setActionCommand(VALORAR_ACTION);
 		ButtonFactory.paintButton(valorar, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(valorar, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 

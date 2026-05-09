@@ -25,10 +25,12 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 	
 	private JPanel notificaciones = new JPanel();
 	
+	public static final String APPLY_BTN = "Aplicar cambios";
+	
 	JButton confirmar;
 	PanelSelectorCajas panelAjustes;
 	
-	public VentanaNotificacionesCliente(String[] ajustes, int[] selected, String actionName) {
+	public VentanaNotificacionesCliente(String[] ajustes, int[] selected) {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 		
@@ -50,8 +52,7 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 		
 		panelAjustes = new PanelSelectorCajas(ajustes, selected);
 		
-		confirmar = ButtonFactory.newRoundedButton("Aplicar cambios", btnHeight, btnWidth, 1);
-		confirmar.setActionCommand(actionName);
+		confirmar = ButtonFactory.newRoundedButton(APPLY_BTN, btnHeight, btnWidth, 1);
 		JPanel btnPanel = new JPanel(new BorderLayout());
 		btnPanel.add(confirmar);
 		btnPanel.setMaximumSize(new Dimension(btnWidth, btnHeight));

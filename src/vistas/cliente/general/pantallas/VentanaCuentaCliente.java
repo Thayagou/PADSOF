@@ -20,6 +20,9 @@ public class VentanaCuentaCliente extends JPanel {
 	private double CS_BTN_WIDTH = 0.12;
 	private double MARGIN_H = 0.02;
 	private double MARGIN_V = 0.02;
+	
+	public static final String CHANGE_BTN = "Cambiar";
+	public static final String LOGOUT_BTN = "Cerrar sesión";
 
 	public VentanaCuentaCliente() {
 		setOpaque(false);
@@ -38,11 +41,11 @@ public class VentanaCuentaCliente extends JPanel {
 		int marginV = t.getPixelsHeight(MARGIN_V);
 		contenido.setBorder(BorderFactory.createEmptyBorder(marginV, marginH, marginV, marginH));
 		
-		cambiarContrasena = new PanelFormulario("Cambiar contraseña", "Cambiar", new Integer[] { 1, 2, 3 },
+		cambiarContrasena = new PanelFormulario("Cambiar contraseña", CHANGE_BTN, new Integer[] { 1, 2, 3 },
 				"Contraseña antigua", "Contraseña nueva", "Confirmar nueva");
 		contenido.add(cambiarContrasena);
 
-		cerrarSesion = ButtonFactory.newRoundedButton("Cerrar Sesión", csH, csW, 1);
+		cerrarSesion = ButtonFactory.newRoundedButton(LOGOUT_BTN, csH, csW, 1);
 		cerrarSesion.setMaximumSize(new Dimension(csW, csH));
 		cerrarSesion.setAlignmentX(Component.CENTER_ALIGNMENT);
 		contenido.add(cerrarSesion);

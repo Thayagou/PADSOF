@@ -13,7 +13,7 @@ public class FixedTextArea extends JTextArea {
 	        setEditable(false);
 	        setOpaque(false);
 	        setLineWrap(true);
-	        setWrapStyleWord(true);
+	        setWrapStyleWord(false);
 	    }
 		
 		public FixedTextArea(String texto) {

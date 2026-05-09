@@ -25,6 +25,9 @@ public class VentanaLoginRegistro extends JPanel {
 
 	private double SPACING = 0.1;
 	
+	public static final String LOGIN_ACTION = "Log In";
+	public static final String SIGNIN_ACTION = "Crear cuenta";
+	
 	/**
 	 * Instancia un nuevo Objeto VentanaLoginRegistro.
 	 */
@@ -34,9 +37,9 @@ public class VentanaLoginRegistro extends JPanel {
 
 		TiendaFrame t = TiendaFrame.getInstance();
 		
-		logInForum = new PanelFormulario("Iniciar Sesión", "Log In", new Integer[] {2}, "Nombre", "Contraseña");
+		logInForum = new PanelFormulario("Iniciar Sesión", LOGIN_ACTION, new Integer[] {2}, "Nombre", "Contraseña");
 		
-		signInForum = new PanelFormulario("Registrarse", "Crear cuenta", new Integer[] {2, 3}, "Nombre", "Contraseña", "Confirmar contraseña");
+		signInForum = new PanelFormulario("Registrarse", SIGNIN_ACTION, new Integer[] {2, 3}, "Nombre", "Contraseña", "Confirmar contraseña");
 
 		int spaceBetween = t.getPixelsWidth(SPACING);
 

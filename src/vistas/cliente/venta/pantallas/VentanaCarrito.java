@@ -18,6 +18,9 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 	private static final double BTN_WIDTH = 0.2;
 	private static final double BTN_HEIGHT = 0.5;
 	private static final double SPACE_AROUND = 0.07;
+	
+	public static final String PAY_ACTION = "Pagar";
+	public static final String CANCEL_ACTION = "Cancelar";
 
 	private JPanel items = new JPanel();
 
@@ -48,9 +51,9 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 
 		/* Botones de la izquierda */
 		pagar = ButtonFactory.newRoundedButton("Finalizar y pagar", btnH, btnW, 0.5);
-		pagar.setActionCommand("pagar");
+		pagar.setActionCommand(PAY_ACTION);
 		cancelar = ButtonFactory.newRoundedButton("Cancelar compra", btnH, btnW, 0.5);
-		cancelar.setActionCommand("cancelar");
+		cancelar.setActionCommand(CANCEL_ACTION);
 
 		JPanel rightPanel = PanelFactory.getColumnaDeBotones(pagar, cancelar);
 		rightPanel.setOpaque(false);

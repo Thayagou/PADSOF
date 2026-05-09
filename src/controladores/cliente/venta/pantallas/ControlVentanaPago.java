@@ -31,7 +31,7 @@ public class ControlVentanaPago implements ControladorPantalla {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("Pagar")) {
+		if(e.getActionCommand().equals(VentanaPago.PAY_ACTION)) {
 			try{
 				tienda.pagarCarritoDe(cliente, vista.getNumeroTarjeta());
 				new VentanaMensaje("El carrito se ha pagado. Puedes ver tu código de pedido en las notificaciones.");

@@ -33,14 +33,14 @@ public class ControlManejoCuenta implements ControladorPantalla {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "Cambiar":
+		case VentanaCuentaCliente.CHANGE_BTN:
 			try{
 				cliente.cambiarContrasena(vista.getContrasenaAntigua(), vista.getContrasenaNueva(), vista.getConfirmacionNueva());
 			} catch (Exception ex) {
 				new VentanaMensaje(ex.getMessage());
 			}
 			break;
-		case "Cerrar Sesión":
+		case VentanaCuentaCliente.LOGOUT_BTN:
 			if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que quieres cerrar sesión? Podrás volver a iniciar sesión más tarde."))
 			SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
 			break;

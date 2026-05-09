@@ -11,12 +11,14 @@ public class VentanaPago extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private PanelFormulario payForum;
+	
+	public static final String PAY_ACTION = "Pagar";
 
 	public VentanaPago() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
 
-		payForum = new PanelFormulario("Realizar pago", "Pagar", "Número de tarjeta:", "Nombre del titular:",
+		payForum = new PanelFormulario("Realizar pago", PAY_ACTION, "Número de tarjeta:", "Nombre del titular:",
 				"Fecha de vencimiento:", "Código de seguridad:");
 
 		add(payForum, BorderLayout.CENTER);

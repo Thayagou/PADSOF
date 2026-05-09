@@ -25,6 +25,8 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 	private final double BTN_WIDTH = 0.1;
 	private final double BTN_HEIGHT = 0.06;
 	
+	public static final String OFFER_ACTION = "Hacer oferta";
+	
 	public VentanaCartera(String usr) {
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -50,7 +52,7 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 		this.add(BorderLayout.CENTER, PanelFactory.getVentanaConCabecera("      Objetos de "+usr, contenido));
 		
 		hacerOferta = ButtonFactory.newRoundedButton("Hacer oferta", t.getPixelsHeight(BTN_HEIGHT), t.getPixelsWidth(BTN_WIDTH), 1);
-		hacerOferta.setActionCommand("Hacer oferta");
+		hacerOferta.setActionCommand(OFFER_ACTION);
 		if(ajeno) {
 			JPanel panelBtn = new JPanel(new BorderLayout());
 			panelBtn.add(hacerOferta, BorderLayout.CENTER);

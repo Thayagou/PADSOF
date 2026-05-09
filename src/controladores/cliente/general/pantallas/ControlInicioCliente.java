@@ -28,20 +28,16 @@ public class ControlInicioCliente implements ControladorPantalla {
 		this.cliente = cliente;
 		TiendaFrame tiendaFrame = TiendaFrame.getInstance();
 
-		// Barra de tareas superior
 		ControlBarraTareasCliente ctrlBarraTareas = new ControlBarraTareasCliente(tienda, cliente);
 		BarraTareasCliente barraTareas = new BarraTareasCliente(cliente.getNombre());
 		barraTareas.setControlador(ctrlBarraTareas);
 		tiendaFrame.setBarraTareas(barraTareas);
-
-		//Barra lateral
 		
 		ControlBarraLateralCliente ctrlBarraLateral = new ControlBarraLateralCliente(tienda, cliente);
 		BarraLateralCliente barraLateral = new BarraLateralCliente();
 		barraLateral.setControlador(ctrlBarraLateral);
 		tiendaFrame.setBarraLateral(barraLateral);
 		
-		// Obtener productos populares del modelo y construir la vista
 		Producto[] populares = tienda.getAlmacen().getListaRecomendacion(cliente);
 		this.vista = new VentanaInicioCliente();
 		for(Producto p : populares) {
@@ -54,7 +50,7 @@ public class ControlInicioCliente implements ControladorPantalla {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-
+			/* Sin acciones para esta ventana */
 		}
 	}
 
