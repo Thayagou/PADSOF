@@ -5,23 +5,49 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Tipo: Class StarRating.
+ */
 public class StarRating extends javax.swing.JPanel {
 	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** Campo star1. */
 	private Star star1;
+	
+	/** Campo star2. */
 	private Star star2;
+	
+	/** Campo star3. */
 	private Star star3;
+	
+	/** Campo star4. */
 	private Star star4;
+	
+	/** Campo star5. */
 	private Star star5;
 	
+	/** Campo events. */
 	private List<EventStarRating> events = new ArrayList<>();
+    
+    /** Campo star. */
     private int star;
 
+    /**
+     * Obtiene Star.
+     *
+     * @return valor de Star
+     */
     public int getStar() {
         return star;
     }
 
+    /**
+     * Establece Star.
+     *
+     * @param star nuevo valor
+     */
     public void setStar(int star) {
         this.star = star;
         if (star == 1) {
@@ -37,17 +63,26 @@ public class StarRating extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Instancia un nuevo Objeto StarRating.
+     */
     public StarRating() {
         initComponents();
         init();
     }
 
+    /**
+     * init.
+     */
     private void init() {
         setOpaque(false);
         setBackground(new Color(204, 204, 204));
         setForeground(new Color(238, 236, 0));
     }
 
+    /**
+     * initComponents.
+     */
     private void initComponents() {
 
         star1 = new Star();
@@ -94,6 +129,11 @@ public class StarRating extends javax.swing.JPanel {
         add(star5);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * star1ActionPerformed.
+     *
+     * @param evt parámetro evt
+     */
     private void star1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star1ActionPerformed
         star1.setSelected(true);
         star2.setSelected(false);
@@ -104,6 +144,11 @@ public class StarRating extends javax.swing.JPanel {
         runEvent();
     }//GEN-LAST:event_star1ActionPerformed
 
+    /**
+     * star2ActionPerformed.
+     *
+     * @param evt parámetro evt
+     */
     private void star2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star2ActionPerformed
         star1.setSelected(true);
         star2.setSelected(true);
@@ -114,6 +159,11 @@ public class StarRating extends javax.swing.JPanel {
         runEvent();
     }//GEN-LAST:event_star2ActionPerformed
 
+    /**
+     * star3ActionPerformed.
+     *
+     * @param evt parámetro evt
+     */
     private void star3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star3ActionPerformed
         star1.setSelected(true);
         star2.setSelected(true);
@@ -124,6 +174,11 @@ public class StarRating extends javax.swing.JPanel {
         runEvent();
     }//GEN-LAST:event_star3ActionPerformed
 
+    /**
+     * star4ActionPerformed.
+     *
+     * @param evt parámetro evt
+     */
     private void star4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star4ActionPerformed
         star1.setSelected(true);
         star2.setSelected(true);
@@ -134,6 +189,11 @@ public class StarRating extends javax.swing.JPanel {
         runEvent();
     }//GEN-LAST:event_star4ActionPerformed
 
+    /**
+     * star5ActionPerformed.
+     *
+     * @param evt parámetro evt
+     */
     private void star5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star5ActionPerformed
         star1.setSelected(true);
         star2.setSelected(true);
@@ -144,6 +204,11 @@ public class StarRating extends javax.swing.JPanel {
         runEvent();
     }//GEN-LAST:event_star5ActionPerformed
 
+    /**
+     * Establece Background.
+     *
+     * @param color nuevo valor
+     */
     @Override
     public void setBackground(Color color) {
         super.setBackground(color);
@@ -152,6 +217,11 @@ public class StarRating extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Establece Foreground.
+     *
+     * @param color nuevo valor
+     */
     @Override
     public void setForeground(Color color) {
         super.setForeground(color);
@@ -160,10 +230,18 @@ public class StarRating extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * addEventStarRating.
+     *
+     * @param event parámetro event
+     */
     public void addEventStarRating(EventStarRating event) {
         events.add(event);
     }
 
+    /**
+     * runEvent.
+     */
     private void runEvent() {
         for (EventStarRating event : events) {
             event.selected(star);

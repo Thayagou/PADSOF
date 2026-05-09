@@ -15,18 +15,34 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Tipo: Class VentanaCartera.
+ */
 public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArticulo>{
 	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** Campo objetos. */
 	private JPanel objetos = new JPanel();
+	
+	/** Campo hacerOferta. */
 	private JButton hacerOferta;
 	
+	/** Campo BTN_WIDTH. */
 	private final double BTN_WIDTH = 0.1;
+	
+	/** Campo BTN_HEIGHT. */
 	private final double BTN_HEIGHT = 0.06;
 	
+	/** Constante OFFER_ACTION. */
 	public static final String OFFER_ACTION = "Hacer oferta";
 	
+	/**
+	 * Instancia un nuevo Objeto VentanaCartera.
+	 *
+	 * @param usr parámetro usr
+	 */
 	public VentanaCartera(String usr) {
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -62,6 +78,9 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 		refreshList();
 	}
 	
+	/**
+	 * limpiarDisplays.
+	 */
 	public void limpiarDisplays() {
 		objetos.removeAll();
 		refreshList();
@@ -69,15 +88,30 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 		repaint();
 	}
 	
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	public void setControlador(ActionListener c) {
 		hacerOferta.addActionListener(c);
 	}
 	
+	/**
+	 * refreshList.
+	 */
 	private void refreshList() {
 		objetos.revalidate();
 		objetos.repaint();
 	}
 
+	/**
+	 * anadirDisplay.
+	 *
+	 * @param <K> clave genérica
+	 * @param panelDisplay parámetro panelDisplay
+	 * @return valor de tipo PanelArticulo
+	 */
 	@Override
 	public <K extends PanelArticulo> PanelArticulo anadirDisplay(K panelDisplay) {
 		objetos.add(panelDisplay);

@@ -9,14 +9,38 @@ import modelo.usuario.*;
 import vistas.common.displays.PanelNotificacion;
 import vistas.common.displays.VentanaConDisplay;
 
+/**
+ * Tipo: Class ControlPanelNotificacion.
+ */
 public class ControlPanelNotificacion implements ActionListener {
+	
+	/** Campo notificacion. */
 	protected Notificacion notificacion;
+	
+	/** Campo tienda. */
 	protected Tienda tienda;
+	
+	/** Campo panel. */
 	protected PanelNotificacion panel;
+	
+	/** Campo vista. */
 	protected VentanaConDisplay<? super PanelNotificacion> vista;
+	
+	/** Campo cliente. */
 	protected ClienteRegistrado cliente;
+	
+	/** Campo controlador. */
 	private ControlNotificacionesCliente controlador;
 
+	/**
+	 * Instancia un nuevo Objeto ControlPanelNotificacion.
+	 *
+	 * @param tienda parámetro tienda
+	 * @param cliente parámetro cliente
+	 * @param notificacion parámetro notificacion
+	 * @param vista parámetro vista
+	 * @param controlador parámetro controlador
+	 */
 	public ControlPanelNotificacion(Tienda tienda, ClienteRegistrado cliente, Notificacion notificacion,
 			VentanaConDisplay<? super PanelNotificacion> vista, ControlNotificacionesCliente controlador) {
 		this.notificacion = notificacion;
@@ -33,6 +57,11 @@ public class ControlPanelNotificacion implements ActionListener {
 		panel.setControlador(this);
 	}
 
+	/**
+	 * actionPerformed.
+	 *
+	 * @param e parámetro e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {

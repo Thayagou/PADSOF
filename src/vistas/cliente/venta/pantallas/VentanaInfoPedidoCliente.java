@@ -9,12 +9,20 @@ import vistas.cliente.venta.PanelItemPedido;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
+/**
+ * Tipo: Class VentanaInfoPedidoCliente.
+ */
 public class VentanaInfoPedidoCliente extends JPanel implements VentanaConDisplay<PanelItemPedido> {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Campo items. */
 	private JPanel items = new JPanel();
 
+	/**
+	 * Instancia un nuevo Objeto VentanaInfoPedidoCliente.
+	 */
 	public VentanaInfoPedidoCliente() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -33,11 +41,21 @@ public class VentanaInfoPedidoCliente extends JPanel implements VentanaConDispla
 		refreshList();
 	}
 
+	/**
+	 * refreshList.
+	 */
 	private void refreshList() {
 		items.revalidate();
 		items.repaint();
 	}
 
+	/**
+	 * anadirDisplay.
+	 *
+	 * @param <K> clave genérica
+	 * @param panelDisplay parámetro panelDisplay
+	 * @return valor de tipo PanelItemPedido
+	 */
 	@Override
 	public <K extends PanelItemPedido> PanelItemPedido anadirDisplay(K panelDisplay) {
 		items.add(panelDisplay);
@@ -45,6 +63,11 @@ public class VentanaInfoPedidoCliente extends JPanel implements VentanaConDispla
 		return panelDisplay;
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	public void setControlador(ActionListener c) {
 		/* Sin acciones para esta ventana */
 	}

@@ -16,13 +16,27 @@ import vistas.cliente.general.BarraTareasCliente;
 import vistas.cliente.general.pantallas.VentanaInicioCliente;
 import vistas.common.app.TiendaFrame;
 
+/**
+ * Tipo: Class ControlInicioCliente.
+ */
 public class ControlInicioCliente implements ControladorPantalla {
 
+	/** Campo tienda. */
 	@SuppressWarnings("unused")
 	private Tienda tienda;
+	
+	/** Campo vista. */
 	private final VentanaInicioCliente vista;
+	
+	/** Campo cliente. */
 	private ClienteRegistrado cliente;
 
+	/**
+	 * Instancia un nuevo Objeto ControlInicioCliente.
+	 *
+	 * @param tienda parámetro tienda
+	 * @param cliente parámetro cliente
+	 */
 	public ControlInicioCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
 		this.cliente = cliente;
@@ -47,6 +61,11 @@ public class ControlInicioCliente implements ControladorPantalla {
 		tiendaFrame.resetearNavegacion(this);
 	}
 
+	/**
+	 * actionPerformed.
+	 *
+	 * @param e parámetro e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
@@ -54,11 +73,21 @@ public class ControlInicioCliente implements ControladorPantalla {
 		}
 	}
 
+	/**
+	 * Obtiene Vista.
+	 *
+	 * @return valor de Vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
 	}
 
+	/**
+	 * Obtiene la explicacion de la ventana.
+	 *
+	 * @return valor de Explicacion
+	 */
 	@Override
 	public String getExplicacion() {
 		return "¡Bienvenido " + cliente.getNombre() + "! Esta es la ventana de inicio. Aquí puedes ver los productos recomendados seleccionados para tí.";

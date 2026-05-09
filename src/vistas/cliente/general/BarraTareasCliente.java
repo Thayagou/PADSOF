@@ -11,29 +11,70 @@ import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelSizes;
 import controladores.ControlBarraTareas;
 
+/**
+ * Tipo: Class BarraTareasCliente.
+ */
 public class BarraTareasCliente extends BarraTareas {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Campo BTN_SEARCH_W. */
 	private static double BTN_SEARCH_W = 0.2;
+	
+	/** Campo BTN_ACCOUNT_W. */
 	private static double BTN_ACCOUNT_W = 0.1;
+	
+	/** Campo SPACE_BETWEEN. */
 	private static double SPACE_BETWEEN = 0.01;
 	
+	/** Constante INFO_ACTION. */
 	public static final String INFO_ACTION = "Info";
+	
+	/** Constante VOLVER_ACTION. */
 	public static final String VOLVER_ACTION = "Volver";
+	
+	/** Constante HOME_ACTION. */
 	public static final String HOME_ACTION = "Home";
+	
+	/** Constante NOTIFICACIONES_ACTION. */
 	public static final String NOTIFICACIONES_ACTION = "Notificaciones";
+	
+	/** Constante CUENTA_ACTION. */
 	public static final String CUENTA_ACTION = "Cuenta";
+	
+	/** Constante BUSCAR_PRODUCTOS_ACTION. */
 	public static final String BUSCAR_PRODUCTOS_ACTION = "Buscar productos";
+	
+	/** Constante CARRITO_ACTION. */
 	public static final String CARRITO_ACTION = "Carrito";
 
+	/** Campo volver. */
 	private JButton volver;
+	
+	/** Campo home. */
 	private JButton home;
+	
+	/** Campo notificaciones. */
 	private JButton notificaciones;
+	
+	/** Campo buscar. */
 	private JButton buscar;
+	
+	/** Campo carrito. */
 	private JButton carrito;
+	
+	/** Campo cuenta. */
 	private JButton cuenta;
+	
+	/** Campo info. */
 	private JButton info;
 
+	/**
+	 * Instancia un nuevo Objeto BarraTareasCliente.
+	 *
+	 * @param cliente parámetro cliente
+	 */
 	public BarraTareasCliente(String cliente) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -127,7 +168,13 @@ public class BarraTareasCliente extends BarraTareas {
 		add(Box.createHorizontalStrut(spaceBetween));
 	}
 
-	/** Fija las tres dimensiones a la vez para evitar que BoxLayout las ignore. */
+	/**
+	 * Fija las tres dimensiones a la vez para evitar que BoxLayout las ignore.
+	 *
+	 * @param btn parámetro btn
+	 * @param w parámetro w
+	 * @param h parámetro h
+	 */
 	private static void fijarTamano(JButton btn, int w, int h) {
 		Dimension d = new Dimension(w, h);
 		btn.setMaximumSize(d);
@@ -135,6 +182,11 @@ public class BarraTareasCliente extends BarraTareas {
 		btn.setMinimumSize(d);
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	@Override
 	public void setControlador(ControlBarraTareas c) {
 		volver.addActionListener(c);

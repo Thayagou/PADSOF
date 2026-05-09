@@ -11,24 +11,49 @@ import vistas.herramientas.*;
 import vistas.cliente.venta.pantallas.starRating.StarRating;
 import vistas.common.app.TiendaFrame;
 
+/**
+ * Tipo: Class VentanaAnadirResena.
+ */
 public class VentanaAnadirResena extends JPanel {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante PANEL_WIDTH. */
 	private static final double PANEL_WIDTH = 0.4;
+	
+	/** Constante PANEL_HEIGHT. */
 	private static final double PANEL_HEIGHT = 0.65;
+	
+	/** Constante SPACING. */
 	private static final double SPACING = 0.02;
+	
+	/** Constante TEXTAREA_HEIGHT. */
 	private static final double TEXTAREA_HEIGHT = 0.2;
+	
+	/** Constante BTN_HEIGHT. */
 	private static final double BTN_HEIGHT = 0.05;
+	
+	/** Constante STARS_WRAP. */
 	private static final double STARS_WRAP = 0.05;
 
+	/** Constante CORNER_RADIUS_MACRO. */
 	private static final double CORNER_RADIUS_MACRO = 0.065;
 
+	/** Campo campoComentario. */
 	private JTextArea campoComentario;
 	
+	/** Campo puntuador. */
 	private StarRating puntuador = new StarRating(); 
 	
+	/** Campo btnEnviar. */
 	private JButton btnEnviar;
 
+	/**
+	 * Instancia un nuevo Objeto VentanaAnadirResena.
+	 *
+	 * @param actionName parámetro actionName
+	 */
 	public VentanaAnadirResena(String actionName) {
 		setLayout(new GridBagLayout());
 		setOpaque(false);
@@ -120,14 +145,29 @@ public class VentanaAnadirResena extends JPanel {
 		add(card);
 	}
 
+	/**
+	 * Obtiene Comentario.
+	 *
+	 * @return valor de Comentario
+	 */
 	public String getComentario() {
 		return campoComentario.getText();
 	}
 
+	/**
+	 * Obtiene Valoracion.
+	 *
+	 * @return valor de Valoracion
+	 */
 	public double getValoracion() {
 		return (double) puntuador.getStar();
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param l nuevo valor
+	 */
 	public void setControlador(ActionListener l) {
 		btnEnviar.addActionListener(l);
 	}

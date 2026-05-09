@@ -8,14 +8,23 @@ import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;
 
 /**
- * Define la barra de tareas de los usuarios no registrados
+ * Define la barra de tareas de los usuarios no registrados.
  */
 public class BarraTareasNoRegistrado extends BarraTareas {
 	
+	/** Constante ATRAS. */
 	public static final String ATRAS = "Volver atras";
+	
+	/** Constante BUSCAR. */
 	public static final String BUSCAR = "Buscar";
+	
+	/** Constante INICIAR. */
 	public static final String INICIAR = "Iniciar";
+	
+	/** Constante HOME. */
 	public static final String HOME = "Home";
+	
+	/** Constante INFO. */
 	public static final String INFO = "Info";
 	
 	/** Constante serialVersionUID. */
@@ -30,7 +39,7 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 	/** Constante BTN_SEARCH_W. */
 	private static final double BTN_SEARCH_W = 0.35;
 	
-	/** Boton para volver atras */
+	/** Boton para volver atras. */
 	private JButton volverAtras;
 
 	/** Campo btnBuscar. */
@@ -42,7 +51,7 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 	/** Campo btnHome. */
 	private JButton btnHome;
 	
-	/** Boton para ver la informacion */
+	/** Boton para ver la informacion. */
 	private JButton info;
 
 	/**
@@ -127,6 +136,13 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 		add(Box.createHorizontalStrut(spaceBetween));
 	}
 	
+	/**
+	 * fijarTamano.
+	 *
+	 * @param btn parámetro btn
+	 * @param w parámetro w
+	 * @param h parámetro h
+	 */
 	private static void fijarTamano(JButton btn, int w, int h) {
 		Dimension d = new Dimension(w, h);
 		btn.setMaximumSize(d);

@@ -16,16 +16,33 @@ import vistas.cliente.general.BarraTareasCliente;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
+/**
+ * Tipo: Class ControlBarraTareasCliente.
+ */
 public class ControlBarraTareasCliente implements ControlBarraTareas {
 
+	/** Campo tienda. */
 	private final Tienda tienda;
+	
+	/** Campo cliente. */
 	private final ClienteRegistrado cliente;
 
+	/**
+	 * Instancia un nuevo Objeto ControlBarraTareasCliente.
+	 *
+	 * @param tienda parámetro tienda
+	 * @param cliente parámetro cliente
+	 */
 	public ControlBarraTareasCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
 		this.cliente = cliente;
 	}
 
+	/**
+	 * actionPerformed.
+	 *
+	 * @param e parámetro e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {

@@ -9,7 +9,6 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelFormulario;
 import vistas.herramientas.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * Pantalla de autenticación: dos RoundedPanel lado a lado, igual que la maqueta
  * — izquierda Login, derecha Registro.
@@ -19,13 +18,19 @@ public class VentanaLoginRegistro extends JPanel {
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Campo logInForum. */
 	private PanelFormulario logInForum;
 	
+	/** Campo signInForum. */
 	private PanelFormulario signInForum;
 
+	/** Campo SPACING. */
 	private double SPACING = 0.1;
 	
+	/** Constante LOGIN_ACTION. */
 	public static final String LOGIN_ACTION = "Log In";
+	
+	/** Constante SIGNIN_ACTION. */
 	public static final String SIGNIN_ACTION = "Crear cuenta";
 	
 	/**

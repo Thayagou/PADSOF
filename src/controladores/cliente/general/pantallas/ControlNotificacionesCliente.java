@@ -14,16 +14,33 @@ import vistas.cliente.general.pantallas.VentanaNotificacionesCliente;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
+/**
+ * Tipo: Class ControlNotificacionesCliente.
+ */
 public class ControlNotificacionesCliente implements ControladorPantalla {
 
+	/** Campo tienda. */
 	private Tienda tienda;
+	
+	/** Campo vista. */
 	private VentanaNotificacionesCliente vista;
+	
+	/** Campo cliente. */
 	private ClienteRegistrado cliente;
 
+	/** Campo options. */
 	private final String[] options = { "Pedido", "Caducidad", "Valoracion", "Intercambios" };
+	
+	/** Campo allTypes. */
 	TipoNotificacion[] allTypes = { TipoNotificacion.PEDIDO, TipoNotificacion.CADUCIDAD, TipoNotificacion.VALORACION,
 			TipoNotificacion.INTERCAMBIO };
 
+	/**
+	 * Instancia un nuevo Objeto ControlNotificacionesCliente.
+	 *
+	 * @param tienda parámetro tienda
+	 * @param cliente parámetro cliente
+	 */
 	public ControlNotificacionesCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
 		this.cliente = cliente;
@@ -44,6 +61,9 @@ public class ControlNotificacionesCliente implements ControladorPantalla {
 
 	}
 
+	/**
+	 * recargarPantalla.
+	 */
 	public void recargarPantalla() {
 		int[] indexes = getSelectedOptions();
 
@@ -60,10 +80,18 @@ public class ControlNotificacionesCliente implements ControladorPantalla {
 		TiendaFrame.getInstance().recargarPantallaActual(this);
 	}
 
+	/**
+	 * refreshVista.
+	 */
 	public void refreshVista() {
 		vista.refreshList();
 	}
 
+	/**
+	 * Obtiene SelectedOptions.
+	 *
+	 * @return valor de SelectedOptions
+	 */
 	private int[] getSelectedOptions() {
 		TipoNotificacion[] selected = cliente.getIntereses();
 
@@ -81,6 +109,9 @@ public class ControlNotificacionesCliente implements ControladorPantalla {
 		return indexes;
 	}
 
+	/**
+	 * aplicarCambios.
+	 */
 	private void aplicarCambios() {
 		String[] selected = vista.getSelectedOptions();
 		TipoNotificacion[] notis = new TipoNotificacion[selected.length];
@@ -101,6 +132,11 @@ public class ControlNotificacionesCliente implements ControladorPantalla {
 			cliente.anadirInteres(n);
 	}
 
+	/**
+	 * actionPerformed.
+	 *
+	 * @param e parámetro e
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
@@ -111,11 +147,21 @@ public class ControlNotificacionesCliente implements ControladorPantalla {
 		}
 	}
 
+	/**
+	 * Obtiene Vista.
+	 *
+	 * @return valor de Vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
 	}
 
+	/**
+	 * Obtiene la explicacion de la ventana.
+	 *
+	 * @return valor de Explicacion
+	 */
 	@Override
 	public String getExplicacion() {
 		return "Aquí puedes ver tus notificaciones. Puedes marcarlas como leídas o borrarlas";

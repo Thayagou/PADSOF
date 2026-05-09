@@ -17,6 +17,7 @@ public class VentanaBusqueda extends JPanel {
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante BUSCAR_ACTION. */
 	public static final String BUSCAR_ACTION = "Buscar";
 
 	/** Campo estrellas. */
@@ -36,7 +37,11 @@ public class VentanaBusqueda extends JPanel {
 
 	/** Campo PREFERRED_FILTER_SIZE. */
 	private static double PREFERRED_FILTER_SIZE = 0.35;
+	
+	/** Campo PANELS_HEIGHT. */
 	private static double PANELS_HEIGHT = 0.5;
+	
+	/** Campo SPACING. */
 	private static double SPACING = 0.03;
 
 	/**
@@ -158,7 +163,6 @@ public class VentanaBusqueda extends JPanel {
 	 *
 	 * @param c nuevo valor
 	 */
-	// Asignar controlador a los botones
 	public void setControlador(ControlBuscar c) {
 		botonBuscar.addActionListener(c);
 	}

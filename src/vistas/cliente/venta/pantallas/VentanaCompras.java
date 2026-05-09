@@ -9,12 +9,20 @@ import vistas.common.displays.PanelPedido;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
+/**
+ * Tipo: Class VentanaCompras.
+ */
 public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPedido> {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Campo pedidos. */
 	private JPanel pedidos = new JPanel();
 
+	/**
+	 * Instancia un nuevo Objeto VentanaCompras.
+	 */
 	public VentanaCompras() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -33,16 +41,29 @@ public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPed
 		refreshList();
 	}
 
+	/**
+	 * refreshList.
+	 */
 	private void refreshList() {
 		pedidos.revalidate();
 		pedidos.repaint();
 	}
 	
+	/**
+	 * limpiarPedidos.
+	 */
 	public void limpiarPedidos() {
         pedidos.removeAll();
         refreshList();
     }
 
+	/**
+	 * anadirDisplay.
+	 *
+	 * @param <K> clave genérica
+	 * @param panelDisplay parámetro panelDisplay
+	 * @return valor de tipo PanelPedido
+	 */
 	@Override
 	public <K extends PanelPedido> PanelPedido anadirDisplay(K panelDisplay) {
 		pedidos.add(panelDisplay);
@@ -50,7 +71,12 @@ public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPed
 		return panelDisplay;
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c nuevo valor
+	 */
 	public void setControlador(ActionListener c) {
-		// Reservado para acciones globales de la ventana si se añaden en el futuro
+		/* Sin acciones en esta ventana */
 	}
 }
