@@ -23,21 +23,22 @@ public class MenuLateral extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/** Color del hueco que queda por la indentacion al abrir una seccion */
-	private static final Color COLOR_SECCION_BG = ColorPalette.DARK_BLUE.getColor();
+	private static final Color COLOR_SECCION_BG = ColorPalette.CARD_DARK.getColor();
 	
 	/** Color del fondo de la cabecera de cada seccion */
-	private static final Color COLOR_TITULO_BG = ColorPalette.LIGHT_PURPLE.getColor();
+	private static final Color COLOR_TITULO_BG = ColorPalette.BLUE.getColor();
 	
 	/** COlor del texto de la cabecera de cada seccion */
 	private static final Color COLOR_TEXTO_TITULO = ColorPalette.WHITE.getColor();
 	
 	/** Color del fondo de la cabecera de cada seccion */
-	private static final Color COLOR_BTN_BG = ColorPalette.PURPLE.getColor();
+	private static final Color COLOR_BTN_BG = ColorPalette.CARD_LIGHT.getColor();
 	
 	/** COlor del texto de la cabecera de cada seccion */
-	private static final Color COLOR_BTN_TITULO = ColorPalette.WHITE.getColor();
+	private static final Color COLOR_BTN_TITULO = ColorPalette.BLACK.getColor();
 	
-	private static final Color SEPARATOR_COLOR = ColorPalette.WHITE.getColor();
+	private static final Color SEPARATOR_COLOR = ColorPalette.DARK_BLUE.getColor();
+	private static final double SEPARATOR_HEIGHT = 0.005;
 	
 	/**Símbolo que se muestra cuando la sección está abierta */
 	private static final String OPEN_SYMBOL = "-";
@@ -172,6 +173,8 @@ public class MenuLateral extends JPanel {
 	        add(tituloLabel, BorderLayout.NORTH);
 	        add(panelBotones, BorderLayout.CENTER);
 	        
+	        setBorder(BorderFactory.createMatteBorder(TiendaFrame.getInstance().getPixelsHeight(SEPARATOR_HEIGHT), 0, 0, 0, SEPARATOR_COLOR));
+	        
 	        updateMaxHeight();   /* fuerza a que no se expanda verticalmente */
 	    }
 
@@ -201,13 +204,7 @@ public class MenuLateral extends JPanel {
 	    }
 
 	    private void toggle() {
-	        panelBotones.setVisible(!panelBotones.isVisible());
-	        if(!panelBotones.isVisible()) {
-	        	setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, SEPARATOR_COLOR));
-	        } else {
-	        	setBorder(BorderFactory.createEmptyBorder());
-	        }
-	        
+	        panelBotones.setVisible(!panelBotones.isVisible());	        
 	        String currentText = tituloLabel.getText();
 	        if (currentText.contains(OPEN_SYMBOL)) {
 	            tituloLabel.setText(currentText.replace(OPEN_SYMBOL, CLOSED_SYMBOL));

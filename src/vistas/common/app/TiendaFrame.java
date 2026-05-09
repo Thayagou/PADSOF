@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
 import modelo.aplicacion.GuiExe;
+import vistas.common.assets.VentanaConfirmacion;
 import vistas.herramientas.PanelSizes;
 
 public class TiendaFrame extends JFrame {
@@ -72,6 +73,36 @@ public class TiendaFrame extends JFrame {
 		}
 		instance.setVisible(true);
 		return instance;
+	}
+	
+	/**
+	 * Método para obtener una confirmación del usuario
+	 *
+	 * @param texto Texto que se muestra cuando se pide la confirmación
+	 * @return true si el usuario pulsa "Confirmar", false si pulsa "Cancelar"
+	 */
+	public static boolean getConfirmacionUsuario(String texto) {
+		final boolean[] resultado = new boolean[1];
+
+		VentanaConfirmacion ventana = new VentanaConfirmacion(texto);
+
+		ventana.setControlador(e -> {
+			switch (e.getActionCommand()) {
+			case VentanaConfirmacion.CONFIRM:
+				resultado[0] = true;
+				ventana.dispose();
+				break;
+
+			case VentanaConfirmacion.CANCEL:
+				resultado[0] = false;
+				ventana.dispose();
+				break;
+			}
+		});
+		
+		ventana.mostrar();
+
+		return resultado[0];
 	}
 
 	public void setBarraTareas(BarraTareas barraTareas) {

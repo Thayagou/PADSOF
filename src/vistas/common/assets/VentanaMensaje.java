@@ -17,8 +17,10 @@ import vistas.herramientas.*;
  * VentanaMensaje.AVISO. El tipo solo afecta al color de la cabecera; el resto
  * del dialogo es siempre identico.
  */
-public class VentanaMensaje {
+public class VentanaMensaje extends JDialog {
 
+	private static final long serialVersionUID = 1L;
+	
 	/* Tipos de mensaje */
 	public static final int INFO = 0;
 	public static final int ERROR = 1;
@@ -35,6 +37,7 @@ public class VentanaMensaje {
 	/* Padding del panel de contenido */
 	private static final double PADDING_H = 0.025;
 	private static final double PADDING_W = 0.02;
+	private static final double BORDER_WIDTH = 8.0/1080.0;
 
 	/* Espacio entre el mensaje y el boton */
 	private static final double GAP = 0.015;
@@ -43,6 +46,8 @@ public class VentanaMensaje {
 	private static final String TITULO_INFO = "Informacion";
 	private static final String TITULO_ERROR = "Error";
 	private static final String TITULO_AVISO = "Aviso";
+	
+	protected JPanel btnPanel;
 
 	/**
 	 * Muestra un dialogo de informacion con titulo por defecto.
@@ -62,23 +67,23 @@ public class VentanaMensaje {
 	public VentanaMensaje(String mensaje, int tipo) {
 		this(mensaje, tituloPorDefecto(tipo), tipo);
 	}
-
-	/**
-	 * Muestra un dialogo con tipo y titulo personalizados.
-	 *
-	 * @param mensaje Texto que se mostrara en el dialogo.
-	 * @param titulo  Texto de la barra de titulo y de la cabecera coloreada.
-	 * @param tipo    Tipo de mensaje: INFO, ERROR o AVISO.
-	 */
+	
 	public VentanaMensaje(String mensaje, String titulo, int tipo) {
-		mostrar(mensaje, titulo, tipo);
+		this(mensaje, tipo, titulo);
+		mostrar();
 	}
 
-	/* Construye y muestra el dialogo. */
-	private static void mostrar(String mensaje, String titulo, int tipo) {
+	/**
+	 * Constructor privado que solo forma el dialogo sin mostrarlo
+	 *
+	 * @param mensaje
+	 * @param tipo
+	 * @param titulo
+	 */
+	protected VentanaMensaje(String mensaje, int tipo, String titulo) {
+		super(TiendaFrame.getInstance(), titulo, true);
+		
 		TiendaFrame t = TiendaFrame.getInstance();
-		JDialog dialogo = new JDialog(t, titulo, true);
-
 		int w = t.getPixelsWidth(DIALOG_W);
 		int h = t.getPixelsHeight(DIALOG_H);
 		int padH = t.getPixelsHeight(PADDING_H);
@@ -86,13 +91,14 @@ public class VentanaMensaje {
 		int gap = t.getPixelsHeight(GAP);
 		int btnW = t.getPixelsWidth(BTN_W);
 		int btnH = t.getPixelsHeight(BTN_H);
+		int grosorBorde = t.getPixelsWidth(BORDER_WIDTH);
 
-		dialogo.setSize(w, h);
-		dialogo.setResizable(false);
-		dialogo.setLocationRelativeTo(t);
-		dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		dialogo.setLayout(new BorderLayout());
-		dialogo.setUndecorated(true);
+		this.setSize(w, h);
+		this.setResizable(false);
+		this.setLocationRelativeTo(t);
+		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.setLayout(new BorderLayout());
+		this.setUndecorated(true);
 
 		/* Cabecera coloreada segun el tipo */
 		JLabel cabecera = new JLabel("  " + titulo);
@@ -100,10 +106,10 @@ public class VentanaMensaje {
 		cabecera.setForeground(ColorPalette.WHITE.getColor());
 		cabecera.setOpaque(true);
 		cabecera.setBackground(colorCabecera(tipo).getColor());
-		cabecera.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
-		dialogo.add(cabecera, BorderLayout.NORTH);
+		cabecera.setBorder(BorderFactory.createEmptyBorder(grosorBorde, grosorBorde, grosorBorde, grosorBorde));
+		this.add(cabecera, BorderLayout.NORTH);
 
-		/* Cuerpo: mensaje centrado + boton Aceptar */
+		/* Cuerpo: mensaje centrado*/
 		JPanel cuerpo = new JPanel();
 		cuerpo.setLayout(new BoxLayout(cuerpo, BoxLayout.Y_AXIS));
 		cuerpo.setBackground(ColorPalette.CARD_LIGHT.getColor());
@@ -115,20 +121,26 @@ public class VentanaMensaje {
 		cuerpo.add(lblMensaje);
 
 		cuerpo.add(Box.createVerticalStrut(gap));
+		this.add(cuerpo, BorderLayout.CENTER);
 
+		/* Boton */
+		btnPanel = new JPanel(new FlowLayout());
 		JButton btnAceptar = ButtonFactory.newRoundedButton("Aceptar", btnH, btnW, 1.0);
 		ButtonFactory.paintButton(btnAceptar, colorCabecera(tipo), ColorPalette.WHITE);
 		ButtonFactory.addHoverColorChange(btnAceptar);
 		btnAceptar.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnAceptar.addActionListener(e -> dialogo.dispose());
-		cuerpo.add(btnAceptar);
-
-		dialogo.add(cuerpo, BorderLayout.CENTER);
-		dialogo.setVisible(true);
+		btnAceptar.addActionListener(e -> this.dispose());
+		btnPanel.add(btnAceptar);
+		btnPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
+		this.add(btnPanel, BorderLayout.SOUTH);
+	}
+	
+	public void mostrar() {
+		this.setVisible(true);
 	}
 
 	/* Devuelve el color de cabecera y boton segun el tipo de mensaje. */
-	private static ColorPalette colorCabecera(int tipo) {
+	protected static ColorPalette colorCabecera(int tipo) {
 		return switch (tipo) {
 		case ERROR -> ColorPalette.RED;
 		case AVISO -> ColorPalette.LIGHT_PURPLE;
