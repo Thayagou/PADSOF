@@ -39,6 +39,7 @@ public abstract class Descuento implements Serializable {
 	public Descuento(double valorMin, LocalDateTime inicio, LocalDateTime fin, CondicionDescuento condicion) throws InvalidArgumentException {
 		if(inicio == null || fin == null || condicion == null) throw new InvalidArgumentException("No se pueden dejar atributos vacíos en el descuento", "crear descuento");
 		if(valorMin < 0) throw new InvalidArgumentException("El valor mínimo del descuento no puede ser negativo", "crear descuento");
+		if (inicio.isAfter(fin)) throw new InvalidArgumentException("La fecha de inicio del descuento no puede ser posterior a la del fin", "crear descuento");
 		
 		this.id = AsignadorId.getInstancia().siguienteId();
 		this.valorMin = valorMin;

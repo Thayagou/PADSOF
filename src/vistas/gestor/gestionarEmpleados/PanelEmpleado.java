@@ -33,7 +33,8 @@ public class PanelEmpleado extends PanelDisplay {
 	private JButton deAltaButton;
 	private JLabel permisosLabel;
 	private JLabel estado;
-	JPanel eastPanel;
+	private JPanel eastPanel;
+	private int maxWidth;
 	
 	private JButton confirmarButton;
 	private boolean expanded = false;
@@ -106,39 +107,56 @@ public class PanelEmpleado extends PanelDisplay {
 		info.add(deAltaRow);
 
 		add(info, BorderLayout.CENTER);
+		
+		info.setMaximumSize(new Dimension(Integer.MAX_VALUE, maxCompHeight));
 
 		eastPanel = new JPanel();
 		eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
 		eastPanel.setOpaque(false);
-		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
+		maxWidth = t.getPixelsWidth(BOTON_PERC_W);
 		eastPanel.setPreferredSize(new Dimension(maxWidth, (int) (maxCompHeight * BOTON_PERC_H)));
 
-		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
-		// f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
+		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxWidth, 0.75f);
 		ButtonFactory.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
-		deAltaButton = ButtonFactory.newRoundedButton(deAlta ? "Dar de baja" : "Dar de alta", (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		deAltaButton = ButtonFactory.newRoundedButton(deAlta ? "Dar de baja" : "Dar de alta", (int) (maxCompHeight * BOTON_PERC_H), maxWidth, 0.75f);
 		deAltaButton.setActionCommand(DE_ALTA_ACTION);
-		// f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
-		ButtonFactory.paintButton(deAltaButton, ColorPalette.RED, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(deAltaButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
-		// modButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-
-		int gapSize = (int) (maxCompHeight * (1 - 2 * BOTON_PERC_H) / 3);
-		eastPanel.add(Box.createVerticalStrut(gapSize));
-		eastPanel.add(modButton);
-		eastPanel.add(Box.createVerticalStrut(gapSize));
-		eastPanel.add(deAltaButton);
-		eastPanel.add(Box.createVerticalStrut(gapSize));
-
-		this.add(eastPanel, BorderLayout.EAST);		
+		ButtonFactory.paintButton(deAltaButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
+		ButtonFactory.addMouseMecanics(deAltaButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		
+		anadirBotones();	
+		
+		Dimension tamano = deAltaButton.getPreferredSize();
+		deAltaButton.setMinimumSize(tamano);
+		deAltaButton.setMaximumSize(tamano);
+		deAltaButton.setPreferredSize(tamano);
+		modButton.setMinimumSize(tamano);
+		modButton.setMaximumSize(tamano);
+		modButton.setPreferredSize(tamano);
 		
 		confirmarButton = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
 		ButtonFactory.paintButton(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 	}
 	
+	private void anadirBotones() {
+		int gapSize = (int) (maxCompHeight * (1 - 2 * BOTON_PERC_H) / 3);
+		eastPanel.removeAll();
+		
+		eastPanel.add(Box.createVerticalStrut(gapSize));
+		eastPanel.add(modButton);
+		eastPanel.add(Box.createVerticalStrut(gapSize));
+		eastPanel.add(deAltaButton);
+		eastPanel.add(Box.createVerticalStrut(gapSize));
+		
+		eastPanel.revalidate();
+		eastPanel.repaint();
+
+		this.add(eastPanel, BorderLayout.EAST);	
+		
+	}
+
 	public void toggleExpand() {
 		if (expanded) {
 			collapsePanel();
@@ -173,7 +191,7 @@ public class PanelEmpleado extends PanelDisplay {
 		if (originalMaxSize == null) {
 	        originalMaxSize = getMaximumSize();
 	    }
-		int expandedHeight = (int)(originalMaxSize.height * 1.5);
+		int expandedHeight = (int)(originalMaxSize.height * 1.3);
 	    setMaximumSize(new Dimension(originalMaxSize.width, expandedHeight));
 
 	    revalidate();
@@ -249,7 +267,7 @@ public class PanelEmpleado extends PanelDisplay {
 		estado.setForeground(deAlta ? ColorPalette.GREEN.getColor() : ColorPalette.RED.getColor());
 		
 		deAltaButton.setText(deAlta ? "Dar de baja" : "Dar de alta");
-		deAltaButton.setPreferredSize(new Dimension(maxCompHeight, (int) (maxCompHeight * BOTON_PERC_H)));
+		anadirBotones();
 	}
 	
 	@Override

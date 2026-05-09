@@ -19,9 +19,10 @@ public class BarraTareasGestor extends BarraTareas {
 	private static final double SPACE_BETWEEN = 0.01;
 	private static final double BTN_ACCOUNT_W = 0.13;
 
+	private JButton volver;
 	private JButton btnHome;
-	private JButton btnCuenta;
 	private JButton btnCerrarSesion;
+	private JButton info;
 
 	public BarraTareasGestor() {
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -35,24 +36,33 @@ public class BarraTareasGestor extends BarraTareas {
 		setBackground(ColorPalette.BLUE.getColor());
 		setPreferredSize(new Dimension(0, h));
 		
+		volver = ButtonFactory.newIconButton("flechaAtras.png", btnH, homeW);
+		ButtonFactory.paintButton(volver, ColorPalette.BLUE, ColorPalette.WHITE);
+		volver.setActionCommand("Volver");
+		volver.setToolTipText("Volver atrás");
+		ButtonFactory.addMouseMecanics(volver, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(volver, "Volver atrás", 0);
+		
 		btnHome = ButtonFactory.newIconButton("homeButton.png", btnH, homeW);
 		btnHome.setBackground(ColorPalette.BLUE.getColor());
 		btnHome.setForeground(ColorPalette.WHITE.getColor());
 		btnHome.setActionCommand("Home");
 		ButtonFactory.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
-		
-		btnCuenta = ButtonFactory.newIconButton("cuentaButton.png", btnH, homeW);
-		btnCuenta.setBackground(ColorPalette.BLUE.getColor());
-		btnCuenta.setForeground(ColorPalette.WHITE.getColor());
-		btnCuenta.setActionCommand("Cuenta");
-		ButtonFactory.addMouseMecanics(btnCuenta, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
-
+		ButtonFactory.addHoverInfo(btnHome, "Volver a la pantalla principal", 0);
+	
 		btnCerrarSesion = ButtonFactory.newRoundedButton("Cerrar sesión", btnH, accountW, 0.25);
 		btnCerrarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
 		btnCerrarSesion.setForeground(ColorPalette.WHITE.getColor());
 		btnCerrarSesion.setActionCommand("Cerrar sesión");
 		ButtonFactory.addMouseMecanics(btnCerrarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
+		ButtonFactory.addHoverInfo(btnCerrarSesion, "Cerrar sesión", 0);
 
+		info = ButtonFactory.newIconButton("interrogacion.png", btnH, homeW);
+		ButtonFactory.paintButton(info, ColorPalette.BLUE, ColorPalette.WHITE);
+		info.setActionCommand("Info");
+		ButtonFactory.addMouseMecanics(info, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
+		ButtonFactory.addHoverInfo(info, "Información", 0);
+		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		add(Box.createHorizontalStrut(spaceBetween));
@@ -61,27 +71,29 @@ public class BarraTareasGestor extends BarraTareas {
 		btnHome.setMinimumSize(new Dimension(homeW, btnH));
 		add(btnHome);
 		add(Box.createHorizontalStrut(spaceBetween));
-
-		btnCuenta.setMaximumSize(new Dimension(homeW, btnH));
-		btnCuenta.setPreferredSize(new Dimension(homeW, btnH));
-		btnCuenta.setMinimumSize(new Dimension(100, btnH));
 				
 		btnCerrarSesion.setMaximumSize(new Dimension(accountW, btnH));
 		btnCerrarSesion.setPreferredSize(new Dimension(accountW, btnH));
 
-		add(btnCuenta);
+		add(volver);
 		add(Box.createHorizontalGlue());
+		add(Box.createHorizontalStrut(spaceBetween));
+		
+		add(info);
 		add(Box.createHorizontalStrut(spaceBetween));
 
 		add(btnCerrarSesion);
 		add(Box.createHorizontalStrut(spaceBetween));
 	}
+	
+	public JButton getInfoButton() { return info;}
 
 	@Override
 	public void setControlador(ControlBarraTareas c) {
 		btnHome.addActionListener(c);
-		btnCuenta.addActionListener(c);
 		btnCerrarSesion.addActionListener(c);
+		volver.addActionListener(c);
+		info.addActionListener(c);
 	}
 
 }

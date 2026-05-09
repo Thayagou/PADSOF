@@ -220,6 +220,18 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	}
 	
 	/**
+	 * Método para dar de alta a un empleado existente
+	 * @param nombre Nombre del empleado a dar de alta
+	 * @return true si se pudo dar de alta, false si no existía el empleado
+	 */
+	public boolean darDeAltaEmpleado(String nombre) {
+		Empleado emp = getEmpleado(nombre);
+		if(emp == null) return false;
+		emp.darDeAlta();
+		return true;
+	}
+	
+	/**
 	 * Método para dar de baja a un empleado
 	 * @param nombre Nombre del empleado a dar de baja
 	 * @return true si se pudo dar de baja, false si no existía el empleado

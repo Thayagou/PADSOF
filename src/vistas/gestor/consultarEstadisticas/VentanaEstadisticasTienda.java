@@ -13,31 +13,29 @@ import javax.swing.JScrollPane;
 
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
+import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
 public class VentanaEstadisticasTienda extends JPanel implements VentanaConDisplay<PanelEstadisticasTienda>{
 	private static final long serialVersionUID = 1L;
-	public static String MAYOR_RECAUDACION = "Mayor recaudación";
-	public static String MENOR_RECAUDACION = "Menor recaudación";
-	public static String MAS_UNIDADES = "Más productos comprados";
-	public static String MENOS_UNIDADES = "Menos productos comprados";
-	public static String MAS_ARTICULOS = "Más artículos intercambiados";
-	public static String MENOS_ARTICULOS = "Menos artículos intercambiados";
+
+	public static final String CAMBIO_ORDEN_ACTION = "Cambiar orden";
+
 	
-	
-	public static String[] ORDENES = {MAYOR_RECAUDACION, MENOR_RECAUDACION, 
-			MAS_UNIDADES, MENOS_UNIDADES, MAS_ARTICULOS, MENOS_ARTICULOS};
+	private String[] ordenes;
 	private static double MAX_HEIGHT_CABECERA = 0.05;
-	private JPanel listaClientes;
+	private JPanel listaStats;
 	private PanelMultiopcion panelOrdenacion;
 	private List<PanelEstadisticasTienda> listaPaneles = new ArrayList<>();
 	
-	public VentanaEstadisticasTienda(String...columnas) {
+	public VentanaEstadisticasTienda(String[] ordenes, String...columnas) {
 		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
-
+		
+		this.ordenes = ordenes;
+		
 		int maxWidth = TiendaFrame.getInstance().getPixelsWidth(PanelClienteEstadisticas.LABEL_WIDTH);
 		int maxHeight = TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT_CABECERA);
 		Dimension size = new Dimension(maxWidth, maxHeight);
@@ -56,35 +54,40 @@ public class VentanaEstadisticasTienda extends JPanel implements VentanaConDispl
 		cabecera.add(statsPanel, BorderLayout.EAST);
 		
 		// Lista 
-		listaClientes = new JPanel();
-		listaClientes.setLayout(new BoxLayout(listaClientes, BoxLayout.Y_AXIS));
-		listaClientes.setBackground(ColorPalette.CARD_LIGHT.getColor());
+		listaStats = new JPanel();
+		listaStats.setLayout(new BoxLayout(listaStats, BoxLayout.Y_AXIS));
+		listaStats.setBackground(ColorPalette.CARD_LIGHT.getColor());
 		
-		JScrollPane scroll = PanelFactory.getScroll(listaClientes);
+		JScrollPane scroll = PanelFactory.getScroll(listaStats);
 		JPanel contenido = new JPanel(new BorderLayout());
 		contenido.add(cabecera, BorderLayout.NORTH);
 		contenido.add(scroll, BorderLayout.CENTER);
 
-		panelOrdenacion = new PanelMultiopcion("Ordenar por", contenido, ORDENES);
+		panelOrdenacion = new PanelMultiopcion("Ordenar por", contenido, ordenes);
+		panelOrdenacion.setActionCommand(CAMBIO_ORDEN_ACTION);
 		
 		add(panelOrdenacion, BorderLayout.CENTER);
 
 		refrescarLista();
 	}
 	
+	public void vaciarLista() {
+		listaPaneles.clear();
+	}
+
 	public void refrescarLista() {
-		listaClientes.removeAll();
-		
-		for (PanelEstadisticasTienda panel: listaPaneles) {
-			listaClientes.add(panel);
+		listaStats.removeAll();
+
+		for (PanelEstadisticasTienda panel : listaPaneles) {
+			listaStats.add(panel);
 		}
-		
+
 		revalidate();
 		repaint();
 	}
-	
-	public List<PanelEstadisticasTienda> getListaPaneles() {
-		return listaPaneles;
+
+	public String getOpcionSeleccionadaOrden() {
+		return ordenes[panelOrdenacion.getOpcionSeleccionada()];
 	}
 	
 	public void setControlador(ActionListener l) {
@@ -94,7 +97,7 @@ public class VentanaEstadisticasTienda extends JPanel implements VentanaConDispl
 	@Override
 	public <K extends PanelEstadisticasTienda> PanelEstadisticasTienda anadirDisplay(K panelDisplay) {
 		listaPaneles.add(panelDisplay);
-		listaClientes.add(panelDisplay);
+		listaStats.add(panelDisplay);
 		return panelDisplay;
 	}
 

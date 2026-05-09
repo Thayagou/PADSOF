@@ -59,35 +59,35 @@ public class ControlInicioGestor implements ControladorPantalla {
 	}
 
 	private void anadirDescuento() {
-		this.frame.remove(vista);
 		SwingUtilities.invokeLater(() -> new ControlAnadirDescuento(tienda, gestor));
 	}
 
 	private void configurarSistema() {
-		this.frame.remove(vista);
 		SwingUtilities.invokeLater(() -> new ControlConfigurarSistema(tienda, gestor));
 	}
 
 	private void gestionarProdsYCats() {
-		this.frame.remove(vista);
 		SwingUtilities.invokeLater(() -> new ControlGestionarExistentes(tienda, gestor)
 		// new ControlGestionarCategorias(tienda, gestor)
 		);
 	}
 
 	private void gestionarEmpleados() {
-		this.frame.remove(vista);
 		SwingUtilities.invokeLater(() -> new ControlGestionarEmpleados(tienda, gestor));
 	}
 
 	private void consultarEstadisticas() {
-		this.frame.remove(vista);
 		SwingUtilities.invokeLater(() -> new ControlEstadisticasProductos(tienda, gestor));
 	}
 
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	@Override
+	public String getExplicacion() {
+		return "Bienvenido " + gestor.getNombre() + "! Selecciona una opción para empezar";
 	}
 
 }

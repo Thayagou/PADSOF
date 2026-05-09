@@ -108,7 +108,6 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	 * @param precio Precio del producto
 	 * @param uds Unidades del producto
 	 * @param tipo Tipo fijo del producto
-	 * @param tiposProductos Nombre de los tipos de productos de la tienda
 	 * @param espValores Características específicas del producto
 	 * @param espComic Características específicas de un Comic
 	 * @param espJuego Características específicas de un Juego

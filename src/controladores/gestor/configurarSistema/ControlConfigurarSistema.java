@@ -19,12 +19,29 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.configurarSistema.PanelParametroSistema;
 import vistas.gestor.configurarSistema.VentanaGestionarParametrosSistema;
 
+/**
+ * Clase controladora de la vista correspondiente a la configuración de los parámetros del sistema, permitiendo su visualización y modificación
+ */
 public class ControlConfigurarSistema implements ControladorPantalla{
+	
+	/** Tienda sobre la que se actúa y muestran datos. */
 	private Tienda tienda;
+	
+	/** Gestor de la tienda sobre la que estamos actuando. */
 	private Gestor gestor;
+	
+	/** Vista que muestra el controlador por pantalla. */
 	private VentanaGestionarParametrosSistema vista;
+	
+	/** Mapa que asocia a cada parámetro del sistema su panel correspondiente de la vista*/
 	private Map<ParametroSistema, PanelParametroSistema> mapaPaneles = new HashMap<>();
 	
+	/**
+	 * Instancia un nuevo Objeto ControlConfigurarSistema. Crea cada panel asociado a cada uno de los paneles de configuración y se establece como su controlador
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
+	 */
 	public ControlConfigurarSistema(Tienda tienda, Gestor gestor) {
 		this.tienda = tienda;
 		this.gestor = gestor;
@@ -33,7 +50,8 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 		
 		Sistema sistema = Sistema.getInstancia();
 		
-		PanelParametroSistema numProductosRecomendados = new PanelParametroSistema("  Categoría:              ", String.format("%.2f", sistema.getPonderacionCategoria()), ParametroSistema.CATEGORIA.name());
+		// Creación de cada uno de los paneles
+		PanelParametroSistema numProductosRecomendados = new PanelParametroSistema("  Número de productos recomendados:              ", String.format("%.2f", sistema.getPonderacionCategoria()), ParametroSistema.CATEGORIA.name());
 		numProductosRecomendados.setControlador(this);
 		vista.anadirDisplay(numProductosRecomendados);
 		mapaPaneles.put(ParametroSistema.NUMERO_PRODUCTOS_RECOMENDADOS, numProductosRecomendados);
@@ -81,6 +99,13 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 		TiendaFrame.getInstance().navegarA(this);		
 	}
 	
+	/**
+	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador. En este caso corresponde a la confirmación de cambio de un parámetro del sistema
+	 * 
+	 * Recibe valores de entrada de los paneles, cambia los valores del sistema y actualiza las ventanas correspondientes.
+	 *
+	 * @param e Evento de acción lanzado por un componente Swing
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		ParametroSistema param = ParametroSistema.valueOf(e.getActionCommand());
@@ -115,12 +140,18 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 				break;
 			}
 		} catch (IllegalArgumentException | InputMismatchException ex) {
-			new VentanaMensaje(ex.getMessage());
+			new VentanaMensaje(ex.getMessage(), 1);
 		} catch (InvalidArgumentException iae) {
-			new VentanaMensaje(iae.getMessage());
+			new VentanaMensaje(iae.getMessage(), 1);
 		}
 	}
 	
+	/**
+	 * Método para obtener un de manera formateada la duración
+	 *
+	 * @param duracion Duración a formatear
+	 * @return String formateado de la duración
+	 */
 	private String stringDuracion(Duration duracion) {
 		long days    = duracion.toDays();
 	    long hours   = duracion.toHoursPart();
@@ -130,9 +161,24 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 	    return String.format("%02d:%02d:%02d:%02d", days, hours, minutes, seconds);
 	}
 
+	/**
+	 * Getter de la vista que controla este controlador.
+	 *
+	 * @return JPanel de la vista
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
+	}
+
+	/**
+	 * Getter de la información que se muestra al consultar la ayuda.
+	 *
+	 * @return the explicacion
+	 */
+	@Override
+	public String getExplicacion() {
+		return "En esta ventana se muestran los valores asociados a los parámetros del sistema y se permite modificar su valor rellenando el campo asociado y pulsando el botón de confirmación";
 	}
 
 }

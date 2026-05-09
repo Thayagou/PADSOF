@@ -22,10 +22,11 @@ import vistas.herramientas.PanelFactory;
 
 public class VentanaEstadisticasProductos extends JPanel implements VentanaConDisplay<PanelProducto> {
 	private static final long serialVersionUID = 1L;
-	public static String MAYOR_RECAUDACION = "Mayor recaudación";
-	public static String MENOR_RECAUDACION = "Menor recaudación";
-	public static String MAS_UNIDADES = "Más unidades vendidas";
-	public static String MENOS_UNIDADES = "Menos unidades vendidas";
+	public static final String CAMBIO_ORDEN_ACTION = "Cambiar orden";
+	public static final String MAYOR_RECAUDACION = "Mayor recaudación";
+	public static final String MENOR_RECAUDACION = "Menor recaudación";
+	public static final String MAS_UNIDADES = "Más unidades vendidas";
+	public static final String MENOS_UNIDADES = "Menos unidades vendidas";
 
 	public static String[] ORDENES = { MAYOR_RECAUDACION, MENOR_RECAUDACION, MAS_UNIDADES, MENOS_UNIDADES };
 	private static double MAX_HEIGHT_CABECERA = 0.05;
@@ -75,10 +76,14 @@ public class VentanaEstadisticasProductos extends JPanel implements VentanaConDi
 		contenido.add(scroll, BorderLayout.CENTER);
 
 		panelOrdenacion = new PanelMultiopcion("Ordenar por", contenido, ORDENES);
-
+		panelOrdenacion.setActionCommand(CAMBIO_ORDEN_ACTION);
 		add(panelOrdenacion, BorderLayout.CENTER);
 
 		refrescarLista();
+	}
+	
+	public void vaciarLista() {
+		listaPaneles.clear();
 	}
 
 	public void refrescarLista() {
@@ -92,8 +97,8 @@ public class VentanaEstadisticasProductos extends JPanel implements VentanaConDi
 		repaint();
 	}
 
-	public List<PanelProducto> getListaPaneles() {
-		return listaPaneles;
+	public String getOpcionSeleccionadaOrden() {
+		return ORDENES[panelOrdenacion.getOpcionSeleccionada()];
 	}
 
 	public void setControlador(ActionListener l) {
