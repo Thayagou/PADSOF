@@ -76,7 +76,7 @@ public class ControlPanelOferta implements ActionListener {
 		case acceptAction:
 			if(TiendaFrame.getConfirmacionUsuario("¿Quieres aceptar la oferta de " + intercambio.getEmisor().getDueno().getNombre() + "?" )) {
 				try {
-					cliente.getCartera().aceptarIntercambio(intercambio);
+					tienda.aceptarIntercambio(cliente, intercambio);
 					controlador.refrescar();
 				} catch (Exception ex) {
 					new VentanaMensaje(ex.getMessage());
@@ -86,7 +86,7 @@ public class ControlPanelOferta implements ActionListener {
 		case rejectAction:
 			if(TiendaFrame.getConfirmacionUsuario("¿Quieres rechazar la oferta de " + intercambio.getEmisor().getDueno().getNombre() + "?" )) {
 				try {
-					cliente.getCartera().rechazarIntercambio(intercambio);
+					tienda.rechazarIntercambio(cliente, intercambio);
 					controlador.refrescar();
 				} catch (Exception ex) {
 					new VentanaMensaje(ex.getMessage());
@@ -96,7 +96,7 @@ public class ControlPanelOferta implements ActionListener {
 		case cancelAction:
 			if(TiendaFrame.getConfirmacionUsuario("¿Quieres cancelar la oferta?")) {
 				try {
-					cliente.getCartera().cancelarIntercambio(intercambio);
+					tienda.cancelarIntercambio(cliente, intercambio);
 					controlador.refrescar();
 				} catch (Exception e1) {
 					new VentanaMensaje(e1.getMessage());

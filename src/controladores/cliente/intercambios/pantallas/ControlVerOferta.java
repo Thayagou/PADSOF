@@ -54,7 +54,7 @@ public class ControlVerOferta implements ControladorPantalla {
 		case BTN_ACCEPT:
 			if(TiendaFrame.getConfirmacionUsuario("Una vez aceptes la oferta, tus objetos incluidos en ella desaparecerán de tu cartera.")) {
 				try {
-					cliente.getCartera().aceptarIntercambio(intercambio);
+					tienda.aceptarIntercambio(cliente, intercambio);
 					new VentanaMensaje("Has aceptado la oferta");
 					TiendaFrame.getInstance().volverAtras();
 				} catch (Exception ex) {
@@ -65,7 +65,7 @@ public class ControlVerOferta implements ControladorPantalla {
 		case BTN_REJECT:
 			if(TiendaFrame.getConfirmacionUsuario("Una vez rechazada, esta oferta no volverá a aparecer entre tus ofertas.")) {
 				try {
-					cliente.getCartera().rechazarIntercambio(intercambio);
+					tienda.rechazarIntercambio(cliente, intercambio);
 					new VentanaMensaje("Has rechazado la oferta");
 					TiendaFrame.getInstance().volverAtras();
 				} catch (Exception ex) {
@@ -76,7 +76,7 @@ public class ControlVerOferta implements ControladorPantalla {
 		case BTN_CANCEL:
 			if(TiendaFrame.getConfirmacionUsuario("¿Quieres cancelar la oferta?")) {
 				try{
-					intercambio.cancelarIntercambio();
+					tienda.cancelarIntercambio(cliente, intercambio);
 					new VentanaMensaje("Has cancelado la oferta");
 					TiendaFrame.getInstance().volverAtras();
 				} catch(Exception ex) {
