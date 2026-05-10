@@ -16,6 +16,7 @@ import modelo.wallapop.*;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -204,17 +205,17 @@ class AlmacenTest {
 
 	@Test
 	void anadirProductosDeFicheroNull() {
-		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, null));
+		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, null, new LinkedList<>()));
 	}
 
 	@Test
 	void anadirProductosDeFicheroNoExistente() {
-		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "noexiste.csv"));
+		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "noexiste.csv", new LinkedList<>()));
 	}
 	
 	@Test
 	void anadirProductosDeFicheroCategoriasNoExistentes() throws Exception {
-		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTest.csv"));
+		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTest.csv", new LinkedList<>()));
 	}
 	
 	@Test
@@ -223,7 +224,7 @@ class AlmacenTest {
 		almacen.anadirCategoria(empleado, "Estrategia");
 		almacen.anadirCategoria(empleado, "Accion");
 		almacen.anadirCategoria(empleado, "Cine");
-		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTestErrorComic.csv"));
+		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTestErrorComic.csv", new LinkedList<>()));
 	}
 	
 	@Test
@@ -232,7 +233,7 @@ class AlmacenTest {
 		almacen.anadirCategoria(empleado, "Estrategia");
 		almacen.anadirCategoria(empleado, "Accion");
 		almacen.anadirCategoria(empleado, "Cine");
-		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTestErrorJuego.csv"));
+		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTestErrorJuego.csv", new LinkedList<>()));
 	}
 	
 	@Test
@@ -241,7 +242,7 @@ class AlmacenTest {
 		almacen.anadirCategoria(empleado, "Estrategia");
 		almacen.anadirCategoria(empleado, "Accion");
 		almacen.anadirCategoria(empleado, "Cine");
-		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTestErrorFigura.csv"));
+		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTestErrorFigura.csv", new LinkedList<>()));
 	}
 	
 	@Test
@@ -250,7 +251,7 @@ class AlmacenTest {
 		almacen.anadirCategoria(empleado, "Estrategia");
 		almacen.anadirCategoria(empleado, "Accion");
 		almacen.anadirCategoria(empleado, "Cine");
-		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTestErrorTipo.csv"));
+		assertThrows(InvalidArgumentException.class, () -> almacen.anadirProductosDeFichero(empleado, "productosTestErrorTipo.csv", new LinkedList<>()));
 	}
 	
 	@Test
@@ -259,7 +260,7 @@ class AlmacenTest {
 		almacen.anadirCategoria(empleado, "Estrategia");
 		almacen.anadirCategoria(empleado, "Accion");
 		almacen.anadirCategoria(empleado, "Cine");
-		assertTrue(almacen.anadirProductosDeFichero(empleado, "productosTest.csv"));
+		assertTrue(almacen.anadirProductosDeFichero(empleado, "productosTest.csv", new LinkedList<>()));
 	}
 
 	// categorias

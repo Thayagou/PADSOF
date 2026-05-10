@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
+import controladores.ControlCargaImagen;
 import controladores.ControladorPantalla;
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
@@ -18,6 +18,7 @@ import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
+import modelo.venta.productos.Pack;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Stock;
 import modelo.venta.productos.TipoJuego;
@@ -29,6 +30,7 @@ import modelo.venta.productos.caracteristicas.CaracteristicasProducto;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelProducto;
+import vistas.empleado.gestionarProductos.anadirProductos.PanelProductoAnadirAPack;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductoIndividual;
 
 public class ControlModificarProductos implements ControladorPantalla {
@@ -36,11 +38,13 @@ public class ControlModificarProductos implements ControladorPantalla {
 	private final Usuario usuario;
 	private final Stock producto;
 	private VentanaAnadirProductoIndividual vista;
+	private String fotoSeleccionada;
 
 	public ControlModificarProductos(Tienda tienda, Usuario usuario, Stock producto) {
 		this.tienda = tienda;
 		this.usuario = usuario;
 		this.producto = producto;
+		this.fotoSeleccionada = producto.getProducto().getImagen();
 
 		TiendaFrame.getInstance().navegarA(this);
 	}
@@ -51,35 +55,74 @@ public class ControlModificarProductos implements ControladorPantalla {
 		case VentanaAnadirProductoIndividual.CONFIRMAR_ACTION:
 			intentarModificar();
 			break;
+		case VentanaAnadirProductoIndividual.ACTION_SELECCIONAR_FOTO:
+			cogerImagen();
+			break;
 		}
 
 	}
+	
+	private void cogerImagen() {
+		fotoSeleccionada = ControlCargaImagen.abrir("Producto");
+		vista.actualizarPreview(fotoSeleccionada);
+	}
 
 	private void intentarModificar() {
-
-		int udsStock = Integer.parseInt(vista.getStock());
-
-		String nombre = vista.getNombre();
-
-		String desc = vista.getDescripcion();
-
-		double precio = Double.parseDouble(vista.getPrecio());
-
-		String imagen = vista.getImagen();
-
-		CaracteristicasProducto caract = getCaracteristicasEsp();
-
-		Categoria[] categorias = getCategorias();
-
+		int udsStock;
 		try {
-			tienda.getAlmacen().modificarProducto(usuario, producto.getProducto(), udsStock, nombre, desc, precio,
-					imagen, caract, categorias);
-		} catch (InvalidArgumentException | DoubleDiscountException | InvalidPermitException e) {
-			new VentanaMensaje(e.getMessage());
+			udsStock = Integer.parseInt(vista.getStock());
+		} catch (Exception e) {
+			new VentanaMensaje("Introduzca un número de unidades válido para el producto", 1);
 			return;
 		}
-		SwingUtilities.invokeLater(() -> new ControlGestionarExistentes(tienda, usuario));
-		new VentanaMensaje("El producto se modificó correctamente");
+
+		String nombre = vista.getNombre();
+		if(nombre.length() < 1) {
+			new VentanaMensaje("Introduzca un nombre válido para el producto", 1);
+			return;
+		}
+
+		String desc = vista.getDescripcion();
+		if(desc.length() < 1) {
+			new VentanaMensaje("Introduzca una descripción válida para el producto", 1);
+			return;
+		}
+
+		double precio;
+		try {
+			precio = Double.parseDouble(vista.getPrecio());
+		} catch (Exception e) {
+			new VentanaMensaje("Introduzca un precio válido para el producto", 1);
+			return;
+		}
+
+		if(fotoSeleccionada.equals("Selecciona la imagen") || fotoSeleccionada.length() < 1) {
+			new VentanaMensaje("Introduzca una imagen válida para el producto", 1);
+			return;
+		}
+
+		CaracteristicasProducto caract = getCaracteristicasEsp();
+		if(caract == null) {
+			return;
+		}
+
+		Categoria[] categorias = getCategorias();
+		if(categorias.length < 1) {
+			new VentanaMensaje("Introduzca al menos una categoría para el producto", 1);
+			return;
+		}
+
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas modificar este producto?")) {
+			try {
+				tienda.getAlmacen().modificarProducto(usuario, producto.getProducto(), udsStock, nombre, desc, precio,
+						fotoSeleccionada, caract, categorias);
+			} catch (InvalidArgumentException | DoubleDiscountException | InvalidPermitException e) {
+				new VentanaMensaje(e.getMessage(), 1);
+				return;
+			}
+			TiendaFrame.getInstance().volverAtras();
+			new VentanaMensaje("El producto se modificó correctamente");
+		}
 	}
 
 	private CaracteristicasProducto getCaracteristicasEsp() {
@@ -90,17 +133,46 @@ public class ControlModificarProductos implements ControladorPantalla {
 
 			LocalDate fecha = null;
 			try {
-				Date date = new SimpleDateFormat("yyyy-MM-dd").parse(esp[0]);
-				fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(esp[0]);
+			    fecha = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 			} catch (Exception e) {
-				e.printStackTrace();
+				new VentanaMensaje("Introduzca una fecha de publicación válida para el Comic", 1);
+				return null;
+			}
+			
+			if(esp[1].length() < 1) {
+				new VentanaMensaje("Introduzca un autor válido para el Comic", 1);
+				return null;
 			}
 
 			int numPags = Integer.parseInt(esp[2]);
+			try {
+				numPags = Integer.parseInt(esp[2]);
+			} catch (Exception e) {
+				new VentanaMensaje("Introduzca un número de páginas válido para el Comic", 1);
+				return null;
+			}
+			
+			if(esp[3].length() < 1) {
+				new VentanaMensaje("Introduzca una editorial válida para el Comic", 1);
+				return null;
+			}
 
 			return new CaracteristicasComic(fecha, esp[1], numPags, esp[3]);
 		case "Juego":
 			int numJug = Integer.parseInt(esp[0]);
+			try {
+				numJug = Integer.parseInt(esp[0]);
+			} catch (Exception e) {
+				new VentanaMensaje("Introduzca un número de jugadores válido para el Juego", 1);
+				return null;
+			}
+			
+			String rangoEdad = esp[1];
+			if(rangoEdad.length() < 1) {
+				new VentanaMensaje("Introduzca un rango de edad válido para el Juego", 1);
+				return null;
+			}
 
 			TipoJuego tipoJuego = null;
 			for (TipoJuego t : TipoJuego.values()) {
@@ -109,9 +181,28 @@ public class ControlModificarProductos implements ControladorPantalla {
 					break;
 				}
 			}
+			if(tipoJuego == null) {
+				new VentanaMensaje("Introduzca un tipo de juego válido para el Juego", 1);
+				return null;
+			}
 
 			return new CaracteristicasJuego(numJug, esp[1], tipoJuego);
 		case "Figura":
+			
+			if(esp[0].length() < 1) {
+				new VentanaMensaje("Introduzca dimensiones válidas para la Figura", 1);
+				return null;
+			}
+			
+			if(esp[1].length() < 1) {
+				new VentanaMensaje("Introduzca una marca válida para la Figura", 1);
+				return null;
+			}
+			
+			if(esp[2].length() < 1) {
+				new VentanaMensaje("Introduzca un material válido para la Figura", 1);
+				return null;
+			}
 
 			return new CaracteristicasFigura(esp[0], esp[1], esp[2]);
 		case "Pack":
@@ -182,7 +273,7 @@ public class ControlModificarProductos implements ControladorPantalla {
 			tiposJuego.add(t.name());
 		}
 
-		List<PanelProducto> paneles = new LinkedList<>();
+		List<PanelProductoAnadirAPack> paneles = new LinkedList<>();
 		for (Stock s : tienda.getAlmacen().getInventario()) {
 			Producto prod = s.getProducto();
 
@@ -191,8 +282,24 @@ public class ControlModificarProductos implements ControladorPantalla {
 				prodCategorias.add(c.getNombre());
 			}
 
-			paneles.add(new PanelProducto(prod.getNombre(), prod.getDescripcion(), prod.getImagen(),
-					prod.getPuntuacionMedia(), prod.getPrecio(), "Producto", prodCategorias.toArray(new String[0])));
+			paneles.add(new PanelProductoAnadirAPack(prod.getNombre(), prod.getDescripcion(), prod.getImagen(),
+					prod.getPuntuacionMedia(), prod.getPrecio(), prodCategorias.toArray(new String[0])));
+		}
+		
+		List<PanelProducto> productosPack = new LinkedList<>();
+		if(p.getTipoProducto().equals("Pack")) {
+			Pack pack = (Pack)p;
+			for (Stock s : pack.getProductos()) {
+				Producto pr = s.getProducto();
+
+				List<String> prodCategorias = new LinkedList<>();
+				for (Categoria c : pr.getCategorias()) {
+					prodCategorias.add(c.getNombre());
+				}
+
+				productosPack.add(new PanelProducto(pr.getNombre(), pr.getDescripcion(), pr.getImagen(),
+						pr.getPuntuacionMedia(), pr.getPrecio(), "", prodCategorias.toArray(new String[0])));
+			}
 		}
 
 		String[] tiposProductos = { "Comic", "Juego", "Figura", "Pack" };
@@ -205,8 +312,14 @@ public class ControlModificarProductos implements ControladorPantalla {
 				productoCategorias.toArray(new String[0]), categorias.toArray(new String[0]), p.getPrecio() + "",
 				producto.getUdsEnStock() + "", p.getTipoProducto(), tiposProductos, p.getValoresCaracteristicas(),
 				espComic, espJuego, espFigura, espPack, tiposJuego.toArray(new String[0]),
-				paneles.toArray(new PanelProducto[0]), true);
+				paneles.toArray(new PanelProductoAnadirAPack[0]), productosPack.toArray(new PanelProducto[0]), true);
+		vista.actualizarPreview(p.getImagen());
 		this.vista.setControlador(this);
+	}
+	
+	@Override
+	public boolean puedeVolver() {
+		return false;
 	}
 	
 }

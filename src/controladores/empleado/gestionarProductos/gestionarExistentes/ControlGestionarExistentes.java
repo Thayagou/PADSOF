@@ -48,9 +48,12 @@ public class ControlGestionarExistentes implements ControladorPantalla {
 	}
 	
 	public void mostrar() {
+		vista.vaciar();
 		for (Stock s : tienda.getAlmacen().getInventario()) {
 			new ControlPanelProductoGestionar(tienda, usuario, s, vista, this);
 		}
+		vista.revalidate();
+		vista.repaint();
 	}
 
 }

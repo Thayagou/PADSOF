@@ -60,5 +60,10 @@ public class VentanaGestionarCategorias extends JPanel implements VentanaConDisp
 		return panelDisplay;
 	}
 	
+	public void vaciar() {
+		listaPanel.removeAll();
+	}
+
+	
 	
 }

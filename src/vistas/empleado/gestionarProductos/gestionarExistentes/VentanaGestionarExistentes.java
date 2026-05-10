@@ -58,5 +58,9 @@ public class VentanaGestionarExistentes extends JPanel implements VentanaConDisp
 		listaPanel.repaint();
 		return panelDisplay;
 	}
+	
+	public void vaciar() {
+		listaPanel.removeAll();
+	}
 
 }
