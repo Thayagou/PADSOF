@@ -28,6 +28,12 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 	public static final String BORRAR_ACTION = "Borrar";
 	/** Nombre de la acción asociada a confirmar */
 	public static final String CONFIRMAR_ACTION = "Confirmar";
+	/** Ancho en pixeles de los botones */
+	public static final int BTN_WIDTH = TiendaFrame.getInstance().getPixelsWidth(0.1);
+	/** Alto en pixeles de los botones */
+	public static final int BTN_HEIGHT = TiendaFrame.getInstance().getPixelsWidth(0.03);
+	/** Ancho en pixeles del espacio para introducir el nombre de la categoria */
+	public static final int FIELD_WIDTH = TiendaFrame.getInstance().getPixelsWidth(0.62);
 	/** Botón de modificar */
 	private JButton modButton;
 	/** Botón de borrar */
@@ -57,17 +63,19 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 		int maxWidth = TiendaFrame.getInstance().getPixelsWidth(BOTON_PERC_W);
 		eastPanel.setPreferredSize(new Dimension(maxWidth, (int) (maxCompHeight * BOTON_PERC_H)));
 
-		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H),
-				maxCompHeight, 0.75f);
+		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		modButton.setMaximumSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
 		ButtonFactory.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 
-		borrarButton = ButtonFactory.newRoundedButton(BORRAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H),
-				maxCompHeight, 0.75f);
-		ButtonFactory.paintButton(borrarButton, ColorPalette.RED, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(borrarButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
+		borrarButton = ButtonFactory.newRoundedButton(BORRAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		borrarButton.setMaximumSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
+		ButtonFactory.paintButton(borrarButton, ColorPalette.CARD_DARK, ColorPalette.DARK_GREY);
+		ButtonFactory.addHoverColorChange(borrarButton);
 		
 		confirmarMod = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
+		confirmarMod.setMaximumSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
+		confirmarMod.setMinimumSize(new Dimension(BTN_WIDTH, BTN_HEIGHT));
 		ButtonFactory.paintButton(confirmarMod, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(confirmarMod, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		
@@ -90,8 +98,10 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 	public void toggleExpand() {
 		if (expanded) {
 			collapsePanel();
+			modButton.setText(MODIFICAR_ACTION);
 		} else {
 			expandPanel();
+			modButton.setText("Cancelar");
 		}
 		expanded = !expanded;
 	}
@@ -109,6 +119,7 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 			JLabel label = new JLabel("Introduzca el nuevo nombre");
 			label.setFont(Fonts.TEXT.getFont());
 			JPanel textField = new JPanel(new BorderLayout());
+			textField.setMaximumSize(new Dimension(FIELD_WIDTH, Short.MAX_VALUE));
 			textField.setOpaque(false);
 			textField.add(label, BorderLayout.NORTH);
 			textField.add(nombreCategoria, BorderLayout.CENTER);
