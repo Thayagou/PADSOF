@@ -184,20 +184,6 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws NotValidUserException Se lanza si el usuario no existe o la contraseña es incorrecta
 	 */
 	public Usuario iniciarSesion(String nombre, String contrasena) throws InvalidArgumentException, NotValidUserException {
-		gestor.setContrasena(BCrypt.hashpw(gestor.getContrasena(), BCrypt.gensalt()));
-		
-		for (Empleado e: empleados.values()) {
-			e.setContrasena(BCrypt.hashpw(e.getContrasena(), BCrypt.gensalt()));
-		}
-		
-		for (Empleado e: empleados.values()) {
-			System.out.println(e.getNombre() + " " + e.getContrasena());
-		}
-		
-		for (ClienteRegistrado c: clientes.values()) {
-			c.setContrasena(BCrypt.hashpw(c.getContrasena(), BCrypt.gensalt()));
-		}
-		
 		if(gestor.getNombre().equals(nombre)) {
 			if(BCrypt.checkpw(contrasena, gestor.getContrasena()))
 				return gestor;
