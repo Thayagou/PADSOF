@@ -22,8 +22,7 @@ public class ControlVerMisOfertas implements ControladorPantalla {
 	public void crearPaneles() {
 		Intercambio[] ofertas = cliente.getCartera().getIntercambiosPendientesSolicitados();
 		for(int i = ofertas.length - 1; i >= 0 ; i--) {
-			if(ofertas[i].getEmisor().getDueno().equals(cliente))
-				new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
+			new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
 		}
 	}
 	
