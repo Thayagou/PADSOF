@@ -13,19 +13,44 @@ import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ */
 public class PanelIntercambioConBoton extends PanelIntercambio {
 	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Constante H_GAP. */
 	private static final double H_GAP = 0.1;
 	
+	/** Botón asociado a la acción de. */
 	private JButton boton;
 
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param nombreEmisor parámetro nombreEmisor
+	 * @param imagenEmisor parámetro imagenEmisor
+	 * @param articulosOfrecidos parámetro articulosOfrecidos
+	 * @param actionName parámetro actionName
+	 * @param buttonName parámetro buttonName
+	 * @param nombreReceptor parámetro nombreReceptor
+	 * @param imagenReceptor parámetro imagenReceptor
+	 * @param articulosSolicitados parámetro articulosSolicitados
+	 */
 	public PanelIntercambioConBoton (String nombreEmisor, String imagenEmisor, String[] articulosOfrecidos, String actionName, String buttonName, String nombreReceptor, String imagenReceptor, String[] articulosSolicitados) {
 		super (nombreEmisor, imagenEmisor, articulosOfrecidos, actionName, nombreReceptor, imagenReceptor, articulosSolicitados);
 		
 		inicializarBoton(buttonName);
 	}
 	
+	/**
+	 * inicializarBoton.
+	 *
+	 * @param nombre parámetro nombre
+	 */
 	public void inicializarBoton(String nombre) {
 		JPanel wrapperEast = new JPanel();
 		wrapperEast.setLayout(new BoxLayout(wrapperEast, BoxLayout.X_AXIS));
@@ -58,6 +83,11 @@ public class PanelIntercambioConBoton extends PanelIntercambio {
 		add(wrapperEast, BorderLayout.EAST);
 	}
 	
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param l Control que es añadido a los componentes
+	 */
 	public void setControlador(ActionListener l) {
 		super.setControlador(l);
 		boton.addActionListener(l);

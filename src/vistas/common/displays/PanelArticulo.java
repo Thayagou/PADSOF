@@ -19,43 +19,75 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Subclase de PanelDisplay que usamos para mostrar los artículos de segunda mano dentro de un scroll.
+ */
 public class PanelArticulo extends PanelDisplay {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Porcentaje de anchura de pantalla utilizado para la foto. */
 	private static final double FOTO_W_PERC = 0.09;
+	
+	/** Porcentaje del panel utilizado para la foto. */
 	private static final double FOTO_H_PERC = 0.99;
+	
+	/** Porcentaje de altura de pantalla que ocupa el panel. */
 	private static final double MAX_HEIGHT = 0.16;
 
-	private static final double AVATAR_SIZE_PERC = 0.05; /* Tamaño del avatar (5% del alto) */
+	/** Porcentaje de pantalla utilizado para el tamaño del icono del usuario. */
+	private static final double AVATAR_SIZE_PERC = 0.05; 
+	
+	/** Constante AVATAR_NAME_SPACE. */
 	private static final double AVATAR_NAME_SPACE = 0.01;
-	private static final double ROW_GAP_PERC = 0.005; /* Espacio vertical entre filas (0.5% del alto) */
-	private static final double COLUMN_GAP_PERC = 0.01; /* Espacio horizontal entre columnas (1% del ancho) */
-	private static final double INTERESADO_HEIGHT_PERC = 0.08; /* Altura del área de "interesado en" (8% del alto) */
+	
+	/* Espacio vertical entre filas (0.5% del alto) */
+	private static final double ROW_GAP_PERC = 0.005; 
+	
+	/* Espacio horizontal entre columnas (1% del ancho) */
+	private static final double COLUMN_GAP_PERC = 0.01; 
+	
+	/* Altura del área de "interesado en" (8% del alto) */
+	private static final double INTERESADO_HEIGHT_PERC = 0.08;
 
+    /** Porcentaje de anchura de pantalla que ocupa el botón. */
     private static final double BTN_SOLIC_WIDTH = 0.12;
     
+    /** Porcentaje de anchura de pantalla que ocupa el nombre. */
     private static final double NAME_MAX_WIDTH = 0.27;
+    
+    /** Porcentaje de anchura de pantalla que ocupa el usuario. */
     private static final double USER_NAME_WIDTH = NAME_MAX_WIDTH - AVATAR_NAME_SPACE - AVATAR_SIZE_PERC - COLUMN_GAP_PERC;
+    
+    /** Porcentaje de anchura de pantalla que ocupan las categorías. */
     private static final double CATS_MAX_WIDTH = NAME_MAX_WIDTH;
+    
+    /** Porcentaje de anchura de pantalla que ocupan los intereses. */
     private static final double INTEREST_MAX_WIDTH = NAME_MAX_WIDTH;
+    
+    /** Constante INTEREST_LINES_MAX: máximo de líneas de los intereses */
     private static final int INTEREST_LINES_MAX = 5;
 	
+	/** Píxeles de espacio */
 	private int spaceBetween;
+	
+	/** Botón asociado a la acción de. */
 	private JButton boton;
 
 	/**
-	 * Constructor para usar en carteras y busqueda
+	 * Constructor para usar en carteras y busqueda.
 	 *
-	 * @param nombreUsuario
-	 * @param fotoDePerfil
-	 * @param nombre
-	 * @param foto
-	 * @param descripcion
-	 * @param interesadoEn
-	 * @param estimacion
-	 * @param estado
-	 * @param actionName
-	 * @param categorias
+	 * @param nombreUsuario parámetro nombreUsuario
+	 * @param fotoDePerfil parámetro fotoDePerfil
+	 * @param nombre parámetro nombre
+	 * @param foto parámetro foto
+	 * @param descripcion parámetro descripcion
+	 * @param interesadoEn parámetro interesadoEn
+	 * @param estimacion parámetro estimacion
+	 * @param estado parámetro estado
+	 * @param actionName parámetro actionName
+	 * @param categorias parámetro categorias
 	 */
 	public PanelArticulo(String nombreUsuario, String fotoDePerfil, String nombre, String foto, String descripcion,
 			String interesadoEn, double estimacion, String estado, String actionName, String... categorias) {
@@ -95,6 +127,12 @@ public class PanelArticulo extends PanelDisplay {
 		this.add(wrapperEast, BorderLayout.EAST);
 	}
 	
+	/**
+	 * panelEstado.
+	 *
+	 * @param estado parámetro estado
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel panelEstado(String estado) {
 	    TiendaFrame t = TiendaFrame.getInstance();
 
@@ -115,6 +153,17 @@ public class PanelArticulo extends PanelDisplay {
 	    return espacio;
 	}
 
+	/**
+	 * crearColumnaIzquierda.
+	 *
+	 * @param t parámetro t
+	 * @param nombre parámetro nombre
+	 * @param categorias parámetro categorias
+	 * @param nombreUsuario parámetro nombreUsuario
+	 * @param avatarSize parámetro avatarSize
+	 * @param rowGap parámetro rowGap
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel crearColumnaIzquierda(TiendaFrame t, String nombre, String[] categorias, String nombreUsuario,
 			int avatarSize, int rowGap) {
 		int nameWidth = t.getPixelsWidth(NAME_MAX_WIDTH);
@@ -167,6 +216,16 @@ public class PanelArticulo extends PanelDisplay {
 		return columna;
 	}
 
+	/**
+	 * crearColumnaDerecha.
+	 *
+	 * @param t parámetro t
+	 * @param interesadoEn parámetro interesadoEn
+	 * @param estimacion parámetro estimacion
+	 * @param rowGap parámetro rowGap
+	 * @param interesadoMaxHeight parámetro interesadoMaxHeight
+	 * @return valor de tipo JPanel
+	 */
 	private JPanel crearColumnaDerecha(TiendaFrame t, String interesadoEn, double estimacion, int rowGap, int interesadoMaxHeight) {
 		int interesWidth = t.getPixelsWidth(INTEREST_MAX_WIDTH);
 		
@@ -220,16 +279,16 @@ public class PanelArticulo extends PanelDisplay {
 	}
 
 	/**
-	 * Constructor para usar en Intercambios
+	 * Constructor para usar en Intercambios.
 	 *
-	 * @param nombre
-	 * @param foto
-	 * @param descripcion
-	 * @param interesadoEn
-	 * @param estimacion
-	 * @param estado
-	 * @param actionName
-	 * @param categorias
+	 * @param nombre parámetro nombre
+	 * @param foto parámetro foto
+	 * @param descripcion parámetro descripcion
+	 * @param interesadoEn parámetro interesadoEn
+	 * @param estimacion parámetro estimacion
+	 * @param estado parámetro estado
+	 * @param actionName parámetro actionName
+	 * @param categorias parámetro categorias
 	 */
 	public PanelArticulo(String nombre, String foto, String descripcion, String interesadoEn, double estimacion, String estado,
 			String actionName, String[] categorias) {
@@ -285,6 +344,11 @@ public class PanelArticulo extends PanelDisplay {
 		this.add(contentPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * inicializarBoton.
+	 *
+	 * @param nombre parámetro nombre
+	 */
 	public void inicializarBoton(String nombre) {
 		JPanel wrapperEast = new JPanel();
 		wrapperEast.setLayout(new BoxLayout(wrapperEast, BoxLayout.X_AXIS));
@@ -316,6 +380,11 @@ public class PanelArticulo extends PanelDisplay {
 		add(wrapperEast, BorderLayout.EAST);
 	}
 
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param l Control que es añadido a los componentes
+	 */
 	@Override
 	public void setControlador(ActionListener l) {
 		super.setControlador(l);

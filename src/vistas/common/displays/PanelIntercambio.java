@@ -14,13 +14,38 @@ import vistas.common.assets.PanelFotoPerfil;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.Fonts;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ */
 public class PanelIntercambio extends PanelDisplay {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Porcentaje de pantalla utilizado para. */
 	private static final double FOTO_H_PERC = 0.99;
+	
+	/** Porcentaje de altura de pantalla que ocupa. */
 	private static final double MAX_HEIGHT = 0.16;
+	
+	/** Porcentaje de pantalla utilizado para. */
 	private static final double GAP_PERC = 0.1;
+	
+	/** Porcentaje de pantalla utilizado para. */
 	private static final double PERC_W = (1 - 1.1*BOTON_PERC_W) / 2;
 	
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param nombreEmisor parámetro nombreEmisor
+	 * @param imagenEmisor parámetro imagenEmisor
+	 * @param articulosOfrecidos parámetro articulosOfrecidos
+	 * @param actionName parámetro actionName
+	 * @param nombreReceptor parámetro nombreReceptor
+	 * @param imagenReceptor parámetro imagenReceptor
+	 * @param articulosSolicitados parámetro articulosSolicitados
+	 */
 	public PanelIntercambio (String nombreEmisor, String imagenEmisor, String[] articulosOfrecidos, String actionName, String nombreReceptor, String imagenReceptor, String[] articulosSolicitados) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, actionName);
 		

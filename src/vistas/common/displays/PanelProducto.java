@@ -139,7 +139,7 @@ public class PanelProducto extends PanelDisplay {
 	}
 
 	/**
-	 * Construye el panel de estrellas del panel de producto
+	 * Construye el panel de estrellas del panel de producto.
 	 *
 	 * @param t Frame de la tienda
 	 * @param valoracion Valoración del producto

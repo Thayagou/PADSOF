@@ -12,24 +12,50 @@ import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ */
 public class PanelCategoria extends PanelDisplay {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Campo MAX_H. */
 	private static double MAX_H = 0.08;
+	
+	/** Campo MAX_H_COMP. */
 	private static double MAX_H_COMP = 0.75;
 	
 	
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param nombreCategoria parámetro nombreCategoria
+	 * @param actionName parámetro actionName
+	 */
 	public PanelCategoria(String nombreCategoria, String actionName) {
 		super(MAX_H, MAX_H * MAX_H_COMP, actionName);
 		
 		anadirLabel(nombreCategoria);
 	}
 	
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param nombreCategoria parámetro nombreCategoria
+	 */
 	public PanelCategoria(String nombreCategoria) {
 		super(MAX_H, MAX_H * MAX_H_COMP);
 		
 		anadirLabel(nombreCategoria);
 	}
 	
+	/**
+	 * anadirLabel.
+	 *
+	 * @param nombreCategoria parámetro nombreCategoria
+	 */
 	private void anadirLabel(String nombreCategoria) {
 		TiendaFrame t = TiendaFrame.getInstance();
 		

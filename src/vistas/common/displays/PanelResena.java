@@ -6,12 +6,28 @@ import javax.swing.*;
 import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ */
 public class PanelResena extends JPanel {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** Campo gradStart. */
 	private Color gradStart = ColorPalette.CARD_LIGHT.getColor();
+	
+	/** Campo gradEnd. */
 	private Color gradEnd = ColorPalette.CARD_DARK.getColor();
 
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param puntuacion parámetro puntuacion
+	 * @param comentario parámetro comentario
+	 * @param usr parámetro usr
+	 */
 	public PanelResena(double puntuacion, String comentario, String usr) {
 		setOpaque(false);
 		setLayout(new BorderLayout(30, 0));
@@ -53,6 +69,13 @@ public class PanelResena extends JPanel {
 		add(comentTxt, BorderLayout.CENTER);
 	}
 
+	/**
+	 * buildEstrellas.
+	 *
+	 * @param t parámetro t
+	 * @param valoracion parámetro valoracion
+	 * @return valor de tipo JPanel
+	 */
 	// ── Estrellas ────────────────────────────────────────────────────
 	private JPanel buildEstrellas(TiendaFrame t, double valoracion) {
 		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));
@@ -68,6 +91,11 @@ public class PanelResena extends JPanel {
 		return p;
 	}
 
+	/**
+	 * paintComponent.
+	 *
+	 * @param g parámetro g
+	 */
 	// ── Fondo con gradiente ──────────────────────────────────────────
 	@Override
 	protected void paintComponent(Graphics g) {

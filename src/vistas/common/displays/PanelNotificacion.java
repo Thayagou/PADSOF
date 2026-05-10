@@ -13,27 +13,60 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ */
 public class PanelNotificacion extends PanelDisplay {
 	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** Porcentaje de pantalla utilizado para. */
 	private static final double FOTO_H_PERC = 0.99;
+	
+	/** Porcentaje de altura de pantalla que ocupa. */
 	private static final double MAX_HEIGHT = 0.16;
+	
+	/** Porcentaje de anchura de pantalla que ocupa. */
 	private static final double BTN_WIDTH = 0.05;
+	
+	/** Porcentaje de altura de pantalla que ocupa. */
 	private static final double BTN_HEIGHT = 0.03;
 	
+	/** Constante VERTICAL_GAP. */
 	private static final double VERTICAL_GAP = 0.01;
 	
+	/** ActionCommand de la acción de. */
 	public static final String READ_ACTION = "leido";
+	
+	/** ActionCommand de la acción de. */
 	public static final String DELETE_ACTION = "borrar";
 	
+	/** Campo titulo. */
 	private String titulo;
+	
+	/** Campo texto. */
 	private String texto;
+	
+	/** Campo fecha. */
 	private String fecha;
 	
+	/** Botón asociado a la acción de. */
 	private JButton marcarLeido;
+	
+	/** Botón asociado a la acción de. */
 	private JButton borrar;
 	
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param titulo parámetro titulo
+	 * @param texto parámetro texto
+	 * @param fecha parámetro fecha
+	 * @param leido parámetro leido
+	 * @param ponerBotones parámetro ponerBotones
+	 */
 	public PanelNotificacion(String titulo, String texto, LocalDate fecha, boolean leido, boolean ponerBotones) {
 		super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT);
 		this.titulo = titulo;
@@ -89,14 +122,33 @@ public class PanelNotificacion extends PanelDisplay {
 		}
 	}
 
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param titulo parámetro titulo
+	 * @param texto parámetro texto
+	 * @param fecha parámetro fecha
+	 * @param leido parámetro leido
+	 */
 	public PanelNotificacion(String titulo, String texto, LocalDate fecha, boolean leido) {
 		this(titulo, texto, fecha, leido, true);
 	}
 	
+	/**
+	 * Obtiene FechaFormat.
+	 *
+	 * @param date parámetro date
+	 * @return valor de FechaFormat
+	 */
 	private String getFechaFormat(LocalDate date) {
 		return date.getDayOfMonth()+"/"+date.getMonthValue()+"/"+date.getYear();
 	}
 	
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param c parámetro c
+	 */
 	@Override
 	public void setControlador(ActionListener c) {
 		borrar.addActionListener(c);

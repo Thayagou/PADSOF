@@ -19,18 +19,48 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ */
 public class PanelDisplay extends JPanel {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Porcentaje de pantalla utilizado para. */
 	protected static final double BOTON_PERC_H = 0.3;
+	
+	/** Porcentaje de pantalla utilizado para. */
 	protected static final double BOTON_PERC_W = 0.2;
+	
+	/** Campo HOR_GAP. */
 	protected static double HOR_GAP = 0.01;
+	
+	/** Botón asociado a la acción de. */
 	protected JButton clickArea; // botón invisible que ocupa todo el panel
+	
+	/** Campo maxHeight. */
 	protected int maxHeight;
+	
+	/** Campo maxCompHeight. */
 	protected int maxCompHeight;
+	
+	/** Campo gradStart. */
 	private ColorPalette gradStart = ColorPalette.CARD_LIGHT;
+	
+	/** Campo gradEnd. */
 	private ColorPalette gradEnd = ColorPalette.CARD_DARK;
 
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param maxHPerc parámetro maxHPerc
+	 * @param compHPerc parámetro compHPerc
+	 * @param fotoWPerc parámetro fotoWPerc
+	 * @param imageName parámetro imageName
+	 * @param actionName parámetro actionName
+	 */
 	public PanelDisplay(double maxHPerc, double compHPerc, double fotoWPerc, String imageName, String actionName) {
 		this(maxHPerc, compHPerc, actionName);
 
@@ -100,6 +130,11 @@ public class PanelDisplay extends JPanel {
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, maxHeight));
 	}
 
+	/**
+	 * paintComponent.
+	 *
+	 * @param g parámetro g
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g.create();
@@ -120,15 +155,31 @@ public class PanelDisplay extends JPanel {
 		super.paintComponent(g);
 	}
 
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param l Control que es añadido a los componentes
+	 */
 	public void setControlador(ActionListener l) {
 		if (clickArea != null)
 			clickArea.addActionListener(l);
 	}
 
+	/**
+	 * Obtiene ClickArea.
+	 *
+	 * @return valor de ClickArea
+	 */
 	public JButton getClickArea() {
 		return clickArea;
 	}
 
+	/**
+	 * anadirFoto.
+	 *
+	 * @param imageName parámetro imageName
+	 * @param fotoWPerc parámetro fotoWPerc
+	 */
 	public void anadirFoto(String imageName, double fotoWPerc) {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int fotoW = t.getPixelsWidth(fotoWPerc);
@@ -144,6 +195,9 @@ public class PanelDisplay extends JPanel {
 		add(foto, BorderLayout.WEST);
 	}
 
+	/**
+	 * refreshDisplay.
+	 */
 	public void refreshDisplay() {
 		revalidate();
 		repaint();
