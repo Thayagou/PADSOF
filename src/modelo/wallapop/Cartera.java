@@ -38,6 +38,15 @@ public class Cartera implements Serializable{
 	}
 	
 	/**
+	 * Elimina un artículo que ha subido el cliente a la cartera
+	 * @param articulo Artículo de segunda mano que se elimina
+	 * @return true si se ha eliminado correctamente, false en caso contrario
+	 */
+	public boolean removeArticulo (ArticuloSegundaMano articulo) {
+		return articulos.remove(articulo);
+	}
+	
+	/**
 	 * Añada un intercambio que ha subido el cliente a la cartera
 	 * @param intercambio Nuevo intercambio añadido
 	 * @return true si se ha añadido correctamente, false en caso contrario

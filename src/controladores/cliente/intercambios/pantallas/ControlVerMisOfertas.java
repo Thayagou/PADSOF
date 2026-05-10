@@ -25,8 +25,9 @@ public class ControlVerMisOfertas implements ControladorPantalla {
 		vista = new VentanaVerMisOfertas();
 		vista.setControlador(this);
 		
-		for(Intercambio i : cliente.getCartera().getIntercambiosPendientes()) {
-			new ControlPanelOferta(tienda, cliente, i, vista, this);
+		Intercambio[] ofertas = cliente.getCartera().getIntercambiosPendientes();
+		for(int i = ofertas.length - 1; i >= 0 ; i--) {
+			new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
 		}
 		
 		TiendaFrame.getInstance().navegarA(this);
@@ -36,8 +37,9 @@ public class ControlVerMisOfertas implements ControladorPantalla {
 		vista = new VentanaVerMisOfertas();
 		vista.setControlador(this);
 		
-		for(Intercambio i : cliente.getCartera().getIntercambiosPendientes()) {
-			new ControlPanelOferta(tienda, cliente, i, vista, this);
+		Intercambio[] ofertas = cliente.getCartera().getIntercambiosPendientes();
+		for(int i = ofertas.length - 1; i >= 0 ; i--) {
+			new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
 		}
 		
 		TiendaFrame.getInstance().recargarPantallaActual(this);
@@ -48,8 +50,9 @@ public class ControlVerMisOfertas implements ControladorPantalla {
 		vista = new VentanaVerMisOfertas();
 		vista.setControlador(this);
 		
-		for(Intercambio i : cliente.getCartera().getIntercambiosPendientes()) {
-			new ControlPanelOferta(tienda, cliente, i, vista, this);
+		Intercambio[] ofertas = cliente.getCartera().getIntercambiosPendientes();
+		for(int i = ofertas.length - 1; i >= 0 ; i--) {
+			new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
 		}
 		
 		TiendaFrame.getInstance().refresh();

@@ -31,8 +31,10 @@ public class ControlVerCompras implements ControladorPantalla {
  
     private void cargarPedidos() {
         vista.limpiarPedidos();
-        for (Pedido pedido : cliente.getPedidos()) {
-            new ControlPanelPedidoCliente(tienda, cliente, pedido, vista);
+        
+        Pedido[] pedidos = cliente.getPedidos();
+        for (int i = pedidos.length -1; i >= 0 ; i--) {
+            new ControlPanelPedidoCliente(tienda, cliente, pedidos[i], vista);
         }
     }
  

@@ -173,6 +173,14 @@ public class Intercambio implements Serializable, Caducable {
 		this.empleado = empleado;
 		this.fechaConfirmacion = Reloj.now();
 		this.estado = EstadoIntercambio.CONFIRMADO;
+		
+		for (ArticuloSegundaMano artSol : solicitados) {
+			receptor.removeArticulo(artSol);
+		}
+		
+		for (ArticuloSegundaMano artOfr : ofrecidos) {
+			emisor.removeArticulo(artOfr);
+		}
 	}
 	
 	/**

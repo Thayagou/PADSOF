@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
-import controladores.cliente.general.pantallas.ControlInicioCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import vistas.cliente.venta.pantallas.VentanaPago;
@@ -33,11 +32,14 @@ public class ControlVentanaPago implements ControladorPantalla {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals(VentanaPago.PAY_ACTION)) {
 			try{
-				tienda.pagarCarritoDe(cliente, vista.getNumeroTarjeta());
-				new VentanaMensaje("El carrito se ha pagado. Puedes ver tu código de pedido en las notificaciones.");
-				SwingUtilities.invokeLater(() -> new ControlInicioCliente(tienda, cliente));
+				if(tienda.pagarCarritoDe(cliente, vista.getNumeroTarjeta()) == true) {
+					new VentanaMensaje("El carrito se ha pagado. Puedes ver tu código de pedido en las notificaciones.");
+					SwingUtilities.invokeLater(() -> new ControlVerCompras(tienda, cliente));
+				} else {
+					new VentanaMensaje("El número de tarjeta introducido es erróneo. Introduce un número de 16 dígitos.", VentanaMensaje.ERROR);
+				}
 			} catch(Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+				new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 			}
 		}
 	}
