@@ -1,13 +1,16 @@
 package vistas.common.displays;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelFotoPerfil;
+import vistas.common.components.FixedTextArea;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.Fonts;
 
@@ -29,6 +32,9 @@ public class PanelPedido extends PanelDisplay{
 	/** Porcentaje de pantalla utilizado para. */
 	private static final double GAP_PERC = 0.1;
 	
+	/** Porcentaje de pantalla maximo para la descripcion del pedido */
+	private static final double DESC_MAX_WIDTH = 0.7;
+	
 	/** Campo gap. */
 	private int gap;
 	
@@ -39,28 +45,29 @@ public class PanelPedido extends PanelDisplay{
 	 * @param estado parámetro estado
 	 * @param productos parámetro productos
 	 */
-	public PanelPedido(String actionName, String estado, String...productos) {
+	public PanelPedido(String actionName, String estado, String id, String...productos) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, actionName);
 		gap = (int)(maxCompHeight *GAP_PERC);
 		
+		int descWidth = TiendaFrame.getInstance().getPixelsWidth(DESC_MAX_WIDTH);
 		
-		JPanel articulosEmisor = new JPanel();
-		articulosEmisor.setOpaque(false);
-		articulosEmisor.setLayout(new BoxLayout(articulosEmisor, BoxLayout.Y_AXIS));
+		JPanel items = new JPanel();
+		items.setOpaque(false);
+		items.setLayout(new BorderLayout());
 		
-		articulosEmisor.add(Box.createVerticalStrut(gap));
-		articulosEmisor.add(Box.createVerticalStrut(gap));
-		articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(productos[0], Fonts.TEXT));
-		for (int i = 1; i < productos.length && i < 4; i++) {
-			articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(", " + productos[i], Fonts.TEXT));
-		}
-		if (productos.length >= 5) articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(", ...", Fonts.TEXT));
-		articulosEmisor.add(Box.createVerticalStrut(gap));
+		/* Descripcion de los productos del pedido */
+		String listaProductos = String.join("   ·   ", productos);
+		FixedTextArea descripcion = new FixedTextArea(Fonts.truncar(listaProductos, descWidth, Fonts.TEXT.getFont(), items), Fonts.TEXT.getFont());
+		items.add(descripcion, BorderLayout.CENTER);
 		
-		articulosEmisor.add(Box.createVerticalStrut(gap));
-		articulosEmisor.add(ButtonFactory.newLabel(estado, Fonts.SMALL));
+		/* Estado del pedido + id */
+		JPanel datos = new JPanel(new GridLayout(1, 2));
+		datos.setOpaque(false);
+		datos.add(ButtonFactory.newLabel("Código de pedido: " + id, Fonts.BOLD));
+		datos.add(ButtonFactory.newLabel("Estado: "+estado, Fonts.BOLD));
 		
-		add(articulosEmisor, BorderLayout.CENTER);
+		add(items, BorderLayout.CENTER);
+		add(datos, BorderLayout.SOUTH);
 	}
 	
 	/**
@@ -72,10 +79,10 @@ public class PanelPedido extends PanelDisplay{
 	 * @param actionName parámetro actionName
 	 * @param productos parámetro productos
 	 */
-	public PanelPedido(String nombreCliente, String estado, String imageName, String actionName, String...productos) {
-		this(actionName, estado, productos);
+	public PanelPedido(String nombreCliente, String estado, String imageName, String id, String actionName, String...productos) {
+		this(actionName, estado, id, productos);
 		
-		int fotoSize = maxCompHeight - 2*gap;
+		int fotoSize = maxCompHeight/2 - 2*gap;
 		
 		PanelFotoPerfil perfilEmisor = new PanelFotoPerfil(imageName, fotoSize);
 		JLabel labelEmisor = ButtonFactory.newLabel(nombreCliente, Fonts.BOLD);

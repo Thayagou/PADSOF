@@ -35,8 +35,27 @@ public class ControlPanelPedidoCliente implements ActionListener {
 		for(StockExterno st : pedido.getItemsPedido()) {
 			nombreProductos.add(st.getProducto().getNombre());
 		}
+		
+		String estado;
+		switch(pedido.getEstado()) {
+		case EN_PREPARACION:
+			estado = "En preparación";
+			break;
+		case LISTO:
+			estado = "Listo para recoger";
+			break;
+		case PAGADO:
+			estado = "Pagado";
+			break;
+		case RECOGIDO:
+			estado = "Recogido";
+			break;
+		default:
+			estado = "Sin estado";
+			break;
+		}
 
-		panel = new PanelPedido(actionName, pedido.getEstado().name(), nombreProductos.toArray(new String[0]));
+		panel = new PanelPedido(actionName, estado, ""+pedido.getId(), nombreProductos.toArray(new String[0]));
 
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);

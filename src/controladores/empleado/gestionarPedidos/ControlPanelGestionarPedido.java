@@ -35,7 +35,7 @@ public class ControlPanelGestionarPedido implements ActionListener {
 			productos.add(s.getProducto().getNombre());
 		}
 		
-		PanelPedidoGestionarPedido panel = new PanelPedidoGestionarPedido(pedido.getCliente().getNombre(), pedido.getEstado().name(), "pfp.png", ACTION_NAME, productos.toArray(new String[0]));
+		PanelPedidoGestionarPedido panel = new PanelPedidoGestionarPedido(pedido.getCliente().getNombre(), pedido.getEstado().name(), "" + pedido.getId(), "pfp.png", ACTION_NAME, productos.toArray(new String[0]));
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);
 	}

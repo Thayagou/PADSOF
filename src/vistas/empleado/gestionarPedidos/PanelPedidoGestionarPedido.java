@@ -30,8 +30,8 @@ public class PanelPedidoGestionarPedido extends PanelPedido{
 	 * @param actionName Acción asociada al botón
 	 * @param productos Productos incluídos en el pedido
 	 */
-	public PanelPedidoGestionarPedido(String nombreCliente, String estado, String imageName, String actionName, String...productos) {
-		super(nombreCliente, estado, imageName, actionName, productos);
+	public PanelPedidoGestionarPedido(String nombreCliente, String estado, String id, String imageName, String actionName, String...productos) {
+		super(nombreCliente, estado, imageName, id, actionName, productos);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		JPanel eastPanel = new JPanel();
