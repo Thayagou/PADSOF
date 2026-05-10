@@ -28,6 +28,8 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 	public static final String BORRAR_ACTION = "Borrar";
 	/** Nombre de la acción asociada a confirmar */
 	public static final String CONFIRMAR_ACTION = "Confirmar";
+	/** Nombre de la acción asociada a confirmar */
+	public static final String CANCELAR_ACTION = "Cancelar";
 	/** Ancho en pixeles de los botones */
 	public static final int BTN_WIDTH = TiendaFrame.getInstance().getPixelsWidth(0.1);
 	/** Alto en pixeles de los botones */
@@ -98,11 +100,10 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 	public void toggleExpand() {
 		if (expanded) {
 			collapsePanel();
-			modButton.setText(MODIFICAR_ACTION);
 		} else {
 			expandPanel();
-			modButton.setText("Cancelar");
 		}
+		setModificarCancelar();
 		expanded = !expanded;
 	}
 
@@ -159,6 +160,10 @@ public class PanelCategoriaGestionarCategoria extends PanelCategoria {
 
 	    revalidate();
 	    repaint();
+	}
+	
+	private void setModificarCancelar() {
+		modButton.setText(expanded ? MODIFICAR_ACTION : CANCELAR_ACTION);
 	}
 
 	/**
