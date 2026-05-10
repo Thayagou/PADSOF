@@ -38,7 +38,7 @@ public class MenuLateral extends JPanel {
 	private static final Color COLOR_BTN_TITULO = ColorPalette.BLACK.getColor();
 	
 	private static final Color SEPARATOR_COLOR = ColorPalette.DARK_BLUE.getColor();
-	private static final double SEPARATOR_HEIGHT = 0.005;
+	private static final double SEPARATOR_HEIGHT = 0.003;
 	
 	/**Símbolo que se muestra cuando la sección está abierta */
 	private static final String OPEN_SYMBOL = "-";
@@ -71,6 +71,7 @@ public class MenuLateral extends JPanel {
 		panelSecciones.setLayout(new BoxLayout(panelSecciones, BoxLayout.Y_AXIS));
 		panelSecciones.setBackground(COLOR_SECCION_BG);
 		add(panelSecciones, BorderLayout.CENTER);
+		setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, ColorPalette.DARK_BLUE.getColor()));
 
 		for (Map.Entry<String, List<JButton>> entrada : btnMap.entrySet()) {
 			addSection(entrada.getKey(), entrada.getValue());
