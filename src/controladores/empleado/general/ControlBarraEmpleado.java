@@ -28,10 +28,10 @@ public class ControlBarraEmpleado implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case "Añadir productos" -> showAnadirProducto();
-		case "Gestionar productos existentes" -> showProductosExistentes();
+		case "Gestionar productos" -> showProductosExistentes();
 		case "Gestionar categorías" -> showCategoriasExistentes();
 		case "Gestionar pedidos" -> showGPedidos();
-		case "Valorar artículos de segunda mano" -> showValorar();
+		case "Valorar artículos" -> showValorar();
 		case "Gestionar intercambios" -> showGIntercambios();
 		}
 	}

@@ -56,6 +56,8 @@ public class PanelIntercambio extends PanelDisplay {
 		
 		JPanel info = new JPanel(new GridLayout(1,2));
 		info.setOpaque(false);
+		info.setMaximumSize(new Dimension(t.getPixelsWidth(PERC_W), maxCompHeight));
+		info.setPreferredSize(new Dimension(t.getPixelsWidth(PERC_W), maxCompHeight));
 		
 		JPanel emisor = new JPanel();
 		emisor.setOpaque(false);
@@ -90,33 +92,30 @@ public class PanelIntercambio extends PanelDisplay {
 		receptor.setOpaque(false);
 		receptor.setLayout(new BoxLayout(receptor, BoxLayout.X_AXIS));
 		receptor.setMaximumSize(max);
-		
-		PanelFotoPerfil perfilreceptor = new PanelFotoPerfil(imagenReceptor, fotoSize);
+
+		PanelFotoPerfil perfilReceptor = new PanelFotoPerfil(imagenReceptor, fotoSize);
 		JLabel labelReceptor = ButtonFactory.newLabel(nombreReceptor, Fonts.BOLD);
-		
-		receptor.add(perfilreceptor);
-		receptor.add(Box.createHorizontalStrut(gap));
-		receptor.add(labelReceptor);
-		
+
 		JPanel articulosReceptor = new JPanel();
 		articulosReceptor.setOpaque(false);
-		articulosReceptor.setLayout(new BoxLayout( articulosReceptor, BoxLayout.Y_AXIS));
-		
+		articulosReceptor.setLayout(new BoxLayout(articulosReceptor, BoxLayout.Y_AXIS));
+
 		articulosReceptor.add(Box.createVerticalStrut(gap));
 		articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(articulosSolicitados[0], Fonts.TEXT));
 		for (int i = 1; i < articulosSolicitados.length && i < 4; i++) {
-			articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(", " + articulosSolicitados[i], Fonts.TEXT));
+		    articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(", " + articulosSolicitados[i], Fonts.TEXT));
 		}
-		if (articulosSolicitados.length >= 5) articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(", ...", Fonts.TEXT));
+		if (articulosSolicitados.length >= 5) 
+		    articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(", ...", Fonts.TEXT));
 		articulosReceptor.add(Box.createVerticalStrut(gap));
-		
-		receptor.add(perfilreceptor);
+
+		receptor.add(perfilReceptor);
 		receptor.add(Box.createHorizontalStrut(gap));
 		receptor.add(labelReceptor);
 		receptor.add(Box.createHorizontalStrut(gap));
 		receptor.add(articulosReceptor);
 		receptor.add(Box.createHorizontalStrut(gap));
-		
+
 		info.add(receptor);
 		
 		add(info, BorderLayout.CENTER);
