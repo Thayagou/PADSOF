@@ -333,6 +333,9 @@ public class Historial implements Serializable, ObservadorProducto {
 		
 		intercambio.validarIntercambio(empleado);
 		
+		emisor.enviarNotificacion("Su intercambio ha sido confirmado", TipoNotificacion.INTERCAMBIO);
+		receptor.enviarNotificacion("Su intercambio ha sido confirmado", TipoNotificacion.INTERCAMBIO);
+		
 		return true;
 	}
 	

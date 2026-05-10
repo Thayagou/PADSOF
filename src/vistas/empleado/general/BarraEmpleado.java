@@ -21,13 +21,13 @@ public class BarraEmpleado extends BarraLateral {
 	/** Botón de gestionar pedidos */
 	private JButton gestionarPedidos = new JButton("Gestionar pedidos");
 	/** Votón de valorar objetos */
-	private JButton valorarObjetos = new JButton("Valorar artículos de segunda mano");
+	private JButton valorarObjetos = new JButton("Valorar artículos");
 	/** Botón de gestionar intercambios */
 	private JButton gestionarIntercambios = new JButton("Gestionar intercambios");
 	/** Botón de añadir productos */
 	private JButton anadirProducto = new JButton("Añadir productos");
 	/** Botón de gestionar existentes */
-	private JButton gestionarExistentes = new JButton("Gestionar productos existentes");
+	private JButton gestionarExistentes = new JButton("Gestionar productos");
 	/** Botón de gestionar categorías */
 	private JButton gestionarCategorias = new JButton("Gestionar categorías");
 	/** Ancho del menú */
