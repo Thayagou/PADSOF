@@ -151,8 +151,8 @@ public class Cartera implements Serializable{
 	 * Getter de los intercambios que ya han concluído
 	 * @return Array de Intercambio con dichos intercambios
 	 */
-	public Intercambio[] getIntercambiosConcluidos() {
-		return intercambios.stream().filter(i->!i.getEstado().equals(EstadoIntercambio.OFERTADO)).toArray(Intercambio[]::new);
+	public Intercambio[] getIntercambiosAceptados() {
+		return intercambios.stream().filter(i->i.getEstado().equals(EstadoIntercambio.ACEPTADO)).toArray(Intercambio[]::new);
 	}
 	
 	@Override
