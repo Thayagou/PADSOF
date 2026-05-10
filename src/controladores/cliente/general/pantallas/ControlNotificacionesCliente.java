@@ -1,6 +1,7 @@
 package controladores.cliente.general.pantallas;
 
 import java.awt.event.ActionEvent;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
 
@@ -49,10 +50,12 @@ public class ControlNotificacionesCliente implements ControladorPantalla {
 
 		this.vista = new VentanaNotificacionesCliente(options, indexes);
 
-		for (Notificacion n : cliente.getNotificaciones()) {
-			if (!n.isBorrada()) {
-				new ControlPanelNotificacion(tienda, cliente, n, vista, this);
-			}
+		Notificacion[] notificaciones = Arrays.copyOf(cliente.getNotificaciones(), cliente.getNotificaciones().length);
+		for (int i = notificaciones.length - 1; i >= 0; i--) {
+		    Notificacion n = notificaciones[i];
+		    if (!n.isBorrada()) {
+		        new ControlPanelNotificacion(tienda, cliente, n, vista, this);
+		    }
 		}
 
 		vista.setControlador(this);
@@ -69,10 +72,12 @@ public class ControlNotificacionesCliente implements ControladorPantalla {
 
 		this.vista = new VentanaNotificacionesCliente(options, indexes);
 
-		for (Notificacion n : cliente.getNotificaciones()) {
-			if (!n.isBorrada()) {
-				new ControlPanelNotificacion(tienda, cliente, n, vista, this);
-			}
+		Notificacion[] notificaciones = Arrays.copyOf(cliente.getNotificaciones(), cliente.getNotificaciones().length);
+		for (int i = notificaciones.length - 1; i >= 0; i--) {
+		    Notificacion n = notificaciones[i];
+		    if (!n.isBorrada()) {
+		        new ControlPanelNotificacion(tienda, cliente, n, vista, this);
+		    }
 		}
 
 		vista.setControlador(this);

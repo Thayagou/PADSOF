@@ -55,7 +55,7 @@ public class PanelArticulo extends PanelDisplay {
     private static final double BTN_SOLIC_WIDTH = 0.12;
     
     /** Porcentaje de anchura de pantalla que ocupa el nombre. */
-    private static final double NAME_MAX_WIDTH = 0.27;
+    private static final double NAME_MAX_WIDTH = 0.20;
     
     /** Porcentaje de anchura de pantalla que ocupa el usuario. */
     private static final double USER_NAME_WIDTH = NAME_MAX_WIDTH - AVATAR_NAME_SPACE - AVATAR_SIZE_PERC - COLUMN_GAP_PERC;
