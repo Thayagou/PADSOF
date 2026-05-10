@@ -8,6 +8,8 @@ import java.util.List;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.usuario.Permiso;
+import vistas.common.app.TiendaFrame;
+import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.gestor.gestionarEmpleados.PanelEmpleado;
 import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
@@ -67,15 +69,23 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 		case PanelEmpleado.DE_ALTA_ACTION:
 			
 			boolean deAlta = empleado.estaDeAlta();
+			String deAltaString = deAlta ? "dar de baja" : "dar de alta";
+			
+			if (!TiendaFrame.getConfirmacionUsuario("Estás seguro de que desea " + deAltaString + " a " + empleado.getNombre() + "?")) return;
+			
 			if (deAlta) tienda.darDeBajaEmpleado(empleado.getNombre());
 			else tienda.darDeAltaEmpleado(empleado.getNombre());
 			panel.setEstadoDeAlta(!deAlta);
+
+			String deAltaStringParticipio = deAlta ? "dado de baja" : "dado de alta";
+			new VentanaMensaje("Se ha " + deAltaStringParticipio + " a " + empleado.getNombre(), VentanaMensaje.INFO);
+			
 			panel.refreshDisplay();
 			break;
 		case PanelEmpleado.MODIFICAR_ACTION:
 			panel.toggleExpand();
 			break;
-		case PanelEmpleado.CONFIRMAR_ACTION:			
+		case PanelEmpleado.CONFIRMAR_ACTION:
 			List<String> listaPermisosString = panel.getPermisos();
 			List<Permiso> listaPermisos = new ArrayList<>();
 			
@@ -85,6 +95,9 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 			
 			empleado.setPermisos(listaPermisos.toArray(new Permiso[0]));
 			panel.setPermisos(listaPermisosString);
+			
+			new VentanaMensaje("Se han modificado los permisos correctamente", VentanaMensaje.INFO);
+			
 			panel.refreshDisplay();
 			break;
 		}

@@ -113,6 +113,8 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 		PanelParametroSistema panel = mapaPaneles.get(param);
 		String valorText = panel.getValorTextField();
 		
+		if (!TiendaFrame.getConfirmacionUsuario("Estás seguro de que deseas modificar el valor del parámetro?")) return;
+		
 		try {
 			switch (param) {
 			
@@ -144,6 +146,8 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 		} catch (InvalidArgumentException iae) {
 			new VentanaMensaje(iae.getMessage(), 1);
 		}
+		
+		new VentanaMensaje("Se ha modificado el valor del parámetro correctamente", VentanaMensaje.INFO);
 	}
 	
 	/**

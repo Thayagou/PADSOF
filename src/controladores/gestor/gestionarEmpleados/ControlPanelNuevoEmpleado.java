@@ -79,6 +79,8 @@ public class ControlPanelNuevoEmpleado implements ActionListener {
 			return;
 		}
 		
+		if (!TiendaFrame.getConfirmacionUsuario("Estás seguro de que desea dar de alta a " + nombre + "?")) return;
+		
 		List<String> listaPermisosString = panel.getPermisos();
 		List<Permiso> listaPermisos = new ArrayList<>();
 		if (listaPermisosString.contains(PanelNuevoEmpleado.PERM_PRODUCTOS)) listaPermisos.add(Permiso.PRODUCTOS);

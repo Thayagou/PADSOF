@@ -264,6 +264,8 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 			return;
 		}
 		
+		if (!TiendaFrame.getConfirmacionUsuario("Estás seguro de que desea añadir el descuento?")) return;
+		
 		try {
 			switch (vista.getOpcionSeleccionadaCompensacion() ) {
 				case VentanaAnadirDescuento.COMP_DINERO -> {
