@@ -43,6 +43,9 @@ public class PanelProducto extends PanelDisplay {
 	/** Campo descripcion. */
 	private String descripcion;
 	
+	/** Panel asociado a la información del producto */
+	private JPanel info;
+	
 	/** Campo puntuacionMedia. */
 	private double puntuacionMedia;
 	
@@ -70,7 +73,7 @@ public class PanelProducto extends PanelDisplay {
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		/* Info: estrellas + nombre + descripción + precio + categorías */
-		JPanel info = new JPanel();
+		info = new JPanel();
 		info.setOpaque(false);
 		info.setLayout(new BorderLayout());
 		
@@ -92,7 +95,7 @@ public class PanelProducto extends PanelDisplay {
 		JTextArea descripcionLabel = new FixedTextArea();
 		descripcionLabel.setFont(Fonts.SMALL.getFont());
 		descripcionLabel.setSize(t.getPixelsWidth(DESC_WIDTH), Short.MAX_VALUE);
-		descripcionLabel.setText(Fonts.truncar(descripcion, t.getPixelsWidth(DESC_WIDTH)*DESC_MAX_LINES, Fonts.SMALL.getFont(), descripcionLabel));
+		descripcionLabel.setText(Fonts.truncar(descripcion, t.getPixelsWidth(DESC_WIDTH), Fonts.SMALL.getFont(), descripcionLabel));
 		descripcionLabel.setForeground(ColorPalette.DARK_GREY.getColor());
 		
 		info.add(descripcionLabel, BorderLayout.CENTER);
@@ -178,6 +181,13 @@ public class PanelProducto extends PanelDisplay {
 		wrapper.setPreferredSize(new Dimension(TiendaFrame.getInstance().getPixelsWidth(0.2), maxCompHeight));
 		
 		add(wrapper, BorderLayout.EAST);
+	}
+	
+	public void setTamanoInfo(double width) {
+		Dimension max = new Dimension(TiendaFrame.getInstance().getPixelsWidth(width), maxCompHeight);
+		
+		info.setMaximumSize(max);
+		
 	}
 	
 	/**

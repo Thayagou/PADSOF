@@ -1,13 +1,18 @@
 package vistas.common.displays;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+import vistas.common.app.TiendaFrame;
 import vistas.common.components.InvisibleCheckBox;
 import vistas.common.components.PanelSeleccion;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
-// TODO: Auto-generated Javadoc
 /**
  * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
  */
@@ -57,9 +62,17 @@ public class PanelProductoSeleccion extends PanelProducto implements PanelSelecc
 	public PanelProductoSeleccion(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String selected, String unselected, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, INCLUIR_ACTION, categorias);
 		
+		JPanel panelCheckBox = new JPanel();
+		panelCheckBox.setOpaque(false);
+		panelCheckBox.setLayout(new BoxLayout(panelCheckBox, BoxLayout.Y_AXIS));
 		checkBox = ButtonFactory.newInvisibleCheckBox(selected, unselected, ColorPalette.BLACK, ColorPalette.GREY);
 		
-		this.add(checkBox, BorderLayout.EAST);
+		panelCheckBox.add(Box.createVerticalGlue());
+		panelCheckBox.add(checkBox);
+		panelCheckBox.add(Box.createVerticalGlue());
+		panelCheckBox.setPreferredSize(new Dimension(TiendaFrame.getInstance().getPixelsWidth(0.07), maxCompHeight));
+		this.add(panelCheckBox, BorderLayout.EAST);
+		
 	}
 	
 	/**

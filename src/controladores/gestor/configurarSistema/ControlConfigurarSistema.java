@@ -3,7 +3,6 @@ package controladores.gestor.configurarSistema;
 import java.awt.event.ActionEvent;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Map;
 
 import javax.swing.JPanel;
@@ -48,6 +47,13 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 		
 		this.vista = new VentanaGestionarParametrosSistema();
 		
+		mostrar();
+		
+		TiendaFrame.getInstance().navegarA(this);		
+	}
+	
+	@Override
+	public void mostrar() {
 		Sistema sistema = Sistema.getInstancia();
 		
 		// Creación de cada uno de los paneles
@@ -95,8 +101,6 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 		precioValoracion.setControlador(this);
 		vista.anadirDisplay(precioValoracion);
 		mapaPaneles.put(ParametroSistema.PRECIO_VALORACION, precioValoracion);
-		
-		TiendaFrame.getInstance().navegarA(this);		
 	}
 	
 	/**
@@ -108,7 +112,15 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ParametroSistema param = ParametroSistema.valueOf(e.getActionCommand());
+		String action = e.getActionCommand();
+		String[] actionSplit = action.split("\s++");
+		ParametroSistema param = ParametroSistema.valueOf(actionSplit[0]);
+		
+		if (actionSplit.length > 1 && actionSplit[1].trim().equals(PanelParametroSistema.INFO_ACTION)) {
+			mostrarInfoPanel(param);
+			return;
+		}
+
 		if (param == null) return;
 		PanelParametroSistema panel = mapaPaneles.get(param);
 		String valorText = panel.getValorTextField();
@@ -121,47 +133,97 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 			case ParametroSistema.DURACION_CARRITO:
 			case ParametroSistema.DURACION_OFERTA:
 				try {
-				String[] parts = panel.getValorTextField().split(":");
-				if (parts.length < 4) throw new IllegalArgumentException();
-				
-				int days = Integer.parseInt(parts[0]);
-				int hours = Integer.parseInt(parts[1]);
-				int mins = Integer.parseInt(parts[2]);
-				int secs = Integer.parseInt(parts[3]);
-				
-				Duration duracion = Duration.ofDays(days).plusHours(hours).plusMinutes(mins).plusSeconds(secs);
-				tienda.gestionarParametroDeSistema(gestor, param, duracion);
+					String[] parts = panel.getValorTextField().split(":");
+					if (parts.length < 4)
+						throw new IllegalArgumentException();
+	
+					int days = Integer.parseInt(parts[0]);
+					int hours = Integer.parseInt(parts[1]);
+					int mins = Integer.parseInt(parts[2]);
+					int secs = Integer.parseInt(parts[3]);
+	
+					Duration duracion = Duration.ofDays(days).plusHours(hours).plusMinutes(mins).plusSeconds(secs);
+					tienda.gestionarParametroDeSistema(gestor, param, duracion);
+					
 				} catch (IllegalArgumentException ex) {
 					new VentanaMensaje("Formato incorrecto de duración. Formato correcto DD:HH:MM:SS", 1);
+					mostrar();
 					return;
 				}
 				break;
 			case ParametroSistema.NUMERO_PRODUCTOS_RECOMENDADOS:
 				try {
 					int valorInt = Integer.parseInt(valorText);
+					if (valorInt < 0) throw new IllegalArgumentException();
 					tienda.gestionarParametroDeSistema(gestor, ParametroSistema.NUMERO_PRODUCTOS_RECOMENDADOS, valorInt);
+					
 				} catch (IllegalArgumentException ex) {
-					new VentanaMensaje("Formato incorrecto del parámetro. Debe ser un entero", 1);
+					new VentanaMensaje("Formato incorrecto del parámetro. Debe ser un entero positivo", 1);
+					mostrar();
 					return;
 				}
 				break;
 			default:
 				try {
 					double valor = Double.parseDouble(panel.getValorTextField());
+					if (valor < 0) throw new IllegalArgumentException();
 					tienda.gestionarParametroDeSistema(gestor, param, valor);
 				} catch (IllegalArgumentException ex) {
 					new VentanaMensaje("Formato incorrecto del parámetro. Debe ser un número positivo", 1);
+					mostrar();
 					return;
 				}
 				break;
 			}
 		} catch (InvalidArgumentException iae) {
 			new VentanaMensaje(iae.getMessage(), 1);
+			mostrar();
 			return;
 		}
 		
 		new VentanaMensaje("Se ha modificado el valor del parámetro correctamente", VentanaMensaje.INFO);
 	}
+	
+	private void mostrarInfoPanel(ParametroSistema parametro) {
+		String infoDePanel = "";
+		
+		switch(parametro)  {
+		case BUSQUEDA:
+			
+			break;
+		case CATEGORIA:
+			infoDePanel = "Es la ponderación que tiene el hecho de que un producto pertenezca a una categoría para su vector de recomendación";
+			break;
+		case DURACION_CARRITO:
+			infoDePanel = "Determina el tiempo que tarda en caducarse el carrito de un cliente desde que se le añade un último producto";
+			break;
+		case DURACION_OFERTA:
+			infoDePanel = "Determina el tiempo que tarda en caducarse una oferta de intercambio desde que esta es realizada";
+			break;
+		case NUMERO_PRODUCTOS_RECOMENDADOS:
+			infoDePanel = "Establece el número de productos que se muestran en la ventana de productos recomendados";
+			break;
+		case PRECIO_COMPRA:
+			infoDePanel = "Es la ponderación que tiene el precio pagado por un producto a la hora de actualizar el vector de interés de un cliente tras pagar";
+			break;
+		case PRECIO_VALORACION:
+			infoDePanel = "Es la ponderación que tiene la similitud entre un producto y el cliente (semejanza entre los vectores)";
+			break;
+		case PRODUCTO_RECOMENDADO:
+			infoDePanel = "Es la ponderación que tiene la compatibilidad entre usuario y producto a la hora de calcular el valor de recomendación";
+			break;
+		case UDS_COMPRADAS:
+			infoDePanel = "Es la ponderación que tiene el número de unidades compradas de un producto a la hora de actualizar el vector de interés de un cliente tras pagar";
+			break;
+		case VALORACIONES_PRODUCTO:
+			infoDePanel = "Es la ponderación que tiene la media de puntuación de un producto a la hora de calcular su valor de compatibilidad con un determinado usuario";
+			break;
+		default:
+			break;
+		}
+		
+		new VentanaMensaje(infoDePanel, VentanaMensaje.INFO);
+		}
 	
 	/**
 	 * Método para obtener un de manera formateada la duración
@@ -195,7 +257,8 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 	 */
 	@Override
 	public String getExplicacion() {
-		return "En esta ventana se muestran los valores asociados a los parámetros del sistema y se permite modificar su valor rellenando el campo asociado y pulsando el botón de confirmación" + "Duración carrito: Tiempo que tarda en caducarse un carrito desde que se le añade un último artículo ";
+		return "En esta ventana se muestran los valores asociados a los parámetros del sistema y se permite modificar su valor rellenando el campo asociado y pulsando el botón de confirmación" ;
 	}
+	
 
 }
