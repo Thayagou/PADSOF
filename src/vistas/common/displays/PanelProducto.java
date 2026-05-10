@@ -107,6 +107,7 @@ public class PanelProducto extends PanelDisplay {
 		if (!cats.isEmpty()) {
 			JLabel categoriasLabel = new JLabel(cats);
 			categoriasLabel.setFont(Fonts.TEXT.getFont());
+			categoriasLabel.setText(Fonts.truncar(cats, t.getPixelsWidth(NAME_WIDTH - 0.01), Fonts.TEXT.getFont(), thirdRow));
 			categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
 			thirdRow.add(categoriasLabel, BorderLayout.WEST);
 		}

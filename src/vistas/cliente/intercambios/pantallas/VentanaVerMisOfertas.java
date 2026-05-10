@@ -42,7 +42,7 @@ public class VentanaVerMisOfertas extends JPanel implements VentanaConDisplay<Pa
 	/**
 	 * refreshList.
 	 */
-	private void refreshList() {
+	public void refreshList() {
 		intercambios.revalidate();
 		intercambios.repaint();
 	}

@@ -36,6 +36,11 @@ public class ControlBuscarArticulos implements ControladorPantalla {
 	public JPanel getVista() {
 		return vista;
 	}
+	
+	@Override
+	public void mostrar() {
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

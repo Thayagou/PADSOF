@@ -42,6 +42,18 @@ public class ControlVerMisOfertas implements ControladorPantalla {
 		
 		TiendaFrame.getInstance().recargarPantallaActual(this);
 	}
+	
+	@Override
+	public void mostrar() {
+		vista = new VentanaVerMisOfertas();
+		vista.setControlador(this);
+		
+		for(Intercambio i : cliente.getCartera().getIntercambiosPendientes()) {
+			new ControlPanelOferta(tienda, cliente, i, vista, this);
+		}
+		
+		TiendaFrame.getInstance().refresh();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -274,6 +274,22 @@ public class TiendaFrame extends JFrame {
 	    revalidate();
 	    repaint();
 	}
+	
+	public void refresh() {
+		JPanel nuevaVista = controladorActual.getVista();
+	    String clave = claveUnica(controladorActual);
+	    if (nuevaVista.getClientProperty("_navClave") == null) {
+	        nuevaVista.putClientProperty("_navClave", clave);
+	        contentPanel.add(nuevaVista, clave);
+	    }
+	    
+	    cardLayout.show(contentPanel, clave);
+	    
+	    this.vistaActual = nuevaVista;
+	    
+	    revalidate();
+	    repaint();
+	}
 
 	/**
 	 * Vacía la pila de pantallas anteriores y destruye todos los controladores

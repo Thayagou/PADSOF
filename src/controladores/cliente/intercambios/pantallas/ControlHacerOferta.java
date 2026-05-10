@@ -79,6 +79,11 @@ public class ControlHacerOferta implements ControladorPantalla {
 			break;
 		}
 	}
+	
+	@Override
+	public boolean puedeVolver() {
+		return false;
+	}
 
 	@Override
 	public JPanel getVista() {

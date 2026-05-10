@@ -77,10 +77,13 @@ public class ControlVerOferta implements ControladorPantalla {
 			if(TiendaFrame.getConfirmacionUsuario("¿Quieres cancelar la oferta?")) {
 				try{
 					intercambio.cancelarIntercambio();
+					new VentanaMensaje("Has cancelado la oferta");
+					TiendaFrame.getInstance().volverAtras();
 				} catch(Exception ex) {
 					new VentanaMensaje(ex.getMessage(), 1);
 				}
 			}
+			break;
 		}
 	}
 

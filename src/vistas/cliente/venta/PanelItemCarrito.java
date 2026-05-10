@@ -19,6 +19,8 @@ public class PanelItemCarrito extends PanelProducto {
 	
 	/** Constante QUITAR_ACTION. */
 	public static final String QUITAR_ACTION = "Quitar";
+	
+	public static final int BTN_WIDTH = TiendaFrame.getInstance().getPixelsWidth(0.07);
 
 	/** Campo quitar. */
 	private JButton quitar;
@@ -56,8 +58,9 @@ public class PanelItemCarrito extends PanelProducto {
 		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
 		buttons.setPreferredSize(new Dimension(maxWidth, (int) (maxCompHeight * BOTON_PERC_H)));
 
-		quitar = ButtonFactory.newRoundedButton("Quitar", (int) (maxCompHeight), maxCompHeight, 0.5f);
-		quitar.setActionCommand("quitar");
+		quitar = ButtonFactory.newRoundedButton("Quitar", (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.5f);
+		quitar.setMaximumSize(new Dimension(BTN_WIDTH,  (int) (maxCompHeight * BOTON_PERC_H)));
+		quitar.setActionCommand(QUITAR_ACTION);
 		ButtonFactory.paintButton(quitar, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(quitar, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 

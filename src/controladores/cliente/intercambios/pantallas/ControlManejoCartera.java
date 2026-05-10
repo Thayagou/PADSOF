@@ -32,16 +32,22 @@ public class ControlManejoCartera implements ControladorPantalla {
 		
 		vista.setControlador(this);
 		
-		refresh();
+		cargarArticulos();
 		
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
-	private void refresh() {
+	private void cargarArticulos() {
 		vista.limpiarDisplays();
 		
-		for(ArticuloSegundaMano a : dueno.getCartera().getArticulos()) {
-			new ControlPanelArticuloEnCartera(tienda, cliente, a, vista);
+		if(cliente.equals(dueno)) {
+			for(ArticuloSegundaMano a : dueno.getCartera().getArticulos()) {
+				new ControlPanelArticuloEnCartera(tienda, cliente, a, vista);
+			}
+		} else {
+			for(ArticuloSegundaMano a : dueno.getCartera().getArticulosDisponibles()) {
+				new ControlPanelArticuloEnCartera(tienda, cliente, a, vista);
+			}
 		}
 	}
 
@@ -61,11 +67,12 @@ public class ControlManejoCartera implements ControladorPantalla {
 	
 	@Override
 	public void mostrar() {
-		refresh();
+		cargarArticulos();
+		TiendaFrame.getInstance().refresh();
 	}
 
 	@Override
 	public String getExplicacion() {
-		return "Aquí se muestran los artículos de tu cartera. Puedes solicitar una valoración para aquellos que no hayan sido valorados ya.";
+		return "Aquí se muestran los artículos de una cartera. Puedes ver los objetos del dueño de la cartera.";
 	}
 }

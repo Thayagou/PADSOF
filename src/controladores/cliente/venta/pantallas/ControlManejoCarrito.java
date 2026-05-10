@@ -23,31 +23,11 @@ public class ControlManejoCarrito implements ControladorPantalla {
 	public ControlManejoCarrito(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
 		this.cliente = cliente;
-		
-		double precio = cliente.getCarrito().calcularCarrito();
-		
-		this.vista = new VentanaCarrito(precio);
-		
-		for(StockExterno st : cliente.getCarrito().getItems()) {
-			new ControlItemCarrito(tienda, cliente, st, vista, this);
-		}
-		
-		vista.setControlador(this);
-		
+
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
 	public void recargarPantalla() {
-		double precio = cliente.getCarrito().calcularCarrito();
-		
-		this.vista = new VentanaCarrito(precio);
-		
-		for(StockExterno st : cliente.getCarrito().getItems()) {
-			new ControlItemCarrito(tienda, cliente, st, vista, this);
-		}
-		
-		vista.setControlador(this);
-		
 		TiendaFrame.getInstance().recargarPantallaActual(this);
 	}
 	
@@ -69,6 +49,21 @@ public class ControlManejoCarrito implements ControladorPantalla {
 			}
 			break;
 		}
+	}
+	
+	@Override
+	public void mostrar() {
+		double precio = cliente.getCarrito().calcularCarrito();
+		
+		this.vista = new VentanaCarrito(precio);
+		
+		for(StockExterno st : cliente.getCarrito().getItems()) {
+			new ControlItemCarrito(tienda, cliente, st, vista, this);
+		}
+		
+		vista.setControlador(this);
+		
+		TiendaFrame.getInstance().refresh();
 	}
 
 	@Override
