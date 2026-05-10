@@ -168,7 +168,8 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		if(!comprobarUnicidadNombre(nombre)) throw new NotValidUserException("Ya existe un usuario con ese nombre", "registrarse", nombre);
 		if(!contrasena.equals(confirmarContrasena)) throw new NotValidUserException("Ha fallado la comprobación de contraseña", "registrarse", nombre);
 		
-		ClienteRegistrado cliente = new ClienteRegistrado(nombre, contrasena, this);
+		String contrasenaHash = BCrypt.hashpw(contrasena, BCrypt.gensalt());
+		ClienteRegistrado cliente = new ClienteRegistrado(nombre, contrasenaHash, this);
 		clientes.put(nombre, cliente);
 		historial.guardarUsuario(cliente);
 		return clientes.get(nombre);
@@ -183,15 +184,31 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 * @throws NotValidUserException Se lanza si el usuario no existe o la contraseña es incorrecta
 	 */
 	public Usuario iniciarSesion(String nombre, String contrasena) throws InvalidArgumentException, NotValidUserException {
+		gestor.setContrasena(BCrypt.hashpw(gestor.getContrasena(), BCrypt.gensalt()));
+		
+		for (Empleado e: empleados.values()) {
+			e.setContrasena(BCrypt.hashpw(e.getContrasena(), BCrypt.gensalt()));
+		}
+		
+		for (Empleado e: empleados.values()) {
+			System.out.println(e.getNombre() + " " + e.getContrasena());
+		}
+		
+		for (ClienteRegistrado c: clientes.values()) {
+			c.setContrasena(BCrypt.hashpw(c.getContrasena(), BCrypt.gensalt()));
+		}
+		
 		if(gestor.getNombre().equals(nombre)) {
-			if(gestor.getContrasena().equals(contrasena))
+			if(BCrypt.checkpw(contrasena, gestor.getContrasena()))
 				return gestor;
 		} else if(clientes.containsKey(nombre)) {
-			if(clientes.get(nombre).getContrasena().equals(contrasena))
-				return clientes.get(nombre);
+			ClienteRegistrado cliente = clientes.get(nombre);
+			if(BCrypt.checkpw(contrasena, cliente.getContrasena()));
+				return cliente;
 		} else if(empleados.containsKey(nombre)) {
-			if(empleados.get(nombre).getContrasena().equals(contrasena) && empleados.get(nombre).estaDeAlta())
-				return empleados.get(nombre);
+			Empleado empleado = empleados.get(nombre);
+			if(BCrypt.checkpw(contrasena, empleado.getContrasena()) && empleado.estaDeAlta())
+				return empleado;
 		} else {
 			throw new NotValidUserException("No se encontró el usuario", "iniciar sesión", nombre);
 		}

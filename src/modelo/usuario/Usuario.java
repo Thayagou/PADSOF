@@ -45,6 +45,10 @@ public abstract class Usuario implements Serializable {
 		return this.contrasena;
 	}
 	
+	public void setContrasena(String newPass) {
+		contrasena = newPass;
+	}
+	
 	/**
 	 * Devuelve la información del usuario
 	 * @return String con la información 
