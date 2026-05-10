@@ -7,7 +7,9 @@ import javax.swing.SwingUtilities;
 
 import controladores.cliente.intercambios.pantallas.ControlAnadirArticulo;
 import controladores.cliente.intercambios.pantallas.ControlBuscarArticulos;
+import controladores.cliente.intercambios.pantallas.ControlIntercambiosPendientes;
 import controladores.cliente.intercambios.pantallas.ControlManejoCartera;
+import controladores.cliente.intercambios.pantallas.ControlOfertasEntrantes;
 import controladores.cliente.intercambios.pantallas.ControlVerMisOfertas;
 import controladores.cliente.venta.pantallas.ControlBuscarCliente;
 import controladores.cliente.venta.pantallas.ControlManejoCarrito;
@@ -61,8 +63,14 @@ public class ControlBarraLateralCliente implements ActionListener {
 		case BarraLateralCliente.ADD_ART:
 			SwingUtilities.invokeLater(() -> new ControlAnadirArticulo(tienda, cliente));
 			break;
-		case BarraLateralCliente.OFFERS:
+		case BarraLateralCliente.OFFERS_SENT:
 			SwingUtilities.invokeLater(() -> new ControlVerMisOfertas(tienda, cliente));
+			break;
+		case BarraLateralCliente.OFFERS_RECIEVED:
+			SwingUtilities.invokeLater(() -> new ControlOfertasEntrantes(tienda, cliente));
+			break;
+		case BarraLateralCliente.EXCHANGES:
+			SwingUtilities.invokeLater(() -> new ControlIntercambiosPendientes(tienda, cliente));
 			break;
 		case BarraLateralCliente.COMPRAS:
 			SwingUtilities.invokeLater(() -> new ControlVerCompras(tienda, cliente));

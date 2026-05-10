@@ -33,7 +33,13 @@ public class BarraLateralCliente extends BarraLateral {
 	public static final String ADD_ART = "Añadir Artículo";
 	
 	/** Constante OFFERS. */
-	public static final String OFFERS = "Ver mis ofertas";
+	public static final String OFFERS_SENT = "Ver mis ofertas";
+	
+	/** Action command para ir a la ventana de ofertas recividas */
+	public static final String OFFERS_RECIEVED = "Ofertas Entrantes";
+	
+	/** Action command para ir a la ventana de intercambios pendientes */
+	public static final String EXCHANGES = "Intercambios pendientes";
 	
 	/** Constante COMPRAS. */
 	public static final String COMPRAS = "Ver mis compras";
@@ -54,7 +60,13 @@ public class BarraLateralCliente extends BarraLateral {
 	private JButton anadirArticulo = new JButton(ADD_ART);
 	
 	/** boton verMisOfertas. */
-	private JButton verMisOfertas = new JButton(OFFERS);
+	private JButton verMisOfertas = new JButton(OFFERS_SENT);
+	
+	/** boton para ver las ofertas entrantes */
+	private JButton verOfertasEnt = new JButton(OFFERS_RECIEVED);
+	
+	/** boton para ver los intercambios pendientes */
+	private JButton verIntercambios = new JButton(EXCHANGES);
 	
 	/** boton verCompras. */
 	private JButton verCompras = new JButton(COMPRAS);
@@ -72,8 +84,8 @@ public class BarraLateralCliente extends BarraLateral {
 		Map<String, List<JButton>> mapa = new TreeMap<>();
 		
 		mapa.put("Comprar", new ArrayList<JButton>(List.of(buscarProductos, verCarrito)));
-		mapa.put("Segunda mano", new ArrayList<JButton>(List.of(buscarArticulos, verCartera, anadirArticulo, verMisOfertas)));
-		mapa.put("Mis compras", new ArrayList<JButton>(List.of(verCompras)));
+		mapa.put("Segunda mano", new ArrayList<JButton>(List.of(buscarArticulos, verCartera, anadirArticulo, verMisOfertas, verOfertasEnt)));
+		mapa.put("Pendientes", new ArrayList<JButton>(List.of(verCompras, verIntercambios)));
 		
 		MenuLateral menu = new MenuLateral(mapa, MENU_WIDTH);
 		
@@ -87,7 +99,7 @@ public class BarraLateralCliente extends BarraLateral {
 	 */
 	@Override
 	public void setControlador(ActionListener c) {
-		for(JButton btn : new JButton[] {buscarProductos, verCarrito, buscarArticulos, verCartera, anadirArticulo, verMisOfertas, verCompras}) {
+		for(JButton btn : new JButton[] {buscarProductos, verCarrito, buscarArticulos, verCartera, anadirArticulo, verMisOfertas, verOfertasEnt, verIntercambios, verCompras}) {
 			btn.addActionListener(c);
 		}
 	}

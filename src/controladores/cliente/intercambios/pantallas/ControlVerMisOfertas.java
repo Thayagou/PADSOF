@@ -14,46 +14,51 @@ import vistas.common.app.TiendaFrame;
 
 public class ControlVerMisOfertas implements ControladorPantalla {
 	
-	Tienda tienda;
-	ClienteRegistrado cliente;
-	VentanaVerMisOfertas vista;
+	protected Tienda tienda;
+	protected ClienteRegistrado cliente;
+	protected VentanaVerMisOfertas vista;
+	protected String cabecera;
+	
+	public void crearPaneles() {
+		Intercambio[] ofertas = cliente.getCartera().getIntercambiosPendientesSolicitados();
+		for(int i = ofertas.length - 1; i >= 0 ; i--) {
+			if(ofertas[i].getEmisor().getDueno().equals(cliente))
+				new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
+		}
+	}
 	
 	public ControlVerMisOfertas(Tienda tienda, ClienteRegistrado cliente) {
+		this(tienda, cliente, "Ver mis ofertas de intercambio");
+	}
+	
+	protected ControlVerMisOfertas(Tienda tienda, ClienteRegistrado cliente, String cabecera) {
 		this.tienda = tienda;
 		this.cliente = cliente;
+		this.cabecera = cabecera;
 		
-		vista = new VentanaVerMisOfertas();
+		vista = new VentanaVerMisOfertas(cabecera);
 		vista.setControlador(this);
 		
-		Intercambio[] ofertas = cliente.getCartera().getIntercambiosPendientes();
-		for(int i = ofertas.length - 1; i >= 0 ; i--) {
-			new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
-		}
+		crearPaneles();
 		
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
 	public void refrescar() {
-		vista = new VentanaVerMisOfertas();
+		vista = new VentanaVerMisOfertas(cabecera);
 		vista.setControlador(this);
 		
-		Intercambio[] ofertas = cliente.getCartera().getIntercambiosPendientes();
-		for(int i = ofertas.length - 1; i >= 0 ; i--) {
-			new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
-		}
+		crearPaneles();
 		
 		TiendaFrame.getInstance().recargarPantallaActual(this);
 	}
 	
 	@Override
 	public void mostrar() {
-		vista = new VentanaVerMisOfertas();
+		vista = new VentanaVerMisOfertas(cabecera);
 		vista.setControlador(this);
 		
-		Intercambio[] ofertas = cliente.getCartera().getIntercambiosPendientes();
-		for(int i = ofertas.length - 1; i >= 0 ; i--) {
-			new ControlPanelOferta(tienda, cliente, ofertas[i], vista, this);
-		}
+		crearPaneles();
 		
 		TiendaFrame.getInstance().refresh();
 	}
@@ -70,7 +75,7 @@ public class ControlVerMisOfertas implements ControladorPantalla {
 
 	@Override
 	public String getExplicacion() {
-		return "Aquí se muestran las ofertas que usted ha realizado o recibido. Para aceptar/rechazar una oferta o para cancelar una propia, haz clic sobre ella y continúa en la nueva ventana.";
+		return "Aquí se muestran las ofertas que usted ha realizado. Para cancelar una oferta, haz clic sobre ella y continúa en la nueva ventana o usa los botones que se muestran a la derecha.";
 	}
 
 }

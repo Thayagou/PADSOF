@@ -23,8 +23,10 @@ public class VentanaVerMisOfertas extends JPanel implements VentanaConDisplay<Pa
 	
 	/**
 	 * Instancia un nuevo Objeto VentanaVerMisOfertas.
+	 * 
+	 * @param cabecera Titulo de la ventana
 	 */
-	public VentanaVerMisOfertas() {
+	public VentanaVerMisOfertas(String cabecera) {
 		setLayout(new BorderLayout());
 		
 		intercambios = new JPanel();
@@ -35,7 +37,7 @@ public class VentanaVerMisOfertas extends JPanel implements VentanaConDisplay<Pa
 		JPanel scrollPanel = new JPanel(new BorderLayout());
 		scrollPanel.add(scroll);
 		
-		add(PanelFactory.getVentanaConCabecera("Mis ofertas de intercambio", scrollPanel));
+		add(PanelFactory.getVentanaConCabecera(cabecera, scrollPanel));
 		refreshList();
 	}
 	
