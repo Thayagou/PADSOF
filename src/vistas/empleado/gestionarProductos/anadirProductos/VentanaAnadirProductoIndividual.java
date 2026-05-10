@@ -565,11 +565,17 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 
 						// Al cerrar el dialogo, actualizar el resumen
 						long seleccionados = java.util.Arrays.stream(this.productos)
-								.filter(p -> p.getUds() > 0).count();
+						        .filter(p -> p.getUds() > 0).count();
 						if (seleccionados == 0) {
-							lblResumen.setText("Ningun producto seleccionado");
+						    lblResumen.setText("Ningun producto seleccionado");
 						} else {
-							lblResumen.setText(seleccionados + " producto" + (seleccionados > 1 ? "s" : "") + " seleccionado" + (seleccionados > 1 ? "s" : ""));
+						    double precioTotal = java.util.Arrays.stream(this.productos)
+						            .filter(p -> p.getUds() > 0)
+						            .mapToDouble(p -> p.getPrecio() * p.getUds())
+						            .sum();
+						    lblResumen.setText(seleccionados + " producto" + (seleccionados > 1 ? "s" : "")
+						            + " seleccionado" + (seleccionados > 1 ? "s" : "")
+						            + " — " + String.format("%.2f €", precioTotal));
 						}
 					});
 
