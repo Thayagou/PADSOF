@@ -2,7 +2,6 @@ package vistas.noRegistrado;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import javax.swing.*;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.common.displays.PanelProducto;
@@ -18,18 +17,12 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Campo productos. */
-	protected ArrayList<? super PanelProducto> productos = new ArrayList<>();
-	
 	/** Campo listaPanel. */
 	protected JPanel listaPanel;
 	
 	/** Campo ordenCombo. */
 	protected PanelMultiopcion panelOpciones;
-
-	/** Campo clickListener. */
-	protected ActionListener clickListener; // para navegar al detalle
-
+	
 	/** Constante ORDENES. */
 	protected static final String[] ORDENES = { "Mejor valorados", "Peor valorados", "Precio: menor a mayor",
 			"Precio: mayor a menor", "Nombre A-Z", "Nombre Z-A" };
@@ -41,7 +34,6 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 		setOpaque(false);
 		setLayout(new BorderLayout(0, 0));
 
-		// Lista 
 		listaPanel = new JPanel();
 		listaPanel.setLayout(new BoxLayout(listaPanel, BoxLayout.Y_AXIS));
 		listaPanel.setBackground(ColorPalette.CARD_LIGHT.getColor());
@@ -51,47 +43,25 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 		contenido.add(scroll);
 
 		panelOpciones = new PanelMultiopcion("Resultados de búsqueda", contenido, ORDENES);
-		panelOpciones.setControlador(e -> refrescarLista());
 		
 		add(panelOpciones);
-
+		
 		refrescarLista();
 	}
 	
-	/**
-	 * anadirProducto.
-	 *
-	 * @param nombre parámetro nombre
-	 * @param descripcion parámetro descripcion
-	 * @param image parámetro image
-	 * @param puntuacionMedia parámetro puntuacionMedia
-	 * @param precio parámetro precio
-	 * @param categorias parámetro categorias
-	 */
-	public void anadirProducto(String nombre, String descripcion, String image, double puntuacionMedia, double precio, String...categorias) {
-		productos.add(new PanelProducto(nombre, descripcion, image, puntuacionMedia, precio, "Ver producto",categorias));
-		refrescarLista();
+	public int getOpcionSeleccionada() {
+		return panelOpciones.getOpcionSeleccionada();
 	}
 
 	/**
 	 * refrescarLista.
 	 */
-	protected void refrescarLista() {
-		PanelProducto[] ordenados = Arrays.copyOf(productos.toArray(new PanelProducto[0]), productos.size());
-		switch (panelOpciones.getOpcionSeleccionada()) {
-		case 0 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPuntuacionMedia).reversed());
-		case 1 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPuntuacionMedia));
-		case 2 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPrecio));
-		case 3 -> Arrays.sort(ordenados, Comparator.comparingDouble(PanelProducto::getPrecio).reversed());
-		case 4 -> Arrays.sort(ordenados, Comparator.comparing(PanelProducto::getNombre));
-		case 5 -> Arrays.sort(ordenados, Comparator.comparing(PanelProducto::getNombre).reversed());
-		}
-
+	public void vaciarLista() {
 		listaPanel.removeAll();
-		for (PanelProducto p : ordenados) {
-			if (clickListener != null) p.setControlador(clickListener);
-			listaPanel.add(p);
-		}
+		refrescarLista();
+	}
+	
+	private void refrescarLista() {
 		listaPanel.revalidate();
 		listaPanel.repaint();
 	}
@@ -102,13 +72,8 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	 *
 	 * @param l nuevo valor
 	 */
-	public void setClickListener(ActionListener l) {
-		this.clickListener = l;
-		// Reasignar a los paneles ya creados
-		for (Component c : listaPanel.getComponents()) {
-			if (c instanceof PanelProducto pp)
-				pp.setControlador(l);
-		}
+	public void setControlador(ActionListener l) {
+		panelOpciones.setControlador(l);
 	}
 
 	/**
@@ -120,8 +85,9 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	 */
 	@Override
 	public <K extends PanelProducto> PanelProducto anadirDisplay(K panelDisplay) {
-		productos.add(panelDisplay);
+		listaPanel.add(panelDisplay);
 		refrescarLista();
+		
 		return panelDisplay;
 	}
 }

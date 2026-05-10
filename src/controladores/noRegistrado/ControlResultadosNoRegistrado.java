@@ -2,6 +2,8 @@ package controladores.noRegistrado;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import javax.swing.JPanel;
 
@@ -9,25 +11,51 @@ import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
 import vistas.common.app.TiendaFrame;
+import vistas.common.assets.PanelMultiopcion;
 import vistas.noRegistrado.VentanaResultadosNoRegistrado;
 
 public class ControlResultadosNoRegistrado implements ActionListener, ControladorPantalla {
 
 	private VentanaResultadosNoRegistrado vista;
+	private Producto[] resultados;
+	private Tienda tienda;
 
 	public ControlResultadosNoRegistrado(Tienda tienda, Producto[] productos) {
 		this.vista = new VentanaResultadosNoRegistrado();
+		vista.setControlador(this);
+		this.resultados = productos;
+		this.tienda = tienda;
 		
-		for(Producto p : productos) {
-			new ControlPanelProductoNoRegistrado(tienda, p, vista);
-		}
+		ordenar();
 		
 		TiendaFrame.getInstance().navegarA(this);
+	}
+	
+	private void ordenar() {
+		Producto[] ordenados = Arrays.copyOf(resultados, resultados.length);
+		switch (vista.getOpcionSeleccionada()) {
+		case 0 -> Arrays.sort(ordenados, Comparator.comparingDouble(Producto::getPuntuacionMedia).reversed());
+		case 1 -> Arrays.sort(ordenados, Comparator.comparingDouble(Producto::getPuntuacionMedia));
+		case 2 -> Arrays.sort(ordenados, Comparator.comparingDouble(Producto::getPrecio));
+		case 3 -> Arrays.sort(ordenados, Comparator.comparingDouble(Producto::getPrecio).reversed());
+		case 4 -> Arrays.sort(ordenados, Comparator.comparing(Producto::getNombre));
+		case 5 -> Arrays.sort(ordenados, Comparator.comparing(Producto::getNombre).reversed());
+		}
+		
+		vista.vaciarLista();
+		
+		for(Producto p : ordenados) {
+			new ControlPanelProductoNoRegistrado(tienda, p, vista);
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/* Sin acciones para esta ventana */
+		switch(e.getActionCommand()) {
+		case PanelMultiopcion.CAMBIO_OPCION_ACTION:
+			ordenar();
+			break;
+		}
 	}
 
 	@Override
