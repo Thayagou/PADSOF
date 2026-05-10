@@ -64,11 +64,9 @@ public class PanelOferta extends PanelDisplay {
 	 * @param pide       Array de nombres de objetos que pide a cambio.
 	 * @param ofrece     Array de nombres de objetos que ofrece.
 	 * @param actionName ActionCommand que se dispara al pulsar el panel.
-	 * @param btn1 	ActionCommand que se dispara al pulsar el boton superior.
-	 * @param btn2 		ActionCommand que se dispara al pulsar el boton inferior.
 	 */
 	public PanelOferta(String usuario, String fotoPerfil, String foto,
-			String[] pide, String[] ofrece, String actionName, String btn1, String btn2) {
+			String[] pide, String[] ofrece, String actionName) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, foto, actionName);
 
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -76,11 +74,33 @@ public class PanelOferta extends PanelDisplay {
 		int rowGap    = t.getPixelsHeight(ROW_GAP);
 		int avatarGap = t.getPixelsWidth(AVATAR_GAP);
 		int textMaxW  = t.getPixelsWidth(CENTER_TEXT_W);
+
+		this.add(buildCentro(t, usuario, null, fotoPerfil, pide, ofrece, rowGap, avatarGap, textMaxW), BorderLayout.CENTER);
+		
+	}
+	
+	/**
+	 * Instancia un nuevo Objeto PanelOferta.
+	 *
+	 * @param usuario    Nombre del usuario que hace la oferta.
+	 * @param fotoPerfil Nombre del fichero de imagen de perfil.
+	 * @param foto       Nombre del fichero de imagen del objeto principal.
+	 * @param pide       Array de nombres de objetos que pide a cambio.
+	 * @param ofrece     Array de nombres de objetos que ofrece.
+	 * @param actionName ActionCommand que se dispara al pulsar el panel.
+	 * @param btn1 	ActionCommand que se dispara al pulsar el boton superior.
+	 * @param btn2 		ActionCommand que se dispara al pulsar el boton inferior.
+	 */
+	public PanelOferta(String usuario, String fotoPerfil, String foto,
+			String[] pide, String[] ofrece, String actionName, String btn1, String btn2) {
+		this(usuario, fotoPerfil, foto, pide, ofrece, actionName);
+		
+		TiendaFrame t = TiendaFrame.getInstance();
+		
 		int btnWidth  = t.getPixelsWidth(BTN_WIDTH);
 		int btnHeight = maxCompHeight;
 		int wrapGap   = t.getPixelsHeight(BTN_WRAP_GAP);
 
-		this.add(buildCentro(t, usuario, null, fotoPerfil, pide, ofrece, rowGap, avatarGap, textMaxW), BorderLayout.CENTER);
 		this.add(buildEast(btn1, btn2, btnHeight, btnWidth, wrapGap), BorderLayout.EAST);
 	}
 	

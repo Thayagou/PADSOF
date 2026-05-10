@@ -132,11 +132,27 @@ public class Cartera implements Serializable{
 	}
 
 	/**
-	 * Getter de los intercambios que se encuentren en estado OFERTADO, es decir, que se encuentren pendientes de respuesta
+	 * Getter de los intercambios hechos por el usuario que se encuentren en estado OFERTADO, es decir, que se encuentren pendientes de respuesta
 	 * @return Array de Intercambio con dichos intercambios
 	 */
-	public Intercambio[] getIntercambiosPendientes() {
-		return intercambios.stream().filter(i->i.getEstado().equals(EstadoIntercambio.OFERTADO)).toArray(Intercambio[]::new);
+	public Intercambio[] getIntercambiosPendientesSolicitados() {
+		return intercambios.stream().filter(i->i.getEstado().equals(EstadoIntercambio.OFERTADO) && i.getEmisor().equals(this)).toArray(Intercambio[]::new);
+	}
+	
+	/**
+	 * Getter de los intercambios hechos por otros usuarios que se encuentren en estado OFERTADO, es decir, que se encuentren pendientes de respuesta
+	 * @return Array de Intercambio con dichos intercambios
+	 */
+	public Intercambio[] getIntercambiosPendientesRecibidos() {
+		return intercambios.stream().filter(i->i.getEstado().equals(EstadoIntercambio.OFERTADO) && !i.getEmisor().equals(this)).toArray(Intercambio[]::new);
+	}
+	
+	/**
+	 * Getter de los intercambios que ya han concluído
+	 * @return Array de Intercambio con dichos intercambios
+	 */
+	public Intercambio[] getIntercambiosConcluidos() {
+		return intercambios.stream().filter(i->!i.getEstado().equals(EstadoIntercambio.OFERTADO)).toArray(Intercambio[]::new);
 	}
 	
 	@Override

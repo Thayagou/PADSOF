@@ -90,7 +90,6 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		vista.vaciarDescontados();
 		
 		if (listaControlesPanelesProductos != null) {
-			System.out.println("Productos");
 			for (ControlPanelProductoSeleccion control : listaControlesPanelesProductos) {
 				vista.anadirDisplay(control.getPanel());
 			}
@@ -120,7 +119,6 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		vista.vaciarDescontados();
 		
 		if (listaControlesPanelesCategorias != null) {
-			System.out.println("Categorias");
 			for (ControlPanelCategoriaSeleccion control : listaControlesPanelesCategorias) {
 				vista.anadirDisplay(control.getPanel());
 			}
@@ -277,7 +275,10 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 					tienda.getAlmacen().anadirDescuentoPorcentaje(descontado, valorMinimo, fechaInicio, fechaFin, condicion, compPorcentaje);
 				}
 				case VentanaAnadirDescuento.COMP_REGALO -> {
-					if (regalo == null) new VentanaMensaje("Debes seleccionar un producto como regalo");
+					if (regalo == null) {
+						new VentanaMensaje("Debes seleccionar un producto como regalo");
+						return;
+					}
 					tienda.getAlmacen().anadirDescuentoRegalo(descontado, valorMinimo, fechaInicio, fechaFin, condicion, regalo);
 				}
 			}
