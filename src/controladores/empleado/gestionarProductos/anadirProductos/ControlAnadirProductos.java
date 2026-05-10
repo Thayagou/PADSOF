@@ -7,10 +7,11 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
+import controladores.ControlCargaImagen;
 import controladores.ControladorPantalla;
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
@@ -29,7 +30,7 @@ import modelo.venta.productos.caracteristicas.CaracteristicasPack;
 import modelo.venta.productos.caracteristicas.CaracteristicasProducto;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
-import vistas.common.displays.PanelProducto;
+import vistas.empleado.gestionarProductos.anadirProductos.PanelProductoAnadirAPack;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductoIndividual;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductos;
 
@@ -49,6 +50,9 @@ public class ControlAnadirProductos implements ControladorPantalla {
 	
 	/** Permiso requerido para realizar esta acción */
 	private static Permiso requerido = Permiso.PRODUCTOS;
+	
+	/** Nombre de la foto */
+	private String fotoSeleccionada = "";
 	
 	/**
 	 * Instancia un nuevo Controlador, que crea la vista y todos los paneles asociados.
@@ -81,7 +85,16 @@ public class ControlAnadirProductos implements ControladorPantalla {
 		case VentanaAnadirProductoIndividual.CONFIRMAR_ACTION:
 			intentarAnadir();
 			break;
+		case VentanaAnadirProductoIndividual.ACTION_SELECCIONAR_FOTO:
+			cogerImagen();
+			break;
 		}
+	}
+	
+	private void cogerImagen() {
+		String nuevaFoto = ControlCargaImagen.abrir("Producto");
+		if(!(nuevaFoto == null)) fotoSeleccionada = nuevaFoto;
+		vista.getVentanaIndividual().actualizarPreview(fotoSeleccionada);
 	}
 	
 	/**
@@ -116,8 +129,7 @@ public class ControlAnadirProductos implements ControladorPantalla {
 			return;
 		}
 
-		String imagen = vista.getVentanaIndividual().getImagen();
-		if(imagen.equals("Selecciona la imagen") || imagen.length() < 1) {
+		if(fotoSeleccionada.equals("Selecciona la imagen") || fotoSeleccionada.length() < 1) {
 			new VentanaMensaje("Introduzca una imagen válida para el producto", 1);
 			return;
 		}
@@ -133,15 +145,17 @@ public class ControlAnadirProductos implements ControladorPantalla {
 			return;
 		}
 
-		try {
-			tienda.getAlmacen().anadirProducto(usuario, udsStock, nombre, desc, precio,
-					imagen, caract, categorias);
-		} catch (InvalidArgumentException | DoubleDiscountException | InvalidPermitException e) {
-			new VentanaMensaje(e.getMessage(), 1);
-			return;
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas añadir este producto?")) {
+			try {
+				tienda.getAlmacen().anadirProducto(usuario, udsStock, nombre, desc, precio,
+						fotoSeleccionada, caract, categorias);
+			} catch (InvalidArgumentException | DoubleDiscountException | InvalidPermitException e) {
+				new VentanaMensaje(e.getMessage(), 1);
+				return;
+			}
+			mostrar();
+			new VentanaMensaje("El producto se añadió correctamente");
 		}
-		SwingUtilities.invokeLater(() -> new ControlAnadirProductos(tienda, usuario));
-		new VentanaMensaje("El producto se añadió correctamente");
 	}
 	
 	/**
@@ -248,7 +262,8 @@ public class ControlAnadirProductos implements ControladorPantalla {
 			try {
 				categorias.add(tienda.getAlmacen().getCategoria(cat));
 			} catch (InvalidArgumentException e) {
-				System.out.println(e);
+				new VentanaMensaje("Error al seleccionar categorías", 1);
+				return null;
 			}
 		}
 		return categorias.toArray(new Categoria[0]);
@@ -263,13 +278,18 @@ public class ControlAnadirProductos implements ControladorPantalla {
 	private Stock[] getProductos(String prods) {
 	    if (prods == null || prods.isEmpty()) return new Stock[0];
 	    
-	    String[] nombres = prods.split(";");
+	    Map<PanelProductoAnadirAPack, Integer> stocks = vista.getVentanaIndividual().getProductosPackSeleccionados();
 	    List<Stock> productos = new LinkedList<>();
 
-	    for (String n : nombres) {
+	    for (PanelProductoAnadirAPack panel : stocks.keySet()) {
 	        for (Stock s : tienda.getAlmacen().getInventario()) {
-	            if (s.getProducto().getNombre().equals(n.trim())) {
-	                productos.add(s);
+	            if (panel.getNombre().equals(s.getProducto().getNombre())) {
+	                try {
+						productos.add(new Stock(s.getProducto(), stocks.get(panel)));
+					} catch (InvalidArgumentException e) {
+						new VentanaMensaje("Error al seleccionar productos", 1);
+						return null;
+					}
 	                break;
 	            }
 	        }
@@ -310,7 +330,7 @@ public class ControlAnadirProductos implements ControladorPantalla {
 			tiposJuego.add(t.name());
 		}
 		
-		List<PanelProducto> paneles = new LinkedList<>();
+		List<PanelProductoAnadirAPack> paneles = new LinkedList<>();
 		for (Stock s : tienda.getAlmacen().getInventario()) {
 			Producto prod = s.getProducto();
 
@@ -319,8 +339,8 @@ public class ControlAnadirProductos implements ControladorPantalla {
 				prodCategorias.add(c.getNombre());
 			}
 
-			paneles.add(new PanelProducto(prod.getNombre(), prod.getDescripcion(), prod.getImagen(),
-					prod.getPuntuacionMedia(), prod.getPrecio(), "Producto", prodCategorias.toArray(new String[0])));
+			paneles.add(new PanelProductoAnadirAPack(prod.getNombre(), prod.getDescripcion(), prod.getImagen(),
+					prod.getPuntuacionMedia(), prod.getPrecio(), prodCategorias.toArray(new String[0])));
 		}
 		
 		String[] tiposProductos = { "Comic", "Juego", "Figura", "Pack"};
@@ -329,9 +349,9 @@ public class ControlAnadirProductos implements ControladorPantalla {
 		String[] espFigura = new CaracteristicasFigura(null, null, null).getNombresCaracteristicas();
 		String[] espPack = new CaracteristicasPack(new Stock[0]).getNombresCaracteristicas();
 		
-		this.vista = new VentanaAnadirProductos(categorias.toArray(new String[0]), tiposProductos, espComic, espJuego, espFigura, espPack, tiposJuego.toArray(new String[0]), paneles.toArray(new PanelProducto[0]));
+		this.vista = new VentanaAnadirProductos(categorias.toArray(new String[0]), tiposProductos, espComic, espJuego, espFigura, espPack, tiposJuego.toArray(new String[0]), paneles.toArray(new PanelProductoAnadirAPack[0]));
 		
-		new ControlPanelCargarFichero(tienda, usuario, vista);
+		new ControlPanelCargarFichero(tienda, usuario, vista, this);
 		vista.setControlador(this);
 	}
 }

@@ -27,10 +27,15 @@ public class ControlBarraTareasEmpleado implements ControlBarraTareas {
 		case "Home" -> SwingUtilities.invokeLater(() -> new ControlInicioEmpleado(tienda, empleado));
 		case "Volver" -> TiendaFrame.getInstance().volverAtras();
 		case "Notificaciones" -> SwingUtilities.invokeLater(() -> new ControlNotificacionesEmpleado(tienda, empleado));
-		case "Cerrar sesión" -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+		case "Cerrar sesión" -> intentarCerrarSesion();
 		case "Info" -> new VentanaMensaje(TiendaFrame.getInstance().getInfo());
 		}
-		
+	}
+	
+	private void intentarCerrarSesion() {
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas cerrar la sesión?")) {
+			SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+		}
 	}
 
 }

@@ -276,16 +276,17 @@ public class Almacen implements Serializable {
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
 	 * @throws InvalidPermitException Se lanza en caso de que el usuario no tenga los permisos adecuados
 	 */
-	public boolean anadirProductosDeFichero(Usuario usuario, String fProductos) throws DoubleDiscountException, InvalidArgumentException, InvalidPermitException {
+	public boolean anadirProductosDeFichero(Usuario usuario, String fProductos, List<Producto> rutas) throws DoubleDiscountException, InvalidArgumentException, InvalidPermitException {
 		if (usuario.tienePermiso(Permiso.PRODUCTOS) == false) throw new InvalidPermitException("No tienes el permiso para hacer esta acción", "añadir productos de fichero", Permiso.PRODUCTOS, usuario);
 		
 		if(fProductos == null) throw new InvalidArgumentException("El nombre del fichero de productos no se puede dejar vacío", "añadir productos de fichero");
 		String linea;
 		
+		String nombre = "";
 		try (BufferedReader br = new BufferedReader(new FileReader("resources/productFiles/" + fProductos))) {
 			while((linea = br.readLine()) != null) {
 				String partes[] = linea.split(";");
-				String nombre = partes[1];
+				nombre = partes[1];
 				String desc = partes[2];
 				double precio;
 				int uds;
@@ -295,6 +296,8 @@ public class Almacen implements Serializable {
 	            } catch (NumberFormatException e) {
 	                throw new InvalidArgumentException("Datos de producto inválidos: " + e.getMessage(), "cargar fichero de productos");
 	            }
+				String ruta = partes[16];
+				
 				
 				String nombreCateg[] = partes[5].split(",");
 				List <Categoria> categorias = new ArrayList<>();
@@ -315,7 +318,7 @@ public class Almacen implements Serializable {
 							String fecha[] = partes[9].split(",");
 							LocalDate fechaPublicacion = LocalDate.of(Integer.parseInt(fecha[0]), Month.of(Integer.parseInt(fecha[1])), Integer.parseInt(fecha[2]));
 							
-							this.anadirComic(usuario, uds, nombre, desc, precio, null, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
+							this.anadirComic(usuario, uds, nombre, desc, precio, ruta, fechaPublicacion, autor, numPags, editorial, categorias.toArray(new Categoria[0]));
 						} catch (IllegalArgumentException | DateTimeException e) {
 	                        throw new InvalidArgumentException("Datos de cómic inválidos: " + e.getMessage(), "cargar fichero de productos");
 	                    }
@@ -327,7 +330,7 @@ public class Almacen implements Serializable {
 							String rangoEdad = partes[11];
 							TipoJuego tipoJuego = TipoJuego.valueOf(partes[12]);
 							
-							this.anadirJuego(usuario, uds, nombre, desc, precio, null, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
+							this.anadirJuego(usuario, uds, nombre, desc, precio, ruta, numJugs, rangoEdad, tipoJuego, categorias.toArray(new Categoria[0]));
 						} catch(IllegalArgumentException e) {
 							throw new InvalidArgumentException("Datos de juego inválidos: " + e.getMessage(), "cargar fichero de productos");
 						}
@@ -339,7 +342,7 @@ public class Almacen implements Serializable {
 							String material = partes[14];
 							String dimensiones = partes[15];
 							
-							this.anadirFigura(usuario, uds, nombre, desc, precio, null, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
+							this.anadirFigura(usuario, uds, nombre, desc, precio, ruta, dimensiones, marca, material, categorias.toArray(new Categoria[0]));
 						} catch (IllegalArgumentException e) {
 							throw new InvalidArgumentException("Datos de figura inválidos: " + e.getMessage(), "cargar fichero de productos");
 						}
@@ -355,6 +358,7 @@ public class Almacen implements Serializable {
 	    } catch (IOException e) {
 	        throw new InvalidArgumentException("Error de lectura en el fichero: " + e.getMessage(), "cargar fichero de productos");
 	    }
+		rutas.add(getProductosCoincidentes(nombre)[0]);
 		return true;
 	}
 	

@@ -60,4 +60,8 @@ public class PanelProductoAnadirAPack extends PanelProducto {
 		add(eastPanel, BorderLayout.EAST);
 		
 	}
+	
+	public int getUds() {
+		return (int) numUds.getValue();
+	}
 }

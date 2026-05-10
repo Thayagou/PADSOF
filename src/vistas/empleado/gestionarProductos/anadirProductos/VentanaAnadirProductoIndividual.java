@@ -11,20 +11,20 @@ import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -48,7 +48,17 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	private static final long serialVersionUID = 1L;
 	/** Nombre de la acción de confirmar */
 	public static final String CONFIRMAR_ACTION = "Confirmar";
+	/** Nombre de la acción de seleccionar foto */
+	public static final String ACTION_SELECCIONAR_FOTO = "SeleccionarFoto";
+	/** Constante FOTO_ANCHO */
+	private static final double FOTO_ANCHO = 0.2;
+	/** Constante FOTO_ALTO */
+	private static final double FOTO_ALTO = 0.25;
 
+	/** Botón de elegir foto */
+	private JButton btnFoto;
+	/** Preview de la foto del producto */
+	private JLabel fotoPreviewLabel;
 	/** Campo nombre del producto */
 	private JTextField nombreField;
 	/** Campo descripción del producto */
@@ -57,8 +67,6 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	private JTextField precioField;
 	/** Campo unidades del producto */
 	private JTextField stockField;
-	/** Campo imagen del producto */
-	private JTextField imagenField;
 	/** Campo tipo de producto */
 	private JComboBox<String> tipoProducto;
 	/** Campo en caso de que el tipo de producto sea fijo*/
@@ -73,12 +81,12 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	private JPanel especPanel;
 	/** Nombre de las características específicas para cada tipo de producto */
 	private String[] espComic, espJuego, espFigura, espPack;
-	/** CheckBox de productos que se añaden a un pack */
-	private List<JCheckBox> checkProductosPack = new ArrayList<>();
 	/** Paneles con los productos de la tienda */
-	private PanelProducto[] productos;
+	private PanelProductoAnadirAPack[] productos;
 	/** Paneles con los productos que contiene un pack */
 	private PanelProducto[] productosPack;
+	/** Paneles de los productos ya seleccionados al modificar un pack */
+	private PanelProducto[] productosSeleccionados;
 	/** Indica si la ventana es para una modificar o añadir un producto */
 	private boolean isModificacion;
 
@@ -94,9 +102,9 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	 * @param productos Paneles con los productos de la tienda
 	 */
 	public VentanaAnadirProductoIndividual(String[] categorias, String[] tiposProductos, String[] espComic,
-			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos) {
+			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProductoAnadirAPack[] productos) {
 		this("Nombre", "Descripción", new String[0], categorias, "0.0 €", "0 uds", "", tiposProductos, new String[0],
-				espComic, espJuego, espFigura, espPack, tiposJuego, productos, false);
+				espComic, espJuego, espFigura, espPack, tiposJuego, productos, new PanelProducto[0], false);
 	}
 
 	/**
@@ -119,14 +127,15 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	 */
 	public VentanaAnadirProductoIndividual(String nombre, String desc, String[] catSeleccionadas, String[] categorias,
 			String precio, String uds, String tipo, String[] tiposProducto, String[] espValores, String[] espComic,
-			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos,
-			boolean isModificacion) {
+			String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProductoAnadirAPack[] productos,
+			PanelProducto[] productosSeleccionados, boolean isModificacion) {
 
 		this.espComic = espComic;
 		this.espJuego = espJuego;
 		this.espFigura = espFigura;
 		this.espPack = espPack;
 		this.isModificacion = isModificacion;
+		this.productosSeleccionados = (productosSeleccionados != null) ? productosSeleccionados : new PanelProducto[0];
 		this.tipoFijo = (tipo != null && !tipo.isEmpty()) ? tipo : "";
 
 		setOpaque(false);
@@ -140,9 +149,39 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 				BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()),
 						BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-		imagenField = ButtonFactory.newTextField("Selecciona la imagen", Fonts.TEXT);
-		imagenField.setMaximumSize(new Dimension(Integer.MAX_VALUE, imagenField.getPreferredSize().height));
-		imagenField.setAlignmentX(Component.LEFT_ALIGNMENT);
+		// Crear panel foto
+		int fotoW = TiendaFrame.getInstance().getPixelsWidth(FOTO_ANCHO);
+		int fotoH = TiendaFrame.getInstance().getPixelsHeight(FOTO_ALTO);
+
+		JPanel contenedorFoto = new JPanel(new BorderLayout());
+		contenedorFoto.setOpaque(false);
+		contenedorFoto.setMaximumSize(new Dimension(Integer.MAX_VALUE, fotoH));
+		contenedorFoto.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		fotoPreviewLabel = new JLabel("Sin imagen", JLabel.CENTER);
+		fotoPreviewLabel.setFont(Fonts.TEXT.getFont());
+		fotoPreviewLabel.setForeground(ColorPalette.DARK_GREY.getColor());
+		fotoPreviewLabel.setBackground(ColorPalette.CARD_DARK.getColor());
+		fotoPreviewLabel.setOpaque(true);
+		fotoPreviewLabel.setPreferredSize(new Dimension(fotoW, fotoH));
+		fotoPreviewLabel.setBorder(BorderFactory.createLineBorder(ColorPalette.GREY.getColor()));
+
+		btnFoto = new JButton();
+		btnFoto.setActionCommand(ACTION_SELECCIONAR_FOTO);
+		btnFoto.setOpaque(false);
+		btnFoto.setContentAreaFilled(false);
+		btnFoto.setBorderPainted(false);
+		btnFoto.setFocusPainted(false);
+		btnFoto.setPreferredSize(new Dimension(fotoW, fotoH));
+
+		JLayeredPane layeredPane = new JLayeredPane();
+		layeredPane.setPreferredSize(new Dimension(fotoW, fotoH));
+		fotoPreviewLabel.setBounds(0, 0, fotoW, fotoH);
+		btnFoto.setBounds(0, 0, fotoW, fotoH);
+		layeredPane.add(fotoPreviewLabel, JLayeredPane.DEFAULT_LAYER);
+		layeredPane.add(btnFoto, JLayeredPane.PALETTE_LAYER);
+
+		contenedorFoto.add(layeredPane, BorderLayout.CENTER);
 
 		nombreField = ButtonFactory.newTextField(nombre, Fonts.TEXT);
 		nombreField.setMaximumSize(new Dimension(Integer.MAX_VALUE, nombreField.getPreferredSize().height));
@@ -155,12 +194,12 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 		descField.setRows(5);
 
 		//String fotoSeleccionada = ControlCargaImagen.abrir("Producto");
-		JLabel urlLabel = ButtonFactory.newLabel("URL de la imagen:", Fonts.BOLD);
+		JLabel urlLabel = ButtonFactory.newLabel("Imagen del producto:", Fonts.BOLD);
 		urlLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		izqda.add(Box.createVerticalStrut(8));
 		izqda.add(urlLabel);
 		izqda.add(Box.createVerticalStrut(4));
-		izqda.add(imagenField);
+		izqda.add(contenedorFoto);
 		izqda.add(Box.createVerticalStrut(8));
 
 		JLabel nombreLabel = ButtonFactory.newLabel("Nombre:", Fonts.BOLD);
@@ -358,9 +397,6 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 				JSpinner spinner = ButtonFactory.spinnerLocalDate(Fonts.TEXT);
 				spinner.setMaximumSize(new Dimension(Integer.MAX_VALUE, spinner.getPreferredSize().height));
 				spinner.setAlignmentX(Component.LEFT_ALIGNMENT);
-				System.out.println("Valor fecha: " + valor);
-				System.out.println("Modelo: " + spinner.getModel().getClass());
-				System.out.println("Valor actual tipo: " + spinner.getValue().getClass());
 
 				if (!valor.isEmpty()) {
 					try {
@@ -382,70 +418,166 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 
 			} else if (espActuales[i].equals("Productos")) {
 				if (isModificacion) {
-					JPanel productosPanel = new JPanel();
-					productosPanel.setLayout(new BoxLayout(productosPanel, BoxLayout.Y_AXIS));
-					productosPanel.setOpaque(false);
-					
-					List<PanelProducto> nuevosProductos = new LinkedList<>();
-					for (PanelProducto p : productos) {
-						if (!valor.isEmpty() && valor.contains(p.getNombre())) {
+					// Guardar referencia para extraerValor
+					productosPack = productosSeleccionados;
+
+					// Panel contenedor: boton + resumen (solo lectura)
+					JPanel selectorPanelMod = new JPanel();
+					selectorPanelMod.setLayout(new BoxLayout(selectorPanelMod, BoxLayout.Y_AXIS));
+					selectorPanelMod.setOpaque(false);
+					selectorPanelMod.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+					// Etiqueta resumen
+					String textoResumenMod = productosSeleccionados.length == 0
+							? "Ningun producto en el pack"
+							: productosSeleccionados.length + " producto" + (productosSeleccionados.length > 1 ? "s" : "") + " en el pack";
+					JLabel lblResumenMod = ButtonFactory.newLeftAlignedLabel(textoResumenMod, Fonts.TEXT);
+					lblResumenMod.setAlignmentX(Component.LEFT_ALIGNMENT);
+					lblResumenMod.setMaximumSize(new Dimension(Integer.MAX_VALUE, lblResumenMod.getPreferredSize().height));
+
+					// Boton para ver los productos del pack
+					int btnHMod = (int) (TiendaFrame.getInstance().getHeight() * 0.05);
+					int btnWMod = (int) (TiendaFrame.getInstance().getWidth() * 0.12);
+					JButton btnVerProductos = ButtonFactory.newRoundedButton("Ver productos del pack", btnHMod, btnWMod, 0.5);
+					ButtonFactory.paintButton(btnVerProductos, ColorPalette.PURPLE, ColorPalette.WHITE);
+					ButtonFactory.addMouseMecanics(btnVerProductos, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
+					btnVerProductos.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+					btnVerProductos.addActionListener(e -> {
+						JPanel productosPanel = new JPanel();
+						productosPanel.setLayout(new BoxLayout(productosPanel, BoxLayout.Y_AXIS));
+						productosPanel.setOpaque(false);
+						for (PanelProducto p : productosSeleccionados) {
 							JPanel fila = new JPanel(new BorderLayout(8, 0));
 							fila.setOpaque(false);
-							fila.setMaximumSize(new Dimension(Integer.MAX_VALUE, p.getPreferredSize().height));
-							fila.setAlignmentX(Component.LEFT_ALIGNMENT);
 							fila.add(p, BorderLayout.CENTER);
 							productosPanel.add(fila);
 							productosPanel.add(Box.createVerticalStrut(4));
-							nuevosProductos.add(p);
 						}
-					}
 
-					JScrollPane scrollProductos = PanelFactory.getScroll(productosPanel);
-					scrollProductos.setAlignmentX(Component.LEFT_ALIGNMENT);
-					scrollProductos.setMaximumSize(new Dimension(Integer.MAX_VALUE, (int) (HEIGHT * 0.3)));
-					scrollProductos.setBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()));
-					scrollProductos.getViewport().setOpaque(false);
-					scrollProductos.setOpaque(false);
+						JScrollPane scrollProductos = PanelFactory.getScroll(productosPanel);
+						scrollProductos.setBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()));
+						scrollProductos.getViewport().setOpaque(false);
+						scrollProductos.setOpaque(false);
 
-					productosPack = nuevosProductos.toArray(new PanelProducto[0]);
-					tf = scrollProductos;
+						int dBtnHMod = (int) (TiendaFrame.getInstance().getHeight() * 0.06);
+						int dBtnWMod = (int) (TiendaFrame.getInstance().getWidth() * 0.1);
+						JButton btnCerrarMod = ButtonFactory.newRoundedButton("Cerrar", dBtnHMod, dBtnWMod, 0.5);
+						ButtonFactory.paintButton(btnCerrarMod, ColorPalette.PURPLE, ColorPalette.WHITE);
+						ButtonFactory.addMouseMecanics(btnCerrarMod, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
+
+						JPanel botonDialogoMod = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 8));
+						botonDialogoMod.setOpaque(false);
+						botonDialogoMod.add(btnCerrarMod);
+
+						JPanel contenidoDialogoMod = new JPanel(new BorderLayout(0, 8));
+						contenidoDialogoMod.setOpaque(false);
+						contenidoDialogoMod.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+						contenidoDialogoMod.add(scrollProductos, BorderLayout.CENTER);
+						contenidoDialogoMod.add(botonDialogoMod, BorderLayout.SOUTH);
+
+						JDialog dialogoMod = new JDialog(TiendaFrame.getInstance(), "Productos del pack", true);
+						dialogoMod.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialogoMod.setContentPane(contenidoDialogoMod);
+						java.awt.Rectangle boundsMod = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+						dialogoMod.setSize(boundsMod.width, boundsMod.height);
+						dialogoMod.setMinimumSize(new Dimension(boundsMod.width, boundsMod.height));
+						dialogoMod.setLocation(boundsMod.x, boundsMod.y);
+						btnCerrarMod.addActionListener(ev -> dialogoMod.dispose());
+						dialogoMod.setVisible(true);
+					});
+
+					selectorPanelMod.add(btnVerProductos);
+					selectorPanelMod.add(Box.createVerticalStrut(4));
+					selectorPanelMod.add(lblResumenMod);
+
+					tf = selectorPanelMod;
 
 				} else {
-					JPanel productosPanel = new JPanel();
-					productosPanel.setLayout(new BoxLayout(productosPanel, BoxLayout.Y_AXIS));
-					productosPanel.setOpaque(false);
+					// Los productos seleccionados se determinan por getUds() > 0 en cada panel
+					this.productos = (PanelProductoAnadirAPack[]) productos;
 
-					List<JCheckBox> checkProductos = new ArrayList<>();
+					// Panel contenedor: boton + resumen
+					JPanel selectorPanel = new JPanel();
+					selectorPanel.setLayout(new BoxLayout(selectorPanel, BoxLayout.Y_AXIS));
+					selectorPanel.setOpaque(false);
+					selectorPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-					for (PanelProducto p : productos) {
-						JPanel fila = new JPanel(new BorderLayout(8, 0));
-						fila.setOpaque(false);
-						fila.setMaximumSize(new Dimension(Integer.MAX_VALUE, p.getPreferredSize().height));
-						fila.setAlignmentX(Component.LEFT_ALIGNMENT);
+					// Etiqueta resumen de seleccion
+					JLabel lblResumen = ButtonFactory.newLeftAlignedLabel("Ningun producto seleccionado", Fonts.TEXT);
+					lblResumen.setAlignmentX(Component.LEFT_ALIGNMENT);
+					lblResumen.setMaximumSize(new Dimension(Integer.MAX_VALUE, lblResumen.getPreferredSize().height));
 
-						JCheckBox cb = new JCheckBox();
-						cb.setOpaque(false);
-						cb.setFocusPainted(false);
-						checkProductos.add(cb);
+					// Boton para abrir el dialogo de seleccion
+					int btnH = (int) (TiendaFrame.getInstance().getHeight() * 0.05);
+					int btnW = (int) (TiendaFrame.getInstance().getWidth() * 0.12);
+					JButton btnSeleccionar = ButtonFactory.newRoundedButton("Seleccionar productos", btnH, btnW, 0.5);
+					ButtonFactory.paintButton(btnSeleccionar, ColorPalette.PURPLE, ColorPalette.WHITE);
+					ButtonFactory.addMouseMecanics(btnSeleccionar, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
+					btnSeleccionar.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-						fila.add(cb, BorderLayout.WEST);
-						fila.add(p, BorderLayout.CENTER);
-						productosPanel.add(fila);
-						productosPanel.add(Box.createVerticalStrut(4));
-					}
+					btnSeleccionar.addActionListener(e -> {
+						// Construir el scroll con los paneles de productos
+						JPanel productosPanel = new JPanel();
+						productosPanel.setLayout(new BoxLayout(productosPanel, BoxLayout.Y_AXIS));
+						productosPanel.setOpaque(false);
+						for (PanelProductoAnadirAPack p : this.productos) {
+							JPanel fila = new JPanel(new BorderLayout(8, 0));
+							fila.setOpaque(false);
+							fila.add(p, BorderLayout.CENTER);
+							productosPanel.add(fila);
+							productosPanel.add(Box.createVerticalStrut(4));
+						}
 
-					JScrollPane scrollProductos = PanelFactory.getScroll(productosPanel);
-					scrollProductos.setAlignmentX(Component.LEFT_ALIGNMENT);
-					scrollProductos.setMaximumSize(new Dimension(Integer.MAX_VALUE, (int) (HEIGHT * 0.3)));
-					scrollProductos.setBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()));
-					scrollProductos.getViewport().setOpaque(false);
-					scrollProductos.setOpaque(false);
+						JScrollPane scrollProductos = PanelFactory.getScroll(productosPanel);
+						scrollProductos.setBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()));
+						scrollProductos.getViewport().setOpaque(false);
+						scrollProductos.setOpaque(false);
 
-					// Guardar referencia a los checks para el getter
-					this.checkProductosPack = checkProductos;
-					this.productos = productos;
+						// Boton de confirmar seleccion dentro del dialogo
+						int dBtnH = (int) (TiendaFrame.getInstance().getHeight() * 0.06);
+						int dBtnW = (int) (TiendaFrame.getInstance().getWidth() * 0.1);
+						JButton btnCerrar = ButtonFactory.newRoundedButton("Confirmar seleccion", dBtnH, dBtnW, 0.5);
+						ButtonFactory.paintButton(btnCerrar, ColorPalette.PURPLE, ColorPalette.WHITE);
+						ButtonFactory.addMouseMecanics(btnCerrar, ColorPalette.PURPLE, ColorPalette.LIGHT_PURPLE);
 
-					tf = scrollProductos;
+						JPanel botonDialogo = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 8));
+						botonDialogo.setOpaque(false);
+						botonDialogo.add(btnCerrar);
+
+						JPanel contenidoDialogo = new JPanel(new BorderLayout(0, 8));
+						contenidoDialogo.setOpaque(false);
+						contenidoDialogo.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+						contenidoDialogo.add(scrollProductos, BorderLayout.CENTER);
+						contenidoDialogo.add(botonDialogo, BorderLayout.SOUTH);
+
+						JDialog dialogo = new JDialog(TiendaFrame.getInstance(), "Seleccionar productos del pack", true);
+						dialogo.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						dialogo.setContentPane(contenidoDialogo);
+						java.awt.Rectangle bounds = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+						dialogo.setSize(bounds.width, bounds.height);
+						dialogo.setMinimumSize(new Dimension(bounds.width, bounds.height));
+						dialogo.setLocation(bounds.x, bounds.y);
+
+						btnCerrar.addActionListener(ev -> dialogo.dispose());
+
+						dialogo.setVisible(true);
+
+						// Al cerrar el dialogo, actualizar el resumen
+						long seleccionados = java.util.Arrays.stream(this.productos)
+								.filter(p -> p.getUds() > 0).count();
+						if (seleccionados == 0) {
+							lblResumen.setText("Ningun producto seleccionado");
+						} else {
+							lblResumen.setText(seleccionados + " producto" + (seleccionados > 1 ? "s" : "") + " seleccionado" + (seleccionados > 1 ? "s" : ""));
+						}
+					});
+
+					selectorPanel.add(btnSeleccionar);
+					selectorPanel.add(Box.createVerticalStrut(4));
+					selectorPanel.add(lblResumen);
+
+					tf = selectorPanel;
 				}
 			} else {
 				JTextField textField = ButtonFactory.newTextField(valor, Fonts.TEXT);
@@ -472,6 +604,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	 */
 	public void setControlador(ActionListener c) {
 		btnConfirmar.addActionListener(c);
+		btnFoto.addActionListener(c);
 	}
 
 	/**
@@ -489,13 +622,20 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	public String getDescripcion() {
 		return descField.getText();
 	}
-
+	
 	/**
-	 * Devuelve el nombre de la imagen del producto
-	 * @return Imagen del producto
+	 * Actualiza la preview de la imagen del producto
+	 * @param archivo Ruta de la imagen seleccionada
 	 */
-	public String getImagen() {
-		return imagenField.getText();
+	public void actualizarPreview(String archivo) {
+		TiendaFrame t = TiendaFrame.getInstance();
+		int ancho = t.getPixelsWidth(FOTO_ANCHO);
+		int alto = t.getPixelsHeight(FOTO_ALTO);
+		ImageIcon icon = ButtonFactory.loadImageIconScaled(archivo, alto, ancho);
+		fotoPreviewLabel.setIcon(icon);
+		fotoPreviewLabel.setText(null);
+		fotoPreviewLabel.revalidate();
+		fotoPreviewLabel.repaint();
 	}
 
 	/**
@@ -525,17 +665,21 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	}
 
 	/**
-	 * Devuelve los paneles seleccionados del pack
-	 * @return Paneles seleccionados
+	 * Devuelve un mapa con los paneles seleccionados del pack y sus unidades.
+	 * Se consideran seleccionados aquellos cuyas unidades sean mayores de 0.
+	 * @return Mapa de panel → unidades seleccionadas
 	 */
-	public PanelProducto[] getProductosPackSeleccionados() {
-		List<PanelProducto> seleccionados = new ArrayList<>();
-		for (int i = 0; i < checkProductosPack.size(); i++) {
-			if (checkProductosPack.get(i).isSelected()) {
-				seleccionados.add(productos[i]);
+	public Map<PanelProductoAnadirAPack, Integer> getProductosPackSeleccionados() {
+		Map<PanelProductoAnadirAPack, Integer> seleccionados = new LinkedHashMap<>();
+		if (productos != null) {
+			for (PanelProductoAnadirAPack p : productos) {
+				int uds = p.getUds();
+				if (uds > 0) {
+					seleccionados.put(p, uds);
+				}
 			}
 		}
-		return seleccionados.toArray(new PanelProducto[0]);
+		return seleccionados;
 	}
 
 	/**
@@ -557,19 +701,22 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 			return (String) ((JComboBox<?>) c).getSelectedItem();
 		if (c instanceof JSpinner)
 			return new SimpleDateFormat("yyyy-MM-dd").format(((JSpinner) c).getValue());
-		if (c instanceof JScrollPane) {
-			if(isModificacion) {
+		// Campos de productos del pack: en ambos modos tf es un JPanel
+		if (c instanceof JPanel) {
+			if (isModificacion && productosPack != null) {
 				StringBuilder sb = new StringBuilder();
-				for(PanelProducto p : productosPack) {
-					sb.append(p.getNombre());
-					sb.append(";");
+				for (PanelProducto p : productosPack) {
+					sb.append(p.getNombre()).append(";");
 				}
 				return sb.toString();
-			} else {
-				Stream<String> ids = IntStream.range(0, checkProductosPack.size())
-						.filter(j -> checkProductosPack.get(j).isSelected())
-						.mapToObj(j -> (String) productos[j].getNombre());
-				return ids.collect(Collectors.joining(";"));
+			} else if (!isModificacion && productos != null) {
+				StringBuilder sb = new StringBuilder();
+				for (PanelProductoAnadirAPack p : productos) {
+					if (p.getUds() > 0) {
+						sb.append(p.getNombre()).append(";");
+					}
+				}
+				return sb.toString();
 			}
 		}
 		return "";

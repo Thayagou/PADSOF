@@ -7,7 +7,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import vistas.common.displays.PanelDisplay;
-import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.PanelFactory;
 
@@ -32,7 +31,7 @@ public class VentanaAnadirProductos extends JPanel implements VentanaConDisplay<
 	 * @param tiposJuego Tipos de juego
 	 * @param productos Paneles con productos de la tienda
 	 */
-	public VentanaAnadirProductos(String[] categorias, String[] tiposProducto, String[] espComic, String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProducto[] productos) {
+	public VentanaAnadirProductos(String[] categorias, String[] tiposProducto, String[] espComic, String[] espJuego, String[] espFigura, String[] espPack, String[] tiposJuego, PanelProductoAnadirAPack[] productos) {
 		setLayout(new BorderLayout());
 		setOpaque(false);
 		

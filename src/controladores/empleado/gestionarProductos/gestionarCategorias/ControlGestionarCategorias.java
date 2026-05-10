@@ -30,8 +30,6 @@ public class ControlGestionarCategorias implements ControladorPantalla{
 		}
 		this.vista = new VentanaGestionarCategorias();
 		
-		new ControlPanelCrearCategoria(tienda, usuario, vista, this);
-		
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
@@ -52,10 +50,11 @@ public class ControlGestionarCategorias implements ControladorPantalla{
 	
 	@Override
 	public void mostrar() {
+		vista.vaciar();
+		new ControlPanelCrearCategoria(tienda, usuario, vista, this);
 		Categoria[] categorias = tienda.getAlmacen().getCategorias();
 		for (Categoria c: categorias) {
 			new ControlPanelCategoriaGestionar(tienda, usuario, c, vista, this);
 		}
 	}
-
 }
