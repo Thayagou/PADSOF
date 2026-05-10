@@ -256,7 +256,7 @@ public class ActionEmpleado {
 	 */
 	static void actionCargarFicheroProductos(Usuario usuario) throws DoubleDiscountException, InvalidArgumentException, InvalidUserInputException, InvalidPermitException {
 		String fichero = Main.getUserInputString("Nombre del archivo: ");
-		Main.tienda.getAlmacen().anadirProductosDeFichero(usuario, fichero);
+		Main.tienda.getAlmacen().anadirProductosDeFichero(usuario, fichero, new LinkedList<>());
 	}
 	
 	/**
