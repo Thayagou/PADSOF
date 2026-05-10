@@ -97,7 +97,9 @@ public class ControlInfoProductoCliente implements ControladorPantalla {
 		switch (e.getActionCommand()) {
 		case VentanaProductoCliente.BUY_ACTION:
 			try {
-				tienda.anadirACarritoDe(cliente, producto);
+				if(TiendaFrame.getConfirmacionUsuario("¿Desea añadir " + producto.getNombre() + " al carrito?")) {
+					tienda.anadirACarritoDe(cliente, producto);
+				}
 			} catch (Exception ex) {
 				new VentanaMensaje(ex.getMessage());
 			}
