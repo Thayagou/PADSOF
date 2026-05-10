@@ -32,7 +32,7 @@ public class ControlBuscarCliente extends ControlBuscar {
 			try {
 				categorias.add(tienda.getAlmacen().getCategoria(cat));
 			} catch (InvalidArgumentException e) {
-				new VentanaMensaje(e.getMessage());
+				new VentanaMensaje(e.getMessage(), VentanaMensaje.ERROR);
 			}
 		}
 
@@ -41,9 +41,9 @@ public class ControlBuscarCliente extends ControlBuscar {
 					pMin, pMax, eMin);
 			new ControlResultadosCliente(tienda, cliente, productos);
 		} catch (CustomException ex) {
-			new VentanaMensaje(ex.getMessage());
+			new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 		} catch (NumberFormatException ex) {
-			new VentanaMensaje("Introduce valores numéricos válidos");
+			new VentanaMensaje("Introduce valores numéricos válidos", VentanaMensaje.ERROR);
 		}
 	}
 }

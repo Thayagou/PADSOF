@@ -74,12 +74,12 @@ public class ControlPanelOferta implements ActionListener {
 			SwingUtilities.invokeLater(() -> new ControlVerOferta(tienda, cliente, intercambio));
 			break;
 		case acceptAction:
-			if(TiendaFrame.getConfirmacionUsuario("¿Quieres aceptar la oferta de " + intercambio.getEmisor().getDueno().getNombre() + "?" )) {
+			if(TiendaFrame.getConfirmacionUsuario("¿Quieres aceptar la oferta de " + intercambio.getEmisor().getDueno().getNombre() + "? Tus objetos involucrados desaparecerán de tu cartera." )) {
 				try {
 					tienda.aceptarIntercambio(cliente, intercambio);
 					controlador.refrescar();
 				} catch (Exception ex) {
-					new VentanaMensaje(ex.getMessage());
+					new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 				}
 			}
 			break;
@@ -89,7 +89,7 @@ public class ControlPanelOferta implements ActionListener {
 					tienda.rechazarIntercambio(cliente, intercambio);
 					controlador.refrescar();
 				} catch (Exception ex) {
-					new VentanaMensaje(ex.getMessage());
+					new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 				}
 			}
 			break;
@@ -99,7 +99,7 @@ public class ControlPanelOferta implements ActionListener {
 					tienda.cancelarIntercambio(cliente, intercambio);
 					controlador.refrescar();
 				} catch (Exception e1) {
-					new VentanaMensaje(e1.getMessage());
+					new VentanaMensaje(e1.getMessage(), VentanaMensaje.ERROR);
 				}
 			}
 			break;

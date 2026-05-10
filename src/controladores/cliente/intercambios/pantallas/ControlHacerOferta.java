@@ -70,7 +70,7 @@ public class ControlHacerOferta implements ControladorPantalla {
 					new VentanaMensaje("Su oferta se ha enviado con éxito");
 					TiendaFrame.getInstance().volverAtras();
 				} catch (Exception ex) {
-					new VentanaMensaje(ex.getMessage());
+					new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 				}
 			}
 			break;

@@ -59,7 +59,7 @@ public class ControlPanelProductoCliente implements ActionListener {
 				try {
 					new ControlInfoProductoCliente(tienda, cliente, producto);
 				} catch (Exception ex) {
-					new VentanaMensaje("Producto no encontrado: " + producto.getNombre());
+					new VentanaMensaje("Producto no encontrado: " + producto.getNombre(), VentanaMensaje.ERROR);
 				}
 			});
 		}
