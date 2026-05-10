@@ -41,7 +41,7 @@ public class ControlAnadirResena implements ControladorPantalla {
 				producto.anadirResena(new Resena(vista.getValoracion(), vista.getComentario(), cliente));
 				TiendaFrame.getInstance().volverAtras();
 			} catch(Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+				new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 			}
 		}
 		

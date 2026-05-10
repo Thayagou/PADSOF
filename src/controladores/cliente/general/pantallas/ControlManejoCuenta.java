@@ -56,7 +56,7 @@ public class ControlManejoCuenta implements ControladorPantalla {
 			try{
 				cliente.cambiarContrasena(vista.getContrasenaAntigua(), vista.getContrasenaNueva(), vista.getConfirmacionNueva());
 			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+				new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 			}
 			break;
 		case VentanaCuentaCliente.LOGOUT_BTN:

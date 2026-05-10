@@ -66,7 +66,7 @@ public class ControlItemCarrito implements ActionListener {
 				tienda.quitarDeCarritoDe(cliente, producto);
 				controlador.recargarPantalla();
 			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+				new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 			}
 			break;
 		case seeProduct:

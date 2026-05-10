@@ -101,7 +101,7 @@ public class ControlInfoProductoCliente implements ControladorPantalla {
 					tienda.anadirACarritoDe(cliente, producto);
 				}
 			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+				new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 			}
 		}
 	}

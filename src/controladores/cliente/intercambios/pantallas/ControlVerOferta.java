@@ -58,7 +58,7 @@ public class ControlVerOferta implements ControladorPantalla {
 					new VentanaMensaje("Has aceptado la oferta");
 					TiendaFrame.getInstance().volverAtras();
 				} catch (Exception ex) {
-					new VentanaMensaje(ex.getMessage(), 2);
+					new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 				}
 			}
 			break;
@@ -69,7 +69,7 @@ public class ControlVerOferta implements ControladorPantalla {
 					new VentanaMensaje("Has rechazado la oferta");
 					TiendaFrame.getInstance().volverAtras();
 				} catch (Exception ex) {
-					new VentanaMensaje(ex.getMessage(), 2);
+					new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 				}
 			}
 			break;
@@ -80,7 +80,7 @@ public class ControlVerOferta implements ControladorPantalla {
 					new VentanaMensaje("Has cancelado la oferta");
 					TiendaFrame.getInstance().volverAtras();
 				} catch(Exception ex) {
-					new VentanaMensaje(ex.getMessage(), 1);
+					new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 				}
 			}
 			break;

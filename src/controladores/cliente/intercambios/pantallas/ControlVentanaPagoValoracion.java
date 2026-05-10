@@ -40,11 +40,14 @@ public class ControlVentanaPagoValoracion implements ControladorPantalla {
 		switch(e.getActionCommand()) {
 		case VentanaPago.PAY_ACTION:
 			try{
-				tienda.solicitarValoracion(cliente, articulo, vista.getNumeroTarjeta());
-				TiendaFrame.getInstance().volverAtras();
-				new VentanaMensaje("Su valoración ha sido solicitada con éxito");
+				if(tienda.solicitarValoracion(cliente, articulo, vista.getNumeroTarjeta())) {
+					TiendaFrame.getInstance().volverAtras();
+					new VentanaMensaje("Su valoración ha sido solicitada con éxito");
+				} else {
+					new VentanaMensaje("Número de tarjeta inválido. Introduce un número de 16 dígitos", VentanaMensaje.ERROR);
+				}
 			} catch (Exception ex) {
-				new VentanaMensaje(ex.getMessage());
+				new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 			}
 			break;
 		}

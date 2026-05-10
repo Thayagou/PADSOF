@@ -94,7 +94,7 @@ public class ControlAnadirArticulo implements ActionListener, ControladorPantall
 			new VentanaMensaje("Artículo añadido correctamente.");
 			TiendaFrame.getInstance().volverAtras(); /* Vuelve a la cartera */
 		} catch (Exception ex) {
-			new VentanaMensaje(ex.getMessage());
+			new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 		}
 	}
 

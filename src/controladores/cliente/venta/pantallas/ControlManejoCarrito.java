@@ -44,7 +44,7 @@ public class ControlManejoCarrito implements ControladorPantalla {
 					recargarPantalla();
 					new VentanaMensaje("Su carrito ha sido cancelado");
 				} catch(Exception ex) {
-					new VentanaMensaje(ex.getMessage());
+					new VentanaMensaje(ex.getMessage(), VentanaMensaje.ERROR);
 				}
 			}
 			break;
