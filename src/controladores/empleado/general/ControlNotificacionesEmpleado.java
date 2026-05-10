@@ -16,9 +16,10 @@ public class ControlNotificacionesEmpleado implements ControladorPantalla {
 
 	public ControlNotificacionesEmpleado(Tienda tienda, Empleado empleado) {
 		this.vista = new VentanaNotificacionesEmpleado();
+		
 		Notificacion[] notificaciones = empleado.getNotificaciones().toArray(new Notificacion[0]);
-		for(Notificacion n : notificaciones) {
-			new ControlPanelNotificacionesEmpleado(tienda, empleado, n, vista);
+		for(int i = notificaciones.length - 1; i >= 0; i--) {
+			new ControlPanelNotificacionesEmpleado(tienda, empleado, notificaciones[i], vista);
 		}
 		
 		TiendaFrame.getInstance().navegarA(this);
@@ -26,7 +27,6 @@ public class ControlNotificacionesEmpleado implements ControladorPantalla {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
