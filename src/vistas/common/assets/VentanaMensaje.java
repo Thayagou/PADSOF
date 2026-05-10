@@ -28,7 +28,7 @@ public class VentanaMensaje extends JDialog {
 
 	/* Dimensiones del dialogo */
 	private static final double DIALOG_W = 0.30;
-	private static final double DIALOG_H = 0.22;
+	private static final double DIALOG_H = 0.30;
 
 	/* Dimensiones del boton Aceptar */
 	private static final double BTN_W = 0.10;
