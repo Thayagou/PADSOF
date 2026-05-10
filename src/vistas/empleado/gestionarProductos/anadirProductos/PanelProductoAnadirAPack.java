@@ -64,4 +64,8 @@ public class PanelProductoAnadirAPack extends PanelProducto {
 	public int getUds() {
 		return (int) numUds.getValue();
 	}
+	
+	public double getPrecio() {
+		return precio;
+	}
 }

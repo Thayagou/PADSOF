@@ -34,9 +34,6 @@ public class PanelProducto extends PanelDisplay {
 	/** Porcentaje de anchura de pantalla que ocupa. */
 	private static final double DESC_WIDTH = NAME_WIDTH + 0.058;
 	
-	/** Constante DESC_MAX_LINES. */
-	private static final int DESC_MAX_LINES = 3;
-	
 	/** Campo nombre. */
 	private String nombre;
 	
@@ -50,7 +47,7 @@ public class PanelProducto extends PanelDisplay {
 	private double puntuacionMedia;
 	
 	/** Campo precio. */
-	private double precio;
+	protected double precio;
 	
 	/**
 	 * Instancia un nuevo panel de producto que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.

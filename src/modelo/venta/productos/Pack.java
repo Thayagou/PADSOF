@@ -39,6 +39,15 @@ public class Pack extends Producto implements Serializable {
 		if((stocks.length == 1 && stocks[0].getUdsEnStock() < 2) || stocks.length == 0){
 			throw new InvalidArgumentException("No se puede crear un pack con menos de dos productos", "crear pack");
 		}
+		
+		double sumPrecio = 0;
+		for(Stock s : stocks) {
+			sumPrecio += s.getProducto().getPrecio() * s.getUdsEnStock();
+		}
+		if(precio > sumPrecio) {
+			throw new InvalidArgumentException("El precio del pack debe ser menor que la suma del precio de sus productos", "crear pack");
+		}
+		
 		for(Stock s : stocks) productos.add(s);
 	}
 	
