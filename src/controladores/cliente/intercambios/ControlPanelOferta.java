@@ -11,6 +11,7 @@ import controladores.cliente.intercambios.pantallas.ControlVerOferta;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
+import modelo.wallapop.EstadoIntercambio;
 import modelo.wallapop.Intercambio;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
@@ -55,13 +56,21 @@ public class ControlPanelOferta implements ActionListener {
 		for (ArticuloSegundaMano a : intercambio.getSolicitados())
 			arraySolicitados.add(a.getNombre());
 		String[] articulosSolicitados = arraySolicitados.toArray(new String[0]);
-
-		if(intercambio.getEmisor().getDueno().equals(cliente)) {
-			panel = new PanelOferta(nombreReceptor, imagenEmisor, fotoArticulo, articulosSolicitados, articulosOfrecidos,
-					clickAction, cancelAction);
+		
+		/* Crear el panel de la oferta */
+		if(intercambio.getEstado().equals(EstadoIntercambio.ACEPTADO)) {
+			if(intercambio.getEmisor().getDueno().equals(cliente)) {
+				panel = new PanelOferta(null, imagenEmisor, nombreReceptor, fotoArticulo, articulosSolicitados, articulosOfrecidos, clickAction);
+			}
+			else panel = new PanelOferta(nombreEmisor, imagenEmisor, null, fotoArticulo, articulosSolicitados, articulosOfrecidos, clickAction);
+		} else {
+			if(intercambio.getEmisor().getDueno().equals(cliente)) {
+				panel = new PanelOferta(nombreReceptor, imagenEmisor, fotoArticulo, articulosSolicitados, articulosOfrecidos,
+						clickAction, cancelAction);
+			}
+			else panel = new PanelOferta(nombreEmisor, imagenEmisor, fotoArticulo, articulosSolicitados, articulosOfrecidos,
+					clickAction, acceptAction, rejectAction);
 		}
-		else panel = new PanelOferta(nombreEmisor, imagenEmisor, fotoArticulo, articulosSolicitados, articulosOfrecidos,
-				clickAction, acceptAction, rejectAction);
 		panel.setControlador(this);
 
 		vista.anadirDisplay(panel);

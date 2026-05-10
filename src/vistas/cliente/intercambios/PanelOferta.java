@@ -65,7 +65,7 @@ public class PanelOferta extends PanelDisplay {
 	 * @param ofrece     Array de nombres de objetos que ofrece.
 	 * @param actionName ActionCommand que se dispara al pulsar el panel.
 	 */
-	public PanelOferta(String usuario, String fotoPerfil, String foto,
+	public PanelOferta(String usuario, String fotoPerfil, String receptor, String foto,
 			String[] pide, String[] ofrece, String actionName) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, foto, actionName);
 
@@ -75,7 +75,7 @@ public class PanelOferta extends PanelDisplay {
 		int avatarGap = t.getPixelsWidth(AVATAR_GAP);
 		int textMaxW  = t.getPixelsWidth(CENTER_TEXT_W);
 
-		this.add(buildCentro(t, usuario, null, fotoPerfil, pide, ofrece, rowGap, avatarGap, textMaxW), BorderLayout.CENTER);
+		this.add(buildCentro(t, usuario, receptor, fotoPerfil, pide, ofrece, rowGap, avatarGap, textMaxW), BorderLayout.CENTER);
 		
 	}
 	
@@ -93,7 +93,7 @@ public class PanelOferta extends PanelDisplay {
 	 */
 	public PanelOferta(String usuario, String fotoPerfil, String foto,
 			String[] pide, String[] ofrece, String actionName, String btn1, String btn2) {
-		this(usuario, fotoPerfil, foto, pide, ofrece, actionName);
+		this(usuario, null, fotoPerfil, foto, pide, ofrece, actionName);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		
