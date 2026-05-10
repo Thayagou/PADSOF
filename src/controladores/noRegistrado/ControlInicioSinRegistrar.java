@@ -1,6 +1,7 @@
 package controladores.noRegistrado;
 
 import java.awt.event.*;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
 
@@ -26,6 +27,8 @@ public class ControlInicioSinRegistrar implements ActionListener, ControladorPan
 		
 		Producto[] populares = tienda.getAlmacen().getProductosCoincidentes("");
 
+		Arrays.sort(populares, (a,b)->Double.compare(b.getPuntuacionMedia(), a.getPuntuacionMedia()));
+		
 		this.vista = new VentanaInicioSinRegistrar();
 		for(Producto p : populares) {
 			new ControlPanelProductoNoRegistrado(tienda, p, vista);

@@ -146,8 +146,7 @@ public class PanelArticulo extends PanelDisplay {
 	    espacio.setMinimumSize(new Dimension(maxWidth, height));
 	    espacio.setMaximumSize(new Dimension(maxWidth, height));
 	    
-	    JLabel estadoPanel = new JLabel(estado);
-	    estadoPanel.setFont(Fonts.TEXT.getFont());
+	    JLabel estadoPanel = ButtonFactory.newLeftAlignedLabel(estado, Fonts.TEXT);
 	    espacio.add(estadoPanel);
 
 	    return espacio;

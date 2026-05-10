@@ -51,7 +51,7 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 		Sistema sistema = Sistema.getInstancia();
 		
 		// Creación de cada uno de los paneles
-		PanelParametroSistema numProductosRecomendados = new PanelParametroSistema("  Número de productos recomendados:              ", String.format("%.2f", sistema.getPonderacionCategoria()), ParametroSistema.CATEGORIA.name());
+		PanelParametroSistema numProductosRecomendados = new PanelParametroSistema("  Número de productos recomendados:              ", String.format("%d", sistema.getNumProductosRecomendados()), ParametroSistema.NUMERO_PRODUCTOS_RECOMENDADOS.name());
 		numProductosRecomendados.setControlador(this);
 		vista.anadirDisplay(numProductosRecomendados);
 		mapaPaneles.put(ParametroSistema.NUMERO_PRODUCTOS_RECOMENDADOS, numProductosRecomendados);
@@ -120,6 +120,7 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 			
 			case ParametroSistema.DURACION_CARRITO:
 			case ParametroSistema.DURACION_OFERTA:
+				try {
 				String[] parts = panel.getValorTextField().split(":");
 				if (parts.length < 4) throw new IllegalArgumentException();
 				
@@ -130,21 +131,33 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 				
 				Duration duracion = Duration.ofDays(days).plusHours(hours).plusMinutes(mins).plusSeconds(secs);
 				tienda.gestionarParametroDeSistema(gestor, param, duracion);
-			
+				} catch (IllegalArgumentException ex) {
+					new VentanaMensaje("Formato incorrecto de duración. Formato correcto DD:HH:MM:SS", 1);
+					return;
+				}
 				break;
 			case ParametroSistema.NUMERO_PRODUCTOS_RECOMENDADOS:
-				int valorInt = Integer.parseInt(valorText);
-				tienda.gestionarParametroDeSistema(gestor, param, valorInt);
+				try {
+					int valorInt = Integer.parseInt(valorText);
+					tienda.gestionarParametroDeSistema(gestor, ParametroSistema.NUMERO_PRODUCTOS_RECOMENDADOS, valorInt);
+				} catch (IllegalArgumentException ex) {
+					new VentanaMensaje("Formato incorrecto del parámetro. Debe ser un entero", 1);
+					return;
+				}
 				break;
 			default:
-				double valor = Double.parseDouble(panel.getValorTextField());
-				tienda.gestionarParametroDeSistema(gestor, param, valor);
+				try {
+					double valor = Double.parseDouble(panel.getValorTextField());
+					tienda.gestionarParametroDeSistema(gestor, param, valor);
+				} catch (IllegalArgumentException ex) {
+					new VentanaMensaje("Formato incorrecto del parámetro. Debe ser un número positivo", 1);
+					return;
+				}
 				break;
 			}
-		} catch (IllegalArgumentException | InputMismatchException ex) {
-			new VentanaMensaje(ex.getMessage(), 1);
 		} catch (InvalidArgumentException iae) {
 			new VentanaMensaje(iae.getMessage(), 1);
+			return;
 		}
 		
 		new VentanaMensaje("Se ha modificado el valor del parámetro correctamente", VentanaMensaje.INFO);
@@ -182,7 +195,7 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 	 */
 	@Override
 	public String getExplicacion() {
-		return "En esta ventana se muestran los valores asociados a los parámetros del sistema y se permite modificar su valor rellenando el campo asociado y pulsando el botón de confirmación";
+		return "En esta ventana se muestran los valores asociados a los parámetros del sistema y se permite modificar su valor rellenando el campo asociado y pulsando el botón de confirmación" + "Duración carrito: Tiempo que tarda en caducarse un carrito desde que se le añade un último artículo ";
 	}
 
 }

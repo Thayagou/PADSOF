@@ -315,6 +315,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	    switch (parametro) {
 	    case NUMERO_PRODUCTOS_RECOMENDADOS:
 	    	Sistema.getInstancia().setNumProdsRecomendados(gestor, valor);
+	    	break;
 	    default:
 	    	gestionarParametroDeSistema(gestor, parametro, (double) valor);
 	    }
