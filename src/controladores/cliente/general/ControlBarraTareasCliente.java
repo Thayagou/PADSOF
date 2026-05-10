@@ -1,10 +1,10 @@
 package controladores.cliente.general;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.ControlBarraTareas;
 import controladores.cliente.general.pantallas.ControlInicioCliente;
 import controladores.cliente.general.pantallas.ControlManejoCuenta;
 import controladores.cliente.general.pantallas.ControlNotificacionesCliente;
@@ -19,7 +19,7 @@ import vistas.common.assets.VentanaMensaje;
 /**
  * Tipo: Class ControlBarraTareasCliente.
  */
-public class ControlBarraTareasCliente implements ControlBarraTareas {
+public class ControlBarraTareasCliente implements ActionListener {
 
 	/** Campo tienda. */
 	private final Tienda tienda;

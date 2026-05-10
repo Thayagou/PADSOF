@@ -1,11 +1,11 @@
 package vistas.cliente.general;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 import javax.swing.JButton;
 
-import controladores.ControlBarraLateral;
 import vistas.common.app.BarraLateral;
 import vistas.common.app.MenuLateral;
 
@@ -86,7 +86,7 @@ public class BarraLateralCliente extends BarraLateral {
 	 * @param c nuevo valor
 	 */
 	@Override
-	public void setControlador(ControlBarraLateral c) {
+	public void setControlador(ActionListener c) {
 		for(JButton btn : new JButton[] {buscarProductos, verCarrito, buscarArticulos, verCartera, anadirArticulo, verMisOfertas, verCompras}) {
 			btn.addActionListener(c);
 		}

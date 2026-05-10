@@ -1,11 +1,11 @@
 package vistas.common.app;
 
-import javax.swing.JPanel;
+import java.awt.event.ActionListener;
 
-import controladores.ControlBarraTareas;
+import javax.swing.JPanel;
 
 public abstract class BarraTareas extends JPanel{
 	private static final long serialVersionUID = 1L;
 
-	public abstract void setControlador(ControlBarraTareas c);
+	public abstract void setControlador(ActionListener c);
 }

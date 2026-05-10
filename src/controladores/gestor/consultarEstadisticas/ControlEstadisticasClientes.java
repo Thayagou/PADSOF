@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
 import modelo.estadistica.StatsUsuario;
-import modelo.sistema.Reloj;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import vistas.common.app.TiendaFrame;

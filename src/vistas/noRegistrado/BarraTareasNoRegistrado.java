@@ -1,8 +1,9 @@
 package vistas.noRegistrado;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
-import controladores.ControlBarraTareas;
 import vistas.common.app.BarraTareas;
 import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;
@@ -156,7 +157,7 @@ public class BarraTareasNoRegistrado extends BarraTareas {
 	 * @param c nuevo valor
 	 */
 	@Override
-	public void setControlador(ControlBarraTareas c) {
+	public void setControlador(ActionListener c) {
 		btnBuscar.addActionListener(c);
 		btnIniciarSesion.addActionListener(c);
 		btnHome.addActionListener(c);

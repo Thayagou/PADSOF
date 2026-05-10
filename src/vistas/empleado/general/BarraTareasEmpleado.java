@@ -1,12 +1,12 @@
 package vistas.empleado.general;
 
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
-import controladores.ControlBarraTareas;
 import vistas.common.app.BarraTareas;
 import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
@@ -117,7 +117,7 @@ public class BarraTareasEmpleado extends BarraTareas {
 	}
 
 	@Override
-	public void setControlador(ControlBarraTareas c) {
+	public void setControlador(ActionListener c) {
 		btnHome.addActionListener(c);
 		btnVolver.addActionListener(c);
 		btnNotificaciones.addActionListener(c);

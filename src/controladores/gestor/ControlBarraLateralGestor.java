@@ -1,10 +1,10 @@
 package controladores.gestor;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.ControlBarraLateral;
 import controladores.empleado.gestionarProductos.anadirProductos.ControlAnadirProductos;
 import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
 import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
@@ -23,7 +23,7 @@ import vistas.gestor.BarraGestor;
 /**
  * Clase controladora de la barra de tareas lateral del gestor.
  */
-public class ControlBarraLateralGestor implements ControlBarraLateral{
+public class ControlBarraLateralGestor implements ActionListener{
 	
 	/** Tienda sobre la que se actúa y muestran datos. */
 	private final Tienda tienda;

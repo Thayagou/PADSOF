@@ -1,7 +1,6 @@
 package controladores.gestor.consultarEstadisticas;
 
 import java.awt.event.ActionEvent;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,13 +12,11 @@ import controladores.ControladorPantalla;
 import modelo.estadistica.StatsMensual;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
-import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
 
-// TODO: Auto-generated Javadoc
 /**
  * Clase controladora de la vista correspondiente a las estadísticas asociadas a los intercambios y productos de segunda mano de la tienda.
  */

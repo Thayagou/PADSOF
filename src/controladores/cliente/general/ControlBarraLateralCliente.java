@@ -1,10 +1,10 @@
 package controladores.cliente.general;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.ControlBarraLateral;
 import controladores.cliente.intercambios.pantallas.ControlAnadirArticulo;
 import controladores.cliente.intercambios.pantallas.ControlBuscarArticulos;
 import controladores.cliente.intercambios.pantallas.ControlManejoCartera;
@@ -19,7 +19,7 @@ import vistas.cliente.general.BarraLateralCliente;
 /**
  * Tipo: Class ControlBarraLateralCliente.
  */
-public class ControlBarraLateralCliente implements ControlBarraLateral {
+public class ControlBarraLateralCliente implements ActionListener {
 	
 	/** Campo tienda. */
 	private Tienda tienda;

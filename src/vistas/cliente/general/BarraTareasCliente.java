@@ -1,6 +1,8 @@
 package vistas.cliente.general;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import vistas.common.app.BarraTareas;
@@ -9,7 +11,6 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelSizes;
-import controladores.ControlBarraTareas;
 
 /**
  * Tipo: Class BarraTareasCliente.
@@ -188,7 +189,7 @@ public class BarraTareasCliente extends BarraTareas {
 	 * @param c nuevo valor
 	 */
 	@Override
-	public void setControlador(ControlBarraTareas c) {
+	public void setControlador(ActionListener c) {
 		volver.addActionListener(c);
 		home.addActionListener(c);
 		notificaciones.addActionListener(c);

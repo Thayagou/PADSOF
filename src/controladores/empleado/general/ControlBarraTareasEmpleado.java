@@ -1,17 +1,17 @@
 package controladores.empleado.general;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.ControlBarraTareas;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
-public class ControlBarraTareasEmpleado implements ControlBarraTareas {
+public class ControlBarraTareasEmpleado implements ActionListener {
 
 	private final Tienda tienda;
 	private final Empleado empleado;

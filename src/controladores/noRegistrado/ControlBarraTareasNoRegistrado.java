@@ -1,8 +1,9 @@
 package controladores.noRegistrado;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.SwingUtilities;
-import controladores.ControlBarraTareas;
 import modelo.sistema.Tienda;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
@@ -12,7 +13,7 @@ import vistas.noRegistrado.BarraTareasNoRegistrado;
  * Controlador de la barra de tareas superior cuando no hay sesión iniciada.
  * Gestiona "Buscar productos" e "Iniciar sesión".
  */
-public class ControlBarraTareasNoRegistrado implements ControlBarraTareas {
+public class ControlBarraTareasNoRegistrado implements ActionListener {
 
 	private final Tienda tienda;
 

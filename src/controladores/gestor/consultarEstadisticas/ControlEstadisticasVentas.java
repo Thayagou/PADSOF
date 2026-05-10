@@ -16,7 +16,6 @@ import modelo.sistema.Tienda;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.consultarEstadisticas.PanelEstadisticasTienda;
-import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasTienda;
 
 /**

@@ -1,22 +1,21 @@
 package controladores.gestor;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.ControlBarraTareas;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.BarraTareasGestor;
-import vistas.herramientas.ButtonFactory;
 
 /**
  * Clase controladora de la barra de tareas superior del gestor
  */
-public class ControlBarraTareasGestor implements ControlBarraTareas {
+public class ControlBarraTareasGestor implements ActionListener {
 	
 	/** Tienda sobre la que se actúa y muestran datos. */
 	private final Tienda tienda;

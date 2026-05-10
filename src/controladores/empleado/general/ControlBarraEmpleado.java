@@ -1,10 +1,10 @@
 package controladores.empleado.general;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import controladores.ControlBarraLateral;
 import controladores.empleado.gestionarIntercambios.ControlGestIntercambios;
 import controladores.empleado.gestionarPedidos.ControlGestPedidos;
 import controladores.empleado.gestionarProductos.anadirProductos.ControlAnadirProductos;
@@ -14,7 +14,7 @@ import controladores.empleado.valorarArticulos.ControlValorarObjetos;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 
-public class ControlBarraEmpleado implements ControlBarraLateral {
+public class ControlBarraEmpleado implements ActionListener {
 
 	private final Tienda tienda;
 	private final Empleado empleado;

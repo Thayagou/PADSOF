@@ -1,6 +1,7 @@
 package vistas.empleado.general;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +9,6 @@ import java.util.TreeMap;
 
 import javax.swing.*;
 
-import controladores.ControlBarraLateral;
 import vistas.common.app.BarraLateral;
 import vistas.common.app.MenuLateral;
 
@@ -53,7 +53,7 @@ public class BarraEmpleado extends BarraLateral {
 	}
 
 	@Override
-	public void setControlador(ControlBarraLateral c) {
+	public void setControlador(ActionListener c) {
 		gestionarPedidos.addActionListener(c);
 		valorarObjetos.addActionListener(c);
 		gestionarIntercambios.addActionListener(c);
