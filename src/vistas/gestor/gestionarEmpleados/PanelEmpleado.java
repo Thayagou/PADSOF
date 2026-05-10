@@ -16,36 +16,85 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+/**
+ * Subclase de PanelDisplay que usamos para mostrar la información de los empleados dentro de un scroll.
+ */
 public class PanelEmpleado extends PanelDisplay {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** ActionCommand de la acción de confirmar el cambio del empleado. */
 	public static final String CONFIRMAR_ACTION = "Confirmar";
+	
+	/** ActionCommand de la acción de tratar de modificar el empleado. */
 	public static final String MODIFICAR_ACTION = "Modificar información y permisos";
+	
+	/** ActionCommand de la acción de dar de alta/ baja. */
 	public static final String DE_ALTA_ACTION = "Alta";
 
+	/** Porcentaje de anchura de pantalla utilizado para la foto */
 	private static final double FOTO_W_PERC = 0.09;
+	
+	/** Porcentaje de panel utilizado para la foto. */
 	private static final double FOTO_H_PERC = 0.99;
+	
+	/** Porcentaje de altura de pantalla que ocupa el panel */
 	private static final double MAX_HEIGHT = 0.16;
 
+	/** Establece si el empleado está actualmente de alta */
 	private boolean deAlta;
+	
+	/** Lista de permisos que tiene el empleado */
 	private List<String> permisos = new ArrayList<>();
+	
+	/** Botón asociado a la acción de modificar al empleado. */
 	private JButton modButton;
+	
+	/** Botón asociado a la acción de dar de alta */
 	private JButton deAltaButton;
+	
+	/** Label de los permisos del empleado. Lo almacenamos para poder cambiarlo. */
 	private JLabel permisosLabel;
+	
+	/** Label con el estado del empleado: de alta si true o de baja si false*/
 	private JLabel estado;
+	
+	/** Panel correspondiente a los botones. */
 	private JPanel eastPanel;
+	
+	/** Máxima anchura de los botones en pantalla */
 	private int maxWidth;
 	
+	/** Botón asociado a la acción de confirmar el cambio. */
 	private JButton confirmarButton;
+	
+	/** Boolean que representa si el panel se encuentra en estado expandido o no. */
 	private boolean expanded = false;
+	
+	/** Panel correspondiente a la expansión de este para permitir la modificación de los permisos del empleado */
 	private JPanel expandedPanel;
+	
+	/** Tamaño preferred original */
 	private Dimension originalMaxSize;
 	
+	/** InvisibleCheckBox que, si seleccionada, indica si el empleado tiene el permiso de productos. */
 	private InvisibleCheckBox permisoProducto = ButtonFactory.newInvisibleCheckBox("Productos", "Productos", ColorPalette.BLACK,ColorPalette.GREY);
+
+	/** InvisibleCheckBox que, si seleccionada, indica si el empleado tiene el permiso de pedidos. */
 	private InvisibleCheckBox permisoPedidos  = ButtonFactory.newInvisibleCheckBox("Pedidos", "Pedidos", ColorPalette.BLACK,ColorPalette.GREY);
+
+	/** InvisibleCheckBox que, si seleccionada, indica si el empleado tiene el permiso de intercambios. */
 	private InvisibleCheckBox permisoIntercambios  = ButtonFactory.newInvisibleCheckBox("Intercambios", "Intercambios", ColorPalette.BLACK,ColorPalette.GREY);
 
 
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param nombre Nombre del empleado
+	 * @param deAlta Boolean que representa si está de alta o no
+	 * @param permisos Varargs de los permisos que tiene el empleado
+	 */
 	public PanelEmpleado(String nombre, boolean deAlta, String... permisos) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, FOTO_W_PERC, "pfp.png", MODIFICAR_ACTION);
 		this.deAlta = deAlta;
@@ -110,6 +159,7 @@ public class PanelEmpleado extends PanelDisplay {
 		
 		info.setMaximumSize(new Dimension(Integer.MAX_VALUE, maxCompHeight));
 
+		// Crea los botones y las añade a la parte EAST del panel
 		eastPanel = new JPanel();
 		eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
 		eastPanel.setOpaque(false);
@@ -135,11 +185,15 @@ public class PanelEmpleado extends PanelDisplay {
 		modButton.setMaximumSize(tamano);
 		modButton.setPreferredSize(tamano);
 		
+		// Botón que se muestra al modificar el empleado
 		confirmarButton = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, (int) (maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
 		ButtonFactory.paintButton(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 	}
 	
+	/**
+	 * Añade los botones correspondientes al panel EAST
+	 */
 	private void anadirBotones() {
 		int gapSize = (int) (maxCompHeight * (1 - 2 * BOTON_PERC_H) / 3);
 		eastPanel.removeAll();
@@ -157,6 +211,9 @@ public class PanelEmpleado extends PanelDisplay {
 		
 	}
 
+	/**
+	 * Cambia el estado de expansión
+	 */
 	public void toggleExpand() {
 		if (expanded) {
 			collapsePanel();
@@ -166,6 +223,9 @@ public class PanelEmpleado extends PanelDisplay {
 		expanded = !expanded;
 	}
 
+	/**
+	 * Define el comportamiento de la expansión del panel
+	 */
 	private void expandPanel() {
 		if (expandedPanel == null) {
 			expandedPanel = new JPanel();
@@ -198,6 +258,12 @@ public class PanelEmpleado extends PanelDisplay {
 	    repaint();
 	}
 	
+	/**
+	 * Crea un panel que envuelve una InvisibleCheckbox
+	 *
+	 * @param cb InvisibleCheckBox de permiso
+	 * @return JPanel con la InvisibleCheckBox en el interior
+	 */
 	private JPanel wrapperCheckBox(InvisibleCheckBox cb	) {
 		JPanel wrapper = new JPanel();
 		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
@@ -217,6 +283,9 @@ public class PanelEmpleado extends PanelDisplay {
 		return wrapper;
 	}
 
+	/**
+	 * Cierra el panel expandido y lo vuelve al tamaño original
+	 */
 	private void collapsePanel() {
 		if (expandedPanel != null) {
 	        expandedPanel.setVisible(false);
@@ -230,6 +299,11 @@ public class PanelEmpleado extends PanelDisplay {
 	    repaint();
 	}
 	
+	/**
+	 * Getter de los permisos que tiene el empleado en String
+	 *
+	 * @return Lista de permisos
+	 */
 	public List<String> getPermisos() {
 		List<String> listaPermisos = new ArrayList<>();
 		
@@ -240,6 +314,11 @@ public class PanelEmpleado extends PanelDisplay {
 		return listaPermisos;
 	}
 	
+	/**
+	 * Establece los permisos del empleado.
+	 *
+	 * @param nuevosPermisos Permisos a establecer
+	 */
 	public void setPermisos(List<String> nuevosPermisos) {
 		permisos.clear();
 		permisos.addAll(nuevosPermisos);
@@ -253,6 +332,11 @@ public class PanelEmpleado extends PanelDisplay {
 		permisosLabel.setText(permisosString);
 	}
 
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param l Control que es añadido a los componentes
+	 */
 	@Override
 	public void setControlador(ActionListener l) {
 		super.setControlador(l);
@@ -262,6 +346,11 @@ public class PanelEmpleado extends PanelDisplay {
 
 	}
 
+	/**
+	 * Establece EstadoDeAlta.
+	 *
+	 * @param deAlta nuevo valor
+	 */
 	public void setEstadoDeAlta(boolean deAlta) {
 		estado.setText(deAlta ? "Empleado de alta" : "Empleado de baja");
 		estado.setForeground(deAlta ? ColorPalette.GREEN.getColor() : ColorPalette.RED.getColor());
@@ -270,6 +359,9 @@ public class PanelEmpleado extends PanelDisplay {
 		anadirBotones();
 	}
 	
+	/**
+	 * Refresca el panel para cargar la información más reciente
+	 */
 	@Override
 	public void refreshDisplay() {
 		revalidate();

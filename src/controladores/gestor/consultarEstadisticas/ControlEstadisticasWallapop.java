@@ -148,13 +148,14 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 	/**
 	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
 	 * 
-	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
+	 * Pemite reordenar los elementos mostrados por pantalla y establecer el periodo en el que se busca 
 	 *
 	 * @param e Evento de acción lanzado por un componente Swing
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals(VentanaEstadisticasTienda.CAMBIO_ORDEN_ACTION)) {
+		switch(e.getActionCommand()) {
+		case VentanaEstadisticasTienda.CAMBIO_ORDEN_ACTION -> {
 			orden = getComparator(vista.getOpcionSeleccionadaOrden());
 			panelesEstadisticas.sort(orden);
 			
@@ -166,6 +167,10 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 			
 			vista.refrescarLista();	
 		}
+		case VentanaEstadisticasTienda.CONFIRMAR_CAMBIO_FECHA_ACTION -> {
+			cargarResultados();
+		}
+	}
 	}
 
 	/**

@@ -23,27 +23,65 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+/**
+ * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ */
 public class PanelNuevoEmpleado extends PanelDisplay {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** ActionCommand de la acción de empezar el proceso de crear un nuevo empleado. */
 	public final static String CREAR_ACTION = "Crear nuevo empleado";
+	
+	/** ActionCommand de la acción de confirmar la creación del nuevo empleado. */
 	public final static String CONFIRMAR_ACTION = "Confirmar";
 	
+	/** Valor por defecto del nombre que debemos evitar al determinarlo */
 	public static final String DF_NOMBRE = "Nombre";
+
+	/** Valor por defecto de la contraseña que debemos evitar al determinarla */
 	public static final String DF_CONTRASENA = "Contraseña";
+	
+	/** Constante que define el nombre del permiso de productos. */
 	public static final String PERM_PRODUCTOS = "Productos";
+
+	/** Constante que define el nombre del permiso de pedidos. */
 	public static final String PERM_PEDIDOS = "Pedidos";
+
+	/** Constante que define el nombre del permiso de intercambios. */
 	public static final String PERM_INTERCAMBIOS = "Intercambios";
 	
+	/** JTextField que nos permite coger el nombre del nuevo empleado */
 	private JTextField nombreEmpleado;
+	
+	/** JTextField que nos permite coger la contraseña del nuevo empleado. */
 	private JTextField contrasenaEmpleado;
+	
+	/** Botón asociado a la acción de confirmar la creación del empleado. */
 	private JButton confirmarButton;
+	
+	/** Variable boolean que determina si está o no expandido el panel de nuevo empleado */
 	private boolean expanded = false;
+	
+	/** Panel correspondiente al panel expandido */
 	private JPanel expandedPanel;
+	
+	/** Dimensión original del panel */
 	private Dimension originalMaxSize;
+	
+	/** InvisibleCheckBox que, si seleccionada, indica si el empleado tiene el permiso de productos. */
 	private InvisibleCheckBox permisoProducto = ButtonFactory.newInvisibleCheckBox("Productos", "Productos", ColorPalette.BLACK,ColorPalette.GREY);
+
+	/** InvisibleCheckBox que, si seleccionada, indica si el empleado tiene el permiso de pedidos. */
 	private InvisibleCheckBox permisoPedidos  = ButtonFactory.newInvisibleCheckBox("Pedidos", "Pedidos", ColorPalette.BLACK,ColorPalette.GREY);
+
+	/** InvisibleCheckBox que, si seleccionada, indica si el empleado tiene el permiso de intercambios. */
 	private InvisibleCheckBox permisoIntercambios  = ButtonFactory.newInvisibleCheckBox("Intercambios", "Intercambios", ColorPalette.BLACK,ColorPalette.GREY);
 
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 */
 	public PanelNuevoEmpleado() {
 		super(0.08, 0.06, CREAR_ACTION);
 		
@@ -58,6 +96,9 @@ public class PanelNuevoEmpleado extends PanelDisplay {
 		//super.getClickArea().addActionListener(e -> toggleExpand());
 	}
 	
+	/**
+	 * Cambia el estado de expansión
+	 */
 	public void toggleExpand() {
 		if (expanded) {
 			collapsePanel();
@@ -67,6 +108,9 @@ public class PanelNuevoEmpleado extends PanelDisplay {
 		expanded = !expanded;
 	}
 
+	/**
+	 * Define el comportamiento de la expansión del panel
+	 */
 	private void expandPanel() {
 		if (expandedPanel == null) {
 			expandedPanel = new JPanel();
@@ -136,6 +180,12 @@ public class PanelNuevoEmpleado extends PanelDisplay {
 	    repaint();
 	}
 	
+	/**
+	 * Crea un panel que envuelve una InvisibleCheckbox
+	 *
+	 * @param cb InvisibleCheckBox de permiso
+	 * @return JPanel con la InvisibleCheckBox en el interior
+	 */
 	private JPanel wrapperCheckBox(InvisibleCheckBox cb	) {
 		JPanel wrapper = new JPanel();
 		wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.X_AXIS));
@@ -155,6 +205,9 @@ public class PanelNuevoEmpleado extends PanelDisplay {
 		return wrapper;
 	}
 
+	/**
+	 * Cierra el panel expandido y lo vuelve al tamaño original
+	 */
 	private void collapsePanel() {
 		if (expandedPanel != null) {
 	        expandedPanel.setVisible(false);
@@ -168,19 +221,39 @@ public class PanelNuevoEmpleado extends PanelDisplay {
 	    repaint();
 	}
 	
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param c parámetro c
+	 */
 	public void setControlador(ActionListener c) {
 		super.setControlador(c);
 		confirmarButton.addActionListener(c);
 	}
 	
+	/**
+	 * Getter del nombre del empleado
+	 *
+	 * @return valor de NombreEmpleado
+	 */
 	public String getNombreEmpleado() {
 		return nombreEmpleado.getText();
 	}
 	
+	/**
+	 * Getter de la contraseña añadida del empleado
+	 *
+	 * @return valor de ContrasenaEmpleado
+	 */
 	public String getContrasenaEmpleado() {
 		return contrasenaEmpleado.getText();
 	}
 	
+	/**
+	 * Getter de los nuevos permisos del empleado
+	 *
+	 * @return Lista con los permisos
+	 */
 	public List<String> getPermisos() {
 		List<String> listaPermisos = new ArrayList<>();
 		

@@ -1,24 +1,27 @@
 package vistas.gestor;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import controladores.gestor.ControlInicioGestor;
 import modelo.sistema.Tienda;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-//import java.awt.*;
-
+/**
+ * Subclase de panel que se usa para mostrar por pantalla la ventana de inicio del gestor.
+ */
 public class VentanaInicioGestor extends JPanel {
-	private static final long serialVersionUID = 1L;
-	private JButton descuentos;
-	private JButton sistema;
-	private JButton estadisticas;
-	private JButton prodYCats;
-	private JButton empleados;
 	
+	/** Constante serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Instancia una nueva ventana que incluye toda la información necesaria para actuar sobre ella.
+	 *
+	 * @param tienda Tienda sobre la que se actúa y muestran datos.
+	 */
 	public VentanaInicioGestor(Tienda tienda) {
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -34,11 +37,10 @@ public class VentanaInicioGestor extends JPanel {
 		add(cabecera, BorderLayout.NORTH);
 	}
 
-	public void setControlador(ControlInicioGestor controlInicioGestor) {
-		descuentos.addActionListener(controlInicioGestor);
-		sistema.addActionListener(controlInicioGestor);
-		estadisticas.addActionListener(controlInicioGestor);
-		prodYCats.addActionListener(controlInicioGestor);
-		empleados.addActionListener(controlInicioGestor);
-	}
+	/**
+	 * Añade un ActionListener a los componentes que lo necesiten, en este caso ninguno ya que es una ventana de bienvenida.
+	 *
+	 * @param l ActionListener a añadir
+	 */
+	public void setControlador(ActionListener l) { }
 }

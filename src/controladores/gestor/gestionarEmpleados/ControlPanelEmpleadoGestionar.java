@@ -12,13 +12,12 @@ import vistas.common.displays.VentanaConDisplay;
 import vistas.gestor.gestionarEmpleados.PanelEmpleado;
 import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 
-// TODO: Auto-generated Javadoc
 /**
- * Clase controladora de la vista correspondiente a.
+ * Clase controladora del panel correspondiente a un empleado que estamos gestionando.
  */
 public class ControlPanelEmpleadoGestionar implements ActionListener{
 	
-	/** Campo empleado. */
+	/** Empleado que estamos gestionando */
 	private Empleado empleado;
 	
 	/** Tienda sobre la que se actúa y muestran datos. */
@@ -32,7 +31,7 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 	 * Instancia un nuevo Controlador del panel de empleados para permitir su gestión.
 	 *
 	 * @param tienda Tienda sobre la que se actúa y muestran datos.
-	 * @param empleado parámetro empleado
+	 * @param empleado Empleado a gestionar
 	 * @param vista Ventana a la que se añaden el panel creado
 	 */
 	public ControlPanelEmpleadoGestionar(Tienda tienda, Empleado empleado, VentanaConDisplay<? super PanelEmpleado> vista) {
@@ -58,8 +57,8 @@ public class ControlPanelEmpleadoGestionar implements ActionListener{
 	/**
 	 * Método que maneja todas las posibles acciones realizadas con el panel que maneja el controlador
 	 * 
-	 * .Estas acciones pueden ser dar de alta/baja a un empleado, modificar sus permisos y confirmar los cambios
-	 *
+	 * Permite modificar los permisos del empleado y seleccionar si está de alta o no.
+	 * 
 	 * @param e Evento de acción lanzado por un componente Swing
 	 */
 	@Override

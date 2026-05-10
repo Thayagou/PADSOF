@@ -65,7 +65,7 @@ public class ControlGestionarEmpleados  implements ControladorPantalla{
 	/**
 	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
 	 * 
-	 *En este caso este controlador sirve para colocar los paneles por pantalla por lo que no realiza acciones
+	 * En este caso este controlador sirve para colocar los paneles por pantalla por lo que no realiza acciones
 	 *
 	 * @param e Evento de acción lanzado por un componente Swing
 	 */

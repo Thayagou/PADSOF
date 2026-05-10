@@ -30,10 +30,10 @@ public class ControlPanelProductoSeleccion implements ActionListener {
 	 * Instancia un nuevo Controlador, que crea la vista y todos los paneles asociados.
 	 *
 	 * @param tienda Tienda sobre la que se actúa y muestran datos.
-	 * @param producto parámetro producto
-	 * @param seleccionado parámetro seleccionado
-	 * @param desSeleccionado parámetro desSeleccionado
-	 * @param superControl parámetro superControl
+	 * @param producto Producto de la tienda asociado al panel
+	 * @param seleccionado Texto que se muestra cuando está seleccionado
+	 * @param desSeleccionado Texto que se muestra cuando no
+	 * @param superControl Controlador central que gestiona la selección general entre paneles
 	 * @param vista Ventana a la que se añaden el panel creado
 	 */
 	public ControlPanelProductoSeleccion(Tienda tienda, Producto producto, String seleccionado, String desSeleccionado, ControlGestionSeleccion<? super Producto> superControl, VentanaConDisplay<? super PanelProducto> vista) {
@@ -55,16 +55,16 @@ public class ControlPanelProductoSeleccion implements ActionListener {
 	}
 	
 	/**
-	 * Obtiene Panel.
+	 * Getter del panel asociado
 	 *
-	 * @return valor de Panel
+	 * @return PanelDisplay correspondiente
 	 */
 	public PanelProductoSeleccion getPanel() { return panel; }
 	
 	/**
 	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
 	 * 
-	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
+	 * Permite seleccionar y quitar la selección del producto, advirtiendo de ello al controlador central
 	 *
 	 * @param e Evento de acción lanzado por un componente Swing
 	 */

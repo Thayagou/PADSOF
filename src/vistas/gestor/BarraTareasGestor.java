@@ -13,28 +13,48 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelSizes;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Tipo: Class BarraTareasGestor.
+ */
 public class BarraTareasGestor extends BarraTareas {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	/** Constante VOLVER_ACTION que representa la acción de retroceder  */
+	
+	/** Constante VOLVER_ACTION que representa la acción de retroceder. */
 	public static final String VOLVER_ACTION = "Volver";
 	
-	/** Constante HOME_ACTION que representa la acción de volver a la ventana principal */
+	/** Constante HOME_ACTION que representa la acción de volver a la ventana principal. */
 	public static final String HOME_ACTION = "Home";
 	
-	/** Constante CERRAR_SESION_ACTION que representa la acción de cerrar sesión */
+	/** Constante CERRAR_SESION_ACTION que representa la acción de cerrar sesión. */
 	public static final String CERRAR_SESION_ACTION = "Cerrar sesión";
 	
-	/** Constante INFO que representa la acción de ver la información */
+	/** Constante INFO que representa la acción de ver la información. */
 	public static final String INFO_ACTION = "Info";
 	
+	/** Constante correspondiente al porcentaje de pantalla dejado para la separación lateral. */
 	private static final double SPACE_BETWEEN = 0.01;
+
+	/* Porcentaje de pantalla que ocupa el botón de cerrar sesión */
 	private static final double BTN_ACCOUNT_W = 0.13;
 
+	/** Botón asociado a la acción de volver a la anterior ventana. */
 	private JButton volver;
+	
+	/** Botón asociado a la acción de volver a la pantalla del inicio. */
 	private JButton btnHome;
+	
+	/** Botón asociado a la acción de cerrar la sesión. */
 	private JButton btnCerrarSesion;
+	
+	/** Botón asociado a la acción de ver la información de la ventana. */
 	private JButton info;
 
+	/**
+	 * Instancia un nuevo Objeto BarraTareasGestor.
+	 */
 	public BarraTareasGestor() {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -47,6 +67,7 @@ public class BarraTareasGestor extends BarraTareas {
 		setBackground(ColorPalette.BLUE.getColor());
 		setPreferredSize(new Dimension(0, h));
 		
+		// Botón de volver atrás
 		volver = ButtonFactory.newIconButton("flechaAtras.png", btnH, homeW);
 		ButtonFactory.paintButton(volver, ColorPalette.BLUE, ColorPalette.WHITE);
 		volver.setActionCommand(VOLVER_ACTION);
@@ -54,6 +75,7 @@ public class BarraTareasGestor extends BarraTareas {
 		ButtonFactory.addMouseMecanics(volver, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 		ButtonFactory.addHoverInfo(volver, "Volver atrás", 0);
 		
+		// Botón de volver a la ventana de inicio del gestor
 		btnHome = ButtonFactory.newIconButton("homeButton.png", btnH, homeW);
 		btnHome.setBackground(ColorPalette.BLUE.getColor());
 		btnHome.setForeground(ColorPalette.WHITE.getColor());
@@ -61,6 +83,7 @@ public class BarraTareasGestor extends BarraTareas {
 		ButtonFactory.addMouseMecanics(btnHome, ColorPalette.BLUE, ColorPalette.HOVER_BLUE);
 		ButtonFactory.addHoverInfo(btnHome, "Volver a la pantalla principal", 0);
 	
+		//Botón de cerrar sesión
 		btnCerrarSesion = ButtonFactory.newRoundedButton("Cerrar sesión", btnH, accountW, 0.25);
 		btnCerrarSesion.setBackground(ColorPalette.LIGHT_PURPLE.getColor());
 		btnCerrarSesion.setForeground(ColorPalette.WHITE.getColor());
@@ -68,6 +91,7 @@ public class BarraTareasGestor extends BarraTareas {
 		ButtonFactory.addMouseMecanics(btnCerrarSesion, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		ButtonFactory.addHoverInfo(btnCerrarSesion, "Cerrar sesión", 0);
 
+		// Botón de ver la información de la pantalla
 		info = ButtonFactory.newIconButton("interrogacion.png", btnH, homeW);
 		ButtonFactory.paintButton(info, ColorPalette.BLUE, ColorPalette.WHITE);
 		info.setActionCommand(INFO_ACTION);
@@ -76,6 +100,7 @@ public class BarraTareasGestor extends BarraTareas {
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
+		// Añade todos los botones a la barra de tareas
 		add(Box.createHorizontalStrut(spaceBetween));
 		btnHome.setMaximumSize(new Dimension(homeW, btnH));
 		btnHome.setPreferredSize(new Dimension(homeW, btnH));
@@ -97,8 +122,11 @@ public class BarraTareasGestor extends BarraTareas {
 		add(Box.createHorizontalStrut(spaceBetween));
 	}
 	
-	public JButton getInfoButton() { return info;}
-
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param c Control de barra de tareas que se añade
+	 */
 	@Override
 	public void setControlador(ControlBarraTareas c) {
 		btnHome.addActionListener(c);

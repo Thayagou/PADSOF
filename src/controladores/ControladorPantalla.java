@@ -45,11 +45,13 @@ public interface ControladorPantalla extends ActionListener{
      * Siempre debe ser la misma instancia (no crear uno nuevo cada vez).
      * <p><b>Obligatorio</b> — no tiene default porque cada controlador
      * tiene su propia vista.</p>
+     * @return JPanel con la vista
      */
     JPanel getVista();
     
     /**
      * Método para obtener la explicación de la utilidad de la pantalla
+     * @return String con la explicación
      */
     String getExplicacion();
 

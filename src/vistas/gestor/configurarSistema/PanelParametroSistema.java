@@ -17,15 +17,37 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ */
 public class PanelParametroSistema extends PanelDisplay{
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Porcentaje de altura de pantalla que ocupa el panel. */
 	private static double MAX_HEIGHT = 0.08;
+	
+	/** Porcentaje de altura del panel que ocupan los componentes. */
 	private static double MAX_COMP_HEIGHT = 0.9;
+	
+	/** Porcentaje de altura dentro del panel que ocupa el textField */
 	private static double TEXT_FIELD_H = 0.5;
 	
+	/** JTextField que contiene el valor actual del parámetro y que incluirá el modificado introducido */
 	private JTextField valor;
+	
+	/** Botón asociado a la acción de confirmar el cambio. */
 	JButton confirmarButton;
 	
+	/**
+	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param nombreParametro Nombre del parámetro a configurar
+	 * @param valorActual Valor actual del parámetro formateado a String
+	 * @param actionName Nombre de la acción de confirmar
+	 */
 	public PanelParametroSistema(String nombreParametro, String valorActual, String actionName) {
 		super(MAX_HEIGHT, MAX_COMP_HEIGHT * MAX_HEIGHT, "");
 		
@@ -33,12 +55,14 @@ public class PanelParametroSistema extends PanelDisplay{
 		int maxWidth = TiendaFrame.getInstance().getPixelsWidth(BOTON_PERC_W);
 		Dimension size = new Dimension(maxWidth, (int)(maxCompHeight * BOTON_PERC_H));
 		
+		// Crea el label del nombre del parámetro y lo coloca en WEST
 		JLabel paramLabel = ButtonFactory.newLeftAlignedLabel(nombreParametro, Fonts.BOLD);
 		paramLabel.setPreferredSize(size);
 		add(paramLabel, BorderLayout.WEST);
 		valor = new JTextField(valorActual);
 		valor.setFont(Fonts.TEXT.getFont());
 		
+		// Crea el panel que hace display del valor del parámetro
 		JPanel valorPanel = new JPanel();
 		valorPanel.setOpaque(false);
 		valorPanel.setLayout(new BoxLayout(valorPanel, BoxLayout.Y_AXIS));
@@ -48,13 +72,11 @@ public class PanelParametroSistema extends PanelDisplay{
 		
 		add(valorPanel, BorderLayout.CENTER);	
 		
+		// Crea el botón de confirmar con mecánica de hovering
 		confirmarButton = ButtonFactory.newRoundedButton("Confirmar", (int)(maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);
-		//f.newRoundedButton("Modificar información y permisos", 0,0, 0.5f);
 		ButtonFactory.paintButton(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(confirmarButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		confirmarButton.setActionCommand(actionName);
-		
-		//modButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		
 		JPanel eastPanel = new JPanel();
 		eastPanel.setPreferredSize(size);
@@ -68,8 +90,18 @@ public class PanelParametroSistema extends PanelDisplay{
 		add(eastPanel, BorderLayout.EAST);
 	}
 	
+	/**
+	 * Valor introducido en el TextField
+	 *
+	 * @return valor introducido en el textfield
+	 */
 	public String getValorTextField() {return valor.getText();}
 	
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param l Control que es añadido a los componentes
+	 */
 	@Override
 	public void setControlador(ActionListener l) {
 		if (confirmarButton != null) confirmarButton.addActionListener(l);

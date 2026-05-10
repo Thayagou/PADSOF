@@ -47,7 +47,7 @@ public class ControlEstadisticasClientes implements ControladorPantalla {
 
 		for (StatsUsuario stats: listaUsuarios) {
 			ClienteRegistrado cliente = stats.getCliente();
-			PanelClienteEstadisticas panel = new PanelClienteEstadisticas(cliente.getNombre(), "producto.png", stats.getGastoTotal(), stats.getUdsCompradas(), stats.getUdsIntercambiadas());
+			PanelClienteEstadisticas panel = new PanelClienteEstadisticas(cliente.getNombre(), "pfp.png", stats.getGastoTotal(), stats.getUdsCompradas(), stats.getUdsIntercambiadas());
 			panelesEstadisticas.add(new ParElementoPanel<>(stats, panel));
 			
 			vista.anadirDisplay(panel);

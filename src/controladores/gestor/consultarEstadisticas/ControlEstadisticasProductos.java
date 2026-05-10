@@ -101,8 +101,8 @@ public class ControlEstadisticasProductos implements ControladorPantalla {
 	/**
 	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
 	 * 
-	 * Recibe valores de entrada de las vistas, actúa sobre el modelo para obtener la respuesta y actualiza las ventanas correspondientes.
-	 *
+	 * Pemite reordenar los elementos mostrados por pantalla y establecer el periodo en el que se busca 
+	 * 
 	 * @param e Evento de acción lanzado por un componente Swing
 	 */
 	@Override

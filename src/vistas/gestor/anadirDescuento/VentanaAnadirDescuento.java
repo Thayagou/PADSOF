@@ -1,7 +1,6 @@
 package vistas.gestor.anadirDescuento;
 
 import javax.swing.*;
-
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.common.displays.PanelDisplay;
@@ -17,62 +16,134 @@ import java.util.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+
+/**
+ * Subclase de panel que se usa para mostrar por pantalla la ventana de añadir un nuevo descuento a la tienda.
+ */
 public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<PanelDisplay> {
+
+	/** Constante serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+	
+	/** ActionCommand de la acción de cambiar la condición del descuento. */
 	public static final String CAMBIO_CONDICION_ACTION = "Cambiar opcion condición";
+	
+	/** ActionCommand de la acción de cambiar la compensación del descuento. */
 	public static final String CAMBIO_COMPENSACION_ACTION = "Cambiar opcion compensacion";
+	
+	/** ActionCommand de la acción de cambiar el tipo descontado del descuento. */
 	public static final String CAMBIO_TIPO_DESCONTADO_ACTION = "Cambiar tipo descontado";
 	
+	/** Clase siendo descontada actualmente: Producto. */
 	public static final String TIPO_PRODUCTO = "Productos";
+	
+	/** Clase siendo descontada actualmente: Categoria. */
 	public static final String TIPO_CATEGORIA = "Categorias";
+	
+	/** Opciones de descontables a descontar. */
 	private static final String[] TIPOS_DESCONTADOS = { TIPO_PRODUCTO, TIPO_CATEGORIA };
 	
+	/** Condición del descuento: cantidad. */
 	public static final String COND_CANTIDAD = "Cantidad"; 
+	
+	/** Condición del descuento: volumen. */
 	public static final String COND_VOLUMEN ="Volumen";
+	
+	/** Condición del descuento: sin condición. */
 	public static final String COND_SIN ="Sin condiciones";
+	
+	/** Array con los tipos de condiciones. */
 	private static final String[] TIPOS_CONDICION = { COND_CANTIDAD, COND_VOLUMEN, COND_SIN};
 	
+	/** Compensación del descuento: dinero. */
 	public static final String COMP_DINERO = "Dinero";
+	
+	/** Compensación del descuento: porcentaje de descuento. */
 	public static final String COMP_PORCENTAJE = "Porcentaje";
+	
+	/** Compensación del descuento: producto como regalo. */
 	public static final String COMP_REGALO = "Regalo";
+	
+	/** Array con los tipos de compensación. */
 	private static final String[] TIPOS_COMPENSACION = { COMP_DINERO, COMP_PORCENTAJE, COMP_REGALO};
 	
 	
-	
+	/** ActionCommand de la acción de cancelar el proceso de añadir el descuento. */
 	public static final String CANCELAR_ACTION = "Cancelar";
+	
+	/** ActionCommand de la acción de confirmar añadir el descuento. */
 	public static final String CONFIRMAR_ACTION = "Confirmar";
 	
+	/** Porcentaje de anchura de pantalla que ocupa el panel de condiciones. */
 	private static double COND_WIDTH = 0.35;
+	
+	/** Porcentaje de altura de pantalla que ocupan los botones. */
 	private static double BUTTON_HEIGHT = 0.07;
 	
+	/** Píxeles que ocupa el campo de condiciones del descuento. */
 	private int maxWidthCond;
+	
+	/** Píxeles de la altura de lo botones. */
 	private int buttonHeight;
 	
+	/** Botón asociado a la acción de confirmar añadir el descuento. */
 	private JButton confirmar;
+	
+	/** Botón asociado a la acción de cancelar el proceso de añadir el intercambio. */
 	private JButton cancelar;
 	
 	
+	/** Panel con cabecera que permite la selección entre opciones de los tipos descontados: productos o categorías. */
 	private PanelMultiopcion panelOpcionesDescontadas;
+	
+	/** Panel que almacena todos los paneles PanelDisplay de la ventana de y se añade al scroll. */
 	private JPanel listaDescontados = new JPanel();
 	
+	/** Panel con cabecera que permite la selección entre opciones de. */
 	private PanelMultiopcion panelOpcionesCondicion;
+	
+	/** Panel correspondiente a la condición de volumen mínimo. */
 	private JPanel panelMinVolumen;
+	
+	/** JSpinner que permite establecer correctar el valor del mínimo volmen. */
 	private JSpinner valorMinVolumen;
+	
+	/** Panel correspondiente a la condición de cantidad mínima . */
 	private JPanel panelMinCantidad;
+	
+	/** JSpinner que permite establecer correctamente el valor de la mínima cantidad. */
 	private JSpinner valorMinCantidad;
 	
+	/** Panel con cabecera que permite la selección entre opciones de compensación del descuento. */
 	private PanelMultiopcion panelOpcionesCompensacion;
+	
+	/** Panel correspondiente a la compensación percentual. */
 	private JPanel panelPorcentaje;
+	
+	/** JSpinner que permite establecer correctamente el valor del porcentaje a compensar. */
 	private JSpinner valorPorcentaje;
+	
+	/** Panel correspondiente a la compensación de dinero. */
 	private JPanel panelDinero;
+	
+	/** JSpinner que permite establecer correctamente el valor del valor de dinero a compensar. */
 	private JSpinner valorDinero;
+	
+	/** Panel correspondiente a la compensación de regalo. */
 	private JPanel panelRegalo;
+	
+	/** Botón asociado a la acción de seleccionar el regalo. */
 	private JButton regalo;
 	
+	/** JSpinner que permite establecer correctamente el valor del inicio del intervalo del descuento. */
 	private JSpinner inicio;
+	
+	/** JSpinner que permite establecer correctamente el valor del final del intervalo del descuento. */
 	private JSpinner fin;
 
-	private static final long serialVersionUID = 1L;
-
+	/**
+	 * Instancia un nuevo Objeto VentanaAnadirDescuento.
+	 */
 	public VentanaAnadirDescuento() {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int windowWidth = t.getPixelsWidth(1) - t.optionBarDistFromLeft();
@@ -90,6 +161,11 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		this.add(split);
 	}
 
+	/**
+	 * Crea el panel izquiero de parámetros del descuento.
+	 *
+	 * @return Jpanel con el panel completo
+	 */
 	private JPanel crearPanelParametros() {
 		JPanel contenido = new JPanel();
 		contenido.setLayout(new BoxLayout(contenido, BoxLayout.Y_AXIS));
@@ -253,7 +329,7 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		contenido.add(PanelFactory.getVentanaConCabecera("  Duración del descuento", contenidoDuracion, Fonts.BOLD));
 		
 		
-		// Confirmar y cancelar
+		// Botones de confirmar y cancelar
 		JPanel botones = new JPanel(new GridLayout(1,2));
 
 		confirmar = ButtonFactory.newRoundedButton(CONFIRMAR_ACTION, buttonHeight, maxWidthCond/3, 0.5f);
@@ -270,6 +346,11 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		return PanelFactory.getVentanaConCabecera("Configuración de descuento", contenido);
 	}
 
+	/**
+	 * Crea el panel derecho de los elementos a descontar.
+	 *
+	 * @return JPanel con el esquema del panel
+	 */
 	private JPanel crearPanelDescontados() {
 		listaDescontados.setLayout(new BoxLayout(listaDescontados, BoxLayout.Y_AXIS));
 		listaDescontados.setBackground(ColorPalette.CARD_LIGHT.getColor());
@@ -285,66 +366,147 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		return panelOpcionesDescontadas;
 	}
 	
+	/**
+	 * Establece la visibilidad del panel asociado a la condición de volumen.
+	 *
+	 * @param visible true si se desea mostrar, false si no
+	 */
 	public void setVisibilidadVolumen(boolean visible) {
 		panelMinVolumen.setVisible(visible);
 	}
 	
+	/**
+	 * Establece la visibilidad del panel asociado a la condición de cantidad.
+	 *
+	 * @param visible true si se desea mostrar, false si no
+	 */
 	public void setVisibilidadCantidad(boolean visible) {
 		panelMinCantidad.setVisible(visible);
 	}
 	
+	/**
+	 * Establece la visibilidad del panel asociado a la compensación de porcentaje.
+	 *
+	 * @param visible true si se desea mostrar, false si no
+	 */
 	public void setVisibilidadPorcentaje(boolean visible) {
 		panelPorcentaje.setVisible(visible);
 	}
 	
+	/**
+	 * Establece la visibilidad del panel asociado a la compensación de dinero.
+	 *
+	 * @param visible true si se desea mostrar, false si no
+	 */
 	public void setVisibilidadDinero(boolean visible) {
 		panelDinero.setVisible(visible);
 	}
 	
+	/**
+	 * Establece la visibilidad del panel asociado a la compensación de regalo.
+	 *
+	 * @param visible true si se desea mostrar, false si no
+	 */
 	public void setVisibilidadRegalo(boolean visible) {
 		panelRegalo.setVisible(visible);
 	}
 
+	
+	/**
+	 * Getter de la opción actualmente seleccionada del tipo descontado.
+	 *
+	 * @return String con la tag de la opción seleccionada
+	 */
 	public String getOpcionSeleccionadaDescontado() {
 		return TIPOS_DESCONTADOS[panelOpcionesDescontadas.getOpcionSeleccionada()];
 	}
 	
+
+	/**
+	 * Getter de la opción actualmente seleccionada de condición del descuento.
+	 *
+	 * @return String con la tag de la opción seleccionada
+	 */
 	public String getOpcionSeleccionadaCondicion() {
 		return TIPOS_CONDICION[panelOpcionesCondicion.getOpcionSeleccionada()];
 	}
 	
+	/**
+	 * Getter de la opción actualmente seleccionada de compensación del descuento .
+	 *
+	 * @return String con la tag de la opción seleccionada
+	 */
 	public String getOpcionSeleccionadaCompensacion() {
 		return TIPOS_COMPENSACION[panelOpcionesCompensacion.getOpcionSeleccionada()];
 	}
 
+	/**
+	 * Vacía el panel de los elementos descontados
+	 */
 	public void vaciarDescontados() {
 		listaDescontados.removeAll();
 	}
 
+	/**
+	 * Obtiene el valor mínimo de la condición de cantidad.
+	 *
+	 * @return valor de ValorMinCantidad
+	 */
 	public int getValorMinCantidad() {
 		return (int) valorMinCantidad.getValue();
 	}
 
+	/**
+	 * Obtiene el valor mínimo de la condición de volumen.
+	 *
+	 * @return valor de ValorMinCantidad
+	 */
 	public double getValorMinVolumen() {
 		return (double) valorMinVolumen.getValue();
 	}
 	
+	/**
+	 * Getter del valor asociado a la compensación de dinero
+	 *
+	 * @return valor de CompensacionDinero
+	 */
 	public double getCompensacionDinero() {
 		return (double) valorDinero.getValue();
 	}
 
+	/**
+	 * Getter del valor asociado a la compensación de porcentaje
+	 *
+	 * @return valor de CompensacionDinero
+	 */
 	public double getCompensacionPorcentaje() {
 		return (double) valorPorcentaje.getValue();
 	}
 	
+	/**
+	 * Getter del la fecha de inicio del descuento
+	 *
+	 * @return valor del inicio
+	 */
 	public LocalDateTime getFechaInicio() {
 		return getValorFecha(inicio);
 	}
 	
+	/**
+	 * Getter del la fecha de fin del descuento
+	 *
+	 * @return valor del fin
+	 */
 	public LocalDateTime getFechaFin() {
 		return getValorFecha(fin);
 	}
 	
+	/**
+	 * Conversor de Date almacenado en el spinner a LocalDateTime.
+	 *
+	 * @param spinnerFecha JSpinner a extraer la fecha
+	 * @return fecha asociada con el JSpinner
+	 */
 	private LocalDateTime getValorFecha(JSpinner spinnerFecha) {
 		Date date = (Date) spinnerFecha.getValue();
 		LocalDateTime ldt = date.toInstant()
@@ -353,12 +515,24 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		return ldt;
 	}
 
+	/**
+	 * Permite añadir nuevos paneles a la ventana dentro del panel del scroll.
+	 *
+	 * @param <K> clave genérica subclase del tipo de panel deseado en la ventana
+	 * @param panelDisplay Panel a ser añadido
+	 * @return el propio panel añadido
+	 */
 	@Override
 	public <K extends PanelDisplay> PanelDisplay anadirDisplay(K panelDisplay) {
 		listaDescontados.add(panelDisplay);
 		return panelDisplay;
 	}
 
+	/**
+	 * Añade un ActionListener a todos los componentes que tengan una acción asociada.
+	 *
+	 * @param l Control que es añadido a los componentes
+	 */
 	public void setControlador(ActionListener l) {
 		panelOpcionesDescontadas.setControlador(l);
 		panelOpcionesCondicion.setControlador(l);

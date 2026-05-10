@@ -11,10 +11,20 @@ import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
+/**
+ * Subclase de JPanel que se usa para mostrar por pantalla la ventana de selección del regalo para el descuento a añadir.
+ */
 public class VentanaSeleccionRegalo extends JPanel implements VentanaConDisplay<PanelProducto>{
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Panel que almacena todos los paneles PanelDisplay de la ventana de y se añade al scroll. */
 	private JPanel listaRegalos = new JPanel();
 	
+	/**
+	 * Instancia una nueva ventana que incluye toda la información necesaria para actuar sobre ella 
+	 */
 	public VentanaSeleccionRegalo() {
 		setOpaque(false);
 		setLayout(new BorderLayout());
@@ -33,6 +43,13 @@ public class VentanaSeleccionRegalo extends JPanel implements VentanaConDisplay<
 
 	}
 
+	/**
+	 * Permite añadir nuevos paneles a la ventana dentro del panel del scroll.
+	 *
+	 * @param <K> clave genérica subclase del tipo de panel deseado en la ventana
+	 * @param panelDisplay Panel a ser añadido
+	 * @return el propio panel añadido
+	 */
 	@Override
 	public <K extends PanelProducto> PanelProducto anadirDisplay(K panelDisplay) {
 		listaRegalos.add(panelDisplay);

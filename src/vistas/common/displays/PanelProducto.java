@@ -8,27 +8,58 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.components.FixedTextArea;
 import vistas.herramientas.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * Fila de producto para las listas de resultados / productos populares.
  * Muestra: foto, estrellas, nombre, descripción truncada, precio y categorías.
  * Al hacer clic sobre la fila se puede asignar un ActionListener externo.
  */
 public class PanelProducto extends PanelDisplay {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Porcentaje de pantalla utilizado para. */
 	private static final double FOTO_W_PERC = 0.09;
+	
+	/** Porcentaje de pantalla utilizado para. */
 	private static final double FOTO_H_PERC = 0.99;
+	
+	/** Porcentaje de altura de pantalla que ocupa. */
 	private static final double MAX_HEIGHT = 0.16;
 	
-	private static final double NAME_WIDTH = 0.5;
+	/** Porcentaje de anchura de pantalla que ocupa. */
+	private static final double NAME_WIDTH = 0.2;
+	
+	/** Porcentaje de anchura de pantalla que ocupa. */
 	private static final double DESC_WIDTH = NAME_WIDTH + 0.058;
+	
+	/** Constante DESC_MAX_LINES. */
 	private static final int DESC_MAX_LINES = 3;
 	
+	/** Campo nombre. */
 	private String nombre;
+	
+	/** Campo descripcion. */
 	private String descripcion;
+	
+	/** Campo puntuacionMedia. */
 	private double puntuacionMedia;
+	
+	/** Campo precio. */
 	private double precio;
 	
+	/**
+	 * Instancia un nuevo panel de producto que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del produto
+	 * @param imageName Imagen del producto
+	 * @param puntuacionMedia Puntuación media del producto
+	 * @param precio Precio del producto
+	 * @param actionName Nombre de acción ejecutada al presionar el botón del panel
+	 * @param categorias Categorías a las que pertenece el producto
+	 */
 	public PanelProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String actionName, String...categorias) {
 		super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT, FOTO_W_PERC, imageName, actionName);
 		
@@ -90,11 +121,30 @@ public class PanelProducto extends PanelDisplay {
 		add(info, BorderLayout.CENTER);
 	}
 	
+	/**
+	 * Instancia un nuevo panel de producto descontado que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 *
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del produto
+	 * @param imageName Imagen del producto
+	 * @param puntuacionMedia Puntuación media del producto
+	 * @param precio Precio del producto
+	 * @param actionName Nombre de acción ejecutada al presionar el botón del panel
+	 * @param mensajeDescuento Mensaje descuento a establecer
+	 * @param categorias Categorías a las que pertenece el producto
+	 */
 	public PanelProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String actionName, String mensajeDescuento, String...categorias) {
 		this(nombre, descripcion, imageName, puntuacionMedia, precio, actionName, categorias);
 		anadirDescuento(mensajeDescuento);
 	}
 
+	/**
+	 * Construye el panel de estrellas del panel de producto
+	 *
+	 * @param t Frame de la tienda
+	 * @param valoracion Valoración del producto
+	 * @return Panel con las estrellas
+	 */
 	private JPanel buildEstrellas(TiendaFrame t, double valoracion) {
 		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));
 		p.setOpaque(false);
@@ -108,6 +158,11 @@ public class PanelProducto extends PanelDisplay {
 		return p;
 	}
 	
+	/**
+	 * anadirDescuento.
+	 *
+	 * @param mensaje parámetro mensaje
+	 */
 	public void anadirDescuento(String mensaje) {
 		JLabel descuento = ButtonFactory.newLabel(mensaje, Fonts.BOLD);
 		descuento.setForeground(ColorPalette.RED.getColor());
@@ -124,18 +179,38 @@ public class PanelProducto extends PanelDisplay {
 		add(wrapper, BorderLayout.EAST);
 	}
 	
+	/**
+	 * Obtiene PuntuacionMedia.
+	 *
+	 * @return valor de PuntuacionMedia
+	 */
 	public double getPuntuacionMedia() {
 		return puntuacionMedia;
 	}
 
+	/**
+	 * Obtiene Nombre.
+	 *
+	 * @return valor de Nombre
+	 */
 	public String getNombre() {
 		return nombre;
 	}
 
+	/**
+	 * Obtiene Descripcion.
+	 *
+	 * @return valor de Descripcion
+	 */
 	public String getDescripcion() {
 		return descripcion;
 	}
 
+	/**
+	 * Obtiene Precio.
+	 *
+	 * @return valor de Precio
+	 */
 	public double getPrecio() {
 		return precio;
 	}
