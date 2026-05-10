@@ -42,6 +42,7 @@ public class ControlPanelOferta implements ActionListener {
 		this.controlador = controlador;
 
 		String nombreEmisor = intercambio.getEmisor().getDueno().getNombre();
+		String nombreReceptor = intercambio.getReceptor().getDueno().getNombre();
 		String imagenEmisor = emisorPfp;
 		String fotoArticulo = intercambio.getOfrecidos()[0].getImage();
 
@@ -56,7 +57,7 @@ public class ControlPanelOferta implements ActionListener {
 		String[] articulosSolicitados = arraySolicitados.toArray(new String[0]);
 
 		if(intercambio.getEmisor().getDueno().equals(cliente)) {
-			panel = new PanelOferta(nombreEmisor, imagenEmisor, fotoArticulo, articulosSolicitados, articulosOfrecidos,
+			panel = new PanelOferta(nombreReceptor, imagenEmisor, fotoArticulo, articulosSolicitados, articulosOfrecidos,
 					clickAction, cancelAction);
 		}
 		else panel = new PanelOferta(nombreEmisor, imagenEmisor, fotoArticulo, articulosSolicitados, articulosOfrecidos,

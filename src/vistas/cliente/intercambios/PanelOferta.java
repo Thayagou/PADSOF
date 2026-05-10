@@ -80,7 +80,7 @@ public class PanelOferta extends PanelDisplay {
 		int btnHeight = maxCompHeight;
 		int wrapGap   = t.getPixelsHeight(BTN_WRAP_GAP);
 
-		this.add(buildCentro(t, usuario, fotoPerfil, pide, ofrece, rowGap, avatarGap, textMaxW), BorderLayout.CENTER);
+		this.add(buildCentro(t, usuario, null, fotoPerfil, pide, ofrece, rowGap, avatarGap, textMaxW), BorderLayout.CENTER);
 		this.add(buildEast(btn1, btn2, btnHeight, btnWidth, wrapGap), BorderLayout.EAST);
 	}
 	
@@ -108,15 +108,16 @@ public class PanelOferta extends PanelDisplay {
 		int btnHeight = maxCompHeight;
 		int wrapGap   = t.getPixelsHeight(BTN_WRAP_GAP);
 
-		this.add(buildCentro(t, null, fotoPerfil, pide, ofrece, rowGap, avatarGap, textMaxW), BorderLayout.CENTER);
+		this.add(buildCentro(t, null, usuario, fotoPerfil, pide, ofrece, rowGap, avatarGap, textMaxW), BorderLayout.CENTER);
 		this.add(buildEast(btn1, btnHeight, btnWidth, wrapGap), BorderLayout.EAST);
 	}
 
 	/**
-	 * buildCentro.
+	 * Construye el panel central con las 4 filas.
 	 *
 	 * @param t parámetro t
 	 * @param usuario parámetro usuario
+	 * @param receptor Usuario que recibe la oferta si la enviaste tú
 	 * @param fotoPerfil parámetro fotoPerfil
 	 * @param pide parámetro pide
 	 * @param ofrece parámetro ofrece
@@ -125,10 +126,8 @@ public class PanelOferta extends PanelDisplay {
 	 * @param textMaxW parámetro textMaxW
 	 * @return valor de tipo JPanel
 	 */
-	/* Construye el panel central con las 4 filas. */
-	private JPanel buildCentro(TiendaFrame t, String usuario, String fotoPerfil,
-			String[] pide, String[] ofrece,
-			int rowGap, int avatarGap, int textMaxW) {
+	private JPanel buildCentro(TiendaFrame t, String usuario, String receptor, String fotoPerfil,
+			String[] pide, String[] ofrece, int rowGap, int avatarGap, int textMaxW) {
 
 		JPanel centro = new JPanel(new GridLayout(4, 1, 0, rowGap));
 		centro.setOpaque(false);
@@ -136,14 +135,15 @@ public class PanelOferta extends PanelDisplay {
 		centro.add(buildFilaUsuario(t, usuario, fotoPerfil, ofrece, avatarGap, textMaxW));
 		centro.add(buildFilaTexto(String.join(", ", ofrece), textMaxW, Fonts.TEXT));
 		if(usuario != null) centro.add(buildFilaTexto("Pide a cambio:", textMaxW, Fonts.BOLD));
-		else centro.add(buildFilaTexto("Pides a cambio:", textMaxW, Fonts.BOLD));
+		else centro.add(buildFilaTexto("Pides a @" +receptor+ " :", textMaxW, Fonts.BOLD));
 		centro.add(buildFilaTexto(String.join(", ", pide), textMaxW, Fonts.TEXT));
 
 		return centro;
 	}
 
 	/**
-	 * buildFilaUsuario.
+	 * Fila 1: avatar a la izquierda (WEST), texto "Usuario ofrece:" en el centro.
+	 * Usa BorderLayout segun la especificacion.
 	 *
 	 * @param t parámetro t
 	 * @param usuario parámetro usuario
@@ -152,10 +152,6 @@ public class PanelOferta extends PanelDisplay {
 	 * @param avatarGap parámetro avatarGap
 	 * @param textMaxW parámetro textMaxW
 	 * @return valor de tipo JPanel
-	 */
-	/*
-	 * Fila 1: avatar a la izquierda (WEST), texto "Usuario ofrece:" en el centro.
-	 * Usa BorderLayout segun la especificacion.
 	 */
 	private JPanel buildFilaUsuario(TiendaFrame t, String usuario, String fotoPerfil,
 			String[] ofrece, int avatarGap, int textMaxW) {
@@ -208,7 +204,7 @@ public class PanelOferta extends PanelDisplay {
 	}
 
 	/**
-	 * buildEast.
+	 * Construye el boton de accion envuelto en un wrapVertical.
 	 *
 	 * @param btn1 parámetro btn1
 	 * @param btn2 parámetro btn2
@@ -217,7 +213,6 @@ public class PanelOferta extends PanelDisplay {
 	 * @param wrapGap parámetro wrapGap
 	 * @return valor de tipo JPanel
 	 */
-	/* Construye el boton de accion envuelto en un wrapVertical. */
 	private JPanel buildEast(String btn1, String btn2, int btnHeight, int btnWidth, int wrapGap) {
 		botonSuperior = ButtonFactory.newRoundedButton(btn1, btnHeight, btnWidth, BTN_ROUNDNESS);
 		botonSuperior.setActionCommand(btn1);
