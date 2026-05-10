@@ -20,6 +20,7 @@ public class PanelItemCarrito extends PanelProducto {
 	/** Constante QUITAR_ACTION. */
 	public static final String QUITAR_ACTION = "Quitar";
 	
+	/** Ancho en pixeles del boton de quitar */
 	public static final int BTN_WIDTH = TiendaFrame.getInstance().getPixelsWidth(0.07);
 
 	/** Campo quitar. */

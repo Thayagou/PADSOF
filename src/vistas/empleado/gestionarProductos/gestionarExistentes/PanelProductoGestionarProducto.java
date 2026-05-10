@@ -13,6 +13,7 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.displays.PanelProducto;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
+import vistas.herramientas.PanelFactory;
 
 /**
  * Esta clase representa un panel con opciones de gestionar un producto
@@ -23,6 +24,8 @@ public class PanelProductoGestionarProducto extends PanelProducto {
 	public static final String MODIFICAR_ACTION = "Modificar";
 	/** Nombre de la acción asociada a borrar */
 	public static final String BORRAR_ACTION = "Borrar";
+	/** Ancho en pixeles de los botones de la derecha */
+	public static final int BTN_WIDTH = TiendaFrame.getInstance().getPixelsWidth(0.1);
 	/** Botón de modificar */
 	private JButton modButton;
 	/** Botón de borrar */
@@ -40,20 +43,19 @@ public class PanelProductoGestionarProducto extends PanelProducto {
 	public PanelProductoGestionarProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, "", categorias);
 		
-		TiendaFrame t = TiendaFrame.getInstance();
 		JPanel eastPanel = new JPanel();
 		eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
 		eastPanel.setOpaque(false);
-		int maxWidth = t.getPixelsWidth(BOTON_PERC_W);
-		eastPanel.setPreferredSize(new Dimension(maxWidth, (int)(maxCompHeight * BOTON_PERC_H)));
 		
-		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int)(maxCompHeight), maxCompHeight, 0.5f);
+		modButton = ButtonFactory.newRoundedButton(MODIFICAR_ACTION, (int)(maxCompHeight), BTN_WIDTH, 0.5f);
+		modButton.setMaximumSize(new Dimension(BTN_WIDTH, (int)(maxCompHeight* BOTON_PERC_H)));
 		ButtonFactory.paintButton(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(modButton, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		
-		borrarButton = ButtonFactory.newRoundedButton(BORRAR_ACTION, (int)(maxCompHeight), maxCompHeight, 0.5f);
-		ButtonFactory.paintButton(borrarButton, ColorPalette.RED, ColorPalette.WHITE);
-		ButtonFactory.addMouseMecanics(borrarButton, ColorPalette.RED, ColorPalette.LIGHT_RED);
+		borrarButton = ButtonFactory.newRoundedButton(BORRAR_ACTION, (int)(maxCompHeight), BTN_WIDTH, 0.5f);
+		borrarButton.setMaximumSize(new Dimension(BTN_WIDTH, (int)(maxCompHeight* BOTON_PERC_H)));
+		ButtonFactory.paintButton(borrarButton, ColorPalette.CARD_DARK, ColorPalette.DARK_GREY);
+		ButtonFactory.addHoverColorChange(borrarButton);
 		
 		int gapSize = (int) (maxCompHeight * (1 - 2*BOTON_PERC_H) / 3);
 		eastPanel.add(Box.createVerticalStrut(gapSize));
@@ -62,7 +64,7 @@ public class PanelProductoGestionarProducto extends PanelProducto {
 		eastPanel.add(borrarButton);
 		eastPanel.add(Box.createVerticalStrut(gapSize));
 		
-		this.add(eastPanel, BorderLayout.EAST);
+		this.add(PanelFactory.wrapHorizontal(eastPanel, gapSize), BorderLayout.EAST);
 	}
 	
 	/**
