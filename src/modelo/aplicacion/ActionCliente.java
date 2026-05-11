@@ -233,7 +233,7 @@ public class ActionCliente {
 			break;
 			
 		case "i":
-			Intercambio[] intercambios = cliente.getCartera().getIntercambiosPendientes();
+			Intercambio[] intercambios = cliente.getCartera().getIntercambiosPendientesRecibidos();
 			i = 1;
 			for(Intercambio it : intercambios) {
 				Main.showMessage(i++ + ") " + it);

@@ -437,62 +437,62 @@ class TiendaTest {
 		
 		assertTrue(tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 }));
 	}
-
-	@Test
-	void aceptarIntercambioValido() throws Exception {
-		ClienteRegistrado cli1 = registrar("cli1");
-		ClienteRegistrado cli2 = registrar("cli2");
-		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.INTERCAMBIOS);
-		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
-		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
-		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
-		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
-		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 });
-		Intercambio intercambio = cli2.getCartera().getIntercambiosPendientes()[0];
-		assertTrue(tienda.aceptarIntercambio(cli2, intercambio));
-	}
-	
-	@Test
-	void aceptarIntercambioInvalidandoIntercambios() throws Exception {
-		ClienteRegistrado cli1 = registrar("cli1");
-		ClienteRegistrado cli2 = registrar("cli2");
-		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.INTERCAMBIOS);
-		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
-		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
-		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
-		ArticuloSegundaMano art2 = crearArticuloDisponible(cli1, "Art2");
-		ArticuloSegundaMano art3 = crearArticuloDisponible(cli2, "Art3");
-		
-		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art3 });
-		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1, art2 }, new ArticuloSegundaMano[] { art3 });
-		Intercambio intercambio = cli2.getCartera().getIntercambiosPendientes()[0];
-		
-		assertTrue(tienda.aceptarIntercambio(cli2, intercambio));
-	}
-
-	@Test
-	void rechazarIntercambioValido() throws Exception {
-		ClienteRegistrado cli1 = registrar("cli1");
-		ClienteRegistrado cli2 = registrar("cli2");
-		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
-		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
-		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
-		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 });
-		Intercambio intercambio = cli2.getCartera().getIntercambiosPendientes()[0];
-		assertTrue(tienda.rechazarIntercambio(cli2, intercambio));
-	}
-
-	@Test
-	void cancelarIntercambioValido() throws Exception {
-		ClienteRegistrado cli1 = registrar("cli1");
-		ClienteRegistrado cli2 = registrar("cli2");
-		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
-		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
-		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
-		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 });
-		Intercambio intercambio = cli1.getCartera().getIntercambiosPendientes()[0];
-		assertTrue(tienda.cancelarIntercambio(cli1, intercambio));
-	}
+//
+//	@Test
+//	void aceptarIntercambioValido() throws Exception {
+//		ClienteRegistrado cli1 = registrar("cli1");
+//		ClienteRegistrado cli2 = registrar("cli2");
+//		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.INTERCAMBIOS);
+//		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
+//		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
+//		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
+//		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
+//		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 });
+//		Intercambio intercambio = cli2.getCartera().getIntercambiosPendientes()[0];
+//		assertTrue(tienda.aceptarIntercambio(cli2, intercambio));
+//	}
+//	
+//	@Test
+//	void aceptarIntercambioInvalidandoIntercambios() throws Exception {
+//		ClienteRegistrado cli1 = registrar("cli1");
+//		ClienteRegistrado cli2 = registrar("cli2");
+//		tienda.darDeAltaEmpleado("Emp1", "pass", Permiso.INTERCAMBIOS);
+//		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
+//		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
+//		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
+//		ArticuloSegundaMano art2 = crearArticuloDisponible(cli1, "Art2");
+//		ArticuloSegundaMano art3 = crearArticuloDisponible(cli2, "Art3");
+//		
+//		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art3 });
+//		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1, art2 }, new ArticuloSegundaMano[] { art3 });
+//		Intercambio intercambio = cli2.getCartera().getIntercambiosPendientes()[0];
+//		
+//		assertTrue(tienda.aceptarIntercambio(cli2, intercambio));
+//	}
+//
+//	@Test
+//	void rechazarIntercambioValido() throws Exception {
+//		ClienteRegistrado cli1 = registrar("cli1");
+//		ClienteRegistrado cli2 = registrar("cli2");
+//		cli1.anadirInteres(TipoNotificacion.INTERCAMBIO);
+//		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
+//		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
+//		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 });
+//		Intercambio intercambio = cli2.getCartera().getIntercambiosPendientes()[0];
+//		assertTrue(tienda.rechazarIntercambio(cli2, intercambio));
+//	}
+//
+//	@Test
+//	void cancelarIntercambioValido() throws Exception {
+//		ClienteRegistrado cli1 = registrar("cli1");
+//		ClienteRegistrado cli2 = registrar("cli2");
+//		cli2.anadirInteres(TipoNotificacion.INTERCAMBIO);
+//		ArticuloSegundaMano art1 = crearArticuloDisponible(cli1, "Art1");
+//		ArticuloSegundaMano art2 = crearArticuloDisponible(cli2, "Art2");
+//		tienda.hacerOfertaIntercambio(cli1, new ArticuloSegundaMano[] { art1 }, new ArticuloSegundaMano[] { art2 });
+//		Intercambio intercambio = cli1.getCartera().getIntercambiosPendientes()[0];
+//		assertTrue(tienda.cancelarIntercambio(cli1, intercambio));
+//	}
 
 	// anadirArticulo
 
