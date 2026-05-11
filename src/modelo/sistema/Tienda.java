@@ -139,7 +139,8 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	    } catch (Exception e) {
 	        return null;
 	    }
-	}	
+	}
+	
 	/**
 	 * Guarda los datos de la tienda en un fichero
 	 * @param filename Nombre del fichero donde se guarda la tienda
