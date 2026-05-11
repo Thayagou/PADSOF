@@ -193,8 +193,10 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 				return cliente;
 		} else if(empleados.containsKey(nombre)) {
 			Empleado empleado = empleados.get(nombre);
-			if(BCrypt.checkpw(contrasena, empleado.getContrasena()) && empleado.estaDeAlta())
+			if(BCrypt.checkpw(contrasena, empleado.getContrasena())) {
+				if(!empleado.estaDeAlta()) throw new NotValidUserException("Actualmente estás dado de baja en la aplicación", "iniciar sesión", nombre);
 				return empleado;
+			}
 		} else {
 			throw new NotValidUserException("No se encontró el usuario", "iniciar sesión", nombre);
 		}
