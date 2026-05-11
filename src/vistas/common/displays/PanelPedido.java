@@ -1,6 +1,7 @@
 package vistas.common.displays;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.Box;
@@ -27,7 +28,7 @@ public class PanelPedido extends PanelDisplay{
 	private static final double FOTO_H_PERC = 0.99;
 	
 	/** Porcentaje de altura de pantalla que ocupa. */
-	private static final double MAX_HEIGHT = 0.16;
+	private static final double MAX_HEIGHT = 0.4;
 	
 	/** Porcentaje de pantalla utilizado para. */
 	private static final double GAP_PERC = 0.1;
@@ -48,6 +49,9 @@ public class PanelPedido extends PanelDisplay{
 	public PanelPedido(String actionName, String estado, String id, String...productos) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, actionName);
 		gap = (int)(maxCompHeight *GAP_PERC);
+		setMinimumSize(new Dimension(0, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
+		setMaximumSize(new Dimension(Integer.MAX_VALUE, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
+		setPreferredSize(new Dimension(Integer.MAX_VALUE, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
 		
 		int descWidth = TiendaFrame.getInstance().getPixelsWidth(DESC_MAX_WIDTH);
 		

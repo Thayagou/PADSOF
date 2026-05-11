@@ -13,6 +13,7 @@ import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGest
 import controladores.empleado.valorarArticulos.ControlValorarObjetos;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
+import vistas.empleado.general.BarraEmpleado;
 
 public class ControlBarraEmpleado implements ActionListener {
 
@@ -27,12 +28,12 @@ public class ControlBarraEmpleado implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
-		case "Añadir productos" -> showAnadirProducto();
-		case "Gestionar productos" -> showProductosExistentes();
-		case "Gestionar categorías" -> showCategoriasExistentes();
-		case "Gestionar pedidos" -> showGPedidos();
-		case "Valorar artículos" -> showValorar();
-		case "Gestionar intercambios" -> showGIntercambios();
+		case BarraEmpleado.ANADIR_ACTION -> showAnadirProducto();
+		case BarraEmpleado.GEST_PRODUCTOS_ACTION -> showProductosExistentes();
+		case BarraEmpleado.GEST_CAT_ACTION -> showCategoriasExistentes();
+		case BarraEmpleado.GEST_PEDIDOS_ACTION -> showGPedidos();
+		case BarraEmpleado.VALORAR_ACTION -> showValorar();
+		case BarraEmpleado.GEST_INT_ACTION -> showGIntercambios();
 		}
 	}
 	

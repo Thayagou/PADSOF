@@ -53,6 +53,6 @@ public class VentanaGestPedidos extends JPanel implements VentanaConDisplay<Pane
 	public void vaciar() {
 		listaPanel.removeAll();
 		listaPanel.revalidate();
-		listaPanel.repaint();
+	    listaPanel.repaint();
 	}
 }

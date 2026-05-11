@@ -153,7 +153,7 @@ public class ControlAnadirProductos implements ControladorPantalla {
 				new VentanaMensaje(e.getMessage(), 1);
 				return;
 			}
-			mostrar();
+			TiendaFrame.getInstance().volverAtras();
 			new VentanaMensaje("El producto se añadió correctamente");
 		}
 	}

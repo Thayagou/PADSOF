@@ -17,19 +17,31 @@ import vistas.common.app.MenuLateral;
  */
 public class BarraEmpleado extends BarraLateral {
 	private static final long serialVersionUID = 1L;
+	
+	public final static String GEST_PEDIDOS_ACTION = "Gestionar pedidos";
+	
+	public final static String VALORAR_ACTION = "Valorar artículos";
+	
+	public final static String GEST_INT_ACTION = "Gestionar intercambios";
+	
+	public final static String ANADIR_ACTION = "Añadir productos";
+	
+	public final static String GEST_PRODUCTOS_ACTION = "Gestionar productos";
+	
+	public final static String GEST_CAT_ACTION = "Gestionar categorías";
 
 	/** Botón de gestionar pedidos */
-	private JButton gestionarPedidos = new JButton("Gestionar pedidos");
+	private JButton gestionarPedidos = new JButton(GEST_PEDIDOS_ACTION);
 	/** Votón de valorar objetos */
-	private JButton valorarObjetos = new JButton("Valorar artículos");
+	private JButton valorarObjetos = new JButton(VALORAR_ACTION);
 	/** Botón de gestionar intercambios */
-	private JButton gestionarIntercambios = new JButton("Gestionar intercambios");
+	private JButton gestionarIntercambios = new JButton(GEST_INT_ACTION);
 	/** Botón de añadir productos */
-	private JButton anadirProducto = new JButton("Añadir productos");
+	private JButton anadirProducto = new JButton(ANADIR_ACTION);
 	/** Botón de gestionar existentes */
-	private JButton gestionarExistentes = new JButton("Gestionar productos");
+	private JButton gestionarExistentes = new JButton(GEST_PRODUCTOS_ACTION);
 	/** Botón de gestionar categorías */
-	private JButton gestionarCategorias = new JButton("Gestionar categorías");
+	private JButton gestionarCategorias = new JButton(GEST_CAT_ACTION);
 	/** Ancho del menú */
 	private static final double MENU_WIDTH = 0.17;
 

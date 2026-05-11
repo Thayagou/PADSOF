@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
@@ -21,14 +23,11 @@ public class ControlPanelGestionarPedido implements ActionListener {
 	private final Empleado empleado;
 	private final Pedido pedido;
 	private final String ACTION_NAME = "Avanzar estado del pedido";
-	/** Controlador de la ventana padre en la que está */
-	private final ControlGestPedidos padre;
 	
 	public ControlPanelGestionarPedido(Tienda tienda, Empleado empleado, Pedido pedido, VentanaGestPedidos vista, ControlGestPedidos padre) {
 		this.tienda = tienda;
 		this.empleado = empleado;
 		this.pedido = pedido;
-		this.padre = padre;
 		
 		List<String> productos = new LinkedList<>();
 		for(StockExterno s : pedido.getItemsPedido()) {
@@ -57,7 +56,7 @@ public class ControlPanelGestionarPedido implements ActionListener {
 				new VentanaMensaje(e.getMessage(), 1);
 				return;
 			}
-			padre.mostrar();
+			SwingUtilities.invokeLater(() -> {new ControlGestPedidos(tienda, empleado);});
 			new VentanaMensaje("El pedido se ha avanzado correctamente");
 		}
 	}

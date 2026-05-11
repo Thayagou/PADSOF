@@ -45,7 +45,7 @@ public class ControlPanelCrearCategoria implements ActionListener {
 			return;
 		}
 		
-		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas confirmar intercambio?"))
+		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas crear esta categoría?"))
 		try {
 			tienda.getAlmacen().anadirCategoria(usuario, nombre);
 		} catch (InvalidArgumentException | InvalidPermitException e) {

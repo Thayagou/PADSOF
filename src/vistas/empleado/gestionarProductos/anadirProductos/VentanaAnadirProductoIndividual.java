@@ -257,6 +257,34 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 			cb.setSeleccionado(catSelList.contains(cb.getText()));
 		}
 
+		JPanel panelCategorias = new JPanel();
+		panelCategorias.setLayout(new BoxLayout(panelCategorias, BoxLayout.Y_AXIS));
+		panelCategorias.setOpaque(false);
+		for (InvisibleCheckBox cb : checkCategorias) {
+			JPanel wrapper = new JPanel(new BorderLayout());
+			wrapper.setOpaque(false);
+			wrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, cb.getPreferredSize().height));
+			wrapper.setAlignmentX(Component.LEFT_ALIGNMENT);
+			wrapper.add(cb, BorderLayout.CENTER);
+			wrapper.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					cb.toggleSelection();
+				}
+			});
+			panelCategorias.add(wrapper);
+		}
+
+		JScrollPane scrollCategorias = PanelFactory.getScroll(panelCategorias);
+		scrollCategorias.setAlignmentX(Component.LEFT_ALIGNMENT);
+		scrollCategorias.setOpaque(false);
+		scrollCategorias.getViewport().setOpaque(false);
+		scrollCategorias.setBorder(BorderFactory.createLineBorder(ColorPalette.PURPLE.getColor()));
+		scrollCategorias.setMaximumSize(new Dimension(Integer.MAX_VALUE, TiendaFrame.getInstance().getPixelsHeight(0.2)));
+		centro.add(scrollCategorias);
+
+		centro.add(Box.createVerticalStrut(16));
+
 		centro.add(Box.createVerticalStrut(16));
 		JSeparator sep = new JSeparator(SwingConstants.HORIZONTAL);
 		sep.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));

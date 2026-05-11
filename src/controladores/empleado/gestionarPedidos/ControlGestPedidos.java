@@ -28,6 +28,7 @@ public class ControlGestPedidos implements ControladorPantalla {
 			new VentanaMensaje("No tiene el permiso para realizar esta acción", 1);
 			return;
 		}
+
 		this.vista = new VentanaGestPedidos();
 		
 		TiendaFrame.getInstance().navegarA(this);
@@ -54,5 +55,7 @@ public class ControlGestPedidos implements ControladorPantalla {
 		for(Pedido p : pedidos) {
 			new ControlPanelGestionarPedido(tienda, empleado, p, vista, this);
 		}
+		vista.revalidate();
+		vista.repaint();
 	}
 }
