@@ -33,6 +33,8 @@ public class ControlPanelOferta implements ActionListener {
 	private static final String cancelAction = "Cancelar";
 
 	private static final String emisorPfp = "pfp.png";
+	
+	private boolean aceptada = false;
 
 	public ControlPanelOferta(Tienda tienda, ClienteRegistrado cliente, Intercambio intercambio,
 			VentanaConDisplay<PanelOferta> vista, ControlVerMisOfertas controlador) {
@@ -59,6 +61,7 @@ public class ControlPanelOferta implements ActionListener {
 		
 		/* Crear el panel de la oferta */
 		if(intercambio.getEstado().equals(EstadoIntercambio.ACEPTADO)) {
+			aceptada = true;
 			if(intercambio.getEmisor().getDueno().equals(cliente)) {
 				panel = new PanelOferta(null, imagenEmisor, nombreReceptor, fotoArticulo, articulosSolicitados, articulosOfrecidos, clickAction);
 			}
@@ -78,6 +81,7 @@ public class ControlPanelOferta implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(aceptada) return;
 		switch (e.getActionCommand()) {
 		case clickAction:
 			SwingUtilities.invokeLater(() -> new ControlVerOferta(tienda, cliente, intercambio));
