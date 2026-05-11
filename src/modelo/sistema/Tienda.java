@@ -39,7 +39,8 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 	 */
 	public Tienda() throws InvalidArgumentException { 
 		almacen = new Almacen(historial);
-		gestor = new Gestor("gestor", "g123");
+		String passGestor = "g123";
+		gestor = new Gestor("gestor", BCrypt.hashpw(passGestor, BCrypt.gensalt()));
 	}
 	
 	@Override
@@ -220,7 +221,8 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 			return true;
 		}
 		if(!comprobarUnicidadNombre(nombre)) return false;
-		empleados.put(nombre, new Empleado(nombre, contrasena, permisos));
+		String contrasenaEncriptada = BCrypt.hashpw(contrasena, BCrypt.gensalt());
+		empleados.put(nombre, new Empleado(nombre, contrasenaEncriptada, permisos));
 		return true;
 	}
 	

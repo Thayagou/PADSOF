@@ -64,7 +64,7 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 	public void cambiarContrasena(String contrasenaAntigua, String contrasena, String confirmarContrasena) throws InvalidArgumentException {
 		if (contrasenaAntigua.equals(this.contrasena) == false) throw new InvalidArgumentException("La contraseña original introducida es incorrecta", "cambiar contraseña");
 		if(contrasena.equals(confirmarContrasena)) {
-			this.contrasena = contrasena;
+			this.contrasena = BCrypt.hashpw(contrasena, BCrypt.gensalt());
 		} else throw new InvalidArgumentException("La confirmación de contraseña no es correcta", "cambiar contraseña");
 	}
 
