@@ -28,13 +28,13 @@ public class PanelPedido extends PanelDisplay{
 	private static final double FOTO_H_PERC = 0.99;
 	
 	/** Porcentaje de altura de pantalla que ocupa. */
-	private static final double MAX_HEIGHT = 0.4;
+	private static final double MAX_HEIGHT = 0.16;
 	
 	/** Porcentaje de pantalla utilizado para. */
 	private static final double GAP_PERC = 0.1;
 	
 	/** Porcentaje de pantalla maximo para la descripcion del pedido */
-	private static final double DESC_MAX_WIDTH = 0.7;
+	private static final double DESC_MAX_WIDTH = 0.4;
 	
 	/** Campo gap. */
 	private int gap;
@@ -49,9 +49,9 @@ public class PanelPedido extends PanelDisplay{
 	public PanelPedido(String actionName, String estado, String id, String...productos) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, actionName);
 		gap = (int)(maxCompHeight *GAP_PERC);
-		setMinimumSize(new Dimension(0, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
+		/*setMinimumSize(new Dimension(0, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
-		setPreferredSize(new Dimension(Integer.MAX_VALUE, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
+		setPreferredSize(new Dimension(Integer.MAX_VALUE, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));*/
 		
 		int descWidth = TiendaFrame.getInstance().getPixelsWidth(DESC_MAX_WIDTH);
 		
@@ -65,10 +65,11 @@ public class PanelPedido extends PanelDisplay{
 		items.add(descripcion, BorderLayout.CENTER);
 		
 		/* Estado del pedido + id */
-		JPanel datos = new JPanel(new GridLayout(1, 2));
+		JPanel datos = new JPanel();
+		datos.setLayout(new BoxLayout(datos, BoxLayout.X_AXIS));
 		datos.setOpaque(false);
-		datos.add(ButtonFactory.newLabel("Código de pedido: " + id, Fonts.BOLD));
-		datos.add(ButtonFactory.newLabel("Estado: "+estado, Fonts.BOLD));
+		datos.add(ButtonFactory.newLeftAlignedLabel("Código de pedido: " + id, Fonts.BOLD));
+		datos.add(ButtonFactory.newLeftAlignedLabel("Estado: "+estado, Fonts.BOLD));
 		
 		add(items, BorderLayout.CENTER);
 		add(datos, BorderLayout.SOUTH);
