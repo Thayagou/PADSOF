@@ -1,8 +1,6 @@
 package vistas.common.displays;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -49,9 +47,6 @@ public class PanelPedido extends PanelDisplay{
 	public PanelPedido(String actionName, String estado, String id, String...productos) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, actionName);
 		gap = (int)(maxCompHeight *GAP_PERC);
-		/*setMinimumSize(new Dimension(0, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
-		setMaximumSize(new Dimension(Integer.MAX_VALUE, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));
-		setPreferredSize(new Dimension(Integer.MAX_VALUE, TiendaFrame.getInstance().getPixelsHeight(MAX_HEIGHT)));*/
 		
 		int descWidth = TiendaFrame.getInstance().getPixelsWidth(DESC_MAX_WIDTH);
 		

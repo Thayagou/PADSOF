@@ -51,13 +51,15 @@ public class PanelIntercambio extends PanelDisplay {
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		int gap = (int)(maxCompHeight *GAP_PERC);
-		int fotoSize = maxCompHeight - 2*gap;
-		Dimension max = new Dimension(t.getPixelsWidth(PERC_W), Integer.MAX_VALUE);
+		int fotoSize = (maxCompHeight - 2*gap)/2;
+		int widthParticipantes = t.getPixelsWidth(PERC_W);
+		int widthInfo = widthParticipantes/2 - fotoSize;
+		Dimension max = new Dimension(widthParticipantes, Integer.MAX_VALUE);
 		
 		JPanel info = new JPanel(new GridLayout(1,2));
 		info.setOpaque(false);
-		info.setMaximumSize(new Dimension(t.getPixelsWidth(PERC_W), maxCompHeight));
-		info.setPreferredSize(new Dimension(t.getPixelsWidth(PERC_W), maxCompHeight));
+		info.setMaximumSize(new Dimension(widthParticipantes, maxCompHeight));
+		info.setPreferredSize(new Dimension(widthParticipantes, maxCompHeight));
 		
 		JPanel emisor = new JPanel();
 		emisor.setOpaque(false);
@@ -65,18 +67,18 @@ public class PanelIntercambio extends PanelDisplay {
 		emisor.setMaximumSize(max);
 		
 		PanelFotoPerfil perfilEmisor = new PanelFotoPerfil(imagenEmisor, fotoSize);
-		JLabel labelEmisor = ButtonFactory.newLabel(nombreEmisor, Fonts.BOLD);
+		JLabel labelEmisor = ButtonFactory.newLabel(Fonts.truncar(nombreEmisor, widthInfo/2, Fonts.BOLD.getFont(), info), Fonts.BOLD);
 		
 		JPanel articulosEmisor = new JPanel();
 		articulosEmisor.setOpaque(false);
 		articulosEmisor.setLayout(new BoxLayout( articulosEmisor, BoxLayout.Y_AXIS));
 		
 		articulosEmisor.add(Box.createVerticalStrut(gap));
-		articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(articulosOfrecidos[0], Fonts.TEXT));
+		articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(Fonts.truncar(articulosOfrecidos[0], widthInfo/2, Fonts.TEXT.getFont(), articulosEmisor), Fonts.TEXT));
 		for (int i = 1; i < articulosOfrecidos.length && i < 4; i++) {
-			articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(", " + articulosOfrecidos[i], Fonts.TEXT));
+			articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(Fonts.truncar(articulosOfrecidos[i], widthInfo/2, Fonts.TEXT.getFont(), articulosEmisor), Fonts.TEXT));
 		}
-		if (articulosOfrecidos.length >= 5) articulosEmisor.add(ButtonFactory.newLeftAlignedLabel(", ...", Fonts.TEXT));
+		if (articulosOfrecidos.length >= 5) articulosEmisor.add(ButtonFactory.newLeftAlignedLabel("...", Fonts.TEXT));
 		articulosEmisor.add(Box.createVerticalStrut(gap));
 		
 		emisor.add(perfilEmisor);
@@ -94,19 +96,20 @@ public class PanelIntercambio extends PanelDisplay {
 		receptor.setMaximumSize(max);
 
 		PanelFotoPerfil perfilReceptor = new PanelFotoPerfil(imagenReceptor, fotoSize);
-		JLabel labelReceptor = ButtonFactory.newLabel(nombreReceptor, Fonts.BOLD);
+		JLabel labelReceptor = ButtonFactory.newLabel(Fonts.truncar(nombreReceptor, widthInfo/2, Fonts.BOLD.getFont(), info), Fonts.BOLD);
 
 		JPanel articulosReceptor = new JPanel();
 		articulosReceptor.setOpaque(false);
 		articulosReceptor.setLayout(new BoxLayout(articulosReceptor, BoxLayout.Y_AXIS));
 
 		articulosReceptor.add(Box.createVerticalStrut(gap));
-		articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(articulosSolicitados[0], Fonts.TEXT));
+		articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(Fonts.truncar(articulosSolicitados[0], widthInfo/2, Fonts.TEXT.getFont(), articulosEmisor), Fonts.TEXT));
 		for (int i = 1; i < articulosSolicitados.length && i < 4; i++) {
-		    articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(", " + articulosSolicitados[i], Fonts.TEXT));
+			
+		    articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(Fonts.truncar(articulosOfrecidos[i], widthInfo/2, Fonts.TEXT.getFont(), articulosEmisor), Fonts.TEXT));
 		}
 		if (articulosSolicitados.length >= 5) 
-		    articulosReceptor.add(ButtonFactory.newLeftAlignedLabel(", ...", Fonts.TEXT));
+		    articulosReceptor.add(ButtonFactory.newLeftAlignedLabel("...", Fonts.TEXT));
 		articulosReceptor.add(Box.createVerticalStrut(gap));
 
 		receptor.add(perfilReceptor);

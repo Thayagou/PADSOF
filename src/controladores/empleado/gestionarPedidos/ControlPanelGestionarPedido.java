@@ -11,6 +11,7 @@ import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
+import modelo.venta.pedidos.EstadoPedido;
 import modelo.venta.pedidos.Pedido;
 import modelo.venta.productos.StockExterno;
 import vistas.common.app.TiendaFrame;
@@ -34,7 +35,9 @@ public class ControlPanelGestionarPedido implements ActionListener {
 			productos.add(s.getProducto().getNombre());
 		}
 		
-		PanelPedidoGestionarPedido panel = new PanelPedidoGestionarPedido(pedido.getCliente().getNombre(), pedido.getEstado().name(), "" + pedido.getId(), "pfp.png", ACTION_NAME, productos.toArray(new String[0]));
+		EstadoPedido estado = pedido.getEstado();
+		String estadoString = estado.equals(EstadoPedido.EN_PREPARACION) ? "EN PREPARACION" : estado.name();
+		PanelPedidoGestionarPedido panel = new PanelPedidoGestionarPedido(pedido.getCliente().getNombre(), estadoString, "" + pedido.getId(), "pfp.png", ACTION_NAME, productos.toArray(new String[0]));
 		vista.anadirDisplay(panel);
 		panel.setControlador(this);
 	}
