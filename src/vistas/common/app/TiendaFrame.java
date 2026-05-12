@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayDeque;
@@ -18,25 +20,50 @@ import modelo.aplicacion.Main;
 import vistas.common.assets.VentanaConfirmacion;
 import vistas.herramientas.PanelSizes;
 
+/**
+ * Frame Singleton central de la aplicación. Sobre este se muestra toda la información de la tienda
+ */
 public class TiendaFrame extends JFrame {
+	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** CInstancia del TiendaFrame */
 	private static TiendaFrame instance;
 
-	// Componentes originales
+	/** Contenido que se muestra actualmente por pantalla */
 	private Component vistaActual;
+	
+	/** Barra lateral actual */
 	private BarraLateral barraLateral;
+	
+	/** Barra de tareas actual */
 	private BarraTareas barraTareas;
+	
+	/** Fondo gradiente que se muestra */
 	private FondoGradiente fondo;
+	
+	/** Altura de la pantalla */
 	private int height;
+	
+	/** Anchura de la pantalla */
 	private int width;
 
-	// ----- NUEVO: Sistema de navegación con pila -----
+	/** CardLayout que se usa para reutilizar vistas */
 	private final CardLayout cardLayout = new CardLayout();
+	
+	/** Panel correspondiente al contenido mostrado por pantalla */
 	private final JPanel contentPanel = new JPanel(cardLayout);
+	
+	/** Pila de controladores de pantallas */
 	private final Deque<ControladorPantalla> pilaPantallas = new ArrayDeque<>();
+	
+	/** Controlador de pantalla actual */
 	private ControladorPantalla controladorActual = null;
-	// -------------------------------------------------
 
+	/**
+	 * Instancia un nuevo Objeto TiendaFrame. Se muestra en mitad de la pantalla y tras abrir se toman las medidas de altura y anchura
+	 */
 	private TiendaFrame() {
 		setTitle("Android's Dungeon");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -47,6 +74,16 @@ public class TiendaFrame extends JFrame {
 		this.height = screen.height;
 		setSize(width, height);
 
+		addComponentListener(new ComponentAdapter() {
+	        @Override
+	        public void componentResized(ComponentEvent e) {
+	            width = getWidth();
+	            height = getHeight();
+	            revalidate();
+	            repaint();
+	        }
+	    });
+		
 		fondo = new FondoGradiente();
 		fondo.setLayout(new BorderLayout()); // Necesario para que funcione el CENTER
 		fondo.setVisible(true);
@@ -58,6 +95,11 @@ public class TiendaFrame extends JFrame {
 		add(fondo);
 	}
 
+	/**
+	 * Obtiene la única instancia de TiendaFrame.
+	 *
+	 * @return la única instancia de TiendaFrame
+	 */
 	public static TiendaFrame getInstance() {
 		if (instance == null) {
 			instance = new TiendaFrame();
@@ -76,7 +118,7 @@ public class TiendaFrame extends JFrame {
 	}
 	
 	/**
-	 * Método para obtener una confirmación del usuario
+	 * Método para obtener una confirmación del usuario.
 	 *
 	 * @param texto Texto que se muestra cuando se pide la confirmación
 	 * @return true si el usuario pulsa "Confirmar", false si pulsa "Cancelar"
@@ -105,6 +147,11 @@ public class TiendaFrame extends JFrame {
 		return resultado[0];
 	}
 
+	/**
+	 * Establece BarraTareas.
+	 *
+	 * @param barraTareas nuevo valor
+	 */
 	public void setBarraTareas(BarraTareas barraTareas) {
 		if (this.barraTareas != null)
 			fondo.remove(this.barraTareas);
@@ -114,6 +161,11 @@ public class TiendaFrame extends JFrame {
 		repaint();
 	}
 
+	/**
+	 * Establece BarraLateral.
+	 *
+	 * @param barraLateral nuevo valor
+	 */
 	public void setBarraLateral(BarraLateral barraLateral) {
 		if (this.barraLateral != null)
 			fondo.remove(this.barraLateral);
@@ -123,6 +175,9 @@ public class TiendaFrame extends JFrame {
 		repaint();
 	}
 
+	/**
+	 * Elimina la barra lateral.
+	 */
 	public void removeBarraLateral() {
 		if (this.barraLateral != null)
 			fondo.remove(this.barraLateral);
@@ -130,6 +185,11 @@ public class TiendaFrame extends JFrame {
 		repaint();
 	}
 
+	/**
+	 * Establece el fondo.
+	 *
+	 * @param nuevoFondo Nuevo fondo de la tienda
+	 */
 	public void setFondo(FondoGradiente nuevoFondo) {
 		if (this.fondo != null)
 			remove(this.fondo);
@@ -142,38 +202,67 @@ public class TiendaFrame extends JFrame {
 		repaint();
 	}
 
+	/**
+	 * Getter de la vista actual de la aplicación
+	 *
+	 * @return la vista actual
+	 */
 	public Component getVistaActual() {
 		return vistaActual;
 	}
 
+	/**
+	 * A partir de un porcentaje entre 0 y 1 obtiene el número de píxeles correspondientes de anchura actual de la aplicación
+	 *
+	 * @param percentaje Porcentaje de anchura
+	 * @return Número de píxeles correspondientes
+	 */
 	public int getPixelsWidth(double percentage) {
 		return (int) (width * percentage);
 	}
 
+	/**
+	 * A partir de un porcentaje entre 0 y 1 obtiene el número de píxeles correspondientes de altura actual de la aplicación
+	 *
+	 * @param percentaje Porcentaje de altura
+	 * @return Número de píxeles correspondientes
+	 */
 	public int getPixelsHeight(double percentage) {
 		return (int) (height * percentage);
 	}
 
+	/**
+	 * Píxeles de tamaño de la barra de tareas a partir de un porcentaje establecido
+	 *
+	 * @return Número de píxeles correspondientes
+	 */
 	public int toolBarDistFromTop() {
 		return (int) (height * PanelSizes.TOOLBAR_HEIGHT);
 	}
 
+	/**
+	 * Píxeles de tamaño de la barra lateral a partir de un porcentaje establecido
+	 *
+	 * @return Número de píxeles correspondientes
+	 */
 	public int optionBarDistFromLeft() {
 		return (int) (width * PanelSizes.OPTION_BAR_WIDTH);
 	}
-
-	public int btnHeight() {
-		return (int) (height * PanelSizes.BTN_HEIGHT);
-	}
 	
+	/**
+	 * Getter de la información que muestra el controlador actual
+	 *
+	 * @return valor de Info
+	 */
 	public String getInfo() {
 		return controladorActual.getExplicacion();
 	}
-
-	/* ========== NUEVOS MÉTODOS PARA NAVEGACIÓN ========== */
+	
 	/**
 	 * Navega a una nueva pantalla gestionada por un ControladorPantalla. La vista
 	 * del controlador debe ser un JPanel.
+	 *
+	 * @param nuevoControlador parámetro nuevoControlador
 	 */
 	public void navegarA(ControladorPantalla nuevoControlador) {
 		if (controladorActual != null) {
@@ -195,7 +284,9 @@ public class TiendaFrame extends JFrame {
 		repaint();
 	}
 
-	/** Vuelve a la pantalla anterior, si existe. */
+	/** 
+	 * Vuelve a la pantalla anterior, si existe. 
+	 */
 	public void volverAtras() {
 		if (pilaPantallas.isEmpty()) {
 			return;
@@ -245,7 +336,7 @@ public class TiendaFrame extends JFrame {
 	
 	/**
 	 * Reemplaza la pantalla actual por una nueva instancia,
-	 * sin modificar el stack de navegacion
+	 * sin modificar el stack de navegacion.
 	 *
 	 * @param nuevoControlador Controlador de la nueva patnalla que sustituira a la actual
 	 */
@@ -275,6 +366,9 @@ public class TiendaFrame extends JFrame {
 	    repaint();
 	}
 	
+	/**
+	 * Recarga el marco
+	 */
 	public void refresh() {
 		JPanel nuevaVista = controladorActual.getVista();
 	    String clave = claveUnica(controladorActual);
@@ -325,6 +419,12 @@ public class TiendaFrame extends JFrame {
 		navegarA(nuevaRaiz);
 	}
 
+	/**
+	 * Para un determinado controlador de pantalla le genera una clave única
+	 *
+	 * @param c Controlador de pantalla
+	 * @return Clave única a partir de un hash
+	 */
 	private static String claveUnica(ControladorPantalla c) {
 		return c.getClass().getName() + "_" + System.identityHashCode(c);
 	}

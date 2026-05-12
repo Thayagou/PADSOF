@@ -18,7 +18,7 @@ import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
-import vistas.gestor.BarraGestor;
+import vistas.gestor.general.BarraGestor;
 
 /**
  * Clase controladora de la barra de tareas lateral del gestor.

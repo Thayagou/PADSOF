@@ -3,12 +3,10 @@ package vistas.common.displays;
 import java.awt.*;
 import javax.swing.*;
 
-import vistas.common.app.TiendaFrame;
 import vistas.herramientas.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ * Panel que usamos para mostrar las reseñas de un producto
  */
 public class PanelResena extends JPanel {
 	
@@ -24,9 +22,9 @@ public class PanelResena extends JPanel {
 	/**
 	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
 	 *
-	 * @param puntuacion parámetro puntuacion
-	 * @param comentario parámetro comentario
-	 * @param usr parámetro usr
+	 * @param puntuacion Puntuación de la reseña
+	 * @param comentario Comentario de la reseña
+	 * @param usr Nombre del usuario que la ha realizado
 	 */
 	public PanelResena(double puntuacion, String comentario, String usr) {
 		setOpaque(false);
@@ -35,8 +33,6 @@ public class PanelResena extends JPanel {
 		setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createMatteBorder(0, 0, 1, 0, ColorPalette.BLACK.getColor()),
 				BorderFactory.createEmptyBorder(8, 8, 8, 8)));
-
-		TiendaFrame t = TiendaFrame.getInstance();
 
 		setLayout(new BorderLayout(10, 5));
 		setBorder(BorderFactory.createCompoundBorder(
@@ -54,7 +50,7 @@ public class PanelResena extends JPanel {
 		usuario.setForeground(ColorPalette.DARK_GREY.getColor());
 		header.add(usuario);
 
-		header.add(buildEstrellas(t, puntuacion));
+		header.add(buildEstrellas(puntuacion));
 
 		// ── Comentario ────────────────────────────────────────────────
 		JTextArea comentTxt = new JTextArea(comentario);
@@ -70,14 +66,12 @@ public class PanelResena extends JPanel {
 	}
 
 	/**
-	 * buildEstrellas.
+	 * Contruye el panel de las estrellas  de la reseña
 	 *
-	 * @param t parámetro t
 	 * @param valoracion parámetro valoracion
 	 * @return valor de tipo JPanel
 	 */
-	// ── Estrellas ────────────────────────────────────────────────────
-	private JPanel buildEstrellas(TiendaFrame t, double valoracion) {
+	private JPanel buildEstrellas(double valoracion) {
 		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT, 1, 0));
 		p.setOpaque(false);
 
@@ -92,11 +86,10 @@ public class PanelResena extends JPanel {
 	}
 
 	/**
-	 * paintComponent.
+	 * Añade el gradiente al fondo del panel
 	 *
-	 * @param g parámetro g
+	 * @param g Unidad gráfica del panel
 	 */
-	// ── Fondo con gradiente ──────────────────────────────────────────
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g.create();

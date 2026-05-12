@@ -1,10 +1,9 @@
 package vistas.common.displays;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de panel que se usa para mostrar por pantalla la ventana de.
+ * Interfaz que implementan aquellas ventanas que tengan paneles en ella. Permite reutilizar controladores y paneles en diferentes ventanas
  *
- * @param <D> parámetro genérico
+ * @param <D> Sublase de PanelDisplay, correspondiente con el panel añadido a la página
  */
 public interface VentanaConDisplay<D extends PanelDisplay> {
 	

@@ -21,23 +21,21 @@ public class PanelProductoSeleccion extends PanelProducto implements PanelSelecc
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** ActionCommand de la acción de. */
+	/** ActionCommand de la acción de incluir el panel. */
 	public static final String INCLUIR_ACTION= "Incluir";
 	
-	/** Campo checkBox. */
+	/** CheckBox invisible de selección */
 	private InvisibleCheckBox checkBox;
 	
-	
-	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de producto que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
 	 *
-	 * @param nombre parámetro nombre
-	 * @param descripcion parámetro descripcion
-	 * @param imageName parámetro imageName
-	 * @param puntuacionMedia parámetro puntuacionMedia
-	 * @param precio parámetro precio
-	 * @param categorias parámetro categorias
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del produto
+	 * @param imageName Imagen del producto
+	 * @param puntuacionMedia Puntuación media del producto
+	 * @param precio Precio del producto
+	 * @param categorias Categorías a las que pertenece el producto
 	 */
 	public PanelProductoSeleccion(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, INCLUIR_ACTION, categorias);
@@ -48,16 +46,16 @@ public class PanelProductoSeleccion extends PanelProducto implements PanelSelecc
 	}
 	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de producto que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
 	 *
-	 * @param nombre parámetro nombre
-	 * @param descripcion parámetro descripcion
-	 * @param imageName parámetro imageName
-	 * @param puntuacionMedia parámetro puntuacionMedia
-	 * @param precio parámetro precio
-	 * @param selected parámetro selected
-	 * @param unselected parámetro unselected
-	 * @param categorias parámetro categorias
+	 * @param nombre Nombre del producto
+	 * @param descripcion Descripción del produto
+	 * @param imageName Imagen del producto
+	 * @param puntuacionMedia Puntuación media del producto
+	 * @param precio Precio del producto
+	 * @param selected Texto que se muestra al estar seleccionado
+	 * @param unselected Texto que se muestra al no estar seleccionado
+	 * @param categorias Categorías a las que pertenece el producto
 	 */
 	public PanelProductoSeleccion(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String selected, String unselected, String...categorias) {
 		super(nombre, descripcion, imageName, puntuacionMedia, precio, INCLUIR_ACTION, categorias);
@@ -76,9 +74,9 @@ public class PanelProductoSeleccion extends PanelProducto implements PanelSelecc
 	}
 	
 	/**
-	 * Comprueba si es Seleccionado.
+	 * Comprueba si es el panel se encuentra seleccionado
 	 *
-	 * @return true si es Seleccionado, falso en caso contrario
+	 * @return true si está Seleccionado, falso en caso contrario
 	 */
 	@Override
 	public boolean isSeleccionado() {
@@ -86,7 +84,7 @@ public class PanelProductoSeleccion extends PanelProducto implements PanelSelecc
 	}
 	
 	/**
-	 * toggleCheckBox.
+	 *	Cambia el estado del panel, de seleccionado a no y viceversa
 	 */
 	@Override
 	public void toggleCheckBox() {

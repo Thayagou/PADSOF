@@ -8,45 +8,37 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.components.FixedTextArea;
 import vistas.herramientas.*;
 
-// TODO: Auto-generated Javadoc
+
 /**
- * Fila de producto para las listas de resultados / productos populares.
- * Muestra: foto, estrellas, nombre, descripción truncada, precio y categorías.
- * Al hacer clic sobre la fila se puede asignar un ActionListener externo.
+ * Subclase de PanelDisplay que usamos para mostrar los productos dentro de un scroll.
  */
 public class PanelProducto extends PanelDisplay {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Porcentaje de pantalla utilizado para. */
+	/** Porcentaje de pantalla utilizado para la imagen. */
 	private static final double FOTO_W_PERC = 0.09;
 	
-	/** Porcentaje de pantalla utilizado para. */
+	/** Porcentaje de altura del panel utilizado para la foto. */
 	private static final double FOTO_H_PERC = 0.99;
 	
-	/** Porcentaje de altura de pantalla que ocupa. */
+	/** Porcentaje de altura de pantalla que ocupa el panel. */
 	private static final double MAX_HEIGHT = 0.16;
 	
-	/** Porcentaje de anchura de pantalla que ocupa. */
+	/** Porcentaje de anchura de pantalla que ocupa el panel de nombre. */
 	private static final double NAME_WIDTH = 0.2;
 	
-	/** Porcentaje de anchura de pantalla que ocupa. */
+	/** Porcentaje de anchura de pantalla que ocupa la descripción. */
 	private static final double DESC_WIDTH = NAME_WIDTH + 0.058;
 	
-	/** Campo nombre. */
-	private String nombre;
-	
-	/** Campo descripcion. */
-	private String descripcion;
-	
-	/** Panel asociado a la información del producto */
+	/** Panel asociado a la información del producto. */
 	private JPanel info;
 	
-	/** Campo puntuacionMedia. */
-	private double puntuacionMedia;
+	/** Nombre del producto */
+	private String nombre;
 	
-	/** Campo precio. */
+	/** Precio del producto */
 	protected double precio;
 	
 	/**
@@ -62,11 +54,8 @@ public class PanelProducto extends PanelDisplay {
 	 */
 	public PanelProducto(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio, String actionName, String...categorias) {
 		super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT, FOTO_W_PERC, imageName, actionName);
-		
-		this.puntuacionMedia = puntuacionMedia;
-		this.descripcion = descripcion;
-		this.nombre = nombre;
 		this.precio = precio;
+		this.nombre = nombre;
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		/* Info: estrellas + nombre + descripción + precio + categorías */
@@ -160,9 +149,9 @@ public class PanelProducto extends PanelDisplay {
 	}
 	
 	/**
-	 * anadirDescuento.
+	 * Añade a la derecha un mensaje de descuento al producto
 	 *
-	 * @param mensaje parámetro mensaje
+	 * @param mensaje Mensaje de descuento
 	 */
 	public void anadirDescuento(String mensaje) {
 		JLabel descuento = ButtonFactory.newLabel(mensaje, Fonts.BOLD);
@@ -180,47 +169,12 @@ public class PanelProducto extends PanelDisplay {
 		add(wrapper, BorderLayout.EAST);
 	}
 	
-	public void setTamanoInfo(double width) {
-		Dimension max = new Dimension(TiendaFrame.getInstance().getPixelsWidth(width), maxCompHeight);
-		
-		info.setMaximumSize(max);
-		
-	}
-	
 	/**
-	 * Obtiene PuntuacionMedia.
-	 *
-	 * @return valor de PuntuacionMedia
-	 */
-	public double getPuntuacionMedia() {
-		return puntuacionMedia;
-	}
-
-	/**
-	 * Obtiene Nombre.
-	 *
-	 * @return valor de Nombre
+	 * Getter del nombre asignado al panel
+	 * @return Nombre del producto almacenado
 	 */
 	public String getNombre() {
 		return nombre;
-	}
-
-	/**
-	 * Obtiene Descripcion.
-	 *
-	 * @return valor de Descripcion
-	 */
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	/**
-	 * Obtiene Precio.
-	 *
-	 * @return valor de Precio
-	 */
-	public double getPrecio() {
-		return precio;
 	}
 	
 }

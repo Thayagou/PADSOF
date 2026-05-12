@@ -11,12 +11,26 @@ import javax.swing.JPanel;
 
 import vistas.herramientas.ButtonFactory;
 
+/**
+ * Subclase de panel que sirve para hacer display de una foto de perfil en forma circular
+ */
 public class PanelFotoPerfil extends JPanel {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Imagen cargada */
 	private Image imagen;
+	
+	/** Circunferencia de la foto de perfil */
 	private int size;
 
+	/**
+	 * Crea un panel en el que se ajusta la foto
+	 * 
+	 * @param imageName Nombre de la imagen
+	 * @param size Tamaño de la imagen
+	 */
 	public PanelFotoPerfil(String imageName, int size) {
 		this.size = size;
 		this.setOpaque(false);
@@ -27,6 +41,11 @@ public class PanelFotoPerfil extends JPanel {
 		imagen = icon.getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH);
 	}
 
+	/**
+	 * Pinta el panel de tal forma que la imagen es circular
+	 *
+	 * @param g Unidad gráfica del panel
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

@@ -1,4 +1,4 @@
-package vistas.gestor;
+package vistas.gestor.general;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;

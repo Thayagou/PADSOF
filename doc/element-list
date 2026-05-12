@@ -1,3 +1,7 @@
+vistas.common.app
+vistas.common.assets
+vistas.common.components
+vistas.common.displays
 vistas.gestor
 vistas.gestor.anadirDescuento
 vistas.gestor.configurarSistema

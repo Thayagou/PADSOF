@@ -13,36 +13,35 @@ import vistas.common.components.FixedTextArea;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.Fonts;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ * Subclase de PanelDisplay que usamos para mostrar los pedidos dentro de un scroll.
  */
 public class PanelPedido extends PanelDisplay{
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Porcentaje de pantalla utilizado para. */
+	/** Porcentaje del panel utilizado para la foto. */
 	private static final double FOTO_H_PERC = 0.99;
 	
-	/** Porcentaje de altura de pantalla que ocupa. */
+	/** Porcentaje de altura de pantalla que ocupa el panel. */
 	private static final double MAX_HEIGHT = 0.16;
 	
-	/** Porcentaje de pantalla utilizado para. */
+	/** Porcentaje de pantalla utilizado para el hueco entre componentes. */
 	private static final double GAP_PERC = 0.1;
 	
 	/** Porcentaje de pantalla maximo para la descripcion del pedido */
 	private static final double DESC_MAX_WIDTH = 0.4;
 	
-	/** Campo gap. */
+	/** Píxeles dejados de espacio */
 	private int gap;
 	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de pedido que se añadirá a una ventana .
 	 *
-	 * @param actionName parámetro actionName
-	 * @param estado parámetro estado
-	 * @param productos parámetro productos
+	 * @param actionName Nombre de acción de pulsar el panel
+	 * @param estado Estado del pedido
+	 * @param productos String de los productos pedidos
 	 */
 	public PanelPedido(String actionName, String estado, String id, String...productos) {
 		super(MAX_HEIGHT, FOTO_H_PERC * MAX_HEIGHT, actionName);
@@ -71,13 +70,13 @@ public class PanelPedido extends PanelDisplay{
 	}
 	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de pedido que se añadirá a una ventana .
 	 *
-	 * @param nombreCliente parámetro nombreCliente
-	 * @param estado parámetro estado
-	 * @param imageName parámetro imageName
-	 * @param actionName parámetro actionName
-	 * @param productos parámetro productos
+	 * @param actionName Nombre de acción de pulsar el panel
+	 * @param estado Estado del pedido
+	 * @param productos String de los productos pedidos
+	 * @param nombreCliente Nombre del cliente que ha hecho el pedido
+	 * @param imageName Nombre de la imagen de perfil del cliente
 	 */
 	public PanelPedido(String nombreCliente, String estado, String imageName, String id, String actionName, String...productos) {
 		this(actionName, estado, id, productos);

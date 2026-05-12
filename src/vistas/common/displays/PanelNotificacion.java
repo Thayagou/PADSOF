@@ -42,20 +42,20 @@ public class PanelNotificacion extends PanelDisplay {
 	/** ActionCommand de la acción de eliminar la notificación. */
 	public static final String DELETE_ACTION = "borrar";
 	
-	/** Botón asociado a la acción de. */
+	/** Botón asociado a la acción de marcar la notificación como leída. */
 	private JButton marcarLeido;
 	
-	/** Botón asociado a la acción de. */
+	/** Botón asociado a la acción de eliminar la notificación. */
 	private JButton borrar;
 	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de notificación que se añadirá a una ventana .
 	 *
-	 * @param titulo parámetro titulo
-	 * @param texto parámetro texto
-	 * @param fecha parámetro fecha
-	 * @param leido parámetro leido
-	 * @param ponerBotones parámetro ponerBotones
+	 * @param titulo Título de la notificación
+	 * @param texto Texto de la notificación
+	 * @param fecha Fecha de la notificación
+	 * @param leido Estado de lectura 
+	 * @param ponerBotones Determina si se colocan o no los botones
 	 */
 	public PanelNotificacion(String titulo, String texto, LocalDate fecha, boolean leido, boolean ponerBotones) {
 		super(MAX_HEIGHT, COMP_H_PERC*MAX_HEIGHT);
@@ -111,22 +111,22 @@ public class PanelNotificacion extends PanelDisplay {
 	}
 
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de notificación que se añadirá a una ventana .
 	 *
-	 * @param titulo parámetro titulo
-	 * @param texto parámetro texto
-	 * @param fecha parámetro fecha
-	 * @param leido parámetro leido
+	 * @param titulo Título de la notificación
+	 * @param texto Texto de la notificación
+	 * @param fecha Fecha de la notificación
+	 * @param leido Estado de lectura 
 	 */
 	public PanelNotificacion(String titulo, String texto, LocalDate fecha, boolean leido) {
 		this(titulo, texto, fecha, leido, true);
 	}
 	
 	/**
-	 * Obtiene FechaFormat.
+	 * Formatea la fecha a String.
 	 *
-	 * @param date parámetro date
-	 * @return valor de FechaFormat
+	 * @param date Fecha como localDate
+	 * @return Fecha como String
 	 */
 	private String getFechaFormat(LocalDate date) {
 		return date.getDayOfMonth()+"/"+date.getMonthValue()+"/"+date.getYear();

@@ -15,16 +15,16 @@ public class PanelCategoriaSeleccion extends PanelCategoria implements PanelSele
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** ActionCommand de la acción de. */
+	/** ActionCommand de la acción de incluir la categoría. */
 	public static final String INCLUIR_ACTION= "Incluir";
 	
-	/** Campo checkBox. */
+	/** CheckBox invisible que indica si está incluído o no la categoría */
 	private InvisibleCheckBox checkBox;
 
 	/**
 	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
 	 *
-	 * @param nombreCategoria parámetro nombreCategoria
+	 * @param nombreCategoria Nombre de la categoría
 	 */
 	public PanelCategoriaSeleccion(String nombreCategoria) {
 		super(nombreCategoria, INCLUIR_ACTION); // ajusta porcentajes a tu diseño
@@ -38,9 +38,9 @@ public class PanelCategoriaSeleccion extends PanelCategoria implements PanelSele
 	}
 
 	/**
-	 * Comprueba si es Seleccionado.
+	 * Comprueba si está seleccionada.
 	 *
-	 * @return true si es Seleccionado, falso en caso contrario
+	 * @return true si está seleccionado, falso en caso contrario
 	 */
 	@Override
 	public boolean isSeleccionado() {
@@ -48,7 +48,7 @@ public class PanelCategoriaSeleccion extends PanelCategoria implements PanelSele
 	}
 	
 	/**
-	 * toggleCheckBox.
+	 *	Cambia el estado del panel, de seleccionado a no y viceversa
 	 */
 	@Override
 	public void toggleCheckBox() {

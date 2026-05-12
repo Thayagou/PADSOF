@@ -7,7 +7,7 @@ import controladores.ControladorPantalla;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import vistas.common.app.TiendaFrame;
-import vistas.gestor.VentanaInicioGestor;
+import vistas.gestor.general.VentanaInicioGestor;
 
 /**
  * Clase controladora de la vista correspondiente a la ventana de inicio del gestor	

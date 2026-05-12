@@ -34,10 +34,13 @@ public class MenuLateral extends JPanel {
 	/** Color del fondo de la cabecera de cada seccion */
 	private static final Color COLOR_BTN_BG = ColorPalette.CARD_LIGHT.getColor();
 	
-	/** COlor del texto de la cabecera de cada seccion */
+	/** Color del texto de la cabecera de cada seccion */
 	private static final Color COLOR_BTN_TITULO = ColorPalette.BLACK.getColor();
 	
+	/** Color de separación */
 	private static final Color SEPARATOR_COLOR = ColorPalette.DARK_BLUE.getColor();
+	
+	/** Porcentaje de altura de pantalla que ocupa el separador */
 	private static final double SEPARATOR_HEIGHT = 0.003;
 	
 	/**Símbolo que se muestra cuando la sección está abierta */
