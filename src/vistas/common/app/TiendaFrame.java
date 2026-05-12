@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
-import modelo.aplicacion.GuiExe;
+import modelo.aplicacion.Main;
 import vistas.common.assets.VentanaConfirmacion;
 import vistas.herramientas.PanelSizes;
 
@@ -65,7 +65,7 @@ public class TiendaFrame extends JFrame {
 			instance.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent e) {
-					GuiExe.guardarTienda();
+					Main.guardarTienda();
 					instance.dispose();
 					System.exit(0);
 				}
