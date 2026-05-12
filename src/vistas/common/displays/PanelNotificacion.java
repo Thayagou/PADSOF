@@ -13,44 +13,34 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelFactory;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ * Subclase de PanelDisplay que usamos para mostrar las notificaciones recibidas dentro de un scroll.
  */
 public class PanelNotificacion extends PanelDisplay {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Porcentaje de pantalla utilizado para. */
-	private static final double FOTO_H_PERC = 0.99;
+	/** Porcentaje de altura del panel utilizado para los componentes. */
+	private static final double COMP_H_PERC = 0.99;
 	
-	/** Porcentaje de altura de pantalla que ocupa. */
+	/** Porcentaje de altura de pantalla que ocupa el panel de notificación. */
 	private static final double MAX_HEIGHT = 0.16;
 	
-	/** Porcentaje de anchura de pantalla que ocupa. */
+	/** Porcentaje de anchura de pantalla que ocupan los botones. */
 	private static final double BTN_WIDTH = 0.05;
 	
-	/** Porcentaje de altura de pantalla que ocupa. */
+	/** Porcentaje de altura de pantalla que ocupan los botones. */
 	private static final double BTN_HEIGHT = 0.03;
 	
-	/** Constante VERTICAL_GAP. */
+	/** Porcentaje de hueco vertical entre componentes */
 	private static final double VERTICAL_GAP = 0.01;
 	
-	/** ActionCommand de la acción de. */
+	/** ActionCommand de la acción de marcar la notificación como leída. */
 	public static final String READ_ACTION = "leido";
 	
-	/** ActionCommand de la acción de. */
+	/** ActionCommand de la acción de eliminar la notificación. */
 	public static final String DELETE_ACTION = "borrar";
-	
-	/** Campo titulo. */
-	private String titulo;
-	
-	/** Campo texto. */
-	private String texto;
-	
-	/** Campo fecha. */
-	private String fecha;
 	
 	/** Botón asociado a la acción de. */
 	private JButton marcarLeido;
@@ -68,10 +58,8 @@ public class PanelNotificacion extends PanelDisplay {
 	 * @param ponerBotones parámetro ponerBotones
 	 */
 	public PanelNotificacion(String titulo, String texto, LocalDate fecha, boolean leido, boolean ponerBotones) {
-		super(MAX_HEIGHT, FOTO_H_PERC*MAX_HEIGHT);
-		this.titulo = titulo;
-		this.texto = texto;
-		this.fecha = getFechaFormat(fecha);
+		super(MAX_HEIGHT, COMP_H_PERC*MAX_HEIGHT);
+		String fechaString = getFechaFormat(fecha);
 		
 		TiendaFrame t = TiendaFrame.getInstance();
 		JPanel contenido = new JPanel(new BorderLayout());
@@ -90,11 +78,11 @@ public class PanelNotificacion extends PanelDisplay {
 			fontColor = ColorPalette.GREY;
 		}
 		
-		JLabel cabecera = ButtonFactory.newLabel(this.fecha + ": " + this.titulo, fontTitle);
+		JLabel cabecera = ButtonFactory.newLabel(fechaString + ": " + titulo, fontTitle);
 		cabecera.setOpaque(false);
 		cabecera.setForeground(fontColor.getColor());
 		contenido.add(cabecera, BorderLayout.NORTH);
-		JTextArea panelTexto = new FixedTextArea(this.texto, fontContent.getFont());
+		JTextArea panelTexto = new FixedTextArea(texto, fontContent.getFont());
 		panelTexto.setForeground(fontColor.getColor());
 		panelTexto.setOpaque(false);
 		contenido.add(panelTexto, BorderLayout.CENTER);

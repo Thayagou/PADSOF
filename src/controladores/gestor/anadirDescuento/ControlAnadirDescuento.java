@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import modelo.venta.descuentos.CondicionDescuento;
 import modelo.venta.descuentos.Descontable;
 import controladores.ControladorPantalla;
-import controladores.gestor.ControlInicioGestor;
+import controladores.gestor.general.ControlInicioGestor;
 import modelo.exceptions.*;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;

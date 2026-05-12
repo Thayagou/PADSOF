@@ -13,29 +13,29 @@ import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ * Subclase de PanelIntercambio que usamos para mostrar los intercambios que requieren algún botón dentro de un scroll.
  */
 public class PanelIntercambioConBoton extends PanelIntercambio {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Constante H_GAP. */
+	/** Porcentaje de espacio que se deja horizontalmente entre componentes */
 	private static final double H_GAP = 0.1;
 	
-	/** Botón asociado a la acción de. */
+	/** Botón asociado a la acción del panel, depende del uso */
 	private JButton boton;
 
+	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de intercambio con botón que se añadirá a una ventana 
 	 *
-	 * @param nombreEmisor parámetro nombreEmisor
-	 * @param imagenEmisor parámetro imagenEmisor
-	 * @param articulosOfrecidos parámetro articulosOfrecidos
-	 * @param actionName parámetro actionName
-	 * @param buttonName parámetro buttonName
+	 * @param nombreEmisor Nombre del emisor del intercambio
+	 * @param imagenEmisor Nombre del receptor del intercambio
+	 * @param articulosOfrecidos Artículos ofrecidos al intercambiar
+	 * @param actionName Nombre de acción asociada con pulsar sobre el panel
+	 * @param buttonName Nombre del botón añadido a la derecha
 	 * @param nombreReceptor parámetro nombreReceptor
 	 * @param imagenReceptor parámetro imagenReceptor
 	 * @param articulosSolicitados parámetro articulosSolicitados
@@ -47,7 +47,7 @@ public class PanelIntercambioConBoton extends PanelIntercambio {
 	}
 	
 	/**
-	 * inicializarBoton.
+	 * Inicializa el botón con el nombre asignado y lo añade a la derecha del panel
 	 *
 	 * @param nombre parámetro nombre
 	 */

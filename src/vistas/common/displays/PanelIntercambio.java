@@ -35,12 +35,12 @@ public class PanelIntercambio extends PanelDisplay {
 	private static final double PERC_W = (1 - 1.1*BOTON_PERC_W) / 2;
 	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de intercambio que se añadirá a una ventana 
 	 *
-	 * @param nombreEmisor parámetro nombreEmisor
-	 * @param imagenEmisor parámetro imagenEmisor
-	 * @param articulosOfrecidos parámetro articulosOfrecidos
-	 * @param actionName parámetro actionName
+	 * @param nombreEmisor Nombre del emisor del intercambio
+	 * @param imagenEmisor Nombre del receptor del intercambio
+	 * @param articulosOfrecidos Artículos ofrecidos al intercambiar
+	 * @param actionName Nombre de acción asociada con pulsar sobre el panel
 	 * @param nombreReceptor parámetro nombreReceptor
 	 * @param imagenReceptor parámetro imagenReceptor
 	 * @param articulosSolicitados parámetro articulosSolicitados

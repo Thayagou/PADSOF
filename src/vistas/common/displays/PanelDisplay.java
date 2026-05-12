@@ -54,11 +54,11 @@ public class PanelDisplay extends JPanel {
 	/**
 	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
 	 *
-	 * @param maxHPerc parámetro maxHPerc
-	 * @param compHPerc parámetro compHPerc
-	 * @param fotoWPerc parámetro fotoWPerc
-	 * @param imageName parámetro imageName
-	 * @param actionName parámetro actionName
+	 * @param maxHPerc Porcentaje de altura máxima permitida para el panel
+	 * @param compHPerc Porcentaje de altura máxima permitida para los componentes del panel
+	 * @param fotoWPerc Porcentaje de anchura máximo permitifo para la imagen del panel
+	 * @param imageName Nombre de la imagen cargada
+	 * @param actionName Nombre de la acción del botón del panel
 	 */
 	public PanelDisplay(double maxHPerc, double compHPerc, double fotoWPerc, String imageName, String actionName) {
 		this(maxHPerc, compHPerc, actionName);

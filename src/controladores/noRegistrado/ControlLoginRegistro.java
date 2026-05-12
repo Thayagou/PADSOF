@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 import controladores.ControladorPantalla;
 import controladores.cliente.general.pantallas.ControlInicioCliente;
 import controladores.empleado.general.ControlInicioEmpleado;
-import controladores.gestor.ControlInicioGestor;
+import controladores.gestor.general.ControlInicioGestor;
 import modelo.exceptions.CustomException;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;

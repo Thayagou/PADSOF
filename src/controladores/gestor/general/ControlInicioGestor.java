@@ -1,4 +1,4 @@
-package controladores.gestor;
+package controladores.gestor.general;
 
 import java.awt.event.ActionEvent;
 
