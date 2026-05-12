@@ -71,8 +71,15 @@ public class ControlPanelCargarFichero implements ActionListener {
 		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas cargar fichero de productos?")) {
 			try {
 				tienda.getAlmacen().anadirProductosDeFichero(usuario, nombreFichero, anadidos);
-			} catch (DoubleDiscountException | InvalidArgumentException | InvalidPermitException e) {
-				new VentanaMensaje(e.getMessage(), 1);
+			} catch (DoubleDiscountException | InvalidArgumentException | InvalidPermitException e1) {
+				new VentanaMensaje(e1.getMessage(), 1);
+				try {
+					for(Producto prod : anadidos) {
+						tienda.getAlmacen().eliminarProducto(usuario, prod);
+					}
+				} catch (InvalidArgumentException | InvalidPermitException e2) {
+					new VentanaMensaje("Error al arreglar el estado de la tienda", 1);
+				}
 				return;
 			}
 			for(Producto p : anadidos) {
