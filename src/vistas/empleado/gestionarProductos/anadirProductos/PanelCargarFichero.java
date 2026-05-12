@@ -88,6 +88,8 @@ public class PanelCargarFichero extends PanelDisplay {
 		
 		// Ventana pop-up para seleccionar archivo
 		seleccionador = new JFileChooser();
+		seleccionador.setCurrentDirectory(new File(System.getProperty("user.dir") + "/resources/productFiles/"));
+		
 		FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos csv", "csv");
 		seleccionador.setFileFilter(filtro);
 		seleccionador.setFileSelectionMode(JFileChooser.FILES_ONLY);
