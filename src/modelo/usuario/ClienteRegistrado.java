@@ -243,6 +243,7 @@ public class ClienteRegistrado extends Usuario implements Serializable, CarritoC
 	
 	/**
 	 * Obtiene un String con las estadísticas
+	 * @return Estadísticas del cliente
 	 */
 	public String stringEstadisticas() {
 		return "Estadisticas: " + estadisticas;

@@ -37,7 +37,11 @@ public class VentanaValoracionIndividual extends JPanel {
 	/** Botón de valorar */
 	private JButton btnValorar;
 	/** Carácteres máximos para la descripción */
-	private static int MAX_DESC = 120;
+	private static int MAX_DESC = 35;
+	/** Carácteres máximos para el nombre */
+	private static int MAX_TITULO = 12;
+	/** Carácteres máximos para las caracteristicas */
+	private static int MAX_CARACT = 50;
 
 	/**
 	 * Constructor de la ventana de crear una valoración
@@ -63,6 +67,7 @@ public class VentanaValoracionIndividual extends JPanel {
 		JLabel fechaSol = ButtonFactory.newLabel(fecha, Fonts.SUBTITLE);
 		fechaSol.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+		if(nombreArt.length() > MAX_TITULO) nombreArt = nombreArt.substring(0, MAX_TITULO) + "...";
 		JLabel nombreArtic = ButtonFactory.newLabel(nombreArt, Fonts.TITLE);
 		nombreArtic.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -82,7 +87,7 @@ public class VentanaValoracionIndividual extends JPanel {
 
 		String cats = String.join(", ", categorias);
 		if (!cats.isEmpty()) {
-		    if (cats.length() > MAX_DESC) cats = cats.substring(0, MAX_DESC) + "...";
+		    if (cats.length() > MAX_CARACT) cats = cats.substring(0, MAX_CARACT) + "...";
 		    JLabel categoriasLabel = ButtonFactory.newLabel(cats, Fonts.BOLD);
 		    categoriasLabel.setForeground(ColorPalette.PURPLE.getColor());
 		    categoriasLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -109,6 +114,7 @@ public class VentanaValoracionIndividual extends JPanel {
 		    ButtonFactory.loadImageIconScaled(imagenUser,
 		        TiendaFrame.getInstance().getPixelsHeight(0.12),
 		        TiendaFrame.getInstance().getPixelsHeight(0.12)));
+		if (nombreUser.length() > MAX_DESC) nombreUser = nombreUser.substring(0, MAX_TITULO) + "...";
 		JLabel labelNombreUser = ButtonFactory.newLabel(nombreUser, Fonts.TITLE3);
 
 		JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 0));
@@ -177,7 +183,6 @@ public class VentanaValoracionIndividual extends JPanel {
 		separadorVertical.setAlignmentY(Component.TOP_ALIGNMENT);
 
 
-		// CONTENEDOR PRINCIPAL
 		JPanel contenido = new JPanel();
 		contenido.setLayout(new BoxLayout(contenido, BoxLayout.X_AXIS));
 		contenido.setOpaque(false);
@@ -189,7 +194,6 @@ public class VentanaValoracionIndividual extends JPanel {
 		contenido.add(separadorVertical);
 		contenido.add(dcha);
 
-		// Dividir 50/50 al redimensionar
 		contenido.addComponentListener(new ComponentAdapter() {
 		    @Override
 		    public void componentResized(ComponentEvent e) {

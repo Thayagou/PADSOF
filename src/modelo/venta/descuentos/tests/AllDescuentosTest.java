@@ -14,5 +14,8 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({ DescuentoTest.class, DescuentoSubTest.class })
 @Suite
 public class AllDescuentosTest {
-	
+	/**
+	 * Constructor privado para evitar instanciación.
+	 */
+	private AllDescuentosTest() { };
 }

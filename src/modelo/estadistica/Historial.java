@@ -49,6 +49,15 @@ public class Historial implements Serializable, ObservadorProducto {
 		if (statsProductos.containsKey(producto) == false) statsProductos.put(producto, new StatsProducto(producto));	
 	}
 	
+	@Override
+	/**
+	 * Elimina un producto en el historial y borra sus estadísticas
+	 * @param producto Producto a eliminar
+	 */
+	public void eliminarProducto(Producto p) {
+		statsProductos.remove(p);
+	}
+	
 	/**
 	 * Guarda un usuario en el historial y le asigna estadísticas
 	 * @param cliente Cliente de la tienda a almacenar

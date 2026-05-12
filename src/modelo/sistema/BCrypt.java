@@ -373,6 +373,11 @@ public class BCrypt {
 	// Expanded Blowfish key
 	private int P[];
 	private int S[];
+	
+	/**
+	 * Cosntructor privado para evitar inicialización
+	 */
+	private BCrypt() {}
 
 	/**
 	 * Encode a byte array using bcrypt's slightly-modified base64

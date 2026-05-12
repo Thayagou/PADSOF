@@ -14,12 +14,22 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.noRegistrado.VentanaResultadosNoRegistrado;
 
+/**
+ * Esta clase representa el controlador de la ventana que muestra los resultados de una búsqueda
+ */
 public class ControlResultadosNoRegistrado implements ActionListener, ControladorPantalla {
-
+	/** Ventana que se muestra */
 	private VentanaResultadosNoRegistrado vista;
+	/** Resultados de la búsqueda */
 	private Producto[] resultados;
+	/** Modelo de la tienda sobre el que se actúa */
 	private Tienda tienda;
 
+	/**
+	 * Constructor del controlador de la ventana de resultados
+	 * @param tienda Modelo de la tienda
+	 * @param productos Resultados de la búsqueda
+	 */
 	public ControlResultadosNoRegistrado(Tienda tienda, Producto[] productos) {
 		this.vista = new VentanaResultadosNoRegistrado();
 		vista.setControlador(this);
@@ -31,6 +41,9 @@ public class ControlResultadosNoRegistrado implements ActionListener, Controlado
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
+	/**
+	 * Ordena los productos según un parámetro
+	 */
 	private void ordenar() {
 		Producto[] ordenados = Arrays.copyOf(resultados, resultados.length);
 		switch (vista.getOpcionSeleccionada()) {

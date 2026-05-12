@@ -12,9 +12,18 @@ import vistas.empleado.general.BarraEmpleado;
 import vistas.empleado.general.BarraTareasEmpleado;
 import vistas.empleado.general.VentanaInicioEmpleado;
 
+/**
+ * Esta clase representa el controlador de la ventana de inicio de un empleado
+ */
 public class ControlInicioEmpleado implements ControladorPantalla {
+	/** Ventana que se muestra */
 	private VentanaInicioEmpleado vista;
 
+	/**
+	 * Constructor del controlador de la ventana de inicio de empleado
+	 * @param tienda Modelo de la tienda sobre el que se actúa
+	 * @param empleado Empleado que ha iniciado sesión
+	 */
 	public ControlInicioEmpleado(Tienda tienda, Empleado empleado) {
 		// Barra lateral
 		BarraEmpleado barraLateral = new BarraEmpleado();

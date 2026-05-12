@@ -11,29 +11,28 @@ import vistas.common.components.InvisibleCheckBox;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ * Subclase de PanelArticulo que usamos para mostrar los artículos a seleccionar para un intercambio dentro de un scroll.
  */
 public class PanelArticuloSeleccion extends PanelArticulo {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Campo checkBox. */
+	/** Checkbox de selección de producto */
 	private InvisibleCheckBox checkBox;
-
+	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de selección de artículo que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
 	 *
-	 * @param nombre parámetro nombre
-	 * @param foto parámetro foto
-	 * @param descripcion parámetro descripcion
-	 * @param interesadoEn parámetro interesadoEn
-	 * @param estimacion parámetro estimacion
-	 * @param estado parámetro estado
-	 * @param actionName parámetro actionName
-	 * @param categorias parámetro categorias
+	 * @param nombre Nombre del artículo
+	 * @param foto Foto del artículo
+	 * @param descripcion Descripción del artículo
+	 * @param interesadoEn Artículos en los que el dueño pueda estar interesado
+	 * @param estimacion Estimación asignada al artículo
+	 * @param estado Estado asignado al artículo
+	 * @param actionName Acción asociada a presionar el botón del panel
+	 * @param categorias Categorías a las que pertenece el artículo
 	 */
 	public PanelArticuloSeleccion (String nombre, String foto, String descripcion, String interesadoEn, double estimacion, String estado, String actionName, String...categorias) {
 		super(nombre, foto, descripcion, interesadoEn, estimacion, estado, actionName, categorias);
@@ -50,14 +49,14 @@ public class PanelArticuloSeleccion extends PanelArticulo {
 	}
 
 	/**
-	 * toggleSelection.
+	 * Cambia el estado de la CheckBox guardada
 	 */
 	public void toggleSelection() {
 		checkBox.toggleSelection();
 	}
 	
 	/**
-	 * Comprueba si es Selected.
+	 * Comprueba si la checkBox está seleccionado
 	 *
 	 * @return true si es Selected, falso en caso contrario
 	 */

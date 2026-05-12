@@ -11,10 +11,17 @@ import modelo.venta.productos.*;
 import vistas.common.app.TiendaFrame;
 import vistas.noRegistrado.*;
 
+/**
+ * Esta clase representa el controlador de uan ventana de inicio para un usuario sin registrar
+ */
 public class ControlInicioSinRegistrar implements ActionListener, ControladorPantalla {
-
+	/** Ventana que se muestra */
 	private VentanaInicioSinRegistrar vista;
 	
+	/**
+	 * Constructor de la ventana de inicio sin registrar
+	 * @param tienda Modelo de la tienda
+	 */
 	public ControlInicioSinRegistrar(Tienda tienda) {
 		TiendaFrame tiendaFrame = TiendaFrame.getInstance();
 

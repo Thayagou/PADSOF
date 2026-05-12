@@ -61,10 +61,18 @@ public class PanelProductoAnadirAPack extends PanelProducto {
 		
 	}
 	
+	/**
+	 * Devuelve las unidades seleccionadas del producto
+	 * @return Unidades seleccionadas
+	 */
 	public int getUds() {
 		return (int) numUds.getValue();
 	}
 	
+	/**
+	 * Devuelve el precio del producto
+	 * @return Precio del producto
+	 */
 	public double getPrecio() {
 		return precio;
 	}

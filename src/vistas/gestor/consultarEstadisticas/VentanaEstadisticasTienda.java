@@ -191,7 +191,7 @@ public class VentanaEstadisticasTienda extends JPanel implements VentanaConDispl
 	/**
 	 * Setter del mes de fin del periodo a consultar las estadísticas
 	 *
-	 * @param inicio Valor de inicio del periodo
+	 * @param fin Valor de inicio del periodo
 	 */
 	public void setFin(YearMonth fin) {
 		setMes(this.fin, fin);

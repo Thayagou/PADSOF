@@ -7,7 +7,6 @@ import vistas.common.components.PanelSeleccion;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
-// TODO: Auto-generated Javadoc
 /**
  * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
  */

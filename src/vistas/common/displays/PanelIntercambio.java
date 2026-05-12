@@ -14,9 +14,8 @@ import vistas.common.assets.PanelFotoPerfil;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.Fonts;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ * Subclase de PanelDisplay que usamos para mostrar los intercambios dentro de un scroll.
  */
 public class PanelIntercambio extends PanelDisplay {
 	
@@ -32,7 +31,7 @@ public class PanelIntercambio extends PanelDisplay {
 	/** Porcentaje de pantalla utilizado para. */
 	private static final double GAP_PERC = 0.1;
 	
-	/** Porcentaje de pantalla utilizado para. */
+	/** Porcentaje de pantalla utilizado para el panel de los participantes del intercambio. */
 	private static final double PERC_W = (1 - 1.1*BOTON_PERC_W) / 2;
 	
 	/**

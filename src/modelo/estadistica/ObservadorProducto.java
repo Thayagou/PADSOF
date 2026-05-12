@@ -11,4 +11,10 @@ public interface ObservadorProducto {
 	 * @param p Producto que se guarda
 	 */
 	void guardarProducto(Producto p);
+	
+	/**
+	 * Elimina un producto de las estadísticas en caso de que haya habido un error al crearlo
+	 * @param p Produto a borrar
+	 */
+	void eliminarProducto(Producto p);
 }

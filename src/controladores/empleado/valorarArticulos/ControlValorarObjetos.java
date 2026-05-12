@@ -13,13 +13,24 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.valorarArticulos.VentanaValorarObjetos;
 
+/**
+ * Esta clase representa el controlador de la ventana para valorar artículos
+ */
 public class ControlValorarObjetos implements ControladorPantalla {
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** Empleado que realiza la acción */
 	private final Empleado empleado;
+	/** Ventana que se muestra */
 	private VentanaValorarObjetos vista;
 	/** Permiso requerido para realizar esta acción */
 	private static Permiso requerido = Permiso.INTERCAMBIOS;
 
+	/**
+	 * Constructor del controlador de valorar artículos de segunda mano
+	 * @param tienda Modelo de la tienda
+	 * @param empleado Empleado que realiza la acción
+	 */
 	public ControlValorarObjetos(Tienda tienda, Empleado empleado) {
 		this.tienda = tienda;
 		this.empleado = empleado;

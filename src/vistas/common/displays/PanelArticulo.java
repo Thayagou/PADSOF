@@ -72,22 +72,22 @@ public class PanelArticulo extends PanelDisplay {
 	/** Píxeles de espacio */
 	private int spaceBetween;
 	
-	/** Botón asociado a la acción de. */
+	/** Botón asociado a la acción de que corresponda */
 	private JButton boton;
 
 	/**
 	 * Constructor para usar en carteras y busqueda.
 	 *
-	 * @param nombreUsuario parámetro nombreUsuario
-	 * @param fotoDePerfil parámetro fotoDePerfil
-	 * @param nombre parámetro nombre
-	 * @param foto parámetro foto
-	 * @param descripcion parámetro descripcion
-	 * @param interesadoEn parámetro interesadoEn
-	 * @param estimacion parámetro estimacion
-	 * @param estado parámetro estado
-	 * @param actionName parámetro actionName
-	 * @param categorias parámetro categorias
+	 * @param nombreUsuario Nombre del usuario propietario del artículo
+	 * @param fotoDePerfil Foto de perfil del usuario
+	 * @param nombre Nombre del artículo
+	 * @param foto Foto del artículo
+	 * @param descripcion Descripción del artículo
+	 * @param interesadoEn Artículos en los que el dueño pueda estar interesado
+	 * @param estimacion Estimación asignada al artículo
+	 * @param estado Estado asignado al artículo
+	 * @param actionName Acción asociada a presionar el botón del panel
+	 * @param categorias Categorías a las que pertenece el artículo
 	 */
 	public PanelArticulo(String nombreUsuario, String fotoDePerfil, String nombre, String foto, String descripcion,
 			String interesadoEn, double estimacion, String estado, String actionName, String... categorias) {
@@ -128,10 +128,10 @@ public class PanelArticulo extends PanelDisplay {
 	}
 	
 	/**
-	 * panelEstado.
+	 * Crea el panel de estado del artículo
 	 *
-	 * @param estado parámetro estado
-	 * @return valor de tipo JPanel
+	 * @param estado String del estado del artículo
+	 * @return Panel de estado 
 	 */
 	private JPanel panelEstado(String estado) {
 	    TiendaFrame t = TiendaFrame.getInstance();
@@ -153,15 +153,15 @@ public class PanelArticulo extends PanelDisplay {
 	}
 
 	/**
-	 * crearColumnaIzquierda.
+	 *	Crea la columna izquierda de información propia del artículo
 	 *
 	 * @param t parámetro t
-	 * @param nombre parámetro nombre
-	 * @param categorias parámetro categorias
-	 * @param nombreUsuario parámetro nombreUsuario
-	 * @param avatarSize parámetro avatarSize
-	 * @param rowGap parámetro rowGap
-	 * @return valor de tipo JPanel
+	 * @param nombre Nombre del artículo
+	 * @param categorias Categorías del artículo
+	 * @param nombreUsuario Nombre del dueño
+	 * @param avatarSize Tamaño asignado al tamaño de la foto de perfil 
+	 * @param rowGap Espacio a dejar entre componentes del panel
+	 * @return Panel de información del artículo
 	 */
 	private JPanel crearColumnaIzquierda(TiendaFrame t, String nombre, String[] categorias, String nombreUsuario,
 			int avatarSize, int rowGap) {
@@ -216,14 +216,14 @@ public class PanelArticulo extends PanelDisplay {
 	}
 
 	/**
-	 * crearColumnaDerecha.
+	 * Crea la columna de intereses del propietario y estimación
 	 *
-	 * @param t parámetro t
-	 * @param interesadoEn parámetro interesadoEn
-	 * @param estimacion parámetro estimacion
-	 * @param rowGap parámetro rowGap
-	 * @param interesadoMaxHeight parámetro interesadoMaxHeight
-	 * @return valor de tipo JPanel
+	 * @param t TiendaFrame de la aplicación
+	 * @param interesadoEn String de intereses
+	 * @param estimacion Estimación asignada al artículo 
+	 * @param rowGap Espacio a dejat entre componentes
+	 * @param interesadoMaxHeight Máxima altura del panel de intereses
+	 * @return Panel con la columna
 	 */
 	private JPanel crearColumnaDerecha(TiendaFrame t, String interesadoEn, double estimacion, int rowGap, int interesadoMaxHeight) {
 		int interesWidth = t.getPixelsWidth(INTEREST_MAX_WIDTH);

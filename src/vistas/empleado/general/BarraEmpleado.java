@@ -17,17 +17,17 @@ import vistas.common.app.MenuLateral;
  */
 public class BarraEmpleado extends BarraLateral {
 	private static final long serialVersionUID = 1L;
-	
+	/** Nombre de la acción asociada a gestionar pedidos */
 	public final static String GEST_PEDIDOS_ACTION = "Gestionar pedidos";
-	
+	/** Nombre de la acción asociada a valorar artículos */
 	public final static String VALORAR_ACTION = "Valorar artículos";
-	
+	/** Nombre de la acción asociada a gestionar intercambios */
 	public final static String GEST_INT_ACTION = "Gestionar intercambios";
-	
+	/** Nombre de la acción asociada a añadir productos */
 	public final static String ANADIR_ACTION = "Añadir productos";
-	
+	/** Nombre de la acción asociada a gestionar productos existentes */
 	public final static String GEST_PRODUCTOS_ACTION = "Gestionar productos";
-	
+	/** Nombre de la acción asociada a gestionar categorías */
 	public final static String GEST_CAT_ACTION = "Gestionar categorías";
 
 	/** Botón de gestionar pedidos */

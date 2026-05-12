@@ -19,37 +19,36 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ * Clase PanelDisplay, antecesora de todos los paneles de la tienda, que usamos para mostrar diferentes Objetos del proyecto dentro de scrolls
  */
 public class PanelDisplay extends JPanel {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Porcentaje de pantalla utilizado para. */
+	/** Porcentaje de pantalla utilizado para el botón. */
 	protected static final double BOTON_PERC_H = 0.3;
 	
-	/** Porcentaje de pantalla utilizado para. */
+	/** Porcentaje de pantalla utilizado para la anchura de botón. */
 	protected static final double BOTON_PERC_W = 0.2;
 	
-	/** Campo HOR_GAP. */
+	/** Porcentaje de anchura de pantalla que se deja para el hueco horizontal */
 	protected static double HOR_GAP = 0.01;
 	
-	/** Botón asociado a la acción de. */
-	protected JButton clickArea; // botón invisible que ocupa todo el panel
+	/** Botón invisible que ocupa todo el panel, asociado a la acción de presionar el panel */
+	protected JButton clickArea; 
 	
-	/** Campo maxHeight. */
+	/** Máxima altura en píxeles del panel */
 	protected int maxHeight;
 	
-	/** Campo maxCompHeight. */
+	/** Máxima altura de los componentes en píxeles */
 	protected int maxCompHeight;
 	
-	/** Campo gradStart. */
+	/** Color de arriba del panel, usado para el gradiente */
 	private ColorPalette gradStart = ColorPalette.CARD_LIGHT;
-	
-	/** Campo gradEnd. */
+
+	/** Color de abajo del panel, usado para el gradiente */
 	private ColorPalette gradEnd = ColorPalette.CARD_DARK;
 
 	/**
@@ -131,20 +130,21 @@ public class PanelDisplay extends JPanel {
 	}
 
 	/**
-	 * paintComponent.
+	 * Crea el gradiente asociado al panel utilizando los colores de gradiente que hemos establecido.
 	 *
-	 * @param g parámetro g
+	 * @param g Unidad gráfica del panel
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g.create();
 
+		// Hace un gradiente suave 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		int w = getWidth();
 		int h = getHeight();
 
-		// Gradiente (puedes ajustar colores)
+		// Crea el gradiente desde la esquina izquierda inferior hasta la superior derecha
 		GradientPaint gp = new GradientPaint(0, 0, gradStart.getColor(), 0, h, gradEnd.getColor());
 
 		g2.setPaint(gp);
@@ -152,6 +152,7 @@ public class PanelDisplay extends JPanel {
 
 		g2.dispose();
 
+		// Establece el diseño que hemos decidido al panel
 		super.paintComponent(g);
 	}
 
@@ -166,7 +167,7 @@ public class PanelDisplay extends JPanel {
 	}
 
 	/**
-	 * Obtiene ClickArea.
+	 * Obtiene el botón asociado con la acción de presionar el panel
 	 *
 	 * @return valor de ClickArea
 	 */
@@ -175,10 +176,10 @@ public class PanelDisplay extends JPanel {
 	}
 
 	/**
-	 * anadirFoto.
+	 * Añade una foto a la izquierda del panel
 	 *
-	 * @param imageName parámetro imageName
-	 * @param fotoWPerc parámetro fotoWPerc
+	 * @param imageName Nombre de la imagen
+	 * @param fotoWPerc Anchura de la foto a establecer
 	 */
 	public void anadirFoto(String imageName, double fotoWPerc) {
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -196,7 +197,7 @@ public class PanelDisplay extends JPanel {
 	}
 
 	/**
-	 * refreshDisplay.
+	 * Refresca el panel y lo actualiza
 	 */
 	public void refreshDisplay() {
 		revalidate();

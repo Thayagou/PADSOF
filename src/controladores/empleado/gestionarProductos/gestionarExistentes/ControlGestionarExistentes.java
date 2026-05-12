@@ -11,14 +11,24 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.gestionarExistentes.VentanaGestionarExistentes;
 
+/**
+ * Esta clase representa el controlador de la ventana de gestionar productos existentes
+ */
 public class ControlGestionarExistentes implements ControladorPantalla {
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** usuario que realiza la acción */
 	private final Usuario usuario;
+	/** Ventana que se muestra */
 	private VentanaGestionarExistentes vista;
-
 	/** Permiso requerido para realizar esta acción */
 	private static Permiso requerido = Permiso.PRODUCTOS;
 	
+	/**
+	 * Constructor del controlador de gestionar productos existentes
+	 * @param tienda Modelo de la tienda
+	 * @param usuario Usuario que reliza la acción
+	 */
 	public ControlGestionarExistentes(Tienda tienda, Usuario usuario) {
 		this.tienda = tienda;
 		this.usuario = usuario;
@@ -47,6 +57,7 @@ public class ControlGestionarExistentes implements ControladorPantalla {
 		return "En esta ventana puedes modificar o borrar productos existentes de la tienda, pulsando sobre uno de los botones al lado de cada producto";
 	}
 	
+	@Override
 	public void mostrar() {
 		vista.vaciar();
 		for (Stock s : tienda.getAlmacen().getInventario()) {

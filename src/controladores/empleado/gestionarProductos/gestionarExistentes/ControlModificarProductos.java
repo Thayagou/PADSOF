@@ -33,13 +33,27 @@ import vistas.common.displays.PanelProducto;
 import vistas.empleado.gestionarProductos.anadirProductos.PanelProductoAnadirAPack;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductoIndividual;
 
+/**
+ * Esta clase representa el controlador de la ventana de modificar productos
+ */
 public class ControlModificarProductos implements ControladorPantalla {
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** Usuario que realiza la acción */
 	private final Usuario usuario;
+	/** Producto que se está modificando */
 	private final Stock producto;
+	/** Ventana que se muestra */
 	private VentanaAnadirProductoIndividual vista;
+	/** Imagen seleccionada */
 	private String fotoSeleccionada;
 
+	/**
+	 * Cosntructor del controlador de modificar productos
+	 * @param tienda Modelo de la tienda
+	 * @param usuario Usuario que realiza la acción
+	 * @param producto Producto que se está modificando
+	 */
 	public ControlModificarProductos(Tienda tienda, Usuario usuario, Stock producto) {
 		this.tienda = tienda;
 		this.usuario = usuario;
@@ -62,11 +76,17 @@ public class ControlModificarProductos implements ControladorPantalla {
 
 	}
 	
+	/**
+	 * Coge una imagen seleccionada
+	 */
 	private void cogerImagen() {
 		fotoSeleccionada = ControlCargaImagen.abrir("Producto");
 		vista.actualizarPreview(fotoSeleccionada);
 	}
 
+	/**
+	 * Acción que se realiza al intentar modificar el producto
+	 */
 	private void intentarModificar() {
 		int udsStock;
 		try {
@@ -125,6 +145,10 @@ public class ControlModificarProductos implements ControladorPantalla {
 		}
 	}
 
+	/**
+	 * Coge las características concretas elegidas para el producto
+	 * @return Características del producto
+	 */
 	private CaracteristicasProducto getCaracteristicasEsp() {
 		String tipo = vista.getTipo();
 		String[] esp = vista.getEspecificaciones();
@@ -213,6 +237,10 @@ public class ControlModificarProductos implements ControladorPantalla {
 		return null;
 	}
 
+	/**
+	 * Coge las categorías elegidas para el producto
+	 * @return Arrau de categorías del producto
+	 */
 	private Categoria[] getCategorias() {
 		List<Categoria> categorias = new LinkedList<>();
 		for (String cat : vista.getCategorias()) {
@@ -225,6 +253,11 @@ public class ControlModificarProductos implements ControladorPantalla {
 		return categorias.toArray(new Categoria[0]);
 	}
 
+	/**
+	 * Coge los productos seleccionados si es pack
+	 * @param prods String con los productos separados por comas
+	 * @return Array de stocks de los productos seleccionados
+	 */
 	private Stock[] getProductos(String prods) {
 		if (prods == null || prods.isEmpty())
 			return new Stock[0];

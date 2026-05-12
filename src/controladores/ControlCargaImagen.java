@@ -73,7 +73,7 @@ public class ControlCargaImagen implements ActionListener {
 	/**
 	 * Metodo abrir pero generando una id aleatoria para la imagen
 	 *
-	 * @param Tipo de objeto
+	 * @param tipo Tipo de objeto
 	 * @return Nombre del fichero guardado, o null si el usuario canceló o hubo un error.
 	 */
 	public static String abrir(String tipo) {

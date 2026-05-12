@@ -37,6 +37,7 @@ public class ControlPanelIntercambioConBoton implements ActionListener {
 	 * @param empleado Empleado que realiza la acción
 	 * @param intercambio Intercambio que se puede confirmar
 	 * @param vista Ventana en la que se muestra el panel
+	 * @param padre Controlador de la ventana sobre la que se muestra el panel
 	 */
 	public ControlPanelIntercambioConBoton(Tienda tienda, Empleado empleado, Intercambio intercambio, VentanaGestIntercambios vista, ControlGestIntercambios padre) {
 		this.tienda = tienda;

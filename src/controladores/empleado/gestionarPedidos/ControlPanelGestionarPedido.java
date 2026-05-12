@@ -19,12 +19,27 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarPedidos.PanelPedidoGestionarPedido;
 import vistas.empleado.gestionarPedidos.VentanaGestPedidos;
 
+/**
+ * Esta clase representa el controlador del panel para gestionar pedidos
+ */
 public class ControlPanelGestionarPedido implements ActionListener {
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** Empleado que realiza la acción */
 	private final Empleado empleado;
+	/** Pedido que se gestiona */
 	private final Pedido pedido;
+	/** Nombre de la acción asociada a avanzar el estado del pedido */
 	private final String ACTION_NAME = "Avanzar estado del pedido";
 	
+	/**
+	 * Constructor del controlador del panel de gestionar pedidos
+	 * @param tienda Modelo de la tienda
+	 * @param empleado Empleado que realiza la acción
+	 * @param pedido Pedido que se gestiona
+	 * @param vista Ventana sobre la que se muestra el panel
+	 * @param padre Controlador de la ventana sobre la que se muestra el panel
+	 */
 	public ControlPanelGestionarPedido(Tienda tienda, Empleado empleado, Pedido pedido, VentanaGestPedidos vista, ControlGestPedidos padre) {
 		this.tienda = tienda;
 		this.empleado = empleado;
@@ -51,6 +66,9 @@ public class ControlPanelGestionarPedido implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Acción que se realiza al intentar avanzar el estado del pedido
+	 */
 	private void intentarAvanzar() {
 		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas avanzar este pedido?")) {
 			try {

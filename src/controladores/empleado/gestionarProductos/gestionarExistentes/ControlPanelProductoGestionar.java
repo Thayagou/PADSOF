@@ -19,13 +19,29 @@ import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.empleado.gestionarProductos.gestionarExistentes.PanelProductoGestionarProducto;
 
+/**
+ * Esta clase representa el controlador de un panel para gestionar producto
+ */
 public class ControlPanelProductoGestionar implements ActionListener {
+	/** Producto que se está gestionando */
 	private final Stock stock;
+	/** Usuario que realiza la acción */
 	private final Usuario usuario;
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** Panel que se controla */
 	private final PanelProductoGestionarProducto panel;
+	/** Controlador de la ventana en la que se muestra el panel */
 	private final ControlGestionarExistentes padre;
 	
+	/**
+	 * Constructor del controlador del panel de gestionar productos
+	 * @param tienda Modelo de la tienda
+	 * @param usuario Usuario que realiza la acción
+	 * @param stock Producto que se gestiona
+	 * @param vista Ventana sobre la que se muestra el panel
+	 * @param padre Controlador de la ventana sobre la que se muestra el panel
+	 */
 	public ControlPanelProductoGestionar(Tienda tienda, Usuario usuario, Stock stock, VentanaConDisplay<? super PanelProducto> vista, ControlGestionarExistentes padre) {
 		this.tienda = tienda;
 		this.usuario = usuario;
@@ -60,6 +76,9 @@ public class ControlPanelProductoGestionar implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Acción que se realiza al intentar borrar un producto
+	 */
 	private void intentarBorrar() {
 		if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas borrar este producto?")) {
 			try {
@@ -73,6 +92,9 @@ public class ControlPanelProductoGestionar implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Acción que se realiza al intentar modificar un producto
+	 */
 	private void intentarModificar() {
 		SwingUtilities.invokeLater(() -> new ControlModificarProductos(tienda, usuario, stock));
 	}

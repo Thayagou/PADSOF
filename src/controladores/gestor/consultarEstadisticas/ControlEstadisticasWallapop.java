@@ -54,7 +54,6 @@ public class ControlEstadisticasWallapop implements ControladorPantalla {
 	 * Instancia un nuevo controlador ControlEstadisticasWallapop que crea la vista y paneles asociados a las estadísticas d elos intercambios.
 	 *
 	 * @param tienda Tienda sobre la que se actúa y muestran datos.
-	 * @param gestor Gestor de la tienda sobre la que estamos actuando.
 	 */
 	public ControlEstadisticasWallapop(Tienda tienda) {
 		this.tienda = tienda;

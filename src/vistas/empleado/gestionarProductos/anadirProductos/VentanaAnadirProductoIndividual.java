@@ -116,6 +116,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	 * @param precio Precio del producto
 	 * @param uds Unidades del producto
 	 * @param tipo Tipo fijo del producto
+	 * @param tiposProducto Tipos de producto en la tienda
 	 * @param espValores Características específicas del producto
 	 * @param espComic Características específicas de un Comic
 	 * @param espJuego Características específicas de un Juego
@@ -123,6 +124,7 @@ public class VentanaAnadirProductoIndividual extends JPanel {
 	 * @param espPack Características específicas de un Pack
 	 * @param tiposJuego Nombres de los tipos de juegos
 	 * @param productos Paneles con los productos de la tienda
+	 * @param productosSeleccionados Paneles con los productos que contiene el pack
 	 * @param isModificacion Indica si la ventana es para una modificar o añadir un producto
 	 */
 	public VentanaAnadirProductoIndividual(String nombre, String desc, String[] catSeleccionadas, String[] categorias,

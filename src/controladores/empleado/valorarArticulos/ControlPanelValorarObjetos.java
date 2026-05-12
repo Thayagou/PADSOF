@@ -14,12 +14,26 @@ import modelo.wallapop.ArticuloSegundaMano;
 import vistas.empleado.valorarArticulos.PanelArticuloPendienteValoracion;
 import vistas.empleado.valorarArticulos.VentanaValorarObjetos;
 
+/**
+ * Esta clase representa el controlador de un panel de valorar artículos de segunda mano
+ */
 public class ControlPanelValorarObjetos implements ActionListener {
+	/** Artículo que se está valorando */
 	private final ArticuloSegundaMano articulo;
+	/** Empleado que realiza la acción */
 	private final Empleado empleado;
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** Nombre de la acción asociada a valorar un artículo */
 	private final String ACTION_NAME = "Valorar artículo";
 
+	/**
+	 * Constructor del controlador de un panel de valorar objetos
+	 * @param tienda Modelo de la tienda
+	 * @param empleado Empleado que realiza la acción
+	 * @param articulo Articulo que se gestiona
+	 * @param vista Ventana sobre la que se muestra el panel
+	 */
 	public ControlPanelValorarObjetos(Tienda tienda, ArticuloSegundaMano articulo, Empleado empleado,
 			VentanaValorarObjetos vista) {
 		this.tienda = tienda;

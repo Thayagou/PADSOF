@@ -12,27 +12,26 @@ import vistas.common.app.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
-// TODO: Auto-generated Javadoc
 /**
- * Subclase de PanelDisplay que usamos para mostrar dentro de un scroll.
+ * Subclase de PanelDisplay que usamos para mostrar las categorías dentro de un scroll.
  */
 public class PanelCategoria extends PanelDisplay {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Campo MAX_H. */
+	/** Porcentaje de altura de pantalla que ocupa el panel de categoría. */
 	private static double MAX_H = 0.08;
 	
-	/** Campo MAX_H_COMP. */
+	/** Porcentaje del panel que ocupan los componentes. */
 	private static double MAX_H_COMP = 0.75;
 	
 	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel de categoría que se añadirá a una ventana y permite su selección.
 	 *
-	 * @param nombreCategoria parámetro nombreCategoria
-	 * @param actionName parámetro actionName
+	 * @param nombreCategoria Nombre de la categoría
+	 * @param actionName Nombre de la acción asociada al botón del panel
 	 */
 	public PanelCategoria(String nombreCategoria, String actionName) {
 		super(MAX_H, MAX_H * MAX_H_COMP, actionName);
@@ -41,7 +40,7 @@ public class PanelCategoria extends PanelDisplay {
 	}
 	
 	/**
-	 * Instancia un nuevo panel que se añadirá a una ventana y que incluye toda la información necesaria para actuar sobre este.
+	 * Instancia un nuevo panel que se añadirá a una ventana sin acción de botón
 	 *
 	 * @param nombreCategoria parámetro nombreCategoria
 	 */
@@ -52,9 +51,9 @@ public class PanelCategoria extends PanelDisplay {
 	}
 	
 	/**
-	 * anadirLabel.
+	 * Añade el label con el nombre de la categoría al panel
 	 *
-	 * @param nombreCategoria parámetro nombreCategoria
+	 * @param nombreCategoria Nombre de la categoría
 	 */
 	private void anadirLabel(String nombreCategoria) {
 		TiendaFrame t = TiendaFrame.getInstance();

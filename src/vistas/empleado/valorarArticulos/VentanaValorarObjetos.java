@@ -50,6 +50,9 @@ public class VentanaValorarObjetos extends JPanel implements VentanaConDisplay<P
 		return panelDisplay;
 	}
 	
+	/**
+	 * Vacía la lista de paneles
+	 */
 	public void vaciar() {
 		listaPanel.removeAll();
 		listaPanel.repaint();
