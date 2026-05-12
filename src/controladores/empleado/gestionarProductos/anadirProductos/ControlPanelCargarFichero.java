@@ -75,7 +75,7 @@ public class ControlPanelCargarFichero implements ActionListener {
 				new VentanaMensaje(e1.getMessage(), 1);
 				try {
 					for(Producto prod : anadidos) {
-						tienda.getAlmacen().eliminarProducto(usuario, prod);
+						tienda.getAlmacen().eliminarProductoPermanentemente(usuario, prod);
 					}
 				} catch (InvalidArgumentException | InvalidPermitException e2) {
 					new VentanaMensaje("Error al arreglar el estado de la tienda", 1);
@@ -95,7 +95,7 @@ public class ControlPanelCargarFichero implements ActionListener {
 					new VentanaMensaje("La imagen no se ha encontrado. Recuerda, para asignar una imagen al producto, esta debe existir en el archivo de la tienda", 1);
 					try {
 						for(Producto prod : anadidos) {
-							tienda.getAlmacen().eliminarProducto(usuario, prod);
+							tienda.getAlmacen().eliminarProductoPermanentemente(usuario, prod);
 						}
 					} catch (InvalidArgumentException | InvalidPermitException e) {
 						new VentanaMensaje("Error al arreglar el estado de la tienda", 1);
