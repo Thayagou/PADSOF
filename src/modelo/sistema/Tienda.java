@@ -2,6 +2,7 @@ package modelo.sistema;
 
 import java.io.*;
 import java.time.Duration;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import es.uam.eps.padsof.telecard.*;
@@ -191,7 +192,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 				return gestor;
 		} else if(clientes.containsKey(nombre)) {
 			ClienteRegistrado cliente = clientes.get(nombre);
-			if(BCrypt.checkpw(contrasena, cliente.getContrasena()));
+			if(BCrypt.checkpw(contrasena, cliente.getContrasena()))
 				return cliente;
 		} else if(empleados.containsKey(nombre)) {
 			Empleado empleado = empleados.get(nombre);
@@ -410,7 +411,11 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 		Intercambio intercambio = new Intercambio(ofrecidos, solicitados);
 		historial.guardarIntercambio(intercambio);
 
-		clienteRecibe.enviarNotificacion("Ha recibido una nueva oferta de intercambio", TipoNotificacion.INTERCAMBIO);
+		String fechaFormateada = intercambio.getFechaCaducidad()
+		        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+
+		cliente.enviarNotificacion("Ha realizado una nueva oferta de intercambio. Caducará el " + fechaFormateada, TipoNotificacion.INTERCAMBIO);
+		clienteRecibe.enviarNotificacion("Ha recibido una nueva oferta de intercambio. Caducará el " + fechaFormateada, TipoNotificacion.INTERCAMBIO);
 		
 		Intercambio[] intercambiosInvalidados = intercambio.getEmisor().invalidarIntercambiosConArticulos(ofrecidos);
 		for (Intercambio i: intercambiosInvalidados) {
