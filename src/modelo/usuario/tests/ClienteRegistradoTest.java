@@ -15,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import modelo.exceptions.*;
+import modelo.sistema.BCrypt;
 import modelo.sistema.Sistema;
 import modelo.sistema.Tienda;
 import modelo.usuario.*;
@@ -93,7 +94,7 @@ class ClienteRegistradoTest {
 	@Test
 	void testCambiarContrasenaCorrecta() throws InvalidArgumentException {
 		c.cambiarContrasena("pass", "nuevaPass", "nuevaPass");
-		assertEquals("nuevaPass", c.getContrasena());
+		assertTrue(BCrypt.checkpw("nuevaPass", c.getContrasena()));
 	}
 
 	@Test

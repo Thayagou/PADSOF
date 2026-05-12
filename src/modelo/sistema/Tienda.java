@@ -191,7 +191,7 @@ public class Tienda implements Serializable, CarritoCaducadoObserver {
 				return gestor;
 		} else if(clientes.containsKey(nombre)) {
 			ClienteRegistrado cliente = clientes.get(nombre);
-			if(BCrypt.checkpw(contrasena, cliente.getContrasena()));
+			if(BCrypt.checkpw(contrasena, cliente.getContrasena()))
 				return cliente;
 		} else if(empleados.containsKey(nombre)) {
 			Empleado empleado = empleados.get(nombre);

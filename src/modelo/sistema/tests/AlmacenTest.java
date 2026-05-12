@@ -257,9 +257,10 @@ class AlmacenTest {
 	@Test
 	void anadirProductosDeFicheroExistente() throws Exception {
 		almacen.anadirCategoria(empleado, "Aventuras");
-		almacen.anadirCategoria(empleado, "Estrategia");
+		almacen.anadirCategoria(empleado, "Fantasia");
+		almacen.anadirCategoria(empleado, "Familiar");
 		almacen.anadirCategoria(empleado, "Accion");
-		almacen.anadirCategoria(empleado, "Cine");
+		almacen.anadirCategoria(empleado, "CienciaFiccion");
 		assertTrue(almacen.anadirProductosDeFichero(empleado, "productosTest.csv", new LinkedList<>()));
 	}
 
