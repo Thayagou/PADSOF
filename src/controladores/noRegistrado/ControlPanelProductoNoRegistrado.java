@@ -15,14 +15,25 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 
+/**
+ * Esta clase representa el controlador para un panel de producto que se muestra a un usuario no registrado
+ */
 public class ControlPanelProductoNoRegistrado implements ActionListener {
+	/** Producto que se muestra */
 	private Producto producto;
+	/** Modelo de la tienda sobre el que se actúa */
 	private Tienda tienda;
+	/** Panel que se controla */
 	private PanelProducto panel;
-
-	private static final String DF_PRODUCT_IMAGE = "producto.png";
+	/** Nombre de la acción de ver un producto */
 	private static final String actionName = "Ver producto";
 
+	/**
+	 * Constructor del panel de mostrar producto
+	 * @param tienda Modelo de la tienda
+	 * @param producto Producto que se muestra
+	 * @param vista Ventana en la que se muestra el panel
+	 */
 	public ControlPanelProductoNoRegistrado(Tienda tienda, Producto producto,
 			VentanaConDisplay<? super PanelProducto> vista) {
 		this.producto = producto;
@@ -33,12 +44,8 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 			categorias.add(c.getNombre());
 		}
 
-		String imageRoute;
-		if (producto.getImagen() == null || producto.getImagen().isBlank())
-			imageRoute = DF_PRODUCT_IMAGE;
-		else
-			imageRoute = producto.getImagen();
-
+		
+		String imageRoute = producto.getImagen();
 		if (producto.tieneDescuento()) {
 			panel = new PanelProducto(producto.getNombre(), producto.getDescripcion(), imageRoute,
 					producto.getPuntuacionMedia(), producto.getPrecio(), actionName, getMensajeDescuento(producto),
@@ -53,6 +60,11 @@ public class ControlPanelProductoNoRegistrado implements ActionListener {
 		panel.setControlador(this);
 	}
 
+	/**
+	 * Devuelve el mensaje de descuento asociado al producto si lo tiene
+	 * @param p Producto
+	 * @return Mensaje de descuento
+	 */
 	private String getMensajeDescuento(Producto p) {
 		Descuento desc = p.getDescuento();
 		String mensaje = "¡Oferta!<br>";

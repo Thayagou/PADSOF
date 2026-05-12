@@ -271,6 +271,7 @@ public class Almacen implements Serializable {
 	 * Añade una lista de productos desde un fichero
 	 * @param usuario Usuario que desea añadir los productos
 	 * @param fProductos, nombre del fichero con datos de productos a añadir
+	 * @param rutas Lista de productos que han sido añadidos
 	 * @return true en caso de que se añadan correctamente todos los productos, false en caso contrario
 	 * @throws DoubleDiscountException Se lanza cuando se produce una colisión de descuentos
 	 * @throws InvalidArgumentException Se lanza cuando el argumento es inválido
@@ -360,7 +361,7 @@ public class Almacen implements Serializable {
 					}
 				}
 
-				rutas.add(getProductosCoincidentes(nombre)[0]);
+				rutas.add(inventario.get(nombre).getProducto());
 		    }
 		} catch (FileNotFoundException e) {
 	        throw new InvalidArgumentException("Fichero no encontrado: " + fProductos, "cargar fichero de productos");

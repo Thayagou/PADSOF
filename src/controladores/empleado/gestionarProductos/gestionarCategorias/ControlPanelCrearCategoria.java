@@ -12,12 +12,26 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.gestionarCategorias.PanelCrearCategoria;
 import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCategorias;
 
+/**
+ * Esta clase representa el controlador del panel para crear categorías
+ */
 public class ControlPanelCrearCategoria implements ActionListener {
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** usuario que realiza la acción */
 	private final Usuario usuario;
+	/** Panel que se controla */
 	private final PanelCrearCategoria panel;
+	/** Controlador de la ventana en la que se muestra el panel */
 	private final ControlGestionarCategorias padre;
 	
+	/**
+	 * Construcor del controlador del panel para crear categorías
+	 * @param tienda Modelo de la tienda
+	 * @param usuario Usuario que ejecuta la acción
+	 * @param vista Ventana en la que se muestra el panel
+	 * @param padre Controlador de la ventana en la que se muestra el panel
+	 */
 	public ControlPanelCrearCategoria(Tienda tienda, Usuario usuario, VentanaGestionarCategorias vista, ControlGestionarCategorias padre) {
 		this.tienda = tienda;
 		this.usuario = usuario;
@@ -38,6 +52,9 @@ public class ControlPanelCrearCategoria implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Acción que se ejecuta el intentar crear una categoría
+	 */
 	private void intentarCrear() {
 		String nombre = panel.getNombreCategoria();
 		if(nombre.equals("Nombre") || nombre.length() < 1) {

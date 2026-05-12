@@ -21,12 +21,25 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.valorarArticulos.VentanaValoracionIndividual;
 
+/**
+ * Esta clase representa el controlador de la ventana para hacer una valoración individual
+ */
 public class ControlValoracionIndividual implements ControladorPantalla {
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** Empleado que realiza la acción */
 	private final Empleado empleado;
+	/** Artículo que se está valorando */
 	private final ArticuloSegundaMano articulo;
+	/** Ventana que se muestra */
 	private final VentanaValoracionIndividual vista;
 
+	/**
+	 * Cosntructor del controlador de la valoración individual
+	 * @param tienda Modelo de la tienda
+	 * @param empleado Empleado que realiza la acción
+	 * @param articulo Artículo que se valora
+	 */
 	public ControlValoracionIndividual(Tienda tienda, Empleado empleado, ArticuloSegundaMano articulo) {
 		this.tienda = tienda;
 		this.empleado = empleado;
@@ -61,6 +74,9 @@ public class ControlValoracionIndividual implements ControladorPantalla {
 		}
 	}
 		
+	/**
+	 * Acción que se ejecuta al intentar valorar un artículo
+	 */
 	private void intentarValorar() {
 		double estimacion = -1;
 		try {

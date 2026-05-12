@@ -13,14 +13,24 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCategorias;
 
+/**
+ * Esta clase representa el controlador de la ventana de gestionar categorias
+ */
 public class ControlGestionarCategorias implements ControladorPantalla{
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
+	/** Usuario que realiza la acción */
 	private final Usuario usuario;
+	/** Ventana que se muestra */
 	private VentanaGestionarCategorias vista;
-
 	/** Permiso requerido para realizar esta acción */
 	private static Permiso requerido = Permiso.PRODUCTOS;
 	
+	/**
+	 * Constructor del controlador de gestionar categorías
+	 * @param tienda Modelo de la tienda
+	 * @param usuario Usuario que realiza la acción
+	 */
 	public ControlGestionarCategorias(Tienda tienda, Usuario usuario) {
 		this.tienda = tienda;
 		this.usuario = usuario;

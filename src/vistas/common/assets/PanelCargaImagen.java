@@ -35,7 +35,6 @@ public class PanelCargaImagen extends JPanel {
 
 	/**
 	 * @param tipo Tipo de objeto para mostrar en el título (ej. "Producto").
-	 * @param id   ID del objeto para mostrar en el título.
 	 */
 	public PanelCargaImagen(String tipo) {
 		TiendaFrame t = TiendaFrame.getInstance();

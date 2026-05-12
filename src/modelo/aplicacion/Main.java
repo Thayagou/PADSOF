@@ -48,7 +48,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en formato de char
 	 * @param message Mensaje que se muestra
 	 * @return char Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	protected static char getUserInputChar(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -66,7 +66,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en formato de palabra
 	 * @param message Mensaje que se muestra
 	 * @return String Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	protected static String getUserInputString(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -84,7 +84,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en forma de frase
 	 * @param message Mensaje que se muestra
 	 * @return String Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	protected static String getUserInputLine(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -99,7 +99,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en forma de entero
 	 * @param message Mensaje que se muestra
 	 * @return int Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException, si el input no es válido
 	 */
 	protected static int getUserInputInt(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -117,7 +117,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en forma de double
 	 * @param message Mensaje que se muestra
 	 * @return double Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	protected static double getUserInputDouble(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -135,7 +135,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en forma de fecha con hora
 	 * @param message Mensaje que se muestra
 	 * @return LocalDateTime Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	protected static LocalDateTime getUserInputLocalDateTime(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -153,7 +153,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en forma de fecha
 	 * @param message Mensaje que se muestra
 	 * @return YearMonth Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	protected static YearMonth getUserInputYearMonth(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -171,7 +171,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en forma de fecha
 	 * @param message Mensaje que se muestra
 	 * @return Duration Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	public static Duration getUserInputDuration(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -196,7 +196,7 @@ public class Main {
 	 * Muestra un mensaje y recoje una respuesta en forma de lista de enteros
 	 * @param message Mensaje que se muestra
 	 * @return List<Integer> Respuesta del usuario
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	protected static List<Integer> getUserInputIntList(String message) throws InvalidUserInputException {
 		showMessage(message);
@@ -216,7 +216,7 @@ public class Main {
 	/**
 	 * Muestra un mensaje y recoje la acción del usuario
 	 * @param message Mensaje que se muestra
-	 * @throws InvalidUserInputException
+	 * @throws InvalidUserInputException si el input no es válido
 	 */
 	protected static void getAction(String message) throws InvalidUserInputException {
 		showMessage(message);

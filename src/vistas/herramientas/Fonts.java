@@ -17,13 +17,24 @@ public enum Fonts {
     LIGHT("Arial", Font.ROMAN_BASELINE, 0.02),
     TEXT("Arial", Font.PLAIN, 0.02);
 	
+	/** Fuente asociada */
 	private Font font;
 	
+	/**
+	 * Cosntructor del enum
+	 * @param name Nombre de la fuente
+	 * @param style Estilo de la fuente
+	 * @param relativeSize Tamaño relativo de pantalla
+	 */
 	private Fonts(String name, int style, double relativeSize) {
 		TiendaFrame frame= TiendaFrame.getInstance();
 		this.font = new Font(name, style, (int) (frame.getHeight() * relativeSize));
 	}
 
+	/**
+	 * Devuelve la fuente asociada
+	 * @return Fuente asociada
+	 */
 	public Font getFont() { return this.font;}
 
 	/**
@@ -64,7 +75,7 @@ public enum Fonts {
 	 * Configura un componente (JLabel, JButton, etc.) para que su texto se trunque dinámicamente
 	 * con "..." cuando el componente se redimensione y el texto completo no quepa.
 	 *
-	 * @param comp          Componente que mostrará el texto (debe implementar setText)
+	 * @param columna       Componente que mostrará el texto (debe implementar setText)
 	 * @param textoCompleto Texto original completo
 	 * @param font          Fuente a usar para medir el texto
 	 * @param padding       Píxeles de margen interno a restar del ancho del componente (opcional, default 0)

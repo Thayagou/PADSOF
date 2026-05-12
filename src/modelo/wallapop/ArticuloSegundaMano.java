@@ -56,10 +56,23 @@ public class ArticuloSegundaMano implements Serializable {
 		this.disponible = false;
 	}
 	
+	/**
+	 * Setter de la imagen del artículo
+	 * @param image Imagen del artículo
+	 */
 	public void setImage(String image) {
 		this.image = image;
 	}
 
+	/**
+	 * Constructor de un artículo de segunda mano
+	 * @param nombre Nombre del artículo
+	 * @param desc Descripción del artículo
+	 * @param dueno Cartera a la que pertenece este artículo
+	 * @param interesadoEn Describe por lo que quiere intercambiar el dueño este artículo
+	 * @param image Imagen del artículo
+	 * @param categorias Categorías a las que pertenece el artículo
+	 */
 	public ArticuloSegundaMano(String nombre, String desc, Cartera dueno, String interesadoEn, String image, Categoria...categorias) {
 		this(nombre, desc, dueno, interesadoEn, categorias);
 		this.image = image;

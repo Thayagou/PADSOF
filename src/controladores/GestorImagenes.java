@@ -22,8 +22,7 @@ public class GestorImagenes {
 	}
 
 	/**
-	 * Copia el fichero de imagen origen al directorio de recursos con el nombre
-	 * <tipo><id>.png, sobreescribiendo si ya existía.
+	 * Copia el fichero de imagen origen al directorio de recursos con el nombre sobreescribiendo si ya existía.
 	 *
 	 * @param origen Fichero PNG seleccionado por el usuario.
 	 * @param tipo   Tipo de objeto

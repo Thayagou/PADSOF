@@ -26,6 +26,11 @@ public class PedidoTest {
 	private StockExterno stock1;
 	private StockExterno stock2;
 	private Pedido pedido;
+	
+	/**
+	 * Constructor privado para evitar instanciación.
+	 */
+	private PedidoTest() { };
 
 	@BeforeEach
 	void setUp() throws Exception {

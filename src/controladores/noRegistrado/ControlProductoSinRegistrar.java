@@ -12,21 +12,25 @@ import modelo.venta.productos.*;
 import vistas.common.app.TiendaFrame;
 import vistas.noRegistrado.VentanaProductoSinRegistrar;
 
+/**
+ * Esta clase representa el controlador de la ventana de mostrar un producto a un cliente sin registrar
+ */
 public class ControlProductoSinRegistrar implements ActionListener, ControladorPantalla {
-
+	/** Ventana que se muestra */
 	private VentanaProductoSinRegistrar vista;
-	
-	private static final String DF_PRODUCT_IMAGE = "producto.png";
 
+	/**
+	 * Constructor del controlador de la ventana de productos sin registrar
+	 * @param tienda Modelo de la tienda
+	 * @param producto Producto que se está mostrando
+	 */
 	public ControlProductoSinRegistrar(Tienda tienda, Producto producto) {
 		ArrayList<String> categorias = new ArrayList<>();
 		for(Categoria c : producto.getCategorias()) {
 			categorias.add(c.getNombre());
 		}
 		
-		String imageRoute;
-		if(producto.getImagen() == null || producto.getImagen().isBlank()) imageRoute = DF_PRODUCT_IMAGE;
-		else imageRoute = producto.getImagen();
+		String imageRoute = producto.getImagen();
 		
 		String caracteristicas = getCaracteristicas(producto);
 		
@@ -40,6 +44,11 @@ public class ControlProductoSinRegistrar implements ActionListener, ControladorP
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
+	/**
+	 * Coge las características del producto
+	 * @param prod Producto
+	 * @return String con las características del producto
+	 */
 	private String getCaracteristicas(Producto prod) {
 		StringBuilder caracteristicas = new StringBuilder();
 		if(prod instanceof Comic) {

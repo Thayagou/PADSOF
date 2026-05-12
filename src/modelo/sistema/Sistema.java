@@ -125,7 +125,9 @@ public class Sistema implements Serializable {
 
 	/**
 	 * Cambia el precio de solicitar una valoración
+	 * @param gestor Gestor que realiza la acción
 	 * @param precioValoracion Nuevo precio de solicitar una valoración
+	 * @throws InvalidArgumentException si los parámetros son inválidos
 	 */
 	public void setPrecioValoracion(Gestor gestor, double precioValoracion) throws InvalidArgumentException {
 		if(gestor == null || precioValoracion < 0) throw new InvalidArgumentException("Argumentos inválidos", "setPrecioValoracion");

@@ -11,9 +11,18 @@ import modelo.usuario.Notificacion;
 import vistas.common.app.TiendaFrame;
 import vistas.empleado.general.VentanaNotificacionesEmpleado;
 
+/**
+ * Esta clase representa el cotrolador de la ventana de notificaciones de empleado
+ */
 public class ControlNotificacionesEmpleado implements ControladorPantalla {
+	/** Ventana que se muestra */
 	private final VentanaNotificacionesEmpleado vista;
 
+	/**
+	 * Constructor del controlador de la ventana de notificaciones
+	 * @param tienda Modelo de tienda
+	 * @param empleado Empleado que ha iniciado sesión
+	 */
 	public ControlNotificacionesEmpleado(Tienda tienda, Empleado empleado) {
 		this.vista = new VentanaNotificacionesEmpleado();
 		

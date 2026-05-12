@@ -15,8 +15,13 @@ import vistas.noRegistrado.BarraTareasNoRegistrado;
  */
 public class ControlBarraTareasNoRegistrado implements ActionListener {
 
+	/** Modelo de la tienda sobre el que se actúa */
 	private final Tienda tienda;
 
+	/**
+	 * Constructor del controlador de la barra de tareas
+	 * @param tienda Modelo de la tienda
+	 */
 	public ControlBarraTareasNoRegistrado(Tienda tienda) {
 		this.tienda = tienda;
 	}

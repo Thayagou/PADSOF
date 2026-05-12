@@ -23,10 +23,15 @@ import vistas.noRegistrado.VentanaLoginRegistro;
  * y la muestra como vista actual.
  */
 public class ControlLoginRegistro implements ActionListener, ControladorPantalla {
-
-    private final Tienda            tienda;
+	/** Modelo de la tienda sobre el que se actúa */
+    private final Tienda tienda;
+    /** Ventana que se muestra */
     private final VentanaLoginRegistro vista;
 
+    /**
+     * Cosntructor del controlador de la ventana loginRegistro
+     * @param tienda Modelo de la tienda
+     */
     public ControlLoginRegistro(Tienda tienda) {
         this.tienda = tienda;
         this.vista  = new VentanaLoginRegistro();
@@ -36,6 +41,9 @@ public class ControlLoginRegistro implements ActionListener, ControladorPantalla
         TiendaFrame.getInstance().navegarA(this);
     }
 
+    /**
+     * Acción que se ejecuta al intentar iniciar sesión
+     */
     private void intentarLogin() {
         String nombre = vista.getLoginUsuario();
         String pass   = new String(vista.getLoginPassword());
@@ -48,6 +56,9 @@ public class ControlLoginRegistro implements ActionListener, ControladorPantalla
         }
     }
 
+    /**
+     * Acción que se ejecuta al intentar registrarse
+     */
     private void intentarRegistro() {
         String nombre = vista.getRegUsuario();
         String pass   = new String(vista.getRegPassword());
@@ -61,6 +72,10 @@ public class ControlLoginRegistro implements ActionListener, ControladorPantalla
         }
     }
 
+    /**
+     * Redirige al usuario a un menú en función de su tipo
+     * @param usuario Usuario que se redirige
+     */
     private void redirigirSegunUsuario(Usuario usuario) {
         if (usuario instanceof Gestor gestor) {
             SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda, gestor));

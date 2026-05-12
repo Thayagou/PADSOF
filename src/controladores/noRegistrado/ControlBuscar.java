@@ -16,10 +16,19 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.noRegistrado.VentanaBusqueda;
 
+/**
+ * Esta clase representa el controlador de la ventana de búsqueda
+ */
 public class ControlBuscar implements ActionListener, ControladorPantalla {
+	/** Modelo de la tienda sobre el que se actúa */
 	protected Tienda tienda;
+	/** Ventana que se muestra */
 	protected VentanaBusqueda vista;
 
+	/**
+	 * Constructor del controlador de la ventana de búsqueda
+	 * @param tienda Modelo de la tienda
+	 */
 	public ControlBuscar(Tienda tienda) {
 		this.tienda = tienda;
 		this.vista = new VentanaBusqueda(Arrays.stream(tienda.getAlmacen().getCategorias()).map(Categoria::getNombre).toArray(String[]::new));
@@ -33,6 +42,9 @@ public class ControlBuscar implements ActionListener, ControladorPantalla {
 			this.intentarBusqueda();
 	}
 	
+	/**
+	 * Acción que se realiza al intentar hacer una búsqueda
+	 */
 	protected void intentarBusqueda() {
 		double eMin = vista.getEstrellas();
 		double pMin = vista.getPrecioMin();

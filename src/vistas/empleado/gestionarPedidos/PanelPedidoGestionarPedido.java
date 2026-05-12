@@ -26,6 +26,7 @@ public class PanelPedidoGestionarPedido extends PanelPedido{
 	 * Constructor de un panel de gestionar pedido
 	 * @param nombreCliente Nombre del cliente que hizo el pedido
 	 * @param estado Estado actual del pedido
+	 * @param id Id del pedido
 	 * @param imageName Nombre de la imagen del usuario
 	 * @param actionName Acción asociada al botón
 	 * @param productos Productos incluídos en el pedido
