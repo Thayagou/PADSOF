@@ -16,6 +16,7 @@ import java.nio.file.StandardCopyOption;
 public class GestorImagenes {
 
 	private static final String DIRECTORIO_IMAGENES = "resources/gui/";
+	private static final String DIRECTORIO_PRODUCT_FILES = "resources/productFilesImages/";
 	private static final String EXTENSION = ".png";
 
 	private GestorImagenes() {
@@ -39,7 +40,28 @@ public class GestorImagenes {
 			Files.copy(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			return nombreDestino;
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Copia el fichero de imagen origen al directorio de recursos con el nombre sobreescribiendo si ya existía.
+	 *
+	 * @param origen Fichero PNG seleccionado por el usuario.
+	 * @param tipo   Tipo de objeto
+	 * @param id     Id del objeto o algun valor único
+	 * @return Nombre del fichero guardado, o null si el usuario canceló o hubo un
+	 *         error.
+	 */
+	public static String guardarImagenProductFiles(File origen, String tipo, String id) {
+		String nombreDestino = tipo + id + EXTENSION;
+		File destino = new File(DIRECTORIO_PRODUCT_FILES + nombreDestino);
+
+		try {
+			destino.getParentFile().mkdirs();
+			Files.copy(origen.toPath(), destino.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			return nombreDestino;
+		} catch (IOException ex) {
 			return null;
 		}
 	}

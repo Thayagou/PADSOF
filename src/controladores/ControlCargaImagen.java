@@ -56,6 +56,26 @@ public class ControlCargaImagen implements ActionListener {
 		dialogo.setResizable(false);
 		dialogo.add(vista);
 	}
+	
+	/**
+	 * Método para abrir pero manteniendo el mismo nombre para el nuevo archivo
+	 * 
+	 * @return Nombre del fichero guardado, o null si el usuario canceló o hubo un error
+	 */
+	public static String abrir() {
+		JFileChooser chooser = new JFileChooser();
+	    chooser.setDialogTitle("Selecciona una imagen PNG");
+	    chooser.setFileFilter(new FileNameExtensionFilter("Imágenes PNG", "png"));
+	    chooser.setAcceptAllFileFilterUsed(false);
+
+	    int opcion = chooser.showOpenDialog(TiendaFrame.getInstance());
+	    if (opcion != JFileChooser.APPROVE_OPTION) return null;
+
+	    File fichero = chooser.getSelectedFile();
+	    String nombreSinExtension = fichero.getName().replaceFirst("\\.png$", "");
+
+	    return GestorImagenes.guardarImagenProductFiles(fichero, nombreSinExtension, "");
+	}
 
 	/**
 	 * Abre la carga de imagen y bloquea hasta que el usuario confirma o cancela.

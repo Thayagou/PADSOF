@@ -78,7 +78,23 @@ public class ControlPanelCargarFichero implements ActionListener {
 			for(Producto p : anadidos) {
 				String imagen = p.getImagen();
 				File origen = new File("resources/productFilesImages/" + imagen);
-				String imagenFinal = GestorImagenes.guardarImagen(origen, p.getNombre(), java.util.UUID.randomUUID().toString());
+				String imagenFinal = "";
+				try {
+					imagenFinal = GestorImagenes.guardarImagen(origen, p.getNombre(), java.util.UUID.randomUUID().toString());
+				} catch (Exception e) {
+					
+				}
+				if(imagenFinal == null) {
+					new VentanaMensaje("La imagen no se ha encontrado. Recuerda, para asignar una imagen al producto, esta debe existir en el archivo de la tienda", 1);
+					try {
+						for(Producto prod : anadidos) {
+							tienda.getAlmacen().eliminarProducto(usuario, prod);
+						}
+					} catch (InvalidArgumentException | InvalidPermitException e) {
+						new VentanaMensaje("Error al arreglar el estado de la tienda", 1);
+					}
+					return;
+				}
 				p.setImagen(imagenFinal);
 				
 			}
