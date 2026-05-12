@@ -351,6 +351,7 @@ public class ControlAnadirProductos implements ControladorPantalla {
 		
 		this.vista = new VentanaAnadirProductos(categorias.toArray(new String[0]), tiposProductos, espComic, espJuego, espFigura, espPack, tiposJuego.toArray(new String[0]), paneles.toArray(new PanelProductoAnadirAPack[0]));
 		
+		new ControlPanelSubirImagenes(vista, this);
 		new ControlPanelCargarFichero(tienda, usuario, vista, this);
 		vista.setControlador(this);
 	}
