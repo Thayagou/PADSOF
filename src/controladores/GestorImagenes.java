@@ -11,7 +11,7 @@ import java.nio.file.StandardCopyOption;
  * Responsabilidad única: recibir un fichero fuente y una clave de destino,
  * copiar el fichero con el nombre correcto y devolver el nombre resultante.
  *
- * Nomenclatura de ficheros: <tipo><id>.png ej: Producto16.png, Articulo3.png
+ * Nomenclatura de ficheros: Producto16.png, Articulo3.png
  */
 public class GestorImagenes {
 

@@ -9,6 +9,11 @@ import javax.swing.JPanel;
  */
 public abstract class BarraTareas extends JPanel{
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Constructor de una barra de tareas superior
+	 */
+	public BarraTareas() {}
 
 	/**
 	 * Asigna un controlador a los componentes
