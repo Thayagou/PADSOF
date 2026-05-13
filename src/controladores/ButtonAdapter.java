@@ -7,6 +7,9 @@ import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/**
+ * Adapa el tamaño de los botones al tamaño de la pantalla
+ */
 public class ButtonAdapter extends ComponentAdapter{
 	private JButton button;
 	private double percIcono;
@@ -14,6 +17,12 @@ public class ButtonAdapter extends ComponentAdapter{
 	private float fontRatio;
 	private int origHeight = -1;
 	
+	/**
+	 * Constructor de un adaptador de tamaño de los botones
+	 * @param button Botón que se adapta
+	 * @param percIcono Porcentaje del icono
+	 * @param original Imagen original
+	 */
 	public ButtonAdapter(JButton button, double percIcono, ImageIcon original) {
 		this.button = button;
 		this.percIcono = percIcono;
