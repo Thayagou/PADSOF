@@ -5,45 +5,23 @@ import javax.swing.*;
 
 import vistas.common.app.TiendaFrame;
 
+/**
+ * Clase de tipo Factory que usamos para crear paneles y estructuras predeterminadamente establecidas
+ */
 public class PanelFactory {
-	private double DF_GAP = 0.05;
 
+	/**
+	 * Contructor por defecto
+	 */
 	public PanelFactory() {
 	}
 
-	public JPanel gridBackLabelText(String[] labelNames, String[] textNames, int buttonHeight, double horProp,
-			Fonts font) {
-		JPanel panel = new JPanel(new GridBagLayout());
-		GridBagConstraints gbc = new GridBagConstraints();
-		TiendaFrame t = TiendaFrame.getInstance();
-		int hGap = t.getPixelsHeight(DF_GAP);
-		int wGap = t.getPixelsWidth(DF_GAP);
-		gbc.insets = new Insets(hGap, wGap, hGap, wGap);
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.anchor = GridBagConstraints.WEST;
-		Dimension size = new Dimension(0, buttonHeight);
-
-		JLabel left;
-		JTextField right;
-		for (int i = 0; i < Math.min(labelNames.length, textNames.length); i++) {
-			left = ButtonFactory.newLabel(labelNames[i], font);
-			left.setPreferredSize(size);
-			right = ButtonFactory.newTextField(textNames[i], font);
-			right.setPreferredSize(size);
-
-			gbc.gridx = 0;
-			gbc.gridy = i;
-			gbc.weightx = horProp;
-			panel.add(left, gbc);
-
-			gbc.gridx = 1;
-			gbc.weightx = 1 - horProp; // el campo se expande
-			panel.add(right, gbc);
-		}
-
-		return panel;
-	}
-
+	/**
+	 * Crea una columna de botones uniformemente espaciados
+	 * 
+	 * @param botones Botones a incluir
+	 * @return Panel con los botones
+	 */
 	public static JPanel getColumnaDeBotones(JButton... botones) {
 		TiendaFrame t = TiendaFrame.getInstance();
 		double VERTICAL_GAP = 0.07;
@@ -57,6 +35,12 @@ public class PanelFactory {
 		return wrapVertical(btnPanel, t.getPixelsHeight(VERTICAL_GAP));
 	}
 	
+	/**
+	 * Crea una columna de botones uniformemente espaciados especificando el espaciado
+	 * 
+	 * @param botones Botones a incluir
+	 * @return Panel con los botones
+	 */
 	public static JPanel getColumnaDeBotones(double VERTICAL_GAP_PERC, JButton... botones) {
 		TiendaFrame t = TiendaFrame.getInstance();
 
@@ -116,6 +100,10 @@ public class PanelFactory {
 		return cabecera;
 	}
 
+	/**
+	 * Crea un icono redondo con la imagen predeterminada de foto de perfil
+	 * @return Panel con la foto de perfil
+	 */
 	public static JPanel buildAvatar() {
 		TiendaFrame t = TiendaFrame.getInstance();
 		int size = t.getPixelsHeight(0.04);
@@ -148,6 +136,11 @@ public class PanelFactory {
 		};
 	}
 	
+	/**
+	 * Crea un panel de un avatar con nombre apoyándose de buildAvatar
+	 * @param usrName Nombre del usuario
+	 * @return Panel con avatar y usuario
+	 */
 	public static JPanel avatarConNombre(String usrName) {
 		JPanel contenido = new JPanel(new BorderLayout());
 		contenido.setOpaque(false);

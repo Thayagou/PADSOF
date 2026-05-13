@@ -60,6 +60,7 @@ public class PanelOferta extends PanelDisplay {
 	 *
 	 * @param usuario    Nombre del usuario que hace la oferta.
 	 * @param fotoPerfil Nombre del fichero de imagen de perfil.
+	 * @param receptor   Nombre del usuario que recibe la oferta.
 	 * @param foto       Nombre del fichero de imagen del objeto principal.
 	 * @param pide       Array de nombres de objetos que pide a cambio.
 	 * @param ofrece     Array de nombres de objetos que ofrece.

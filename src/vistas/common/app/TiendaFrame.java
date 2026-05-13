@@ -214,7 +214,7 @@ public class TiendaFrame extends JFrame {
 	/**
 	 * A partir de un porcentaje entre 0 y 1 obtiene el número de píxeles correspondientes de anchura actual de la aplicación
 	 *
-	 * @param percentaje Porcentaje de anchura
+	 * @param percentage Porcentaje de anchura
 	 * @return Número de píxeles correspondientes
 	 */
 	public int getPixelsWidth(double percentage) {
@@ -224,7 +224,7 @@ public class TiendaFrame extends JFrame {
 	/**
 	 * A partir de un porcentaje entre 0 y 1 obtiene el número de píxeles correspondientes de altura actual de la aplicación
 	 *
-	 * @param percentaje Porcentaje de altura
+	 * @param percentage Porcentaje de altura
 	 * @return Número de píxeles correspondientes
 	 */
 	public int getPixelsHeight(double percentage) {

@@ -41,6 +41,7 @@ public class PanelPedido extends PanelDisplay{
 	 *
 	 * @param actionName Nombre de acción de pulsar el panel
 	 * @param estado Estado del pedido
+	 * @param id Id del pedido
 	 * @param productos String de los productos pedidos
 	 */
 	public PanelPedido(String actionName, String estado, String id, String...productos) {
@@ -74,6 +75,7 @@ public class PanelPedido extends PanelDisplay{
 	 *
 	 * @param actionName Nombre de acción de pulsar el panel
 	 * @param estado Estado del pedido
+	 * @param id Id del pedido
 	 * @param productos String de los productos pedidos
 	 * @param nombreCliente Nombre del cliente que ha hecho el pedido
 	 * @param imageName Nombre de la imagen de perfil del cliente
