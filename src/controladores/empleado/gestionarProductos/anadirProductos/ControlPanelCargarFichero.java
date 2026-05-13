@@ -87,7 +87,7 @@ public class ControlPanelCargarFichero implements ActionListener {
 				File origen = new File("resources/productFilesImages/" + imagen);
 				String imagenFinal = "";
 				try {
-					imagenFinal = GestorImagenes.guardarImagen(origen, p.getNombre(), java.util.UUID.randomUUID().toString());
+					imagenFinal = GestorImagenes.guardarImagen(origen, "Producto", java.util.UUID.randomUUID().toString());
 				} catch (Exception e) {
 					
 				}
