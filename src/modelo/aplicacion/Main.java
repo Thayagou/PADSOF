@@ -23,7 +23,7 @@ public class Main {
 	
 	/**
 	 * Método ejecutable
-	 * @param args ARgumentos de entrada
+	 * @param args Argumentos de entrada
 	 */
 	public static void main(String[] args) {
 		try {

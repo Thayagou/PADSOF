@@ -37,7 +37,7 @@ public class VentanaGestionarParametrosSistema extends JPanel implements Ventana
 		contenido.add(BorderLayout.CENTER, scroll);
 
 		// Formatea la ventana para que tenga una cabecera con contenido
-		add(PanelFactory.getVentanaConCabecera("      Parametros del sistema", contenido), BorderLayout.CENTER);
+		add(PanelFactory.getVentanaConCabecera("      Parámetros del sistema", contenido), BorderLayout.CENTER);
 	}
 	
 	
@@ -52,6 +52,14 @@ public class VentanaGestionarParametrosSistema extends JPanel implements Ventana
 	public <K extends PanelParametroSistema> PanelParametroSistema anadirDisplay(K panelDisplay) {
 		listaParametros.add(panelDisplay);
 		return panelDisplay;
+	}
+	
+	/**
+	 * Vacía la lista de parámetros
+	 *
+	 */
+	public void vaciarLista() {
+		listaParametros.removeAll();
 	}
 
 }

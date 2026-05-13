@@ -92,6 +92,6 @@ public class ControlInicioCliente implements ControladorPantalla {
 	 */
 	@Override
 	public String getExplicacion() {
-		return "¡Bienvenido " + cliente.getNombre() + "! Esta es la ventana de inicio. Aquí puedes ver los productos recomendados seleccionados para tí.";
+		return "¡Bienvenido, " + cliente.getNombre() + "! Esta es la ventana de inicio. Aquí puedes ver los productos recomendados seleccionados para tí.";
 	}
 }
