@@ -67,6 +67,7 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 	/** Array con los tipos de compensación. */
 	private static final String[] TIPOS_COMPENSACION = { COMP_DINERO, COMP_PORCENTAJE, COMP_REGALO};
 	
+	private static final String DF_REGALO_NOMBRE = "Nada seleccionado";
 	
 	/** ActionCommand de la acción de cancelar el proceso de añadir el descuento. */
 	public static final String CANCELAR_ACTION = "Cancelar";
@@ -131,6 +132,9 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 	
 	/** Panel correspondiente a la compensación de regalo. */
 	private JPanel panelRegalo;
+	
+	/** Label correspondiente al nombre del regalo a descontar */
+	private JLabel nombreRegalo;
 	
 	/** Botón asociado a la acción de seleccionar el regalo. */
 	private JButton regalo;
@@ -258,10 +262,20 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		// Panel regalo
 		JLabel labelRegalo = ButtonFactory.newLeftAlignedLabel("Elegir regalo: ", Fonts.BOLD);
 		labelRegalo.setPreferredSize(new Dimension((int) maxWidthCond * 2 / 3, buttonHeight));
+		nombreRegalo = ButtonFactory.newLeftAlignedLabel(DF_REGALO_NOMBRE, Fonts.TEXT);
+		nombreRegalo.setPreferredSize(new Dimension((int) maxWidthCond * 2 / 3, buttonHeight));
 		regalo = ButtonFactory.newRoundedButton("Regalo", buttonHeight, maxWidthCond/2, 0.5);
 		ButtonFactory.paintButton(regalo, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		ButtonFactory.addMouseMecanics(regalo, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 		regalo.setPreferredSize(sizeSpinner);
+		
+		JPanel regaloLabels = new JPanel();
+		regaloLabels.setOpaque(false);
+		regaloLabels.setLayout(new BoxLayout(regaloLabels, BoxLayout.Y_AXIS));
+		regaloLabels.add(Box.createVerticalGlue());
+		regaloLabels.add(labelRegalo);
+		regaloLabels.add(nombreRegalo);
+		regaloLabels.add(Box.createVerticalGlue());
 		
 		JPanel regaloWrapper = new JPanel();
 		regaloWrapper.setLayout(new BoxLayout(regaloWrapper, BoxLayout.Y_AXIS));
@@ -270,7 +284,7 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 		regaloWrapper.add(Box.createVerticalGlue());
 		
 		panelRegalo = new JPanel(new BorderLayout());
-		panelRegalo.add(labelRegalo, BorderLayout.WEST);
+		panelRegalo.add(regaloLabels, BorderLayout.WEST);
 		panelRegalo.add(regaloWrapper, BorderLayout.CENTER);
 		
 		// Wrapper de los tres para el tipo compensación multiopción
@@ -499,6 +513,17 @@ public class VentanaAnadirDescuento extends JPanel implements VentanaConDisplay<
 	 */
 	public LocalDateTime getFechaFin() {
 		return getValorFecha(fin);
+	}
+	
+	public void setNombreRegalo(boolean sel, String nombre) {
+		if (!sel) {
+			nombreRegalo.setText(DF_REGALO_NOMBRE);
+		} else {
+			nombreRegalo.setText(Fonts.truncar(nombre, maxWidthCond/3, nombreRegalo.getFont(), nombreRegalo));
+		}
+		
+		revalidate();
+		repaint();
 	}
 	
 	/**

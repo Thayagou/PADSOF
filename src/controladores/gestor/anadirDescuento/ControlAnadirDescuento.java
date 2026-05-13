@@ -67,11 +67,20 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 		tipoActual = vista.getOpcionSeleccionadaDescontado();
 		vista.setControlador(this);
 		
-		cargarDescontados();
+		mostrar();
 		
 		TiendaFrame.getInstance().navegarA(this);
 		
     }
+	
+	@Override
+	public void mostrar() {	
+		descontado = null;
+		regalo = null;
+		listaControlesPanelesCategorias = null;
+		listaControlesPanelesProductos = null;
+		cargarDescontados();
+	}
 	
 	/**
 	 * Dependiendo del tipo de descontado carga las categorías o productos a descontar
@@ -325,13 +334,13 @@ public class ControlAnadirDescuento implements ControlGestionSeleccion<Descontab
 	}
 
 	/**
-	 * seleccionRegalo.
+	 * Crea un popup en el que se muestran las opciones de regalo
 	 */
 	public void seleccionRegalo() {
-		ControlSeleccionarRegalo control = new ControlSeleccionarRegalo(tienda, vista);
+		ControlSeleccionarRegalo control = new ControlSeleccionarRegalo(tienda, vista, regalo);
 		regalo = control.getRegalo();
-		
-		
+		String nombre = regalo == null ? "" : regalo.getNombre();
+		vista.setNombreRegalo(regalo != null, nombre);		
 	}
 
 	/**

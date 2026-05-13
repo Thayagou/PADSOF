@@ -44,9 +44,10 @@ public class ControlSeleccionarRegalo implements ControlGestionSeleccion<Product
 	 * @param tienda Tienda sobre la que se actúa y muestran datos.
 	 * @param vistaInferior Vista sobre la que se muestra el popup. Sirve para centrarlo en pantalla
 	 */
-	public ControlSeleccionarRegalo(Tienda tienda, JPanel vistaInferior) {
+	public ControlSeleccionarRegalo(Tienda tienda, JPanel vistaInferior, Producto regalo) {
 		this.tienda = tienda;
 		this.vista = new VentanaSeleccionRegalo();
+		this.regalo = regalo;
 
 		anadirProductos();
 		TiendaFrame frame = TiendaFrame.getInstance();
@@ -65,7 +66,6 @@ public class ControlSeleccionarRegalo implements ControlGestionSeleccion<Product
 
 	/**
 	 * Método que maneja todas las posibles acciones realizadas sobre la vista que maneja el controlador
-	 * 
 	 * 
 	 * 
 	 * @param e Evento de acción lanzado por un componente Swing
