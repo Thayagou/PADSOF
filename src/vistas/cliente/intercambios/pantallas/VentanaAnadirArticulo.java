@@ -10,7 +10,7 @@ import vistas.common.assets.PanelSelectorCajas;
 import vistas.herramientas.*;
 
 /**
- * Tipo: Class VentanaAnadirArticulo.
+ * Pantalla para añadir un nuevo artículo de segunda mano, con campos de formulario, selector de categorías y carga de imagen.
  */
 public class VentanaAnadirArticulo extends JPanel {
 	
@@ -18,17 +18,15 @@ public class VentanaAnadirArticulo extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/** Constante ACTION_CONFIRMAR. */
-	/* Acciones para los botones */
-	public static final String ACTION_CONFIRMAR = "Confirmar";
+	public static final String ACTION_CONFIRMAR = "Confirmar"; /* Comando para el botón de confirmar */
 	
 	/** Constante ACTION_CANCELAR. */
-	public static final String ACTION_CANCELAR = "Cancelar";
+	public static final String ACTION_CANCELAR = "Cancelar"; /* Comando para el botón de cancelar */
 	
 	/** Constante ACTION_SELECCIONAR_FOTO. */
-	public static final String ACTION_SELECCIONAR_FOTO = "SeleccionarFoto";
+	public static final String ACTION_SELECCIONAR_FOTO = "SeleccionarFoto"; /* Comando para el botón de seleccionar foto */
 
 	/** Constante FOTO_ANCHO. */
-	/* Macros de dimensiones relativas */
 	private static final double FOTO_ANCHO = 0.2; /* Ancho de la foto (20% ancho pantalla) */
 	
 	/** Constante FOTO_ALTO. */
@@ -44,37 +42,37 @@ public class VentanaAnadirArticulo extends JPanel {
 	private static final double PANEL_GAP = 0.02; /* Separación horizontal entre columnas (2% ancho) */
 
 	/** Campo nombreField. */
-	/* Componentes de la vista */
-	private JTextField nombreField;
+	private JTextField nombreField; /* Campo para el nombre del artículo */
 	
 	/** Campo intercambioArea. */
-	private JTextArea intercambioArea;
+	private JTextArea intercambioArea; /* Área de texto para lo que se busca a cambio */
 	
 	/** Campo descripcionArea. */
-	private JTextArea descripcionArea;
+	private JTextArea descripcionArea; /* Área de texto para la descripción del artículo */
 	
 	/** Campo selectorCategorias. */
-	private PanelSelectorCajas selectorCategorias;
+	private PanelSelectorCajas selectorCategorias; /* Panel con casillas para seleccionar categorías */
 	
 	/** Campo btnConfirmar. */
-	private JButton btnConfirmar;
+	private JButton btnConfirmar; /* Botón para confirmar y añadir el artículo */
 	
 	/** Campo btnCancelar. */
-	private JButton btnCancelar;
+	private JButton btnCancelar; /* Botón para cancelar la operación */
 	
 	/** Campo btnFoto. */
-	private JButton btnFoto;
+	private JButton btnFoto; /* Botón invisible sobre la imagen para seleccionar foto */
 	
 	/** Campo fotoPreviewLabel. */
-	private JLabel fotoPreviewLabel;
+	private JLabel fotoPreviewLabel; /* Etiqueta que muestra la imagen seleccionada */
 	
 	/** Campo imagenArchivo. */
 	private File imagenArchivo; /* Archivo temporal seleccionado, aún no guardado */
 
 	/**
 	 * Instancia un nuevo Objeto VentanaAnadirArticulo.
+	 * Construye la interfaz con tres columnas: foto/nombre/intercambio, descripción y categorías/botones.
 	 *
-	 * @param nombresCategorias parámetro nombresCategorias
+	 * @param nombresCategorias Array con los nombres de todas las categorías disponibles.
 	 */
 	public VentanaAnadirArticulo(String[] nombresCategorias) {
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -104,9 +102,10 @@ public class VentanaAnadirArticulo extends JPanel {
 
 	/**
 	 * crearColumnaIzquierda.
+	 * Construye la columna izquierda del formulario con la foto, el nombre y el intercambio buscado.
 	 *
-	 * @param t parámetro t
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame para obtener dimensiones relativas.
+	 * @return valor de tipo JPanel, la columna izquierda.
 	 */
 	private JPanel crearColumnaIzquierda(TiendaFrame t) {
 		JPanel panel = new JPanel(new BorderLayout(0, t.getPixelsHeight(0.02)));
@@ -149,9 +148,10 @@ public class VentanaAnadirArticulo extends JPanel {
 
 	/**
 	 * crearPanelFoto.
+	 * Construye el panel de selección de foto con un área de preview y un botón transparente encima.
 	 *
-	 * @param t parámetro t
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame para obtener dimensiones relativas.
+	 * @return valor de tipo JPanel, el panel de selección de foto.
 	 */
 	private JPanel crearPanelFoto(TiendaFrame t) {
 		int fotoW = t.getPixelsWidth(FOTO_ANCHO);
@@ -191,9 +191,10 @@ public class VentanaAnadirArticulo extends JPanel {
 
 	/**
 	 * crearColumnaCentral.
+	 * Construye la columna central del formulario con la descripción del artículo.
 	 *
-	 * @param t parámetro t
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame para obtener dimensiones relativas.
+	 * @return valor de tipo JPanel, la columna central.
 	 */
 	private JPanel crearColumnaCentral(TiendaFrame t) {
 		JPanel panel = new JPanel(new BorderLayout());
@@ -213,10 +214,11 @@ public class VentanaAnadirArticulo extends JPanel {
 
 	/**
 	 * crearColumnaDerecha.
+	 * Construye la columna derecha del formulario con el selector de categorías y los botones de acción.
 	 *
-	 * @param t parámetro t
-	 * @param nombresCategorias parámetro nombresCategorias
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame para obtener dimensiones relativas.
+	 * @param nombresCategorias Array con los nombres de las categorías para mostrar en el selector.
+	 * @return valor de tipo JPanel, la columna derecha.
 	 */
 	private JPanel crearColumnaDerecha(TiendaFrame t, String[] nombresCategorias) {
 		int topWrap = t.getPixelsHeight(0.02);
@@ -258,8 +260,9 @@ public class VentanaAnadirArticulo extends JPanel {
 
 	/**
 	 * Establece Controlador.
+	 * Asigna el controlador a los botones de confirmar, cancelar y seleccionar foto.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos de los botones.
 	 */
 	public void setControlador(ActionListener c) {
 		btnConfirmar.addActionListener(c);
@@ -269,8 +272,9 @@ public class VentanaAnadirArticulo extends JPanel {
 
 	/**
 	 * actualizarPreview.
+	 * Actualiza la previsualización de la imagen seleccionada.
 	 *
-	 * @param archivo parámetro archivo
+	 * @param archivo Ruta del archivo de imagen a mostrar en el preview.
 	 */
 	public void actualizarPreview(String archivo) {
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -284,7 +288,7 @@ public class VentanaAnadirArticulo extends JPanel {
 	/**
 	 * Obtiene Nombre.
 	 *
-	 * @return valor de Nombre
+	 * @return valor de Nombre, el texto ingresado en el campo de nombre del artículo.
 	 */
 	/* Getters para obtener los datos del formulario */
 	public String getNombre() {
@@ -294,7 +298,7 @@ public class VentanaAnadirArticulo extends JPanel {
 	/**
 	 * Obtiene IntercambioBuscado.
 	 *
-	 * @return valor de IntercambioBuscado
+	 * @return valor de IntercambioBuscado, el texto ingresado como qué se busca a cambio.
 	 */
 	public String getIntercambioBuscado() {
 		return intercambioArea.getText().trim();
@@ -303,7 +307,7 @@ public class VentanaAnadirArticulo extends JPanel {
 	/**
 	 * Obtiene Descripcion.
 	 *
-	 * @return valor de Descripcion
+	 * @return valor de Descripcion, el texto ingresado como descripción del artículo.
 	 */
 	public String getDescripcion() {
 		return descripcionArea.getText().trim();
@@ -312,7 +316,7 @@ public class VentanaAnadirArticulo extends JPanel {
 	/**
 	 * Obtiene CategoriasSeleccionadas.
 	 *
-	 * @return valor de CategoriasSeleccionadas
+	 * @return valor de CategoriasSeleccionadas, array con los nombres de las categorías marcadas.
 	 */
 	public String[] getCategoriasSeleccionadas() {
 		return selectorCategorias.getCategoriasSeleccionadas();
@@ -321,7 +325,7 @@ public class VentanaAnadirArticulo extends JPanel {
 	/**
 	 * Obtiene ImagenArchivo.
 	 *
-	 * @return valor de ImagenArchivo
+	 * @return valor de ImagenArchivo, el archivo de imagen temporal seleccionado.
 	 */
 	public File getImagenArchivo() {
 		return imagenArchivo;
@@ -329,6 +333,7 @@ public class VentanaAnadirArticulo extends JPanel {
 
 	/**
 	 * limpiarFormulario.
+	 * Restablece todos los campos del formulario a su estado inicial, borrando el contenido y la imagen seleccionada.
 	 */
 	public void limpiarFormulario() {
 		nombreField.setText("");

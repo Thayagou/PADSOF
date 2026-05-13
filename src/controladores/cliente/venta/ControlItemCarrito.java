@@ -17,18 +17,47 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.cliente.venta.PanelItemCarrito;
 
+/**
+ * Controlador del panel de un producto dentro del carrito de compras.
+ */
 public class ControlItemCarrito implements ActionListener {
+	
+	/** Campo producto. Producto asociado a este ítem del carrito. */
 	protected Producto producto;
+	
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	protected Tienda tienda;
+	
+	/** Campo panel. Panel del ítem del carrito asociado a este controlador. */
 	protected PanelItemCarrito panel;
+	
+	/** Campo vista. Contenedor donde se muestra el panel del ítem. */
 	protected VentanaConDisplay<? super PanelItemCarrito> vista;
+	
+	/** Campo cliente. Cliente registrado propietario del carrito. */
 	protected ClienteRegistrado cliente;
+	
+	/** Campo unidades. Cantidad de unidades del producto en el carrito. */
 	private int unidades;
+	
+	/** Campo controlador. Controlador padre del carrito para refrescar la vista. */
 	private ControlManejoCarrito controlador;
 
+	/** Constante DF_PRODUCT_IMAGE. Ruta de la imagen por defecto del producto. */
 	protected static final String DF_PRODUCT_IMAGE = "producto.png";
+	
+	/** Constante seeProduct. Comando de acción para ver el producto. */
 	private static final String seeProduct = "Ver producto";
 
+	/**
+	 * Instancia un nuevo Objeto ControlItemCarrito.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado propietario del carrito.
+	 * @param stock Stock del producto en el carrito.
+	 * @param vista Contenedor donde se añadirá el panel del ítem.
+	 * @param controlador Controlador padre del carrito para refrescar la vista.
+	 */
 	public ControlItemCarrito(Tienda tienda, ClienteRegistrado cliente, StockExterno stock,
 			VentanaConDisplay<? super PanelItemCarrito> vista, ControlManejoCarrito controlador) {
 		this.producto = stock.getProducto();
@@ -58,6 +87,12 @@ public class ControlItemCarrito implements ActionListener {
 		panel.setControlador(this);
 	}
 
+	/**
+	 * actionPerformed.
+	 * Gestiona la eliminación del producto del carrito o la visualización de su información.
+	 *
+	 * @param e Evento de acción recibido.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {

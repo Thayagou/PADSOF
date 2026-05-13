@@ -9,44 +9,58 @@ import vistas.herramientas.*;
 /**
  * Dialogo modal de mensaje para la aplicacion.
  *
- * Uso basico: new VentanaMensaje("Operacion completada."); new
- * VentanaMensaje("El campo no puede estar vacio.", "Error",
- * VentanaMensaje.ERROR);
- *
  * Tipos disponibles: VentanaMensaje.INFO, VentanaMensaje.ERROR,
  * VentanaMensaje.AVISO. El tipo solo afecta al color de la cabecera; el resto
  * del dialogo es siempre identico.
  */
 public class VentanaMensaje extends JDialog {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/* Tipos de mensaje */
+	/** Tipo para mensajes informativos. */
 	public static final int INFO = 0;
+	
+	/** Tipo para mensajes de error. */
 	public static final int ERROR = 1;
+	
+	/** Tipo para mensajes de advertencia. */
 	public static final int AVISO = 2;
 
-	/* Dimensiones del dialogo */
+	/** Anchura del diálogo como porcentaje de la pantalla. */
 	private static final double DIALOG_W = 0.30;
+	
+	/** Altura del diálogo como porcentaje de la pantalla. */
 	private static final double DIALOG_H = 0.30;
 
-	/* Dimensiones del boton Aceptar */
+	/** Anchura del botón como porcentaje de la pantalla. */
 	private static final double BTN_W = 0.10;
+	
+	/** Altura del botón como porcentaje de la pantalla. */
 	private static final double BTN_H = 0.05;
 
-	/* Padding del panel de contenido */
+	/** Padding vertical del contenido. */
 	private static final double PADDING_H = 0.025;
+	
+	/** Padding horizontal del contenido. */
 	private static final double PADDING_W = 0.02;
+	
+	/** Grosor del borde de la cabecera. */
 	private static final double BORDER_WIDTH = 8.0/1080.0;
 
-	/* Espacio entre el mensaje y el boton */
+	/** Espacio vertical entre el mensaje y el botón. */
 	private static final double GAP = 0.015;
 
-	/* Titulos por defecto segun tipo */
+	/** Título por defecto para mensajes informativos. */
 	private static final String TITULO_INFO = "Informacion";
+	
+	/** Título por defecto para mensajes de error. */
 	private static final String TITULO_ERROR = "Error";
+	
+	/** Título por defecto para mensajes de advertencia. */
 	private static final String TITULO_AVISO = "Aviso";
 	
+	/** Panel que contiene el botón de aceptar. */
 	protected JPanel btnPanel;
 
 	/**
@@ -68,17 +82,24 @@ public class VentanaMensaje extends JDialog {
 		this(mensaje, tituloPorDefecto(tipo), tipo);
 	}
 	
+	/**
+	 * Instancia un nuevo Objeto VentanaMensaje.
+	 *
+	 * @param mensaje Texto que se mostrara en el dialogo.
+	 * @param titulo Título personalizado de la ventana.
+	 * @param tipo Tipo de mensaje: INFO, ERROR o AVISO.
+	 */
 	public VentanaMensaje(String mensaje, String titulo, int tipo) {
 		this(mensaje, tipo, titulo);
 		mostrar();
 	}
 
 	/**
-	 * Constructor privado que solo forma el dialogo sin mostrarlo
+	 * Constructor privado que solo forma el dialogo sin mostrarlo.
 	 *
-	 * @param mensaje
-	 * @param tipo
-	 * @param titulo
+	 * @param mensaje Texto que se mostrara en el dialogo.
+	 * @param tipo Tipo de mensaje: INFO, ERROR o AVISO.
+	 * @param titulo Título de la ventana.
 	 */
 	protected VentanaMensaje(String mensaje, int tipo, String titulo) {
 		super(TiendaFrame.getInstance(), titulo, true);
@@ -135,10 +156,21 @@ public class VentanaMensaje extends JDialog {
 		this.add(btnPanel, BorderLayout.SOUTH);
 	}
 	
+	/**
+	 * mostrar.
+	 * Hace visible el diálogo modal.
+	 */
 	public void mostrar() {
 		this.setVisible(true);
 	}
 
+	/**
+	 * colorCabecera.
+	 * Devuelve el color de cabecera y boton segun el tipo de mensaje.
+	 *
+	 * @param tipo Tipo de mensaje (INFO, ERROR, AVISO).
+	 * @return valor de tipo ColorPalette, el color correspondiente.
+	 */
 	/* Devuelve el color de cabecera y boton segun el tipo de mensaje. */
 	protected static ColorPalette colorCabecera(int tipo) {
 		return switch (tipo) {
@@ -148,6 +180,13 @@ public class VentanaMensaje extends JDialog {
 		};
 	}
 
+	/**
+	 * tituloPorDefecto.
+	 * Devuelve el titulo por defecto segun el tipo.
+	 *
+	 * @param tipo Tipo de mensaje (INFO, ERROR, AVISO).
+	 * @return valor de tipo String, el título correspondiente.
+	 */
 	/* Devuelve el titulo por defecto segun el tipo. */
 	private static String tituloPorDefecto(int tipo) {
 		return switch (tipo) {

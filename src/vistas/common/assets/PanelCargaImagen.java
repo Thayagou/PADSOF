@@ -17,23 +17,45 @@ import vistas.herramientas.*;
  */
 public class PanelCargaImagen extends JPanel {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante PREVIEW_W. Anchura del área de preview como porcentaje de la pantalla. */
 	private static final double PREVIEW_W = 0.20;
+	
+	/** Constante PREVIEW_H. Altura del área de preview como porcentaje de la pantalla. */
 	private static final double PREVIEW_H = 0.22;
+	
+	/** Constante BTN_W. Anchura de los botones como porcentaje de la pantalla. */
 	private static final double BTN_W = 0.08;
+	
+	/** Constante BTN_H. Altura de los botones como porcentaje de la pantalla. */
 	private static final double BTN_H = 0.04;
+	
+	/** Constante GAP. Espacio entre componentes como porcentaje de la pantalla. */
 	private static final double GAP = 0.015;
+	
+	/** Constante PADDING. Padding interior del panel como porcentaje de la pantalla. */
 	private static final double PADDING = 0.02;
 
+	/** Campo btnSeleccionar. Botón para abrir el explorador de archivos. */
 	private JButton btnSeleccionar;
+	
+	/** Campo btnConfirmar. Botón para confirmar la carga de la imagen. */
 	private JButton btnConfirmar;
+	
+	/** Campo btnCancelar. Botón para cancelar la operación. */
 	private JButton btnCancelar;
 
+	/** Campo lblPreview. Etiqueta que muestra la previsualización de la imagen. */
 	private JLabel lblPreview;
+	
+	/** Campo lblNombreFichero. Etiqueta que muestra el nombre del archivo seleccionado. */
 	private JLabel lblNombreFichero;
 
 	/**
+	 * Instancia un nuevo Objeto PanelCargaImagen.
+	 *
 	 * @param tipo Tipo de objeto para mostrar en el título (ej. "Producto").
 	 */
 	public PanelCargaImagen(String tipo) {
@@ -55,6 +77,13 @@ public class PanelCargaImagen extends JPanel {
 		add(buildBotones(btnW, btnH, gap), BorderLayout.SOUTH);
 	}
 
+	/**
+	 * buildCabecera.
+	 * Construye la cabecera del panel con el título.
+	 *
+	 * @param tipo Tipo de objeto (no usado en la cabecera actualmente).
+	 * @return valor de tipo JPanel, el panel de la cabecera.
+	 */
 	private JPanel buildCabecera(String tipo) {
 		JLabel titulo = ButtonFactory.newLabel("Cargar imagen", Fonts.BOLD);
 		titulo.setAlignmentX(CENTER_ALIGNMENT);
@@ -66,6 +95,15 @@ public class PanelCargaImagen extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * buildCentro.
+	 * Construye el área central con el preview de la imagen y el nombre del archivo.
+	 *
+	 * @param previewW Anchura del preview en píxeles.
+	 * @param previewH Altura del preview en píxeles.
+	 * @param gap Espacio entre componentes en píxeles.
+	 * @return valor de tipo JPanel, el panel central.
+	 */
 	private JPanel buildCentro(int previewW, int previewH, int gap) {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -94,6 +132,15 @@ public class PanelCargaImagen extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * buildBotones.
+	 * Construye el panel con los botones de seleccionar, confirmar y cancelar.
+	 *
+	 * @param btnW Anchura de los botones en píxeles.
+	 * @param btnH Altura de los botones en píxeles.
+	 * @param gap Espacio entre botones en píxeles.
+	 * @return valor de tipo JPanel, el panel de botones.
+	 */
 	private JPanel buildBotones(int btnW, int btnH, int gap) {
 		btnSeleccionar = ButtonFactory.newRoundedButton("Seleccionar", btnH, btnW, 0.5);
 		ButtonFactory.paintButton(btnSeleccionar, ColorPalette.PURPLE, ColorPalette.WHITE);
@@ -144,7 +191,11 @@ public class PanelCargaImagen extends JPanel {
 		repaint();
 	}
 
-	/** Conecta el controlador a los tres botones. */
+	/**
+	 * Conecta el controlador a los tres botones.
+	 *
+	 * @param c controlador que manejará los eventos de los botones.
+	 */
 	public void setControlador(ActionListener c) {
 		btnSeleccionar.addActionListener(c);
 		btnConfirmar.addActionListener(c);

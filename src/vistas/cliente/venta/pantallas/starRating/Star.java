@@ -8,7 +8,7 @@ import java.awt.RenderingHints;
 import javax.swing.JButton;
 
 /**
- * Tipo: Class Star.
+ * Componente de estrella individual para el selector de puntuación.
  */
 public class Star extends JButton {
 
@@ -16,7 +16,7 @@ public class Star extends JButton {
     private static final long serialVersionUID = 1L;
 
 	/**
-	 * Instancia un nuevo Objeto Star.
+	 * Configura la estrella sin fondo pintado, con cursor de mano y colores por defecto.
 	 */
 	public Star() {
         setContentAreaFilled(false);
@@ -26,9 +26,9 @@ public class Star extends JButton {
     }
 
     /**
-     * paint.
+     * Dibuja la estrella utilizando la forma Star2D.
      *
-     * @param grphcs parámetro grphcs
+     * @param grphcs contexto gráfico donde se pintará la estrella.
      */
     @Override
     public void paint(Graphics grphcs) {

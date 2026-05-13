@@ -11,20 +11,21 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
 /**
- * Tipo: Class VentanaVerMisOfertas.
+ * Pantalla que muestra el listado de ofertas de intercambio realizadas o recibidas por el usuario.
  */
 public class VentanaVerMisOfertas extends JPanel implements VentanaConDisplay<PanelOferta>{
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Campo intercambios. */
+	/** Campo intercambios. Panel que contiene los paneles de oferta a mostrar. */
 	JPanel intercambios;
 	
 	/**
 	 * Instancia un nuevo Objeto VentanaVerMisOfertas.
+	 * Construye la interfaz con el título especificado y el área desplazable de ofertas.
 	 * 
-	 * @param cabecera Titulo de la ventana
+	 * @param cabecera Titulo de la ventana que se muestra en la cabecera.
 	 */
 	public VentanaVerMisOfertas(String cabecera) {
 		setLayout(new BorderLayout());
@@ -43,6 +44,7 @@ public class VentanaVerMisOfertas extends JPanel implements VentanaConDisplay<Pa
 	
 	/**
 	 * refreshList.
+	 * Refresca la interfaz para mostrar los cambios en el panel de ofertas.
 	 */
 	public void refreshList() {
 		intercambios.revalidate();
@@ -52,7 +54,7 @@ public class VentanaVerMisOfertas extends JPanel implements VentanaConDisplay<Pa
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos de la ventana (actualmente sin acciones).
 	 */
 	public void setControlador(ActionListener c) {
 		/* sin acciones para esta ventana */
@@ -60,10 +62,11 @@ public class VentanaVerMisOfertas extends JPanel implements VentanaConDisplay<Pa
 
 	/**
 	 * anadirDisplay.
+	 * Añade una oferta al panel de listado y refresca la vista.
 	 *
-	 * @param <K> clave genérica
-	 * @param panelDisplay parámetro panelDisplay
-	 * @return valor de tipo PanelOferta
+	 * @param <K> subtipo de PanelOferta del panel a añadir.
+	 * @param panelDisplay Panel de la oferta a añadir.
+	 * @return valor de tipo PanelOferta, el mismo panel que se añadió.
 	 */
 	@Override
 	public <K extends PanelOferta> PanelOferta anadirDisplay(K panelDisplay) {

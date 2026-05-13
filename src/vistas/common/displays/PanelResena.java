@@ -52,7 +52,6 @@ public class PanelResena extends JPanel {
 
 		header.add(buildEstrellas(puntuacion));
 
-		// ── Comentario ────────────────────────────────────────────────
 		JTextArea comentTxt = new JTextArea(comentario);
 		comentTxt.setFont(Fonts.SMALL.getFont());
 		comentTxt.setLineWrap(true);

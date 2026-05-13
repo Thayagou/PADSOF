@@ -13,34 +13,73 @@ import vistas.herramientas.*;
  */
 public class PanelFormulario extends JPanel {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante CORNER_RADIUS_MACRO. */
 	/* ── Macros de layout (relativos a resolución base 1920×1080) ── */
-	private static final double CORNER_RADIUS_MACRO = 50.0 / 1920.0;
+	private static final double CORNER_RADIUS_MACRO = 50.0 / 1920.0; /* Radio de las esquinas redondeadas */
 
-	private static final double HEADER_PADDING_TOP_MACRO = 12.0 / 1080.0;
-	private static final double HEADER_PADDING_LEFT_MACRO = 16.0 / 1920.0;
-	private static final double HEADER_PADDING_BOTTOM_MACRO = 12.0 / 1080.0;
-	private static final double HEADER_PADDING_RIGHT_MACRO = 16.0 / 1920.0;
+	/** Constante HEADER_PADDING_TOP_MACRO. */
+	private static final double HEADER_PADDING_TOP_MACRO = 12.0 / 1080.0; /* Padding superior de la cabecera */
+	
+	/** Constante HEADER_PADDING_LEFT_MACRO. */
+	private static final double HEADER_PADDING_LEFT_MACRO = 16.0 / 1920.0; /* Padding izquierdo de la cabecera */
+	
+	/** Constante HEADER_PADDING_BOTTOM_MACRO. */
+	private static final double HEADER_PADDING_BOTTOM_MACRO = 12.0 / 1080.0; /* Padding inferior de la cabecera */
+	
+	/** Constante HEADER_PADDING_RIGHT_MACRO. */
+	private static final double HEADER_PADDING_RIGHT_MACRO = 16.0 / 1920.0; /* Padding derecho de la cabecera */
 
-	private static final double BODY_PADDING_TOP_MACRO = 16.0 / 1080.0;
-	private static final double BODY_PADDING_LEFT_MACRO = 32.0 / 1920.0;
-	private static final double BODY_PADDING_BOTTOM_MACRO = 8.0 / 1080.0;
-	private static final double BODY_PADDING_RIGHT_MACRO = 32.0 / 1920.0;
+	/** Constante BODY_PADDING_TOP_MACRO. */
+	private static final double BODY_PADDING_TOP_MACRO = 16.0 / 1080.0; /* Padding superior del cuerpo */
+	
+	/** Constante BODY_PADDING_LEFT_MACRO. */
+	private static final double BODY_PADDING_LEFT_MACRO = 32.0 / 1920.0; /* Padding izquierdo del cuerpo */
+	
+	/** Constante BODY_PADDING_BOTTOM_MACRO. */
+	private static final double BODY_PADDING_BOTTOM_MACRO = 8.0 / 1080.0; /* Padding inferior del cuerpo */
+	
+	/** Constante BODY_PADDING_RIGHT_MACRO. */
+	private static final double BODY_PADDING_RIGHT_MACRO = 32.0 / 1920.0; /* Padding derecho del cuerpo */
 
-	private static final double STRUT_LABEL_FIELD_MACRO = 4.0 / 1080.0;
-	private static final double STRUT_BETWEEN_FIELDS_MACRO = 12.0 / 1080.0;
-	private static final double STRUT_BEFORE_BUTTON_MACRO = 4.0 / 1080.0;
-	private static final double STRUT_AFTER_BUTTON_MACRO = 16.0 / 1080.0;
+	/** Constante STRUT_LABEL_FIELD_MACRO. */
+	private static final double STRUT_LABEL_FIELD_MACRO = 4.0 / 1080.0; /* Espacio entre etiqueta y campo */
+	
+	/** Constante STRUT_BETWEEN_FIELDS_MACRO. */
+	private static final double STRUT_BETWEEN_FIELDS_MACRO = 12.0 / 1080.0; /* Espacio entre campos consecutivos */
+	
+	/** Constante STRUT_BEFORE_BUTTON_MACRO. */
+	private static final double STRUT_BEFORE_BUTTON_MACRO = 4.0 / 1080.0; /* Espacio antes del botón */
+	
+	/** Constante STRUT_AFTER_BUTTON_MACRO. */
+	private static final double STRUT_AFTER_BUTTON_MACRO = 16.0 / 1080.0; /* Espacio después del botón */
 
-	private static final double BTN_HEIGHT_MACRO = 50.0 / 1080.0;
-	private static final double BTN_WIDTH_MACRO = 150.0 / 1920.0;
-	private static final double BTN_ROUNDNESS = 1.0;
+	/** Constante BTN_HEIGHT_MACRO. */
+	private static final double BTN_HEIGHT_MACRO = 50.0 / 1080.0; /* Altura del botón */
+	
+	/** Constante BTN_WIDTH_MACRO. */
+	private static final double BTN_WIDTH_MACRO = 150.0 / 1920.0; /* Anchura del botón */
+	
+	/** Constante BTN_ROUNDNESS. */
+	private static final double BTN_ROUNDNESS = 1.0; /* Redondeo del botón */
 
+	/** Campo fields. */
 	/* ── Estado interno ── */
-	private final JTextField[] fields;
-	private final JButton boton;
+	private final JTextField[] fields; /* Array con los campos del formulario */
+	
+	/** Campo boton. */
+	private final JButton boton; /* Botón de acción del formulario */
 
+	/**
+	 * arrayContainsValue.
+	 * Comprueba si un valor está presente en un array de enteros.
+	 *
+	 * @param array Array de enteros a buscar.
+	 * @param value Valor a localizar.
+	 * @return true si la operación fue correcta, falso en caso contrario
+	 */
 	private boolean arrayContainsValue(Integer[] array, int value) {
 		for (Integer i : array) {
 			if (i.equals(value))
@@ -50,7 +89,7 @@ public class PanelFormulario extends JPanel {
 	}
 
 	/**
-	 * Construye el formulario con campos visibles y ocultos
+	 * Construye el formulario con campos visibles y ocultos.
 	 *
 	 * @param titulo     Texto de la cabecera de la tarjeta.
 	 * @param botonTexto Texto del botón de acción.
@@ -145,7 +184,7 @@ public class PanelFormulario extends JPanel {
 	}
 	
 	/**
-	 * Constructor con todos los campos visibles
+	 * Constructor con todos los campos visibles.
 	 *
 	 * @param titulo Titulo que pondrá en la cabecera
 	 * @param botonTexto Texto del botón

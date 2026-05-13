@@ -12,12 +12,21 @@ import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaBuscarArticulos;
 import vistas.common.app.TiendaFrame;
 
+/**
+ * Controlador de la ventana de búsqueda de artículos de segunda mano.
+ */
 public class ControlBuscarArticulos implements ControladorPantalla {
 	
 	Tienda tienda;
 	ClienteRegistrado cliente;
 	VentanaBuscarArticulos vista;
 	
+	/**
+	 * Constructor del controlador.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que realiza la búsqueda.
+	 */
 	public ControlBuscarArticulos(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
 		this.cliente = cliente;

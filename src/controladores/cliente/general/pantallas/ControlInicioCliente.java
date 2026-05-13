@@ -17,25 +17,26 @@ import vistas.cliente.general.pantallas.VentanaInicioCliente;
 import vistas.common.app.TiendaFrame;
 
 /**
- * Tipo: Class ControlInicioCliente.
+ * Controlador de la pantalla de inicio del cliente, gestiona la configuración de las barras y la carga de productos recomendados.
  */
 public class ControlInicioCliente implements ControladorPantalla {
 
-	/** Campo tienda. */
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	@SuppressWarnings("unused")
 	private Tienda tienda;
 	
-	/** Campo vista. */
+	/** Campo vista. Ventana de inicio asociada a este controlador. */
 	private final VentanaInicioCliente vista;
 	
-	/** Campo cliente. */
+	/** Campo cliente. Cliente registrado que ha iniciado sesión. */
 	private ClienteRegistrado cliente;
 
 	/**
 	 * Instancia un nuevo Objeto ControlInicioCliente.
+	 * Configura las barras de tareas y lateral, carga los productos recomendados y establece la navegación.
 	 *
-	 * @param tienda parámetro tienda
-	 * @param cliente parámetro cliente
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que ha iniciado sesión.
 	 */
 	public ControlInicioCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
@@ -63,8 +64,9 @@ public class ControlInicioCliente implements ControladorPantalla {
 
 	/**
 	 * actionPerformed.
+	 * Gestiona los eventos de acción de la ventana (actualmente sin acciones implementadas).
 	 *
-	 * @param e parámetro e
+	 * @param e Evento de acción recibido.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -76,7 +78,7 @@ public class ControlInicioCliente implements ControladorPantalla {
 	/**
 	 * Obtiene Vista.
 	 *
-	 * @return valor de Vista
+	 * @return valor de Vista, el panel de la ventana de inicio.
 	 */
 	@Override
 	public JPanel getVista() {
@@ -86,7 +88,7 @@ public class ControlInicioCliente implements ControladorPantalla {
 	/**
 	 * Obtiene la explicacion de la ventana.
 	 *
-	 * @return valor de Explicacion
+	 * @return valor de Explicacion, mensaje de bienvenida personalizado para el cliente.
 	 */
 	@Override
 	public String getExplicacion() {

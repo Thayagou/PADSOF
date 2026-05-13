@@ -6,10 +6,18 @@ import java.awt.Font;
 
 import javax.swing.JTextArea;
 
+/**
+ * Área de texto no editable que se ajusta al ancho de su contenedor y calcula su altura dinámicamente.
+ */
 public class FixedTextArea extends JTextArea {
 	
+    /** Constante serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+	/**
+	 * Instancia un nuevo Objeto FixedTextArea.
+	 * Configura el área de texto como no enfocable, no editable, transparente y con ajuste de línea.
+	 */
 	public FixedTextArea() {
         setFocusable(false);
         setEditable(false);
@@ -18,21 +26,46 @@ public class FixedTextArea extends JTextArea {
         setWrapStyleWord(false);
     }
 	
+	/**
+	 * Instancia un nuevo Objeto FixedTextArea con el texto especificado.
+	 *
+	 * @param texto Texto inicial a mostrar en el área.
+	 */
 	public FixedTextArea(String texto) {
 		this();
 		setText(texto);
 	}
 	
+	/**
+	 * Instancia un nuevo Objeto FixedTextArea con el texto y fuente especificados.
+	 *
+	 * @param texto Texto inicial a mostrar en el área.
+	 * @param font Fuente a aplicar al texto.
+	 */
 	public FixedTextArea(String texto, Font font) {
 		this(texto);
 		setFont(font);
 	}
     
+    /**
+     * contains.
+     * Hace que el componente no detecte eventos de ratón sobre sí mismo.
+     *
+     * @param x Coordenada X en píxeles.
+     * @param y Coordenada Y en píxeles.
+     * @return true si la operación fue correcta, falso en caso contrario
+     */
     @Override
     public boolean contains(int x, int y) {
         return false;
     }
     
+    /**
+     * Obtiene PreferredSize.
+     * Calcula el tamaño preferido basándose en el ancho real del contenedor padre.
+     *
+     * @return valor de PreferredSize, la dimensión calculada con el ancho del padre.
+     */
     @Override
 	public Dimension getPreferredSize() {
 		Container parent = getParent();

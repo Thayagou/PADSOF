@@ -20,32 +20,62 @@ import vistas.herramientas.*;
  */
 public class PanelInfoProducto extends JPanel {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante PADDING. */
 	/* Proporciones generales */
-	private static final double PADDING = 0.02;
-	private static final double GAP = 0.015;
+	private static final double PADDING = 0.02; /* Padding interior del panel */
+	
+	/** Constante GAP. */
+	private static final double GAP = 0.015; /* Espacio entre componentes */
 
+	/** Constante FOTO_W. */
 	/* Foto del producto */
-	private static final double FOTO_W = 0.32;
-	private static final double FOTO_H = 0.37;
+	private static final double FOTO_W = 0.32; /* Anchura de la foto del producto */
+	
+	/** Constante FOTO_H. */
+	private static final double FOTO_H = 0.37; /* Altura de la foto del producto */
 
+	/** Constante MAX_STARS. */
 	/* Estrellas */
-	private static final int MAX_STARS = 5;
-	private static final int STAR_HGAP = 2;
-	private static final int STAR_VGAP = 0;
+	private static final int MAX_STARS = 5; /* Número máximo de estrellas */
+	
+	/** Constante STAR_HGAP. */
+	private static final int STAR_HGAP = 2; /* Espaciado horizontal entre estrellas */
+	
+	/** Constante STAR_VGAP. */
+	private static final int STAR_VGAP = 0; /* Espaciado vertical entre estrellas */
 
+	/** Constante TEXT_MAX_W. */
 	/* Truncado de textos en la columna derecha */
-	private static final double TEXT_MAX_W = 0.29;
+	private static final double TEXT_MAX_W = 0.29; /* Anchura máxima para textos truncados */
 
+	/** Constante DESC_MAX_LINES. */
 	/* Numero maximo de lineas en las text areas */
-	private static final int DESC_MAX_LINES = 8;
-	private static final int CARACT_MAX_LINES = 5;
-	private static final int BW = TiendaFrame.getInstance().getPixelsWidth(8.0/1080.0);
+	private static final int DESC_MAX_LINES = 8; /* Líneas máximas para la descripción */
+	
+	/** Constante CARACT_MAX_LINES. */
+	private static final int CARACT_MAX_LINES = 5; /* Líneas máximas para las características */
+	
+	/** Constante BW. */
+	private static final int BW = TiendaFrame.getInstance().getPixelsWidth(8.0/1080.0); /* Padding interno del text area */
 
+	/** Constante SCROLL_W_MARGIN. */
 	/* Factor de reduccion del ancho para el scroll (deja margen para la barra) */
-	private static final double SCROLL_W_MARGIN = 0.05;
+	private static final double SCROLL_W_MARGIN = 0.05; /* Margen para el scroll horizontal */
 
+	/**
+	 * Instancia un nuevo Objeto PanelInfoProducto.
+	 *
+	 * @param nombre Nombre del producto.
+	 * @param descripcion Descripción detallada del producto.
+	 * @param image Ruta de la imagen del producto.
+	 * @param puntuacionMedia Puntuación media del producto (0-5).
+	 * @param precio Precio del producto en euros.
+	 * @param caracteristicas Características destacadas del producto.
+	 * @param categorias Categorías a las que pertenece el producto.
+	 */
 	public PanelInfoProducto(String nombre, String descripcion, String image, double puntuacionMedia, double precio,
 			String caracteristicas, String... categorias) {
 
@@ -65,6 +95,21 @@ public class PanelInfoProducto extends JPanel {
 		add(contenido, BorderLayout.CENTER);
 	}
 
+	/**
+	 * buildContenido.
+	 * Construye el panel principal de dos columnas.
+	 *
+	 * @param t Referencia a TiendaFrame.
+	 * @param nombre Nombre del producto.
+	 * @param descripcion Descripción del producto.
+	 * @param image Ruta de la imagen del producto.
+	 * @param puntuacionMedia Puntuación media del producto.
+	 * @param precio Precio del producto.
+	 * @param caracteristicas Características del producto.
+	 * @param categorias Categorías del producto.
+	 * @param gap Espacio entre columnas en píxeles.
+	 * @return valor de tipo JPanel, el panel con dos columnas.
+	 */
 	/* Construye el panel principal de dos columnas. */
 	private JPanel buildContenido(TiendaFrame t, String nombre, String descripcion, String image,
 			double puntuacionMedia, double precio, String caracteristicas, String[] categorias, int gap) {
@@ -78,6 +123,16 @@ public class PanelInfoProducto extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * buildColumnaIzquierda.
+	 * Columna izquierda: foto del producto + seccion descripcion.
+	 *
+	 * @param t Referencia a TiendaFrame.
+	 * @param image Ruta de la imagen del producto.
+	 * @param descripcion Descripción del producto.
+	 * @param gap Espacio entre componentes en píxeles.
+	 * @return valor de tipo JPanel, la columna izquierda.
+	 */
 	/* Columna izquierda: foto del producto + seccion descripcion. */
 	private JPanel buildColumnaIzquierda(TiendaFrame t, String image, String descripcion, int gap) {
 
@@ -108,6 +163,19 @@ public class PanelInfoProducto extends JPanel {
 		return columna;
 	}
 
+	/**
+	 * buildColumnaDerecha.
+	 * Columna derecha: estrellas, nombre, categorias, precio, caracteristicas.
+	 *
+	 * @param t Referencia a TiendaFrame.
+	 * @param nombre Nombre del producto.
+	 * @param puntuacionMedia Puntuación media del producto.
+	 * @param precio Precio del producto.
+	 * @param caracteristicas Características del producto.
+	 * @param categorias Categorías del producto.
+	 * @param gap Espacio entre componentes en píxeles.
+	 * @return valor de tipo JPanel, la columna derecha.
+	 */
 	/* Columna derecha: estrellas, nombre, categorias, precio, caracteristicas. */
 	private JPanel buildColumnaDerecha(TiendaFrame t, String nombre, double puntuacionMedia, double precio,
 			String caracteristicas, String[] categorias, int gap) {
@@ -149,6 +217,14 @@ public class PanelInfoProducto extends JPanel {
 		return columna;
 	}
 
+	/**
+	 * buildFotoProducto.
+	 * Panel con imagen del producto centrada sobre fondo CARD_DARK.
+	 *
+	 * @param t Referencia a TiendaFrame.
+	 * @param image Ruta de la imagen del producto.
+	 * @return valor de tipo JPanel, el panel con la foto.
+	 */
 	/* Panel con imagen del producto centrada sobre fondo CARD_DARK. */
 	private JPanel buildFotoProducto(TiendaFrame t, String image) {
 
@@ -170,6 +246,16 @@ public class PanelInfoProducto extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * buildTextoSimple.
+	 * Etiqueta de texto simple truncada al ancho maximo definido.
+	 *
+	 * @param t Referencia a TiendaFrame.
+	 * @param texto Texto a mostrar.
+	 * @param fuente Fuente del texto.
+	 * @param color Color del texto.
+	 * @return valor de tipo JPanel, el panel con la etiqueta.
+	 */
 	/* Etiqueta de texto simple truncada al ancho maximo definido. */
 	private JPanel buildTextoSimple(TiendaFrame t, String texto, Fonts fuente, ColorPalette color) {
 
@@ -187,6 +273,15 @@ public class PanelInfoProducto extends JPanel {
 		return panel;
 	}
 
+	/**
+	 * buildTextArea.
+	 * Text area con scroll y ajuste dinamico al ancho del viewport.
+	 *
+	 * @param t Referencia a TiendaFrame.
+	 * @param texto Texto a mostrar.
+	 * @param maxLines Número máximo de líneas.
+	 * @return valor de tipo JScrollPane, el scroll con el área de texto.
+	 */
 	/* Text area con scroll y ajuste dinamico al ancho del viewport. */
 	private JScrollPane buildTextArea(TiendaFrame t, String texto, int maxLines) {
 
@@ -227,6 +322,17 @@ public class PanelInfoProducto extends JPanel {
 		return scroll;
 	}
 
+	/**
+	 * buildEstrellas.
+	 * Fila de estrellas rellenas o vacias segun la puntuacion media.
+	 *
+	 * @param t Referencia a TiendaFrame.
+	 * @param val Valor de puntuación (0-5).
+	 * @param hgap Espaciado horizontal entre estrellas.
+	 * @param vgap Espaciado vertical entre estrellas.
+	 * @param maxStars Número máximo de estrellas.
+	 * @return valor de tipo JPanel, el panel con las estrellas.
+	 */
 	/* Fila de estrellas rellenas o vacias segun la puntuacion media. */
 	private JPanel buildEstrellas(TiendaFrame t, double val, int hgap, int vgap, int maxStars) {
 
@@ -244,6 +350,16 @@ public class PanelInfoProducto extends JPanel {
 		return p;
 	}
 
+	/**
+	 * truncarTextoMultilinea.
+	 * Trunca un texto a un maximo de lineas respetando el ancho en pixeles.
+	 *
+	 * @param texto Texto original a truncar.
+	 * @param maxLines Número máximo de líneas permitidas.
+	 * @param maxWidth Anchura máxima en píxeles.
+	 * @param font Fuente utilizada para medir el texto.
+	 * @return valor de tipo String, el texto truncado.
+	 */
 	/* Trunca un texto a un maximo de lineas respetando el ancho en pixeles. */
 	private String truncarTextoMultilinea(String texto, int maxLines, int maxWidth, Font font) {
 

@@ -13,67 +13,68 @@ import vistas.common.components.FixedTextArea;
 import vistas.herramientas.*;
 
 /**
- * Tipo: Class VentanaInfoArticulo.
+ * Pantalla que muestra la información detallada de un artículo de segunda mano, incluyendo foto, descripción, categorías y botones de acción.
  */
 public class VentanaInfoArticulo extends JPanel {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Constante PADDING. */
+	/** Constante PADDING. Padding interior del panel principal como porcentaje de la pantalla. */
 	private static final double PADDING = 0.02;
 	
-	/** Constante GAP. */
+	/** Constante GAP. Espacio entre componentes como porcentaje de la pantalla. */
 	private static final double GAP = 0.015;
 
-	/** Constante FOTO_W. */
+	/** Constante FOTO_W. Anchura de la foto del artículo como porcentaje de la pantalla. */
 	private static final double FOTO_W = 0.32;
 	
-	/** Constante FOTO_H. */
+	/** Constante FOTO_H. Altura de la foto del artículo como porcentaje de la pantalla. */
 	private static final double FOTO_H = 0.32;
 
-	/** Constante AVATAR_SIZE. */
+	/** Constante AVATAR_SIZE. Tamaño del avatar del usuario como porcentaje de la pantalla. */
 	private static final double AVATAR_SIZE = 0.055;
 
-	/** Constante BTN_W. */
+	/** Constante BTN_W. Anchura de los botones de acción como porcentaje de la pantalla. */
 	private static final double BTN_W = 0.18;
 	
-	/** Constante BTN_H. */
+	/** Constante BTN_H. Altura de los botones de acción como porcentaje de la pantalla. */
 	private static final double BTN_H = 0.05;
 	
-	/** Constante BTN_ROUNDNESS. */
+	/** Constante BTN_ROUNDNESS. Redondeo de los botones de acción. */
 	private static final double BTN_ROUNDNESS = 0.5;
 
-	/** Constante TEXT_MAX_W. */
+	/** Constante TEXT_MAX_W. Anchura máxima para textos truncados como porcentaje de la pantalla. */
 	private static final double TEXT_MAX_W = 0.35;
 
-	/** Constante DESC_MAX_LINES. */
+	/** Constante DESC_MAX_LINES. Número máximo de líneas para la descripción del artículo. */
 	private static final int DESC_MAX_LINES = 8;
 	
-	/** Constante INTERES_MAX_LINES. */
+	/** Constante INTERES_MAX_LINES. Número máximo de líneas para el campo "busca a cambio". */
 	private static final int INTERES_MAX_LINES = 5;
 
-	/** Campo btnOferta. */
+	/** Campo btnOferta. Botón para realizar una oferta por el artículo (visible solo para usuarios ajenos). */
 	private JButton btnOferta;
 	
-	/** Campo btnCartera. */
+	/** Campo btnCartera. Botón para ver la cartera del propietario del artículo. */
 	private JButton btnCartera;
 
 	/**
 	 * Instancia un nuevo Objeto VentanaInfoArticulo.
+	 * Construye la pantalla mostrando la información del artículo y los botones de acción si el usuario es ajeno.
 	 *
-	 * @param usrName parámetro usrName
-	 * @param fotoPerfil parámetro fotoPerfil
-	 * @param nombreArticulo parámetro nombreArticulo
-	 * @param fotoArticulo parámetro fotoArticulo
-	 * @param descripcion parámetro descripcion
-	 * @param interesadoEn parámetro interesadoEn
-	 * @param estado parámetro estado
-	 * @param estimacion parámetro estimacion
-	 * @param ajeno parámetro ajeno
-	 * @param actionOffer parámetro actionOffer
-	 * @param actionWallet parámetro actionWallet
-	 * @param categorias parámetro categorias
+	 * @param usrName Nombre del usuario propietario del artículo.
+	 * @param fotoPerfil Ruta de la foto de perfil del propietario.
+	 * @param nombreArticulo Título del artículo.
+	 * @param fotoArticulo Ruta de la foto del artículo.
+	 * @param descripcion Descripción detallada del artículo.
+	 * @param interesadoEn Qué busca a cambio el propietario.
+	 * @param estado Estado del artículo (como nuevo, usado, etc.).
+	 * @param estimacion Valor estimado del artículo en euros, o -1 si no tiene.
+	 * @param ajeno Indica si el usuario actual es ajeno al propietario (determina si se muestran los botones).
+	 * @param actionOffer Comando de acción para el botón de hacer oferta.
+	 * @param actionWallet Comando de acción para el botón de ver cartera.
+	 * @param categorias Array de categorías del artículo.
 	 */
 	public VentanaInfoArticulo(String usrName, String fotoPerfil, String nombreArticulo, String fotoArticulo,
 			String descripcion, String interesadoEn, String estado, double estimacion, boolean ajeno,
@@ -102,19 +103,20 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * buildContenido.
+	 * Construye el panel central dividido en dos columnas (izquierda: foto y descripción, derecha: información del artículo).
 	 *
-	 * @param t parámetro t
-	 * @param usrName parámetro usrName
-	 * @param fotoPerfil parámetro fotoPerfil
-	 * @param nombreArticulo parámetro nombreArticulo
-	 * @param fotoArticulo parámetro fotoArticulo
-	 * @param descripcion parámetro descripcion
-	 * @param interesadoEn parámetro interesadoEn
-	 * @param estado parámetro estado
-	 * @param estimacion parámetro estimacion
-	 * @param categorias parámetro categorias
-	 * @param gap parámetro gap
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame para obtener dimensiones relativas.
+	 * @param usrName Nombre del propietario.
+	 * @param fotoPerfil Ruta de la foto de perfil.
+	 * @param nombreArticulo Nombre del artículo.
+	 * @param fotoArticulo Ruta de la foto del artículo.
+	 * @param descripcion Descripción del artículo.
+	 * @param interesadoEn Qué busca a cambio.
+	 * @param estado Estado del artículo.
+	 * @param estimacion Valor estimado.
+	 * @param categorias Categorías del artículo.
+	 * @param gap Espacio entre columnas en píxeles.
+	 * @return valor de tipo JPanel, el panel con las dos columnas.
 	 */
 	private JPanel buildContenido(TiendaFrame t, String usrName, String fotoPerfil, String nombreArticulo,
 			String fotoArticulo, String descripcion, String interesadoEn, String estado, double estimacion,
@@ -133,12 +135,13 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * buildColumnaIzquierda.
+	 * Construye la columna izquierda con la foto del artículo y la descripción.
 	 *
-	 * @param t parámetro t
-	 * @param fotoArticulo parámetro fotoArticulo
-	 * @param descripcion parámetro descripcion
-	 * @param gap parámetro gap
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame.
+	 * @param fotoArticulo Ruta de la foto del artículo.
+	 * @param descripcion Descripción del artículo.
+	 * @param gap Espacio entre elementos en píxeles.
+	 * @return valor de tipo JPanel, la columna izquierda.
 	 */
 	private JPanel buildColumnaIzquierda(TiendaFrame t, String fotoArticulo, String descripcion, int gap) {
 
@@ -173,17 +176,18 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * buildColumnaDerecha.
+	 * Construye la columna derecha con el perfil del usuario, nombre del artículo, categorías, estado, estimación y qué busca a cambio.
 	 *
-	 * @param t parámetro t
-	 * @param usrName parámetro usrName
-	 * @param fotoPerfil parámetro fotoPerfil
-	 * @param nombreArticulo parámetro nombreArticulo
-	 * @param estado parámetro estado
-	 * @param estimacion parámetro estimacion
-	 * @param interesadoEn parámetro interesadoEn
-	 * @param categorias parámetro categorias
-	 * @param gap parámetro gap
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame.
+	 * @param usrName Nombre del propietario.
+	 * @param fotoPerfil Ruta de la foto de perfil.
+	 * @param nombreArticulo Nombre del artículo.
+	 * @param estado Estado del artículo.
+	 * @param estimacion Valor estimado.
+	 * @param interesadoEn Qué busca a cambio.
+	 * @param categorias Categorías del artículo.
+	 * @param gap Espacio entre elementos en píxeles.
+	 * @return valor de tipo JPanel, la columna derecha.
 	 */
 	private JPanel buildColumnaDerecha(TiendaFrame t, String usrName, String fotoPerfil, String nombreArticulo,
 			String estado, double estimacion, String interesadoEn, String[] categorias, int gap) {
@@ -239,12 +243,13 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * buildUsuario.
+	 * Construye el panel que muestra el avatar y el nombre del propietario.
 	 *
-	 * @param t parámetro t
-	 * @param usrName parámetro usrName
-	 * @param fotoPerfil parámetro fotoPerfil
-	 * @param gap parámetro gap
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame.
+	 * @param usrName Nombre del usuario.
+	 * @param fotoPerfil Ruta de la foto de perfil.
+	 * @param gap Espacio entre avatar y nombre en píxeles.
+	 * @return valor de tipo JPanel, el panel con avatar y nombre.
 	 */
 	private JPanel buildUsuario(TiendaFrame t, String usrName, String fotoPerfil, int gap) {
 
@@ -269,10 +274,11 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * buildFotoArticulo.
+	 * Construye el panel que muestra la foto del artículo con dimensiones fijas.
 	 *
-	 * @param t parámetro t
-	 * @param fotoArticulo parámetro fotoArticulo
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame.
+	 * @param fotoArticulo Ruta de la foto del artículo.
+	 * @return valor de tipo JPanel, el panel con la foto.
 	 */
 	private JPanel buildFotoArticulo(TiendaFrame t, String fotoArticulo) {
 
@@ -298,12 +304,13 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * buildTextoSimple.
+	 * Construye un panel con una etiqueta de texto truncada automáticamente.
 	 *
-	 * @param t parámetro t
-	 * @param texto parámetro texto
-	 * @param fuente parámetro fuente
-	 * @param color parámetro color
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame.
+	 * @param texto Texto a mostrar.
+	 * @param fuente Fuente del texto.
+	 * @param color Color del texto.
+	 * @return valor de tipo JPanel, el panel con la etiqueta.
 	 */
 	private JPanel buildTextoSimple(TiendaFrame t, String texto, Fonts fuente, ColorPalette color) {
 
@@ -323,11 +330,12 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * buildTextArea.
+	 * Construye un área de texto multilínea no editable con ajuste de línea y scroll, truncada por líneas y ancho.
 	 *
-	 * @param t parámetro t
-	 * @param texto parámetro texto
-	 * @param maxLines parámetro maxLines
-	 * @return valor de tipo JScrollPane
+	 * @param t Referencia a TiendaFrame.
+	 * @param texto Texto a mostrar.
+	 * @param maxLines Número máximo de líneas antes de truncar.
+	 * @return valor de tipo JScrollPane, el scroll con el área de texto.
 	 */
 	private JScrollPane buildTextArea(TiendaFrame t, String texto, int maxLines) {
 	    int maxWidth = t.getPixelsWidth(TEXT_MAX_W - 0.05);
@@ -375,12 +383,13 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * buildBotones.
+	 * Construye el panel de botones de acción (Oferta y Ver cartera).
 	 *
-	 * @param t parámetro t
-	 * @param actionOffer parámetro actionOffer
-	 * @param actionWallet parámetro actionWallet
-	 * @param gap parámetro gap
-	 * @return valor de tipo JPanel
+	 * @param t Referencia a TiendaFrame.
+	 * @param actionOffer Comando de acción para el botón de oferta.
+	 * @param actionWallet Comando de acción para el botón de cartera.
+	 * @param gap Espacio entre botones en píxeles.
+	 * @return valor de tipo JPanel, el panel con los botones.
 	 */
 	private JPanel buildBotones(TiendaFrame t, String actionOffer, String actionWallet, int gap) {
 
@@ -414,12 +423,13 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * truncarTextoMultilinea.
+	 * Trunca un texto multilínea por número de líneas y ancho máximo, añadiendo "..." al final si es necesario.
 	 *
-	 * @param texto parámetro texto
-	 * @param maxLines parámetro maxLines
-	 * @param maxWidth parámetro maxWidth
-	 * @param font parámetro font
-	 * @return valor de tipo String
+	 * @param texto Texto original a truncar.
+	 * @param maxLines Número máximo de líneas permitidas.
+	 * @param maxWidth Anchura máxima en píxeles por línea.
+	 * @param font Fuente utilizada para medir el texto.
+	 * @return valor de tipo String, el texto truncado.
 	 */
 	private String truncarTextoMultilinea(String texto, int maxLines, int maxWidth, Font font) {
 
@@ -466,8 +476,9 @@ public class VentanaInfoArticulo extends JPanel {
 
 	/**
 	 * Establece Controlador.
+	 * Asigna el controlador a los botones de oferta y cartera si existen.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos de los botones.
 	 */
 	public void setControlador(ActionListener c) {
 

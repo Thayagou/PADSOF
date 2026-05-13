@@ -11,41 +11,42 @@ import vistas.common.displays.PanelResena;
 import vistas.herramientas.*;
 
 /**
- * Tipo: Class VentanaProductoCliente.
+ * Pantalla de detalle de producto para clientes registrados, con información del producto, reseñas y botón de compra.
  */
 public class VentanaProductoCliente extends JPanel {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Constante REVIEWS_W_PERC. */
+	/** Constante REVIEWS_W_PERC. Anchura del panel de reseñas como porcentaje de la pantalla. */
 	private static final double REVIEWS_W_PERC = 0.33;
 
-	/** Constante COMPRAR_BTN_WIDTH. */
+	/** Constante COMPRAR_BTN_WIDTH. Anchura del botón de compra como porcentaje de la pantalla. */
 	private static final double COMPRAR_BTN_WIDTH = 0.2;
 	
-	/** Constante COMPRAR_BTN_HEIGHT. */
+	/** Constante COMPRAR_BTN_HEIGHT. Altura del botón de compra como porcentaje de la pantalla. */
 	private static final double COMPRAR_BTN_HEIGHT = 0.06;
 	
-	/** Constante BUY_ACTION. */
+	/** Constante BUY_ACTION. Comando de acción para el botón de añadir al carrito. */
 	public static final String BUY_ACTION = "comprar";
 
-	/** boton comprar. */
+	/** boton comprar. Botón para añadir el producto al carrito de compras. */
 	private JButton comprar;
 
-	/** boton resenasPanel. */
+	/** boton resenasPanel. Panel que contiene las reseñas del producto. */
 	private JPanel resenasPanel = new JPanel();
 
 	/**
 	 * Instancia un nuevo Objeto VentanaProductoSinRegistrar.
+	 * Construye la interfaz con el panel de reseñas a la izquierda y los detalles del producto a la derecha.
 	 *
-	 * @param nombre          parámetro nombre
-	 * @param descripcion     parámetro descripcion
-	 * @param image parámetro image
-	 * @param puntuacionMedia parámetro puntuacionMedia
-	 * @param precio          parámetro precio
-	 * @param caracteristicas parámetro caracteristicas
-	 * @param categorias      parámetro categorias
+	 * @param nombre          Nombre del producto.
+	 * @param descripcion     Descripción del producto.
+	 * @param image           Ruta de la imagen del producto.
+	 * @param puntuacionMedia Puntuación media del producto (0-5).
+	 * @param precio          Precio del producto en euros.
+	 * @param caracteristicas Características destacadas del producto.
+	 * @param categorias      Categorías a las que pertenece el producto.
 	 */
 	public VentanaProductoCliente(String nombre, String descripcion, String image, double puntuacionMedia,
 			double precio, String caracteristicas, String... categorias) {
@@ -90,6 +91,7 @@ public class VentanaProductoCliente extends JPanel {
 	
 	/**
 	 * refreshList.
+	 * Refresca la interfaz para mostrar los cambios en el panel de reseñas.
 	 */
 	private void refreshList() {
 		resenasPanel.revalidate();
@@ -98,10 +100,11 @@ public class VentanaProductoCliente extends JPanel {
 
 	/**
 	 * anadirPanelResena.
+	 * Añade una nueva reseña al panel de reseñas y refresca la vista.
 	 *
-	 * @param puntuacion parámetro puntuacion
-	 * @param comentario parámetro comentario
-	 * @param usr        parámetro usr
+	 * @param puntuacion Puntuación asignada (0-5).
+	 * @param comentario Comentario escrito por el usuario.
+	 * @param usr        Nombre del usuario que realiza la reseña.
 	 */
 	public void anadirPanelResena(double puntuacion, String comentario, String usr) {
 		resenasPanel.add(new PanelResena(puntuacion, comentario, usr));
@@ -111,7 +114,7 @@ public class VentanaProductoCliente extends JPanel {
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos del botón de compra.
 	 */
 	public void setControlador(ActionListener c) {
 		comprar.addActionListener(c);

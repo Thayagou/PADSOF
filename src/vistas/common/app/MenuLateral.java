@@ -18,56 +18,76 @@ import javax.swing.SwingConstants;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 
+/**
+ * Panel de menú lateral colapsable que organiza botones en secciones desplegables.
+ */
 public class MenuLateral extends JPanel {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Color del hueco que queda por la indentacion al abrir una seccion */
+	/** Color del hueco que queda por la indentacion al abrir una seccion. */
 	private static final Color COLOR_SECCION_BG = ColorPalette.CARD_DARK.getColor();
 	
-	/** Color del fondo de la cabecera de cada seccion */
+	/** Color del fondo de la cabecera de cada seccion. */
 	private static final Color COLOR_TITULO_BG = ColorPalette.BLUE.getColor();
 	
-	/** COlor del texto de la cabecera de cada seccion */
+	/** COlor del texto de la cabecera de cada seccion. */
 	private static final Color COLOR_TEXTO_TITULO = ColorPalette.WHITE.getColor();
 	
-	/** Color del fondo de la cabecera de cada seccion */
+	/** Color del fondo de la cabecera de cada seccion. */
 	private static final Color COLOR_BTN_BG = ColorPalette.CARD_LIGHT.getColor();
 	
-	/** Color del texto de la cabecera de cada seccion */
+	/** Color del texto de la cabecera de cada seccion. */
 	private static final Color COLOR_BTN_TITULO = ColorPalette.BLACK.getColor();
 	
-	/** Color de separación */
+	/** Color de separación. */
 	private static final Color SEPARATOR_COLOR = ColorPalette.DARK_BLUE.getColor();
 	
-	/** Porcentaje de altura de pantalla que ocupa el separador */
+	/** Porcentaje de altura de pantalla que ocupa el separador. */
 	private static final double SEPARATOR_HEIGHT = 0.003;
 	
-	/**Símbolo que se muestra cuando la sección está abierta */
+	/** Símbolo que se muestra cuando la sección está abierta. */
 	private static final String OPEN_SYMBOL = "-";
 	
-	/**Símbolo que se muestra cuando la sección está cerrada */
+	/** Símbolo que se muestra cuando la sección está cerrada. */
 	private static final String CLOSED_SYMBOL = "+";
 	
-	/** Fuente que se usa para el texto de la cabecera */
+	/** Fuente que se usa para el texto de la cabecera. */
 	private static final Font FUENTE_TITULO = Fonts.BOLD.getFont();
 	
-	/** Fuente que se usa para el texto de los botones  */
+	/** Fuente que se usa para el texto de los botones. */
 	private static final Font FUENTE_BOTONES = Fonts.TEXT.getFont();
 	
+	/** Constante PADDING_TITULO. Padding interior del título de cada sección. */
 	private static final int PADDING_TITULO = TiendaFrame.getInstance().getPixelsWidth(0.01);
 	
+	/** Constante BTN_HEIGHT. Altura de cada botón dentro de las secciones. */
 	private static final int BTN_HEIGHT = TiendaFrame.getInstance().getPixelsWidth(0.03);
 
+	/** Campo panelSecciones. Panel que contiene todas las secciones del menú. */
 	private final JPanel panelSecciones;
+	
+	/** Campo minimumWidth. Ancho mínimo del menú en píxeles (-1 indica no establecido). */
 	private int minimumWidth = -1;  /* -1 indica que no se ha establecido */
 
+	/**
+	 * Instancia un nuevo Objeto MenuLateral.
+	 *
+	 * @param btnMap Mapa con los nombres de las secciones y sus respectivos botones.
+	 * @param screenPerc Porcentaje de la pantalla para el ancho del menú.
+	 */
 	public MenuLateral(Map<String, List<JButton>> btnMap, double screenPerc) {
 		this(btnMap);
 		setMinimumWidth(TiendaFrame.getInstance().getPixelsWidth(screenPerc));
 		refresh();
 	}
 	
+	/**
+	 * Instancia un nuevo Objeto MenuLateral.
+	 *
+	 * @param btnMap Mapa con los nombres de las secciones y sus respectivos botones.
+	 */
 	private MenuLateral(Map<String, List<JButton>> btnMap) {
 		setLayout(new BorderLayout());
 		panelSecciones = new JPanel();
@@ -81,6 +101,11 @@ public class MenuLateral extends JPanel {
 		}
 	}
 
+	/**
+	 * Establece MinimumWidth.
+	 *
+	 * @param width Ancho mínimo en píxeles para el menú.
+	 */
 	/* Método para establecer un ancho mínimo en píxeles */
 	public void setMinimumWidth(int width) {
 		this.minimumWidth = width;
@@ -96,6 +121,11 @@ public class MenuLateral extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * propagarAnchoMinimo.
+	 *
+	 * @param width Ancho mínimo en píxeles a propagar a cada sección.
+	 */
 	private void propagarAnchoMinimo(int width) {
 		for (int i = 0; i < panelSecciones.getComponentCount(); i++) {
 			if (panelSecciones.getComponent(i) instanceof Seccion) {
@@ -105,6 +135,12 @@ public class MenuLateral extends JPanel {
 		}
 	}
 
+	/**
+	 * addSection.
+	 *
+	 * @param titulo Título de la sección.
+	 * @param botones Lista de botones a mostrar dentro de la sección.
+	 */
 	public void addSection(String titulo, List<JButton> botones) {
 		Seccion seccion = new Seccion(titulo, botones);
 		panelSecciones.add(seccion);
@@ -115,6 +151,10 @@ public class MenuLateral extends JPanel {
 		panelSecciones.repaint();
 	}
 
+	/**
+	 * collapseAll.
+	 * Colapsa todas las secciones del menú.
+	 */
 	public void collapseAll() {
 		for (int i = 0; i < panelSecciones.getComponentCount(); i++) {
 			if (panelSecciones.getComponent(i) instanceof Seccion) {
@@ -123,6 +163,10 @@ public class MenuLateral extends JPanel {
 		}
 	}
 	
+	/**
+	 * openAll.
+	 * Expande todas las secciones del menú.
+	 */
 	public void openAll() {
 		for (int i = 0; i < panelSecciones.getComponentCount(); i++) {
 			if (panelSecciones.getComponent(i) instanceof Seccion) {
@@ -131,17 +175,36 @@ public class MenuLateral extends JPanel {
 		}
 	}
 	
+	/**
+	 * refresh.
+	 * Refresca el menú colapsando y expandiendo todas las secciones.
+	 */
 	public void refresh() {
 		collapseAll();
 		openAll();
 	}
 
+	/**
+	 * Sección individual del menú lateral con cabecera clickeable y lista de botones colapsable.
+	 */
 	private class Seccion extends JPanel {
+		
+		/** Constante serialVersionUID. */
 		private static final long serialVersionUID = 1L;
+		
+		/** Campo panelBotones. Panel que contiene los botones de la sección. */
 		private final JPanel panelBotones;
-	    private final JLabel tituloLabel;
+	    
+    	/** Campo tituloLabel. Etiqueta que muestra el título de la sección y el símbolo de colapso. */
+    	private final JLabel tituloLabel;
 
-	    Seccion(String titulo, List<JButton> botones) {
+	    /**
+    	 * Instancia un nuevo Objeto Seccion.
+    	 *
+    	 * @param titulo Título de la sección.
+    	 * @param botones Lista de botones a mostrar dentro de la sección.
+    	 */
+    	Seccion(String titulo, List<JButton> botones) {
 	        setLayout(new BorderLayout());
 	        setBackground(COLOR_SECCION_BG);
 
@@ -181,13 +244,22 @@ public class MenuLateral extends JPanel {
 	        updateMaxHeight();   /* fuerza a que no se expanda verticalmente */
 	    }
 
-	    /* Actualiza la altura máxima a la altura preferida actual */
+	    /**
+    	 * updateMaxHeight.
+    	 * Actualiza la altura máxima a la altura preferida actual.
+    	 */
+    	/* Actualiza la altura máxima a la altura preferida actual */
 	    private void updateMaxHeight() {
 	        int prefHeight = getPreferredSize().height;
 	        setMaximumSize(new Dimension(Integer.MAX_VALUE, prefHeight));
 	    }
 
-	    /* Método interno para forzar el ancho mínimo en esta sección */
+	    /**
+    	 * Establece MinimumWidth.
+    	 *
+    	 * @param width Ancho mínimo en píxeles para la sección y sus botones.
+    	 */
+    	/* Método interno para forzar el ancho mínimo en esta sección */
 	    private void setMinimumWidth(int width) {
 	        setMinimumSize(new Dimension(width, 0));
 	        panelBotones.setMinimumSize(new Dimension(width, 0));
@@ -206,7 +278,11 @@ public class MenuLateral extends JPanel {
 	        
 	    }
 
-	    private void toggle() {
+	    /**
+    	 * toggle.
+    	 * Alterna la visibilidad del panel de botones y actualiza el símbolo de la cabecera.
+    	 */
+    	private void toggle() {
 	        panelBotones.setVisible(!panelBotones.isVisible());	        
 	        String currentText = tituloLabel.getText();
 	        if (currentText.contains(OPEN_SYMBOL)) {
@@ -219,13 +295,21 @@ public class MenuLateral extends JPanel {
 	        repaint();
 	    }
 
-	    private void collapse() {
+	    /**
+    	 * collapse.
+    	 * Colapsa la sección si está expandida.
+    	 */
+    	private void collapse() {
 	        if (panelBotones.isVisible()) {
 	            toggle();
 	        }
 	    }
 	    
-	    private void open() {
+	    /**
+    	 * open.
+    	 * Expande la sección si está colapsada.
+    	 */
+    	private void open() {
 	    	if (!panelBotones.isVisible()) {
 	            toggle();
 	        }

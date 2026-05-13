@@ -14,17 +14,37 @@ import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaOfertaIntercambio;
 import vistas.common.displays.PanelArticulo;
 
+/**
+ * Controlador del panel de artículo dentro de una oferta de intercambio.
+ */
 public class ControlPanelArticuloEnOferta implements ActionListener {
 
+	/** Campo panel. Panel de artículo asociado a este controlador. */
 	private PanelArticulo panel;
+	
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	private Tienda tienda;
+	
+	/** Campo cliente. Cliente registrado que visualiza la oferta. */
 	private ClienteRegistrado cliente;
+	
+	/** Campo articulo. Artículo de segunda mano incluido en la oferta. */
 	private ArticuloSegundaMano articulo;
 	
+	/** Constante FOTO_ARTICULO_DF. Ruta de la imagen por defecto del artículo. */
 	private static final String FOTO_ARTICULO_DF = "articuloDefault.png";
 	
+	/** Constante actionName. Comando de acción para el clic sobre el artículo. */
 	private static final String actionName = "clic";
 
+	/**
+	 * Instancia un nuevo Objeto ControlPanelArticuloEnOferta.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que visualiza la oferta.
+	 * @param articulo Artículo de segunda mano incluido en la oferta.
+	 * @param vista Contenedor donde se añadirá el panel según si es del oferente o del receptor.
+	 */
 	public ControlPanelArticuloEnOferta(Tienda tienda, ClienteRegistrado cliente, ArticuloSegundaMano articulo,
 			VentanaOfertaIntercambio vista) {
 		this.cliente = cliente;
@@ -90,6 +110,12 @@ public class ControlPanelArticuloEnOferta implements ActionListener {
 		}
 	}
 
+	/**
+	 * actionPerformed.
+	 * Abre la ventana de información detallada del artículo al hacer clic.
+	 *
+	 * @param e Evento de acción recibido.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {

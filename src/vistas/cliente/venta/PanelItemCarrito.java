@@ -10,39 +10,40 @@ import vistas.common.displays.PanelProducto;
 import vistas.herramientas.*;
 
 /**
- * Tipo: Class PanelItemCarrito.
+ * Panel que representa un producto dentro del carrito de compras, mostrando su información y permitiendo eliminarlo.
  */
 public class PanelItemCarrito extends PanelProducto {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Constante QUITAR_ACTION. */
+	/** Constante QUITAR_ACTION. Comando de acción para el botón de eliminar del carrito. */
 	public static final String QUITAR_ACTION = "Quitar";
 	
 	/** Ancho en pixeles del boton de quitar */
 	public static final int BTN_WIDTH = TiendaFrame.getInstance().getPixelsWidth(0.07);
 
-	/** Campo quitar. */
+	/** Campo quitar. Botón para eliminar el producto del carrito. */
 	private JButton quitar;
 	
-	/** Campo unidadesLabel. */
+	/** Campo unidadesLabel. Etiqueta que muestra la cantidad de unidades del producto. */
 	private JLabel unidadesLabel;
 
-	/** Constante SPACE_EAST_PANEL. */
+	/** Constante SPACE_EAST_PANEL. Espacio horizontal entre componentes del panel este como porcentaje de la pantalla. */
 	private static final double SPACE_EAST_PANEL = 0.01;
 
 	/**
 	 * Instancia un nuevo Objeto PanelItemCarrito.
+	 * Construye el panel con la información del producto y los controles de cantidad y eliminación.
 	 *
-	 * @param nombre parámetro nombre
-	 * @param descripcion parámetro descripcion
-	 * @param imageName parámetro imageName
-	 * @param puntuacionMedia parámetro puntuacionMedia
-	 * @param precio parámetro precio
-	 * @param unidades parámetro unidades
-	 * @param actionName parámetro actionName
-	 * @param categorias parámetro categorias
+	 * @param nombre Nombre del producto.
+	 * @param descripcion Descripción del producto.
+	 * @param imageName Ruta de la imagen del producto.
+	 * @param puntuacionMedia Puntuación media del producto (0-5).
+	 * @param precio Precio del producto en euros.
+	 * @param unidades Cantidad de unidades añadidas al carrito.
+	 * @param actionName Comando de acción para el botón principal del producto.
+	 * @param categorias Categorías a las que pertenece el producto.
 	 */
 	public PanelItemCarrito(String nombre, String descripcion, String imageName, double puntuacionMedia, double precio,
 			int unidades, String actionName, String... categorias) {
@@ -93,7 +94,7 @@ public class PanelItemCarrito extends PanelProducto {
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param l nuevo valor
+	 * @param l controlador que manejará los eventos del botón de eliminar.
 	 */
 	@Override
 	public void setControlador(ActionListener l) {

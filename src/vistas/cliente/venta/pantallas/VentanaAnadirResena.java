@@ -12,47 +12,48 @@ import vistas.cliente.venta.pantallas.starRating.StarRating;
 import vistas.common.app.TiendaFrame;
 
 /**
- * Tipo: Class VentanaAnadirResena.
+ * Pantalla emergente para añadir una reseña a un producto, con selector de estrellas y campo de comentario.
  */
 public class VentanaAnadirResena extends JPanel {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Constante PANEL_WIDTH. */
+	/** Constante PANEL_WIDTH. Anchura del panel de reseña como porcentaje de la pantalla. */
 	private static final double PANEL_WIDTH = 0.4;
 	
-	/** Constante PANEL_HEIGHT. */
+	/** Constante PANEL_HEIGHT. Altura del panel de reseña como porcentaje de la pantalla. */
 	private static final double PANEL_HEIGHT = 0.65;
 	
-	/** Constante SPACING. */
+	/** Constante SPACING. Espaciado vertical entre componentes como porcentaje de la pantalla. */
 	private static final double SPACING = 0.02;
 	
-	/** Constante TEXTAREA_HEIGHT. */
+	/** Constante TEXTAREA_HEIGHT. Altura del área de texto para el comentario como porcentaje de la pantalla. */
 	private static final double TEXTAREA_HEIGHT = 0.2;
 	
-	/** Constante BTN_HEIGHT. */
+	/** Constante BTN_HEIGHT. Altura del botón de enviar como porcentaje de la pantalla. */
 	private static final double BTN_HEIGHT = 0.05;
 	
-	/** Constante STARS_WRAP. */
+	/** Constante STARS_WRAP. Margen horizontal del contenedor de estrellas como porcentaje de la pantalla. */
 	private static final double STARS_WRAP = 0.05;
 
-	/** Constante CORNER_RADIUS_MACRO. */
+	/** Constante CORNER_RADIUS_MACRO. Radio de las esquinas redondeadas del panel como porcentaje de la pantalla. */
 	private static final double CORNER_RADIUS_MACRO = 0.065;
 
-	/** Campo campoComentario. */
+	/** Campo campoComentario. Área de texto donde el usuario escribe su reseña. */
 	private JTextArea campoComentario;
 	
-	/** Campo puntuador. */
+	/** Campo puntuador. Componente de selección de puntuación por estrellas. */
 	private StarRating puntuador = new StarRating(); 
 	
-	/** Campo btnEnviar. */
+	/** Campo btnEnviar. Botón para enviar la reseña. */
 	private JButton btnEnviar;
 
 	/**
 	 * Instancia un nuevo Objeto VentanaAnadirResena.
+	 * Construye la ventana con el selector de estrellas, campo de comentario y botón de envío.
 	 *
-	 * @param actionName parámetro actionName
+	 * @param actionName Comando de acción para el botón de enviar reseña.
 	 */
 	public VentanaAnadirResena(String actionName) {
 		setLayout(new GridBagLayout());
@@ -148,7 +149,7 @@ public class VentanaAnadirResena extends JPanel {
 	/**
 	 * Obtiene Comentario.
 	 *
-	 * @return valor de Comentario
+	 * @return valor de Comentario, el texto ingresado por el usuario como reseña.
 	 */
 	public String getComentario() {
 		return campoComentario.getText();
@@ -157,7 +158,7 @@ public class VentanaAnadirResena extends JPanel {
 	/**
 	 * Obtiene Valoracion.
 	 *
-	 * @return valor de Valoracion
+	 * @return valor de Valoracion, la puntuación seleccionada mediante las estrellas (0-5).
 	 */
 	public double getValoracion() {
 		return (double) puntuador.getStar();
@@ -166,7 +167,7 @@ public class VentanaAnadirResena extends JPanel {
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param l nuevo valor
+	 * @param l controlador que manejará los eventos del botón de enviar reseña.
 	 */
 	public void setControlador(ActionListener l) {
 		btnEnviar.addActionListener(l);

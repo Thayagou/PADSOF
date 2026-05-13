@@ -17,21 +17,21 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
 /**
- * Tipo: Class ControlBarraTareasCliente.
+ * Controlador que gestiona las acciones de la barra de tareas del cliente, redirigiendo a las diferentes pantallas según la opción seleccionada.
  */
 public class ControlBarraTareasCliente implements ActionListener {
 
-	/** Campo tienda. */
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	private final Tienda tienda;
 	
-	/** Campo cliente. */
+	/** Campo cliente. Cliente registrado que ha iniciado sesión. */
 	private final ClienteRegistrado cliente;
 
 	/**
 	 * Instancia un nuevo Objeto ControlBarraTareasCliente.
 	 *
-	 * @param tienda parámetro tienda
-	 * @param cliente parámetro cliente
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que ha iniciado sesión.
 	 */
 	public ControlBarraTareasCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
@@ -40,8 +40,9 @@ public class ControlBarraTareasCliente implements ActionListener {
 
 	/**
 	 * actionPerformed.
+	 * Redirige a la pantalla correspondiente según el comando del botón pulsado.
 	 *
-	 * @param e parámetro e
+	 * @param e Evento de acción recibido.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -14,24 +14,25 @@ import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
 /**
- * Tipo: Class ControlManejoCuenta.
+ * Controlador de la ventana de gestión de cuenta del cliente, permite cambiar contraseña y cerrar sesión.
  */
 public class ControlManejoCuenta implements ControladorPantalla {
 
-	/** Campo tienda. */
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	private Tienda tienda;
 	
-	/** Campo vista. */
+	/** Campo vista. Ventana de gestión de cuenta asociada a este controlador. */
 	private VentanaCuentaCliente vista;
 	
-	/** Campo cliente. */
+	/** Campo cliente. Cliente registrado que gestiona su cuenta. */
 	private ClienteRegistrado cliente;
 	
 	/**
 	 * Instancia un nuevo Objeto ControlManejoCuenta.
+	 * Inicializa la vista y configura la navegación hacia esta pantalla.
 	 *
-	 * @param tienda parámetro tienda
-	 * @param cliente parámetro cliente
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que gestiona su cuenta.
 	 */
 	public ControlManejoCuenta(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
@@ -46,8 +47,9 @@ public class ControlManejoCuenta implements ControladorPantalla {
 
 	/**
 	 * actionPerformed.
+	 * Gestiona los eventos de cambio de contraseña y cierre de sesión.
 	 *
-	 * @param e parámetro e
+	 * @param e Evento de acción recibido.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -69,7 +71,7 @@ public class ControlManejoCuenta implements ControladorPantalla {
 	/**
 	 * Obtiene Vista.
 	 *
-	 * @return valor de Vista
+	 * @return valor de Vista, el panel de la ventana de gestión de cuenta.
 	 */
 	@Override
 	public JPanel getVista() {
@@ -79,7 +81,7 @@ public class ControlManejoCuenta implements ControladorPantalla {
 	/**
 	 * Obtiene la explicacion de la ventana.
 	 *
-	 * @return valor de Explicacion
+	 * @return valor de Explicacion, descripción de las acciones disponibles.
 	 */
 	@Override
 	public String getExplicacion() {

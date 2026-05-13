@@ -9,60 +9,51 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * <p>
- * This class provides a star shape. A star is defined by two radii and a number
- * of branches. Each branch spans between the two radii. The inner radius is the
- * distance between the center of the star and the origin of the branches. The
- * outer radius is the distance between the center of the star and the tips of
- * the branches.</p>
- *
- * @author Romain Guy <romain.guy@mac.com>
+ * Esta clase proporciona una forma de estrella. Una estrella se define por dos radios y un número
+ * de puntas. Cada punta se extiende entre los dos radios. El radio interior es la distancia
+ * entre el centro de la estrella y el origen de las puntas. El radio exterior es la distancia
+ * entre el centro de la estrella y las puntas de las ramas.
  */
 public class Star2D implements Shape {
 
-    /** Campo starShape. */
+    /** Campo starShape. Forma geométrica de la estrella. */
     private Shape starShape;
     
-    /** Campo x. */
+    /** Campo x. Coordenada X del centro de la estrella. */
     private double x;
     
-    /** Campo y. */
+    /** Campo y. Coordenada Y del centro de la estrella. */
     private double y;
     
-    /** Campo innerRadius. */
+    /** Campo innerRadius. Radio interior de la estrella (distancia al origen de las puntas). */
     private double innerRadius;
     
-    /** Campo outerRadius. */
+    /** Campo outerRadius. Radio exterior de la estrella (distancia a las puntas). */
     private double outerRadius;
     
-    /** Campo branchesCount. */
+    /** Campo branchesCount. Número de puntas de la estrella. */
     private int branchesCount;
 
     /**
-     * <p>
-     * Creates a new star whose center is located at the specified
-     * <code>x</code> and <code>y</code> coordinates. The number of branches and
-     * their length can be specified.</p>
+     * Crea una nueva estrella cuyo centro se encuentra en las coordenadas especificadas.
+     * El número de puntas y su longitud pueden especificarse.
      *
-     * @param x the location of the star center
-     * @param y the location of the star center
-     * @param innerRadius the distance between the center of the star and the
-     * origin of the branches
-     * @param outerRadius the distance between the center of the star and the
-     * tip of the branches
-     * @param branchesCount the number of branches in this star; must be &gt;= 3
-     * @throws IllegalArgumentException if <code>branchesCount<code> is < 3 or
-     *   if <code>innerRadius</code> is &gt;= <code>outerRadius</code>
+     * @param x coordenada X del centro de la estrella
+     * @param y coordenada Y del centro de la estrella
+     * @param innerRadius distancia entre el centro y el origen de las puntas
+     * @param outerRadius distancia entre el centro y las puntas de las ramas
+     * @param branchesCount número de puntas de la estrella; debe ser >= 3
+     * @throws IllegalArgumentException
      */
     public Star2D(double x, double y,
             double innerRadius, double outerRadius,
             int branchesCount) {
         if (branchesCount < 3) {
-            throw new IllegalArgumentException("The number of branches must"
-                    + " be >= 3.");
+            throw new IllegalArgumentException("El número de puntas debe"
+                    + " ser >= 3.");
         } else if (innerRadius >= outerRadius) {
-            throw new IllegalArgumentException("The inner radius must be < "
-                    + "outer radius.");
+            throw new IllegalArgumentException("El radio interior debe ser < "
+                    + "radio exterior.");
         }
 
         this.x = x;
@@ -76,13 +67,14 @@ public class Star2D implements Shape {
 
     /**
      * generateStar.
+     * Genera la forma geométrica de la estrella.
      *
-     * @param x parámetro x
-     * @param y parámetro y
-     * @param innerRadius parámetro innerRadius
-     * @param outerRadius parámetro outerRadius
-     * @param branchesCount parámetro branchesCount
-     * @return valor de tipo Shape
+     * @param x coordenada X del centro
+     * @param y coordenada Y del centro
+     * @param innerRadius radio interior
+     * @param outerRadius radio exterior
+     * @param branchesCount número de puntas
+     * @return valor de tipo Shape, la forma geométrica generada
      */
     private static Shape generateStar(double x, double y,
             double innerRadius, double outerRadius,
@@ -126,20 +118,17 @@ public class Star2D implements Shape {
     }
 
     /**
-     * <p>
-     * Sets the inner radius of the star, that is the distance between its
-     * center and the origin of the branches. The inner radius must always be
-     * lower than the outer radius.</p>
+     * Establece el radio interior de la estrella, es decir, la distancia entre su
+     * centro y el origen de las puntas. El radio interior siempre debe ser
+     * menor que el radio exterior.
      *
-     * @param innerRadius the distance between the center of the star and the
-     * origin of the branches
-     * @throws IllegalArgumentException if the inner radius is &gt;= outer
-     * radius
+     * @param innerRadius distancia entre el centro y el origen de las puntas
+     * @throws IllegalArgumentException si el radio interior es >= radio exterior
      */
     public void setInnerRadius(double innerRadius) {
         if (innerRadius >= outerRadius) {
-            throw new IllegalArgumentException("The inner radius must be <"
-                    + " outer radius.");
+            throw new IllegalArgumentException("El radio interior debe ser <"
+                    + " radio exterior.");
         }
 
         this.innerRadius = innerRadius;
@@ -148,10 +137,9 @@ public class Star2D implements Shape {
     }
 
     /**
-     * <p>
-     * Sets location of the center of the star.</p>
+     * Establece la coordenada X del centro de la estrella.
      *
-     * @param x the x location of the center of the star
+     * @param x coordenada X del centro de la estrella
      */
     public void setX(double x) {
         this.x = x;
@@ -160,10 +148,9 @@ public class Star2D implements Shape {
     }
 
     /**
-     * <p>
-     * Sets the location of the center of the star.</p>
+     * Establece la coordenada Y del centro de la estrella.
      *
-     * @param y the x location of the center of the star
+     * @param y coordenada Y del centro de la estrella
      */
     public void setY(double y) {
         this.y = y;
@@ -172,20 +159,17 @@ public class Star2D implements Shape {
     }
 
     /**
-     * <p>
-     * Sets the outer radius of the star, that is the distance between its
-     * center and the tips of the branches. The outer radius must always be
-     * greater than the inner radius.</p>
+     * Establece el radio exterior de la estrella, es decir, la distancia entre su
+     * centro y las puntas de las ramas. El radio exterior siempre debe ser
+     * mayor que el radio interior.
      *
-     * @param outerRadius the distance between the center of the star and the
-     * tips of the branches
-     * @throws IllegalArgumentException if the inner radius is &gt;= outer
-     * radius
+     * @param outerRadius distancia entre el centro y las puntas de las ramas
+     * @throws IllegalArgumentException si el radio interior es >= radio exterior
      */
     public void setOuterRadius(double outerRadius) {
         if (innerRadius >= outerRadius) {
-            throw new IllegalArgumentException("The outer radius must be > "
-                    + "inner radius.");
+            throw new IllegalArgumentException("El radio exterior debe ser > "
+                    + "radio interior.");
         }
 
         this.outerRadius = outerRadius;
@@ -194,17 +178,16 @@ public class Star2D implements Shape {
     }
 
     /**
-     * <p>
-     * Sets the number branches of the star. A star must always have at least 3
-     * branches.</p>
+     * Establece el número de puntas de la estrella. Una estrella siempre debe
+     * tener al menos 3 puntas.
      *
-     * @param branchesCount the number of branches
-     * @throws IllegalArgumentException if <code>branchesCount</code> is &lt;=2
+     * @param branchesCount número de puntas
+     * @throws IllegalArgumentException
      */
     public void setBranchesCount(int branchesCount) {
         if (branchesCount <= 2) {
-            throw new IllegalArgumentException("The number of branches must"
-                    + " be >= 3.");
+            throw new IllegalArgumentException("El número de puntas debe"
+                    + " ser >= 3.");
         }
 
         this.branchesCount = branchesCount;
@@ -213,52 +196,47 @@ public class Star2D implements Shape {
     }
 
     /**
-     * <p>
-     * Returns the location of the center of star.</p>
+     * Devuelve la coordenada X del centro de la estrella.
      *
-     * @return the x coordinate of the center of the star
+     * @return coordenada X del centro de la estrella
      */
     public double getX() {
         return x;
     }
 
     /**
-     * <p>
-     * Returns the location of the center of star.</p>
+     * Devuelve la coordenada Y del centro de la estrella.
      *
-     * @return the y coordinate of the center of the star
+     * @return coordenada Y del centro de la estrella
      */
     public double getY() {
         return y;
     }
 
     /**
-     * <p>
-     * Returns the distance between the center of the star and the origin of the
-     * branches.</p>
+     * Devuelve la distancia entre el centro de la estrella y el origen de las
+     * puntas.
      *
-     * @return the inner radius of the star
+     * @return radio interior de la estrella
      */
     public double getInnerRadius() {
         return innerRadius;
     }
 
     /**
-     * <p>
-     * Returns the distance between the center of the star and the tips of the
-     * branches.</p>
+     * Devuelve la distancia entre el centro de la estrella y las puntas de las
+     * ramas.
      *
-     * @return the outer radius of the star
+     * @return radio exterior de la estrella
      */
     public double getOuterRadius() {
         return outerRadius;
     }
 
     /**
-     * <p>
-     * Returns the number of branches of the star.</p>
+     * Devuelve el número de puntas de la estrella.
      *
-     * @return the number of branches, always &gt;= 3
+     * @return número de puntas, siempre >= 3
      */
     public int getBranchesCount() {
         return branchesCount;

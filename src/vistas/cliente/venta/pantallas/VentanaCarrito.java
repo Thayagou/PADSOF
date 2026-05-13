@@ -12,41 +12,42 @@ import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
 /**
- * Tipo: Class VentanaCarrito.
+ * Pantalla que muestra los productos añadidos al carrito de compras con el precio total y botones de acción.
  */
 public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelItemCarrito> {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Constante BTN_WIDTH. */
+	/** Constante BTN_WIDTH. Anchura de los botones de acción como porcentaje de la pantalla. */
 	private static final double BTN_WIDTH = 0.2;
 	
-	/** Constante BTN_HEIGHT. */
+	/** Constante BTN_HEIGHT. Altura de los botones de acción como porcentaje de la pantalla. */
 	private static final double BTN_HEIGHT = 0.5;
 	
-	/** Constante SPACE_AROUND. */
+	/** Constante SPACE_AROUND. Espacio alrededor de los botones como porcentaje de la pantalla. */
 	private static final double SPACE_AROUND = 0.07;
 	
-	/** Constante PAY_ACTION. */
+	/** Constante PAY_ACTION. Comando de acción para el botón de pagar. */
 	public static final String PAY_ACTION = "Pagar";
 	
-	/** Constante CANCEL_ACTION. */
+	/** Constante CANCEL_ACTION. Comando de acción para el botón de cancelar compra. */
 	public static final String CANCEL_ACTION = "Cancelar";
 
-	/** Campo items. */
+	/** Campo items. Panel que contiene los ítems del carrito. */
 	private JPanel items = new JPanel();
 
-	/** Campo pagar. */
+	/** Campo pagar. Botón para finalizar la compra. */
 	JButton pagar;
 	
-	/** Campo cancelar. */
+	/** Campo cancelar. Botón para cancelar la compra. */
 	JButton cancelar;
 
 	/**
 	 * Instancia un nuevo Objeto VentanaCarrito.
+	 * Construye la interfaz con la lista de productos y el panel lateral con botones.
 	 *
-	 * @param precio parámetro precio
+	 * @param precio Coste total del carrito a mostrar en la cabecera.
 	 */
 	public VentanaCarrito(double precio) {
 		setOpaque(false);
@@ -86,6 +87,7 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 
 	/**
 	 * refreshList.
+	 * Refresca la interfaz para mostrar los cambios en el panel de ítems.
 	 */
 	private void refreshList() {
 		items.revalidate();
@@ -95,7 +97,7 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param l nuevo valor
+	 * @param l controlador que manejará los eventos de los botones de pago y cancelación.
 	 */
 	public void setControlador(ActionListener l) {
 		for (Component c : items.getComponents()) {
@@ -108,8 +110,9 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 	
 	/**
 	 * quitarDisplay.
+	 * Elimina un ítem específico del carrito y refresca la vista.
 	 *
-	 * @param panel parámetro panel
+	 * @param panel Panel del ítem a eliminar del carrito.
 	 */
 	public void quitarDisplay(PanelItemCarrito panel) {
 		if(panel != null) {
@@ -120,10 +123,11 @@ public class VentanaCarrito extends JPanel implements VentanaConDisplay<PanelIte
 
 	/**
 	 * anadirDisplay.
+	 * Añade un ítem al carrito y refresca la vista.
 	 *
-	 * @param <K> clave genérica
-	 * @param panelDisplay parámetro panelDisplay
-	 * @return valor de tipo PanelItemCarrito
+	 * @param <K> subtipo de PanelItemCarrito del panel a añadir.
+	 * @param panelDisplay Panel del ítem a añadir.
+	 * @return valor de tipo PanelItemCarrito, el mismo panel que se añadió.
 	 */
 	@Override
 	public <K extends PanelItemCarrito> PanelItemCarrito anadirDisplay(K panelDisplay) {

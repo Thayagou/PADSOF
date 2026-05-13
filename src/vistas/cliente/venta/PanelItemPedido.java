@@ -19,29 +19,30 @@ public class PanelItemPedido extends PanelProducto {
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Constante SPACE_EAST_PANEL. */
+	/** Constante SPACE_EAST_PANEL. Espacio horizontal entre componentes del panel este como porcentaje de la pantalla. */
 	private static final double SPACE_EAST_PANEL = 0.01;
 	
-	/** Constante BTN_WIDTH. */
+	/** Constante BTN_WIDTH. Anchura del botón de valorar como porcentaje de la anchura de la pantalla. */
 	private static final double BTN_WIDTH = 100.0/1876.0;
 	
-	/** Constante VALORAR_ACTION. */
+	/** Constante VALORAR_ACTION. Comando de acción para el botón de valorar el producto. */
 	public static final String VALORAR_ACTION = "Valorar";
 	
-	/** Campo valorar. */
+	/** Campo valorar. Botón para valorar el producto adquirido. */
 	private JButton valorar;
 
 	/**
 	 * Instancia un nuevo Objeto PanelItemPedido.
+	 * Construye el panel con la información del producto y el botón de valoración.
 	 *
-	 * @param nombre parámetro nombre
-	 * @param descripcion parámetro descripcion
-	 * @param imageName parámetro imageName
-	 * @param puntuacionMedia parámetro puntuacionMedia
-	 * @param precio parámetro precio
-	 * @param unidades parámetro unidades
-	 * @param actionName parámetro actionName
-	 * @param categorias parámetro categorias
+	 * @param nombre Nombre del producto.
+	 * @param descripcion Descripción del producto.
+	 * @param imageName Ruta de la imagen del producto.
+	 * @param puntuacionMedia Puntuación media del producto (0-5).
+	 * @param precio Precio del producto en euros.
+	 * @param unidades Cantidad de unidades compradas.
+	 * @param actionName Comando de acción para el botón principal del producto.
+	 * @param categorias Categorías a las que pertenece el producto.
 	 */
 	public PanelItemPedido(String nombre, String descripcion, String imageName,
 			double puntuacionMedia, double precio, int unidades,
@@ -90,7 +91,7 @@ public class PanelItemPedido extends PanelProducto {
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param l nuevo valor
+	 * @param l controlador que manejará los eventos del botón de valorar.
 	 */
 	@Override
 	public void setControlador(ActionListener l) {

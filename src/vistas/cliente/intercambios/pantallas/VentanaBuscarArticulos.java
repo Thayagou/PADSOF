@@ -11,18 +11,19 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
 /**
- * Tipo: Class VentanaBuscarArticulos.
+ * Pantalla que muestra un listado de artículos de segunda mano disponibles para intercambio.
  */
 public class VentanaBuscarArticulos extends JPanel implements VentanaConDisplay<PanelArticulo>{
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Campo articulos. */
+	/** Campo articulos. Panel que contiene los artículos de segunda mano a mostrar. */
 	private JPanel articulos = new JPanel();
 	
 	/**
 	 * Instancia un nuevo Objeto VentanaBuscarArticulos.
+	 * Construye la interfaz con el título y el área desplazable de artículos.
 	 */
 	public VentanaBuscarArticulos() {
 		setOpaque(false);
@@ -45,7 +46,7 @@ public class VentanaBuscarArticulos extends JPanel implements VentanaConDisplay<
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos de los artículos de la ventana.
 	 */
 	public void setControlador(ActionListener c) {
 		
@@ -53,6 +54,7 @@ public class VentanaBuscarArticulos extends JPanel implements VentanaConDisplay<
 	
 	/**
 	 * refreshList.
+	 * Refresca la interfaz para mostrar los cambios en el panel de artículos.
 	 */
 	private void refreshList() {
 		articulos.revalidate();
@@ -61,10 +63,11 @@ public class VentanaBuscarArticulos extends JPanel implements VentanaConDisplay<
 
 	/**
 	 * anadirDisplay.
+	 * Añade un artículo al panel de listado y refresca la vista.
 	 *
-	 * @param <K> clave genérica
-	 * @param panelDisplay parámetro panelDisplay
-	 * @return valor de tipo PanelArticulo
+	 * @param <K> subtipo de PanelArticulo del panel a añadir.
+	 * @param panelDisplay Panel del artículo a añadir.
+	 * @return valor de tipo PanelArticulo, el mismo panel que se añadió.
 	 */
 	@Override
 	public <K extends PanelArticulo> PanelArticulo anadirDisplay(K panelDisplay) {

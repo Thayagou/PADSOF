@@ -10,36 +10,36 @@ import vistas.common.displays.PanelNotificacion;
 import vistas.common.displays.VentanaConDisplay;
 
 /**
- * Tipo: Class ControlPanelNotificacion.
+ * Controlador de un panel individual de notificación, gestiona las acciones de marcar como leída y eliminar.
  */
 public class ControlPanelNotificacion implements ActionListener {
 	
-	/** Campo notificacion. */
+	/** Campo notificacion. Notificación asociada a este panel. */
 	protected Notificacion notificacion;
 	
-	/** Campo tienda. */
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	protected Tienda tienda;
 	
-	/** Campo panel. */
+	/** Campo panel. Panel de visualización de la notificación. */
 	protected PanelNotificacion panel;
 	
-	/** Campo vista. */
+	/** Campo vista. Contenedor donde se muestra el panel de notificación. */
 	protected VentanaConDisplay<? super PanelNotificacion> vista;
 	
-	/** Campo cliente. */
+	/** Campo cliente. Cliente registrado propietario de la notificación. */
 	protected ClienteRegistrado cliente;
 	
-	/** Campo controlador. */
+	/** Campo controlador. Controlador padre de notificaciones para refrescar la vista. */
 	private ControlNotificacionesCliente controlador;
 
 	/**
 	 * Instancia un nuevo Objeto ControlPanelNotificacion.
 	 *
-	 * @param tienda parámetro tienda
-	 * @param cliente parámetro cliente
-	 * @param notificacion parámetro notificacion
-	 * @param vista parámetro vista
-	 * @param controlador parámetro controlador
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado propietario de la notificación.
+	 * @param notificacion Notificación a mostrar en el panel.
+	 * @param vista Contenedor donde se añadirá el panel de notificación.
+	 * @param controlador Controlador padre para refrescar la lista tras las acciones.
 	 */
 	public ControlPanelNotificacion(Tienda tienda, ClienteRegistrado cliente, Notificacion notificacion,
 			VentanaConDisplay<? super PanelNotificacion> vista, ControlNotificacionesCliente controlador) {
@@ -59,8 +59,9 @@ public class ControlPanelNotificacion implements ActionListener {
 
 	/**
 	 * actionPerformed.
+	 * Gestiona las acciones de marcar como leída o eliminar la notificación.
 	 *
-	 * @param e parámetro e
+	 * @param e Evento de acción recibido.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {

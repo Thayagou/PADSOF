@@ -14,6 +14,9 @@ import vistas.cliente.intercambios.pantallas.VentanaAnadirArticulo;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
+/**
+ * Controlador de la ventana de añadir artículo de segunda mano.
+ */
 public class ControlAnadirArticulo implements ActionListener, ControladorPantalla {
 	private Tienda tienda;
 	private ClienteRegistrado cliente;
@@ -22,6 +25,12 @@ public class ControlAnadirArticulo implements ActionListener, ControladorPantall
 	private Categoria[] todasCategorias; /* Array de objetos Categoria de la tienda */
 	private String fotoSeleccionada;
 
+	/**
+	 * Constructor del controlador.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que añade el artículo.
+	 */
 	public ControlAnadirArticulo(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
 		this.cliente = cliente;
@@ -63,6 +72,10 @@ public class ControlAnadirArticulo implements ActionListener, ControladorPantall
 		}
 	}
 
+	/**
+	 * Confirma la creación del nuevo artículo.
+	 * Valida los campos, procesa las categorías y crea el artículo en la tienda.
+	 */
 	private void confirmar() {
 		/* Validar campos obligatorios */
 		String nombre = vista.getNombre();

@@ -13,68 +13,69 @@ import vistas.herramientas.Fonts;
 import vistas.herramientas.PanelSizes;
 
 /**
- * Tipo: Class BarraTareasCliente.
+ * Barra de tareas superior para clientes registrados, con botones de navegación, búsqueda y acceso a cuenta.
  */
 public class BarraTareasCliente extends BarraTareas {
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Campo BTN_SEARCH_W. */
+	/** Campo BTN_SEARCH_W. Anchura del botón de búsqueda como porcentaje de la pantalla. */
 	private static double BTN_SEARCH_W = 0.2;
 	
-	/** Campo BTN_ACCOUNT_W. */
+	/** Campo BTN_ACCOUNT_W. Anchura del botón de cuenta como porcentaje de la pantalla. */
 	private static double BTN_ACCOUNT_W = 0.1;
 	
-	/** Campo SPACE_BETWEEN. */
+	/** Campo SPACE_BETWEEN. Espacio entre botones como porcentaje de la pantalla. */
 	private static double SPACE_BETWEEN = 0.01;
 	
-	/** Constante INFO_ACTION. */
+	/** Constante INFO_ACTION. Comando de acción para el botón de información. */
 	public static final String INFO_ACTION = "Info";
 	
-	/** Constante VOLVER_ACTION. */
+	/** Constante VOLVER_ACTION. Comando de acción para el botón de volver atrás. */
 	public static final String VOLVER_ACTION = "Volver";
 	
-	/** Constante HOME_ACTION. */
+	/** Constante HOME_ACTION. Comando de acción para el botón de inicio. */
 	public static final String HOME_ACTION = "Home";
 	
-	/** Constante NOTIFICACIONES_ACTION. */
+	/** Constante NOTIFICACIONES_ACTION. Comando de acción para el botón de notificaciones. */
 	public static final String NOTIFICACIONES_ACTION = "Notificaciones";
 	
-	/** Constante CUENTA_ACTION. */
+	/** Constante CUENTA_ACTION. Comando de acción para el botón de gestión de cuenta. */
 	public static final String CUENTA_ACTION = "Cuenta";
 	
-	/** Constante BUSCAR_PRODUCTOS_ACTION. */
+	/** Constante BUSCAR_PRODUCTOS_ACTION. Comando de acción para el botón de búsqueda de productos. */
 	public static final String BUSCAR_PRODUCTOS_ACTION = "Buscar productos";
 	
-	/** Constante CARRITO_ACTION. */
+	/** Constante CARRITO_ACTION. Comando de acción para el botón del carrito de compras. */
 	public static final String CARRITO_ACTION = "Carrito";
 
-	/** Campo volver. */
+	/** Campo volver. Botón para navegar a la pantalla anterior. */
 	private JButton volver;
 	
-	/** Campo home. */
+	/** Campo home. Botón para ir a la pantalla de inicio. */
 	private JButton home;
 	
-	/** Campo notificaciones. */
+	/** Campo notificaciones. Botón para ver las notificaciones del usuario. */
 	private JButton notificaciones;
 	
-	/** Campo buscar. */
+	/** Campo buscar. Botón para acceder a la búsqueda de productos. */
 	private JButton buscar;
 	
-	/** Campo carrito. */
+	/** Campo carrito. Botón para acceder al carrito de compras. */
 	private JButton carrito;
 	
-	/** Campo cuenta. */
+	/** Campo cuenta. Botón para acceder a la gestión de la cuenta del usuario. */
 	private JButton cuenta;
 	
-	/** Campo info. */
+	/** Campo info. Botón para acceder a la información de la aplicación. */
 	private JButton info;
 
 	/**
 	 * Instancia un nuevo Objeto BarraTareasCliente.
+	 * Construye la barra con los botones de navegación, búsqueda, carrito, notificaciones y acceso a cuenta.
 	 *
-	 * @param cliente parámetro cliente
+	 * @param cliente Nombre del cliente para mostrar en el botón de cuenta.
 	 */
 	public BarraTareasCliente(String cliente) {
 		TiendaFrame t = TiendaFrame.getInstance();
@@ -171,10 +172,11 @@ public class BarraTareasCliente extends BarraTareas {
 
 	/**
 	 * Fija las tres dimensiones a la vez para evitar que BoxLayout las ignore.
+	 * Define el tamaño mínimo, preferido y máximo del botón.
 	 *
-	 * @param btn parámetro btn
-	 * @param w parámetro w
-	 * @param h parámetro h
+	 * @param btn Botón al que se le fijan las dimensiones.
+	 * @param w Anchura en píxeles.
+	 * @param h Altura en píxeles.
 	 */
 	private static void fijarTamano(JButton btn, int w, int h) {
 		Dimension d = new Dimension(w, h);
@@ -185,8 +187,9 @@ public class BarraTareasCliente extends BarraTareas {
 
 	/**
 	 * Establece Controlador.
+	 * Asigna el mismo controlador a todos los botones de la barra de tareas.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos de los botones.
 	 */
 	@Override
 	public void setControlador(ActionListener c) {

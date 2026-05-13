@@ -16,32 +16,33 @@ import vistas.herramientas.ColorPalette;
 import vistas.herramientas.PanelFactory;
 
 /**
- * Tipo: Class VentanaCartera.
+ * Pantalla que muestra los artículos de segunda mano que posee un usuario, permitiendo hacer ofertas desde carteras ajenas.
  */
 public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArticulo>{
 	
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Campo objetos. */
+	/** Campo objetos. Panel que contiene los artículos de segunda mano del usuario. */
 	private JPanel objetos = new JPanel();
 	
-	/** Campo hacerOferta. */
+	/** Campo hacerOferta. Botón para iniciar una oferta desde una cartera ajena. */
 	private JButton hacerOferta;
 	
-	/** Campo BTN_WIDTH. */
+	/** Campo BTN_WIDTH. Anchura del botón de oferta como porcentaje de la pantalla. */
 	private final double BTN_WIDTH = 0.1;
 	
-	/** Campo BTN_HEIGHT. */
+	/** Campo BTN_HEIGHT. Altura del botón de oferta como porcentaje de la pantalla. */
 	private final double BTN_HEIGHT = 0.06;
 	
-	/** Constante OFFER_ACTION. */
+	/** Constante OFFER_ACTION. Comando de acción para el botón de hacer oferta. */
 	public static final String OFFER_ACTION = "Hacer oferta";
 	
 	/**
 	 * Instancia un nuevo Objeto VentanaCartera.
+	 * Construye la interfaz con la lista de artículos, mostrando el botón de oferta solo si se visualiza la cartera de otro usuario.
 	 *
-	 * @param usr parámetro usr
+	 * @param usr Nombre del propietario de la cartera, o null si es la cartera del propio usuario.
 	 */
 	public VentanaCartera(String usr) {
 		setOpaque(false);
@@ -80,6 +81,7 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 	
 	/**
 	 * limpiarDisplays.
+	 * Elimina todos los artículos del panel de objetos para actualizar la vista.
 	 */
 	public void limpiarDisplays() {
 		objetos.removeAll();
@@ -91,7 +93,7 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos del botón de hacer oferta.
 	 */
 	public void setControlador(ActionListener c) {
 		hacerOferta.addActionListener(c);
@@ -99,6 +101,7 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 	
 	/**
 	 * refreshList.
+	 * Refresca la interfaz para mostrar los cambios en el panel de objetos.
 	 */
 	private void refreshList() {
 		objetos.revalidate();
@@ -107,10 +110,11 @@ public class VentanaCartera extends JPanel implements VentanaConDisplay<PanelArt
 
 	/**
 	 * anadirDisplay.
+	 * Añade un artículo al panel de objetos y refresca la vista.
 	 *
-	 * @param <K> clave genérica
-	 * @param panelDisplay parámetro panelDisplay
-	 * @return valor de tipo PanelArticulo
+	 * @param <K> subtipo de PanelArticulo del panel a añadir.
+	 * @param panelDisplay Panel del artículo a añadir.
+	 * @return valor de tipo PanelArticulo, el mismo panel que se añadió.
 	 */
 	@Override
 	public <K extends PanelArticulo> PanelArticulo anadirDisplay(K panelDisplay) {

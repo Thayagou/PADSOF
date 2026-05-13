@@ -14,17 +14,40 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 
+/**
+ * Controlador del panel de un producto para clientes registrados.
+ */
 public class ControlPanelProductoCliente implements ActionListener {
+	
+	/** Campo producto. Producto asociado a este panel. */
 	protected Producto producto;
+	
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	protected Tienda tienda;
+	
+	/** Campo panel. Panel del producto asociado a este controlador. */
 	protected PanelProducto panel;
+	
+	/** Campo vista. Contenedor donde se muestra el panel del producto. */
 	protected VentanaConDisplay<? super PanelProducto> vista;
+	
+	/** Campo cliente. Cliente registrado que visualiza el producto. */
 	protected ClienteRegistrado cliente;
 
+	/** Constante DF_PRODUCT_IMAGE. Ruta de la imagen por defecto del producto. */
 	protected static final String DF_PRODUCT_IMAGE = "producto.png";
 	
+	/** Constante actionName. Comando de acción para ver el producto. */
 	private static final String actionName = "Ver producto";
 
+	/**
+	 * Instancia un nuevo Objeto ControlPanelProductoCliente.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que visualiza el producto.
+	 * @param producto Producto asociado a este panel.
+	 * @param vista Contenedor donde se añadirá el panel del producto.
+	 */
 	public ControlPanelProductoCliente(Tienda tienda, ClienteRegistrado cliente, Producto producto,
 			VentanaConDisplay<? super PanelProducto> vista) {
 		this.producto = producto;
@@ -51,6 +74,12 @@ public class ControlPanelProductoCliente implements ActionListener {
 		panel.setControlador(this);
 	}
 
+	/**
+	 * actionPerformed.
+	 * Abre la ventana de información detallada del producto al hacer clic.
+	 *
+	 * @param e Evento de acción recibido.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {

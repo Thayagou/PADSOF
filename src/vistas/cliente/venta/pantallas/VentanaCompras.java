@@ -10,18 +10,19 @@ import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
 /**
- * Tipo: Class VentanaCompras.
+ * Pantalla que muestra el historial de pedidos realizados por el usuario.
  */
 public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPedido> {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Campo pedidos. */
+	/** Campo pedidos. Panel que contiene los pedidos realizados. */
 	private JPanel pedidos = new JPanel();
 
 	/**
 	 * Instancia un nuevo Objeto VentanaCompras.
+	 * Construye la interfaz con el título y el área desplazable de pedidos.
 	 */
 	public VentanaCompras() {
 		setOpaque(false);
@@ -43,6 +44,7 @@ public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPed
 
 	/**
 	 * refreshList.
+	 * Refresca la interfaz para mostrar los cambios en el panel de pedidos.
 	 */
 	private void refreshList() {
 		pedidos.revalidate();
@@ -51,6 +53,7 @@ public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPed
 	
 	/**
 	 * limpiarPedidos.
+	 * Elimina todos los pedidos del panel para actualizar la vista.
 	 */
 	public void limpiarPedidos() {
         pedidos.removeAll();
@@ -59,10 +62,11 @@ public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPed
 
 	/**
 	 * anadirDisplay.
+	 * Añade un pedido al panel de listado y refresca la vista.
 	 *
-	 * @param <K> clave genérica
-	 * @param panelDisplay parámetro panelDisplay
-	 * @return valor de tipo PanelPedido
+	 * @param <K> subtipo de PanelPedido del panel a añadir.
+	 * @param panelDisplay Panel del pedido a añadir.
+	 * @return valor de tipo PanelPedido, el mismo panel que se añadió.
 	 */
 	@Override
 	public <K extends PanelPedido> PanelPedido anadirDisplay(K panelDisplay) {
@@ -74,7 +78,7 @@ public class VentanaCompras extends JPanel implements VentanaConDisplay<PanelPed
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos de la ventana (actualmente sin acciones).
 	 */
 	public void setControlador(ActionListener c) {
 		/* Sin acciones en esta ventana */

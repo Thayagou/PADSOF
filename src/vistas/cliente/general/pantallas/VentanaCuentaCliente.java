@@ -10,39 +10,40 @@ import vistas.common.assets.PanelFormulario;
 import vistas.herramientas.*;
 
 /**
- * Tipo: Class VentanaCuentaCliente.
+ * Panel que permite al cliente ver y modificar los datos de su cuenta.
  */
 public class VentanaCuentaCliente extends JPanel {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Campo cerrarSesion. */
+	/** Campo cerrarSesion. Botón para cerrar la sesión del usuario. */
 	private JButton cerrarSesion;
 	
-	/** Campo cambiarContrasena. */
+	/** Campo cambiarContrasena. Formulario para cambiar la contraseña del usuario. */
 	private PanelFormulario cambiarContrasena;
 
-	/** Campo CS_BTN_HEIGHT. */
+	/** Campo CS_BTN_HEIGHT. Altura del botón de cerrar sesión como porcentaje de la pantalla. */
 	private double CS_BTN_HEIGHT = 0.04;
 	
-	/** Campo CS_BTN_WIDTH. */
+	/** Campo CS_BTN_WIDTH. Anchura del botón de cerrar sesión como porcentaje de la pantalla. */
 	private double CS_BTN_WIDTH = 0.12;
 	
-	/** Campo MARGIN_H. */
+	/** Campo MARGIN_H. Margen horizontal del contenido como porcentaje de la anchura de la pantalla. */
 	private double MARGIN_H = 0.02;
 	
-	/** Campo MARGIN_V. */
+	/** Campo MARGIN_V. Margen vertical del contenido como porcentaje de la altura de la pantalla. */
 	private double MARGIN_V = 0.02;
 	
-	/** Constante CHANGE_BTN. */
+	/** Constante CHANGE_BTN. Comando de acción para el botón de cambio de contraseña. */
 	public static final String CHANGE_BTN = "Cambiar";
 	
-	/** Constante LOGOUT_BTN. */
+	/** Constante LOGOUT_BTN. Comando de acción para el botón de cierre de sesión. */
 	public static final String LOGOUT_BTN = "Cerrar sesión";
 
 	/**
 	 * Instancia un nuevo Objeto VentanaCuentaCliente.
+	 * Construye la interfaz con el formulario de cambio de contraseña y el botón de cierre de sesión.
 	 */
 	public VentanaCuentaCliente() {
 		setOpaque(false);
@@ -77,7 +78,7 @@ public class VentanaCuentaCliente extends JPanel {
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos de los botones del formulario y cierre de sesión.
 	 */
 	public void setControlador(ActionListener c) {
 		cerrarSesion.addActionListener(c);
@@ -87,7 +88,7 @@ public class VentanaCuentaCliente extends JPanel {
 	/**
 	 * Obtiene ContrasenaAntigua.
 	 *
-	 * @return valor de ContrasenaAntigua
+	 * @return valor de ContrasenaAntigua, la contraseña actual del usuario ingresada en el formulario.
 	 */
 	public String getContrasenaAntigua() {
 		return cambiarContrasena.getCampo(0);
@@ -96,7 +97,7 @@ public class VentanaCuentaCliente extends JPanel {
 	/**
 	 * Obtiene ContrasenaNueva.
 	 *
-	 * @return valor de ContrasenaNueva
+	 * @return valor de ContrasenaNueva, la nueva contraseña ingresada por el usuario.
 	 */
 	public String getContrasenaNueva() {
 		return cambiarContrasena.getCampo(1);
@@ -105,7 +106,7 @@ public class VentanaCuentaCliente extends JPanel {
 	/**
 	 * Obtiene ConfirmacionNueva.
 	 *
-	 * @return valor de ConfirmacionNueva
+	 * @return valor de ConfirmacionNueva, la confirmación de la nueva contraseña ingresada.
 	 */
 	public String getConfirmacionNueva() {
 		return cambiarContrasena.getCampo(2);

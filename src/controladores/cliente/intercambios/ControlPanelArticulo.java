@@ -14,20 +14,44 @@ import modelo.wallapop.ArticuloSegundaMano;
 import vistas.common.displays.PanelArticulo;
 import vistas.common.displays.VentanaConDisplay;
 
+/**
+ * Controlador del panel de visualización de un artículo de segunda mano.
+ */
 public class ControlPanelArticulo implements ActionListener {
 
+	/** Campo panel. Panel de artículo asociado a este controlador. */
 	private PanelArticulo panel;
+	
+	/** Campo articulo. Artículo de segunda mano asociado a este controlador. */
 	private ArticuloSegundaMano articulo;
+	
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	private Tienda tienda;
+	
+	/** Campo cliente. Cliente registrado que visualiza el artículo. */
 	private ClienteRegistrado cliente;
+	
+	/** Campo vista. Contenedor donde se muestra el panel de artículo. */
 	@SuppressWarnings("unused")
 	private VentanaConDisplay<PanelArticulo> vista;
 
+	/** Campo FOTO_PERFIL. Ruta de la imagen de perfil por defecto del propietario. */
 	private final String FOTO_PERFIL = "pfp.png";
+	
+	/** Campo FOTO_ARTICULO_DF. Ruta de la imagen por defecto del artículo. */
 	private final String FOTO_ARTICULO_DF = "articuloDefault.png";
 
+	/** Constante actionName. Comando de acción para el clic sobre el artículo. */
 	private static final String actionName = "clic";
 
+	/**
+	 * Instancia un nuevo Objeto ControlPanelArticulo.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que visualiza el artículo.
+	 * @param articulo Artículo de segunda mano a mostrar.
+	 * @param vista Contenedor donde se añadirá el panel de artículo.
+	 */
 	public ControlPanelArticulo(Tienda tienda, ClienteRegistrado cliente, ArticuloSegundaMano articulo,
 			VentanaConDisplay<PanelArticulo> vista) {
 		ClienteRegistrado dueno = articulo.getDueno().getDueno();
@@ -87,6 +111,12 @@ public class ControlPanelArticulo implements ActionListener {
 		vista.anadirDisplay(panel);
 	}
 
+	/**
+	 * actionPerformed.
+	 * Abre la ventana de información detallada del artículo al hacer clic.
+	 *
+	 * @param e Evento de acción recibido.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().endsWith(actionName)) {

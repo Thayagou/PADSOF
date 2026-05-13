@@ -14,17 +14,39 @@ import vistas.cliente.intercambios.pantallas.VentanaOfertaIntercambio;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
+/**
+ * Controlador de la ventana de visualización de una oferta de intercambio.
+ */
 public class ControlVerOferta implements ControladorPantalla {
 	
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	Tienda tienda;
+	
+	/** Campo cliente. Cliente registrado que visualiza la oferta. */
 	ClienteRegistrado cliente;
+	
+	/** Campo intercambio. Intercambio que se está visualizando. */
 	Intercambio intercambio;
+	
+	/** Campo vista. Ventana de visualización de la oferta. */
 	VentanaOfertaIntercambio vista;
 	
+	/** Constante BTN_ACCEPT. Comando de acción para el botón de aceptar oferta. */
 	private static final String BTN_ACCEPT = "Aceptar";
+	
+	/** Constante BTN_REJECT. Comando de acción para el botón de rechazar oferta. */
 	private static final String BTN_REJECT = "Rechazar";
+	
+	/** Constante BTN_CANCEL. Comando de acción para el botón de cancelar oferta. */
 	private static final String BTN_CANCEL = "Cancelar";
 	
+	/**
+	 * Instancia un nuevo Objeto ControlVerOferta.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que visualiza la oferta.
+	 * @param intercambio Intercambio que se está visualizando.
+	 */
 	public ControlVerOferta(Tienda tienda, ClienteRegistrado cliente, Intercambio intercambio) {
 		this.tienda = tienda;
 		this.cliente = cliente;
@@ -43,11 +65,23 @@ public class ControlVerOferta implements ControladorPantalla {
 		TiendaFrame.getInstance().navegarA(this);
 	}
 	
+	/**
+	 * anadirArticulos.
+	 * Añade los artículos del intercambio a la ventana de visualización.
+	 *
+	 * @param articulos parámetro articulos, array de artículos a añadir.
+	 */
 	private void anadirArticulos(ArticuloSegundaMano[] articulos) {
 		for(ArticuloSegundaMano a : articulos)
 			new ControlPanelArticuloEnOferta(tienda, this.cliente, a, vista);
 	}
 
+	/**
+	 * actionPerformed.
+	 * Gestiona las acciones de aceptar, rechazar o cancelar la oferta según el botón pulsado.
+	 *
+	 * @param e Evento de acción recibido.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
@@ -87,11 +121,21 @@ public class ControlVerOferta implements ControladorPantalla {
 		}
 	}
 
+	/**
+	 * Obtiene Vista.
+	 *
+	 * @return valor de Vista, el panel de la ventana de visualización de la oferta.
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
 	}
 
+	/**
+	 * Obtiene Explicacion.
+	 *
+	 * @return valor de Explicacion, descripción de la funcionalidad de la ventana.
+	 */
 	@Override
 	public String getExplicacion() {
 		return "Aquí puedes ver la información de una oferta. Se muestran los artículos que se intercambiarán en caso de que la oferta sea aceptada.";

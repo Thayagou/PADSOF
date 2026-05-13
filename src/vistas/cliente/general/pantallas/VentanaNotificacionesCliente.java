@@ -12,45 +12,45 @@ import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.*;
 
 /**
- * Tipo: Class VentanaNotificacionesCliente.
+ * Pantalla que muestra las notificaciones del cliente y permite configurar los ajustes de las mismas.
  */
 public class VentanaNotificacionesCliente extends JPanel implements VentanaConDisplay<PanelNotificacion> {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/** Constante BTN_WIDTH. */
+	/** Constante BTN_WIDTH. Anchura del botón de confirmación como porcentaje de la pantalla. */
 	private static final double BTN_WIDTH = 0.1;
 	
-	/** Constante BTN_HEIGHT. */
+	/** Constante BTN_HEIGHT. Altura del botón de confirmación como porcentaje de la pantalla. */
 	private static final double BTN_HEIGHT = 0.07;
 	
-	/** Constante BTN_V_WRAP. */
+	/** Constante BTN_V_WRAP. Margen vertical alrededor del botón como porcentaje de la altura de la pantalla. */
 	private static final double BTN_V_WRAP = 0.05;
 	
-	/** Constante BTN_H_WRAP. */
+	/** Constante BTN_H_WRAP. Margen horizontal alrededor del botón como porcentaje de la anchura de la pantalla. */
 	private static final double BTN_H_WRAP = 0.02;
 	
-	/** Constante EAST_PANEL_WIDTH. */
+	/** Constante EAST_PANEL_WIDTH. Anchura del panel lateral de ajustes como porcentaje de la pantalla. */
 	private static final double EAST_PANEL_WIDTH = 0.25;
 	
-	/** Campo notificaciones. */
+	/** Campo notificaciones. Panel que contiene la lista de notificaciones del usuario. */
 	private JPanel notificaciones = new JPanel();
 	
-	/** Constante APPLY_BTN. */
+	/** Constante APPLY_BTN. Comando de acción para el botón de aplicar cambios en los ajustes. */
 	public static final String APPLY_BTN = "Aplicar cambios";
 	
-	/** Campo confirmar. */
+	/** Campo confirmar. Botón que aplica los cambios seleccionados en los ajustes. */
 	JButton confirmar;
 	
-	/** Campo panelAjustes. */
+	/** Campo panelAjustes. Panel con casillas de verificación para configurar las opciones de notificaciones. */
 	PanelSelectorCajas panelAjustes;
 	
 	/**
-	 * Instancia un nuevo Objeto VentanaNotificacionesCliente.
+	 * Construye la interfaz con la lista de notificaciones a la izquierda y el panel de ajustes a la derecha.
 	 *
-	 * @param ajustes parámetro ajustes
-	 * @param selected parámetro selected
+	 * @param ajustes Array con los nombres de las opciones de ajuste disponibles.
+	 * @param selected Array con los índices de las opciones que aparecen seleccionadas por defecto.
 	 */
 	public VentanaNotificacionesCliente(String[] ajustes, int[] selected) {
 		setOpaque(false);
@@ -93,6 +93,7 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 	
 	/**
 	 * refreshList.
+	 * Refresca la interfaz para mostrar los cambios en el panel de notificaciones.
 	 */
 	public void refreshList() {
 		notificaciones.revalidate();
@@ -102,7 +103,7 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 	/**
 	 * Obtiene SelectedOptions.
 	 *
-	 * @return valor de SelectedOptions
+	 * @return valor de SelectedOptions, un array con los nombres de las opciones de ajuste seleccionadas.
 	 */
 	public String[] getSelectedOptions() {
 		return panelAjustes.getCategoriasSeleccionadas();
@@ -110,10 +111,11 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 
 	/**
 	 * anadirDisplay.
+	 * Añade una notificación al panel de la lista y refresca la vista.
 	 *
-	 * @param <K> clave genérica
-	 * @param panelDisplay parámetro panelDisplay
-	 * @return valor de tipo PanelNotificacion
+	 * @param <K> subtipo de PanelNotificacion del panel a añadir.
+	 * @param panelDisplay Panel de la notificación a añadir.
+	 * @return valor de tipo PanelNotificacion, el mismo panel que se añadió.
 	 */
 	@Override
 	public <K extends PanelNotificacion> PanelNotificacion anadirDisplay(K panelDisplay) {
@@ -126,7 +128,7 @@ public class VentanaNotificacionesCliente extends JPanel implements VentanaConDi
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param c nuevo valor
+	 * @param c controlador que manejará los eventos del botón de confirmación.
 	 */
 	public void setControlador(ActionListener c) {
 		confirmar.addActionListener(c);

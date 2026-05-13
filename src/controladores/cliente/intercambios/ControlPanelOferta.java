@@ -18,24 +18,56 @@ import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.cliente.intercambios.*;
 
+/**
+ * Controlador del panel de visualización de una oferta de intercambio.
+ */
 public class ControlPanelOferta implements ActionListener {
 
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	Tienda tienda;
+	
+	/** Campo cliente. Cliente registrado que visualiza la oferta. */
 	ClienteRegistrado cliente;
+	
+	/** Campo intercambio. Intercambio asociado a este panel. */
 	Intercambio intercambio;
+	
+	/** Campo vista. Contenedor donde se muestra el panel de oferta. */
 	VentanaConDisplay<PanelOferta> vista;
+	
+	/** Campo panel. Panel de oferta asociado a este controlador. */
 	PanelOferta panel;
+	
+	/** Campo controlador. Controlador padre para refrescar la lista tras las acciones. */
 	ControlVerMisOfertas controlador;
 
+	/** Constante clickAction. Comando de acción para el clic sobre el panel. */
 	private static final String clickAction = "clic";
+	
+	/** Constante acceptAction. Comando de acción para el botón de aceptar oferta. */
 	private static final String acceptAction = "Aceptar";
+	
+	/** Constante rejectAction. Comando de acción para el botón de rechazar oferta. */
 	private static final String rejectAction = "Rechazar";
+	
+	/** Constante cancelAction. Comando de acción para el botón de cancelar oferta. */
 	private static final String cancelAction = "Cancelar";
 
+	/** Constante emisorPfp. Ruta de la imagen de perfil por defecto del emisor. */
 	private static final String emisorPfp = "pfp.png";
 	
+	/** Campo aceptada. Indica si la oferta ya ha sido aceptada. */
 	private boolean aceptada = false;
 
+	/**
+	 * Instancia un nuevo Objeto ControlPanelOferta.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que visualiza la oferta.
+	 * @param intercambio Intercambio asociado a este panel.
+	 * @param vista Contenedor donde se añadirá el panel de oferta.
+	 * @param controlador Controlador padre para refrescar la lista tras las acciones.
+	 */
 	public ControlPanelOferta(Tienda tienda, ClienteRegistrado cliente, Intercambio intercambio,
 			VentanaConDisplay<PanelOferta> vista, ControlVerMisOfertas controlador) {
 		this.tienda = tienda;
@@ -79,6 +111,12 @@ public class ControlPanelOferta implements ActionListener {
 		vista.anadirDisplay(panel);
 	}
 
+	/**
+	 * actionPerformed.
+	 * Gestiona las acciones de aceptar, rechazar o cancelar la oferta, o ver sus detalles.
+	 *
+	 * @param e Evento de acción recibido.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(aceptada) return;

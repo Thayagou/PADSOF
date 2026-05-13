@@ -10,27 +10,35 @@ import vistas.herramientas.*;
 /**
  * Panel reutilizable que combina una cabecera con título, un selector de
  * opciones (JComboBox) y un contenido central intercambiable.
- *
- * Uso típico: listas de resultados con ordenación, paneles con filtros por
- * tipo, etc.
  */
 public class PanelMultiopcion extends JPanel {
 
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Constante HEADER_GAP_H_MACRO. */
 	/* Macros de layout (relativos a resolución base 1920×1080) */
 	private static final double HEADER_GAP_H_MACRO = 12.0 / 1920.0; /* Espacio horizontal entre elementos de cabecera */
+	
+	/** Constante HEADER_GAP_V_MACRO. */
 	private static final double HEADER_GAP_V_MACRO = 6.0 / 1080.0; /* Espacio vertical interno de la cabecera */
+	
+	/** Constante HEADER_PAD_MACRO. */
 	private static final double HEADER_PAD_MACRO = 8.0 / 1080.0; /* Padding vertical de la cabecera */
 
-	public static final String CAMBIO_OPCION_ACTION = "Cambiar opcion";
+	/** Constante CAMBIO_OPCION_ACTION. */
+	public static final String CAMBIO_OPCION_ACTION = "Cambiar opcion"; /* Comando de acción para cambios de opción */
+	
+	/** Campo selector. */
 	/* ── Estado interno ── */
-	private final JComboBox<String> selector;
+	private final JComboBox<String> selector; /* Selector desplegable de opciones */
 
 	/**
-	 * Construye el panel con cabecera y selector de opciones 
+	 * Construye el panel con cabecera y selector de opciones .
 	 *
 	 * @param titulo    Texto que aparece en la cabecera.
+	 * @param titleFont Fuente para el título de la cabecera.
+	 * @param selectorFont Fuente para las opciones del selector.
 	 * @param opciones  Array de strings con las opciones del selector.
 	 */
 	public PanelMultiopcion(String titulo, Fonts titleFont, Fonts selectorFont, String[] opciones) {
@@ -96,7 +104,8 @@ public class PanelMultiopcion extends JPanel {
 	}
 	
 	/**
-	 * Establece el Action Command del panel
+	 * Establece el Action Command del panel.
+	 *
 	 * @param aCommand Nuevo Action Command
 	 */
 	public void setActionCommand(String aCommand) {

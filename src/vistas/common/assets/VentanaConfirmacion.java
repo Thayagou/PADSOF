@@ -13,28 +13,35 @@ import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;
 
 /**
- * Ventana de mensaje con dos opciones: Confirmar y Cancelar
- * 
- * @version 1.0
+ * Ventana de mensaje con dos opciones: Confirmar y Cancelar.
  */
 public class VentanaConfirmacion extends VentanaMensaje {
 	
+	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	/* Dimensiones del boton Aceptar */
-	private static final double BTN_W = 0.10;
+	/** Anchura de los botones como porcentaje de la pantalla */
+	private static final double BTN_W = 0.10; 
+	
+	/** Altura de los botones como porcentaje de la pantalla. */
 	private static final double BTN_H = 0.05;
 
+	/** Botón para confirmar la acción */
 	private JButton btnConfirmar;
+	
+	/** Botón para cancelar la acción */
 	private JButton btnCancelar;
 	
+	/** Comando de acción para el botón de confirmar */
 	public static final String CONFIRM = "Confirmar";
+	
+	/** Comando de acción para el botón de cancelar */
 	public static final String CANCEL = "Cancelar";
 
 	/**
-	 * Construye una ventana de mensaje con opciones Confirmar y Cancelar
+	 * Construye una ventana de mensaje con opciones Confirmar y Cancelar.
 	 *
-	 * @param mensaje
+	 * @param mensaje Texto del mensaje a mostrar en la ventana.
 	 */
 	public VentanaConfirmacion(String mensaje) {
 		super(mensaje, VentanaMensaje.AVISO, "Confirmar acción...");
@@ -61,6 +68,11 @@ public class VentanaConfirmacion extends VentanaMensaje {
 		this.add(newBtnPanel, BorderLayout.SOUTH);
 	}
 
+	/**
+	 * Establece Controlador.
+	 *
+	 * @param c controlador que manejará los eventos de los botones de confirmar y cancelar.
+	 */
 	public void setControlador(ActionListener c) {
 		btnConfirmar.addActionListener(c);
 		btnCancelar.addActionListener(c);

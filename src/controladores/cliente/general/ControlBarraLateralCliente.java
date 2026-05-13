@@ -19,21 +19,21 @@ import modelo.usuario.ClienteRegistrado;
 import vistas.cliente.general.BarraLateralCliente;
 
 /**
- * Tipo: Class ControlBarraLateralCliente.
+ * Controlador que gestiona las acciones de la barra lateral del cliente, redirigiendo a las diferentes pantallas según la opción seleccionada.
  */
 public class ControlBarraLateralCliente implements ActionListener {
 	
-	/** Campo tienda. */
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	private Tienda tienda;
 	
-	/** Campo cliente. */
+	/** Campo cliente. Cliente registrado que ha iniciado sesión. */
 	private ClienteRegistrado cliente;
 	
 	/**
 	 * Instancia un nuevo Objeto ControlBarraLateralCliente.
 	 *
-	 * @param tienda parámetro tienda
-	 * @param cliente parámetro cliente
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que ha iniciado sesión.
 	 */
 	public ControlBarraLateralCliente(Tienda tienda, ClienteRegistrado cliente) {
 		this.tienda = tienda;
@@ -42,8 +42,9 @@ public class ControlBarraLateralCliente implements ActionListener {
 
 	/**
 	 * actionPerformed.
+	 * Redirige a la pantalla correspondiente según el comando del botón pulsado.
 	 *
-	 * @param e parámetro e
+	 * @param e Evento de acción recibido.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {

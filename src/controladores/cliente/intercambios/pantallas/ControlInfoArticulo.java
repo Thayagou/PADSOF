@@ -14,17 +14,39 @@ import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaInfoArticulo;
 import vistas.common.app.TiendaFrame;
 
+/**
+ * Controlador de la ventana de información detallada de un artículo de segunda mano.
+ */
 public class ControlInfoArticulo implements ControladorPantalla {
 	
+	/** Campo tienda. Referencia al modelo de la tienda. */
 	private Tienda tienda;
+	
+	/** Campo cliente. Cliente registrado que visualiza el artículo. */
 	private ClienteRegistrado cliente;
+	
+	/** Campo articulo. Artículo de segunda mano que se está visualizando. */
 	private ArticuloSegundaMano articulo;
+	
+	/** Campo vista. Ventana de información del artículo. */
 	private VentanaInfoArticulo vista;
 	
+	/** Campo USER_PFP. Ruta de la imagen de perfil por defecto del usuario. */
 	private final String USER_PFP = "pfp.png";
+	
+	/** Constante actionOffer. Comando de acción para el botón de hacer oferta. */
 	private static final String actionOffer = "Hacer oferta";
+	
+	/** Constante actionWallet. Comando de acción para el botón de ver cartera. */
 	private static final String actionWallet = "Ver cartera";
 
+	/**
+	 * Instancia un nuevo Objeto ControlInfoArticulo.
+	 *
+	 * @param tienda Referencia al modelo de la tienda.
+	 * @param cliente Cliente registrado que visualiza el artículo.
+	 * @param articulo Artículo de segunda mano que se está visualizando.
+	 */
 	public ControlInfoArticulo(Tienda tienda, ClienteRegistrado cliente, ArticuloSegundaMano articulo) {
 		this.tienda = tienda;
 		this.cliente = cliente;
@@ -84,6 +106,12 @@ public class ControlInfoArticulo implements ControladorPantalla {
 	}
 	
 	
+	/**
+	 * actionPerformed.
+	 * Gestiona las acciones de hacer oferta o ver la cartera del propietario.
+	 *
+	 * @param e Evento de acción recibido.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
@@ -97,12 +125,22 @@ public class ControlInfoArticulo implements ControladorPantalla {
 		
 	}
 
+	/**
+	 * Obtiene Vista.
+	 *
+	 * @return valor de Vista, el panel de la ventana de información del artículo.
+	 */
 	@Override
 	public JPanel getVista() {
 		return vista;
 	}
 
 
+	/**
+	 * Obtiene Explicacion.
+	 *
+	 * @return valor de Explicacion, descripción de la funcionalidad de la ventana.
+	 */
 	@Override
 	public String getExplicacion() {
 		return "Aquí se ve la información sobre un artículo de segunda mano.";

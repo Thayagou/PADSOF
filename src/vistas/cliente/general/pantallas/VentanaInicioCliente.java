@@ -10,18 +10,19 @@ import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;
 
 /**
- * Tipo: Class VentanaInicioCliente.
+ * Pantalla de inicio para clientes, muestra una lista de productos recomendados.
  */
 public class VentanaInicioCliente extends JPanel implements VentanaConDisplay<PanelProducto> {
 
 	/** Constante serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** Campo recomendados. */
+	/** Campo recomendados. Panel que contiene los productos recomendados a mostrar. */
 	private JPanel recomendados = new JPanel();
 
 	/**
 	 * Instancia un nuevo Objeto VentanaInicioCliente.
+	 * Construye la interfaz con el título y el área desplazable de productos.
 	 */
 	public VentanaInicioCliente() {
 		setOpaque(false);
@@ -44,6 +45,7 @@ public class VentanaInicioCliente extends JPanel implements VentanaConDisplay<Pa
 
 	/**
 	 * refreshList.
+	 * Refresca la interfaz para mostrar los cambios en el panel de recomendados.
 	 */
 	private void refreshList() {
 		recomendados.revalidate();
@@ -53,7 +55,7 @@ public class VentanaInicioCliente extends JPanel implements VentanaConDisplay<Pa
 	/**
 	 * Establece Controlador.
 	 *
-	 * @param l nuevo valor
+	 * @param l controlador que manejará los eventos de la ventana.
 	 */
 	public void setControlador(ActionListener l) {
 
@@ -61,9 +63,10 @@ public class VentanaInicioCliente extends JPanel implements VentanaConDisplay<Pa
 
 	/**
 	 * anadirDisplay.
+	 * Añade un producto al panel de recomendados y refresca la vista.
 	 *
-	 * @param panelDisplay parámetro panelDisplay
-	 * @return valor de tipo PanelProducto
+	 * @param panelDisplay Panel del producto a añadir.
+	 * @return valor de tipo PanelProducto, el mismo panel que se añadió.
 	 */
 	@Override
 	public PanelProducto anadirDisplay(PanelProducto panelDisplay) {
