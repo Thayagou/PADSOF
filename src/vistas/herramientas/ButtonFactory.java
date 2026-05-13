@@ -50,7 +50,7 @@ public class ButtonFactory {
 	 * Obtiene un string HTML centrado
 	 *
 	 * @param label String a mostrar
-	 * @return 
+	 * @return String HTML centrado
 	 */
 	private static String getHTMLCenteredLabel(String label) {
 		return "<html><center>" + label + "</center></html>";
@@ -67,12 +67,12 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * loadImageIconScaled.
+	 * Carga una version de la imagen a escala.
 	 *
-	 * @param imageName parámetro imageName
-	 * @param h parámetro h
-	 * @param w parámetro w
-	 * @return valor de tipo ImageIcon
+	 * @param imageName Nombre de la imagen
+	 * @param h Altura establecida
+	 * @param w Anchura establecida
+	 * @return ImageIcon escalada
 	 */
 	public static ImageIcon loadImageIconScaled(String imageName, int h, int w) {
 		ImageIcon original = loadImageIcon(imageName);
@@ -83,12 +83,12 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * loadImageInBounds.
+	 * Se asegura que la imagen está a escala y que cabe en el hueco
 	 *
-	 * @param imageName parámetro imageName
-	 * @param maxH parámetro maxH
-	 * @param maxW parámetro maxW
-	 * @return valor de tipo ImageIcon
+	 * @param imageName Nombre de la imagen
+	 * @param maxH Altura máxima
+	 * @param maxW Anchura máxima
+	 * @return ImageIcon escalada
 	 */
 	public static ImageIcon loadImageInBounds(String imageName, int maxH, int maxW) {
 		ImageIcon original = loadImageIcon(imageName);
@@ -115,19 +115,19 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * loadImageIcon.
+	 * Carga un icono a partir de su nombre usando el path establecido
 	 *
-	 * @param imageName parámetro imageName
-	 * @return valor de tipo ImageIcon
+	 * @param imageName Nombre de la image
+	 * @return ImageIcon cargado
 	 */
 	public static ImageIcon loadImageIcon(String imageName) {
 		return new ImageIcon(IMAGE_PATH + imageName);
 	}
 
 	/**
-	 * Establece Default.
+	 * Establece características por defecto de un botón
 	 *
-	 * @param button nuevo valor
+	 * @param button Botón a cambiar
 	 */
 	private static void setDefault(JButton button) {
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -141,11 +141,11 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * paintButton.
+	 * Pinta un botón a partir de los colores establecidos
 	 *
-	 * @param button parámetro button
-	 * @param background parámetro background
-	 * @param foreground parámetro foreground
+	 * @param button Botón a pintar
+	 * @param background Color de fondo
+	 * @param foreground Color de las letras
 	 */
 	public static void paintButton(JButton button, ColorPalette background, ColorPalette foreground) {
 		button.setBackground(background.getColor());
@@ -153,21 +153,21 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * iconoDinamico.
+	 * Añade comportamiento dinámico a un botón
 	 *
-	 * @param button parámetro button
-	 * @param original parámetro original
-	 * @param percIcono parámetro percIcono
+	 * @param button Botón que se hace dinámico
+	 * @param original Imagen original
+	 * @param percIcono Porcentaje de pantalla del icono
 	 */
 	private static void iconoDinamico(JButton button, ImageIcon original, double percIcono) {
 		button.addComponentListener(new ButtonAdapter(button, percIcono, original));
 	}
 
 	/**
-	 * newButton.
+	 * Crea un nuevo botón con etiqueta
 	 *
-	 * @param label parámetro label
-	 * @return valor de tipo JButton
+	 * @param label Etiqueta del botón
+	 * @return botón creado
 	 */
 	public static JButton newButton(String label) {
 		JButton button = new JButton(getHTMLCenteredLabel(label));
@@ -177,13 +177,13 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newRoundedButton.
+	 * Crea un nuevo botón redondeado
 	 *
-	 * @param label parámetro label
-	 * @param height parámetro height
-	 * @param width parámetro width
-	 * @param roundness parámetro roundness
-	 * @return valor de tipo JButton
+	 * @param label Etiqueta del botón
+	 * @param height Altura del botón
+	 * @param width Anchura del botón
+	 * @param roundness Nivel de redondeo del botón
+	 * @return botón creado
 	 */
 	public static JButton newRoundedButton(String label, int height, int width, double roundness) {
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
@@ -197,14 +197,14 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newRoundedIconButton.
+	 * Crea un nuevo botón dinámico redondeado
 	 *
-	 * @param label parámetro label
-	 * @param height parámetro height
-	 * @param width parámetro width
-	 * @param roundness parámetro roundness
-	 * @param imageName parámetro imageName
-	 * @return valor de tipo JButton
+	 * @param label Etiqueta del botón
+	 * @param height Altura del botón
+	 * @param width Anchura del botón
+	 * @param roundness Nivel de redondeo del botón
+	 * @param imageName Nombre de la imagen sobre el botón
+	 * @return Botón creado
 	 */
 	public static JButton newRoundedIconButton(String label, int height, int width, double roundness,
 			String imageName) {
@@ -222,12 +222,12 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newButton.
+	 * Crea un nuevo botón con altura y anchura específicos
 	 *
-	 * @param label parámetro label
-	 * @param height parámetro height
-	 * @param width parámetro width
-	 * @return valor de tipo JButton
+	 * @param label Etiqueta para el botón
+	 * @param height Altura del botón
+	 * @param width Anchura del botón
+	 * @return Botón creado
 	 */
 	public static JButton newButton(String label, int height, int width) {
 		JButton button = newButton(label);
@@ -239,12 +239,12 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newButtonLeft.
+	 * Crea un botón que se alinea a la izquierda
 	 *
-	 * @param label parámetro label
-	 * @param height parámetro height
-	 * @param width parámetro width
-	 * @return valor de tipo JButton
+	 * @param label Etiqueta para el botón
+	 * @param height Altura del botón
+	 * @param width Anchura del botón
+	 * @return botón creado
 	 */
 	public static JButton newButtonLeft(String label, int height, int width) {
 		JButton button = new JButton(getHTMLLabel(label));
@@ -257,7 +257,7 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newIconButton.
+	 * 
 	 *
 	 * @param imageName parámetro imageName
 	 * @param height parámetro height
