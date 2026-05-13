@@ -50,7 +50,7 @@ public class ControlEstadisticasProductos implements ControladorPantalla {
 		
 		this.vista = new VentanaEstadisticasProductos();
 		vista.setControlador(this);
-		vista.setInicio(Reloj.mesNow().minusMonths(1));
+		vista.setInicio(Reloj.mesNow().minusMonths(3));
 		vista.setFin(Reloj.mesNow());
 		
 		orden = getComparator(VentanaEstadisticasProductos.ORDENES[0]);

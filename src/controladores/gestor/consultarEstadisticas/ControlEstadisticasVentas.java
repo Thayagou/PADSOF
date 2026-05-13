@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import controladores.ControladorPantalla;
 import modelo.estadistica.StatsMensual;
 import modelo.exceptions.InvalidArgumentException;
+import modelo.sistema.Reloj;
 import modelo.sistema.Tienda;
 import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
@@ -61,6 +62,8 @@ public class ControlEstadisticasVentas implements ControladorPantalla {
 		
 		this.vista = new VentanaEstadisticasTienda(new String[] {MAYOR_RECAUDACION, MENOR_RECAUDACION, MAS_UNIDADES, MENOS_UNIDADES}, COLUMNAS);
 		vista.setControlador(this);
+		vista.setInicio(Reloj.mesNow().minusMonths(3));
+		vista.setFin(Reloj.mesNow());
 		
 		orden = getComparator(vista.getOpcionSeleccionadaOrden());
 		

@@ -80,7 +80,9 @@ public class ControlValoracionIndividual implements ControladorPantalla {
 	private void intentarValorar() {
 		double estimacion = -1;
 		try {
-			estimacion = Double.parseDouble(vista.getEstimacion());
+			String stringEstimacion = vista.getEstimacion();
+			stringEstimacion = stringEstimacion.replace(',', '.');
+			estimacion = Double.parseDouble(stringEstimacion);
 		} catch (RuntimeException ex) {
 			new VentanaMensaje("Introduzca una estimación de valor válida", 1);
 			return;

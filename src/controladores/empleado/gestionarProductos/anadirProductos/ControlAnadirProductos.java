@@ -123,7 +123,9 @@ public class ControlAnadirProductos implements ControladorPantalla {
 
 		double precio;
 		try {
-			precio = Double.parseDouble(vista.getVentanaIndividual().getPrecio());
+			String stringPrecio = vista.getVentanaIndividual().getPrecio();
+			stringPrecio = stringPrecio.replace(',', '.');
+			precio = Double.parseDouble(stringPrecio);
 		} catch (Exception e) {
 			new VentanaMensaje("Introduzca un precio válido para el producto", 1);
 			return;
