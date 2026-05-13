@@ -257,18 +257,16 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * 
+	 * Crea un botón con imagen
 	 *
-	 * @param imageName parámetro imageName
-	 * @param height parámetro height
-	 * @param width parámetro width
-	 * @return valor de tipo JButton
+	 * @param imageName Nombre de la imagen
+	 * @param height Altura de la imagen
+	 * @param width Anchura de la imagen
+	 * @return botón creado
 	 */
 	public static JButton newIconButton(String imageName, int height, int width) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = new JButton(icon);
-
-		// iconoDinamico(button, icon, 0.6);
 
 		setDefault(button);
 
@@ -279,20 +277,19 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newIconButton.
+	 * Crea un botón con imagen y etiqueta
 	 *
-	 * @param label parámetro label
-	 * @param height parámetro height
-	 * @param width parámetro width
-	 * @param imageName parámetro imageName
-	 * @return valor de tipo JButton
+	 * @param label Etiqueta del botón
+	 * @param height Altura de la imagen
+	 * @param width Anchura de la imagen
+	 * @param imageName Nombre de la imagen
+	 * @return botón creado
 	 */
 	public static JButton newIconButton(String label, int height, int width, String imageName) {
 
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = newButton(label);
 		button.setIcon(icon);
-		// JButton button = this.newIconButton(imageName, height, width);
 		button.setText(getHTMLCenteredLabel(label));
 		setDefault(button);
 		iconoDinamico(button, icon, 0.6);
@@ -301,11 +298,11 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * addMouseMecanics.
+	 * Añade a un botón la mecánica de cambiar de color al poner el ratón sobre él
 	 *
-	 * @param btn parámetro btn
-	 * @param defaultC parámetro defaultC
-	 * @param pressedC parámetro pressedC
+	 * @param btn Botón al que se añade la mecánica
+	 * @param defaultC Color al presionar
+	 * @param pressedC Color cuando no se presiona
 	 */
 	public static void addMouseMecanics(JButton btn, ColorPalette defaultC, ColorPalette pressedC) {
 		btn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -321,10 +318,10 @@ public class ButtonFactory {
 	}
 	
 	/**
-	 * addMouseMecanics.
+	 * Añade a un botón la mecánica de cambiar de color al poner el ratón sobre él, utilizando su hoverColor asociado
 	 *
-	 * @param btn parámetro btn
-	 * @param defaultC parámetro defaultC
+	 * @param btn Botón al que se añade la mecánica
+	 * @param defaultC Color por defecto
 	 */
 	public static void addMouseMecanics(JButton btn, ColorPalette defaultC) {
 		btn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -340,9 +337,9 @@ public class ButtonFactory {
 	}
 	
 	/**
-	 * addHoverColorChange.
+	 * Añade a un botón la mecánica de cambiar de color al poner el ratón sobre él, utilizando su hoverColor asociado
 	 *
-	 * @param btn parámetro btn
+	 * @param btn Botón al que se añade la mecánica
 	 */
 	public static void addHoverColorChange(JButton btn) {
 		Color color = btn.getBackground();
@@ -358,11 +355,11 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newLabel.
+	 * Crea una nueva etiqueta JLabel
 	 *
-	 * @param text parámetro text
-	 * @param font parámetro font
-	 * @return valor de tipo JLabel
+	 * @param text Texto sobre la etiqueta
+	 * @param font Font de la etiqueta
+	 * @return JLabel creada
 	 */
 	public static JLabel newLabel(String text, Fonts font) {
 		JLabel label = new JLabel(getHTMLCenteredLabel(text));
@@ -373,11 +370,11 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newLeftAlignedLabel.
+	 * Crea una etiqueta JLabel alineada a la izquierda
 	 *
-	 * @param text parámetro text
-	 * @param font parámetro font
-	 * @return valor de tipo JLabel
+	 * @param text Texto sobre la etiqueta
+	 * @param font Font sobre la etiqueta
+	 * @return etiqueta JLabel creada
 	 */
 	public static JLabel newLeftAlignedLabel(String text, Fonts font) {
 		JLabel label = new JLabel(getHTMLLabel(text));
@@ -388,11 +385,11 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newTextField.
+	 * Crea un nuevo campo de texto
 	 *
-	 * @param text parámetro text
-	 * @param font parámetro font
-	 * @return valor de tipo JTextField
+	 * @param text Texto en el campo por defecto
+	 * @param font Font para el campo de texto
+	 * @return campo de texto JTextField creado
 	 */
 	public static JTextField newTextField(String text, Fonts font) {
 		JTextField field = new JTextField(text);
@@ -421,11 +418,11 @@ public class ButtonFactory {
 	}
 	
 	/**
-	 * newTextArea.
+	 * Crea una nueva área de texto
 	 *
-	 * @param text parámetro text
-	 * @param font parámetro font
-	 * @return valor de tipo JTextArea
+	 * @param text Texto sobre el área por defecto
+	 * @param font Font para el área de texto
+	 * @return área de texto JTextArea creada
 	 */
 	public static JTextArea newTextArea(String text, Fonts font) {
 		JTextArea field = new JTextArea(text);
@@ -454,10 +451,10 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * spinnerFecha.
+	 * Crea un spinner de para fecha y hora
 	 *
-	 * @param font parámetro font
-	 * @return valor de tipo JSpinner
+	 * @param font Font para el spinner
+	 * @return JSpinner creado
 	 */
 	public static JSpinner spinnerFecha(Fonts font) {
 		SpinnerDateModel modelo = new SpinnerDateModel();
@@ -469,10 +466,10 @@ public class ButtonFactory {
 	}
 	
 	/**
-	 * spinnerLocalDate.
+	 * Crea un spinner para fecha
 	 *
-	 * @param font parámetro font
-	 * @return valor de tipo JSpinner
+	 * @param font Font para el spinner
+	 * @return JSpinner creado
 	 */
 	public static JSpinner spinnerLocalDate(Fonts font) {
 		JSpinner spinner = new JSpinner(new SpinnerDateModel());
@@ -483,10 +480,10 @@ public class ButtonFactory {
 	}   
 	
 	/**
-	 * spinnerFechaYearMonth.
+	 * Crea un spinner para año y mes
 	 *
-	 * @param font parámetro font
-	 * @return valor de tipo JSpinner
+	 * @param font Font para el spinner
+	 * @return JSpinner creado
 	 */
 	public static JSpinner spinnerFechaYearMonth(Fonts font) {
 		SpinnerDateModel modelo = new SpinnerDateModel();
@@ -498,14 +495,14 @@ public class ButtonFactory {
 	}
 	    
 	/**
-	 * spinnerEntero.
+	 * Crea un spinner para un valor entero
 	 *
-	 * @param font parámetro font
-	 * @param valor parámetro valor
-	 * @param min parámetro min
-	 * @param max parámetro max
-	 * @param paso parámetro paso
-	 * @return valor de tipo JSpinner
+	 * @param font Fuente del spinner
+	 * @param valor Valor por defecto
+	 * @param min Valor mínimo
+	 * @param max Valor máximo
+	 * @param paso Salto de valor para el spinner
+	 * @return JSpinner creado
 	 */
 	public static JSpinner spinnerEntero(Fonts font, int valor, int min, int max, int paso) {
 	    SpinnerNumberModel modelo = new SpinnerNumberModel(valor, min, max, paso);
@@ -515,14 +512,14 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * spinnerDouble.
+	 * Crea un spinner para un valor double
 	 *
-	 * @param font parámetro font
-	 * @param valor parámetro valor
-	 * @param min parámetro min
-	 * @param max parámetro max
-	 * @param paso parámetro paso
-	 * @return valor de tipo JSpinner
+	 * @param font Fuente del spinner
+	 * @param valor Valor por defecto
+	 * @param min Valor mínimo
+	 * @param max Valor máximo
+	 * @param paso Salto de valor para el spinner
+	 * @return JSpinner creado
 	 */
 	public static JSpinner spinnerDouble(Fonts font, double valor, double min, double max, double paso) {
 	    SpinnerNumberModel modelo = new SpinnerNumberModel(valor, min, max, paso);
@@ -534,12 +531,12 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * newComboBox.
+	 * Crea un ComboBox de diferentes elementos
 	 *
-	 * @param <T> parámetro genérico
-	 * @param font parámetro font
-	 * @param elementos parámetro elementos
-	 * @return valor de tipo JComboBox
+	 * @param <T> Tipo de elemento del ComboBox
+	 * @param font Font del ComboBox
+	 * @param elementos Elementos que tiene el ComboBox
+	 * @return JComboBox creado
 	 */
 	public static <T> JComboBox<T> newComboBox(Fonts font, @SuppressWarnings("unchecked") T... elementos) {
 		JComboBox<T> comboBox = new JComboBox<T>(elementos);
@@ -564,12 +561,12 @@ public class ButtonFactory {
 	}
 
 	/**
-	 * spinnerEntero.
+	 * Crea un spinner para un valor entero
 	 *
-	 * @param font parámetro font
-	 * @param height parámetro height
-	 * @param width parámetro width
-	 * @return valor de tipo JSpinner
+	 * @param font Fuente del spinner
+	 * @param height Altura del spinner
+	 * @param width Anchura del spinner
+	 * @return JSpinner creado
 	 */
 	public static JSpinner spinnerEntero(Fonts font, int height, int width) {
 		SpinnerNumberModel model = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
@@ -595,16 +592,10 @@ public class ButtonFactory {
      * @param nSecs Segundos de espera antes de que aparezca (puede ser decimal, ej. 0.5).
      */
     public static void addHoverInfo(JButton btn, String txt, double nSecs) {
-
-        // ── Construir el panel del tooltip ────────────────────────────────
-        // Usamos un JPanel personalizado en lugar de setToolTipText() para
-        // tener control total sobre el aspecto visual.
         JToolTip tooltip = new JToolTip() {
             private static final long serialVersionUID = 1L;
 
             {
-                // Fondo y borde iguales al UIManager de TiendaFrame,
-                // pero definidos aquí para no depender del orden de inicialización.
                 setBackground(ColorPalette.CARD_LIGHT.getColor());
                 setForeground(ColorPalette.DARK_GREY.getColor());
                 setFont(Fonts.TEXT.getFont());
@@ -617,7 +608,6 @@ public class ButtonFactory {
 
             @Override
             protected void paintComponent(Graphics g) {
-                // Fondo redondeado para que combine con RoundedButton
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                         RenderingHints.VALUE_ANTIALIAS_ON);
@@ -628,24 +618,17 @@ public class ButtonFactory {
             }
         };
         tooltip.setTipText(txt);
+        Popup[] popupHolder = { null };
 
-        // ── Ventana ligera que contiene el tooltip ────────────────────────
-        // Popup en vez de JWindow para que no robe el foco y no aparezca
-        // en la barra de tareas del sistema operativo.
-        Popup[] popupHolder = { null }; // array para poder modificarlo desde el lambda
-
-        // ── Timer por botón ───────────────────────────────────────────────
         int delayMs = (int)(nSecs * 1000);
         javax.swing.Timer timer = new javax.swing.Timer(delayMs, null);
-        timer.setRepeats(false); // dispara una sola vez por hover
+        timer.setRepeats(false);
 
         timer.addActionListener(ev -> {
-            // Calcular posición: justo debajo del botón
             Point loc = btn.getLocationOnScreen();
             int x = loc.x;
             int y = loc.y + btn.getHeight() + 2;
 
-            // Ajustar tamaño del tooltip al texto
             tooltip.setSize(tooltip.getPreferredSize());
 
             PopupFactory factory = PopupFactory.getSharedInstance();
@@ -653,12 +636,11 @@ public class ButtonFactory {
             popupHolder[0].show();
         });
 
-        // ── MouseListener ─────────────────────────────────────────────────
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
 
             @Override
             public void mouseEntered(java.awt.event.MouseEvent e) {
-                timer.restart(); // reinicia el contador cada vez que se entra
+                timer.restart();
             }
 
             @Override
@@ -672,7 +654,6 @@ public class ButtonFactory {
 
             @Override
             public void mousePressed(java.awt.event.MouseEvent e) {
-                // Ocultar también al hacer clic para no dejar el tooltip flotando
                 timer.stop();
                 if (popupHolder[0] != null) {
                     popupHolder[0].hide();
@@ -681,8 +662,6 @@ public class ButtonFactory {
             }
         });
 
-        // Desactivar el tooltip nativo de Swing para este botón
-        // (evita que aparezcan dos tooltips a la vez si alguien llama también a setToolTipText)
         btn.setToolTipText(null);
     }
 }
