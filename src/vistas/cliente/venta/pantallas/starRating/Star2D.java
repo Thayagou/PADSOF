@@ -43,7 +43,7 @@ public class Star2D implements Shape {
      * @param innerRadius distancia entre el centro y el origen de las puntas
      * @param outerRadius distancia entre el centro y las puntas de las ramas
      * @param branchesCount número de puntas de la estrella; debe ser >= 3
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException Lanza la excepción en caso de parámetros incorrectos
      */
     public Star2D(double x, double y,
             double innerRadius, double outerRadius,
@@ -182,7 +182,7 @@ public class Star2D implements Shape {
      * tener al menos 3 puntas.
      *
      * @param branchesCount número de puntas
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException Lanza la excepción en caso de parámetros incorrectos
      */
     public void setBranchesCount(int branchesCount) {
         if (branchesCount <= 2) {

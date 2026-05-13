@@ -50,8 +50,7 @@ public class VentanaInicioSinRegistrar extends JPanel implements VentanaConDispl
 	}
 
 	/**
-	 * Listener disparado al hacer clic en un producto de la lista. ActionCommand:
-	 * "Ver producto:<nombreProducto>"
+	 * Listener disparado al hacer clic en un producto de la lista.
 	 *
 	 * @param l nuevo valor
 	 */

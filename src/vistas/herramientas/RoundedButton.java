@@ -3,10 +3,19 @@ package vistas.herramientas;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Esta clase representa un botón con los bordes redondeados
+ */
 public class RoundedButton extends JButton {
 	private static final long serialVersionUID = 1L;
+	/** Nivel de redondeo del botón */
 	private double roundness;
 
+	/**
+	 * Crea un nuevo botón redondeado
+	 * @param text Texto sobre el botón
+	 * @param roundness Nivel de redondeo
+	 */
 	public RoundedButton(String text, double roundness) {
 		super(text);
 		if (roundness < 0) roundness = 0;

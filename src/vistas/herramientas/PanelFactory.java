@@ -39,6 +39,7 @@ public class PanelFactory {
 	 * Crea una columna de botones uniformemente espaciados especificando el espaciado
 	 * 
 	 * @param botones Botones a incluir
+	 * @param VERTICAL_GAP_PERC porcentaje de hueco vertical que se deja
 	 * @return Panel con los botones
 	 */
 	public static JPanel getColumnaDeBotones(double VERTICAL_GAP_PERC, JButton... botones) {
@@ -89,7 +90,12 @@ public class PanelFactory {
 
 		return ventana;
 	}
-	
+
+	/**
+	 * Obtiene un panel de formato cabecera, una barra horizontal
+	 * 
+	 * @return Panel de cabecera
+	 */
 	public static JPanel getCabecera() {
 		JPanel cabecera = new JPanel();
 		cabecera.setForeground(ColorPalette.WHITE.getColor());

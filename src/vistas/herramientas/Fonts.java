@@ -7,15 +7,33 @@ import javax.swing.*;
 
 import vistas.common.app.TiendaFrame;
 
+/**
+ * Enum usado para estandarizar las Fonts que usamos a lo largo del proyecto
+ */
 public enum Fonts {
+	/** Font usada para los títulos */
 	TITLE("Arial", Font.BOLD, 0.05),
+	
+	/** Font usada para los títulos */
     SUBTITLE("Arial", Font.BOLD, 0.04),
+	
+	/** Font usada para los títulos */
     TITLE3("Arial", Font.BOLD, 0.03),
+	
+	/** Font usada para el texto en negrita */
     BOLD("Arial", Font.BOLD, 0.02),
+
+	/** Font usada para el texto corriente */
+    TEXT("Arial", Font.PLAIN, 0.02),
+	
+	/** Font usada para los texto pequeño */
     SMALL("Arial", Font.PLAIN, 0.015),
+	
+	/** Font usada para texto pequeño en negrita */
     SMALL_BOLD("Arial", Font.BOLD, 0.015),
-    LIGHT("Arial", Font.ROMAN_BASELINE, 0.02),
-    TEXT("Arial", Font.PLAIN, 0.02);
+	
+	/** Font usada para los texto especial */
+    LIGHT("Arial", Font.ROMAN_BASELINE, 0.02);
 	
 	/** Fuente asociada */
 	private Font font;
@@ -77,8 +95,9 @@ public enum Fonts {
 	 *
 	 * @param columna       Componente que mostrará el texto (debe implementar setText)
 	 * @param textoCompleto Texto original completo
+	 * @param label 		Label usada
 	 * @param font          Fuente a usar para medir el texto
-	 * @param padding       Píxeles de margen interno a restar del ancho del componente (opcional, default 0)
+	 * @param paddingX       Píxeles de margen interno a restar del ancho del componente (opcional, default 0)
 	 */
 	@Deprecated
 	public static void configurarColumnaConTextoDinamico(JPanel columna, JLabel label, String textoCompleto, Font font, int paddingX) {

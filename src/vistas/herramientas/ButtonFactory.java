@@ -31,21 +31,49 @@ import javax.swing.SwingConstants;
 import controladores.ButtonAdapter;
 import vistas.common.components.InvisibleCheckBox;
 
+/**
+ * Fábrica para la creación de botones y componentes semejantes
+ */
 public class ButtonFactory {
+	
+	/** Path establecido del que se cogen las imágenes */
 	private static String IMAGE_PATH = "resources/gui/";
 
-	public ButtonFactory() {
+	/**
+	 * Instancia un nuevo Objeto ButtonFactory. Privado para usar método como estático
+	 */
+	private ButtonFactory() {
 
 	}
 
+	/**
+	 * Obtiene un string HTML centrado
+	 *
+	 * @param label String a mostrar
+	 * @return 
+	 */
 	private static String getHTMLCenteredLabel(String label) {
 		return "<html><center>" + label + "</center></html>";
 	}
 
+	/**
+	 * Obtiene HTMLLabel.
+	 *
+	 * @param label parámetro label
+	 * @return valor de HTMLLabel
+	 */
 	private static String getHTMLLabel(String label) {
 		return "<html><div style='text-align:left;'>" + label + "</div></html>";
 	}
 
+	/**
+	 * loadImageIconScaled.
+	 *
+	 * @param imageName parámetro imageName
+	 * @param h parámetro h
+	 * @param w parámetro w
+	 * @return valor de tipo ImageIcon
+	 */
 	public static ImageIcon loadImageIconScaled(String imageName, int h, int w) {
 		ImageIcon original = loadImageIcon(imageName);
 		if (h <= 0 || w <= 0)
@@ -54,6 +82,14 @@ public class ButtonFactory {
 		return new ImageIcon(img);
 	}
 
+	/**
+	 * loadImageInBounds.
+	 *
+	 * @param imageName parámetro imageName
+	 * @param maxH parámetro maxH
+	 * @param maxW parámetro maxW
+	 * @return valor de tipo ImageIcon
+	 */
 	public static ImageIcon loadImageInBounds(String imageName, int maxH, int maxW) {
 		ImageIcon original = loadImageIcon(imageName);
 		if (maxH <= 0 || maxW <= 0)
@@ -78,10 +114,21 @@ public class ButtonFactory {
 		return original;
 	}
 
+	/**
+	 * loadImageIcon.
+	 *
+	 * @param imageName parámetro imageName
+	 * @return valor de tipo ImageIcon
+	 */
 	public static ImageIcon loadImageIcon(String imageName) {
 		return new ImageIcon(IMAGE_PATH + imageName);
 	}
 
+	/**
+	 * Establece Default.
+	 *
+	 * @param button nuevo valor
+	 */
 	private static void setDefault(JButton button) {
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		button.setFont(Fonts.TEXT.getFont());
@@ -93,15 +140,35 @@ public class ButtonFactory {
 		addMouseMecanics(button, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
 	}
 
+	/**
+	 * paintButton.
+	 *
+	 * @param button parámetro button
+	 * @param background parámetro background
+	 * @param foreground parámetro foreground
+	 */
 	public static void paintButton(JButton button, ColorPalette background, ColorPalette foreground) {
 		button.setBackground(background.getColor());
 		button.setForeground(foreground.getColor());
 	}
 
+	/**
+	 * iconoDinamico.
+	 *
+	 * @param button parámetro button
+	 * @param original parámetro original
+	 * @param percIcono parámetro percIcono
+	 */
 	private static void iconoDinamico(JButton button, ImageIcon original, double percIcono) {
 		button.addComponentListener(new ButtonAdapter(button, percIcono, original));
 	}
 
+	/**
+	 * newButton.
+	 *
+	 * @param label parámetro label
+	 * @return valor de tipo JButton
+	 */
 	public static JButton newButton(String label) {
 		JButton button = new JButton(getHTMLCenteredLabel(label));
 		button.setActionCommand(label);
@@ -109,6 +176,15 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * newRoundedButton.
+	 *
+	 * @param label parámetro label
+	 * @param height parámetro height
+	 * @param width parámetro width
+	 * @param roundness parámetro roundness
+	 * @return valor de tipo JButton
+	 */
 	public static JButton newRoundedButton(String label, int height, int width, double roundness) {
 		JButton button = new RoundedButton(getHTMLLabel(label), roundness);
 
@@ -120,6 +196,16 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * newRoundedIconButton.
+	 *
+	 * @param label parámetro label
+	 * @param height parámetro height
+	 * @param width parámetro width
+	 * @param roundness parámetro roundness
+	 * @param imageName parámetro imageName
+	 * @return valor de tipo JButton
+	 */
 	public static JButton newRoundedIconButton(String label, int height, int width, double roundness,
 			String imageName) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
@@ -135,6 +221,14 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * newButton.
+	 *
+	 * @param label parámetro label
+	 * @param height parámetro height
+	 * @param width parámetro width
+	 * @return valor de tipo JButton
+	 */
 	public static JButton newButton(String label, int height, int width) {
 		JButton button = newButton(label);
 		Dimension size = new Dimension(width, height);
@@ -144,6 +238,14 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * newButtonLeft.
+	 *
+	 * @param label parámetro label
+	 * @param height parámetro height
+	 * @param width parámetro width
+	 * @return valor de tipo JButton
+	 */
 	public static JButton newButtonLeft(String label, int height, int width) {
 		JButton button = new JButton(getHTMLLabel(label));
 		button.setActionCommand(label);
@@ -154,6 +256,14 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * newIconButton.
+	 *
+	 * @param imageName parámetro imageName
+	 * @param height parámetro height
+	 * @param width parámetro width
+	 * @return valor de tipo JButton
+	 */
 	public static JButton newIconButton(String imageName, int height, int width) {
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
 		JButton button = new JButton(icon);
@@ -168,6 +278,15 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * newIconButton.
+	 *
+	 * @param label parámetro label
+	 * @param height parámetro height
+	 * @param width parámetro width
+	 * @param imageName parámetro imageName
+	 * @return valor de tipo JButton
+	 */
 	public static JButton newIconButton(String label, int height, int width, String imageName) {
 
 		ImageIcon icon = loadImageIconScaled(imageName, height, width);
@@ -181,6 +300,13 @@ public class ButtonFactory {
 		return button;
 	}
 
+	/**
+	 * addMouseMecanics.
+	 *
+	 * @param btn parámetro btn
+	 * @param defaultC parámetro defaultC
+	 * @param pressedC parámetro pressedC
+	 */
 	public static void addMouseMecanics(JButton btn, ColorPalette defaultC, ColorPalette pressedC) {
 		btn.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent e) {
@@ -194,6 +320,12 @@ public class ButtonFactory {
 
 	}
 	
+	/**
+	 * addMouseMecanics.
+	 *
+	 * @param btn parámetro btn
+	 * @param defaultC parámetro defaultC
+	 */
 	public static void addMouseMecanics(JButton btn, ColorPalette defaultC) {
 		btn.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent e) {
@@ -207,6 +339,11 @@ public class ButtonFactory {
 
 	}
 	
+	/**
+	 * addHoverColorChange.
+	 *
+	 * @param btn parámetro btn
+	 */
 	public static void addHoverColorChange(JButton btn) {
 		Color color = btn.getBackground();
 		btn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -220,6 +357,13 @@ public class ButtonFactory {
 		});
 	}
 
+	/**
+	 * newLabel.
+	 *
+	 * @param text parámetro text
+	 * @param font parámetro font
+	 * @return valor de tipo JLabel
+	 */
 	public static JLabel newLabel(String text, Fonts font) {
 		JLabel label = new JLabel(getHTMLCenteredLabel(text));
 		label.setFont(font.getFont());
@@ -228,6 +372,13 @@ public class ButtonFactory {
 		return label;
 	}
 
+	/**
+	 * newLeftAlignedLabel.
+	 *
+	 * @param text parámetro text
+	 * @param font parámetro font
+	 * @return valor de tipo JLabel
+	 */
 	public static JLabel newLeftAlignedLabel(String text, Fonts font) {
 		JLabel label = new JLabel(getHTMLLabel(text));
 		label.setFont(font.getFont());
@@ -236,6 +387,13 @@ public class ButtonFactory {
 		return label;
 	}
 
+	/**
+	 * newTextField.
+	 *
+	 * @param text parámetro text
+	 * @param font parámetro font
+	 * @return valor de tipo JTextField
+	 */
 	public static JTextField newTextField(String text, Fonts font) {
 		JTextField field = new JTextField(text);
 		field.setFont(font.getFont());
@@ -262,6 +420,13 @@ public class ButtonFactory {
 		return field;
 	}
 	
+	/**
+	 * newTextArea.
+	 *
+	 * @param text parámetro text
+	 * @param font parámetro font
+	 * @return valor de tipo JTextArea
+	 */
 	public static JTextArea newTextArea(String text, Fonts font) {
 		JTextArea field = new JTextArea(text);
 		field.setFont(font.getFont());
@@ -288,6 +453,12 @@ public class ButtonFactory {
 		return field;
 	}
 
+	/**
+	 * spinnerFecha.
+	 *
+	 * @param font parámetro font
+	 * @return valor de tipo JSpinner
+	 */
 	public static JSpinner spinnerFecha(Fonts font) {
 		SpinnerDateModel modelo = new SpinnerDateModel();
 		JSpinner spinner = new JSpinner(modelo);
@@ -297,6 +468,12 @@ public class ButtonFactory {
 		return spinner;
 	}
 	
+	/**
+	 * spinnerLocalDate.
+	 *
+	 * @param font parámetro font
+	 * @return valor de tipo JSpinner
+	 */
 	public static JSpinner spinnerLocalDate(Fonts font) {
 		JSpinner spinner = new JSpinner(new SpinnerDateModel());
 	    JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy");
@@ -305,6 +482,12 @@ public class ButtonFactory {
 	    return spinner;
 	}   
 	
+	/**
+	 * spinnerFechaYearMonth.
+	 *
+	 * @param font parámetro font
+	 * @return valor de tipo JSpinner
+	 */
 	public static JSpinner spinnerFechaYearMonth(Fonts font) {
 		SpinnerDateModel modelo = new SpinnerDateModel();
 		JSpinner spinner = new JSpinner(modelo);
@@ -314,6 +497,16 @@ public class ButtonFactory {
 		return spinner;
 	}
 	    
+	/**
+	 * spinnerEntero.
+	 *
+	 * @param font parámetro font
+	 * @param valor parámetro valor
+	 * @param min parámetro min
+	 * @param max parámetro max
+	 * @param paso parámetro paso
+	 * @return valor de tipo JSpinner
+	 */
 	public static JSpinner spinnerEntero(Fonts font, int valor, int min, int max, int paso) {
 	    SpinnerNumberModel modelo = new SpinnerNumberModel(valor, min, max, paso);
 	    JSpinner spinner = new JSpinner(modelo);
@@ -321,6 +514,16 @@ public class ButtonFactory {
 	    return spinner;
 	}
 
+	/**
+	 * spinnerDouble.
+	 *
+	 * @param font parámetro font
+	 * @param valor parámetro valor
+	 * @param min parámetro min
+	 * @param max parámetro max
+	 * @param paso parámetro paso
+	 * @return valor de tipo JSpinner
+	 */
 	public static JSpinner spinnerDouble(Fonts font, double valor, double min, double max, double paso) {
 	    SpinnerNumberModel modelo = new SpinnerNumberModel(valor, min, max, paso);
 	    JSpinner spinner = new JSpinner(modelo);
@@ -330,6 +533,14 @@ public class ButtonFactory {
 	    return spinner;
 	}
 
+	/**
+	 * newComboBox.
+	 *
+	 * @param <T> parámetro genérico
+	 * @param font parámetro font
+	 * @param elementos parámetro elementos
+	 * @return valor de tipo JComboBox
+	 */
 	public static <T> JComboBox<T> newComboBox(Fonts font, @SuppressWarnings("unchecked") T... elementos) {
 		JComboBox<T> comboBox = new JComboBox<T>(elementos);
 		comboBox.setFont(font.getFont());
@@ -339,18 +550,27 @@ public class ButtonFactory {
 
 	/**
 	 * Crea una check box que no se controla a sí misma, sino que depende de
-	 * toggleSelection
-	 * 
-	 * @param label
-	 * @param selected
-	 * @param unselected
-	 * @return
+	 * toggleSelection.
+	 *
+	 * @param labelSelected parámetro labelSelected
+	 * @param labelUnselected parámetro labelUnselected
+	 * @param selected parámetro selected
+	 * @param unselected parámetro unselected
+	 * @return valor de tipo InvisibleCheckBox
 	 */
 	public static InvisibleCheckBox newInvisibleCheckBox(String labelSelected, String labelUnselected,
 			ColorPalette selected, ColorPalette unselected) {
 		return new InvisibleCheckBox(labelSelected, labelUnselected, selected, unselected);
 	}
 
+	/**
+	 * spinnerEntero.
+	 *
+	 * @param font parámetro font
+	 * @param height parámetro height
+	 * @param width parámetro width
+	 * @return valor de tipo JSpinner
+	 */
 	public static JSpinner spinnerEntero(Fonts font, int height, int width) {
 		SpinnerNumberModel model = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
 		JSpinner spinner = new JSpinner(model);

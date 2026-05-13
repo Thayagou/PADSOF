@@ -49,6 +49,10 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 		refrescarLista();
 	}
 	
+	/**
+	 * Devuelve la opción seleccionada en el panel de opciones
+	 * @return La opción seleccionada
+	 */
 	public int getOpcionSeleccionada() {
 		return panelOpciones.getOpcionSeleccionada();
 	}
@@ -67,8 +71,7 @@ public class VentanaResultadosNoRegistrado extends JPanel implements VentanaConD
 	}
 
 	/**
-	 * Listener que se llama al hacer clic en una fila de producto. El ActionCommand
-	 * tiene la forma "Ver producto:<nombreProducto>".
+	 * Listener que se llama al hacer clic en una fila de producto.
 	 *
 	 * @param l nuevo valor
 	 */
