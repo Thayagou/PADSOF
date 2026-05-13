@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.*;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.assets.PanelSelectorCajas;
 import vistas.herramientas.*;
 

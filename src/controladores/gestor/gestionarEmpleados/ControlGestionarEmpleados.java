@@ -3,10 +3,10 @@ package controladores.gestor.gestionarEmpleados;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.usuario.Gestor;
-import vistas.common.app.TiendaFrame;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;
 
 /**

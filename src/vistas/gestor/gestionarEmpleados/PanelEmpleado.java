@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.components.InvisibleCheckBox;
 import vistas.common.displays.PanelDisplay;
 import vistas.herramientas.ButtonFactory;

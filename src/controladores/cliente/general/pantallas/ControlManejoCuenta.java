@@ -6,11 +6,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.noRegistrado.ControlInicioSinRegistrar;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import vistas.cliente.general.pantallas.VentanaCuentaCliente;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
 /**

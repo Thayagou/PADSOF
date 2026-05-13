@@ -2,8 +2,8 @@ package vistas.noRegistrado;
 
 import javax.swing.*;
 
+import controladores.TiendaFrame;
 import controladores.noRegistrado.ControlBuscar;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelSelectorCajas;
 import vistas.herramientas.*;
 

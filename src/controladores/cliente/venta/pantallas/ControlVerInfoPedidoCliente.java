@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.venta.ControlPanelItemPedido;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.pedidos.Pedido;
 import modelo.venta.productos.StockExterno;
 import vistas.cliente.venta.pantallas.VentanaInfoPedidoCliente;
-import vistas.common.app.TiendaFrame;
 
 /**
  * Controlador de la ventana de información detallada de un pedido del cliente.

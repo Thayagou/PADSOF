@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.displays.PanelCategoria;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;

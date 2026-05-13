@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.components.FixedTextArea;
 import vistas.herramientas.ButtonFactory;
 import vistas.herramientas.ColorPalette;

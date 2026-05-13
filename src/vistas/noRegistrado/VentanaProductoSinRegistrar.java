@@ -3,7 +3,8 @@ package vistas.noRegistrado;
 import java.awt.*;
 
 import javax.swing.*;
-import vistas.common.app.TiendaFrame;
+
+import controladores.TiendaFrame;
 import vistas.common.assets.PanelInfoProducto;
 import vistas.common.displays.PanelResena;
 import vistas.herramientas.*;

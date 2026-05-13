@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.usuario.Permiso;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.gestor.gestionarEmpleados.PanelEmpleado;

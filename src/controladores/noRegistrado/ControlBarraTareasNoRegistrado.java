@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
+
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.noRegistrado.BarraTareasNoRegistrado;
 

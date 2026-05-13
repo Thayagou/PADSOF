@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import controladores.ControlCargaImagen;
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
@@ -27,7 +28,6 @@ import modelo.venta.productos.caracteristicas.CaracteristicasFigura;
 import modelo.venta.productos.caracteristicas.CaracteristicasJuego;
 import modelo.venta.productos.caracteristicas.CaracteristicasPack;
 import modelo.venta.productos.caracteristicas.CaracteristicasProducto;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelProducto;
 import vistas.empleado.gestionarProductos.anadirProductos.PanelProductoAnadirAPack;

@@ -7,7 +7,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.components.InvisibleCheckBox;
 import vistas.common.components.PanelSeleccion;
 import vistas.herramientas.ButtonFactory;

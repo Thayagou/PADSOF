@@ -1,7 +1,8 @@
 package vistas.gestor.anadirDescuento;
 
 import javax.swing.*;
-import vistas.common.app.TiendaFrame;
+
+import controladores.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.common.displays.PanelDisplay;
 import vistas.common.displays.VentanaConDisplay;

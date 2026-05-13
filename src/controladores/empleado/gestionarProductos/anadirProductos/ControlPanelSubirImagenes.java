@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controladores.ControlCargaImagen;
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.anadirProductos.PanelSubirImagenes;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductos;

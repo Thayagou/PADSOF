@@ -11,13 +11,13 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.estadistica.StatsMensual;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Reloj;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.consultarEstadisticas.PanelProductoEstadisticas;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasProductos;

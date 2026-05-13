@@ -12,7 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.herramientas.ColorPalette;

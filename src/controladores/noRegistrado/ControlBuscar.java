@@ -7,12 +7,12 @@ import java.util.*;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.exceptions.CustomException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.noRegistrado.VentanaBusqueda;
 

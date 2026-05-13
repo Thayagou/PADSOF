@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.usuario.Empleado;
 import modelo.usuario.Permiso;
 import modelo.wallapop.Valoracion;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.valorarArticulos.VentanaValorarObjetos;
 

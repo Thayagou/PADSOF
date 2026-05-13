@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.intercambios.ControlPanelArticulo;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaBuscarArticulos;
-import vistas.common.app.TiendaFrame;
 
 /**
  * Controlador de la ventana de búsqueda de artículos de segunda mano.

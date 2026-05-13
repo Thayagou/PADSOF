@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import controladores.TiendaFrame;
 import vistas.herramientas.ColorPalette;
 import vistas.herramientas.Fonts;
 

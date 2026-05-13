@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.venta.ControlPanelPedidoCliente;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.pedidos.Pedido;
 import vistas.cliente.venta.pantallas.VentanaCompras;
-import vistas.common.app.TiendaFrame;
 
 /**
  * Controlador de la ventana de historial de compras del cliente.

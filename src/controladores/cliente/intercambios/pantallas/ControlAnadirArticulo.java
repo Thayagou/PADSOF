@@ -7,11 +7,11 @@ import javax.swing.*;
 
 import controladores.ControlCargaImagen;
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import vistas.cliente.intercambios.pantallas.VentanaAnadirArticulo;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
 /**

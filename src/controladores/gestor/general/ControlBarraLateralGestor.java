@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
+import controladores.TiendaFrame;
 import controladores.empleado.gestionarProductos.anadirProductos.ControlAnadirProductos;
 import controladores.empleado.gestionarProductos.gestionarCategorias.ControlGestionarCategorias;
 import controladores.empleado.gestionarProductos.gestionarExistentes.ControlGestionarExistentes;
@@ -17,7 +18,6 @@ import controladores.gestor.consultarEstadisticas.ControlEstadisticasWallapop;
 import controladores.gestor.gestionarEmpleados.ControlGestionarEmpleados;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
-import vistas.common.app.TiendaFrame;
 import vistas.gestor.general.BarraGestor;
 
 /**

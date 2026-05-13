@@ -8,7 +8,6 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelCargaImagen;
 
 /**

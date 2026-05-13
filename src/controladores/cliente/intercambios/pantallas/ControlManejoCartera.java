@@ -6,12 +6,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.intercambios.ControlPanelArticuloEnCartera;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaCartera;
-import vistas.common.app.TiendaFrame;
 
 /**
  * Controlador de la ventana de cartera de artículos de segunda mano.

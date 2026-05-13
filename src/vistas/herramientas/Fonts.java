@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 
 /**
  * Enum usado para estandarizar las Fonts que usamos a lo largo del proyecto

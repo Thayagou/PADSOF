@@ -17,7 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.UIManager;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;

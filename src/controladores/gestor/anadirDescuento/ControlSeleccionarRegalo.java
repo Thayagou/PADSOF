@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
-import vistas.common.app.TiendaFrame;
 import vistas.common.components.PanelSeleccion;
 import vistas.gestor.anadirDescuento.VentanaSeleccionRegalo;
 

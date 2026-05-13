@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
+import controladores.TiendaFrame;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
@@ -14,7 +15,6 @@ import modelo.usuario.Empleado;
 import modelo.venta.pedidos.EstadoPedido;
 import modelo.venta.pedidos.Pedido;
 import modelo.venta.productos.StockExterno;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarPedidos.PanelPedidoGestionarPedido;
 import vistas.empleado.gestionarPedidos.VentanaGestPedidos;

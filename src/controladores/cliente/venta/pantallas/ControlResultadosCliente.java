@@ -7,13 +7,13 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.venta.ControlPanelProductoCliente;
 import controladores.noRegistrado.ControlPanelProductoNoRegistrado;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Producto;
 import vistas.noRegistrado.*;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 
 /**

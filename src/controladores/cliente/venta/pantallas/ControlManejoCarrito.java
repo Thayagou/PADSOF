@@ -6,12 +6,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.venta.ControlItemCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.StockExterno;
 import vistas.cliente.venta.pantallas.VentanaCarrito;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
 /**

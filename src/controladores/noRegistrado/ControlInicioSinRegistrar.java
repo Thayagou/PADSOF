@@ -6,9 +6,9 @@ import java.util.Arrays;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.*;
-import vistas.common.app.TiendaFrame;
 import vistas.noRegistrado.*;
 
 /**

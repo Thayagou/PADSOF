@@ -6,7 +6,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 import vistas.common.components.FixedTextArea;
 import vistas.herramientas.*;
 

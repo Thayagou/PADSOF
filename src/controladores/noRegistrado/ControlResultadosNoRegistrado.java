@@ -8,9 +8,9 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.venta.productos.Producto;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.PanelMultiopcion;
 import vistas.noRegistrado.VentanaResultadosNoRegistrado;
 

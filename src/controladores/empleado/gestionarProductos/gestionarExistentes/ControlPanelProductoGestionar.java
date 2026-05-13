@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import controladores.TiendaFrame;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
@@ -13,7 +14,6 @@ import modelo.usuario.Usuario;
 import modelo.venta.productos.Categoria;
 import modelo.venta.productos.Producto;
 import modelo.venta.productos.Stock;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.PanelProducto;
 import vistas.common.displays.VentanaConDisplay;

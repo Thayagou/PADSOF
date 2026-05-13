@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.general.ControlBarraLateralCliente;
 import controladores.cliente.general.ControlBarraTareasCliente;
 import controladores.cliente.venta.ControlPanelProductoCliente;
@@ -14,7 +15,6 @@ import modelo.venta.productos.Producto;
 import vistas.cliente.general.BarraLateralCliente;
 import vistas.cliente.general.BarraTareasCliente;
 import vistas.cliente.general.pantallas.VentanaInicioCliente;
-import vistas.common.app.TiendaFrame;
 
 /**
  * Controlador de la pantalla de inicio del cliente, gestiona la configuración de las barras y la carga de productos recomendados.

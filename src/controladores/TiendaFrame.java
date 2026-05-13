@@ -1,4 +1,4 @@
-package vistas.common.app;
+package controladores;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -15,8 +15,10 @@ import java.util.Deque;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controladores.ControladorPantalla;
 import modelo.aplicacion.Main;
+import vistas.common.app.BarraLateral;
+import vistas.common.app.BarraTareas;
+import vistas.common.app.FondoGradiente;
 import vistas.common.assets.VentanaConfirmacion;
 import vistas.herramientas.PanelSizes;
 

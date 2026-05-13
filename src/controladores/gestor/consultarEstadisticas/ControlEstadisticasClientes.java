@@ -8,10 +8,10 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.estadistica.StatsUsuario;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
-import vistas.common.app.TiendaFrame;
 import vistas.gestor.consultarEstadisticas.PanelClienteEstadisticas;
 import vistas.gestor.consultarEstadisticas.VentanaEstadisticasCliente;
 

@@ -3,11 +3,11 @@ package controladores.empleado.gestionarProductos.gestionarExistentes;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.usuario.Permiso;
 import modelo.usuario.Usuario;
 import modelo.venta.productos.Stock;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.gestionarExistentes.VentanaGestionarExistentes;
 

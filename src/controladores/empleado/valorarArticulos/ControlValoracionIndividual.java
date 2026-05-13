@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.exceptions.ArticuloSinValoracionException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
@@ -17,7 +18,6 @@ import modelo.usuario.Empleado;
 import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.EstadoFisicoArticulo;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.valorarArticulos.VentanaValoracionIndividual;
 

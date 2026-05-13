@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.intercambios.ControlPanelOferta;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.Intercambio;
 import vistas.cliente.intercambios.pantallas.VentanaVerMisOfertas;
-import vistas.common.app.TiendaFrame;
 
 /**
  * Controlador de la ventana de ofertas de intercambio realizadas por el usuario.

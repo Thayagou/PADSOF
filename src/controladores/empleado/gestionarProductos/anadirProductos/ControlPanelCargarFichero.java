@@ -7,13 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import controladores.GestorImagenes;
+import controladores.TiendaFrame;
 import modelo.exceptions.DoubleDiscountException;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
 import modelo.venta.productos.Producto;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.anadirProductos.PanelCargarFichero;
 import vistas.empleado.gestionarProductos.anadirProductos.VentanaAnadirProductos;

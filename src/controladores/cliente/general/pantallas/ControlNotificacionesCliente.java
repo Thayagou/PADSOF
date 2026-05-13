@@ -6,13 +6,13 @@ import java.util.Arrays;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import controladores.cliente.general.ControlPanelNotificacion;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Notificacion;
 import modelo.usuario.TipoNotificacion;
 import vistas.cliente.general.pantallas.VentanaNotificacionesCliente;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
 /**

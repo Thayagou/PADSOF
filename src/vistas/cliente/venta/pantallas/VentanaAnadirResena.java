@@ -7,9 +7,9 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
+import controladores.TiendaFrame;
 import vistas.herramientas.*;
 import vistas.cliente.venta.pantallas.starRating.StarRating;
-import vistas.common.app.TiendaFrame;
 
 /**
  * Pantalla emergente para añadir una reseña a un producto, con selector de estrellas y campo de comentario.

@@ -3,7 +3,7 @@ package vistas.herramientas;
 import java.awt.*;
 import javax.swing.*;
 
-import vistas.common.app.TiendaFrame;
+import controladores.TiendaFrame;
 
 /**
  * Clase de tipo Factory que usamos para crear paneles y estructuras predeterminadamente establecidas

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
+import controladores.TiendaFrame;
 import controladores.cliente.general.pantallas.ControlInicioCliente;
 import controladores.cliente.general.pantallas.ControlManejoCuenta;
 import controladores.cliente.general.pantallas.ControlNotificacionesCliente;
@@ -13,7 +14,6 @@ import controladores.cliente.venta.pantallas.ControlManejoCarrito;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import vistas.cliente.general.BarraTareasCliente;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 
 /**

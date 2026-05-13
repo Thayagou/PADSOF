@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.swing.SwingUtilities;
 
+import controladores.TiendaFrame;
 import controladores.cliente.intercambios.pantallas.ControlVerMisOfertas;
 import controladores.cliente.intercambios.pantallas.ControlVerOferta;
 import modelo.sistema.Tienda;
@@ -13,7 +14,6 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.wallapop.ArticuloSegundaMano;
 import modelo.wallapop.EstadoIntercambio;
 import modelo.wallapop.Intercambio;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.common.displays.VentanaConDisplay;
 import vistas.cliente.intercambios.*;

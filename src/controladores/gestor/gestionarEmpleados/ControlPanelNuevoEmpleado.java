@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import controladores.TiendaFrame;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
 import modelo.usuario.Permiso;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.gestionarEmpleados.PanelNuevoEmpleado;
 import vistas.gestor.gestionarEmpleados.VentanaGestionarEmpleados;

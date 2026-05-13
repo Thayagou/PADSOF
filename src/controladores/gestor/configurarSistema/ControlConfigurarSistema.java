@@ -8,12 +8,12 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.sistema.ParametroSistema;
 import modelo.sistema.Sistema;
 import modelo.sistema.Tienda;
 import modelo.usuario.Gestor;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.gestor.configurarSistema.PanelParametroSistema;
 import vistas.gestor.configurarSistema.VentanaGestionarParametrosSistema;

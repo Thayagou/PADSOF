@@ -7,12 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controladores.ControladorPantalla;
+import controladores.TiendaFrame;
 import modelo.sistema.Tienda;
 import modelo.usuario.ClienteRegistrado;
 import modelo.venta.productos.Categoria;
 import modelo.wallapop.ArticuloSegundaMano;
 import vistas.cliente.intercambios.pantallas.VentanaInfoArticulo;
-import vistas.common.app.TiendaFrame;
 
 /**
  * Controlador de la ventana de información detallada de un artículo de segunda mano.

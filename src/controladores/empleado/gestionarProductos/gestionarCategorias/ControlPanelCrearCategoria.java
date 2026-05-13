@@ -3,11 +3,11 @@ package controladores.empleado.gestionarProductos.gestionarCategorias;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import controladores.TiendaFrame;
 import modelo.exceptions.InvalidArgumentException;
 import modelo.exceptions.InvalidPermitException;
 import modelo.sistema.Tienda;
 import modelo.usuario.Usuario;
-import vistas.common.app.TiendaFrame;
 import vistas.common.assets.VentanaMensaje;
 import vistas.empleado.gestionarProductos.gestionarCategorias.PanelCrearCategoria;
 import vistas.empleado.gestionarProductos.gestionarCategorias.VentanaGestionarCategorias;
