@@ -18,8 +18,6 @@ public class ControlPanelSubirImagenes implements ActionListener{
 	
 	/**
 	 * Constructor del controlador del panel cargar fichero
-	 * @param tienda Modelo de la tienda
-	 * @param usuario Usuario qeu realiza la acción
 	 * @param vista Ventana en la que se muestra
 	 * @param padre Controlador de la ventana en la que se muestra
 	 */
