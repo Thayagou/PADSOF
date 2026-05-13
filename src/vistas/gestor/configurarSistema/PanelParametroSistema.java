@@ -88,7 +88,7 @@ public class PanelParametroSistema extends PanelDisplay{
 		ButtonFactory.paintButton(info, ColorPalette.LIGHT_PURPLE, ColorPalette.WHITE);
 		info.setActionCommand(actionName + " " + INFO_ACTION);
 		ButtonFactory.addMouseMecanics(info, ColorPalette.LIGHT_PURPLE, ColorPalette.PURPLE);
-		ButtonFactory.addHoverInfo(info, "Ver información de la ventana", 0);
+		ButtonFactory.addHoverInfo(info, "Ver explicación del parámetro", 0);
 		
 		// Crea el botón de confirmar con mecánica de hovering
 		confirmarButton = ButtonFactory.newRoundedButton("Confirmar", (int)(maxCompHeight * BOTON_PERC_H), maxCompHeight, 0.75f);

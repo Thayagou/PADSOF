@@ -52,7 +52,7 @@ public class VentanaMensaje extends JDialog {
 	private static final double GAP = 0.015;
 
 	/** Título por defecto para mensajes informativos. */
-	private static final String TITULO_INFO = "Informacion";
+	private static final String TITULO_INFO = "Información";
 	
 	/** Título por defecto para mensajes de error. */
 	private static final String TITULO_ERROR = "Error";

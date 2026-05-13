@@ -56,6 +56,8 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 	public void mostrar() {
 		Sistema sistema = Sistema.getInstancia();
 		
+		vista.vaciarLista();
+		
 		// Creación de cada uno de los paneles
 		PanelParametroSistema numProductosRecomendados = new PanelParametroSistema("  Número de productos recomendados:              ", String.format("%d", sistema.getNumProductosRecomendados()), ParametroSistema.NUMERO_PRODUCTOS_RECOMENDADOS.name());
 		numProductosRecomendados.setControlador(this);
@@ -71,6 +73,11 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 		precioDeCompra.setControlador(this);
 		vista.anadirDisplay(precioDeCompra);
 		mapaPaneles.put(ParametroSistema.PRECIO_COMPRA, precioDeCompra);
+		
+		PanelParametroSistema udsCompradas = new PanelParametroSistema("  Unidades compradas:       ", String.format("%.2f", sistema.getPonderacionUdsCompra()), ParametroSistema.UDS_COMPRADAS.name());
+		udsCompradas.setControlador(this);
+		vista.anadirDisplay(udsCompradas);
+		mapaPaneles.put(ParametroSistema.UDS_COMPRADAS, udsCompradas);
 		
 		PanelParametroSistema valoracionesProducto = new PanelParametroSistema("  Valoraciones producto:  ", String.format("%.2f", sistema.getPonderacionValoracionesProducto()), ParametroSistema.VALORACIONES_PRODUCTO.name());
 		valoracionesProducto.setControlador(this);
@@ -165,7 +172,10 @@ public class ControlConfigurarSistema implements ControladorPantalla{
 				break;
 			default:
 				try {
-					double valor = Double.parseDouble(panel.getValorTextField());
+					String stringValor = panel.getValorTextField();
+					stringValor = stringValor.replace(',', '.');
+					double valor = Double.parseDouble(stringValor);
+					System.out.println(valor);
 					if (valor < 0) throw new IllegalArgumentException();
 					tienda.gestionarParametroDeSistema(gestor, param, valor);
 				} catch (IllegalArgumentException ex) {
