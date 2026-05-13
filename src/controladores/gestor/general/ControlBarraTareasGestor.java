@@ -57,7 +57,11 @@ public class ControlBarraTareasGestor implements ActionListener {
 		switch (e.getActionCommand()) {
 		case BarraTareasGestor.VOLVER_ACTION -> TiendaFrame.getInstance().volverAtras();
 		case BarraTareasGestor.HOME_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioGestor(tienda, gestor));
-		case BarraTareasGestor.CERRAR_SESION_ACTION -> SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+		case BarraTareasGestor.CERRAR_SESION_ACTION -> {
+			if(TiendaFrame.getConfirmacionUsuario("¿Estás seguro de que deseas cerrar la sesión?")) {
+				SwingUtilities.invokeLater(() -> new ControlInicioSinRegistrar(tienda));
+			}
+		}
 		case BarraTareasGestor.INFO_ACTION -> new VentanaMensaje(TiendaFrame.getInstance().getInfo(), 0);
 		}
 		
